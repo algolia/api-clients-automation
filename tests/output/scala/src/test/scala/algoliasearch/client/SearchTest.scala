@@ -47,6 +47,19 @@ class SearchTest extends AnyFunSuite {
     assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
   }
 
+  test("read transporter with POST method") {
+
+    val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
+
+    Await.ready(
+      client.searchSingleIndex(
+        indexName = "indexName"
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
+  }
+
   test("calls api with correct write host") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
@@ -69,9 +82,24 @@ class SearchTest extends AnyFunSuite {
         .builder()
         .withHosts(
           List(
-            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676)),
-            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6677)),
-            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6676)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6677)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6678)
+            )
           )
         )
         .build()
@@ -93,7 +121,16 @@ class SearchTest extends AnyFunSuite {
       apiKey = "test-api-key",
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6676)
+            )
+          )
+        )
         .build()
     )
 
@@ -114,7 +151,16 @@ class SearchTest extends AnyFunSuite {
       apiKey = "test-api-key",
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6678)
+            )
+          )
+        )
         .withCompressionType(CompressionType.Gzip)
         .build()
     )
@@ -158,7 +204,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.3.1\).*""".r
+    val regexp = """^Algolia for Scala \(2.4.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -261,7 +307,16 @@ class SearchTest extends AnyFunSuite {
       apiKey = "test-api-key",
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6683)
+            )
+          )
+        )
         .build()
     )
 

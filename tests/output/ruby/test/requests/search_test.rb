@@ -517,14 +517,14 @@ class TestSearchClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -536,14 +536,14 @@ class TestSearchClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -1196,10 +1196,10 @@ class TestSearchClient < Test::Unit::TestCase
 
   # restoreApiKey
   def test_restore_api_key
-    req = @client.restore_api_key_with_http_info("myApiKey")
+    req = @client.restore_api_key_with_http_info("ALGOLIA_API_KEY")
 
     assert_equal(:post, req.method)
-    assert_equal("/1/keys/myApiKey/restore", req.path)
+    assert_equal("/1/keys/ALGOLIA_API_KEY/restore", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
@@ -2293,12 +2293,12 @@ class TestSearchClient < Test::Unit::TestCase
   # updateApiKey
   def test_update_api_key
     req = @client.update_api_key_with_http_info(
-      "myApiKey",
+      "ALGOLIA_API_KEY",
       ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
     )
 
     assert_equal(:put, req.method)
-    assert_equal("/1/keys/myApiKey", req.path)
+    assert_equal("/1/keys/ALGOLIA_API_KEY", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(

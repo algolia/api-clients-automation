@@ -1154,54 +1154,6 @@ open class IngestionClient {
         )
     }
 
-    /// - parameter generateTransformationCodePayload: (body)
-    /// - returns: GenerateTransformationCodeResponse
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open func generateTransformationCode(
-        generateTransformationCodePayload: GenerateTransformationCodePayload,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GenerateTransformationCodeResponse {
-        let response: Response<GenerateTransformationCodeResponse> = try await generateTransformationCodeWithHTTPInfo(
-            generateTransformationCodePayload: generateTransformationCodePayload,
-            requestOptions: requestOptions
-        )
-
-        guard let body = response.body else {
-            throw AlgoliaError.missingData
-        }
-
-        return body
-    }
-
-    // Generates code for the selected model based on the given prompt.
-    // Required API Key ACLs:
-    //  - addObject
-    //  - deleteIndex
-    //  - editSettings
-    //
-    // - parameter generateTransformationCodePayload: (body)
-    // - returns: RequestBuilder<GenerateTransformationCodeResponse>
-
-    open func generateTransformationCodeWithHTTPInfo(
-        generateTransformationCodePayload: GenerateTransformationCodePayload,
-        requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<GenerateTransformationCodeResponse> {
-        let resourcePath = "/1/transformations/models"
-        let body = generateTransformationCodePayload
-        let queryParameters: [String: Any?]? = nil
-
-        let nillableHeaders: [String: Any?]? = nil
-
-        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
-
-        return try await self.transporter.send(
-            method: "POST",
-            path: resourcePath,
-            data: body,
-            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
-        )
-    }
-
     /// - parameter authenticationID: (path) Unique identifier of an authentication resource.
     /// - returns: Authentication
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1682,8 +1634,8 @@ open class IngestionClient {
     /// - parameter itemsPerPage: (query) Number of items per page. (optional, default to 10)
     /// - parameter page: (query) Page number of the paginated API response. (optional)
     /// - parameter type: (query) Type of authentication resource to retrieve. (optional)
-    /// - parameter platform: (query) Ecommerce platform for which to retrieve authentication resources. (optional)
-    /// - parameter sort: (query) Property by which to sort the list of authentication resources. (optional)
+    /// - parameter platform: (query) Ecommerce platform for which to retrieve authentications. (optional)
+    /// - parameter sort: (query) Property by which to sort the list of authentications. (optional)
     /// - parameter order: (query) Sort order of the response, ascending or descending. (optional)
     /// - returns: ListAuthenticationsResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1725,9 +1677,9 @@ open class IngestionClient {
     //
     // - parameter type: (query) Type of authentication resource to retrieve. (optional)
     //
-    // - parameter platform: (query) Ecommerce platform for which to retrieve authentication resources. (optional)
+    // - parameter platform: (query) Ecommerce platform for which to retrieve authentications. (optional)
     //
-    // - parameter sort: (query) Property by which to sort the list of authentication resources. (optional)
+    // - parameter sort: (query) Property by which to sort the list of authentications. (optional)
     //
     // - parameter order: (query) Sort order of the response, ascending or descending. (optional)
     // - returns: RequestBuilder<ListAuthenticationsResponse>
@@ -1768,6 +1720,7 @@ open class IngestionClient {
     /// - parameter page: (query) Page number of the paginated API response. (optional)
     /// - parameter type: (query) Destination type. (optional)
     /// - parameter authenticationID: (query) Authentication ID used by destinations. (optional)
+    /// - parameter transformationID: (query) Get the list of destinations used by a transformation. (optional)
     /// - parameter sort: (query) Property by which to sort the destinations. (optional)
     /// - parameter order: (query) Sort order of the response, ascending or descending. (optional)
     /// - returns: ListDestinationsResponse
@@ -1777,6 +1730,7 @@ open class IngestionClient {
         page: Int? = nil,
         type: [DestinationType]? = nil,
         authenticationID: [String]? = nil,
+        transformationID: String? = nil,
         sort: DestinationSortKeys? = nil,
         order: OrderKeys? = nil,
         requestOptions: RequestOptions? = nil
@@ -1786,6 +1740,7 @@ open class IngestionClient {
             page: page,
             type: type,
             authenticationID: authenticationID,
+            transformationID: transformationID,
             sort: sort,
             order: order,
             requestOptions: requestOptions
@@ -1812,6 +1767,8 @@ open class IngestionClient {
     //
     // - parameter authenticationID: (query) Authentication ID used by destinations. (optional)
     //
+    // - parameter transformationID: (query) Get the list of destinations used by a transformation. (optional)
+    //
     // - parameter sort: (query) Property by which to sort the destinations. (optional)
     //
     // - parameter order: (query) Sort order of the response, ascending or descending. (optional)
@@ -1822,6 +1779,7 @@ open class IngestionClient {
         page: Int? = nil,
         type: [DestinationType]? = nil,
         authenticationID: [String]? = nil,
+        transformationID: String? = nil,
         sort: DestinationSortKeys? = nil,
         order: OrderKeys? = nil,
         requestOptions userRequestOptions: RequestOptions? = nil
@@ -1833,6 +1791,7 @@ open class IngestionClient {
             "page": page?.encodeToJSON(),
             "type": type?.encodeToJSON(),
             "authenticationID": authenticationID?.encodeToJSON(),
+            "transformationID": transformationID?.encodeToJSON(),
             "sort": sort?.encodeToJSON(),
             "order": order?.encodeToJSON(),
         ]
@@ -2084,7 +2043,7 @@ open class IngestionClient {
     /// - parameter page: (query) Page number of the paginated API response. (optional)
     /// - parameter type: (query) Source type. Some sources require authentication. (optional)
     /// - parameter authenticationID: (query) Authentication IDs of the sources to retrieve. 'none' returns sources that
-    /// doesn't have an authentication resource.  (optional)
+    /// doesn't have an authentication.  (optional)
     /// - parameter sort: (query) Property by which to sort the list of sources. (optional)
     /// - parameter order: (query) Sort order of the response, ascending or descending. (optional)
     /// - returns: ListSourcesResponse
@@ -2128,7 +2087,7 @@ open class IngestionClient {
     // - parameter type: (query) Source type. Some sources require authentication. (optional)
     //
     // - parameter authenticationID: (query) Authentication IDs of the sources to retrieve. 'none' returns sources that
-    // doesn't have an authentication resource.  (optional)
+    // doesn't have an authentication.  (optional)
     //
     // - parameter sort: (query) Property by which to sort the list of sources. (optional)
     //
@@ -2379,56 +2338,16 @@ open class IngestionClient {
         )
     }
 
-    /// - returns: TransformationModels
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open func listTransformationModels(requestOptions: RequestOptions? = nil) async throws -> TransformationModels {
-        let response: Response<TransformationModels> =
-            try await listTransformationModelsWithHTTPInfo(requestOptions: requestOptions)
-
-        guard let body = response.body else {
-            throw AlgoliaError.missingData
-        }
-
-        return body
-    }
-
-    // Retrieves a list of existing LLM transformation helpers.
-    // Required API Key ACLs:
-    //  - addObject
-    //  - deleteIndex
-    //  - editSettings
-    //     - returns: RequestBuilder<TransformationModels>
-
-    open func listTransformationModelsWithHTTPInfo(
-        requestOptions userRequestOptions: RequestOptions? =
-            nil
-    ) async throws -> Response<TransformationModels> {
-        let resourcePath = "/1/transformations/models"
-        let body: AnyCodable? = nil
-        let queryParameters: [String: Any?]? = nil
-
-        let nillableHeaders: [String: Any?]? = nil
-
-        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
-
-        return try await self.transporter.send(
-            method: "GET",
-            path: resourcePath,
-            data: body,
-            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
-        )
-    }
-
     /// - parameter itemsPerPage: (query) Number of items per page. (optional, default to 10)
     /// - parameter page: (query) Page number of the paginated API response. (optional)
-    /// - parameter sort: (query) Property by which to sort the list. (optional)
+    /// - parameter sort: (query) Property by which to sort the list of transformations. (optional)
     /// - parameter order: (query) Sort order of the response, ascending or descending. (optional)
     /// - returns: ListTransformationsResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func listTransformations(
         itemsPerPage: Int? = nil,
         page: Int? = nil,
-        sort: SortKeys? = nil,
+        sort: TransformationSortKeys? = nil,
         order: OrderKeys? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws -> ListTransformationsResponse {
@@ -2457,7 +2376,7 @@ open class IngestionClient {
     //
     // - parameter page: (query) Page number of the paginated API response. (optional)
     //
-    // - parameter sort: (query) Property by which to sort the list. (optional)
+    // - parameter sort: (query) Property by which to sort the list of transformations. (optional)
     //
     // - parameter order: (query) Sort order of the response, ascending or descending. (optional)
     // - returns: RequestBuilder<ListTransformationsResponse>
@@ -2465,7 +2384,7 @@ open class IngestionClient {
     open func listTransformationsWithHTTPInfo(
         itemsPerPage: Int? = nil,
         page: Int? = nil,
-        sort: SortKeys? = nil,
+        sort: TransformationSortKeys? = nil,
         order: OrderKeys? = nil,
         requestOptions userRequestOptions: RequestOptions? = nil
     ) async throws -> Response<ListTransformationsResponse> {

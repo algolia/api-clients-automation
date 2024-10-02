@@ -190,7 +190,7 @@ export async function runComposerInstall(): Promise<void> {
 }
 
 export function ensureGitHubToken(): string {
-  // use process.env here to mock with jest
+  // use process.env here to mock with vitest
   if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }

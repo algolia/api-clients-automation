@@ -5,6 +5,7 @@ export const patterns = [
 
   'clients/**',
   'snippets/**',
+  'snippets/guides/**',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
   'clients/**/.github/**',
@@ -76,11 +77,9 @@ export const patterns = [
     : 'clients/algoliasearch-client-javascript/packages/**/package.json',
   '!clients/algoliasearch-client-javascript/packages/requester-*/**',
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
+  '!clients/algoliasearch-client-javascript/packages/logger-console/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/vitest.workspace.ts',
-  'clients/algoliasearch-client-javascript/packages/*/tsup.config.ts',
-  '!clients/algoliasearch-client-javascript/packages/client-common/tsup.config.ts',
-  '!clients/algoliasearch-client-javascript/packages/requester-*/tsup.config.ts',
 
   'tests/output/javascript/package.json',
 
@@ -118,7 +117,6 @@ export const patterns = [
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
 
-  'tests/output/python/requirements.txt',
   'tests/output/python/poetry.lock',
   '!tests/output/python/**/__init__.py',
 

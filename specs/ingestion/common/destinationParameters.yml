@@ -23,6 +23,16 @@ authenticationID:
     items:
       $ref: './schemas/common.yml#/authenticationID'
 
+transformationID:
+  name: transformationID
+  in: query
+  description: Get the list of destinations used by a transformation.
+  required: false
+  style: form
+  explode: false
+  schema:
+    $ref: './schemas/common.yml#/transformationID'
+
 sort:
   name: sort
   in: query

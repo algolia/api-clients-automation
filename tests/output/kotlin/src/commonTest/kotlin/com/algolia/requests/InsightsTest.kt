@@ -234,7 +234,7 @@ class InsightsTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -242,7 +242,7 @@ class InsightsTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -264,7 +264,7 @@ class InsightsTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -272,7 +272,7 @@ class InsightsTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -529,7 +529,7 @@ class InsightsTest {
                 index = "products",
                 userToken = "user-123456",
                 authenticatedUserToken = "user-123456",
-                timestamp = 1726012800000L,
+                timestamp = 1727827200000L,
                 objectIDs = listOf("9780545139700", "9780439784542"),
                 queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               ),
@@ -539,7 +539,7 @@ class InsightsTest {
                 index = "products",
                 userToken = "user-123456",
                 authenticatedUserToken = "user-123456",
-                timestamp = 1726012800000L,
+                timestamp = 1727827200000L,
                 objectIDs = listOf("9780545139700", "9780439784542"),
               ),
             ),
@@ -549,7 +549,7 @@ class InsightsTest {
       intercept = {
         assertEquals("/1/events".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1726012800000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1726012800000,"objectIDs":["9780545139700","9780439784542"]}]}""", it.body)
+        assertJsonBody("""{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1727827200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1727827200000,"objectIDs":["9780545139700","9780439784542"]}]}""", it.body)
       },
     )
   }

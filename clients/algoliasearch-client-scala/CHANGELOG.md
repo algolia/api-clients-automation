@@ -1,3 +1,35 @@
+## [2.4.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.7...2.4.0)
+
+- [788483537](https://github.com/algolia/api-clients-automation/commit/788483537) chore(clients): add workflow to auto-close PR ([#3834](https://github.com/algolia/api-clients-automation/pull/3834)) by [@shortcuts](https://github.com/shortcuts/)
+- [e59dd41d5](https://github.com/algolia/api-clients-automation/commit/e59dd41d5) fix(specs): API key description will be obfuscated ([#3840](https://github.com/algolia/api-clients-automation/pull/3840)) by [@kai687](https://github.com/kai687/)
+- [dc28c0268](https://github.com/algolia/api-clients-automation/commit/dc28c0268) feat(specs): add recommend batch rules endpoint ([#3782](https://github.com/algolia/api-clients-automation/pull/3782)) by [@raed667](https://github.com/raed667/)
+
+## [2.3.7](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.6...2.3.7)
+
+- [022131871](https://github.com/algolia/api-clients-automation/commit/022131871) fix(specs): correct query params for ingestion [skip-bc] ([#3830](https://github.com/algolia/api-clients-automation/pull/3830)) by [@millotp](https://github.com/millotp/)
+
+## [2.3.6](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.5...2.3.6)
+
+- [1939114e1](https://github.com/algolia/api-clients-automation/commit/1939114e1) chore(deps): dependencies 2024-09-23 ([#3790](https://github.com/algolia/api-clients-automation/pull/3790)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [4e8275165](https://github.com/algolia/api-clients-automation/commit/4e8275165) fix(clients): deserialization ([#3822](https://github.com/algolia/api-clients-automation/pull/3822)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [2.3.5](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.4...2.3.5)
+
+- [1ee5ce88e](https://github.com/algolia/api-clients-automation/commit/1ee5ce88e) fix(clients): use the correct host for search ([#3787](https://github.com/algolia/api-clients-automation/pull/3787)) by [@millotp](https://github.com/millotp/)
+
+## [2.3.4](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.3...2.3.4)
+
+- [4f64d5fdd](https://github.com/algolia/api-clients-automation/commit/4f64d5fdd) fix(clients): use the dsn with the read transporter ([#3781](https://github.com/algolia/api-clients-automation/pull/3781)) by [@millotp](https://github.com/millotp/)
+
+## [2.3.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.2...2.3.3)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+- [92438873c](https://github.com/algolia/api-clients-automation/commit/92438873c) fix(specs): remove models from ingestion specs [skip-bc] ([#3774](https://github.com/algolia/api-clients-automation/pull/3774)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [2.3.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.1...2.3.2)
+
+- [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.3.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.0...2.3.1)
 
 - [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)

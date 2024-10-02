@@ -1,11 +1,12 @@
 # {{generationBanner}}
 # >IMPORT
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}
 # IMPORT<
 
 {{#blocksRequests}}
 {{#snippets}}
-async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}():
+def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}():
     """
     Snippet for the {{method}} method.
 
@@ -13,10 +14,18 @@ async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{test
     """
     # >SEPARATOR {{method}} {{testName}}
     # Initialize the client
-    _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
+    # In an asynchronous context, you can use {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} instead, which exposes the exact same methods.
+    client = {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"{{#hasRegionalHost}}, "ALGOLIA_APPLICATION_REGION"{{/hasRegionalHost}})
 
-    # Call the API
-    {{#hasResponse}}response = {{/hasResponse}}{{#isAsyncMethod}}await {{/isAsyncMethod}}_client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+    # Call the API 
+    {{#hasResponse}}response = {{/hasResponse}}client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+
+    {{#hasResponse}}print(response){{/hasResponse}}
+
+    # Skip deserialization
+    {{#hasResponse}}raw_response = {{/hasResponse}}client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+
+    {{#hasResponse}}print(raw_response.raw_data){{/hasResponse}}
     
     # >LOG
     {{#hasResponse}}

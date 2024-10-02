@@ -10,20 +10,20 @@
   "dependencies": {
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
     "instantsearch.css": "8.5.1",
-    "instantsearch.js": "4.74.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-instantsearch": "7.13.1"
+    "instantsearch.js": "4.74.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-instantsearch": "7.13.2"
   },
   "devDependencies": {
-    "@parcel/core": "2.10.0",
-    "@parcel/packager-raw-url": "2.10.0",
-    "@parcel/transformer-webmanifest": "2.10.0",
+    "@parcel/core": "2.12.0",
+    "@parcel/packager-raw-url": "2.12.0",
+    "@parcel/transformer-webmanifest": "2.12.0",
     "@types/react": "^18.0.9",
     "https-browserify": "^1.0.0",
-    "parcel": "2.10.0",
+    "parcel": "2.12.0",
     "stream-http": "^3.1.0",
-    "typescript": "5.5.2",
+    "typescript": "5.6.2",
     "url": "^0.11.0"
   },
   "@parcel/resolver-default": {

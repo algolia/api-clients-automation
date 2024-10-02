@@ -13,11 +13,15 @@ final class SearchClientClientBenchmark: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6682")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6682"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        for i in 1 ... 1000 {
+        for i in 1 ... 2000 {
             let response: Response<SearchResponses<Hit>> = try await client
                 .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
                     SearchQuery

@@ -6,6 +6,35 @@ import "github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
 
 // IMPORT<
 
+func SnippetForBatchRecommendRulesOfRecommend() {
+	/*
+	   Snippet for the batchRecommendRules method.
+
+	   batch recommend rules
+	*/
+
+	// >SEPARATOR batchRecommendRules default
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomDeleteOfRecommend() {
 	/*
 	   Snippet for the customDelete method.
@@ -15,7 +44,7 @@ func SnippetForCustomDeleteOfRecommend() {
 
 	// >SEPARATOR customDelete default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -44,7 +73,7 @@ func SnippetForCustomGetOfRecommend() {
 
 	// >SEPARATOR customGet default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -73,7 +102,7 @@ func SnippetForCustomPostOfRecommend() {
 
 	// >SEPARATOR customPost default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -102,7 +131,7 @@ func SnippetForCustomPutOfRecommend() {
 
 	// >SEPARATOR customPut default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -131,7 +160,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 
 	// >SEPARATOR deleteRecommendRule default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -160,7 +189,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 
 	// >SEPARATOR getRecommendRule default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -189,7 +218,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 
 	// >SEPARATOR getRecommendStatus default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -218,7 +247,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 
 	// >SEPARATOR getRecommendations default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -250,7 +279,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 
 	// >SEPARATOR searchRecommendRules default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -279,7 +308,7 @@ func SnippetForSetClientApiKeyOfRecommend() {
 
 	// >SEPARATOR setClientApiKey default
 	// Initialize the client
-	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

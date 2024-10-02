@@ -14,7 +14,7 @@ class SnippetPersonalizationClient {
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -28,7 +28,7 @@ class SnippetPersonalizationClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customGet("test/minimal");
@@ -42,7 +42,7 @@ class SnippetPersonalizationClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPost("test/minimal");
@@ -56,7 +56,7 @@ class SnippetPersonalizationClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPut("test/minimal");
@@ -70,7 +70,7 @@ class SnippetPersonalizationClient {
   void snippetForDeleteUserProfile() {
     // >SEPARATOR deleteUserProfile default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.deleteUserProfile("UserToken");
@@ -84,7 +84,7 @@ class SnippetPersonalizationClient {
   void snippetForGetPersonalizationStrategy() {
     // >SEPARATOR getPersonalizationStrategy default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getPersonalizationStrategy();
@@ -98,7 +98,7 @@ class SnippetPersonalizationClient {
   void snippetForGetUserTokenProfile() {
     // >SEPARATOR getUserTokenProfile default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getUserTokenProfile("UserToken");
@@ -112,7 +112,7 @@ class SnippetPersonalizationClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.setClientApiKey("updated-api-key");
@@ -126,7 +126,7 @@ class SnippetPersonalizationClient {
   void snippetForSetPersonalizationStrategy() {
     // >SEPARATOR setPersonalizationStrategy default
     // Initialize the client
-    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    PersonalizationClient client = new PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.setPersonalizationStrategy(

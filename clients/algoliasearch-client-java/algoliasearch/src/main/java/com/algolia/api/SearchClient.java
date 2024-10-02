@@ -49,9 +49,9 @@ public class SearchClient extends ApiClient {
     hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
 
     List<Host> commonHosts = new ArrayList<>();
-    hosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-1.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-2.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-3.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
 
     Collections.shuffle(commonHosts, new Random());
 
@@ -2014,7 +2014,8 @@ public class SearchClient extends ApiClient {
   /**
    * Gets the permissions and restrictions of an API key. When authenticating with the admin API
    * key, you can request information for any of your application's keys. When authenticating with
-   * other API keys, you can only retrieve information for that key.
+   * other API keys, you can only retrieve information for that key, with the description replaced
+   * by `<redacted>`.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2028,7 +2029,8 @@ public class SearchClient extends ApiClient {
   /**
    * Gets the permissions and restrictions of an API key. When authenticating with the admin API
    * key, you can request information for any of your application's keys. When authenticating with
-   * other API keys, you can only retrieve information for that key.
+   * other API keys, you can only retrieve information for that key, with the description replaced
+   * by `<redacted>`.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2040,7 +2042,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Gets the permissions and restrictions of an API key. When authenticating with
    * the admin API key, you can request information for any of your application's keys. When
-   * authenticating with other API keys, you can only retrieve information for that key.
+   * authenticating with other API keys, you can only retrieve information for that key, with the
+   * description replaced by `<redacted>`.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2059,7 +2062,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Gets the permissions and restrictions of an API key. When authenticating with
    * the admin API key, you can request information for any of your application's keys. When
-   * authenticating with other API keys, you can only retrieve information for that key.
+   * authenticating with other API keys, you can only retrieve information for that key, with the
+   * description replaced by `<redacted>`.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

@@ -20,7 +20,7 @@ class SnippetInsightsClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -42,7 +42,7 @@ class SnippetInsightsClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -64,7 +64,7 @@ class SnippetInsightsClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -86,7 +86,7 @@ class SnippetInsightsClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -108,7 +108,7 @@ class SnippetInsightsClient
     {
         // >SEPARATOR deleteUserToken default
         // Initialize the client
-        $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $client->deleteUserToken(
@@ -128,7 +128,7 @@ class SnippetInsightsClient
     {
         // >SEPARATOR pushEvents default
         // Initialize the client
-        $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->pushEvents(
@@ -170,7 +170,7 @@ class SnippetInsightsClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $client->setClientApiKey(

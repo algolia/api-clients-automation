@@ -18,16 +18,20 @@ else:
 
 class AuthenticationSortKeys(str, Enum):
     """
-    Property by which to sort the list of authentication resources.
+    Property by which to sort the list of authentications.
     """
 
     """
     allowed enum values
     """
     NAME = "name"
-    AUTH_TYPE = "auth_type"
+
+    TYPE = "type"
+
     PLATFORM = "platform"
+
     UPDATEDAT = "updatedAt"
+
     CREATEDAT = "createdAt"
 
     @classmethod

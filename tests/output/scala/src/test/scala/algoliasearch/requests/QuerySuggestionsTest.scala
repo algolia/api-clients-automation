@@ -290,7 +290,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -310,7 +310,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -327,7 +327,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -347,7 +347,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))

@@ -1,4 +1,6 @@
 // {{generationBanner}}
+import { describe, test, expect } from 'vitest';
+
 import { {{client}} } from '{{{import}}}';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
@@ -30,7 +32,3 @@ describe('{{operationId}}', () => {
 })
 
 {{/blocksRequests}}
-
-{{#isSearchClient}}
-{{> tests/requests/helpers}}
-{{/isSearchClient}}

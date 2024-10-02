@@ -12,7 +12,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = FallbackParams(
-          query: $checkedConvert('query', (v) => v as String?),
           similarQuery: $checkedConvert('similarQuery', (v) => v as String?),
           filters: $checkedConvert('filters', (v) => v as String?),
           facetFilters: $checkedConvert('facetFilters', (v) => v),
@@ -28,9 +27,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           facetingAfterDistinct:
               $checkedConvert('facetingAfterDistinct', (v) => v as bool?),
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
-          offset: $checkedConvert('offset', (v) => (v as num?)?.toInt()),
-          length: $checkedConvert('length', (v) => (v as num?)?.toInt()),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundLatLngViaIP:
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
@@ -71,11 +67,53 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
           percentileComputation:
               $checkedConvert('percentileComputation', (v) => v as bool?),
           enableABTest: $checkedConvert('enableABTest', (v) => v as bool?),
+          query: $checkedConvert('query', (v) => v as String?),
+          attributesForFaceting: $checkedConvert('attributesForFaceting',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          replicas: $checkedConvert('replicas',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          paginationLimitedTo: $checkedConvert(
+              'paginationLimitedTo', (v) => (v as num?)?.toInt()),
+          unretrievableAttributes: $checkedConvert('unretrievableAttributes',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          disableTypoToleranceOnWords: $checkedConvert(
+              'disableTypoToleranceOnWords',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          attributesToTransliterate: $checkedConvert(
+              'attributesToTransliterate',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          camelCaseAttributes: $checkedConvert('camelCaseAttributes',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          decompoundedAttributes:
+              $checkedConvert('decompoundedAttributes', (v) => v),
+          indexLanguages: $checkedConvert(
+              'indexLanguages',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
+                  .toList()),
+          disablePrefixOnAttributes: $checkedConvert(
+              'disablePrefixOnAttributes',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          allowCompressionOfIntegerArray: $checkedConvert(
+              'allowCompressionOfIntegerArray', (v) => v as bool?),
+          numericAttributesForFiltering: $checkedConvert(
+              'numericAttributesForFiltering',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          separatorsToIndex:
+              $checkedConvert('separatorsToIndex', (v) => v as String?),
+          searchableAttributes: $checkedConvert('searchableAttributes',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          userData: $checkedConvert('userData', (v) => v),
+          customNormalization: $checkedConvert(
+              'customNormalization',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
+                  )),
+          attributeForDistinct:
+              $checkedConvert('attributeForDistinct', (v) => v as String?),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          customRanking: $checkedConvert('customRanking',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           relevancyStrictness: $checkedConvert(
               'relevancyStrictness', (v) => (v as num?)?.toInt()),
@@ -91,8 +129,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('snippetEllipsisText', (v) => v as String?),
           restrictHighlightAndSnippetArrays: $checkedConvert(
               'restrictHighlightAndSnippetArrays', (v) => v as bool?),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           minWordSizefor1Typo: $checkedConvert(
               'minWordSizefor1Typo', (v) => (v as num?)?.toInt()),
           minWordSizefor2Typos: $checkedConvert(
@@ -105,8 +141,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ignorePlurals: $checkedConvert('ignorePlurals', (v) => v),
           removeStopWords: $checkedConvert('removeStopWords', (v) => v),
-          keepDiacriticsOnCharacters: $checkedConvert(
-              'keepDiacriticsOnCharacters', (v) => v as String?),
           queryLanguages: $checkedConvert(
               'queryLanguages',
               (v) => (v as List<dynamic>?)
@@ -121,13 +155,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               'queryType', (v) => $enumDecodeNullable(_$QueryTypeEnumMap, v)),
           removeWordsIfNoResults: $checkedConvert('removeWordsIfNoResults',
               (v) => $enumDecodeNullable(_$RemoveWordsIfNoResultsEnumMap, v)),
-          mode: $checkedConvert(
-              'mode', (v) => $enumDecodeNullable(_$ModeEnumMap, v)),
-          semanticSearch: $checkedConvert(
-              'semanticSearch',
-              (v) => v == null
-                  ? null
-                  : SemanticSearch.fromJson(v as Map<String, dynamic>)),
           advancedSyntax: $checkedConvert('advancedSyntax', (v) => v as bool?),
           optionalWords: $checkedConvert('optionalWords',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
@@ -183,7 +210,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
     }
   }
 
-  writeNotNull('query', instance.query);
   writeNotNull('similarQuery', instance.similarQuery);
   writeNotNull('filters', instance.filters);
   writeNotNull('facetFilters', instance.facetFilters);
@@ -195,9 +221,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
       'restrictSearchableAttributes', instance.restrictSearchableAttributes);
   writeNotNull('facets', instance.facets);
   writeNotNull('facetingAfterDistinct', instance.facetingAfterDistinct);
-  writeNotNull('page', instance.page);
-  writeNotNull('offset', instance.offset);
-  writeNotNull('length', instance.length);
   writeNotNull('aroundLatLng', instance.aroundLatLng);
   writeNotNull('aroundLatLngViaIP', instance.aroundLatLngViaIP);
   writeNotNull('aroundRadius', instance.aroundRadius);
@@ -217,9 +240,30 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
   writeNotNull('analyticsTags', instance.analyticsTags);
   writeNotNull('percentileComputation', instance.percentileComputation);
   writeNotNull('enableABTest', instance.enableABTest);
+  writeNotNull('query', instance.query);
+  writeNotNull('attributesForFaceting', instance.attributesForFaceting);
+  writeNotNull('replicas', instance.replicas);
+  writeNotNull('paginationLimitedTo', instance.paginationLimitedTo);
+  writeNotNull('unretrievableAttributes', instance.unretrievableAttributes);
+  writeNotNull(
+      'disableTypoToleranceOnWords', instance.disableTypoToleranceOnWords);
+  writeNotNull('attributesToTransliterate', instance.attributesToTransliterate);
+  writeNotNull('camelCaseAttributes', instance.camelCaseAttributes);
+  writeNotNull('decompoundedAttributes', instance.decompoundedAttributes);
+  writeNotNull('indexLanguages',
+      instance.indexLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('disablePrefixOnAttributes', instance.disablePrefixOnAttributes);
+  writeNotNull('allowCompressionOfIntegerArray',
+      instance.allowCompressionOfIntegerArray);
+  writeNotNull(
+      'numericAttributesForFiltering', instance.numericAttributesForFiltering);
+  writeNotNull('separatorsToIndex', instance.separatorsToIndex);
+  writeNotNull('searchableAttributes', instance.searchableAttributes);
+  writeNotNull('userData', instance.userData);
+  writeNotNull('customNormalization', instance.customNormalization);
+  writeNotNull('attributeForDistinct', instance.attributeForDistinct);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
   writeNotNull('ranking', instance.ranking);
-  writeNotNull('customRanking', instance.customRanking);
   writeNotNull('relevancyStrictness', instance.relevancyStrictness);
   writeNotNull('attributesToHighlight', instance.attributesToHighlight);
   writeNotNull('attributesToSnippet', instance.attributesToSnippet);
@@ -228,7 +272,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
   writeNotNull('snippetEllipsisText', instance.snippetEllipsisText);
   writeNotNull('restrictHighlightAndSnippetArrays',
       instance.restrictHighlightAndSnippetArrays);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
   writeNotNull('minWordSizefor1Typo', instance.minWordSizefor1Typo);
   writeNotNull('minWordSizefor2Typos', instance.minWordSizefor2Typos);
   writeNotNull('typoTolerance', instance.typoTolerance);
@@ -237,8 +280,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
       instance.disableTypoToleranceOnAttributes);
   writeNotNull('ignorePlurals', instance.ignorePlurals);
   writeNotNull('removeStopWords', instance.removeStopWords);
-  writeNotNull(
-      'keepDiacriticsOnCharacters', instance.keepDiacriticsOnCharacters);
   writeNotNull('queryLanguages',
       instance.queryLanguages?.map((e) => e.toJson()).toList());
   writeNotNull('decompoundQuery', instance.decompoundQuery);
@@ -247,8 +288,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
   writeNotNull('queryType', instance.queryType?.toJson());
   writeNotNull(
       'removeWordsIfNoResults', instance.removeWordsIfNoResults?.toJson());
-  writeNotNull('mode', instance.mode?.toJson());
-  writeNotNull('semanticSearch', instance.semanticSearch?.toJson());
   writeNotNull('advancedSyntax', instance.advancedSyntax);
   writeNotNull('optionalWords', instance.optionalWords);
   writeNotNull('disableExactOnAttributes', instance.disableExactOnAttributes);
@@ -356,11 +395,6 @@ const _$RemoveWordsIfNoResultsEnumMap = {
   RemoveWordsIfNoResults.lastWords: 'lastWords',
   RemoveWordsIfNoResults.firstWords: 'firstWords',
   RemoveWordsIfNoResults.allOptional: 'allOptional',
-};
-
-const _$ModeEnumMap = {
-  Mode.neuralSearch: 'neuralSearch',
-  Mode.keywordSearch: 'keywordSearch',
 };
 
 const _$ExactOnSingleWordQueryEnumMap = {

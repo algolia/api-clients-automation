@@ -4,7 +4,7 @@
     {
       {{#customHosts}}new () {
         Scheme = HttpScheme.Http,
-        Url = "{{host}}",
+        Url = Environment.GetEnvironmentVariable("CI") == "true" ? "localhost" : "host.docker.internal",
         Port = {{port}},
         Up = true,
         LastUse = DateTime.UtcNow,

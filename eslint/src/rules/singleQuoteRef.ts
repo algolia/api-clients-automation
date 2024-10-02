@@ -1,19 +1,24 @@
-import type { Rule } from 'eslint';
+import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isBlockScalar, isPairWithKey, isScalar } from '../utils';
+import { isBlockScalar, isPairWithKey, isScalar } from '../utils.js';
 
-export const singleQuoteRef: Rule.RuleModule = {
+export const singleQuoteRef = createRule('singleQuoteRef', {
   meta: {
     docs: {
       description: '$ref must be wrapped in single quote',
+      categories: null,
+      extensionRule: false,
+      layout: false,
     },
     messages: {
       refNoQuote: '$ref is not wrapped in single quote',
     },
     fixable: 'code',
+    type: 'layout',
+    schema: [],
   },
   create(context) {
-    if (!context.sourceCode.parserServices.isYAML) {
+    if (!context.getSourceCode().parserServices.isYAML) {
       return {};
     }
 
@@ -52,4 +57,4 @@ export const singleQuoteRef: Rule.RuleModule = {
       },
     };
   },
-};
+});

@@ -1,3 +1,22 @@
+## [4.5.0](https://github.com/algolia/algoliasearch-client-php/compare/4.4.4...4.5.0)
+
+- [788483537](https://github.com/algolia/api-clients-automation/commit/788483537) chore(clients): add workflow to auto-close PR ([#3834](https://github.com/algolia/api-clients-automation/pull/3834)) by [@shortcuts](https://github.com/shortcuts/)
+- [e59dd41d5](https://github.com/algolia/api-clients-automation/commit/e59dd41d5) fix(specs): API key description will be obfuscated ([#3840](https://github.com/algolia/api-clients-automation/pull/3840)) by [@kai687](https://github.com/kai687/)
+- [dc28c0268](https://github.com/algolia/api-clients-automation/commit/dc28c0268) feat(specs): add recommend batch rules endpoint ([#3782](https://github.com/algolia/api-clients-automation/pull/3782)) by [@raed667](https://github.com/raed667/)
+
+## [4.4.4](https://github.com/algolia/algoliasearch-client-php/compare/4.4.3...4.4.4)
+
+- [022131871](https://github.com/algolia/api-clients-automation/commit/022131871) fix(specs): correct query params for ingestion [skip-bc] ([#3830](https://github.com/algolia/api-clients-automation/pull/3830)) by [@millotp](https://github.com/millotp/)
+
+## [4.4.3](https://github.com/algolia/algoliasearch-client-php/compare/4.4.2...4.4.3)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+- [92438873c](https://github.com/algolia/api-clients-automation/commit/92438873c) fix(specs): remove models from ingestion specs [skip-bc] ([#3774](https://github.com/algolia/api-clients-automation/pull/3774)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.4.2](https://github.com/algolia/algoliasearch-client-php/compare/4.4.1...4.4.2)
+
+- [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.4.1](https://github.com/algolia/algoliasearch-client-php/compare/4.4.0...4.4.1)
 
 - [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)

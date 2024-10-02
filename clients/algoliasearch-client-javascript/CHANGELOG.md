@@ -1,3 +1,46 @@
+## [5.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.6.1...5.7.0)
+
+- [788483537](https://github.com/algolia/api-clients-automation/commit/788483537) chore(clients): add workflow to auto-close PR ([#3834](https://github.com/algolia/api-clients-automation/pull/3834)) by [@shortcuts](https://github.com/shortcuts/)
+- [e59dd41d5](https://github.com/algolia/api-clients-automation/commit/e59dd41d5) fix(specs): API key description will be obfuscated ([#3840](https://github.com/algolia/api-clients-automation/pull/3840)) by [@kai687](https://github.com/kai687/)
+- [dc28c0268](https://github.com/algolia/api-clients-automation/commit/dc28c0268) feat(specs): add recommend batch rules endpoint ([#3782](https://github.com/algolia/api-clients-automation/pull/3782)) by [@raed667](https://github.com/raed667/)
+- [6f58ae2dc](https://github.com/algolia/api-clients-automation/commit/6f58ae2dc) chore(deps): dependencies 2024-09-30 ([#3842](https://github.com/algolia/api-clients-automation/pull/3842)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [5.6.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.6.0...5.6.1)
+
+- [847ce7753](https://github.com/algolia/api-clients-automation/commit/847ce7753) chore(javascript): update READMEs ([#3829](https://github.com/algolia/api-clients-automation/pull/3829)) by [@shortcuts](https://github.com/shortcuts/)
+- [022131871](https://github.com/algolia/api-clients-automation/commit/022131871) fix(specs): correct query params for ingestion [skip-bc] ([#3830](https://github.com/algolia/api-clients-automation/pull/3830)) by [@millotp](https://github.com/millotp/)
+
+## [5.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.3...5.6.0)
+
+- [1939114e1](https://github.com/algolia/api-clients-automation/commit/1939114e1) chore(deps): dependencies 2024-09-23 ([#3790](https://github.com/algolia/api-clients-automation/pull/3790)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [db4cf48c5](https://github.com/algolia/api-clients-automation/commit/db4cf48c5) feat(javascript): add logger-console package from v4 ([#3823](https://github.com/algolia/api-clients-automation/pull/3823)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.5.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.2...5.5.3)
+
+- [b187a09df](https://github.com/algolia/api-clients-automation/commit/b187a09df) fix(javascript): add override to name property ([#3785](https://github.com/algolia/api-clients-automation/pull/3785)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.5.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.1...5.5.2)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+- [92438873c](https://github.com/algolia/api-clients-automation/commit/92438873c) fix(specs): remove models from ingestion specs [skip-bc] ([#3774](https://github.com/algolia/api-clients-automation/pull/3774)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.0...5.5.1)
+
+- [901076592](https://github.com/algolia/api-clients-automation/commit/901076592) fix(javascript): react-native lite resolution ([#3771](https://github.com/algolia/api-clients-automation/pull/3771)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.5.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.3...5.5.0)
+
+- [d67c0e0e6](https://github.com/algolia/api-clients-automation/commit/d67c0e0e6) feat(javascript): add react-native field in package.json ([#3767](https://github.com/algolia/api-clients-automation/pull/3767)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.4.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.2...5.4.3)
+
+- [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
+- [08d8ee6de](https://github.com/algolia/api-clients-automation/commit/08d8ee6de) chore(deps): dependencies 2024-09-16 [skip-bc] ([#3704](https://github.com/algolia/api-clients-automation/pull/3704)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [5.4.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.1...5.4.2)
+
+- [274fae19b](https://github.com/algolia/api-clients-automation/commit/274fae19b) fix(javascript): umd export name ([#3701](https://github.com/algolia/api-clients-automation/pull/3701)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.4.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.0...5.4.1)
 
 - [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)

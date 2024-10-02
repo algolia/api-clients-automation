@@ -2682,139 +2682,6 @@ func (c *APIClient) EnableTaskV1(r ApiEnableTaskV1Request, opts ...RequestOption
 	return returnValue, nil
 }
 
-func (r *ApiGenerateTransformationCodeRequest) UnmarshalJSON(b []byte) error {
-	req := map[string]json.RawMessage{}
-	err := json.Unmarshal(b, &req)
-	if err != nil {
-		return fmt.Errorf("cannot unmarshal request: %w", err)
-	}
-	if v, ok := req["generateTransformationCodePayload"]; ok {
-		err = json.Unmarshal(v, &r.generateTransformationCodePayload)
-		if err != nil {
-			err = json.Unmarshal(b, &r.generateTransformationCodePayload)
-			if err != nil {
-				return fmt.Errorf("cannot unmarshal generateTransformationCodePayload: %w", err)
-			}
-		}
-	} else {
-		err = json.Unmarshal(b, &r.generateTransformationCodePayload)
-		if err != nil {
-			return fmt.Errorf("cannot unmarshal body parameter generateTransformationCodePayload: %w", err)
-		}
-	}
-
-	return nil
-}
-
-// ApiGenerateTransformationCodeRequest represents the request with all the parameters for the API call.
-type ApiGenerateTransformationCodeRequest struct {
-	generateTransformationCodePayload *GenerateTransformationCodePayload
-}
-
-// NewApiGenerateTransformationCodeRequest creates an instance of the ApiGenerateTransformationCodeRequest to be used for the API call.
-func (c *APIClient) NewApiGenerateTransformationCodeRequest(generateTransformationCodePayload *GenerateTransformationCodePayload) ApiGenerateTransformationCodeRequest {
-	return ApiGenerateTransformationCodeRequest{
-		generateTransformationCodePayload: generateTransformationCodePayload,
-	}
-}
-
-/*
-GenerateTransformationCode calls the API and returns the raw response from it.
-
-	  Generates code for the selected model based on the given prompt.
-
-	    Required API Key ACLs:
-	    - addObject
-	    - deleteIndex
-	    - editSettings
-
-	Request can be constructed by NewApiGenerateTransformationCodeRequest with parameters below.
-	  @param generateTransformationCodePayload GenerateTransformationCodePayload
-	@param opts ...RequestOption - Optional parameters for the API call
-	@return *http.Response - The raw response from the API
-	@return []byte - The raw response body from the API
-	@return error - An error if the API call fails
-*/
-func (c *APIClient) GenerateTransformationCodeWithHTTPInfo(r ApiGenerateTransformationCodeRequest, opts ...RequestOption) (*http.Response, []byte, error) {
-	requestPath := "/1/transformations/models"
-
-	if r.generateTransformationCodePayload == nil {
-		return nil, nil, reportError("Parameter `generateTransformationCodePayload` is required when calling `GenerateTransformationCode`.")
-	}
-
-	conf := config{
-		context:      context.Background(),
-		queryParams:  url.Values{},
-		headerParams: map[string]string{},
-	}
-
-	// optional params if any
-	for _, opt := range opts {
-		opt.apply(&conf)
-	}
-
-	var postBody any
-
-	// body params
-	postBody = r.generateTransformationCodePayload
-	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return c.callAPI(req, false)
-}
-
-/*
-GenerateTransformationCode casts the HTTP response body to a defined struct.
-
-Generates code for the selected model based on the given prompt.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGenerateTransformationCodeRequest with parameters below.
-
-	@param generateTransformationCodePayload GenerateTransformationCodePayload
-	@return GenerateTransformationCodeResponse
-*/
-func (c *APIClient) GenerateTransformationCode(r ApiGenerateTransformationCodeRequest, opts ...RequestOption) (*GenerateTransformationCodeResponse, error) {
-	var returnValue *GenerateTransformationCodeResponse
-
-	res, resBody, err := c.GenerateTransformationCodeWithHTTPInfo(r, opts...)
-	if err != nil {
-		return returnValue, err
-	}
-	if res == nil {
-		return returnValue, reportError("res is nil")
-	}
-
-	if res.StatusCode >= 300 {
-		newErr := &APIError{
-			Message: string(resBody),
-			Status:  res.StatusCode,
-		}
-
-		var v ErrorBase
-		err = c.decode(&v, resBody)
-		if err != nil {
-			newErr.Message = err.Error()
-			return returnValue, newErr
-		}
-
-		return returnValue, newErr
-	}
-
-	err = c.decode(&returnValue, resBody)
-	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
-	}
-
-	return returnValue, nil
-}
-
 func (r *ApiGetAuthenticationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
@@ -3977,8 +3844,8 @@ ListAuthentications calls the API and returns the raw response from it.
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
 	  @param type_ []AuthenticationType - Type of authentication resource to retrieve.
-	  @param platform []PlatformWithNone - Ecommerce platform for which to retrieve authentication resources.
-	  @param sort AuthenticationSortKeys - Property by which to sort the list of authentication resources.
+	  @param platform []PlatformWithNone - Ecommerce platform for which to retrieve authentications.
+	  @param sort AuthenticationSortKeys - Property by which to sort the list of authentications.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
@@ -4043,8 +3910,8 @@ Request can be constructed by NewApiListAuthenticationsRequest with parameters b
 	@param itemsPerPage int32 - Number of items per page.
 	@param page int32 - Page number of the paginated API response.
 	@param type_ []AuthenticationType - Type of authentication resource to retrieve.
-	@param platform []PlatformWithNone - Ecommerce platform for which to retrieve authentication resources.
-	@param sort AuthenticationSortKeys - Property by which to sort the list of authentication resources.
+	@param platform []PlatformWithNone - Ecommerce platform for which to retrieve authentications.
+	@param sort AuthenticationSortKeys - Property by which to sort the list of authentications.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListAuthenticationsResponse
 */
@@ -4125,6 +3992,15 @@ func (r *ApiListDestinationsRequest) UnmarshalJSON(b []byte) error {
 			}
 		}
 	}
+	if v, ok := req["transformationID"]; ok {
+		err = json.Unmarshal(v, &r.transformationID)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationID)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationID: %w", err)
+			}
+		}
+	}
 	if v, ok := req["sort"]; ok {
 		err = json.Unmarshal(v, &r.sort)
 		if err != nil {
@@ -4153,6 +4029,7 @@ type ApiListDestinationsRequest struct {
 	page             *int32
 	type_            []DestinationType
 	authenticationID []string
+	transformationID *string
 	sort             DestinationSortKeys
 	order            OrderKeys
 }
@@ -4186,6 +4063,12 @@ func (r ApiListDestinationsRequest) WithAuthenticationID(authenticationID []stri
 	return r
 }
 
+// WithTransformationID adds the transformationID to the ApiListDestinationsRequest and returns the request for chaining.
+func (r ApiListDestinationsRequest) WithTransformationID(transformationID string) ApiListDestinationsRequest {
+	r.transformationID = &transformationID
+	return r
+}
+
 // WithSort adds the sort to the ApiListDestinationsRequest and returns the request for chaining.
 func (r ApiListDestinationsRequest) WithSort(sort DestinationSortKeys) ApiListDestinationsRequest {
 	r.sort = sort
@@ -4213,6 +4096,7 @@ ListDestinations calls the API and returns the raw response from it.
 	  @param page int32 - Page number of the paginated API response.
 	  @param type_ []DestinationType - Destination type.
 	  @param authenticationID []string - Authentication ID used by destinations.
+	  @param transformationID string - Get the list of destinations used by a transformation.
 	  @param sort DestinationSortKeys - Property by which to sort the destinations.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	@param opts ...RequestOption - Optional parameters for the API call
@@ -4240,6 +4124,9 @@ func (c *APIClient) ListDestinationsWithHTTPInfo(r ApiListDestinationsRequest, o
 	}
 	if !utils.IsNilOrEmpty(r.authenticationID) {
 		conf.queryParams.Set("authenticationID", utils.QueryParameterToString(r.authenticationID))
+	}
+	if !utils.IsNilOrEmpty(r.transformationID) {
+		conf.queryParams.Set("transformationID", utils.QueryParameterToString(*r.transformationID))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
 		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
@@ -4279,6 +4166,7 @@ Request can be constructed by NewApiListDestinationsRequest with parameters belo
 	@param page int32 - Page number of the paginated API response.
 	@param type_ []DestinationType - Destination type.
 	@param authenticationID []string - Authentication ID used by destinations.
+	@param transformationID string - Get the list of destinations used by a transformation.
 	@param sort DestinationSortKeys - Property by which to sort the destinations.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListDestinationsResponse
@@ -5041,7 +4929,7 @@ ListSources calls the API and returns the raw response from it.
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
 	  @param type_ []SourceType - Source type. Some sources require authentication.
-	  @param authenticationID []string - Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+	  @param authenticationID []string - Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
 	  @param sort SourceSortKeys - Property by which to sort the list of sources.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	@param opts ...RequestOption - Optional parameters for the API call
@@ -5107,7 +4995,7 @@ Request can be constructed by NewApiListSourcesRequest with parameters below.
 	@param itemsPerPage int32 - Number of items per page.
 	@param page int32 - Page number of the paginated API response.
 	@param type_ []SourceType - Source type. Some sources require authentication.
-	@param authenticationID []string - Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+	@param authenticationID []string - Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
 	@param sort SourceSortKeys - Property by which to sort the list of sources.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListSourcesResponse
@@ -5743,95 +5631,6 @@ func (c *APIClient) ListTasksV1(r ApiListTasksV1Request, opts ...RequestOption) 
 	return returnValue, nil
 }
 
-/*
-ListTransformationModels calls the API and returns the raw response from it.
-
-	  Retrieves a list of existing LLM transformation helpers.
-
-	    Required API Key ACLs:
-	    - addObject
-	    - deleteIndex
-	    - editSettings
-
-	Request can be constructed by NewApiListTransformationModelsRequest with parameters below.
-	@param opts ...RequestOption - Optional parameters for the API call
-	@return *http.Response - The raw response from the API
-	@return []byte - The raw response body from the API
-	@return error - An error if the API call fails
-*/
-func (c *APIClient) ListTransformationModelsWithHTTPInfo(opts ...RequestOption) (*http.Response, []byte, error) {
-	requestPath := "/1/transformations/models"
-
-	conf := config{
-		context:      context.Background(),
-		queryParams:  url.Values{},
-		headerParams: map[string]string{},
-	}
-
-	// optional params if any
-	for _, opt := range opts {
-		opt.apply(&conf)
-	}
-
-	var postBody any
-
-	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return c.callAPI(req, false)
-}
-
-/*
-ListTransformationModels casts the HTTP response body to a defined struct.
-
-Retrieves a list of existing LLM transformation helpers.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiListTransformationModelsRequest with parameters below.
-
-	@return TransformationModels
-*/
-func (c *APIClient) ListTransformationModels(opts ...RequestOption) (*TransformationModels, error) {
-	var returnValue *TransformationModels
-
-	res, resBody, err := c.ListTransformationModelsWithHTTPInfo(opts...)
-	if err != nil {
-		return returnValue, err
-	}
-	if res == nil {
-		return returnValue, reportError("res is nil")
-	}
-
-	if res.StatusCode >= 300 {
-		newErr := &APIError{
-			Message: string(resBody),
-			Status:  res.StatusCode,
-		}
-
-		var v ErrorBase
-		err = c.decode(&v, resBody)
-		if err != nil {
-			newErr.Message = err.Error()
-			return returnValue, newErr
-		}
-
-		return returnValue, newErr
-	}
-
-	err = c.decode(&returnValue, resBody)
-	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
-	}
-
-	return returnValue, nil
-}
-
 func (r *ApiListTransformationsRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
@@ -5882,7 +5681,7 @@ func (r *ApiListTransformationsRequest) UnmarshalJSON(b []byte) error {
 type ApiListTransformationsRequest struct {
 	itemsPerPage *int32
 	page         *int32
-	sort         SortKeys
+	sort         TransformationSortKeys
 	order        OrderKeys
 }
 
@@ -5904,7 +5703,7 @@ func (r ApiListTransformationsRequest) WithPage(page int32) ApiListTransformatio
 }
 
 // WithSort adds the sort to the ApiListTransformationsRequest and returns the request for chaining.
-func (r ApiListTransformationsRequest) WithSort(sort SortKeys) ApiListTransformationsRequest {
+func (r ApiListTransformationsRequest) WithSort(sort TransformationSortKeys) ApiListTransformationsRequest {
 	r.sort = sort
 	return r
 }
@@ -5928,7 +5727,7 @@ ListTransformations calls the API and returns the raw response from it.
 	Request can be constructed by NewApiListTransformationsRequest with parameters below.
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
-	  @param sort SortKeys - Property by which to sort the list.
+	  @param sort TransformationSortKeys - Property by which to sort the list of transformations.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
@@ -5986,7 +5785,7 @@ Request can be constructed by NewApiListTransformationsRequest with parameters b
 
 	@param itemsPerPage int32 - Number of items per page.
 	@param page int32 - Page number of the paginated API response.
-	@param sort SortKeys - Property by which to sort the list.
+	@param sort TransformationSortKeys - Property by which to sort the list of transformations.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListTransformationsResponse
 */

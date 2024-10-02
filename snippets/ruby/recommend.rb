@@ -4,13 +4,33 @@ require "algolia"
 
 # IMPORT<
 
+# Snippet for the batchRecommendRules method.
+#
+# batch recommend rules
+def snippet_for_batch_recommend_rules
+  # >SEPARATOR batchRecommendRules default
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.batch_recommend_rules("<YOUR_INDEX_NAME>", "related-products")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customDelete method.
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -30,7 +50,7 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -50,7 +70,7 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -70,7 +90,7 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -90,7 +110,7 @@ end
 def snippet_for_delete_recommend_rule
   # >SEPARATOR deleteRecommendRule default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_recommend_rule("<YOUR_INDEX_NAME>", "related-products", "objectID")
@@ -110,7 +130,7 @@ end
 def snippet_for_get_recommend_rule
   # >SEPARATOR getRecommendRule default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_recommend_rule("<YOUR_INDEX_NAME>", "related-products", "objectID")
@@ -130,7 +150,7 @@ end
 def snippet_for_get_recommend_status
   # >SEPARATOR getRecommendStatus default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_recommend_status("<YOUR_INDEX_NAME>", "related-products", 12345)
@@ -150,7 +170,7 @@ end
 def snippet_for_get_recommendations
   # >SEPARATOR getRecommendations default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_recommendations(
@@ -181,7 +201,7 @@ end
 def snippet_for_search_recommend_rules
   # >SEPARATOR searchRecommendRules default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_recommend_rules("<YOUR_INDEX_NAME>", "related-products")
@@ -201,7 +221,7 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   client.set_client_api_key("updated-api-key")

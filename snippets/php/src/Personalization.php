@@ -20,7 +20,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -42,7 +42,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -64,7 +64,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -86,7 +86,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -108,7 +108,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR deleteUserProfile default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteUserProfile(
@@ -130,7 +130,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR getPersonalizationStrategy default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getPersonalizationStrategy();
@@ -150,7 +150,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR getUserTokenProfile default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getUserTokenProfile(
@@ -172,7 +172,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $client->setClientApiKey(
@@ -192,7 +192,7 @@ class SnippetPersonalizationClient
     {
         // >SEPARATOR setPersonalizationStrategy default
         // Initialize the client
-        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->setPersonalizationStrategy(

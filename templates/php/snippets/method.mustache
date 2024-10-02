@@ -21,7 +21,7 @@ class Snippet{{client}}
     {
         // >SEPARATOR {{method}} {{testName}}
         // Initialize the client
-        $client = {{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
+        $client = {{client}}::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY'{{#hasRegionalHost}}, 'ALGOLIA_APPLICATION_REGION'{{/hasRegionalHost}});
 
         // Call the API
         {{#hasResponse}}$response = {{/hasResponse}}{{> tests/method}};

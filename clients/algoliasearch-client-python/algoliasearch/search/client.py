@@ -18,11 +18,12 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictBool, StrictInt, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.exceptions import RequestException, ValidUntilNotFoundException
@@ -171,9 +172,10 @@ class SearchClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: SearchConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: SearchConfig, transporter: Optional[Transporter] = None
+    ) -> SearchClient:
         """Allows creating a client with a customized `SearchConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -197,7 +199,7 @@ class SearchClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -236,7 +238,7 @@ class SearchClient:
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
+            error_validate=lambda _: self._retry_count >= max_retries,
             error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
         )
 
@@ -263,7 +265,7 @@ class SearchClient:
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
+            error_validate=lambda _: self._retry_count >= max_retries,
             error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
         )
 
@@ -418,7 +420,9 @@ class SearchClient:
     async def generate_secured_api_key(
         self,
         parent_api_key: str,
-        restrictions: Optional[SecuredApiKeyRestrictions] = SecuredApiKeyRestrictions(),
+        restrictions: Optional[
+            Union[dict, SecuredApiKeyRestrictions]
+        ] = SecuredApiKeyRestrictions(),
     ) -> str:
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
@@ -468,18 +472,23 @@ class SearchClient:
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return await self.chunked_batch(
-            index_name=index_name, objects=objects, action=Action.ADDOBJECT
+            index_name=index_name,
+            objects=objects,
+            action=Action.ADDOBJECT,
+            request_options=request_options,
         )
 
     async def delete_objects(
         self,
         index_name: str,
         object_ids: List[str],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -488,6 +497,7 @@ class SearchClient:
             index_name=index_name,
             objects=[{"objectID": id} for id in object_ids],
             action=Action.DELETEOBJECT,
+            request_options=request_options,
         )
 
     async def partial_update_objects(
@@ -495,6 +505,7 @@ class SearchClient:
         index_name: str,
         objects: List[Dict[str, Any]],
         create_if_not_exists: Optional[bool] = False,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -505,6 +516,7 @@ class SearchClient:
             action=Action.PARTIALUPDATEOBJECT
             if create_if_not_exists
             else Action.PARTIALUPDATEOBJECTNOCREATE,
+            request_options=request_options,
         )
 
     async def chunked_batch(
@@ -670,9 +682,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (
-            await self.add_api_key_with_http_info(api_key, request_options)
-        ).deserialize(AddApiKeyResponse)
+        resp = await self.add_api_key_with_http_info(api_key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     async def add_or_update_object_with_http_info(
         self,
@@ -766,11 +777,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            await self.add_or_update_object_with_http_info(
-                index_name, object_id, body, request_options
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = await self.add_or_update_object_with_http_info(
+            index_name, object_id, body, request_options
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     async def append_source_with_http_info(
         self,
@@ -824,9 +834,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            await self.append_source_with_http_info(source, request_options)
-        ).deserialize(CreatedAtResponse)
+        resp = await self.append_source_with_http_info(source, request_options)
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     async def assign_user_id_with_http_info(
         self,
@@ -909,11 +918,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            await self.assign_user_id_with_http_info(
-                x_algolia_user_id, assign_user_id_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = await self.assign_user_id_with_http_info(
+            x_algolia_user_id, assign_user_id_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     async def batch_with_http_info(
         self,
@@ -980,11 +988,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BatchResponse' result object.
         """
-        return (
-            await self.batch_with_http_info(
-                index_name, batch_write_params, request_options
-            )
-        ).deserialize(BatchResponse)
+        resp = await self.batch_with_http_info(
+            index_name, batch_write_params, request_options
+        )
+        return resp.deserialize(BatchResponse, resp.raw_data)
 
     async def batch_assign_user_ids_with_http_info(
         self,
@@ -1067,11 +1074,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            await self.batch_assign_user_ids_with_http_info(
-                x_algolia_user_id, batch_assign_user_ids_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = await self.batch_assign_user_ids_with_http_info(
+            x_algolia_user_id, batch_assign_user_ids_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     async def batch_dictionary_entries_with_http_info(
         self,
@@ -1142,11 +1148,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.batch_dictionary_entries_with_http_info(
-                dictionary_name, batch_dictionary_entries_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.batch_dictionary_entries_with_http_info(
+            dictionary_name, batch_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def browse_with_http_info(
         self,
@@ -1214,9 +1219,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BrowseResponse' result object.
         """
-        return (
-            await self.browse_with_http_info(index_name, browse_params, request_options)
-        ).deserialize(BrowseResponse)
+        resp = await self.browse_with_http_info(
+            index_name, browse_params, request_options
+        )
+        return resp.deserialize(BrowseResponse, resp.raw_data)
 
     async def clear_objects_with_http_info(
         self,
@@ -1273,9 +1279,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.clear_objects_with_http_info(index_name, request_options)
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.clear_objects_with_http_info(index_name, request_options)
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def clear_rules_with_http_info(
         self,
@@ -1350,11 +1355,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.clear_rules_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.clear_rules_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def clear_synonyms_with_http_info(
         self,
@@ -1429,11 +1433,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.clear_synonyms_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.clear_synonyms_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def custom_delete_with_http_info(
         self,
@@ -1507,9 +1510,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -1581,9 +1585,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -1672,11 +1675,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -1765,11 +1767,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_api_key_with_http_info(
         self,
@@ -1818,9 +1819,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteApiKeyResponse' result object.
         """
-        return (
-            await self.delete_api_key_with_http_info(key, request_options)
-        ).deserialize(DeleteApiKeyResponse)
+        resp = await self.delete_api_key_with_http_info(key, request_options)
+        return resp.deserialize(DeleteApiKeyResponse, resp.raw_data)
 
     async def delete_by_with_http_info(
         self,
@@ -1893,11 +1893,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_by_with_http_info(
-                index_name, delete_by_params, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_by_with_http_info(
+            index_name, delete_by_params, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def delete_index_with_http_info(
         self,
@@ -1954,9 +1953,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_index_with_http_info(index_name, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_index_with_http_info(index_name, request_options)
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def delete_object_with_http_info(
         self,
@@ -2024,11 +2022,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_object_with_http_info(
-                index_name, object_id, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_object_with_http_info(
+            index_name, object_id, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def delete_rule_with_http_info(
         self,
@@ -2118,11 +2115,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.delete_rule_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.delete_rule_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def delete_source_with_http_info(
         self,
@@ -2177,9 +2173,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteSourceResponse' result object.
         """
-        return (
-            await self.delete_source_with_http_info(source, request_options)
-        ).deserialize(DeleteSourceResponse)
+        resp = await self.delete_source_with_http_info(source, request_options)
+        return resp.deserialize(DeleteSourceResponse, resp.raw_data)
 
     async def delete_synonym_with_http_info(
         self,
@@ -2269,11 +2264,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_synonym_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_synonym_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def get_api_key_with_http_info(
         self,
@@ -2281,7 +2275,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -2308,7 +2302,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetApiKeyResponse:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -2316,9 +2310,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetApiKeyResponse' result object.
         """
-        return (
-            await self.get_api_key_with_http_info(key, request_options)
-        ).deserialize(GetApiKeyResponse)
+        resp = await self.get_api_key_with_http_info(key, request_options)
+        return resp.deserialize(GetApiKeyResponse, resp.raw_data)
 
     async def get_app_task_with_http_info(
         self,
@@ -2367,9 +2360,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (
-            await self.get_app_task_with_http_info(task_id, request_options)
-        ).deserialize(GetTaskResponse)
+        resp = await self.get_app_task_with_http_info(task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     async def get_dictionary_languages_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -2405,9 +2397,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Dict[str, Languages]' result object.
         """
-        return (
-            await self.get_dictionary_languages_with_http_info(request_options)
-        ).deserialize(Dict[str, Languages])
+        resp = await self.get_dictionary_languages_with_http_info(request_options)
+        return resp.deserialize(Dict[str, Languages], resp.raw_data)
 
     async def get_dictionary_settings_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -2443,9 +2434,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetDictionarySettingsResponse' result object.
         """
-        return (
-            await self.get_dictionary_settings_with_http_info(request_options)
-        ).deserialize(GetDictionarySettingsResponse)
+        resp = await self.get_dictionary_settings_with_http_info(request_options)
+        return resp.deserialize(GetDictionarySettingsResponse, resp.raw_data)
 
     async def get_logs_with_http_info(
         self,
@@ -2555,11 +2545,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetLogsResponse' result object.
         """
-        return (
-            await self.get_logs_with_http_info(
-                offset, length, index_name, type, request_options
-            )
-        ).deserialize(GetLogsResponse)
+        resp = await self.get_logs_with_http_info(
+            offset, length, index_name, type, request_options
+        )
+        return resp.deserialize(GetLogsResponse, resp.raw_data)
 
     async def get_object_with_http_info(
         self,
@@ -2649,11 +2638,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.get_object_with_http_info(
-                index_name, object_id, attributes_to_retrieve, request_options
-            )
-        ).deserialize(object)
+        resp = await self.get_object_with_http_info(
+            index_name, object_id, attributes_to_retrieve, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def get_objects_with_http_info(
         self,
@@ -2711,9 +2699,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetObjectsResponse' result object.
         """
-        return (
-            await self.get_objects_with_http_info(get_objects_params, request_options)
-        ).deserialize(GetObjectsResponse)
+        resp = await self.get_objects_with_http_info(
+            get_objects_params, request_options
+        )
+        return resp.deserialize(GetObjectsResponse, resp.raw_data)
 
     async def get_rule_with_http_info(
         self,
@@ -2785,9 +2774,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Rule' result object.
         """
-        return (
-            await self.get_rule_with_http_info(index_name, object_id, request_options)
-        ).deserialize(Rule)
+        resp = await self.get_rule_with_http_info(
+            index_name, object_id, request_options
+        )
+        return resp.deserialize(Rule, resp.raw_data)
 
     async def get_settings_with_http_info(
         self,
@@ -2844,9 +2834,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SettingsResponse' result object.
         """
-        return (
-            await self.get_settings_with_http_info(index_name, request_options)
-        ).deserialize(SettingsResponse)
+        resp = await self.get_settings_with_http_info(index_name, request_options)
+        return resp.deserialize(SettingsResponse, resp.raw_data)
 
     async def get_sources_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -2882,9 +2871,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Source]' result object.
         """
-        return (await self.get_sources_with_http_info(request_options)).deserialize(
-            List[Source]
-        )
+        resp = await self.get_sources_with_http_info(request_options)
+        return resp.deserialize(List[Source], resp.raw_data)
 
     async def get_synonym_with_http_info(
         self,
@@ -2956,11 +2944,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SynonymHit' result object.
         """
-        return (
-            await self.get_synonym_with_http_info(
-                index_name, object_id, request_options
-            )
-        ).deserialize(SynonymHit)
+        resp = await self.get_synonym_with_http_info(
+            index_name, object_id, request_options
+        )
+        return resp.deserialize(SynonymHit, resp.raw_data)
 
     async def get_task_with_http_info(
         self,
@@ -3026,9 +3013,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (
-            await self.get_task_with_http_info(index_name, task_id, request_options)
-        ).deserialize(GetTaskResponse)
+        resp = await self.get_task_with_http_info(index_name, task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     async def get_top_user_ids_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -3064,9 +3050,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopUserIdsResponse' result object.
         """
-        return (
-            await self.get_top_user_ids_with_http_info(request_options)
-        ).deserialize(GetTopUserIdsResponse)
+        resp = await self.get_top_user_ids_with_http_info(request_options)
+        return resp.deserialize(GetTopUserIdsResponse, resp.raw_data)
 
     async def get_user_id_with_http_info(
         self,
@@ -3129,9 +3114,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UserId' result object.
         """
-        return (
-            await self.get_user_id_with_http_info(user_id, request_options)
-        ).deserialize(UserId)
+        resp = await self.get_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(UserId, resp.raw_data)
 
     async def has_pending_mappings_with_http_info(
         self,
@@ -3191,11 +3175,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'HasPendingMappingsResponse' result object.
         """
-        return (
-            await self.has_pending_mappings_with_http_info(
-                get_clusters, request_options
-            )
-        ).deserialize(HasPendingMappingsResponse)
+        resp = await self.has_pending_mappings_with_http_info(
+            get_clusters, request_options
+        )
+        return resp.deserialize(HasPendingMappingsResponse, resp.raw_data)
 
     async def list_api_keys_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -3231,9 +3214,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListApiKeysResponse' result object.
         """
-        return (await self.list_api_keys_with_http_info(request_options)).deserialize(
-            ListApiKeysResponse
-        )
+        resp = await self.list_api_keys_with_http_info(request_options)
+        return resp.deserialize(ListApiKeysResponse, resp.raw_data)
 
     async def list_clusters_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -3269,9 +3251,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListClustersResponse' result object.
         """
-        return (await self.list_clusters_with_http_info(request_options)).deserialize(
-            ListClustersResponse
-        )
+        resp = await self.list_clusters_with_http_info(request_options)
+        return resp.deserialize(ListClustersResponse, resp.raw_data)
 
     async def list_indices_with_http_info(
         self,
@@ -3343,9 +3324,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListIndicesResponse' result object.
         """
-        return (
-            await self.list_indices_with_http_info(page, hits_per_page, request_options)
-        ).deserialize(ListIndicesResponse)
+        resp = await self.list_indices_with_http_info(
+            page, hits_per_page, request_options
+        )
+        return resp.deserialize(ListIndicesResponse, resp.raw_data)
 
     async def list_user_ids_with_http_info(
         self,
@@ -3417,11 +3399,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListUserIdsResponse' result object.
         """
-        return (
-            await self.list_user_ids_with_http_info(
-                page, hits_per_page, request_options
-            )
-        ).deserialize(ListUserIdsResponse)
+        resp = await self.list_user_ids_with_http_info(
+            page, hits_per_page, request_options
+        )
+        return resp.deserialize(ListUserIdsResponse, resp.raw_data)
 
     async def multiple_batch_with_http_info(
         self,
@@ -3471,9 +3452,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'MultipleBatchResponse' result object.
         """
-        return (
-            await self.multiple_batch_with_http_info(batch_params, request_options)
-        ).deserialize(MultipleBatchResponse)
+        resp = await self.multiple_batch_with_http_info(batch_params, request_options)
+        return resp.deserialize(MultipleBatchResponse, resp.raw_data)
 
     async def operation_index_with_http_info(
         self,
@@ -3546,11 +3526,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.operation_index_with_http_info(
-                index_name, operation_index_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.operation_index_with_http_info(
+            index_name, operation_index_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def partial_update_object_with_http_info(
         self,
@@ -3656,15 +3635,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            await self.partial_update_object_with_http_info(
-                index_name,
-                object_id,
-                attributes_to_update,
-                create_if_not_exists,
-                request_options,
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = await self.partial_update_object_with_http_info(
+            index_name,
+            object_id,
+            attributes_to_update,
+            create_if_not_exists,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     async def remove_user_id_with_http_info(
         self,
@@ -3727,9 +3705,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RemoveUserIdResponse' result object.
         """
-        return (
-            await self.remove_user_id_with_http_info(user_id, request_options)
-        ).deserialize(RemoveUserIdResponse)
+        resp = await self.remove_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(RemoveUserIdResponse, resp.raw_data)
 
     async def replace_sources_with_http_info(
         self,
@@ -3783,9 +3760,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ReplaceSourceResponse' result object.
         """
-        return (
-            await self.replace_sources_with_http_info(source, request_options)
-        ).deserialize(ReplaceSourceResponse)
+        resp = await self.replace_sources_with_http_info(source, request_options)
+        return resp.deserialize(ReplaceSourceResponse, resp.raw_data)
 
     async def restore_api_key_with_http_info(
         self,
@@ -3834,9 +3810,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (
-            await self.restore_api_key_with_http_info(key, request_options)
-        ).deserialize(AddApiKeyResponse)
+        resp = await self.restore_api_key_with_http_info(key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     async def save_object_with_http_info(
         self,
@@ -3917,9 +3892,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveObjectResponse' result object.
         """
-        return (
-            await self.save_object_with_http_info(index_name, body, request_options)
-        ).deserialize(SaveObjectResponse)
+        resp = await self.save_object_with_http_info(index_name, body, request_options)
+        return resp.deserialize(SaveObjectResponse, resp.raw_data)
 
     async def save_rule_with_http_info(
         self,
@@ -4023,11 +3997,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedRuleResponse' result object.
         """
-        return (
-            await self.save_rule_with_http_info(
-                index_name, object_id, rule, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedRuleResponse)
+        resp = await self.save_rule_with_http_info(
+            index_name, object_id, rule, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedRuleResponse, resp.raw_data)
 
     async def save_rules_with_http_info(
         self,
@@ -4134,15 +4107,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.save_rules_with_http_info(
-                index_name,
-                rules,
-                forward_to_replicas,
-                clear_existing_rules,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.save_rules_with_http_info(
+            index_name,
+            rules,
+            forward_to_replicas,
+            clear_existing_rules,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def save_synonym_with_http_info(
         self,
@@ -4248,11 +4220,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveSynonymResponse' result object.
         """
-        return (
-            await self.save_synonym_with_http_info(
-                index_name, object_id, synonym_hit, forward_to_replicas, request_options
-            )
-        ).deserialize(SaveSynonymResponse)
+        resp = await self.save_synonym_with_http_info(
+            index_name, object_id, synonym_hit, forward_to_replicas, request_options
+        )
+        return resp.deserialize(SaveSynonymResponse, resp.raw_data)
 
     async def save_synonyms_with_http_info(
         self,
@@ -4363,15 +4334,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.save_synonyms_with_http_info(
-                index_name,
-                synonym_hit,
-                forward_to_replicas,
-                replace_existing_synonyms,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.save_synonyms_with_http_info(
+            index_name,
+            synonym_hit,
+            forward_to_replicas,
+            replace_existing_synonyms,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def search_with_http_info(
         self,
@@ -4435,9 +4405,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponses' result object.
         """
-        return (
-            await self.search_with_http_info(search_method_params, request_options)
-        ).deserialize(SearchResponses)
+        resp = await self.search_with_http_info(search_method_params, request_options)
+        return resp.deserialize(SearchResponses, resp.raw_data)
 
     async def search_dictionary_entries_with_http_info(
         self,
@@ -4508,11 +4477,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchDictionaryEntriesResponse' result object.
         """
-        return (
-            await self.search_dictionary_entries_with_http_info(
-                dictionary_name, search_dictionary_entries_params, request_options
-            )
-        ).deserialize(SearchDictionaryEntriesResponse)
+        resp = await self.search_dictionary_entries_with_http_info(
+            dictionary_name, search_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(SearchDictionaryEntriesResponse, resp.raw_data)
 
     async def search_for_facet_values_with_http_info(
         self,
@@ -4601,11 +4569,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchForFacetValuesResponse' result object.
         """
-        return (
-            await self.search_for_facet_values_with_http_info(
-                index_name, facet_name, search_for_facet_values_request, request_options
-            )
-        ).deserialize(SearchForFacetValuesResponse)
+        resp = await self.search_for_facet_values_with_http_info(
+            index_name, facet_name, search_for_facet_values_request, request_options
+        )
+        return resp.deserialize(SearchForFacetValuesResponse, resp.raw_data)
 
     async def search_rules_with_http_info(
         self,
@@ -4673,11 +4640,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchRulesResponse' result object.
         """
-        return (
-            await self.search_rules_with_http_info(
-                index_name, search_rules_params, request_options
-            )
-        ).deserialize(SearchRulesResponse)
+        resp = await self.search_rules_with_http_info(
+            index_name, search_rules_params, request_options
+        )
+        return resp.deserialize(SearchRulesResponse, resp.raw_data)
 
     async def search_single_index_with_http_info(
         self,
@@ -4745,11 +4711,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponse' result object.
         """
-        return (
-            await self.search_single_index_with_http_info(
-                index_name, search_params, request_options
-            )
-        ).deserialize(SearchResponse)
+        resp = await self.search_single_index_with_http_info(
+            index_name, search_params, request_options
+        )
+        return resp.deserialize(SearchResponse, resp.raw_data)
 
     async def search_synonyms_with_http_info(
         self,
@@ -4823,11 +4788,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchSynonymsResponse' result object.
         """
-        return (
-            await self.search_synonyms_with_http_info(
-                index_name, search_synonyms_params, request_options
-            )
-        ).deserialize(SearchSynonymsResponse)
+        resp = await self.search_synonyms_with_http_info(
+            index_name, search_synonyms_params, request_options
+        )
+        return resp.deserialize(SearchSynonymsResponse, resp.raw_data)
 
     async def search_user_ids_with_http_info(
         self,
@@ -4881,11 +4845,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchUserIdsResponse' result object.
         """
-        return (
-            await self.search_user_ids_with_http_info(
-                search_user_ids_params, request_options
-            )
-        ).deserialize(SearchUserIdsResponse)
+        resp = await self.search_user_ids_with_http_info(
+            search_user_ids_params, request_options
+        )
+        return resp.deserialize(SearchUserIdsResponse, resp.raw_data)
 
     async def set_dictionary_settings_with_http_info(
         self,
@@ -4939,11 +4902,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.set_dictionary_settings_with_http_info(
-                dictionary_settings_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.set_dictionary_settings_with_http_info(
+            dictionary_settings_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def set_settings_with_http_info(
         self,
@@ -5034,11 +4996,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.set_settings_with_http_info(
-                index_name, index_settings, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.set_settings_with_http_info(
+            index_name, index_settings, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def update_api_key_with_http_info(
         self,
@@ -5103,9 +5064,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdateApiKeyResponse' result object.
         """
-        return (
-            await self.update_api_key_with_http_info(key, api_key, request_options)
-        ).deserialize(UpdateApiKeyResponse)
+        resp = await self.update_api_key_with_http_info(key, api_key, request_options)
+        return resp.deserialize(UpdateApiKeyResponse, resp.raw_data)
 
 
 class SearchClientSync:
@@ -5149,9 +5109,10 @@ class SearchClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: SearchConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls, config: SearchConfig, transporter: Optional[TransporterSync] = None
+    ) -> SearchClientSync:
         """Allows creating a client with a customized `SearchConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -5213,7 +5174,7 @@ class SearchClientSync:
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
+            error_validate=lambda _: self._retry_count >= max_retries,
             error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
         )
 
@@ -5240,7 +5201,7 @@ class SearchClientSync:
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
+            error_validate=lambda _: self._retry_count >= max_retries,
             error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
         )
 
@@ -5395,7 +5356,9 @@ class SearchClientSync:
     def generate_secured_api_key(
         self,
         parent_api_key: str,
-        restrictions: Optional[SecuredApiKeyRestrictions] = SecuredApiKeyRestrictions(),
+        restrictions: Optional[
+            Union[dict, SecuredApiKeyRestrictions]
+        ] = SecuredApiKeyRestrictions(),
     ) -> str:
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
@@ -5445,18 +5408,23 @@ class SearchClientSync:
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return self.chunked_batch(
-            index_name=index_name, objects=objects, action=Action.ADDOBJECT
+            index_name=index_name,
+            objects=objects,
+            action=Action.ADDOBJECT,
+            request_options=request_options,
         )
 
     def delete_objects(
         self,
         index_name: str,
         object_ids: List[str],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -5465,6 +5433,7 @@ class SearchClientSync:
             index_name=index_name,
             objects=[{"objectID": id} for id in object_ids],
             action=Action.DELETEOBJECT,
+            request_options=request_options,
         )
 
     def partial_update_objects(
@@ -5472,6 +5441,7 @@ class SearchClientSync:
         index_name: str,
         objects: List[Dict[str, Any]],
         create_if_not_exists: Optional[bool] = False,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -5482,6 +5452,7 @@ class SearchClientSync:
             action=Action.PARTIALUPDATEOBJECT
             if create_if_not_exists
             else Action.PARTIALUPDATEOBJECTNOCREATE,
+            request_options=request_options,
         )
 
     def chunked_batch(
@@ -5645,9 +5616,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (self.add_api_key_with_http_info(api_key, request_options)).deserialize(
-            AddApiKeyResponse
-        )
+        resp = self.add_api_key_with_http_info(api_key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     def add_or_update_object_with_http_info(
         self,
@@ -5741,11 +5711,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            self.add_or_update_object_with_http_info(
-                index_name, object_id, body, request_options
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = self.add_or_update_object_with_http_info(
+            index_name, object_id, body, request_options
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     def append_source_with_http_info(
         self,
@@ -5799,9 +5768,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (self.append_source_with_http_info(source, request_options)).deserialize(
-            CreatedAtResponse
-        )
+        resp = self.append_source_with_http_info(source, request_options)
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     def assign_user_id_with_http_info(
         self,
@@ -5884,11 +5852,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            self.assign_user_id_with_http_info(
-                x_algolia_user_id, assign_user_id_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = self.assign_user_id_with_http_info(
+            x_algolia_user_id, assign_user_id_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     def batch_with_http_info(
         self,
@@ -5955,9 +5922,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BatchResponse' result object.
         """
-        return (
-            self.batch_with_http_info(index_name, batch_write_params, request_options)
-        ).deserialize(BatchResponse)
+        resp = self.batch_with_http_info(
+            index_name, batch_write_params, request_options
+        )
+        return resp.deserialize(BatchResponse, resp.raw_data)
 
     def batch_assign_user_ids_with_http_info(
         self,
@@ -6040,11 +6008,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            self.batch_assign_user_ids_with_http_info(
-                x_algolia_user_id, batch_assign_user_ids_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = self.batch_assign_user_ids_with_http_info(
+            x_algolia_user_id, batch_assign_user_ids_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     def batch_dictionary_entries_with_http_info(
         self,
@@ -6115,11 +6082,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.batch_dictionary_entries_with_http_info(
-                dictionary_name, batch_dictionary_entries_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.batch_dictionary_entries_with_http_info(
+            dictionary_name, batch_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def browse_with_http_info(
         self,
@@ -6187,9 +6153,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BrowseResponse' result object.
         """
-        return (
-            self.browse_with_http_info(index_name, browse_params, request_options)
-        ).deserialize(BrowseResponse)
+        resp = self.browse_with_http_info(index_name, browse_params, request_options)
+        return resp.deserialize(BrowseResponse, resp.raw_data)
 
     def clear_objects_with_http_info(
         self,
@@ -6246,9 +6211,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.clear_objects_with_http_info(index_name, request_options)
-        ).deserialize(UpdatedAtResponse)
+        resp = self.clear_objects_with_http_info(index_name, request_options)
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def clear_rules_with_http_info(
         self,
@@ -6323,11 +6287,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.clear_rules_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.clear_rules_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def clear_synonyms_with_http_info(
         self,
@@ -6402,11 +6365,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.clear_synonyms_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.clear_synonyms_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def custom_delete_with_http_info(
         self,
@@ -6480,9 +6442,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -6554,9 +6515,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -6645,9 +6605,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -6736,9 +6695,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_api_key_with_http_info(
         self,
@@ -6787,9 +6745,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteApiKeyResponse' result object.
         """
-        return (self.delete_api_key_with_http_info(key, request_options)).deserialize(
-            DeleteApiKeyResponse
-        )
+        resp = self.delete_api_key_with_http_info(key, request_options)
+        return resp.deserialize(DeleteApiKeyResponse, resp.raw_data)
 
     def delete_by_with_http_info(
         self,
@@ -6862,9 +6819,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_by_with_http_info(index_name, delete_by_params, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_by_with_http_info(
+            index_name, delete_by_params, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def delete_index_with_http_info(
         self,
@@ -6921,9 +6879,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_index_with_http_info(index_name, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_index_with_http_info(index_name, request_options)
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def delete_object_with_http_info(
         self,
@@ -6991,9 +6948,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_object_with_http_info(index_name, object_id, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_object_with_http_info(index_name, object_id, request_options)
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def delete_rule_with_http_info(
         self,
@@ -7083,11 +7039,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.delete_rule_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.delete_rule_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def delete_source_with_http_info(
         self,
@@ -7142,9 +7097,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteSourceResponse' result object.
         """
-        return (self.delete_source_with_http_info(source, request_options)).deserialize(
-            DeleteSourceResponse
-        )
+        resp = self.delete_source_with_http_info(source, request_options)
+        return resp.deserialize(DeleteSourceResponse, resp.raw_data)
 
     def delete_synonym_with_http_info(
         self,
@@ -7234,11 +7188,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_synonym_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_synonym_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def get_api_key_with_http_info(
         self,
@@ -7246,7 +7199,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -7273,7 +7226,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetApiKeyResponse:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -7281,9 +7234,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetApiKeyResponse' result object.
         """
-        return (self.get_api_key_with_http_info(key, request_options)).deserialize(
-            GetApiKeyResponse
-        )
+        resp = self.get_api_key_with_http_info(key, request_options)
+        return resp.deserialize(GetApiKeyResponse, resp.raw_data)
 
     def get_app_task_with_http_info(
         self,
@@ -7332,9 +7284,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (self.get_app_task_with_http_info(task_id, request_options)).deserialize(
-            GetTaskResponse
-        )
+        resp = self.get_app_task_with_http_info(task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     def get_dictionary_languages_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -7370,9 +7321,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Dict[str, Languages]' result object.
         """
-        return (
-            self.get_dictionary_languages_with_http_info(request_options)
-        ).deserialize(Dict[str, Languages])
+        resp = self.get_dictionary_languages_with_http_info(request_options)
+        return resp.deserialize(Dict[str, Languages], resp.raw_data)
 
     def get_dictionary_settings_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -7408,9 +7358,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetDictionarySettingsResponse' result object.
         """
-        return (
-            self.get_dictionary_settings_with_http_info(request_options)
-        ).deserialize(GetDictionarySettingsResponse)
+        resp = self.get_dictionary_settings_with_http_info(request_options)
+        return resp.deserialize(GetDictionarySettingsResponse, resp.raw_data)
 
     def get_logs_with_http_info(
         self,
@@ -7520,11 +7469,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetLogsResponse' result object.
         """
-        return (
-            self.get_logs_with_http_info(
-                offset, length, index_name, type, request_options
-            )
-        ).deserialize(GetLogsResponse)
+        resp = self.get_logs_with_http_info(
+            offset, length, index_name, type, request_options
+        )
+        return resp.deserialize(GetLogsResponse, resp.raw_data)
 
     def get_object_with_http_info(
         self,
@@ -7614,11 +7562,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.get_object_with_http_info(
-                index_name, object_id, attributes_to_retrieve, request_options
-            )
-        ).deserialize(object)
+        resp = self.get_object_with_http_info(
+            index_name, object_id, attributes_to_retrieve, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     def get_objects_with_http_info(
         self,
@@ -7676,9 +7623,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetObjectsResponse' result object.
         """
-        return (
-            self.get_objects_with_http_info(get_objects_params, request_options)
-        ).deserialize(GetObjectsResponse)
+        resp = self.get_objects_with_http_info(get_objects_params, request_options)
+        return resp.deserialize(GetObjectsResponse, resp.raw_data)
 
     def get_rule_with_http_info(
         self,
@@ -7750,9 +7696,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Rule' result object.
         """
-        return (
-            self.get_rule_with_http_info(index_name, object_id, request_options)
-        ).deserialize(Rule)
+        resp = self.get_rule_with_http_info(index_name, object_id, request_options)
+        return resp.deserialize(Rule, resp.raw_data)
 
     def get_settings_with_http_info(
         self,
@@ -7809,9 +7754,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SettingsResponse' result object.
         """
-        return (
-            self.get_settings_with_http_info(index_name, request_options)
-        ).deserialize(SettingsResponse)
+        resp = self.get_settings_with_http_info(index_name, request_options)
+        return resp.deserialize(SettingsResponse, resp.raw_data)
 
     def get_sources_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -7847,9 +7791,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Source]' result object.
         """
-        return (self.get_sources_with_http_info(request_options)).deserialize(
-            List[Source]
-        )
+        resp = self.get_sources_with_http_info(request_options)
+        return resp.deserialize(List[Source], resp.raw_data)
 
     def get_synonym_with_http_info(
         self,
@@ -7921,9 +7864,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SynonymHit' result object.
         """
-        return (
-            self.get_synonym_with_http_info(index_name, object_id, request_options)
-        ).deserialize(SynonymHit)
+        resp = self.get_synonym_with_http_info(index_name, object_id, request_options)
+        return resp.deserialize(SynonymHit, resp.raw_data)
 
     def get_task_with_http_info(
         self,
@@ -7989,9 +7931,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (
-            self.get_task_with_http_info(index_name, task_id, request_options)
-        ).deserialize(GetTaskResponse)
+        resp = self.get_task_with_http_info(index_name, task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     def get_top_user_ids_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -8027,9 +7968,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopUserIdsResponse' result object.
         """
-        return (self.get_top_user_ids_with_http_info(request_options)).deserialize(
-            GetTopUserIdsResponse
-        )
+        resp = self.get_top_user_ids_with_http_info(request_options)
+        return resp.deserialize(GetTopUserIdsResponse, resp.raw_data)
 
     def get_user_id_with_http_info(
         self,
@@ -8092,9 +8032,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UserId' result object.
         """
-        return (self.get_user_id_with_http_info(user_id, request_options)).deserialize(
-            UserId
-        )
+        resp = self.get_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(UserId, resp.raw_data)
 
     def has_pending_mappings_with_http_info(
         self,
@@ -8154,9 +8093,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'HasPendingMappingsResponse' result object.
         """
-        return (
-            self.has_pending_mappings_with_http_info(get_clusters, request_options)
-        ).deserialize(HasPendingMappingsResponse)
+        resp = self.has_pending_mappings_with_http_info(get_clusters, request_options)
+        return resp.deserialize(HasPendingMappingsResponse, resp.raw_data)
 
     def list_api_keys_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -8192,9 +8130,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListApiKeysResponse' result object.
         """
-        return (self.list_api_keys_with_http_info(request_options)).deserialize(
-            ListApiKeysResponse
-        )
+        resp = self.list_api_keys_with_http_info(request_options)
+        return resp.deserialize(ListApiKeysResponse, resp.raw_data)
 
     def list_clusters_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -8230,9 +8167,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListClustersResponse' result object.
         """
-        return (self.list_clusters_with_http_info(request_options)).deserialize(
-            ListClustersResponse
-        )
+        resp = self.list_clusters_with_http_info(request_options)
+        return resp.deserialize(ListClustersResponse, resp.raw_data)
 
     def list_indices_with_http_info(
         self,
@@ -8304,9 +8240,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListIndicesResponse' result object.
         """
-        return (
-            self.list_indices_with_http_info(page, hits_per_page, request_options)
-        ).deserialize(ListIndicesResponse)
+        resp = self.list_indices_with_http_info(page, hits_per_page, request_options)
+        return resp.deserialize(ListIndicesResponse, resp.raw_data)
 
     def list_user_ids_with_http_info(
         self,
@@ -8378,9 +8313,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListUserIdsResponse' result object.
         """
-        return (
-            self.list_user_ids_with_http_info(page, hits_per_page, request_options)
-        ).deserialize(ListUserIdsResponse)
+        resp = self.list_user_ids_with_http_info(page, hits_per_page, request_options)
+        return resp.deserialize(ListUserIdsResponse, resp.raw_data)
 
     def multiple_batch_with_http_info(
         self,
@@ -8430,9 +8364,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'MultipleBatchResponse' result object.
         """
-        return (
-            self.multiple_batch_with_http_info(batch_params, request_options)
-        ).deserialize(MultipleBatchResponse)
+        resp = self.multiple_batch_with_http_info(batch_params, request_options)
+        return resp.deserialize(MultipleBatchResponse, resp.raw_data)
 
     def operation_index_with_http_info(
         self,
@@ -8505,11 +8438,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.operation_index_with_http_info(
-                index_name, operation_index_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.operation_index_with_http_info(
+            index_name, operation_index_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def partial_update_object_with_http_info(
         self,
@@ -8615,15 +8547,14 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            self.partial_update_object_with_http_info(
-                index_name,
-                object_id,
-                attributes_to_update,
-                create_if_not_exists,
-                request_options,
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = self.partial_update_object_with_http_info(
+            index_name,
+            object_id,
+            attributes_to_update,
+            create_if_not_exists,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     def remove_user_id_with_http_info(
         self,
@@ -8686,9 +8617,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RemoveUserIdResponse' result object.
         """
-        return (
-            self.remove_user_id_with_http_info(user_id, request_options)
-        ).deserialize(RemoveUserIdResponse)
+        resp = self.remove_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(RemoveUserIdResponse, resp.raw_data)
 
     def replace_sources_with_http_info(
         self,
@@ -8742,9 +8672,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ReplaceSourceResponse' result object.
         """
-        return (
-            self.replace_sources_with_http_info(source, request_options)
-        ).deserialize(ReplaceSourceResponse)
+        resp = self.replace_sources_with_http_info(source, request_options)
+        return resp.deserialize(ReplaceSourceResponse, resp.raw_data)
 
     def restore_api_key_with_http_info(
         self,
@@ -8793,9 +8722,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (self.restore_api_key_with_http_info(key, request_options)).deserialize(
-            AddApiKeyResponse
-        )
+        resp = self.restore_api_key_with_http_info(key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     def save_object_with_http_info(
         self,
@@ -8876,9 +8804,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveObjectResponse' result object.
         """
-        return (
-            self.save_object_with_http_info(index_name, body, request_options)
-        ).deserialize(SaveObjectResponse)
+        resp = self.save_object_with_http_info(index_name, body, request_options)
+        return resp.deserialize(SaveObjectResponse, resp.raw_data)
 
     def save_rule_with_http_info(
         self,
@@ -8982,11 +8909,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedRuleResponse' result object.
         """
-        return (
-            self.save_rule_with_http_info(
-                index_name, object_id, rule, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedRuleResponse)
+        resp = self.save_rule_with_http_info(
+            index_name, object_id, rule, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedRuleResponse, resp.raw_data)
 
     def save_rules_with_http_info(
         self,
@@ -9093,15 +9019,14 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.save_rules_with_http_info(
-                index_name,
-                rules,
-                forward_to_replicas,
-                clear_existing_rules,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.save_rules_with_http_info(
+            index_name,
+            rules,
+            forward_to_replicas,
+            clear_existing_rules,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def save_synonym_with_http_info(
         self,
@@ -9207,11 +9132,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveSynonymResponse' result object.
         """
-        return (
-            self.save_synonym_with_http_info(
-                index_name, object_id, synonym_hit, forward_to_replicas, request_options
-            )
-        ).deserialize(SaveSynonymResponse)
+        resp = self.save_synonym_with_http_info(
+            index_name, object_id, synonym_hit, forward_to_replicas, request_options
+        )
+        return resp.deserialize(SaveSynonymResponse, resp.raw_data)
 
     def save_synonyms_with_http_info(
         self,
@@ -9322,15 +9246,14 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.save_synonyms_with_http_info(
-                index_name,
-                synonym_hit,
-                forward_to_replicas,
-                replace_existing_synonyms,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.save_synonyms_with_http_info(
+            index_name,
+            synonym_hit,
+            forward_to_replicas,
+            replace_existing_synonyms,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def search_with_http_info(
         self,
@@ -9394,9 +9317,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponses' result object.
         """
-        return (
-            self.search_with_http_info(search_method_params, request_options)
-        ).deserialize(SearchResponses)
+        resp = self.search_with_http_info(search_method_params, request_options)
+        return resp.deserialize(SearchResponses, resp.raw_data)
 
     def search_dictionary_entries_with_http_info(
         self,
@@ -9467,11 +9389,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchDictionaryEntriesResponse' result object.
         """
-        return (
-            self.search_dictionary_entries_with_http_info(
-                dictionary_name, search_dictionary_entries_params, request_options
-            )
-        ).deserialize(SearchDictionaryEntriesResponse)
+        resp = self.search_dictionary_entries_with_http_info(
+            dictionary_name, search_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(SearchDictionaryEntriesResponse, resp.raw_data)
 
     def search_for_facet_values_with_http_info(
         self,
@@ -9560,11 +9481,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchForFacetValuesResponse' result object.
         """
-        return (
-            self.search_for_facet_values_with_http_info(
-                index_name, facet_name, search_for_facet_values_request, request_options
-            )
-        ).deserialize(SearchForFacetValuesResponse)
+        resp = self.search_for_facet_values_with_http_info(
+            index_name, facet_name, search_for_facet_values_request, request_options
+        )
+        return resp.deserialize(SearchForFacetValuesResponse, resp.raw_data)
 
     def search_rules_with_http_info(
         self,
@@ -9632,11 +9552,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchRulesResponse' result object.
         """
-        return (
-            self.search_rules_with_http_info(
-                index_name, search_rules_params, request_options
-            )
-        ).deserialize(SearchRulesResponse)
+        resp = self.search_rules_with_http_info(
+            index_name, search_rules_params, request_options
+        )
+        return resp.deserialize(SearchRulesResponse, resp.raw_data)
 
     def search_single_index_with_http_info(
         self,
@@ -9704,11 +9623,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponse' result object.
         """
-        return (
-            self.search_single_index_with_http_info(
-                index_name, search_params, request_options
-            )
-        ).deserialize(SearchResponse)
+        resp = self.search_single_index_with_http_info(
+            index_name, search_params, request_options
+        )
+        return resp.deserialize(SearchResponse, resp.raw_data)
 
     def search_synonyms_with_http_info(
         self,
@@ -9782,11 +9700,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchSynonymsResponse' result object.
         """
-        return (
-            self.search_synonyms_with_http_info(
-                index_name, search_synonyms_params, request_options
-            )
-        ).deserialize(SearchSynonymsResponse)
+        resp = self.search_synonyms_with_http_info(
+            index_name, search_synonyms_params, request_options
+        )
+        return resp.deserialize(SearchSynonymsResponse, resp.raw_data)
 
     def search_user_ids_with_http_info(
         self,
@@ -9840,9 +9757,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchUserIdsResponse' result object.
         """
-        return (
-            self.search_user_ids_with_http_info(search_user_ids_params, request_options)
-        ).deserialize(SearchUserIdsResponse)
+        resp = self.search_user_ids_with_http_info(
+            search_user_ids_params, request_options
+        )
+        return resp.deserialize(SearchUserIdsResponse, resp.raw_data)
 
     def set_dictionary_settings_with_http_info(
         self,
@@ -9896,11 +9814,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.set_dictionary_settings_with_http_info(
-                dictionary_settings_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.set_dictionary_settings_with_http_info(
+            dictionary_settings_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def set_settings_with_http_info(
         self,
@@ -9991,11 +9908,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.set_settings_with_http_info(
-                index_name, index_settings, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.set_settings_with_http_info(
+            index_name, index_settings, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def update_api_key_with_http_info(
         self,
@@ -10060,6 +9976,5 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdateApiKeyResponse' result object.
         """
-        return (
-            self.update_api_key_with_http_info(key, api_key, request_options)
-        ).deserialize(UpdateApiKeyResponse)
+        resp = self.update_api_key_with_http_info(key, api_key, request_options)
+        return resp.deserialize(UpdateApiKeyResponse, resp.raw_data)

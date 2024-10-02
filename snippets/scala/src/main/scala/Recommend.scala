@@ -16,6 +16,27 @@ class SnippetRecommendClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = org.json4s.DefaultFormats
 
+  /** Snippet for the batchRecommendRules method.
+    *
+    * batch recommend rules
+    */
+  def snippetForRecommendClientBatchRecommendRules(): Unit = {
+    // >SEPARATOR batchRecommendRules default
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.batchRecommendRules(
+      indexName = "<YOUR_INDEX_NAME>",
+      model = RecommendModels.withName("related-products")
+    )
+
+    // >LOG
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the customDelete method.
     *
     * allow del method for a custom path with minimal parameters
@@ -23,7 +44,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientCustomDelete(): Unit = {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customDelete[JObject](
@@ -43,7 +64,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientCustomGet(): Unit = {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customGet[JObject](
@@ -63,7 +84,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientCustomPost(): Unit = {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customPost[JObject](
@@ -83,7 +104,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientCustomPut(): Unit = {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customPut[JObject](
@@ -103,7 +124,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientDeleteRecommendRule(): Unit = {
     // >SEPARATOR deleteRecommendRule default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteRecommendRule(
@@ -125,7 +146,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientGetRecommendRule(): Unit = {
     // >SEPARATOR getRecommendRule default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getRecommendRule(
@@ -147,7 +168,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientGetRecommendStatus(): Unit = {
     // >SEPARATOR getRecommendStatus default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getRecommendStatus(
@@ -169,7 +190,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientGetRecommendations(): Unit = {
     // >SEPARATOR getRecommendations default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getRecommendations(
@@ -198,7 +219,7 @@ class SnippetRecommendClient {
   def snippetForRecommendClientSearchRecommendRules(): Unit = {
     // >SEPARATOR searchRecommendRules default
     // Initialize the client
-    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.searchRecommendRules(

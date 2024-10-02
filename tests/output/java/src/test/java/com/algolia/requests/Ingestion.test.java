@@ -71,7 +71,7 @@ class IngestionClientRequestsTests {
         new AuthenticationCreate()
           .setType(AuthenticationType.ALGOLIA)
           .setName("authName")
-          .setInput(new AuthAlgolia().setAppID("myappID").setApiKey("randomApiKey"))
+          .setInput(new AuthAlgolia().setAppID("ALGOLIA_APPLICATION_ID").setApiKey("ALGOLIA_API_KEY"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -79,7 +79,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}",
+        "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"ALGOLIA_APPLICATION_ID\",\"apiKey\":\"ALGOLIA_API_KEY\"}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -644,7 +644,7 @@ class IngestionClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -666,7 +666,7 @@ class IngestionClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -695,7 +695,7 @@ class IngestionClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -717,7 +717,7 @@ class IngestionClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -1099,29 +1099,6 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("generateTransformationCode")
-  void generateTransformationCodeTest() {
-    assertDoesNotThrow(() -> {
-      client.generateTransformationCode(
-        new GenerateTransformationCodePayload()
-          .setId("foo")
-          .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH" + " LINE of code is doing")
-      );
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/transformations/models", req.path);
-    assertEquals("POST", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of" +
-        " comments that describe what EACH LINE of code is doing\"}",
-        req.body,
-        JSONCompareMode.STRICT
-      )
-    );
-  }
-
-  @Test
   @DisplayName("getAuthentication")
   void getAuthenticationTest() {
     assertDoesNotThrow(() -> {
@@ -1331,18 +1308,6 @@ class IngestionClientRequestsTests {
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
-  @DisplayName("listTransformationModels")
-  void listTransformationModelsTest() {
-    assertDoesNotThrow(() -> {
-      client.listTransformationModels();
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/transformations/models", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }

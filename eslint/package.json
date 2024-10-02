@@ -2,24 +2,25 @@
   "name": "eslint-plugin-automation-custom",
   "version": "1.0.0",
   "description": "Custom rules for eslint",
-  "main": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.cjs",
   "files": [
     "src/**.ts"
   ],
   "scripts": {
-    "build": "esbuild --bundle --minify --platform=node --outdir=dist --log-level=error src/index.ts",
+    "build": "esbuild --bundle --minify --platform=node --outdir=dist --out-extension:.js=.cjs --log-level=error src/index.ts",
     "lint": "eslint --ext=ts .",
     "lint:fix": "eslint --ext=ts --fix .",
-    "test": "jest"
+    "test": "tsc --noEmit && vitest"
   },
   "devDependencies": {
-    "@babel/core": "7.25.2",
-    "@babel/preset-env": "7.25.4",
-    "@babel/preset-typescript": "7.24.7",
-    "@types/jest": "29.5.12",
-    "esbuild": "0.23.1",
-    "eslint": "8.57.0",
-    "jest": "29.7.0",
-    "typescript": "5.5.4"
+    "@types/eslint": "9.6.1",
+    "esbuild": "0.24.0",
+    "eslint": "8.57.1",
+    "eslint-plugin-yml": "1.14.0",
+    "eslint-vitest-rule-tester": "0.6.1",
+    "typescript": "5.6.2",
+    "vitest": "2.1.1",
+    "yaml-eslint-parser": "1.2.3"
   }
 }

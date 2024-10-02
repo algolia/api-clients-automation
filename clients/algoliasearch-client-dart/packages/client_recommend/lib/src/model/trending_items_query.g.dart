@@ -20,7 +20,7 @@ TrendingItemsQuery _$TrendingItemsQueryFromJson(Map<String, dynamic> json) =>
               'queryParameters',
               (v) => v == null
                   ? null
-                  : SearchParams.fromJson(v as Map<String, dynamic>)),
+                  : RecommendSearchParams.fromJson(v as Map<String, dynamic>)),
           facetName: $checkedConvert('facetName', (v) => v as String?),
           facetValue: $checkedConvert('facetValue', (v) => v as String?),
           model: $checkedConvert(
@@ -29,7 +29,7 @@ TrendingItemsQuery _$TrendingItemsQueryFromJson(Map<String, dynamic> json) =>
               'fallbackParameters',
               (v) => v == null
                   ? null
-                  : SearchParamsObject.fromJson(v as Map<String, dynamic>)),
+                  : FallbackParams.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

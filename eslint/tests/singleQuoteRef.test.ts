@@ -1,55 +1,55 @@
-import { RuleTester } from 'eslint';
+import { runClassic } from 'eslint-vitest-rule-tester';
+import yamlParser from 'yaml-eslint-parser';
 
-import { singleQuoteRef } from '../src/rules/singleQuoteRef';
+import { singleQuoteRef } from '../src/rules/singleQuoteRef.js';
 
-const ruleTester = new RuleTester({
-  parser: require.resolve('yaml-eslint-parser'),
-});
-
-ruleTester.run('single-quote-ref', singleQuoteRef, {
-  valid: [
-    `
+runClassic(
+  'single-quote-ref',
+  singleQuoteRef,
+  {
+    valid: [
+      `
 simple:
   $ref: 'random/path.yml'`,
-    `
+      `
 sameFile:
   $ref: '#/inside'`,
-    `
+      `
 long:
   $ref: 'some/random/file.yml#/root/object/prop'
 `,
-    `
+      `
 post:
   description: test desc.
   '400':
     $ref: '../../common/responses/BadRequest.yml'
 `,
-  ],
-  invalid: [
-    {
-      code: `
+    ],
+    invalid: [
+      {
+        code: `
 simple:
   $ref: random/path.yml
 `,
-      errors: [{ messageId: 'refNoQuote' }],
-      output: `
+        errors: [{ messageId: 'refNoQuote' }],
+        output: `
 simple:
   $ref: 'random/path.yml'
 `,
-    },
-    {
-      code: `
+      },
+      {
+        code: `
 long:
   $ref: some/random/file.yml#/root/object/prop
 `,
-      errors: [{ messageId: 'refNoQuote' }],
-      output: `
+        errors: [{ messageId: 'refNoQuote' }],
+        output: `
 long:
   $ref: 'some/random/file.yml#/root/object/prop'
 `,
-    },
-    {
-      code: `
+      },
+      {
+        code: `
 post:
   description: test desc.
   '400':
@@ -57,8 +57,8 @@ post:
   '404':
     $ref: ../../common/responses/IndexNotFound.yml
 `,
-      errors: [{ messageId: 'refNoQuote' }, { messageId: 'refNoQuote' }],
-      output: `
+        errors: [{ messageId: 'refNoQuote' }, { messageId: 'refNoQuote' }],
+        output: `
 post:
   description: test desc.
   '400':
@@ -66,17 +66,21 @@ post:
   '404':
     $ref: '../../common/responses/IndexNotFound.yml'
 `,
-    },
-    {
-      code: `
+      },
+      {
+        code: `
 double:
   $ref: "some/ref"
 `,
-      errors: [{ messageId: 'refNoQuote' }],
-      output: `
+        errors: [{ messageId: 'refNoQuote' }],
+        output: `
 double:
   $ref: 'some/ref'
 `,
-    },
-  ],
-});
+      },
+    ],
+  },
+  {
+    parser: yamlParser,
+  },
+);

@@ -59,11 +59,9 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     // root export files
     supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
     supportingFiles.add(new SupportingFile("index.d.mustache", "", "index.d.ts"));
-
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
-    supportingFiles.add(new SupportingFile("LICENSE", "", "../../LICENSE"));
-    supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
-    supportingFiles.add(new SupportingFile("Bug_report.yml", "../../.github/ISSUE_TEMPLATE", "Bug_report.yml"));
+
+    Helpers.addCommonSupportingFiles(supportingFiles, "../../");
 
     supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
@@ -148,14 +146,23 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   /** Set default generator options */
   private void setDefaultGeneratorOptions() {
-    String apiName = CLIENT + Helpers.API_SUFFIX;
+    String clientName = CLIENT + Helpers.API_SUFFIX;
     String packageName = getPackageName((String) additionalProperties.get("client"));
 
-    additionalProperties.put("apiName", apiName);
+    additionalProperties.put("apiName", CLIENT);
+    additionalProperties.put("clientName", clientName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
+    additionalProperties.put(
+      "isAvailableInAlgoliasearch",
+      CLIENT.equals("search") ||
+      CLIENT.equals("recommend") ||
+      CLIENT.equals("personalization") ||
+      CLIENT.equals("analytics") ||
+      CLIENT.equals("abtesting")
+    );
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
     additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);
@@ -170,8 +177,9 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       additionalProperties.put("recommendVersion", Helpers.getPackageJsonVersion("recommend"));
 
       // Files used to generate the `lite` client
-      apiName = "lite" + Helpers.API_SUFFIX;
-      additionalProperties.put("apiName", apiName);
+      clientName = "lite" + Helpers.API_SUFFIX;
+      additionalProperties.put("apiName", "search");
+      additionalProperties.put("clientName", clientName);
       additionalProperties.put("algoliaAgent", "Lite");
     }
   }

@@ -1,13 +1,13 @@
 {
   "csharp": {
     "import": {
-      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Ingestion;"
     },
     "createAuthentication": {
       "default": "var response = await client.CreateAuthenticationAsync(\n  new AuthenticationCreate\n  {\n    Type = Enum.Parse<AuthenticationType>(\"Oauth\"),\n    Name = \"authName\",\n    Input = new AuthInput(\n      new AuthOAuth\n      {\n        Url = \"http://test.oauth\",\n        ClientId = \"myID\",\n        ClientSecret = \"mySecret\",\n      }\n    ),\n  }\n);"
     },
     "createDestination": {
-      "default": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexName { IndexName = \"<YOUR_INDEX_NAME>\", }),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
+      "default": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexName { IndexName = \"<YOUR_INDEX_NAME>\" }),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
     },
     "createSource": {
       "default": "var response = await client.CreateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
@@ -16,7 +16,7 @@
       "default": "var response = await client.CreateTaskAsync(\n  new TaskCreate\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n  }\n);"
     },
     "createTaskV1": {
-      "default": "var response = await client.CreateTaskV1Async(\n  new TaskCreateV1\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Trigger = new TaskCreateTrigger(\n      new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>(\"OnDemand\"), }\n    ),\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n  }\n);"
+      "default": "var response = await client.CreateTaskV1Async(\n  new TaskCreateV1\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Trigger = new TaskCreateTrigger(\n      new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>(\"OnDemand\") }\n    ),\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n  }\n);"
     },
     "createTransformation": {
       "default": "var response = await client.CreateTransformationAsync(\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
@@ -63,9 +63,6 @@
     "enableTaskV1": {
       "default": "var response = await client.EnableTaskV1Async(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
     },
-    "generateTransformationCode": {
-      "default": "var response = await client.GenerateTransformationCodeAsync(\n  new GenerateTransformationCodePayload\n  {\n    Id = \"foo\",\n    UserPrompt =\n      \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\",\n  }\n);"
-    },
     "getAuthentication": {
       "default": "var response = await client.GetAuthenticationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
@@ -111,14 +108,11 @@
     "listTasksV1": {
       "default": "var response = await client.ListTasksV1Async();"
     },
-    "listTransformationModels": {
-      "default": "var response = await client.ListTransformationModelsAsync();"
-    },
     "listTransformations": {
       "default": "var response = await client.ListTransformationsAsync();"
     },
     "pushTask": {
-      "default": "var response = await client.PushTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload\n  {\n    Action = Enum.Parse<Action>(\"AddObject\"),\n    Records = new List<PushTaskRecords>\n    {\n      new PushTaskRecords\n      {\n        ObjectID = \"o\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"bar\" },\n          { \"foo\", \"1\" },\n        }\n      },\n      new PushTaskRecords\n      {\n        ObjectID = \"k\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"baz\" },\n          { \"foo\", \"2\" },\n        }\n      }\n    },\n  }\n);"
+      "default": "var response = await client.PushTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload\n  {\n    Action = Enum.Parse<Action>(\"AddObject\"),\n    Records = new List<PushTaskRecords>\n    {\n      new PushTaskRecords\n      {\n        ObjectID = \"o\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"bar\" },\n          { \"foo\", \"1\" },\n        },\n      },\n      new PushTaskRecords\n      {\n        ObjectID = \"k\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"baz\" },\n          { \"foo\", \"2\" },\n        },\n      },\n    },\n  }\n);"
     },
     "runSource": {
       "default": "var response = await client.RunSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload\n  {\n    IndexToInclude = new List<string> { \"products_us\", \"products eu\" },\n    EntityIDs = new List<string> { \"1234\", \"5678\" },\n    EntityType = Enum.Parse<EntityType>(\"Product\"),\n  }\n);"
@@ -130,22 +124,22 @@
       "default": "var response = await client.RunTaskV1Async(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "searchAuthentications": {
-      "default": "var response = await client.SearchAuthenticationsAsync(\n  new AuthenticationSearch\n  {\n    AuthenticationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchAuthenticationsAsync(\n  new AuthenticationSearch\n  {\n    AuthenticationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    },\n  }\n);"
     },
     "searchDestinations": {
-      "default": "var response = await client.SearchDestinationsAsync(\n  new DestinationSearch\n  {\n    DestinationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchDestinationsAsync(\n  new DestinationSearch\n  {\n    DestinationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    },\n  }\n);"
     },
     "searchSources": {
-      "default": "var response = await client.SearchSourcesAsync(\n  new SourceSearch\n  {\n    SourceIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchSourcesAsync(\n  new SourceSearch\n  {\n    SourceIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    },\n  }\n);"
     },
     "searchTasks": {
-      "default": "var response = await client.SearchTasksAsync(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchTasksAsync(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    },\n  }\n);"
     },
     "searchTasksV1": {
-      "default": "var response = await client.SearchTasksV1Async(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchTasksV1Async(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    },\n  }\n);"
     },
     "searchTransformations": {
-      "default": "var response = await client.SearchTransformationsAsync(\n  new TransformationSearch\n  {\n    TransformationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchTransformationsAsync(\n  new TransformationSearch\n  {\n    TransformationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    },\n  }\n);"
     },
     "setClientApiKey": {
       "default": "client.SetClientApiKey(\"updated-api-key\");"
@@ -160,19 +154,19 @@
       "default": "var response = await client.TryTransformationBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry\n  {\n    Code = \"foo\",\n    SampleRecord = new Dictionary<string, string> { { \"bar\", \"baz\" } },\n  }\n);"
     },
     "updateAuthentication": {
-      "default": "var response = await client.UpdateAuthenticationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new AuthenticationUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.UpdateAuthenticationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new AuthenticationUpdate { Name = \"newName\" }\n);"
     },
     "updateDestination": {
-      "default": "var response = await client.UpdateDestinationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new DestinationUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.UpdateDestinationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new DestinationUpdate { Name = \"newName\" }\n);"
     },
     "updateSource": {
-      "default": "var response = await client.UpdateSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.UpdateSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\" }\n);"
     },
     "updateTask": {
-      "default": "var response = await client.UpdateTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdate { Enabled = false, Cron = \"* * * * *\", }\n);"
+      "default": "var response = await client.UpdateTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdate { Enabled = false, Cron = \"* * * * *\" }\n);"
     },
     "updateTaskV1": {
-      "default": "var response = await client.UpdateTaskV1Async(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdateV1 { Enabled = false, }\n);"
+      "default": "var response = await client.UpdateTaskV1Async(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdateV1 { Enabled = false }\n);"
     },
     "updateTransformation": {
       "default": "var response = await client.UpdateTransformationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
@@ -181,10 +175,10 @@
       "default": "var response = await client.ValidateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
     },
     "validateSourceBeforeUpdate": {
-      "default": "var response = await client.ValidateSourceBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.ValidateSourceBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\" }\n);"
     },
     "init": {
-      "default": "var client = new IngestionClient("
+      "default": "var client = new IngestionClient(\n  new IngestionConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")\n);"
     }
   },
   "dart": {},
@@ -252,9 +246,6 @@
     "enableTaskV1": {
       "default": "response, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
-    "generateTransformationCode": {
-      "default": "response, err := client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(\n\n  ingestion.NewEmptyGenerateTransformationCodePayload().SetId(\"foo\").SetUserPrompt(\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
-    },
     "getAuthentication": {
       "default": "response, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
@@ -299,9 +290,6 @@
     },
     "listTasksV1": {
       "default": "response, err := client.ListTasksV1(client.NewApiListTasksV1Request())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
-    },
-    "listTransformationModels": {
-      "default": "response, err := client.ListTransformationModels()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listTransformations": {
       "default": "response, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -373,7 +361,7 @@
       "default": "response, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
-      "default": "client, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)"
+      "default": "client, err := ingestion.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
     }
   },
   "java": {
@@ -440,9 +428,6 @@
     "enableTaskV1": {
       "default": "client.enableTaskV1(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
     },
-    "generateTransformationCode": {
-      "default": "client.generateTransformationCode(\n  new GenerateTransformationCodePayload()\n    .setId(\"foo\")\n    .setUserPrompt(\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE\" + \" of code is doing\")\n);"
-    },
     "getAuthentication": {
       "default": "client.getAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
@@ -487,9 +472,6 @@
     },
     "listTasksV1": {
       "default": "client.listTasksV1();"
-    },
-    "listTransformationModels": {
-      "default": "client.listTransformationModels();"
     },
     "listTransformations": {
       "default": "client.listTransformations();"
@@ -561,7 +543,7 @@
       "default": "client.validateSourceBeforeUpdate(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new SourceUpdate().setName(\"newName\"));"
     },
     "init": {
-      "default": "IngestionClient client = new IngestionClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
+      "default": "IngestionClient client = new IngestionClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
     }
   },
   "javascript": {
@@ -628,9 +610,6 @@
     "enableTaskV1": {
       "default": "const response = await client.enableTaskV1({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });"
     },
-    "generateTransformationCode": {
-      "default": "const response = await client.generateTransformationCode({\n  id: 'foo',\n  userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',\n});"
-    },
     "getAuthentication": {
       "default": "const response = await client.getAuthentication({ authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });"
     },
@@ -675,9 +654,6 @@
     },
     "listTasksV1": {
       "default": "const response = await client.listTasksV1();"
-    },
-    "listTransformationModels": {
-      "default": "const response = await client.listTransformationModels();"
     },
     "listTransformations": {
       "default": "const response = await client.listTransformations();"
@@ -749,7 +725,7 @@
       "default": "const response = await client.validateSourceBeforeUpdate({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  sourceUpdate: { name: 'newName' },\n});"
     },
     "init": {
-      "default": "const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
+      "default": "const client = ingestionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
     }
   },
   "kotlin": {
@@ -816,9 +792,6 @@
     "enableTaskV1": {
       "default": "var response = client.enableTaskV1(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
     },
-    "generateTransformationCode": {
-      "default": "var response = client.generateTransformationCode(\n  generateTransformationCodePayload = GenerateTransformationCodePayload(\n    id = \"foo\",\n    userPrompt = \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\",\n  ),\n)"
-    },
     "getAuthentication": {
       "default": "var response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
@@ -863,9 +836,6 @@
     },
     "listTasksV1": {
       "default": "var response = client.listTasksV1()"
-    },
-    "listTransformationModels": {
-      "default": "var response = client.listTransformationModels()"
     },
     "listTransformations": {
       "default": "var response = client.listTransformations()"
@@ -937,7 +907,7 @@
       "default": "var response = client.validateSourceBeforeUpdate(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = \"newName\",\n  ),\n)"
     },
     "init": {
-      "default": "val client = IngestionClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
+      "default": "val client = IngestionClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
     }
   },
   "php": {
@@ -1004,9 +974,6 @@
     "enableTaskV1": {
       "default": "$response = $client->enableTaskV1(\n    '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n);"
     },
-    "generateTransformationCode": {
-      "default": "$response = $client->generateTransformationCode(\n    ['id' => 'foo',\n        'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',\n    ],\n);"
-    },
     "getAuthentication": {
       "default": "$response = $client->getAuthentication(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);"
     },
@@ -1051,9 +1018,6 @@
     },
     "listTasksV1": {
       "default": "$response = $client->listTasksV1();"
-    },
-    "listTransformationModels": {
-      "default": "$response = $client->listTransformationModels();"
     },
     "listTransformations": {
       "default": "$response = $client->listTransformations();"
@@ -1125,195 +1089,189 @@
       "default": "$response = $client->validateSourceBeforeUpdate(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['name' => 'newName',\n    ],\n);"
     },
     "init": {
-      "default": "$client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
+      "default": "$client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
     }
   },
   "python": {
     "import": {
-      "default": "from algoliasearch.ingestion.client import IngestionClient"
+      "default": "from algoliasearch.ingestion.client import IngestionClientSync"
     },
     "createAuthentication": {
-      "default": "response = await _client.create_authentication(\n    authentication_create={\n        \"type\": \"oauth\",\n        \"name\": \"authName\",\n        \"input\": {\n            \"url\": \"http://test.oauth\",\n            \"client_id\": \"myID\",\n            \"client_secret\": \"mySecret\",\n        },\n    },\n)"
+      "default": "response = client.create_authentication(\n    authentication_create={\n        \"type\": \"oauth\",\n        \"name\": \"authName\",\n        \"input\": {\n            \"url\": \"http://test.oauth\",\n            \"client_id\": \"myID\",\n            \"client_secret\": \"mySecret\",\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_authentication_with_http_info(\n    authentication_create={\n        \"type\": \"oauth\",\n        \"name\": \"authName\",\n        \"input\": {\n            \"url\": \"http://test.oauth\",\n            \"client_id\": \"myID\",\n            \"client_secret\": \"mySecret\",\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "createDestination": {
-      "default": "response = await _client.create_destination(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)"
+      "default": "response = client.create_destination(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_destination_with_http_info(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "createSource": {
-      "default": "response = await _client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)"
+      "default": "response = client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_source_with_http_info(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "createTask": {
-      "default": "response = await _client.create_task(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"action\": \"replace\",\n    },\n)"
+      "default": "response = client.create_task(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"action\": \"replace\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_task_with_http_info(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"action\": \"replace\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "createTaskV1": {
-      "default": "response = await _client.create_task_v1(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n    },\n)"
+      "default": "response = client.create_task_v1(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_task_v1_with_http_info(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "createTransformation": {
-      "default": "response = await _client.create_transformation(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
+      "default": "response = client.create_transformation(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_transformation_with_http_info(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "customDelete": {
-      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customGet": {
-      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPost": {
-      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPut": {
-      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteAuthentication": {
-      "default": "response = await _client.delete_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.delete_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_authentication_with_http_info(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteDestination": {
-      "default": "response = await _client.delete_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.delete_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_destination_with_http_info(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteSource": {
-      "default": "response = await _client.delete_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.delete_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_source_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteTask": {
-      "default": "response = await _client.delete_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.delete_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteTaskV1": {
-      "default": "response = await _client.delete_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.delete_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteTransformation": {
-      "default": "response = await _client.delete_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.delete_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_transformation_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "disableTask": {
-      "default": "response = await _client.disable_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.disable_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.disable_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "disableTaskV1": {
-      "default": "response = await _client.disable_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.disable_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.disable_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "enableTask": {
-      "default": "response = await _client.enable_task(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
+      "default": "response = client.enable_task(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.enable_task_with_http_info(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(raw_response.raw_data)"
     },
     "enableTaskV1": {
-      "default": "response = await _client.enable_task_v1(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
-    },
-    "generateTransformationCode": {
-      "default": "response = await _client.generate_transformation_code(\n    generate_transformation_code_payload={\n        \"id\": \"foo\",\n        \"userPrompt\": \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\",\n    },\n)"
+      "default": "response = client.enable_task_v1(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.enable_task_v1_with_http_info(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getAuthentication": {
-      "default": "response = await _client.get_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.get_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_authentication_with_http_info(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getDestination": {
-      "default": "response = await _client.get_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.get_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_destination_with_http_info(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getEvent": {
-      "default": "response = await _client.get_event(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    event_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)"
+      "default": "response = client.get_event(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    event_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_event_with_http_info(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    event_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getRun": {
-      "default": "response = await _client.get_run(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.get_run(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_run_with_http_info(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSource": {
-      "default": "response = await _client.get_source(\n    source_id=\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)"
+      "default": "response = client.get_source(\n    source_id=\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_source_with_http_info(\n    source_id=\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTask": {
-      "default": "response = await _client.get_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.get_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTaskV1": {
-      "default": "response = await _client.get_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.get_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTransformation": {
-      "default": "response = await _client.get_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.get_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_transformation_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "listAuthentications": {
-      "default": "response = await _client.list_authentications()"
+      "default": "response = client.list_authentications()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_authentications_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listDestinations": {
-      "default": "response = await _client.list_destinations()"
+      "default": "response = client.list_destinations()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_destinations_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listEvents": {
-      "default": "response = await _client.list_events(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.list_events(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_events_with_http_info(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "listRuns": {
-      "default": "response = await _client.list_runs()"
+      "default": "response = client.list_runs()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_runs_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listSources": {
-      "default": "response = await _client.list_sources()"
+      "default": "response = client.list_sources()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_sources_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listTasks": {
-      "default": "response = await _client.list_tasks()"
+      "default": "response = client.list_tasks()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_tasks_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listTasksV1": {
-      "default": "response = await _client.list_tasks_v1()"
-    },
-    "listTransformationModels": {
-      "default": "response = await _client.list_transformation_models()"
+      "default": "response = client.list_tasks_v1()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_tasks_v1_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listTransformations": {
-      "default": "response = await _client.list_transformations()"
+      "default": "response = client.list_transformations()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_transformations_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "pushTask": {
-      "default": "response = await _client.push_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)"
+      "default": "response = client.push_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.push_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "runSource": {
-      "default": "response = await _client.run_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    run_source_payload={\n        \"indexToInclude\": [\n            \"products_us\",\n            \"products eu\",\n        ],\n        \"entityIDs\": [\n            \"1234\",\n            \"5678\",\n        ],\n        \"entityType\": \"product\",\n    },\n)"
+      "default": "response = client.run_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    run_source_payload={\n        \"indexToInclude\": [\n            \"products_us\",\n            \"products eu\",\n        ],\n        \"entityIDs\": [\n            \"1234\",\n            \"5678\",\n        ],\n        \"entityType\": \"product\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.run_source_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    run_source_payload={\n        \"indexToInclude\": [\n            \"products_us\",\n            \"products eu\",\n        ],\n        \"entityIDs\": [\n            \"1234\",\n            \"5678\",\n        ],\n        \"entityType\": \"product\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "runTask": {
-      "default": "response = await _client.run_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.run_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.run_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "runTaskV1": {
-      "default": "response = await _client.run_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.run_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.run_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "searchAuthentications": {
-      "default": "response = await _client.search_authentications(\n    authentication_search={\n        \"authenticationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)"
+      "default": "response = client.search_authentications(\n    authentication_search={\n        \"authenticationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_authentications_with_http_info(\n    authentication_search={\n        \"authenticationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchDestinations": {
-      "default": "response = await _client.search_destinations(\n    destination_search={\n        \"destinationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)"
+      "default": "response = client.search_destinations(\n    destination_search={\n        \"destinationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_destinations_with_http_info(\n    destination_search={\n        \"destinationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchSources": {
-      "default": "response = await _client.search_sources(\n    source_search={\n        \"sourceIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)"
+      "default": "response = client.search_sources(\n    source_search={\n        \"sourceIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_sources_with_http_info(\n    source_search={\n        \"sourceIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchTasks": {
-      "default": "response = await _client.search_tasks(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)"
+      "default": "response = client.search_tasks(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_tasks_with_http_info(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchTasksV1": {
-      "default": "response = await _client.search_tasks_v1(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)"
+      "default": "response = client.search_tasks_v1(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_tasks_v1_with_http_info(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchTransformations": {
-      "default": "response = await _client.search_transformations(\n    transformation_search={\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)"
+      "default": "response = client.search_transformations(\n    transformation_search={\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_transformations_with_http_info(\n    transformation_search={\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "setClientApiKey": {
-      "default": "_client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
     },
     "triggerDockerSourceDiscover": {
-      "default": "response = await _client.trigger_docker_source_discover(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "response = client.trigger_docker_source_discover(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.trigger_docker_source_discover_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
     },
     "tryTransformation": {
-      "default": "response = await _client.try_transformation(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)"
+      "default": "response = client.try_transformation(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.try_transformation_with_http_info(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "tryTransformationBeforeUpdate": {
-      "default": "response = await _client.try_transformation_before_update(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)"
+      "default": "response = client.try_transformation_before_update(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.try_transformation_before_update_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "updateAuthentication": {
-      "default": "response = await _client.update_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)"
+      "default": "response = client.update_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_authentication_with_http_info(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "updateDestination": {
-      "default": "response = await _client.update_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destination_update={\n        \"name\": \"newName\",\n    },\n)"
+      "default": "response = client.update_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destination_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_destination_with_http_info(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destination_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "updateSource": {
-      "default": "response = await _client.update_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)"
+      "default": "response = client.update_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_source_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "updateTask": {
-      "default": "response = await _client.update_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n        \"cron\": \"* * * * *\",\n    },\n)"
+      "default": "response = client.update_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n        \"cron\": \"* * * * *\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n        \"cron\": \"* * * * *\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "updateTaskV1": {
-      "default": "response = await _client.update_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)"
+      "default": "response = client.update_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "updateTransformation": {
-      "default": "response = await _client.update_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
+      "default": "response = client.update_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_transformation_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "validateSource": {
-      "default": "response = await _client.validate_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)"
+      "default": "response = client.validate_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.validate_source_with_http_info(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "validateSourceBeforeUpdate": {
-      "default": "response = await _client.validate_source_before_update(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)"
+      "default": "response = client.validate_source_before_update(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.validate_source_before_update_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "init": {
-      "default": "_client = IngestionClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+      "default": "# In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.\nclient = IngestionClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
     }
   },
   "ruby": {
@@ -1380,9 +1338,6 @@
     "enableTaskV1": {
       "default": "response = client.enable_task_v1(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")"
     },
-    "generateTransformationCode": {
-      "default": "response = client.generate_transformation_code(\n  GenerateTransformationCodePayload.new(\n    id: \"foo\",\n    user_prompt: \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"\n  )\n)"
-    },
     "getAuthentication": {
       "default": "response = client.get_authentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
@@ -1427,9 +1382,6 @@
     },
     "listTasksV1": {
       "default": "response = client.list_tasks_v1"
-    },
-    "listTransformationModels": {
-      "default": "response = client.list_transformation_models"
     },
     "listTransformations": {
       "default": "response = client.list_transformations"
@@ -1501,7 +1453,7 @@
       "default": "response = client.validate_source_before_update(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  SourceUpdate.new(name: \"newName\")\n)"
     },
     "init": {
-      "default": "client = Algolia::IngestionClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+      "default": "client = Algolia::IngestionClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")"
     }
   },
   "scala": {
@@ -1568,9 +1520,6 @@
     "enableTaskV1": {
       "default": "val response = client.enableTaskV1(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n)"
     },
-    "generateTransformationCode": {
-      "default": "val response = client.generateTransformationCode(\n  generateTransformationCodePayload = GenerateTransformationCodePayload(\n    id = \"foo\",\n    userPrompt =\n      \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"\n  )\n)"
-    },
     "getAuthentication": {
       "default": "val response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
     },
@@ -1615,9 +1564,6 @@
     },
     "listTasksV1": {
       "default": "val response = client.listTasksV1(\n)"
-    },
-    "listTransformationModels": {
-      "default": "val response = client.listTransformationModels(\n)"
     },
     "listTransformations": {
       "default": "val response = client.listTransformations(\n)"
@@ -1686,7 +1632,7 @@
       "default": "val response = client.validateSourceBeforeUpdate(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = Some(\"newName\")\n  )\n)"
     },
     "init": {
-      "default": "val client = IngestionClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
+      "default": "val client = IngestionClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = \"ALGOLIA_APPLICATION_REGION\"\n)"
     }
   },
   "swift": {
@@ -1753,9 +1699,6 @@
     "enableTaskV1": {
       "default": "let response = try await client.enableTaskV1(taskID: \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")"
     },
-    "generateTransformationCode": {
-      "default": "let response = try await client\n    .generateTransformationCode(generateTransformationCodePayload: GenerateTransformationCodePayload(\n        id: \"foo\",\n        userPrompt: \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"\n    ))"
-    },
     "getAuthentication": {
       "default": "let response = try await client.getAuthentication(authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
@@ -1800,9 +1743,6 @@
     },
     "listTasksV1": {
       "default": "let response = try await client.listTasksV1()"
-    },
-    "listTransformationModels": {
-      "default": "let response = try await client.listTransformationModels()"
     },
     "listTransformations": {
       "default": "let response = try await client.listTransformations()"
@@ -1874,7 +1814,7 @@
       "default": "let response = try await client.validateSourceBeforeUpdate(\n    sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    sourceUpdate: SourceUpdate(name: \"newName\")\n)"
     },
     "init": {
-      "default": "let client = try IngestionClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
+      "default": "let client = try IngestionClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
     }
   }
 }

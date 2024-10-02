@@ -1579,7 +1579,9 @@ paths:
         for any of your application's keys.
 
         When authenticating with other API keys, you can only retrieve
-        information for that key.
+        information for that key,
+
+        with the description replaced by `<redacted>`.
       parameters:
         - $ref: '#/components/parameters/KeyString'
       responses:
@@ -5728,21 +5730,10 @@ components:
           $ref: '#/components/schemas/nbPages'
         hitsPerPage:
           $ref: '#/components/schemas/hitsPerPage'
-      required:
-        - page
-        - nbHits
-        - nbPages
-        - hitsPerPage
     objectID:
       type: string
       description: Unique record identifier.
       example: test-record-123
-    highlightResultMap:
-      type: object
-      description: Surround words that match the query with HTML tags for highlighting.
-      additionalProperties:
-        x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResult'
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -5780,29 +5771,22 @@ components:
       x-discriminator-fields:
         - matchLevel
         - matchedWords
-    highlightResultOptionMap:
+    highlightResultMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResultOption'
-    highlightResultOptionArray:
+        $ref: '#/components/schemas/highlightResult'
+    highlightResult:
+      oneOf:
+        - $ref: '#/components/schemas/highlightResultOption'
+        - $ref: '#/components/schemas/highlightResultMap'
+        - $ref: '#/components/schemas/highlightResultArray'
+    highlightResultArray:
       type: array
       description: Surround words that match the query with HTML tags for highlighting.
       items:
-        $ref: '#/components/schemas/highlightResultOption'
-    highlightResult:
-      oneOf:
-        - $ref: '#/components/schemas/highlightResultMap'
-        - $ref: '#/components/schemas/highlightResultOption'
-        - $ref: '#/components/schemas/highlightResultOptionMap'
-        - $ref: '#/components/schemas/highlightResultOptionArray'
-    snippetResultMap:
-      type: object
-      description: Snippets that show the context around a matching search query.
-      additionalProperties:
-        x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResult'
+        $ref: '#/components/schemas/highlightResult'
     snippetResultOption:
       type: object
       description: Snippets that show the context around a matching search query.
@@ -5817,23 +5801,22 @@ components:
         - matchLevel
       x-discriminator-fields:
         - matchLevel
-    snippetResultOptionMap:
+    snippetResultMap:
       type: object
       description: Snippets that show the context around a matching search query.
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResultOption'
-    snippetResultOptionArray:
+        $ref: '#/components/schemas/snippetResult'
+    snippetResult:
+      oneOf:
+        - $ref: '#/components/schemas/snippetResultOption'
+        - $ref: '#/components/schemas/snippetResultMap'
+        - $ref: '#/components/schemas/snippetResultArray'
+    snippetResultArray:
       type: array
       description: Snippets that show the context around a matching search query.
       items:
-        $ref: '#/components/schemas/snippetResultOption'
-    snippetResult:
-      oneOf:
-        - $ref: '#/components/schemas/snippetResultMap'
-        - $ref: '#/components/schemas/snippetResultOption'
-        - $ref: '#/components/schemas/snippetResultOptionMap'
-        - $ref: '#/components/schemas/snippetResultOptionArray'
+        $ref: '#/components/schemas/snippetResult'
     matchedGeoLocation:
       type: object
       properties:

@@ -757,7 +757,7 @@ class SearchTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -777,7 +777,7 @@ class SearchTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -794,7 +794,7 @@ class SearchTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -814,7 +814,7 @@ class SearchTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -1726,13 +1726,13 @@ class SearchTest extends AnyFunSuite {
   test("restoreApiKey") {
     val (client, echo) = testClient()
     val future = client.restoreApiKey(
-      key = "myApiKey"
+      key = "ALGOLIA_API_KEY"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/keys/myApiKey/restore")
+    assert(res.path == "/1/keys/ALGOLIA_API_KEY/restore")
     assert(res.method == "POST")
     assert(res.body.contains("{}"))
   }
@@ -3364,7 +3364,7 @@ class SearchTest extends AnyFunSuite {
   test("updateApiKey") {
     val (client, echo) = testClient()
     val future = client.updateApiKey(
-      key = "myApiKey",
+      key = "ALGOLIA_API_KEY",
       apiKey = ApiKey(
         acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
         validity = Some(300),
@@ -3376,7 +3376,7 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/keys/myApiKey")
+    assert(res.path == "/1/keys/ALGOLIA_API_KEY")
     assert(res.method == "PUT")
     val expectedBody =
       parse("""{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}""")

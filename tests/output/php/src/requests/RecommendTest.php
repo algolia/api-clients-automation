@@ -31,6 +31,24 @@ class RecommendTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
+    #[TestDox('batch recommend rules')]
+    public function testBatchRecommendRules(): void
+    {
+        $client = $this->getClient();
+        $client->batchRecommendRules(
+            'indexName',
+            'related-products',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/related-products/recommend/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{}'),
+            ],
+        ]);
+    }
+
     #[TestDox('allow del method for a custom path with minimal parameters')]
     public function testCustomDelete(): void
     {
@@ -241,7 +259,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -252,7 +270,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }
@@ -269,7 +287,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -280,7 +298,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }

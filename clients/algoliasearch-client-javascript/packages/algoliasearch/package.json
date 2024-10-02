@@ -1,5 +1,5 @@
 {
-  "version": "5.4.1",
+  "version": "5.7.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -59,6 +59,10 @@
   },
   "jsdelivr": "./dist/algoliasearch.umd.js",
   "unpkg": "./dist/algoliasearch.umd.js",
+  "react-native": {
+    ".": "./dist/browser.js",
+    "./lite": "./dist/lite/builds/browser.js"
+  },
   "files": [
     "dist",
     "builds",
@@ -69,26 +73,26 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-abtesting": "5.4.1",
-    "@algolia/client-analytics": "5.4.1",
-    "@algolia/client-common": "5.4.1",
-    "@algolia/client-personalization": "5.4.1",
-    "@algolia/client-search": "5.4.1",
-    "@algolia/recommend": "5.4.1",
-    "@algolia/requester-browser-xhr": "5.4.1",
-    "@algolia/requester-fetch": "5.4.1",
-    "@algolia/requester-node-http": "5.4.1"
+    "@algolia/client-abtesting": "5.7.0",
+    "@algolia/client-analytics": "5.7.0",
+    "@algolia/client-common": "5.7.0",
+    "@algolia/client-personalization": "5.7.0",
+    "@algolia/client-search": "5.7.0",
+    "@algolia/recommend": "5.7.0",
+    "@algolia/requester-browser-xhr": "5.7.0",
+    "@algolia/requester-fetch": "5.7.0",
+    "@algolia/requester-node-http": "5.7.0"
   },
   "devDependencies": {
-    "@algolia/requester-testing": "5.4.1",
-    "@arethetypeswrong/cli": "0.15.4",
-    "@types/node": "22.5.1",
-    "jsdom": "25.0.0",
-    "publint": "0.2.10",
-    "rollup": "4.21.2",
-    "tsup": "8.2.4",
-    "typescript": "5.5.4",
-    "vitest": "2.0.5",
+    "@algolia/requester-testing": "5.7.0",
+    "@arethetypeswrong/cli": "0.16.4",
+    "@types/node": "22.7.4",
+    "jsdom": "25.0.1",
+    "publint": "0.2.11",
+    "rollup": "4.22.5",
+    "tsup": "8.3.0",
+    "typescript": "5.6.2",
+    "vitest": "2.1.1",
     "vitest-environment-miniflare": "2.14.3"
   },
   "engines": {

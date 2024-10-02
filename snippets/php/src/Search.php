@@ -20,7 +20,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR addApiKey default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->addApiKey(
@@ -51,7 +51,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR addOrUpdateObject default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->addOrUpdateObject(
@@ -76,7 +76,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR appendSource default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->appendSource(
@@ -100,7 +100,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR assignUserId default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->assignUserId(
@@ -124,7 +124,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batch addObject
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batch(
@@ -160,7 +160,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batch clear
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batch(
@@ -189,7 +189,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batch delete
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batch(
@@ -218,7 +218,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batch deleteObject
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batch(
@@ -247,7 +247,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batch partialUpdateObject
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batch(
@@ -276,7 +276,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batch partialUpdateObjectNoCreate
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batch(
@@ -305,7 +305,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batch updateObject
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batch(
@@ -334,7 +334,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batchAssignUserIds default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batchAssignUserIds(
@@ -363,7 +363,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batchDictionaryEntries replace
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batchDictionaryEntries(
@@ -406,7 +406,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batchDictionaryEntries delete
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batchDictionaryEntries(
@@ -436,7 +436,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR batchDictionaryEntries append
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->batchDictionaryEntries(
@@ -467,7 +467,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR browse default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->browse(
@@ -489,7 +489,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR clearObjects default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->clearObjects(
@@ -511,7 +511,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR clearRules default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->clearRules(
@@ -533,7 +533,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR clearSynonyms default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->clearSynonyms(
@@ -555,7 +555,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customDelete(
@@ -577,7 +577,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customGet(
@@ -599,7 +599,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customPost(
@@ -621,7 +621,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customPut(
@@ -643,7 +643,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteApiKey default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteApiKey(
@@ -665,7 +665,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteBy default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteBy(
@@ -689,7 +689,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteIndex default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteIndex(
@@ -711,7 +711,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteObject default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteObject(
@@ -734,7 +734,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteObjects default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteObjects(
@@ -761,7 +761,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteRule default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteRule(
@@ -784,7 +784,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteSource default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteSource(
@@ -806,7 +806,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR deleteSynonym default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteSynonym(
@@ -829,7 +829,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR generateSecuredApiKey generate secured api key basic
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->generateSecuredApiKey(
@@ -856,7 +856,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->generateSecuredApiKey(
@@ -899,7 +899,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getApiKey default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getApiKey(
@@ -921,7 +921,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getAppTask default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getAppTask(
@@ -943,7 +943,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getDictionaryLanguages default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getDictionaryLanguages();
@@ -963,7 +963,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getDictionarySettings default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getDictionarySettings();
@@ -983,7 +983,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getLogs default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getLogs();
@@ -1003,7 +1003,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getObject default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getObject(
@@ -1031,7 +1031,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getObjects default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getObjects(
@@ -1063,7 +1063,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getRule default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getRule(
@@ -1086,7 +1086,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getSettings default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getSettings(
@@ -1108,7 +1108,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getSources default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getSources();
@@ -1128,7 +1128,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getSynonym default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getSynonym(
@@ -1151,7 +1151,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getTask default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getTask(
@@ -1174,7 +1174,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getTopUserIds default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getTopUserIds();
@@ -1194,7 +1194,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR getUserId default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getUserId(
@@ -1216,7 +1216,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR hasPendingMappings default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->hasPendingMappings();
@@ -1236,7 +1236,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR indexExists indexExists
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->indexExists(
@@ -1258,7 +1258,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR indexExists indexNotExists
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->indexExists(
@@ -1280,7 +1280,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR indexExists indexExistsWithError
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->indexExists(
@@ -1302,7 +1302,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR listApiKeys default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->listApiKeys();
@@ -1322,7 +1322,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR listClusters default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->listClusters();
@@ -1342,7 +1342,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR listIndices default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->listIndices();
@@ -1362,7 +1362,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR listUserIds default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->listUserIds();
@@ -1382,7 +1382,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR multipleBatch default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->multipleBatch(
@@ -1411,7 +1411,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR operationIndex scopes
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->operationIndex(
@@ -1441,7 +1441,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR operationIndex copy
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->operationIndex(
@@ -1466,7 +1466,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR operationIndex move
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->operationIndex(
@@ -1491,7 +1491,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR partialUpdateObject default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->partialUpdateObject(
@@ -1516,7 +1516,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->partialUpdateObjects(
@@ -1548,7 +1548,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->partialUpdateObjects(
@@ -1580,7 +1580,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR removeUserId default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->removeUserId(
@@ -1602,7 +1602,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR replaceAllObjects default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->replaceAllObjects(
@@ -1666,7 +1666,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR replaceSources default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->replaceSources(
@@ -1692,11 +1692,11 @@ class SnippetSearchClient
     {
         // >SEPARATOR restoreApiKey default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->restoreApiKey(
-            'myApiKey',
+            'ALGOLIA_API_KEY',
         );
 
         // >LOG
@@ -1714,7 +1714,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR saveObject default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->saveObject(
@@ -1739,7 +1739,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR saveObjects call saveObjects without error
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->saveObjects(
@@ -1770,7 +1770,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR saveObjects saveObjects should report errors
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->saveObjects(
@@ -1801,7 +1801,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR saveRule default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->saveRule(
@@ -1831,7 +1831,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR saveRules default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->saveRules(
@@ -1872,7 +1872,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR saveSynonym default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->saveSynonym(
@@ -1906,7 +1906,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR saveSynonyms default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->saveSynonyms(
@@ -1954,7 +1954,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR search withHitsPerPage
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->search(
@@ -1982,7 +1982,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR search filterOnly
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->search(
@@ -2010,7 +2010,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR search filterOr
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->search(
@@ -2038,7 +2038,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR search filterNot
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->search(
@@ -2066,7 +2066,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR search retrieveFacets
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->search(
@@ -2098,7 +2098,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR search retrieveFacetsWildcard
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->search(
@@ -2128,7 +2128,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR searchDictionaryEntries default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchDictionaryEntries(
@@ -2152,7 +2152,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR searchForFacetValues default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchForFacetValues(
@@ -2175,7 +2175,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR searchRules default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchRules(
@@ -2199,7 +2199,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR searchSingleIndex default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchSingleIndex(
@@ -2221,7 +2221,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR searchSynonyms default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchSynonyms(
@@ -2243,7 +2243,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR searchUserIds default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchUserIds(
@@ -2269,7 +2269,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $client->setClientApiKey(
@@ -2289,7 +2289,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR setDictionarySettings default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->setDictionarySettings(
@@ -2316,7 +2316,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR setSettings default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->setSettings(
@@ -2346,11 +2346,11 @@ class SnippetSearchClient
     {
         // >SEPARATOR updateApiKey default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->updateApiKey(
-            'myApiKey',
+            'ALGOLIA_API_KEY',
             ['acl' => [
                 'search',
 
@@ -2377,7 +2377,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR waitForApiKey wait for api key helper - add
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->waitForApiKey(
@@ -2400,7 +2400,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR waitForApiKey wait for api key - update
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->waitForApiKey(
@@ -2445,7 +2445,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR waitForApiKey wait for api key - delete
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->waitForApiKey(
@@ -2468,7 +2468,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR waitForAppTask default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->waitForAppTask(
@@ -2490,7 +2490,7 @@ class SnippetSearchClient
     {
         // >SEPARATOR waitForTask default
         // Initialize the client
-        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->waitForTask(

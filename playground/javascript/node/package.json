@@ -4,15 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start:algoliasearch": "tsc && node dist/algoliasearch.js",
-    "start:abtesting": "tsc && node dist/abtesting.js",
-    "start:analytics": "tsc && node dist/analytics.js",
-    "start:insights": "tsc && node dist/insights.js",
-    "start:personalization": "tsc && node dist/personalization.js",
-    "start:query-suggestions": "tsc && node dist/query-suggestions.js",
-    "start:recommend": "tsc && node dist/recommend.js",
-    "start:search": "tsc && node dist/search.js",
-    "start:sources": "tsc && node dist/sources.js",
+    "start": "tsc && node --env-file=../../.env dist/$0.js",
     "build": "tsc"
   },
   "dependencies": {
@@ -29,11 +21,10 @@
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
   },
   "devDependencies": {
-    "dotenv": "16.4.5",
-    "typescript": "5.5.4"
+    "typescript": "5.6.2"
   },
   "engines": {
-    "node": ">= 14.0.0",
+    "node": ">= 20.0.0",
     "yarn": "^4.0.0"
   }
 }

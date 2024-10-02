@@ -63,7 +63,9 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<AuthenticationType>("Algolia"),
         Name = "authName",
-        Input = new AuthInput(new AuthAlgolia { AppID = "myappID", ApiKey = "randomApiKey", }),
+        Input = new AuthInput(
+          new AuthAlgolia { AppID = "ALGOLIA_APPLICATION_ID", ApiKey = "ALGOLIA_API_KEY" }
+        ),
       }
     );
 
@@ -71,7 +73,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/authentications", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}",
+      "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"ALGOLIA_APPLICATION_ID\",\"apiKey\":\"ALGOLIA_API_KEY\"}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -85,7 +87,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______", }),
+        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______" }),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
@@ -108,7 +110,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______", }),
+        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______" }),
         TransformationIDs = new List<string> { "6c02aeb1-775e-418e-870b-1faccd4b2c0f" },
       }
     );
@@ -158,7 +160,7 @@ public class IngestionClientRequestTests
   public async Task CreateSourceTest1()
   {
     await client.CreateSourceAsync(
-      new SourceCreate { Type = Enum.Parse<SourceType>("Push"), Name = "pushezpourentrer", }
+      new SourceCreate { Type = Enum.Parse<SourceType>("Push"), Name = "pushezpourentrer" }
     );
 
     var req = _echo.LastResponse;
@@ -235,7 +237,7 @@ public class IngestionClientRequestTests
               {
                 Name = "foo",
                 SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
-              }
+              },
             },
           }
         ),
@@ -261,7 +263,7 @@ public class IngestionClientRequestTests
         SourceID = "search",
         DestinationID = "destinationName",
         Trigger = new TaskCreateTrigger(
-          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand"), }
+          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand") }
         ),
         Action = Enum.Parse<ActionType>("Replace"),
       }
@@ -315,7 +317,7 @@ public class IngestionClientRequestTests
         SourceID = "search",
         DestinationID = "destinationName",
         Trigger = new TaskCreateTrigger(
-          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand"), }
+          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand") }
         ),
         Action = Enum.Parse<ActionType>("Replace"),
       }
@@ -340,7 +342,7 @@ public class IngestionClientRequestTests
         SourceID = "search",
         DestinationID = "destinationName",
         Trigger = new TaskCreateTrigger(
-          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand"), }
+          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand") }
         ),
         Action = Enum.Parse<ActionType>("Replace"),
         Input = new TaskInput(
@@ -352,7 +354,7 @@ public class IngestionClientRequestTests
               {
                 Name = "foo",
                 SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
-              }
+              },
             },
           }
         ),
@@ -617,7 +619,7 @@ public class IngestionClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -638,7 +640,7 @@ public class IngestionClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -656,7 +658,7 @@ public class IngestionClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -677,7 +679,7 @@ public class IngestionClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -992,28 +994,6 @@ public class IngestionClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "generateTransformationCode")]
-  public async Task GenerateTransformationCodeTest()
-  {
-    await client.GenerateTransformationCodeAsync(
-      new GenerateTransformationCodePayload
-      {
-        Id = "foo",
-        UserPrompt =
-          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/transformations/models", req.Path);
-    Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
   [Fact(DisplayName = "getAuthentication")]
   public async Task GetAuthenticationTest()
   {
@@ -1128,7 +1108,7 @@ public class IngestionClientRequestTests
       new List<AuthenticationType>
       {
         Enum.Parse<AuthenticationType>("Basic"),
-        Enum.Parse<AuthenticationType>("Algolia")
+        Enum.Parse<AuthenticationType>("Algolia"),
       },
       new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
       Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
@@ -1220,17 +1200,6 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "listTransformationModels")]
-  public async Task ListTransformationModelsTest()
-  {
-    await client.ListTransformationModelsAsync();
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/transformations/models", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "listTransformations")]
   public async Task ListTransformationsTest()
   {
@@ -1259,7 +1228,7 @@ public class IngestionClientRequestTests
             {
               { "key", "bar" },
               { "foo", "1" },
-            }
+            },
           },
           new PushTaskRecords
           {
@@ -1268,8 +1237,8 @@ public class IngestionClientRequestTests
             {
               { "key", "baz" },
               { "foo", "2" },
-            }
-          }
+            },
+          },
         },
       }
     );
@@ -1338,7 +1307,7 @@ public class IngestionClientRequestTests
         AuthenticationIDs = new List<string>
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
         },
       }
     );
@@ -1362,7 +1331,7 @@ public class IngestionClientRequestTests
         DestinationIDs = new List<string>
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
         },
       }
     );
@@ -1386,7 +1355,7 @@ public class IngestionClientRequestTests
         SourceIDs = new List<string>
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
         },
       }
     );
@@ -1411,7 +1380,7 @@ public class IngestionClientRequestTests
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         },
       }
     );
@@ -1436,7 +1405,7 @@ public class IngestionClientRequestTests
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         },
       }
     );
@@ -1461,7 +1430,7 @@ public class IngestionClientRequestTests
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         },
       }
     );
@@ -1530,7 +1499,7 @@ public class IngestionClientRequestTests
                 ClientSecret = "mySecret",
               }
             ),
-          }
+          },
         },
       }
     );
@@ -1590,7 +1559,7 @@ public class IngestionClientRequestTests
                 ClientSecret = "mySecret",
               }
             ),
-          }
+          },
         },
       }
     );
@@ -1610,7 +1579,7 @@ public class IngestionClientRequestTests
   {
     await client.UpdateAuthenticationAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new AuthenticationUpdate { Name = "newName", }
+      new AuthenticationUpdate { Name = "newName" }
     );
 
     var req = _echo.LastResponse;
@@ -1624,7 +1593,7 @@ public class IngestionClientRequestTests
   {
     await client.UpdateDestinationAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new DestinationUpdate { Name = "newName", }
+      new DestinationUpdate { Name = "newName" }
     );
 
     var req = _echo.LastResponse;
@@ -1638,7 +1607,7 @@ public class IngestionClientRequestTests
   {
     await client.UpdateSourceAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new SourceUpdate { Name = "newName", }
+      new SourceUpdate { Name = "newName" }
     );
 
     var req = _echo.LastResponse;
@@ -1652,7 +1621,7 @@ public class IngestionClientRequestTests
   {
     await client.UpdateTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new TaskUpdate { Enabled = false, Cron = "* * * * *", }
+      new TaskUpdate { Enabled = false, Cron = "* * * * *" }
     );
 
     var req = _echo.LastResponse;
@@ -1670,7 +1639,7 @@ public class IngestionClientRequestTests
   {
     await client.UpdateTaskV1Async(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new TaskUpdateV1 { Enabled = false, }
+      new TaskUpdateV1 { Enabled = false }
     );
 
     var req = _echo.LastResponse;
@@ -1738,7 +1707,7 @@ public class IngestionClientRequestTests
   {
     await client.ValidateSourceBeforeUpdateAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new SourceUpdate { Name = "newName", }
+      new SourceUpdate { Name = "newName" }
     );
 
     var req = _echo.LastResponse;

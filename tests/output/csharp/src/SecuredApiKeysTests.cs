@@ -18,7 +18,7 @@ public class SecuredApiKeysTests
     var restriction = new SecuredApiKeyRestrictions
     {
       ValidUntil = new DateTimeOffset(DateTime.UtcNow.AddMinutes(-10)).ToUnixTimeSeconds(),
-      RestrictIndices = ["indexName"]
+      RestrictIndices = ["indexName"],
     };
 
     var client = new SearchClient(
@@ -39,7 +39,7 @@ public class SecuredApiKeysTests
     var restriction = new SecuredApiKeyRestrictions
     {
       ValidUntil = new DateTimeOffset(DateTime.UtcNow.AddMinutes(10)).ToUnixTimeSeconds(),
-      RestrictIndices = ["indexName"]
+      RestrictIndices = ["indexName"],
     };
 
     var client = new SearchClient(

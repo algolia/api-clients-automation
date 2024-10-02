@@ -331,7 +331,7 @@ final class InsightsClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -356,7 +356,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -380,7 +380,7 @@ final class InsightsClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -405,7 +405,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -785,7 +785,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_726_012_800_000)
+                timestamp: Int64(1_727_827_200_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -794,7 +794,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_726_012_800_000)
+                timestamp: Int64(1_727_827_200_000)
             )),
         ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -804,7 +804,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726012800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726012800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1727827200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1727827200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

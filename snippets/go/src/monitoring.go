@@ -15,7 +15,7 @@ func SnippetForCustomDeleteOfMonitoring() {
 
 	// >SEPARATOR customDelete default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -44,7 +44,7 @@ func SnippetForCustomGetOfMonitoring() {
 
 	// >SEPARATOR customGet default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -73,7 +73,7 @@ func SnippetForCustomPostOfMonitoring() {
 
 	// >SEPARATOR customPost default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -102,7 +102,7 @@ func SnippetForCustomPutOfMonitoring() {
 
 	// >SEPARATOR customPut default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -131,7 +131,7 @@ func SnippetForGetClusterIncidentsOfMonitoring() {
 
 	// >SEPARATOR getClusterIncidents default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -160,7 +160,7 @@ func SnippetForGetClusterStatusOfMonitoring() {
 
 	// >SEPARATOR getClusterStatus default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -189,7 +189,7 @@ func SnippetForGetIncidentsOfMonitoring() {
 
 	// >SEPARATOR getIncidents default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -216,7 +216,7 @@ func SnippetForGetIndexingTimeOfMonitoring() {
 
 	// >SEPARATOR getIndexingTime default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -245,7 +245,7 @@ func SnippetForGetLatencyOfMonitoring() {
 
 	// >SEPARATOR getLatency default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -274,7 +274,7 @@ func SnippetForGetMetricsOfMonitoring() {
 
 	// >SEPARATOR getMetrics default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -303,7 +303,7 @@ func SnippetForGetReachabilityOfMonitoring() {
 
 	// >SEPARATOR getReachability default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -332,7 +332,7 @@ func SnippetForGetServersOfMonitoring() {
 
 	// >SEPARATOR getServers default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -359,7 +359,7 @@ func SnippetForGetStatusOfMonitoring() {
 
 	// >SEPARATOR getStatus default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -386,7 +386,7 @@ func SnippetForSetClientApiKeyOfMonitoring() {
 
 	// >SEPARATOR setClientApiKey default
 	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

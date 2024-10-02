@@ -16,7 +16,7 @@ authenticationID:
   in: query
   description: |
     Authentication IDs of the sources to retrieve.
-    'none' returns sources that doesn't have an authentication resource.
+    'none' returns sources that doesn't have an authentication.
   required: false
   style: form
   explode: false

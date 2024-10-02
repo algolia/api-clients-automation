@@ -208,8 +208,3 @@ SearchPagination:
       $ref: '#/nbPages'
     hitsPerPage:
       $ref: './IndexSettings.yml#/hitsPerPage'
-  required:
-    - page
-    - nbHits
-    - nbPages
-    - hitsPerPage

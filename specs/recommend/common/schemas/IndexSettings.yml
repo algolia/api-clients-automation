@@ -1,0 +1,88 @@
+recommendIndexSettings:
+  description: Index settings.
+  allOf:
+    - $ref: '../../../common/schemas/IndexSettings.yml#/baseIndexSettings'
+    - $ref: '#/baseRecommendIndexSettings'
+
+baseRecommendIndexSettings:
+  type: object
+  additionalProperties: false
+  properties:
+    attributesToRetrieve:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/attributesToRetrieve'
+    ranking:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/ranking'
+    relevancyStrictness:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/relevancyStrictness'
+    attributesToHighlight:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/attributesToHighlight'
+    attributesToSnippet:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/attributesToSnippet'
+    highlightPreTag:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/highlightPreTag'
+    highlightPostTag:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/highlightPostTag'
+    snippetEllipsisText:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/snippetEllipsisText'
+    restrictHighlightAndSnippetArrays:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/restrictHighlightAndSnippetArrays'
+    minWordSizefor1Typo:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/minWordSizefor1Typo'
+    minWordSizefor2Typos:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/minWordSizefor2Typos'
+    typoTolerance:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/typoTolerance'
+    allowTyposOnNumericTokens:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/allowTyposOnNumericTokens'
+    disableTypoToleranceOnAttributes:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/disableTypoToleranceOnAttributes'
+    ignorePlurals:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/ignorePlurals'
+    removeStopWords:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/removeStopWords'
+    queryLanguages:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/queryLanguages'
+    decompoundQuery:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/decompoundQuery'
+    enableRules:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/enableRules'
+    enablePersonalization:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/enablePersonalization'
+    queryType:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/queryType'
+    removeWordsIfNoResults:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/removeWordsIfNoResults'
+    advancedSyntax:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/advancedSyntax'
+    optionalWords:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/optionalWords'
+    disableExactOnAttributes:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/disableExactOnAttributes'
+    exactOnSingleWordQuery:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/exactOnSingleWordQuery'
+    alternativesAsExact:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/alternativesAsExact'
+    advancedSyntaxFeatures:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/advancedSyntaxFeatures'
+    distinct:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/distinct'
+    replaceSynonymsInHighlight:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/replaceSynonymsInHighlight'
+    minProximity:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/minProximity'
+    responseFields:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/responseFields'
+    maxFacetHits:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/maxFacetHits'
+    maxValuesPerFacet:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/maxValuesPerFacet'
+    sortFacetValuesBy:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/sortFacetValuesBy'
+    attributeCriteriaComputedByMinProximity:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/attributeCriteriaComputedByMinProximity'
+    renderingContent:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/renderingContent'
+    enableReRanking:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/enableReRanking'
+    reRankingApplyFilter:
+      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/reRankingApplyFilter'

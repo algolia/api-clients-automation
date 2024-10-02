@@ -62,7 +62,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.4.1\).*/',
+                '/^Algolia for PHP \(4.5.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -141,7 +141,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
-        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://localhost:6683']));
+        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
 
         $res = $client->customGet(
             'check-api-key/1',

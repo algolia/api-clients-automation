@@ -27,7 +27,7 @@ import type { ListABTestsResponse } from '../model/listABTestsResponse';
 import type { ScheduleABTestResponse } from '../model/scheduleABTestResponse';
 import type { ScheduleABTestsRequest } from '../model/scheduleABTestsRequest';
 
-export const apiClientVersion = '5.4.1';
+export const apiClientVersion = '5.7.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -351,14 +351,13 @@ export function createAbtestingClient({
       const requestPath = '/2/abtests';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
+
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
-
       if (indexPrefix !== undefined) {
         queryParameters.indexPrefix = indexPrefix.toString();
       }

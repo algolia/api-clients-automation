@@ -9,7 +9,8 @@ import 'package:algolia_client_search/algolia_client_search.dart';
 void snippetForaddApiKey() async {
   // >SEPARATOR addApiKey default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.addApiKey(
@@ -34,7 +35,8 @@ void snippetForaddApiKey() async {
 void snippetForaddOrUpdateObject() async {
   // >SEPARATOR addOrUpdateObject default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.addOrUpdateObject(
@@ -54,7 +56,8 @@ void snippetForaddOrUpdateObject() async {
 void snippetForappendSource() async {
   // >SEPARATOR appendSource default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.appendSource(
@@ -73,7 +76,8 @@ void snippetForappendSource() async {
 void snippetForassignUserId() async {
   // >SEPARATOR assignUserId default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.assignUserId(
@@ -92,7 +96,8 @@ void snippetForassignUserId() async {
 void snippetForbatch() async {
   // >SEPARATOR batch addObject
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batch(
@@ -126,7 +131,8 @@ void snippetForbatch() async {
 void snippetForbatch1() async {
   // >SEPARATOR batch clear
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batch(
@@ -152,7 +158,8 @@ void snippetForbatch1() async {
 void snippetForbatch2() async {
   // >SEPARATOR batch delete
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batch(
@@ -178,7 +185,8 @@ void snippetForbatch2() async {
 void snippetForbatch3() async {
   // >SEPARATOR batch deleteObject
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batch(
@@ -204,7 +212,8 @@ void snippetForbatch3() async {
 void snippetForbatch4() async {
   // >SEPARATOR batch partialUpdateObject
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batch(
@@ -230,7 +239,8 @@ void snippetForbatch4() async {
 void snippetForbatch5() async {
   // >SEPARATOR batch partialUpdateObjectNoCreate
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batch(
@@ -256,7 +266,8 @@ void snippetForbatch5() async {
 void snippetForbatch6() async {
   // >SEPARATOR batch updateObject
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batch(
@@ -282,7 +293,8 @@ void snippetForbatch6() async {
 void snippetForbatchAssignUserIds() async {
   // >SEPARATOR batchAssignUserIds default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batchAssignUserIds(
@@ -305,7 +317,8 @@ void snippetForbatchAssignUserIds() async {
 void snippetForbatchDictionaryEntries() async {
   // >SEPARATOR batchDictionaryEntries replace
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batchDictionaryEntries(
@@ -343,7 +356,8 @@ void snippetForbatchDictionaryEntries() async {
 void snippetForbatchDictionaryEntries1() async {
   // >SEPARATOR batchDictionaryEntries delete
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batchDictionaryEntries(
@@ -370,7 +384,8 @@ void snippetForbatchDictionaryEntries1() async {
 void snippetForbatchDictionaryEntries2() async {
   // >SEPARATOR batchDictionaryEntries append
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.batchDictionaryEntries(
@@ -398,7 +413,8 @@ void snippetForbatchDictionaryEntries2() async {
 void snippetForbrowse() async {
   // >SEPARATOR browse default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.browse(
@@ -414,7 +430,8 @@ void snippetForbrowse() async {
 void snippetForclearObjects() async {
   // >SEPARATOR clearObjects default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.clearObjects(
@@ -430,7 +447,8 @@ void snippetForclearObjects() async {
 void snippetForclearRules() async {
   // >SEPARATOR clearRules default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.clearRules(
@@ -446,7 +464,8 @@ void snippetForclearRules() async {
 void snippetForclearSynonyms() async {
   // >SEPARATOR clearSynonyms default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.clearSynonyms(
@@ -462,7 +481,8 @@ void snippetForclearSynonyms() async {
 void snippetForcustomDelete() async {
   // >SEPARATOR customDelete default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customDelete(
@@ -478,7 +498,8 @@ void snippetForcustomDelete() async {
 void snippetForcustomGet() async {
   // >SEPARATOR customGet default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customGet(
@@ -494,7 +515,8 @@ void snippetForcustomGet() async {
 void snippetForcustomPost() async {
   // >SEPARATOR customPost default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customPost(
@@ -510,7 +532,8 @@ void snippetForcustomPost() async {
 void snippetForcustomPut() async {
   // >SEPARATOR customPut default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customPut(
@@ -526,7 +549,8 @@ void snippetForcustomPut() async {
 void snippetFordeleteApiKey() async {
   // >SEPARATOR deleteApiKey default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteApiKey(
@@ -542,7 +566,8 @@ void snippetFordeleteApiKey() async {
 void snippetFordeleteBy() async {
   // >SEPARATOR deleteBy default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteBy(
@@ -561,7 +586,8 @@ void snippetFordeleteBy() async {
 void snippetFordeleteIndex() async {
   // >SEPARATOR deleteIndex default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteIndex(
@@ -577,7 +603,8 @@ void snippetFordeleteIndex() async {
 void snippetFordeleteObject() async {
   // >SEPARATOR deleteObject default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteObject(
@@ -594,7 +621,8 @@ void snippetFordeleteObject() async {
 void snippetFordeleteObjects() async {
   // >SEPARATOR deleteObjects default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteObjects(
@@ -614,7 +642,8 @@ void snippetFordeleteObjects() async {
 void snippetFordeleteRule() async {
   // >SEPARATOR deleteRule default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteRule(
@@ -631,7 +660,8 @@ void snippetFordeleteRule() async {
 void snippetFordeleteSource() async {
   // >SEPARATOR deleteSource default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteSource(
@@ -647,7 +677,8 @@ void snippetFordeleteSource() async {
 void snippetFordeleteSynonym() async {
   // >SEPARATOR deleteSynonym default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteSynonym(
@@ -664,7 +695,8 @@ void snippetFordeleteSynonym() async {
 void snippetForgenerateSecuredApiKey() async {
   // >SEPARATOR generateSecuredApiKey generate secured api key basic
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = client.generateSecuredApiKey(
@@ -686,7 +718,8 @@ void snippetForgenerateSecuredApiKey() async {
 void snippetForgenerateSecuredApiKey1() async {
   // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = client.generateSecuredApiKey(
@@ -723,7 +756,8 @@ void snippetForgenerateSecuredApiKey1() async {
 void snippetForgetApiKey() async {
   // >SEPARATOR getApiKey default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getApiKey(
@@ -739,7 +773,8 @@ void snippetForgetApiKey() async {
 void snippetForgetAppTask() async {
   // >SEPARATOR getAppTask default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getAppTask(
@@ -755,7 +790,8 @@ void snippetForgetAppTask() async {
 void snippetForgetDictionaryLanguages() async {
   // >SEPARATOR getDictionaryLanguages default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getDictionaryLanguages();
@@ -769,7 +805,8 @@ void snippetForgetDictionaryLanguages() async {
 void snippetForgetDictionarySettings() async {
   // >SEPARATOR getDictionarySettings default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getDictionarySettings();
@@ -783,7 +820,8 @@ void snippetForgetDictionarySettings() async {
 void snippetForgetLogs() async {
   // >SEPARATOR getLogs default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getLogs();
@@ -797,7 +835,8 @@ void snippetForgetLogs() async {
 void snippetForgetObject() async {
   // >SEPARATOR getObject default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getObject(
@@ -818,7 +857,8 @@ void snippetForgetObject() async {
 void snippetForgetObjects() async {
   // >SEPARATOR getObjects default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getObjects(
@@ -845,7 +885,8 @@ void snippetForgetObjects() async {
 void snippetForgetRule() async {
   // >SEPARATOR getRule default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getRule(
@@ -862,7 +903,8 @@ void snippetForgetRule() async {
 void snippetForgetSettings() async {
   // >SEPARATOR getSettings default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getSettings(
@@ -878,7 +920,8 @@ void snippetForgetSettings() async {
 void snippetForgetSources() async {
   // >SEPARATOR getSources default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getSources();
@@ -892,7 +935,8 @@ void snippetForgetSources() async {
 void snippetForgetSynonym() async {
   // >SEPARATOR getSynonym default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getSynonym(
@@ -909,7 +953,8 @@ void snippetForgetSynonym() async {
 void snippetForgetTask() async {
   // >SEPARATOR getTask default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getTask(
@@ -926,7 +971,8 @@ void snippetForgetTask() async {
 void snippetForgetTopUserIds() async {
   // >SEPARATOR getTopUserIds default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getTopUserIds();
@@ -940,7 +986,8 @@ void snippetForgetTopUserIds() async {
 void snippetForgetUserId() async {
   // >SEPARATOR getUserId default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getUserId(
@@ -956,7 +1003,8 @@ void snippetForgetUserId() async {
 void snippetForhasPendingMappings() async {
   // >SEPARATOR hasPendingMappings default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.hasPendingMappings();
@@ -970,7 +1018,8 @@ void snippetForhasPendingMappings() async {
 void snippetForindexExists() async {
   // >SEPARATOR indexExists indexExists
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.indexExists(
@@ -986,7 +1035,8 @@ void snippetForindexExists() async {
 void snippetForindexExists1() async {
   // >SEPARATOR indexExists indexNotExists
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.indexExists(
@@ -1002,7 +1052,8 @@ void snippetForindexExists1() async {
 void snippetForindexExists2() async {
   // >SEPARATOR indexExists indexExistsWithError
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.indexExists(
@@ -1018,7 +1069,8 @@ void snippetForindexExists2() async {
 void snippetForlistApiKeys() async {
   // >SEPARATOR listApiKeys default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.listApiKeys();
@@ -1032,7 +1084,8 @@ void snippetForlistApiKeys() async {
 void snippetForlistClusters() async {
   // >SEPARATOR listClusters default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.listClusters();
@@ -1046,7 +1099,8 @@ void snippetForlistClusters() async {
 void snippetForlistIndices() async {
   // >SEPARATOR listIndices default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.listIndices();
@@ -1060,7 +1114,8 @@ void snippetForlistIndices() async {
 void snippetForlistUserIds() async {
   // >SEPARATOR listUserIds default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.listUserIds();
@@ -1074,7 +1129,8 @@ void snippetForlistUserIds() async {
 void snippetFormultipleBatch() async {
   // >SEPARATOR multipleBatch default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.multipleBatch(
@@ -1100,7 +1156,8 @@ void snippetFormultipleBatch() async {
 void snippetForoperationIndex() async {
   // >SEPARATOR operationIndex scopes
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.operationIndex(
@@ -1124,7 +1181,8 @@ void snippetForoperationIndex() async {
 void snippetForoperationIndex1() async {
   // >SEPARATOR operationIndex copy
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.operationIndex(
@@ -1144,7 +1202,8 @@ void snippetForoperationIndex1() async {
 void snippetForoperationIndex2() async {
   // >SEPARATOR operationIndex move
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.operationIndex(
@@ -1164,7 +1223,8 @@ void snippetForoperationIndex2() async {
 void snippetForpartialUpdateObject() async {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.partialUpdateObject(
@@ -1184,7 +1244,8 @@ void snippetForpartialUpdateObject() async {
 void snippetForpartialUpdateObjects() async {
   // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.partialUpdateObjects(
@@ -1211,7 +1272,8 @@ void snippetForpartialUpdateObjects() async {
 void snippetForpartialUpdateObjects1() async {
   // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.partialUpdateObjects(
@@ -1238,7 +1300,8 @@ void snippetForpartialUpdateObjects1() async {
 void snippetForremoveUserId() async {
   // >SEPARATOR removeUserId default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.removeUserId(
@@ -1254,7 +1317,8 @@ void snippetForremoveUserId() async {
 void snippetForreplaceAllObjects() async {
   // >SEPARATOR replaceAllObjects default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.replaceAllObjects(
@@ -1313,7 +1377,8 @@ void snippetForreplaceAllObjects() async {
 void snippetForreplaceSources() async {
   // >SEPARATOR replaceSources default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.replaceSources(
@@ -1334,11 +1399,12 @@ void snippetForreplaceSources() async {
 void snippetForrestoreApiKey() async {
   // >SEPARATOR restoreApiKey default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.restoreApiKey(
-    key: "myApiKey",
+    key: "ALGOLIA_API_KEY",
   );
   // >LOG
   // SEPARATOR<
@@ -1350,7 +1416,8 @@ void snippetForrestoreApiKey() async {
 void snippetForsaveObject() async {
   // >SEPARATOR saveObject default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.saveObject(
@@ -1370,7 +1437,8 @@ void snippetForsaveObject() async {
 void snippetForsaveObjects() async {
   // >SEPARATOR saveObjects call saveObjects without error
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.saveObjects(
@@ -1396,7 +1464,8 @@ void snippetForsaveObjects() async {
 void snippetForsaveObjects1() async {
   // >SEPARATOR saveObjects saveObjects should report errors
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.saveObjects(
@@ -1422,7 +1491,8 @@ void snippetForsaveObjects1() async {
 void snippetForsaveRule() async {
   // >SEPARATOR saveRule default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.saveRule(
@@ -1448,7 +1518,8 @@ void snippetForsaveRule() async {
 void snippetForsaveRules() async {
   // >SEPARATOR saveRules default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.saveRules(
@@ -1486,7 +1557,8 @@ void snippetForsaveRules() async {
 void snippetForsaveSynonym() async {
   // >SEPARATOR saveSynonym default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.saveSynonym(
@@ -1513,7 +1585,8 @@ void snippetForsaveSynonym() async {
 void snippetForsaveSynonyms() async {
   // >SEPARATOR saveSynonyms default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.saveSynonyms(
@@ -1552,7 +1625,8 @@ void snippetForsaveSynonyms() async {
 void snippetForsearch() async {
   // >SEPARATOR search withHitsPerPage
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -1576,7 +1650,8 @@ void snippetForsearch() async {
 void snippetForsearch1() async {
   // >SEPARATOR search filterOnly
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -1600,7 +1675,8 @@ void snippetForsearch1() async {
 void snippetForsearch2() async {
   // >SEPARATOR search filterOr
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -1624,7 +1700,8 @@ void snippetForsearch2() async {
 void snippetForsearch3() async {
   // >SEPARATOR search filterNot
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -1648,7 +1725,8 @@ void snippetForsearch3() async {
 void snippetForsearch4() async {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -1675,7 +1753,8 @@ void snippetForsearch4() async {
 void snippetForsearch5() async {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -1701,7 +1780,8 @@ void snippetForsearch5() async {
 void snippetForsearchDictionaryEntries() async {
   // >SEPARATOR searchDictionaryEntries default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.searchDictionaryEntries(
@@ -1720,7 +1800,8 @@ void snippetForsearchDictionaryEntries() async {
 void snippetForsearchForFacetValues() async {
   // >SEPARATOR searchForFacetValues default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.searchForFacetValues(
@@ -1737,7 +1818,8 @@ void snippetForsearchForFacetValues() async {
 void snippetForsearchRules() async {
   // >SEPARATOR searchRules default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.searchRules(
@@ -1756,7 +1838,8 @@ void snippetForsearchRules() async {
 void snippetForsearchSingleIndex() async {
   // >SEPARATOR searchSingleIndex default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.searchSingleIndex(
@@ -1772,7 +1855,8 @@ void snippetForsearchSingleIndex() async {
 void snippetForsearchSynonyms() async {
   // >SEPARATOR searchSynonyms default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.searchSynonyms(
@@ -1788,7 +1872,8 @@ void snippetForsearchSynonyms() async {
 void snippetForsearchUserIds() async {
   // >SEPARATOR searchUserIds default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.searchUserIds(
@@ -1809,7 +1894,8 @@ void snippetForsearchUserIds() async {
 void snippetForsetClientApiKey() async {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   client.setClientApiKey(
@@ -1825,7 +1911,8 @@ void snippetForsetClientApiKey() async {
 void snippetForsetDictionarySettings() async {
   // >SEPARATOR setDictionarySettings default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.setDictionarySettings(
@@ -1849,7 +1936,8 @@ void snippetForsetDictionarySettings() async {
 void snippetForsetSettings() async {
   // >SEPARATOR setSettings default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.setSettings(
@@ -1872,11 +1960,12 @@ void snippetForsetSettings() async {
 void snippetForupdateApiKey() async {
   // >SEPARATOR updateApiKey default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.updateApiKey(
-    key: "myApiKey",
+    key: "ALGOLIA_API_KEY",
     apiKey: ApiKey(
       acl: [
         Acl.fromJson("search"),
@@ -1897,7 +1986,8 @@ void snippetForupdateApiKey() async {
 void snippetForwaitForApiKey() async {
   // >SEPARATOR waitForApiKey wait for api key helper - add
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.waitForApiKey(
@@ -1914,7 +2004,8 @@ void snippetForwaitForApiKey() async {
 void snippetForwaitForApiKey1() async {
   // >SEPARATOR waitForApiKey wait for api key - update
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.waitForApiKey(
@@ -1950,7 +2041,8 @@ void snippetForwaitForApiKey1() async {
 void snippetForwaitForApiKey2() async {
   // >SEPARATOR waitForApiKey wait for api key - delete
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.waitForApiKey(
@@ -1967,7 +2059,8 @@ void snippetForwaitForApiKey2() async {
 void snippetForwaitForAppTask() async {
   // >SEPARATOR waitForAppTask default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.waitForAppTask(
@@ -1983,7 +2076,8 @@ void snippetForwaitForAppTask() async {
 void snippetForwaitForTask() async {
   // >SEPARATOR waitForTask default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.waitForTask(

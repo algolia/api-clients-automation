@@ -13,6 +13,23 @@ class TestRecommendClient:
         config=_config, transporter=EchoTransporter(_config)
     )
 
+    async def test_batch_recommend_rules_(self):
+        """
+        batch recommend rules
+        """
+        _req = await self._client.batch_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="related-products",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/related-products/recommend/rules/batch"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
     async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
@@ -203,14 +220,14 @@ class TestRecommendClient:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     async def test_custom_post_5(self):
@@ -226,14 +243,14 @@ class TestRecommendClient:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     async def test_custom_post_6(self):
@@ -719,6 +736,23 @@ class TestRecommendClientSync:
         config=_config, transporter=EchoTransporterSync(_config)
     )
 
+    def test_batch_recommend_rules_(self):
+        """
+        batch recommend rules
+        """
+        _req = self._client.batch_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="related-products",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/related-products/recommend/rules/batch"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
     def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
@@ -909,14 +943,14 @@ class TestRecommendClientSync:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     def test_custom_post_5(self):
@@ -932,14 +966,14 @@ class TestRecommendClientSync:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     def test_custom_post_6(self):

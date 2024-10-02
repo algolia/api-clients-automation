@@ -325,7 +325,7 @@ class InsightsClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -347,7 +347,7 @@ class InsightsClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -376,7 +376,7 @@ class InsightsClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -398,7 +398,7 @@ class InsightsClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -720,7 +720,7 @@ class InsightsClientRequestsTests {
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1726012800000L)
+                .setTimestamp(1727827200000L)
                 .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
               new ViewedObjectIDs()
@@ -729,7 +729,7 @@ class InsightsClientRequestsTests {
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1726012800000L)
+                .setTimestamp(1727827200000L)
                 .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
             )
           )
@@ -741,9 +741,9 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
-        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726012800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1727827200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
         " Detail Page" +
-        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726012800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1727827200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
         req.body,
         JSONCompareMode.STRICT
       )

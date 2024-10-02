@@ -255,7 +255,7 @@ class InsightsTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -275,7 +275,7 @@ class InsightsTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -292,7 +292,7 @@ class InsightsTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -312,7 +312,7 @@ class InsightsTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -574,7 +574,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1726012800000L),
+            timestamp = Some(1727827200000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -584,7 +584,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1726012800000L),
+            timestamp = Some(1727827200000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )
@@ -597,7 +597,7 @@ class InsightsTest extends AnyFunSuite {
     assert(res.path == "/1/events")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1726012800000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1726012800000,"objectIDs":["9780545139700","9780439784542"]}]}"""
+      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1727827200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1727827200000,"objectIDs":["9780545139700","9780439784542"]}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

@@ -113,9 +113,9 @@ case class RecommendationsResults(
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
     automaticInsights: Option[Boolean] = scala.None,
-    page: Int,
-    nbHits: Int,
-    nbPages: Int,
-    hitsPerPage: Int,
+    page: Option[Int] = scala.None,
+    nbHits: Option[Int] = scala.None,
+    nbPages: Option[Int] = scala.None,
+    hitsPerPage: Option[Int] = scala.None,
     hits: Seq[RecommendationsHit]
 )

@@ -13,21 +13,6 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
-	echo := &tests.EchoRequester{}
-	cfg := search.SearchConfiguration{
-		Configuration: transport.Configuration{
-			AppID:     "appID",
-			ApiKey:    "apiKey",
-			Requester: echo,
-		},
-	}
-	client, err := search.NewClientWithConfig(cfg)
-	require.NoError(t, err)
-
-	return client, echo
-}
-
 // benchmark the search method
 func TestSearchbenchmark0(t *testing.T) {
 	var err error
@@ -42,12 +27,12 @@ func TestSearchbenchmark0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6682", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6682", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 2000; i++ {
 		res, err = client.Search(client.NewApiSearchRequest(
 
 			search.NewEmptySearchMethodParams().SetRequests(

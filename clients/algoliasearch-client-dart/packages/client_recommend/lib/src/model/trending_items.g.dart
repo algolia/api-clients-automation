@@ -20,7 +20,7 @@ TrendingItems _$TrendingItemsFromJson(Map<String, dynamic> json) =>
               'fallbackParameters',
               (v) => v == null
                   ? null
-                  : SearchParamsObject.fromJson(v as Map<String, dynamic>)),
+                  : FallbackParams.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

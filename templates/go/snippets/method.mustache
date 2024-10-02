@@ -16,8 +16,8 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     */
     
     // >SEPARATOR {{method}} {{testName}}
-    // Initialize the client{{#hasRegionalHost}} with your application region, eg. {{clientPrefix}}.YOUR_APP_ID_REGION{{/hasRegionalHost}}
-    client, err := {{clientPrefix}}.NewClient("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}}{{/hasRegionalHost}})
+    // Initialize the client{{#hasRegionalHost}} with your application region, eg. {{clientPrefix}}.ALGOLIA_APPLICATION_REGION{{/hasRegionalHost}}
+    client, err := {{clientPrefix}}.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"{{#hasRegionalHost}}, {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}}{{/hasRegionalHost}})
     if err != nil {
       // The client can fail to initialize if you pass an invalid parameter.
       panic(err)

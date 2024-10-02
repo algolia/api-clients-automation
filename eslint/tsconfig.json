@@ -2,6 +2,8 @@
   "extends": "../config/base.tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   },
   "include": [
     "src/**/*.ts",

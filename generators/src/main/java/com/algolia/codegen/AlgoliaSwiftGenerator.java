@@ -38,6 +38,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "aroundradiusall",
     "automaticfacetfilter",
     "automaticfacetfilters",
+    "baseindexsettings",
     "basesearchparams",
     "basesearchparamswithoutquery",
     "basesearchresponse",
@@ -84,8 +85,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "range",
     "rankinginfo",
     "redirect",
-    "redirectruleindexmetadata",
     "redirectruleindexdata",
+    "redirectruleindexmetadata",
     "redirecturl",
     "region",
     "removestopwords",
@@ -105,6 +106,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "supportedlanguage",
     "tagfilters",
     "taskstatus",
+    "timerange",
     "typotolerance",
     "typotoleranceenum",
     "value"
@@ -196,9 +198,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     supportingFiles.add(
       new SupportingFile("client_configuration.mustache", sourceFolder, getClientName(CLIENT) + "ClientConfiguration.swift")
     );
-    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
-    supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
-    supportingFiles.add(new SupportingFile("Bug_report.yml", ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
+    Helpers.addCommonSupportingFiles(supportingFiles, "");
 
     supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
     supportingFiles.add(new SupportingFile("podspec.mustache", projectName + ".podspec"));

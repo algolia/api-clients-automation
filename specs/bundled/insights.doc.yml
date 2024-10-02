@@ -151,7 +151,7 @@ paths:
           source: |
             // Initialize the client
             var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -162,9 +162,9 @@ paths:
           source: |
             // Initialize the client
             final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
 
             // Call the API
             final response = await client.customGet(
@@ -175,10 +175,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
+            insights.ALGOLIA_APPLICATION_REGION
 
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -208,8 +208,8 @@ paths:
           source: >
             // Initialize the client
 
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -222,8 +222,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = insightsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -241,8 +241,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -262,8 +262,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -283,15 +283,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_get(
+            response = client.custom_get(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_get_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -309,8 +326,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -330,32 +347,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -397,7 +411,7 @@ paths:
           source: |
             // Initialize the client
             var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -408,9 +422,9 @@ paths:
           source: |
             // Initialize the client
             final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
 
             // Call the API
             final response = await client.customPost(
@@ -421,10 +435,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
+            insights.ALGOLIA_APPLICATION_REGION
 
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -454,8 +468,8 @@ paths:
           source: >
             // Initialize the client
 
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -468,8 +482,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = insightsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -487,8 +501,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -508,8 +522,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -529,15 +543,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_post(
+            response = client.custom_post(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_post_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -555,8 +586,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -576,32 +607,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -643,7 +671,7 @@ paths:
           source: |
             // Initialize the client
             var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -654,9 +682,9 @@ paths:
           source: |
             // Initialize the client
             final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
 
             // Call the API
             final response = await client.customPut(
@@ -667,10 +695,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
+            insights.ALGOLIA_APPLICATION_REGION
 
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -700,8 +728,8 @@ paths:
           source: >
             // Initialize the client
 
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -714,8 +742,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = insightsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -733,8 +761,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -754,8 +782,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -775,15 +803,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_put(
+            response = client.custom_put(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_put_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -801,8 +846,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -822,32 +867,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -883,7 +925,7 @@ paths:
           source: |
             // Initialize the client
             var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -894,9 +936,9 @@ paths:
           source: |
             // Initialize the client
             final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
 
             // Call the API
             final response = await client.customDelete(
@@ -907,10 +949,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
+            insights.ALGOLIA_APPLICATION_REGION
 
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -941,8 +983,8 @@ paths:
           source: >
             // Initialize the client
 
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -955,8 +997,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = insightsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -975,8 +1017,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -996,8 +1038,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1017,15 +1059,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_delete(
+            response = client.custom_delete(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_delete_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -1043,8 +1102,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -1064,32 +1123,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1545,7 +1601,7 @@ paths:
           source: |
             // Initialize the client
             var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -1567,7 +1623,7 @@ paths:
                       QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
                       Positions = new List<int> { 7, 6 },
                     }
-                  )
+                  ),
                 },
               }
             );
@@ -1577,9 +1633,9 @@ paths:
           source: |
             // Initialize the client
             final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
 
             // Call the API
             final response = await client.pushEvents(
@@ -1610,10 +1666,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
+            insights.ALGOLIA_APPLICATION_REGION
 
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1648,8 +1704,8 @@ paths:
           source: >
             // Initialize the client
 
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1678,8 +1734,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = insightsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1711,8 +1767,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1746,8 +1802,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1787,13 +1843,17 @@ paths:
           source: >
             # Initialize the client
 
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.push_events(
+            response = client.push_events(
                 insights_events={
                     "events": [
                         {
@@ -1818,6 +1878,39 @@ paths:
             )
 
 
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.push_events_with_http_info(
+                insights_events={
+                    "events": [
+                        {
+                            "eventType": "click",
+                            "eventName": "Product Clicked",
+                            "index": "products",
+                            "userToken": "user-123456",
+                            "authenticatedUserToken": "user-123456",
+                            "timestamp": 1641290601962,
+                            "objectIDs": [
+                                "9780545139700",
+                                "9780439784542",
+                            ],
+                            "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
+                            "positions": [
+                                7,
+                                6,
+                            ],
+                        },
+                    ],
+                },
+            )
+
+
+            print(raw_response.raw_data)
+
+
             # >LOG
 
             # use the class directly
@@ -1833,8 +1926,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -1870,15 +1963,15 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.pushEvents(
               insightsEvents = InsightsEvents(
                 events = Seq(
@@ -1897,19 +1990,16 @@ paths:
               )
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1981,7 +2071,7 @@ paths:
           source: |
             // Initialize the client
             var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -1992,9 +2082,9 @@ paths:
           source: |
             // Initialize the client
             final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
 
             // Call the API
             await client.deleteUserToken(
@@ -2005,10 +2095,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
+            insights.ALGOLIA_APPLICATION_REGION
 
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -2034,8 +2124,8 @@ paths:
           source: >
             // Initialize the client
 
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -2048,8 +2138,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = insightsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2063,8 +2153,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -2080,8 +2170,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2097,13 +2187,24 @@ paths:
           source: >
             # Initialize the client
 
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            await _client.delete_user_token(
+            client.delete_user_token(
+                user_token="test-user-1",
+            )
+
+
+            # Skip deserialization
+
+            client.delete_user_token_with_http_info(
                 user_token="test-user-1",
             )
 
@@ -2114,8 +2215,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -2125,19 +2226,18 @@ paths:
             # >LOG
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             client.deleteUserToken(
               userToken = "test-user-1"
             )
-
 
             // >LOG
         - lang: swift
@@ -2145,8 +2245,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API

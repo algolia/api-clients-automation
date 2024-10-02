@@ -20,7 +20,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR createAuthentication default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->createAuthentication(
@@ -48,7 +48,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR createDestination default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->createDestination(
@@ -75,7 +75,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR createSource default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->createSource(
@@ -109,7 +109,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR createTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->createTask(
@@ -134,7 +134,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR createTaskV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->createTaskV1(
@@ -161,7 +161,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR createTransformation default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->createTransformation(
@@ -186,7 +186,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -208,7 +208,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -230,7 +230,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -252,7 +252,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -274,7 +274,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR deleteAuthentication default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteAuthentication(
@@ -296,7 +296,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR deleteDestination default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteDestination(
@@ -318,7 +318,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR deleteSource default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteSource(
@@ -340,7 +340,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR deleteTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteTask(
@@ -362,7 +362,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR deleteTaskV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteTaskV1(
@@ -384,7 +384,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR deleteTransformation default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteTransformation(
@@ -406,7 +406,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR disableTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->disableTask(
@@ -428,7 +428,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR disableTaskV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->disableTaskV1(
@@ -450,7 +450,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR enableTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->enableTask(
@@ -472,35 +472,11 @@ class SnippetIngestionClient
     {
         // >SEPARATOR enableTaskV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->enableTaskV1(
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-        );
-
-        // >LOG
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
-     * Snippet for the GenerateTransformationCode method.
-     *
-     * generateTransformationCode
-     */
-    public function snippetForGenerateTransformationCode(): void
-    {
-        // >SEPARATOR generateTransformationCode default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->generateTransformationCode(
-            ['id' => 'foo',
-                'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
-            ],
         );
 
         // >LOG
@@ -518,7 +494,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getAuthentication default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getAuthentication(
@@ -540,7 +516,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getDestination default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getDestination(
@@ -562,7 +538,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getEvent default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getEvent(
@@ -585,7 +561,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getRun default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getRun(
@@ -607,7 +583,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getSource default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getSource(
@@ -629,7 +605,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTask(
@@ -651,7 +627,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getTaskV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTaskV1(
@@ -673,7 +649,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR getTransformation default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTransformation(
@@ -695,7 +671,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listAuthentications default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listAuthentications();
@@ -715,7 +691,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listDestinations default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listDestinations();
@@ -735,7 +711,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listEvents default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listEvents(
@@ -757,7 +733,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listRuns default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listRuns();
@@ -777,7 +753,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listSources default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listSources();
@@ -797,7 +773,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listTasks default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listTasks();
@@ -817,30 +793,10 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listTasksV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listTasksV1();
-
-        // >LOG
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
-     * Snippet for the ListTransformationModels method.
-     *
-     * listTransformationModels
-     */
-    public function snippetForListTransformationModels(): void
-    {
-        // >SEPARATOR listTransformationModels default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->listTransformationModels();
 
         // >LOG
         // play with the response
@@ -857,7 +813,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR listTransformations default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listTransformations();
@@ -877,7 +833,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR pushTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->pushTask(
@@ -912,7 +868,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR runSource default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->runSource(
@@ -946,7 +902,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR runTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->runTask(
@@ -968,7 +924,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR runTaskV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->runTaskV1(
@@ -990,7 +946,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR searchAuthentications default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->searchAuthentications(
@@ -1017,7 +973,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR searchDestinations default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->searchDestinations(
@@ -1044,7 +1000,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR searchSources default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->searchSources(
@@ -1071,7 +1027,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR searchTasks default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->searchTasks(
@@ -1100,7 +1056,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR searchTasksV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->searchTasksV1(
@@ -1129,7 +1085,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR searchTransformations default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->searchTransformations(
@@ -1158,7 +1114,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $client->setClientApiKey(
@@ -1178,7 +1134,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR triggerDockerSourceDiscover default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->triggerDockerSourceDiscover(
@@ -1200,7 +1156,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR tryTransformation default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->tryTransformation(
@@ -1225,7 +1181,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR tryTransformationBeforeUpdate default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->tryTransformationBeforeUpdate(
@@ -1251,7 +1207,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR updateAuthentication default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->updateAuthentication(
@@ -1275,7 +1231,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR updateDestination default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->updateDestination(
@@ -1299,7 +1255,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR updateSource default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->updateSource(
@@ -1323,7 +1279,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR updateTask default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->updateTask(
@@ -1348,7 +1304,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR updateTaskV1 default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->updateTaskV1(
@@ -1372,7 +1328,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR updateTransformation default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->updateTransformation(
@@ -1398,7 +1354,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR validateSource default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->validateSource(
@@ -1432,7 +1388,7 @@ class SnippetIngestionClient
     {
         // >SEPARATOR validateSourceBeforeUpdate default
         // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->validateSourceBeforeUpdate(

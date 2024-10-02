@@ -37,7 +37,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       );
       break;
     case 'javascript':
-      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`);
+      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`, { language });
       break;
     case 'kotlin':
       await run(`./gradle/gradlew -p ${cwd} spotlessApply`, { language });
@@ -51,7 +51,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'python':
       await run(
-        'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix && poetry run ruff format',
+        'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix --unsafe-fixes && poetry run ruff format',
         { cwd, language },
       );
       break;
