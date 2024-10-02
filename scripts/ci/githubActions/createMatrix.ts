@@ -96,7 +96,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
           return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension} ${testsRootFolder}/benchmarkResult.json`;
         })
         .join(' '),
-      snippetsToStore: `snippets/${language}`,
+      guidesToStore: `guides/${language} snippets/${language}`,
       version,
       isMainVersion: true,
     };

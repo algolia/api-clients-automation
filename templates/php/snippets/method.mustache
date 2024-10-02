@@ -5,7 +5,7 @@
 namespace Algolia\AlgoliaSearch\Snippets;
 
 // >IMPORT
-use Algolia\AlgoliaSearch\Api\{{client}};
+{{> snippets/import}}
 // IMPORT<
 
 class Snippet{{client}}
@@ -21,7 +21,7 @@ class Snippet{{client}}
     {
         // >SEPARATOR {{method}} {{testName}}
         // Initialize the client
-        $client = {{client}}::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY'{{#hasRegionalHost}}, 'ALGOLIA_APPLICATION_REGION'{{/hasRegionalHost}});
+        {{> snippets/init}}
 
         // Call the API
         {{#hasResponse}}$response = {{/hasResponse}}{{> tests/method}};

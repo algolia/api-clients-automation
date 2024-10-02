@@ -6,6 +6,8 @@
   "workspaces": [
     "scripts/",
     "playground/javascript/node/",
+    "snippets/javascript/",
+    "guides/javascript/",
     "eslint"
   ],
   "scripts": {

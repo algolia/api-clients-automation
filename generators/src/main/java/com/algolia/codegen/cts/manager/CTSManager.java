@@ -31,7 +31,7 @@ public interface CTSManager {
     // NO-OP
   }
 
-  public default void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
+  public default void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
     // NO-OP
   }
 

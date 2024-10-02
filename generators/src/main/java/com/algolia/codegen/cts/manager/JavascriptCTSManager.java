@@ -37,6 +37,12 @@ public class JavascriptCTSManager implements CTSManager {
   }
 
   @Override
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
+    supportingFiles.add(new SupportingFile("snippets/package.mustache", output + "/javascript", "package.json"));
+    supportingFiles.add(new SupportingFile("snippets/tsconfig.mustache", output + "/javascript", "tsconfig.json"));
+  }
+
+  @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
 
