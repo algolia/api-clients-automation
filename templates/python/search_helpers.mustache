@@ -209,10 +209,12 @@
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
         """
-        if not isinstance(restrictions, SecuredApiKeyRestrictions):
-            restrictions = SecuredApiKeyRestrictions.from_dict(restrictions)
+        restrictions_dict = {}
+        if isinstance(restrictions, SecuredApiKeyRestrictions):
+          restrictions_dict = restrictions.to_dict()
+        elif isinstance(restrictions, dict):
+          restrictions_dict = restrictions
 
-        restrictions_dict: dict[str, Any] = restrictions.to_dict()
         if "searchParams" in restrictions_dict:
             restrictions_dict = {**restrictions_dict, **restrictions_dict["searchParams"]}
             del restrictions_dict["searchParams"]
