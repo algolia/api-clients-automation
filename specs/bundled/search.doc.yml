@@ -369,6 +369,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -630,6 +632,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -893,6 +897,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1149,6 +1155,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -1427,6 +1435,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -1760,6 +1770,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -2106,6 +2118,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2427,6 +2441,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2746,6 +2762,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3047,6 +3065,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3346,6 +3366,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -3669,6 +3691,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3965,6 +3989,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -4250,6 +4276,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -4527,6 +4555,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -4870,6 +4900,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -5240,6 +5272,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -5720,6 +5754,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6137,6 +6173,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6461,6 +6499,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6757,6 +6797,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -7064,6 +7106,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -7386,6 +7430,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -7713,6 +7759,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -8045,6 +8093,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -8435,6 +8485,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8718,6 +8770,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8985,6 +9039,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -9267,6 +9323,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -9595,6 +9653,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -9896,6 +9956,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -10217,6 +10279,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -10488,6 +10552,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -10756,6 +10822,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -11064,6 +11132,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -11391,6 +11461,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -11733,6 +11805,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -12132,6 +12206,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -12454,6 +12530,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -12835,6 +12913,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -13276,6 +13356,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -13559,6 +13641,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -13860,6 +13944,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -14166,6 +14252,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -14441,6 +14529,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -14737,6 +14827,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -15030,6 +15122,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -15349,6 +15443,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -15607,6 +15703,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -15875,6 +15973,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -16141,6 +16241,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -16498,6 +16600,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -16820,6 +16924,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -17065,6 +17171,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -17341,6 +17449,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -17641,6 +17751,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -17933,6 +18045,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -18371,6 +18485,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -18628,6 +18744,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -18910,6 +19028,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -19275,6 +19395,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -19584,6 +19706,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
