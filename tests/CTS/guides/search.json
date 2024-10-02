@@ -4,11 +4,7 @@
     "ignoreResponse": true,
     "parameters": {
       "indexName": "movies_index",
-      "objects": [
-        {
-          "$var": "objects"
-        }
-      ]
+      "objects": "$var: objects"
     }
   }
 }
