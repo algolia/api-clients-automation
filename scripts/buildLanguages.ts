@@ -42,7 +42,10 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       break;
     case 'java':
     case 'kotlin':
-      await run(`./gradle/gradlew -p ${cwd} assemble`, { language });
+      await run(
+        `./gradle/gradlew -p ${cwd} ${buildType === 'client' || buildType === 'playground' ? 'assemble' : 'build'}`,
+        { language },
+      );
       break;
     case 'php':
       // await runComposerInstall();
