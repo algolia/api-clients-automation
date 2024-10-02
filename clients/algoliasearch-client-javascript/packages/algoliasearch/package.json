@@ -1,5 +1,5 @@
 {
-  "version": "5.3.2",
+  "version": "5.7.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
     "clean": "rm -rf ./dist || true",
-    "test": "jest",
+    "test": "vitest --run",
     "test:bundle": "publint . && attw --pack ."
   },
   "name": "algoliasearch",
@@ -26,6 +26,10 @@
         "import": "./dist/node.js",
         "module": "./dist/node.js",
         "require": "./dist/node.cjs"
+      },
+      "worker": {
+        "types": "./dist/fetch.d.ts",
+        "default": "./dist/fetch.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -55,6 +59,10 @@
   },
   "jsdelivr": "./dist/algoliasearch.umd.js",
   "unpkg": "./dist/algoliasearch.umd.js",
+  "react-native": {
+    ".": "./dist/browser.js",
+    "./lite": "./dist/lite/builds/browser.js"
+  },
   "files": [
     "dist",
     "builds",
@@ -65,26 +73,27 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-abtesting": "5.3.2",
-    "@algolia/client-analytics": "5.3.2",
-    "@algolia/client-common": "5.3.2",
-    "@algolia/client-personalization": "5.3.2",
-    "@algolia/client-search": "5.3.2",
-    "@algolia/recommend": "5.3.2",
-    "@algolia/requester-browser-xhr": "5.3.2",
-    "@algolia/requester-node-http": "5.3.2"
+    "@algolia/client-abtesting": "5.7.0",
+    "@algolia/client-analytics": "5.7.0",
+    "@algolia/client-common": "5.7.0",
+    "@algolia/client-personalization": "5.7.0",
+    "@algolia/client-search": "5.7.0",
+    "@algolia/recommend": "5.7.0",
+    "@algolia/requester-browser-xhr": "5.7.0",
+    "@algolia/requester-fetch": "5.7.0",
+    "@algolia/requester-node-http": "5.7.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.15.4",
-    "@babel/preset-env": "7.25.4",
-    "@babel/preset-typescript": "7.24.7",
-    "@types/jest": "29.5.12",
-    "@types/node": "22.5.1",
-    "jest": "29.7.0",
-    "publint": "0.2.10",
-    "rollup": "4.21.2",
-    "tsup": "8.2.4",
-    "typescript": "5.5.4"
+    "@algolia/requester-testing": "5.7.0",
+    "@arethetypeswrong/cli": "0.16.4",
+    "@types/node": "22.7.4",
+    "jsdom": "25.0.1",
+    "publint": "0.2.11",
+    "rollup": "4.22.5",
+    "tsup": "8.3.0",
+    "typescript": "5.6.2",
+    "vitest": "2.1.1",
+    "vitest-environment-miniflare": "2.14.3"
   },
   "engines": {
     "node": ">= 14.0.0"

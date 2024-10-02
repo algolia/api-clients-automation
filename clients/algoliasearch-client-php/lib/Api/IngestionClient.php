@@ -12,7 +12,6 @@ use Algolia\AlgoliaSearch\Model\Ingestion\AuthenticationUpdate;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationCreate;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationSearch;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationUpdate;
-use Algolia\AlgoliaSearch\Model\Ingestion\GenerateTransformationCodePayload;
 use Algolia\AlgoliaSearch\Model\Ingestion\PushTaskPayload;
 use Algolia\AlgoliaSearch\Model\Ingestion\RunSourcePayload;
 use Algolia\AlgoliaSearch\Model\Ingestion\SourceCreate;
@@ -30,7 +29,6 @@ use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
-use Algolia\AlgoliaSearch\Support\Helpers;
 use GuzzleHttp\Psr7\Query;
 
 /**
@@ -40,7 +38,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.4.0';
+    public const VERSION = '4.5.0';
 
     /**
      * @var ApiWrapperInterface
@@ -880,42 +878,6 @@ class IngestionClient
     }
 
     /**
-     * Generates code for the selected model based on the given prompt.
-     *
-     * Required API Key ACLs:
-     *  - addObject
-     *  - deleteIndex
-     *  - editSettings
-     *
-     * @param array $generateTransformationCodePayload generateTransformationCodePayload (required)
-     *                                                 - $generateTransformationCodePayload['id'] => (string)  (required)
-     *                                                 - $generateTransformationCodePayload['systemPrompt'] => (string)
-     *                                                 - $generateTransformationCodePayload['userPrompt'] => (string)  (required)
-     *
-     * @see GenerateTransformationCodePayload
-     *
-     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\GenerateTransformationCodeResponse|array<string, mixed>
-     */
-    public function generateTransformationCode($generateTransformationCodePayload, $requestOptions = [])
-    {
-        // verify the required parameter 'generateTransformationCodePayload' is set
-        if (!isset($generateTransformationCodePayload)) {
-            throw new \InvalidArgumentException(
-                'Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`.'
-            );
-        }
-
-        $resourcePath = '/1/transformations/models';
-        $queryParameters = [];
-        $headers = [];
-        $httpBody = $generateTransformationCodePayload;
-
-        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
-    }
-
-    /**
      * Retrieves an authentication resource by its ID.
      *
      * Required API Key ACLs:
@@ -1254,8 +1216,8 @@ class IngestionClient
      * @param int   $itemsPerPage   Number of items per page. (optional, default to 10)
      * @param int   $page           Page number of the paginated API response. (optional)
      * @param array $type           Type of authentication resource to retrieve. (optional)
-     * @param array $platform       Ecommerce platform for which to retrieve authentication resources. (optional)
-     * @param array $sort           Property by which to sort the list of authentication resources. (optional)
+     * @param array $platform       Ecommerce platform for which to retrieve authentications. (optional)
+     * @param array $sort           Property by which to sort the list of authentications. (optional)
      * @param array $order          Sort order of the response, ascending or descending. (optional)
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -1320,17 +1282,18 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param int   $itemsPerPage     Number of items per page. (optional, default to 10)
-     * @param int   $page             Page number of the paginated API response. (optional)
-     * @param array $type             Destination type. (optional)
-     * @param array $authenticationID Authentication ID used by destinations. (optional)
-     * @param array $sort             Property by which to sort the destinations. (optional)
-     * @param array $order            Sort order of the response, ascending or descending. (optional)
-     * @param array $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     * @param int    $itemsPerPage     Number of items per page. (optional, default to 10)
+     * @param int    $page             Page number of the paginated API response. (optional)
+     * @param array  $type             Destination type. (optional)
+     * @param array  $authenticationID Authentication ID used by destinations. (optional)
+     * @param string $transformationID Get the list of destinations used by a transformation. (optional)
+     * @param array  $sort             Property by which to sort the destinations. (optional)
+     * @param array  $order            Sort order of the response, ascending or descending. (optional)
+     * @param array  $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\ListDestinationsResponse|array<string, mixed>
      */
-    public function listDestinations($itemsPerPage = null, $page = null, $type = null, $authenticationID = null, $sort = null, $order = null, $requestOptions = [])
+    public function listDestinations($itemsPerPage = null, $page = null, $type = null, $authenticationID = null, $transformationID = null, $sort = null, $order = null, $requestOptions = [])
     {
         if (null !== $itemsPerPage && $itemsPerPage > 100) {
             throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listDestinations, must be smaller than or equal to 100.');
@@ -1368,6 +1331,13 @@ class IngestionClient
         }
         if (null !== $authenticationID) {
             $queryParameters['authenticationID'] = $authenticationID;
+        }
+
+        if (is_array($transformationID)) {
+            $transformationID = ObjectSerializer::serializeCollection($transformationID, 'form', true);
+        }
+        if (null !== $transformationID) {
+            $queryParameters['transformationID'] = $transformationID;
         }
 
         if (null !== $sort) {
@@ -1559,7 +1529,7 @@ class IngestionClient
      * @param int   $itemsPerPage     Number of items per page. (optional, default to 10)
      * @param int   $page             Page number of the paginated API response. (optional)
      * @param array $type             Source type. Some sources require authentication. (optional)
-     * @param array $authenticationID Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource. (optional)
+     * @param array $authenticationID Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication. (optional)
      * @param array $sort             Property by which to sort the list of sources. (optional)
      * @param array $order            Sort order of the response, ascending or descending. (optional)
      * @param array $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -1798,28 +1768,6 @@ class IngestionClient
     }
 
     /**
-     * Retrieves a list of existing LLM transformation helpers.
-     *
-     * Required API Key ACLs:
-     *  - addObject
-     *  - deleteIndex
-     *  - editSettings
-     *
-     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationModels|array<string, mixed>
-     */
-    public function listTransformationModels($requestOptions = [])
-    {
-        $resourcePath = '/1/transformations/models';
-        $queryParameters = [];
-        $headers = [];
-        $httpBody = null;
-
-        return $this->sendRequest('GET', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
-    }
-
-    /**
      * Retrieves a list of transformations.
      *
      * Required API Key ACLs:
@@ -1829,7 +1777,7 @@ class IngestionClient
      *
      * @param int   $itemsPerPage   Number of items per page. (optional, default to 10)
      * @param int   $page           Page number of the paginated API response. (optional)
-     * @param array $sort           Property by which to sort the list. (optional)
+     * @param array $sort           Property by which to sort the list of transformations. (optional)
      * @param array $order          Sort order of the response, ascending or descending. (optional)
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *

@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import path from 'path';
+
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
@@ -7,7 +9,6 @@ import generationCommitText, { isGeneratedCommit } from '../ci/codegen/text.js';
 import { getNbGitDiff } from '../ci/utils.js';
 import {
   LANGUAGES,
-  ROOT_ENV_PATH,
   run,
   MAIN_BRANCH,
   OWNER,
@@ -19,19 +20,18 @@ import {
   gitBranchExists,
   setVerbose,
   configureGitHubAuthor,
+  ROOT_DIR,
 } from '../common.js';
-import { getLanguageFolder, getPackageVersionDefault } from '../config.js';
+import { getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
 
-import { getLastReleasedTag } from './common.js';
-import { generateSLA } from './sla.js';
+import { getFileChanges, getLastReleasedTag } from './common.js';
 import TEXT from './text.js';
-import type { Versions, VersionsBeforeBump, PassedCommit, Commit, Scope, Changelog } from './types.js';
+import type { Versions, ParsedCommit, Commit, Changelog, Scope, CommitType } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
+import { generateVersionsHistory } from './versionsHistory.js';
 
-dotenv.config({ path: ROOT_ENV_PATH });
-
-export const COMMON_SCOPES = ['specs', 'clients'];
+dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 
 // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
 // see https://peps.python.org/pep-0440/
@@ -41,28 +41,13 @@ export const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta
 // Prevent fetching the same user multiple times
 const fetchedUsers: Record<string, string> = {};
 
-export function readVersions(): VersionsBeforeBump {
-  return Object.fromEntries(LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]));
-}
-
 export function getVersionChangesText(versions: Versions): string {
   return LANGUAGES.map((lang) => {
-    const { current, releaseType, noCommit, skipRelease, next } = versions[lang];
-
-    if (noCommit) {
-      return `- ~${lang}: ${current} (${TEXT.noCommit})~`;
+    if (!versions[lang]) {
+      return `- ~${lang}: ${getPackageVersionDefault(lang)} (no commit)~`;
     }
 
-    if (!current) {
-      return `- ~${lang}: (${TEXT.currentVersionNotFound})~`;
-    }
-
-    if (skipRelease) {
-      return [
-        `- ~${lang}: ${current} -> **\`${releaseType}\` _(e.g. ${next})_**~`,
-        TEXT.descriptionForSkippedLang,
-      ].join('\n');
-    }
+    const { current, releaseType, next } = versions[lang];
 
     return `- ${lang}: ${current} -> **\`${releaseType}\` _(e.g. ${next})_**`;
   }).join('\n');
@@ -70,12 +55,10 @@ export function getVersionChangesText(versions: Versions): string {
 
 export function getSkippedCommitsText({
   commitsWithoutLanguageScope,
-  commitsWithUnknownLanguageScope,
 }: {
   commitsWithoutLanguageScope: string[];
-  commitsWithUnknownLanguageScope: string[];
 }): string {
-  if (commitsWithoutLanguageScope.length === 0 && commitsWithUnknownLanguageScope.length === 0) {
+  if (commitsWithoutLanguageScope.length === 0) {
     return '_(None)_';
   }
 
@@ -94,48 +77,51 @@ export function getSkippedCommitsText({
     .slice(0, 15)
     .map((commit) => `- ${commit}`)
     .join('\n')}
-</details>
-
-<details>
-  <summary>
-    <i>Commits with unknown language scope:</i>
-  </summary>
-
-  ${commitsWithUnknownLanguageScope
-    .slice(0, 15)
-    .map((commit) => `- ${commit}`)
-    .join('\n')}
 </details>`;
 }
 
 export async function parseCommit(commit: string): Promise<Commit> {
   const [hash, authorEmail, message] = commit.split('|');
-  const commitScope = message.slice(0, message.indexOf(':'));
-  const typeAndScope = commitScope.match(/(.+)\((.+)\)/);
+  const typeAndScope = message.match(/(.+?)(?:\((.+)\))?:/);
   const prNumberMatch = message.match(/#(\d+)/);
   const prNumber = prNumberMatch ? parseInt(prNumberMatch[1], 10) : 0;
-  let commitMessage = message;
 
-  if (prNumber) {
-    commitMessage = message.replace(`(#${prNumber})`, '').trim();
+  let commitType = typeAndScope ? typeAndScope[1] : 'fix'; // default to fix.
+  if (!['feat', 'fix', 'chore'].includes(commitType)) {
+    commitType = 'fix';
   }
 
-  // We skip generation commits as they do not appear in changelogs
+  // get the scope of the commit by checking the changes.
+  // any changes in the folder of a language will be scoped to that language
+  const diff = await getFileChanges(hash);
+  if (!diff) {
+    // for empty commits, they will be filtered out later
+    return {
+      hash,
+      type: commitType as CommitType,
+      languages: [],
+      scope: typeAndScope ? (typeAndScope[2] as Scope) : undefined,
+      message: message.replace(`(#${prNumber})`, '').trim(),
+      prNumber,
+      author: fetchedUsers[authorEmail],
+    };
+  }
+
+  const languageScopes = new Set();
+  for (const change of diff.split('\n').map((line) => line.trim())) {
+    if (change.startsWith('clients/')) {
+      const lang = change.split('/')[1].replace('algoliasearch-client-', '') as Language;
+      languageScopes.add(lang);
+    }
+  }
+
+  // for generated commits, we just report the languages so that the changes are attributed to the correct language and commit
   if (isGeneratedCommit(message)) {
     return {
-      error: 'generation-commit',
-    };
-  }
-  if (!typeAndScope) {
-    return {
-      error: 'missing-language-scope',
+      generated: true,
+      languages: [...languageScopes] as Language[],
       message,
     };
-  }
-
-  const scope = typeAndScope[2] as Scope;
-  if (![...LANGUAGES, ...COMMON_SCOPES].includes(scope)) {
-    return { error: 'unknown-language-scope', message };
   }
 
   // Retrieve the author GitHub username if publicly available
@@ -154,11 +140,11 @@ export async function parseCommit(commit: string): Promise<Commit> {
 
   return {
     hash,
-    type: typeAndScope[1], // `fix` | `feat` | `chore` | ...
-    scope, // `clients` | `specs` | `javascript` | `php` | `java` | ...
-    message: commitMessage,
+    type: commitType as CommitType, // `fix` | `feat` | `chore` | ..., default to `fix`
+    languages: [...languageScopes] as Language[],
+    scope: typeAndScope ? (typeAndScope[2] as Scope) : undefined, // `clients` | `specs` | `javascript` | `php` | `java` | ...
+    message: message.replace(`(#${prNumber})`, '').trim(),
     prNumber,
-    raw: commit,
     author: fetchedUsers[authorEmail],
   };
 }
@@ -166,11 +152,7 @@ export async function parseCommit(commit: string): Promise<Commit> {
 /**
  * Returns the next version of the client.
  */
-export function getNextVersion(current: string, releaseType: semver.ReleaseType | null): string {
-  if (releaseType === null) {
-    return current;
-  }
-
+export function getNextVersion(current: string, releaseType: semver.ReleaseType): string {
   let nextVersion: string | null = current;
 
   const preReleaseVersion = current.match(preReleaseRegExp);
@@ -196,78 +178,33 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
   return nextVersion;
 }
 
-export async function decideReleaseStrategy({
-  versions,
+export function decideReleaseStrategy({
   commits,
-  languages,
   releaseType,
-  dryRun,
 }: {
-  versions: VersionsBeforeBump;
-  commits: PassedCommit[];
-  languages: Language[];
+  commits: ParsedCommit[];
   releaseType?: semver.ReleaseType;
   dryRun?: boolean;
-}): Promise<Versions> {
+}): Versions {
   const versionsToPublish: Versions = {};
 
-  for (const [lang, version] of Object.entries(versions)) {
-    const currentVersion = versions[lang].current;
-
-    if (!languages.includes(lang as Language)) {
-      console.log(`${lang} is not in the given language list, skipping release`);
-
-      versionsToPublish[lang] = {
-        ...version,
-        noCommit: true,
-        releaseType: null,
-        skipRelease: true,
-        next: getNextVersion(currentVersion, null),
-      };
-
-      continue;
-    }
-
-    const commitsPerLang = commits.filter((commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope));
-
-    let nbGitDiff = await getNbGitDiff({
-      branch: await getLastReleasedTag(),
-      head: null,
-      path: getLanguageFolder(lang as Language),
-    });
+  for (const lang of LANGUAGES) {
+    const currentVersion = getPackageVersionDefault(lang);
+    const relevantCommits = commits.filter((commit) => commit.languages.includes(lang));
 
     console.log(`Deciding next version bump for ${lang}.`);
 
-    // we force the release for this language in this case if there was no commits
-    if (dryRun || releaseType) {
-      nbGitDiff = 1;
-      commitsPerLang.length = 1;
-    }
-
-    if (nbGitDiff === 0 || commitsPerLang.length === 0) {
-      versionsToPublish[lang] = {
-        ...version,
-        noCommit: true,
-        releaseType: null,
-        next: getNextVersion(currentVersion, null),
-      };
-
-      const msg =
-        commitsPerLang.length === 0
-          ? 'no commits found'
-          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${commitsPerLang.length}' commits`;
-
-      console.log(`    > Skipping, ${msg}`);
+    if (relevantCommits.length === 0) {
+      console.log(`    > Skipping, no commits found for ${lang}.`);
 
       continue;
     }
 
-    let langReleaseType: semver.ReleaseType = 'patch';
-    let skipRelease = false;
-    const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
+    let langReleaseType: semver.ReleaseType | null = null;
+    const commitTypes = new Set(relevantCommits.map(({ type }) => type));
 
     switch (true) {
-      case commitsPerLang.some((commit) => commit.message.includes('BREAKING CHANGE')):
+      case relevantCommits.some((commit) => commit.message.includes('BREAKING CHANGE')):
         langReleaseType = 'major';
         break;
       case semver.prerelease(currentVersion) && !currentVersion.endsWith('-SNAPSHOT'):
@@ -276,22 +213,23 @@ export async function decideReleaseStrategy({
       case commitTypes.has('feat'):
         langReleaseType = 'minor';
         break;
-      case !commitTypes.has('fix'):
-        skipRelease = true;
+      case commitTypes.has('fix') || commitTypes.has('chore'):
+        langReleaseType = 'patch';
         break;
       default:
-        langReleaseType = 'patch';
     }
 
     if (releaseType) {
-      skipRelease = false;
       langReleaseType = releaseType;
     }
 
+    if (!langReleaseType) {
+      continue;
+    }
+
     versionsToPublish[lang] = {
-      ...version,
+      current: currentVersion,
       releaseType: langReleaseType,
-      skipRelease,
       next: getNextVersion(currentVersion, langReleaseType),
     };
   }
@@ -305,28 +243,27 @@ export async function decideReleaseStrategy({
  * Gracefully exits if there is none.
  */
 async function getCommits(force?: boolean): Promise<{
-  validCommits: PassedCommit[];
+  validCommits: ParsedCommit[];
   skippedCommits: string;
 }> {
   // Reading commits since last release
-  const latestCommits = (await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`))
+  const latestCommits = (
+    await run(`git log --reverse --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`)
+  )
     .split('\n')
     .filter(Boolean);
 
-  const commitsWithoutLanguageScope: string[] = [];
-  const commitsWithUnknownLanguageScope: string[] = [];
-  const validCommits: PassedCommit[] = [];
+  let validCommits: ParsedCommit[] = [];
 
   for (const commitMessage of latestCommits) {
     const commit = await parseCommit(commitMessage);
 
-    if ('error' in commit) {
-      if (commit.error === 'missing-language-scope') {
-        commitsWithoutLanguageScope.push(commit.message);
-      }
-
-      if (commit.error === 'unknown-language-scope') {
-        commitsWithUnknownLanguageScope.push(commit.message);
+    if ('generated' in commit) {
+      const originalCommit = validCommits.findIndex((c) => commit.message.includes(c.message));
+      if (originalCommit !== -1) {
+        validCommits[originalCommit].languages = [
+          ...new Set([...validCommits[originalCommit].languages, ...commit.languages]),
+        ];
       }
 
       continue;
@@ -334,6 +271,12 @@ async function getCommits(force?: boolean): Promise<{
 
     validCommits.push(commit);
   }
+
+  // redo a pass to filter out commits without language scope
+  const commitsWithoutLanguageScope = validCommits
+    .filter((commit) => commit.languages.length === 0)
+    .map((commit) => commit.message);
+  validCommits = validCommits.filter((commit) => commit.languages.length > 0);
 
   if (!force && validCommits.length === 0) {
     console.log(
@@ -348,7 +291,6 @@ async function getCommits(force?: boolean): Promise<{
     validCommits,
     skippedCommits: getSkippedCommitsText({
       commitsWithoutLanguageScope,
-      commitsWithUnknownLanguageScope,
     }),
   };
 }
@@ -384,12 +326,10 @@ async function prepareGitEnvironment(): Promise<void> {
 }
 
 export async function createReleasePR({
-  languages,
   releaseType,
   dryRun,
   breaking,
 }: {
-  languages: Language[];
   releaseType?: semver.ReleaseType;
   dryRun?: boolean;
   breaking?: boolean;
@@ -401,30 +341,25 @@ export async function createReleasePR({
   console.log('Searching for commits since last release...');
   const { validCommits, skippedCommits } = await getCommits(releaseType !== undefined);
 
-  const versions = await decideReleaseStrategy({
-    versions: readVersions(),
-    commits: validCommits,
-    languages,
-    releaseType,
-  });
+  const versions = decideReleaseStrategy({ commits: validCommits, releaseType });
 
-  // skip anything sla related for now
-  if (process.env.SLA) {
-    await generateSLA(versions);
-  }
+  await generateVersionsHistory(versions);
 
   const versionChanges = getVersionChangesText(versions);
+  const languages = Object.keys(versions).join(', ');
 
   console.log(`Creating changelogs for languages: ${languages}...`);
-  const changelog: Changelog = LANGUAGES.reduce((newChangelog, lang) => {
-    if (versions[lang].noCommit) {
-      return newChangelog;
-    }
-
+  const changelog: Changelog = {};
+  for (const lang of Object.keys(versions) as Language[]) {
     const changelogCommits: string[] = [];
     for (const validCommit of validCommits) {
-      if (validCommit.scope !== lang && !COMMON_SCOPES.includes(validCommit.scope)) {
+      if (!validCommit.languages.includes(lang)) {
         continue;
+      }
+
+      // sometimes the scope of the commits is not set correctly and concerns another language, we can fix it.
+      if (LANGUAGES.includes(validCommit.scope as Language) && validCommit.scope !== lang) {
+        validCommit.message = validCommit.message.replace(`(${validCommit.scope}):`, '(clients):');
       }
 
       const changelogCommit = [
@@ -441,11 +376,8 @@ export async function createReleasePR({
       changelogCommits.push(`- ${changelogCommit}`);
     }
 
-    return {
-      ...newChangelog,
-      [lang]: changelogCommits.join('\n'),
-    };
-  }, {} as Changelog);
+    changelog[lang] = changelogCommits.join('\n');
+  }
 
   console.log('Updating config files...');
   await updateAPIVersions(versions, changelog);

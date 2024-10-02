@@ -27,14 +27,14 @@ import org.json4s._
 
 sealed trait AuthenticationSortKeys
 
-/** Property by which to sort the list of authentication resources.
+/** Property by which to sort the list of authentications.
   */
 object AuthenticationSortKeys {
   case object Name extends AuthenticationSortKeys {
     override def toString = "name"
   }
-  case object AuthType extends AuthenticationSortKeys {
-    override def toString = "auth_type"
+  case object `Type` extends AuthenticationSortKeys {
+    override def toString = "type"
   }
   case object Platform extends AuthenticationSortKeys {
     override def toString = "platform"
@@ -45,7 +45,7 @@ object AuthenticationSortKeys {
   case object CreatedAt extends AuthenticationSortKeys {
     override def toString = "createdAt"
   }
-  val values: Seq[AuthenticationSortKeys] = Seq(Name, AuthType, Platform, UpdatedAt, CreatedAt)
+  val values: Seq[AuthenticationSortKeys] = Seq(Name, `Type`, Platform, UpdatedAt, CreatedAt)
 
   def withName(name: String): AuthenticationSortKeys = AuthenticationSortKeys.values
     .find(_.toString == name)

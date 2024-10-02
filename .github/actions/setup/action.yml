@@ -19,7 +19,7 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@v4.2.2
+      uses: actions/setup-java@v4.4.0
       with:
         distribution: zulu
         java-version-file: config/.java-version
@@ -201,7 +201,7 @@ runs:
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.54.4" >> $GITHUB_OUTPUT
+      run: echo "SWIFTFORMAT_VERSION=0.54.5" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}

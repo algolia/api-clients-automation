@@ -47,7 +47,7 @@ public class AbtestingClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.3.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.5.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -122,13 +122,16 @@ public class AbtestingClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6683,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new AbtestingClient(_config);
 

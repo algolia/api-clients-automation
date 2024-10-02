@@ -57,10 +57,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     case 'go':
-      await run(`go test -race -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`, {
-        cwd,
-        language,
-      });
+      await run(
+        `go test ${suites.benchmark ? '' : '-race'} -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     case 'java':
       await run(`./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
@@ -68,8 +71,9 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     case 'javascript':
-      await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `dist/${f}`)}`, {
+      await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`, {
         cwd,
+        language,
       });
       break;
     case 'kotlin':
@@ -128,8 +132,7 @@ export async function runCts(
 ): Promise<void> {
   const withBenchmarkServer =
     suites.benchmark && (clients.includes('search') || clients.includes('all') || languages.includes('swift'));
-  const withClientServer =
-    suites.client && (clients.includes('search') || clients.includes('all') || process.platform === 'darwin'); // the macos swift CI also runs the clients tests
+  const withClientServer = suites.client;
   const closeTestServer = await startTestServer({
     ...suites,
     benchmark: withBenchmarkServer,
@@ -142,7 +145,8 @@ export async function runCts(
 
   await closeTestServer();
 
-  if (withClientServer) {
+  if (withClientServer && (clients.includes('search') || clients.includes('all') || process.platform === 'darwin')) {
+    // the macos swift CI also runs the clients tests
     const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
 
     assertValidTimeouts(languages.length);

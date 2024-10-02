@@ -149,14 +149,14 @@ class TestInsightsClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -168,14 +168,14 @@ class TestInsightsClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -338,7 +338,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1725753600000,
+            timestamp: 1727827200000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -348,7 +348,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1725753600000,
+            timestamp: 1727827200000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
@@ -361,7 +361,7 @@ class TestInsightsClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1725753600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1725753600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+        "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1727827200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1727827200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
       ),
       JSON.parse(req.body)
     )

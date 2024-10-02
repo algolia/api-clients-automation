@@ -26,8 +26,6 @@ import algoliasearch.ingestion.Event
 import algoliasearch.ingestion.EventSortKeys._
 import algoliasearch.ingestion.EventStatus._
 import algoliasearch.ingestion.EventType._
-import algoliasearch.ingestion.GenerateTransformationCodePayload
-import algoliasearch.ingestion.GenerateTransformationCodeResponse
 import algoliasearch.ingestion.ListAuthenticationsResponse
 import algoliasearch.ingestion.ListDestinationsResponse
 import algoliasearch.ingestion.ListEventsResponse
@@ -46,7 +44,6 @@ import algoliasearch.ingestion.RunSourcePayload
 import algoliasearch.ingestion.RunSourceResponse
 import algoliasearch.ingestion.RunStatus._
 import algoliasearch.ingestion.RunType._
-import algoliasearch.ingestion.SortKeys._
 import algoliasearch.ingestion.Source
 import algoliasearch.ingestion.SourceCreate
 import algoliasearch.ingestion.SourceCreateResponse
@@ -69,8 +66,8 @@ import algoliasearch.ingestion.TaskV1
 import algoliasearch.ingestion.Transformation
 import algoliasearch.ingestion.TransformationCreate
 import algoliasearch.ingestion.TransformationCreateResponse
-import algoliasearch.ingestion.TransformationModels
 import algoliasearch.ingestion.TransformationSearch
+import algoliasearch.ingestion.TransformationSortKeys._
 import algoliasearch.ingestion.TransformationTry
 import algoliasearch.ingestion.TransformationTryResponse
 import algoliasearch.ingestion.TransformationUpdateResponse
@@ -583,31 +580,6 @@ class IngestionClient(
     execute[TaskUpdateResponse](request, requestOptions)
   }
 
-  /** Generates code for the selected model based on the given prompt.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    */
-  def generateTransformationCode(
-      generateTransformationCodePayload: GenerateTransformationCodePayload,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[GenerateTransformationCodeResponse] = Future {
-    requireNotNull(
-      generateTransformationCodePayload,
-      "Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`."
-    )
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("POST")
-      .withPath(s"/1/transformations/models")
-      .withBody(generateTransformationCodePayload)
-      .build()
-    execute[GenerateTransformationCodeResponse](request, requestOptions)
-  }
-
   /** Retrieves an authentication resource by its ID.
     *
     * Required API Key ACLs:
@@ -808,9 +780,9 @@ class IngestionClient(
     * @param `type`
     *   Type of authentication resource to retrieve.
     * @param platform
-    *   Ecommerce platform for which to retrieve authentication resources.
+    *   Ecommerce platform for which to retrieve authentications.
     * @param sort
-    *   Property by which to sort the list of authentication resources.
+    *   Property by which to sort the list of authentications.
     * @param order
     *   Sort order of the response, ascending or descending.
     */
@@ -853,6 +825,8 @@ class IngestionClient(
     *   Destination type.
     * @param authenticationID
     *   Authentication ID used by destinations.
+    * @param transformationID
+    *   Get the list of destinations used by a transformation.
     * @param sort
     *   Property by which to sort the destinations.
     * @param order
@@ -863,6 +837,7 @@ class IngestionClient(
       page: Option[Int] = None,
       `type`: Option[Seq[DestinationType]] = None,
       authenticationID: Option[Seq[String]] = None,
+      transformationID: Option[String] = None,
       sort: Option[DestinationSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -876,6 +851,7 @@ class IngestionClient(
       .withQueryParameter("page", page)
       .withQueryParameter("type", `type`)
       .withQueryParameter("authenticationID", authenticationID)
+      .withQueryParameter("transformationID", transformationID)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
@@ -1009,8 +985,7 @@ class IngestionClient(
     * @param `type`
     *   Source type. Some sources require authentication.
     * @param authenticationID
-    *   Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication
-    *   resource.
+    *   Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
     * @param sort
     *   Property by which to sort the list of sources.
     * @param order
@@ -1152,25 +1127,6 @@ class IngestionClient(
     execute[ListTasksResponseV1](request, requestOptions)
   }
 
-  /** Retrieves a list of existing LLM transformation helpers.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    */
-  def listTransformationModels(
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[TransformationModels] = Future {
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("GET")
-      .withPath(s"/1/transformations/models")
-      .build()
-    execute[TransformationModels](request, requestOptions)
-  }
-
   /** Retrieves a list of transformations.
     *
     * Required API Key ACLs:
@@ -1183,14 +1139,14 @@ class IngestionClient(
     * @param page
     *   Page number of the paginated API response.
     * @param sort
-    *   Property by which to sort the list.
+    *   Property by which to sort the list of transformations.
     * @param order
     *   Sort order of the response, ascending or descending.
     */
   def listTransformations(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      sort: Option[SortKeys] = None,
+      sort: Option[TransformationSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListTransformationsResponse] = Future {

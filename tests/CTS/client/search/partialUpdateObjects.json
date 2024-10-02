@@ -10,7 +10,6 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6680
             }
           ]
@@ -59,7 +58,6 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6680
             }
           ]

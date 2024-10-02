@@ -54,8 +54,8 @@ class IngestionTest {
             type = AuthenticationType.entries.first { it.value == "algolia" },
             name = "authName",
             input = AuthAlgolia(
-              appID = "myappID",
-              apiKey = "randomApiKey",
+              appID = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
             ),
           ),
         )
@@ -63,7 +63,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}""", it.body)
+        assertJsonBody("""{"type":"algolia","name":"authName","input":{"appID":"ALGOLIA_APPLICATION_ID","apiKey":"ALGOLIA_API_KEY"}}""", it.body)
       },
     )
   }
@@ -575,7 +575,7 @@ class IngestionTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -583,7 +583,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -605,7 +605,7 @@ class IngestionTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -613,7 +613,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -987,27 +987,6 @@ class IngestionTest {
     )
   }
 
-  // generateTransformationCode
-
-  @Test
-  fun `generateTransformationCode`() = runTest {
-    client.runTest(
-      call = {
-        generateTransformationCode(
-          generateTransformationCodePayload = GenerateTransformationCodePayload(
-            id = "foo",
-            userPrompt = "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
-          ),
-        )
-      },
-      intercept = {
-        assertEquals("/1/transformations/models".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}""", it.body)
-      },
-    )
-  }
-
   // getAuthentication
 
   @Test
@@ -1283,22 +1262,6 @@ class IngestionTest {
       },
       intercept = {
         assertEquals("/1/tasks".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
-  // listTransformationModels
-
-  @Test
-  fun `listTransformationModels`() = runTest {
-    client.runTest(
-      call = {
-        listTransformationModels()
-      },
-      intercept = {
-        assertEquals("/1/transformations/models".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },

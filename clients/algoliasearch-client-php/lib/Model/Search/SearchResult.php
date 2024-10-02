@@ -44,6 +44,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'string',
         'userData' => 'object',
         'queryID' => 'string',
+        'automaticInsights' => 'bool',
         'page' => 'int',
         'nbHits' => 'int',
         'nbPages' => 'int',
@@ -84,6 +85,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => null,
         'userData' => null,
         'queryID' => null,
+        'automaticInsights' => null,
         'page' => null,
         'nbHits' => null,
         'nbPages' => null,
@@ -125,6 +127,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'serverUsed',
         'userData' => 'userData',
         'queryID' => 'queryID',
+        'automaticInsights' => '_automaticInsights',
         'page' => 'page',
         'nbHits' => 'nbHits',
         'nbPages' => 'nbPages',
@@ -165,6 +168,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'setServerUsed',
         'userData' => 'setUserData',
         'queryID' => 'setQueryID',
+        'automaticInsights' => 'setAutomaticInsights',
         'page' => 'setPage',
         'nbHits' => 'setNbHits',
         'nbPages' => 'setNbPages',
@@ -205,6 +209,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'getServerUsed',
         'userData' => 'getUserData',
         'queryID' => 'getQueryID',
+        'automaticInsights' => 'getAutomaticInsights',
         'page' => 'getPage',
         'nbHits' => 'getNbHits',
         'nbPages' => 'getNbPages',
@@ -300,6 +305,9 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         }
         if (isset($data['queryID'])) {
             $this->container['queryID'] = $data['queryID'];
+        }
+        if (isset($data['automaticInsights'])) {
+            $this->container['automaticInsights'] = $data['automaticInsights'];
         }
         if (isset($data['page'])) {
             $this->container['page'] = $data['page'];
@@ -401,27 +409,15 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         if (!isset($this->container['processingTimeMS']) || null === $this->container['processingTimeMS']) {
             $invalidProperties[] = "'processingTimeMS' can't be null";
         }
-        if (!isset($this->container['page']) || null === $this->container['page']) {
-            $invalidProperties[] = "'page' can't be null";
-        }
-        if ($this->container['page'] < 0) {
+        if (isset($this->container['page']) && ($this->container['page'] < 0)) {
             $invalidProperties[] = "invalid value for 'page', must be bigger than or equal to 0.";
         }
 
-        if (!isset($this->container['nbHits']) || null === $this->container['nbHits']) {
-            $invalidProperties[] = "'nbHits' can't be null";
-        }
-        if (!isset($this->container['nbPages']) || null === $this->container['nbPages']) {
-            $invalidProperties[] = "'nbPages' can't be null";
-        }
-        if (!isset($this->container['hitsPerPage']) || null === $this->container['hitsPerPage']) {
-            $invalidProperties[] = "'hitsPerPage' can't be null";
-        }
-        if ($this->container['hitsPerPage'] > 1000) {
+        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] > 1000)) {
             $invalidProperties[] = "invalid value for 'hitsPerPage', must be smaller than or equal to 1000.";
         }
 
-        if ($this->container['hitsPerPage'] < 1) {
+        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] < 1)) {
             $invalidProperties[] = "invalid value for 'hitsPerPage', must be bigger than or equal to 1.";
         }
 
@@ -1045,9 +1041,33 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     }
 
     /**
+     * Gets automaticInsights.
+     *
+     * @return null|bool
+     */
+    public function getAutomaticInsights()
+    {
+        return $this->container['automaticInsights'] ?? null;
+    }
+
+    /**
+     * Sets automaticInsights.
+     *
+     * @param null|bool $automaticInsights whether automatic events collection is enabled for the application
+     *
+     * @return self
+     */
+    public function setAutomaticInsights($automaticInsights)
+    {
+        $this->container['automaticInsights'] = $automaticInsights;
+
+        return $this;
+    }
+
+    /**
      * Gets page.
      *
-     * @return int
+     * @return null|int
      */
     public function getPage()
     {
@@ -1057,13 +1077,13 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets page.
      *
-     * @param int $page page of search results to retrieve
+     * @param null|int $page page of search results to retrieve
      *
      * @return self
      */
     public function setPage($page)
     {
-        if ($page < 0) {
+        if (!is_null($page) && ($page < 0)) {
             throw new \InvalidArgumentException('invalid value for $page when calling SearchResult., must be bigger than or equal to 0.');
         }
 
@@ -1075,7 +1095,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets nbHits.
      *
-     * @return int
+     * @return null|int
      */
     public function getNbHits()
     {
@@ -1085,7 +1105,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets nbHits.
      *
-     * @param int $nbHits number of results (hits)
+     * @param null|int $nbHits number of results (hits)
      *
      * @return self
      */
@@ -1099,7 +1119,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets nbPages.
      *
-     * @return int
+     * @return null|int
      */
     public function getNbPages()
     {
@@ -1109,7 +1129,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets nbPages.
      *
-     * @param int $nbPages number of pages of results
+     * @param null|int $nbPages number of pages of results
      *
      * @return self
      */
@@ -1123,7 +1143,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets hitsPerPage.
      *
-     * @return int
+     * @return null|int
      */
     public function getHitsPerPage()
     {
@@ -1133,16 +1153,16 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets hitsPerPage.
      *
-     * @param int $hitsPerPage number of hits per page
+     * @param null|int $hitsPerPage number of hits per page
      *
      * @return self
      */
     public function setHitsPerPage($hitsPerPage)
     {
-        if ($hitsPerPage > 1000) {
+        if (!is_null($hitsPerPage) && ($hitsPerPage > 1000)) {
             throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchResult., must be smaller than or equal to 1000.');
         }
-        if ($hitsPerPage < 1) {
+        if (!is_null($hitsPerPage) && ($hitsPerPage < 1)) {
             throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchResult., must be bigger than or equal to 1.');
         }
 

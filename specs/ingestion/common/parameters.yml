@@ -83,17 +83,3 @@ orderKeys:
   description: Ascending or descending sort order.
   default: desc
   enum: [asc, desc]
-
-sort:
-  name: sort
-  in: query
-  description: Property by which to sort the list.
-  required: false
-  schema:
-    $ref: '#/sortKeys'
-
-sortKeys:
-  type: string
-  description: Property by which to sort the list.
-  default: desc
-  enum: [name, type, updatedAt, createdAt]

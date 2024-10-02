@@ -37,6 +37,8 @@ package algoliasearch.recommend
   *   Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
   * @param enabled
   *   Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+  * @param validity
+  *   Time periods when the rule is active.
   */
 case class RecommendRule(
     metadata: Option[RuleMetadata] = scala.None,
@@ -44,5 +46,6 @@ case class RecommendRule(
     condition: Option[Condition] = scala.None,
     consequence: Option[Consequence] = scala.None,
     description: Option[String] = scala.None,
-    enabled: Option[Boolean] = scala.None
+    enabled: Option[Boolean] = scala.None,
+    validity: Option[Seq[TimeRange]] = scala.None
 )

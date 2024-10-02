@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from json import dumps, loads
 from sys import version_info
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Set, Union
 
 from pydantic import BaseModel, Field, ValidationError, model_serializer
 
@@ -26,27 +26,20 @@ class HighlightResult(BaseModel):
     HighlightResult
     """
 
-    oneof_schema_1_validator: Optional[Dict[str, HighlightResult]] = Field(
-        default=None,
-        description="Surround words that match the query with HTML tags for highlighting.",
-    )
-    oneof_schema_2_validator: Optional[HighlightResultOption] = None
-    oneof_schema_3_validator: Optional[Dict[str, HighlightResultOption]] = Field(
-        default=None,
-        description="Surround words that match the query with HTML tags for highlighting.",
-    )
-    oneof_schema_4_validator: Optional[List[HighlightResultOption]] = Field(
-        default=None,
-        description="Surround words that match the query with HTML tags for highlighting.",
-    )
+    oneof_schema_1_validator: Optional[HighlightResultOption] = Field(default=None)
+
+    oneof_schema_2_validator: Optional[Dict[str, HighlightResult]] = Field(default=None)
+    """ Surround words that match the query with HTML tags for highlighting. """
+    oneof_schema_3_validator: Optional[List[HighlightResult]] = Field(default=None)
+    """ Surround words that match the query with HTML tags for highlighting. """
     actual_instance: Optional[
-        Union[
-            Dict[str, HighlightResultOption],
-            Dict[str, HighlightResult],
-            HighlightResultOption,
-            List[HighlightResultOption],
-        ]
+        Union[Dict[str, HighlightResult], HighlightResultOption, List[HighlightResult]]
     ] = None
+    one_of_schemas: Set[str] = {
+        "Dict[str, HighlightResult]",
+        "HighlightResultOption",
+        "List[HighlightResult]",
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -66,12 +59,7 @@ class HighlightResult(BaseModel):
     def unwrap_actual_instance(
         self,
     ) -> Optional[
-        Union[
-            Dict[str, HighlightResultOption],
-            Dict[str, HighlightResult],
-            HighlightResultOption,
-            List[HighlightResultOption],
-        ]
+        Union[Dict[str, HighlightResult], HighlightResultOption, List[HighlightResult]]
     ]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
@@ -79,7 +67,8 @@ class HighlightResult(BaseModel):
         return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Self:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+        """Create an instance of HighlightResult from a JSON string"""
         return cls.from_json(dumps(obj))
 
     @classmethod
@@ -89,14 +78,14 @@ class HighlightResult(BaseModel):
         error_messages = []
 
         try:
-            instance.oneof_schema_1_validator = loads(json_str)
-            instance.actual_instance = instance.oneof_schema_1_validator
+            instance.actual_instance = HighlightResultOption.from_json(json_str)
 
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
         try:
-            instance.actual_instance = HighlightResultOption.from_json(json_str)
+            instance.oneof_schema_2_validator = loads(json_str)
+            instance.actual_instance = instance.oneof_schema_2_validator
 
             return instance
         except (ValidationError, ValueError) as e:
@@ -108,16 +97,9 @@ class HighlightResult(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        try:
-            instance.oneof_schema_4_validator = loads(json_str)
-            instance.actual_instance = instance.oneof_schema_4_validator
-
-            return instance
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
 
         raise ValueError(
-            "No match found when deserializing the JSON string into HighlightResult with oneOf schemas: Dict[str, HighlightResultOption], Dict[str, HighlightResult], HighlightResultOption, List[HighlightResultOption]. Details: "
+            "No match found when deserializing the JSON string into HighlightResult with oneOf schemas: Dict[str, HighlightResult], HighlightResultOption, List[HighlightResult]. Details: "
             + ", ".join(error_messages)
         )
 
@@ -126,17 +108,30 @@ class HighlightResult(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json"):
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json
+        ):
             return self.actual_instance.to_json()
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Dict:
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[
+            Dict[str, Any],
+            Dict[str, HighlightResult],
+            HighlightResultOption,
+            List[HighlightResult],
+        ]
+    ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict"):
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict
+        ):
             return self.actual_instance.to_dict()
         else:
             return self.actual_instance

@@ -40,7 +40,10 @@ class TestQuerySuggestionsClientE2E:
         _expected_body = loads(
             """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
 
 class TestQuerySuggestionsClientSyncE2E:
@@ -74,4 +77,7 @@ class TestQuerySuggestionsClientSyncE2E:
         _expected_body = loads(
             """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )

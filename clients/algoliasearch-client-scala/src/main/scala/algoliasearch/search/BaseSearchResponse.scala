@@ -83,6 +83,8 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   * @param queryID
   *   Unique identifier for the query. This is used for [click
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  * @param automaticInsights
+  *   Whether automatic events collection is enabled for the application.
   */
 case class BaseSearchResponse(
     abTestID: Option[Int] = scala.None,
@@ -109,6 +111,7 @@ case class BaseSearchResponse(
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
+    automaticInsights: Option[Boolean] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 
@@ -146,7 +149,8 @@ class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
             "serverTimeMS",
             "serverUsed",
             "userData",
-            "queryID"
+            "queryID",
+            "automaticInsights"
           )
           val additionalProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true

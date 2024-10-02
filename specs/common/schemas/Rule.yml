@@ -6,3 +6,17 @@ context:
     For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`.
     A rule context must only contain alphanumeric characters.
   example: mobile
+
+timeRange:
+  type: object
+  additionalProperties: false
+  properties:
+    from:
+      type: integer
+      description: When the rule should start to be active, in Unix epoch time.
+    until:
+      type: integer
+      description: When the rule should stop to be active, in Unix epoch time.
+  required:
+    - from
+    - until

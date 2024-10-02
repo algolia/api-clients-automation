@@ -12,11 +12,12 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.request_options import RequestOptions
@@ -79,9 +80,10 @@ class QuerySuggestionsClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: QuerySuggestionsConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: QuerySuggestionsConfig, transporter: Optional[Transporter] = None
+    ) -> QuerySuggestionsClient:
         """Allows creating a client with a customized `QuerySuggestionsConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -106,7 +108,7 @@ class QuerySuggestionsClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -173,11 +175,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            await self.create_config_with_http_info(
-                configuration_with_index, request_options
-            )
-        ).deserialize(BaseResponse)
+        resp = await self.create_config_with_http_info(
+            configuration_with_index, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     async def custom_delete_with_http_info(
         self,
@@ -251,9 +252,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -325,9 +327,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -416,11 +417,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -509,11 +509,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_config_with_http_info(
         self,
@@ -568,9 +567,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            await self.delete_config_with_http_info(index_name, request_options)
-        ).deserialize(BaseResponse)
+        resp = await self.delete_config_with_http_info(index_name, request_options)
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     async def get_all_configs_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -606,9 +604,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[ConfigurationResponse]' result object.
         """
-        return (await self.get_all_configs_with_http_info(request_options)).deserialize(
-            List[ConfigurationResponse]
-        )
+        resp = await self.get_all_configs_with_http_info(request_options)
+        return resp.deserialize(List[ConfigurationResponse], resp.raw_data)
 
     async def get_config_with_http_info(
         self,
@@ -663,9 +660,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigurationResponse' result object.
         """
-        return (
-            await self.get_config_with_http_info(index_name, request_options)
-        ).deserialize(ConfigurationResponse)
+        resp = await self.get_config_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigurationResponse, resp.raw_data)
 
     async def get_config_status_with_http_info(
         self,
@@ -720,9 +716,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigStatus' result object.
         """
-        return (
-            await self.get_config_status_with_http_info(index_name, request_options)
-        ).deserialize(ConfigStatus)
+        resp = await self.get_config_status_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigStatus, resp.raw_data)
 
     async def get_log_file_with_http_info(
         self,
@@ -777,9 +772,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'LogFile' result object.
         """
-        return (
-            await self.get_log_file_with_http_info(index_name, request_options)
-        ).deserialize(LogFile)
+        resp = await self.get_log_file_with_http_info(index_name, request_options)
+        return resp.deserialize(LogFile, resp.raw_data)
 
     async def update_config_with_http_info(
         self,
@@ -850,11 +844,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            await self.update_config_with_http_info(
-                index_name, configuration, request_options
-            )
-        ).deserialize(BaseResponse)
+        resp = await self.update_config_with_http_info(
+            index_name, configuration, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
 
 class QuerySuggestionsClientSync:
@@ -899,9 +892,12 @@ class QuerySuggestionsClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: QuerySuggestionsConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls,
+        config: QuerySuggestionsConfig,
+        transporter: Optional[TransporterSync] = None,
+    ) -> QuerySuggestionsClientSync:
         """Allows creating a client with a customized `QuerySuggestionsConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -992,9 +988,10 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            self.create_config_with_http_info(configuration_with_index, request_options)
-        ).deserialize(BaseResponse)
+        resp = self.create_config_with_http_info(
+            configuration_with_index, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     def custom_delete_with_http_info(
         self,
@@ -1068,9 +1065,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -1142,9 +1138,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -1233,9 +1228,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -1324,9 +1318,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_config_with_http_info(
         self,
@@ -1381,9 +1374,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            self.delete_config_with_http_info(index_name, request_options)
-        ).deserialize(BaseResponse)
+        resp = self.delete_config_with_http_info(index_name, request_options)
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     def get_all_configs_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -1419,9 +1411,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[ConfigurationResponse]' result object.
         """
-        return (self.get_all_configs_with_http_info(request_options)).deserialize(
-            List[ConfigurationResponse]
-        )
+        resp = self.get_all_configs_with_http_info(request_options)
+        return resp.deserialize(List[ConfigurationResponse], resp.raw_data)
 
     def get_config_with_http_info(
         self,
@@ -1476,9 +1467,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigurationResponse' result object.
         """
-        return (
-            self.get_config_with_http_info(index_name, request_options)
-        ).deserialize(ConfigurationResponse)
+        resp = self.get_config_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigurationResponse, resp.raw_data)
 
     def get_config_status_with_http_info(
         self,
@@ -1533,9 +1523,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigStatus' result object.
         """
-        return (
-            self.get_config_status_with_http_info(index_name, request_options)
-        ).deserialize(ConfigStatus)
+        resp = self.get_config_status_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigStatus, resp.raw_data)
 
     def get_log_file_with_http_info(
         self,
@@ -1590,9 +1579,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'LogFile' result object.
         """
-        return (
-            self.get_log_file_with_http_info(index_name, request_options)
-        ).deserialize(LogFile)
+        resp = self.get_log_file_with_http_info(index_name, request_options)
+        return resp.deserialize(LogFile, resp.raw_data)
 
     def update_config_with_http_info(
         self,
@@ -1663,8 +1651,7 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            self.update_config_with_http_info(
-                index_name, configuration, request_options
-            )
-        ).deserialize(BaseResponse)
+        resp = self.update_config_with_http_info(
+            index_name, configuration, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)

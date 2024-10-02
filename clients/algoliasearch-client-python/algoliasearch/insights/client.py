@@ -12,11 +12,12 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.request_options import RequestOptions
@@ -71,9 +72,10 @@ class InsightsClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: InsightsConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: InsightsConfig, transporter: Optional[Transporter] = None
+    ) -> InsightsClient:
         """Allows creating a client with a customized `InsightsConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -98,7 +100,7 @@ class InsightsClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -185,9 +187,10 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -259,9 +262,8 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -350,11 +352,10 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -443,11 +444,10 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_user_token_with_http_info(
         self,
@@ -509,9 +509,8 @@ class InsightsClient:
         :type user_token: str
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         """
-        return (
-            await self.delete_user_token_with_http_info(user_token, request_options)
-        ).deserialize()
+        resp = await self.delete_user_token_with_http_info(user_token, request_options)
+        return resp.deserialize(None, resp.raw_data)
 
     async def push_events_with_http_info(
         self,
@@ -561,9 +560,8 @@ class InsightsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'EventsResponse' result object.
         """
-        return (
-            await self.push_events_with_http_info(insights_events, request_options)
-        ).deserialize(EventsResponse)
+        resp = await self.push_events_with_http_info(insights_events, request_options)
+        return resp.deserialize(EventsResponse, resp.raw_data)
 
 
 class InsightsClientSync:
@@ -608,9 +606,10 @@ class InsightsClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: InsightsConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls, config: InsightsConfig, transporter: Optional[TransporterSync] = None
+    ) -> InsightsClientSync:
         """Allows creating a client with a customized `InsightsConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -721,9 +720,8 @@ class InsightsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -795,9 +793,8 @@ class InsightsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -886,9 +883,8 @@ class InsightsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -977,9 +973,8 @@ class InsightsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_user_token_with_http_info(
         self,
@@ -1041,9 +1036,8 @@ class InsightsClientSync:
         :type user_token: str
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         """
-        return (
-            self.delete_user_token_with_http_info(user_token, request_options)
-        ).deserialize()
+        resp = self.delete_user_token_with_http_info(user_token, request_options)
+        return resp.deserialize(None, resp.raw_data)
 
     def push_events_with_http_info(
         self,
@@ -1093,6 +1087,5 @@ class InsightsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'EventsResponse' result object.
         """
-        return (
-            self.push_events_with_http_info(insights_events, request_options)
-        ).deserialize(EventsResponse)
+        resp = self.push_events_with_http_info(insights_events, request_options)
+        return resp.deserialize(EventsResponse, resp.raw_data)

@@ -4,6 +4,28 @@ import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 
 void main() {
+  // batchRecommendRules
+  test(
+    'batch recommend rules',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.batchRecommendRules(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("related-products"),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/related-products/recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
   // customDelete
   test(
     'allow del method for a custom path with minimal parameters',
@@ -264,14 +286,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -297,14 +320,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -650,7 +674,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 42.1,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
@@ -725,13 +749,13 @@ void main() {
               maxRecommendations: 10,
               facetName: "myFacetName",
               facetValue: "myFacetValue",
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
                 ],
               ),
-              fallbackParameters: SearchParamsObject(
+              fallbackParameters: FallbackParams(
                 query: "myQuery",
                 facetFilters: [
                   "fallback",
@@ -804,7 +828,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query1",
@@ -823,7 +847,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query2",

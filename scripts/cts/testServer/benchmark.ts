@@ -22,8 +22,9 @@ export function printBenchmarkReport(): void {
   const times: Array<{ lang: string; rate: number }> = [];
   for (const lang of Object.keys(benchmarkStatus)) {
     const status = benchmarkStatus[lang];
-    expect(status.requestTimes).to.have.length(1000);
-    const rate = 1000000 / (status.requestTimes.at(-1)! - status.requestTimes[0]);
+    expect(status.requestTimes).to.have.length(2000);
+    status.requestTimes.sort((a, b) => a - b);
+    const rate = (status.requestTimes.length * 1000) / (status.requestTimes.at(-1)! - status.requestTimes[0]);
     times.push({ lang, rate });
   }
 

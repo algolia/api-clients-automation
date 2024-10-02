@@ -13,11 +13,12 @@ from urllib.parse import quote
 from warnings import warn
 
 from pydantic import Field, StrictBool, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.request_options import RequestOptions
@@ -58,12 +59,6 @@ from algoliasearch.ingestion.models.event import Event
 from algoliasearch.ingestion.models.event_sort_keys import EventSortKeys
 from algoliasearch.ingestion.models.event_status import EventStatus
 from algoliasearch.ingestion.models.event_type import EventType
-from algoliasearch.ingestion.models.generate_transformation_code_payload import (
-    GenerateTransformationCodePayload,
-)
-from algoliasearch.ingestion.models.generate_transformation_code_response import (
-    GenerateTransformationCodeResponse,
-)
 from algoliasearch.ingestion.models.list_authentications_response import (
     ListAuthenticationsResponse,
 )
@@ -88,7 +83,6 @@ from algoliasearch.ingestion.models.run_source_payload import RunSourcePayload
 from algoliasearch.ingestion.models.run_source_response import RunSourceResponse
 from algoliasearch.ingestion.models.run_status import RunStatus
 from algoliasearch.ingestion.models.run_type import RunType
-from algoliasearch.ingestion.models.sort_keys import SortKeys
 from algoliasearch.ingestion.models.source import Source
 from algoliasearch.ingestion.models.source_create import SourceCreate
 from algoliasearch.ingestion.models.source_create_response import SourceCreateResponse
@@ -113,8 +107,10 @@ from algoliasearch.ingestion.models.transformation_create import TransformationC
 from algoliasearch.ingestion.models.transformation_create_response import (
     TransformationCreateResponse,
 )
-from algoliasearch.ingestion.models.transformation_models import TransformationModels
 from algoliasearch.ingestion.models.transformation_search import TransformationSearch
+from algoliasearch.ingestion.models.transformation_sort_keys import (
+    TransformationSortKeys,
+)
 from algoliasearch.ingestion.models.transformation_try import TransformationTry
 from algoliasearch.ingestion.models.transformation_try_response import (
     TransformationTryResponse,
@@ -167,9 +163,10 @@ class IngestionClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: IngestionConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: IngestionConfig, transporter: Optional[Transporter] = None
+    ) -> IngestionClient:
         """Allows creating a client with a customized `IngestionConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -194,7 +191,7 @@ class IngestionClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -265,11 +262,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AuthenticationCreateResponse' result object.
         """
-        return (
-            await self.create_authentication_with_http_info(
-                authentication_create, request_options
-            )
-        ).deserialize(AuthenticationCreateResponse)
+        resp = await self.create_authentication_with_http_info(
+            authentication_create, request_options
+        )
+        return resp.deserialize(AuthenticationCreateResponse, resp.raw_data)
 
     async def create_destination_with_http_info(
         self,
@@ -327,11 +323,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DestinationCreateResponse' result object.
         """
-        return (
-            await self.create_destination_with_http_info(
-                destination_create, request_options
-            )
-        ).deserialize(DestinationCreateResponse)
+        resp = await self.create_destination_with_http_info(
+            destination_create, request_options
+        )
+        return resp.deserialize(DestinationCreateResponse, resp.raw_data)
 
     async def create_source_with_http_info(
         self,
@@ -389,9 +384,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceCreateResponse' result object.
         """
-        return (
-            await self.create_source_with_http_info(source_create, request_options)
-        ).deserialize(SourceCreateResponse)
+        resp = await self.create_source_with_http_info(source_create, request_options)
+        return resp.deserialize(SourceCreateResponse, resp.raw_data)
 
     async def create_task_with_http_info(
         self,
@@ -445,9 +439,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskCreateResponse' result object.
         """
-        return (
-            await self.create_task_with_http_info(task_create, request_options)
-        ).deserialize(TaskCreateResponse)
+        resp = await self.create_task_with_http_info(task_create, request_options)
+        return resp.deserialize(TaskCreateResponse, resp.raw_data)
 
     async def create_task_v1_with_http_info(
         self,
@@ -501,9 +494,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskCreateResponse' result object.
         """
-        return (
-            await self.create_task_v1_with_http_info(task_create, request_options)
-        ).deserialize(TaskCreateResponse)
+        resp = await self.create_task_v1_with_http_info(task_create, request_options)
+        return resp.deserialize(TaskCreateResponse, resp.raw_data)
 
     async def create_transformation_with_http_info(
         self,
@@ -559,11 +551,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationCreateResponse' result object.
         """
-        return (
-            await self.create_transformation_with_http_info(
-                transformation_create, request_options
-            )
-        ).deserialize(TransformationCreateResponse)
+        resp = await self.create_transformation_with_http_info(
+            transformation_create, request_options
+        )
+        return resp.deserialize(TransformationCreateResponse, resp.raw_data)
 
     async def custom_delete_with_http_info(
         self,
@@ -637,9 +628,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -711,9 +703,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -802,11 +793,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -895,11 +885,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_authentication_with_http_info(
         self,
@@ -960,11 +949,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            await self.delete_authentication_with_http_info(
-                authentication_id, request_options
-            )
-        ).deserialize(DeleteResponse)
+        resp = await self.delete_authentication_with_http_info(
+            authentication_id, request_options
+        )
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     async def delete_destination_with_http_info(
         self,
@@ -1023,11 +1011,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            await self.delete_destination_with_http_info(
-                destination_id, request_options
-            )
-        ).deserialize(DeleteResponse)
+        resp = await self.delete_destination_with_http_info(
+            destination_id, request_options
+        )
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     async def delete_source_with_http_info(
         self,
@@ -1086,9 +1073,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            await self.delete_source_with_http_info(source_id, request_options)
-        ).deserialize(DeleteResponse)
+        resp = await self.delete_source_with_http_info(source_id, request_options)
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     async def delete_task_with_http_info(
         self,
@@ -1137,9 +1123,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            await self.delete_task_with_http_info(task_id, request_options)
-        ).deserialize(DeleteResponse)
+        resp = await self.delete_task_with_http_info(task_id, request_options)
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     async def delete_task_v1_with_http_info(
         self,
@@ -1188,9 +1173,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            await self.delete_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(DeleteResponse)
+        resp = await self.delete_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     async def delete_transformation_with_http_info(
         self,
@@ -1241,11 +1225,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            await self.delete_transformation_with_http_info(
-                transformation_id, request_options
-            )
-        ).deserialize(DeleteResponse)
+        resp = await self.delete_transformation_with_http_info(
+            transformation_id, request_options
+        )
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     async def disable_task_with_http_info(
         self,
@@ -1304,9 +1287,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            await self.disable_task_with_http_info(task_id, request_options)
-        ).deserialize(TaskUpdateResponse)
+        resp = await self.disable_task_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     async def disable_task_v1_with_http_info(
         self,
@@ -1369,9 +1351,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            await self.disable_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(TaskUpdateResponse)
+        resp = await self.disable_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     async def enable_task_with_http_info(
         self,
@@ -1430,9 +1411,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            await self.enable_task_with_http_info(task_id, request_options)
-        ).deserialize(TaskUpdateResponse)
+        resp = await self.enable_task_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     async def enable_task_v1_with_http_info(
         self,
@@ -1491,71 +1471,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            await self.enable_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(TaskUpdateResponse)
-
-    async def generate_transformation_code_with_http_info(
-        self,
-        generate_transformation_code_payload: GenerateTransformationCodePayload,
-        request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> ApiResponse[str]:
-        """
-        Generates code for the selected model based on the given prompt.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param generate_transformation_code_payload: (required)
-        :type generate_transformation_code_payload: GenerateTransformationCodePayload
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the raw algoliasearch 'APIResponse' object.
-        """
-
-        if generate_transformation_code_payload is None:
-            raise ValueError(
-                "Parameter `generate_transformation_code_payload` is required when calling `generate_transformation_code`."
-            )
-
-        _data = {}
-        if generate_transformation_code_payload is not None:
-            _data = generate_transformation_code_payload
-
-        return await self._transporter.request(
-            verb=Verb.POST,
-            path="/1/transformations/models",
-            request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
-                user_request_options=request_options,
-            ),
-            use_read_transporter=False,
-        )
-
-    async def generate_transformation_code(
-        self,
-        generate_transformation_code_payload: GenerateTransformationCodePayload,
-        request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> GenerateTransformationCodeResponse:
-        """
-        Generates code for the selected model based on the given prompt.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param generate_transformation_code_payload: (required)
-        :type generate_transformation_code_payload: GenerateTransformationCodePayload
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the deserialized response in a 'GenerateTransformationCodeResponse' result object.
-        """
-        return (
-            await self.generate_transformation_code_with_http_info(
-                generate_transformation_code_payload, request_options
-            )
-        ).deserialize(GenerateTransformationCodeResponse)
+        resp = await self.enable_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     async def get_authentication_with_http_info(
         self,
@@ -1616,11 +1533,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Authentication' result object.
         """
-        return (
-            await self.get_authentication_with_http_info(
-                authentication_id, request_options
-            )
-        ).deserialize(Authentication)
+        resp = await self.get_authentication_with_http_info(
+            authentication_id, request_options
+        )
+        return resp.deserialize(Authentication, resp.raw_data)
 
     async def get_destination_with_http_info(
         self,
@@ -1679,9 +1595,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Destination' result object.
         """
-        return (
-            await self.get_destination_with_http_info(destination_id, request_options)
-        ).deserialize(Destination)
+        resp = await self.get_destination_with_http_info(
+            destination_id, request_options
+        )
+        return resp.deserialize(Destination, resp.raw_data)
 
     async def get_event_with_http_info(
         self,
@@ -1753,9 +1670,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Event' result object.
         """
-        return (
-            await self.get_event_with_http_info(run_id, event_id, request_options)
-        ).deserialize(Event)
+        resp = await self.get_event_with_http_info(run_id, event_id, request_options)
+        return resp.deserialize(Event, resp.raw_data)
 
     async def get_run_with_http_info(
         self,
@@ -1810,9 +1726,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Run' result object.
         """
-        return (await self.get_run_with_http_info(run_id, request_options)).deserialize(
-            Run
-        )
+        resp = await self.get_run_with_http_info(run_id, request_options)
+        return resp.deserialize(Run, resp.raw_data)
 
     async def get_source_with_http_info(
         self,
@@ -1871,9 +1786,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Source' result object.
         """
-        return (
-            await self.get_source_with_http_info(source_id, request_options)
-        ).deserialize(Source)
+        resp = await self.get_source_with_http_info(source_id, request_options)
+        return resp.deserialize(Source, resp.raw_data)
 
     async def get_task_with_http_info(
         self,
@@ -1928,9 +1842,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Task' result object.
         """
-        return (
-            await self.get_task_with_http_info(task_id, request_options)
-        ).deserialize(Task)
+        resp = await self.get_task_with_http_info(task_id, request_options)
+        return resp.deserialize(Task, resp.raw_data)
 
     async def get_task_v1_with_http_info(
         self,
@@ -1987,9 +1900,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskV1' result object.
         """
-        return (
-            await self.get_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(TaskV1)
+        resp = await self.get_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskV1, resp.raw_data)
 
     async def get_transformation_with_http_info(
         self,
@@ -2048,11 +1960,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Transformation' result object.
         """
-        return (
-            await self.get_transformation_with_http_info(
-                transformation_id, request_options
-            )
-        ).deserialize(Transformation)
+        resp = await self.get_transformation_with_http_info(
+            transformation_id, request_options
+        )
+        return resp.deserialize(Transformation, resp.raw_data)
 
     async def list_authentications_with_http_info(
         self,
@@ -2071,14 +1982,12 @@ class IngestionClient:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -2100,9 +2009,9 @@ class IngestionClient:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
@@ -2152,14 +2061,12 @@ class IngestionClient:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -2181,20 +2088,19 @@ class IngestionClient:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListAuthenticationsResponse' result object.
         """
-        return (
-            await self.list_authentications_with_http_info(
-                items_per_page, page, type, platform, sort, order, request_options
-            )
-        ).deserialize(ListAuthenticationsResponse)
+        resp = await self.list_authentications_with_http_info(
+            items_per_page, page, type, platform, sort, order, request_options
+        )
+        return resp.deserialize(ListAuthenticationsResponse, resp.raw_data)
 
     async def list_destinations_with_http_info(
         self,
@@ -2212,6 +2118,10 @@ class IngestionClient:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
+        ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
         ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
@@ -2239,6 +2149,8 @@ class IngestionClient:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -2257,6 +2169,8 @@ class IngestionClient:
             _query_parameters.append(("type", type))
         if authentication_id is not None:
             _query_parameters.append(("authenticationID", authentication_id))
+        if transformation_id is not None:
+            _query_parameters.append(("transformationID", transformation_id))
         if sort is not None:
             _query_parameters.append(("sort", sort))
         if order is not None:
@@ -2289,6 +2203,10 @@ class IngestionClient:
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
         ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
+        ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
             Field(description="Property by which to sort the destinations."),
@@ -2315,6 +2233,8 @@ class IngestionClient:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -2322,17 +2242,17 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListDestinationsResponse' result object.
         """
-        return (
-            await self.list_destinations_with_http_info(
-                items_per_page,
-                page,
-                type,
-                authentication_id,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListDestinationsResponse)
+        resp = await self.list_destinations_with_http_info(
+            items_per_page,
+            page,
+            type,
+            authentication_id,
+            transformation_id,
+            sort,
+            order,
+            request_options,
+        )
+        return resp.deserialize(ListDestinationsResponse, resp.raw_data)
 
     async def list_events_with_http_info(
         self,
@@ -2515,20 +2435,19 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListEventsResponse' result object.
         """
-        return (
-            await self.list_events_with_http_info(
-                run_id,
-                items_per_page,
-                page,
-                status,
-                type,
-                sort,
-                order,
-                start_date,
-                end_date,
-                request_options,
-            )
-        ).deserialize(ListEventsResponse)
+        resp = await self.list_events_with_http_info(
+            run_id,
+            items_per_page,
+            page,
+            status,
+            type,
+            sort,
+            order,
+            start_date,
+            end_date,
+            request_options,
+        )
+        return resp.deserialize(ListEventsResponse, resp.raw_data)
 
     async def list_runs_with_http_info(
         self,
@@ -2708,20 +2627,19 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunListResponse' result object.
         """
-        return (
-            await self.list_runs_with_http_info(
-                items_per_page,
-                page,
-                status,
-                type,
-                task_id,
-                sort,
-                order,
-                start_date,
-                end_date,
-                request_options,
-            )
-        ).deserialize(RunListResponse)
+        resp = await self.list_runs_with_http_info(
+            items_per_page,
+            page,
+            status,
+            type,
+            task_id,
+            sort,
+            order,
+            start_date,
+            end_date,
+            request_options,
+        )
+        return resp.deserialize(RunListResponse, resp.raw_data)
 
     async def list_sources_with_http_info(
         self,
@@ -2740,7 +2658,7 @@ class IngestionClient:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -2767,7 +2685,7 @@ class IngestionClient:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -2819,7 +2737,7 @@ class IngestionClient:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -2846,7 +2764,7 @@ class IngestionClient:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -2855,17 +2773,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListSourcesResponse' result object.
         """
-        return (
-            await self.list_sources_with_http_info(
-                items_per_page,
-                page,
-                type,
-                authentication_id,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListSourcesResponse)
+        resp = await self.list_sources_with_http_info(
+            items_per_page, page, type, authentication_id, sort, order, request_options
+        )
+        return resp.deserialize(ListSourcesResponse, resp.raw_data)
 
     async def list_tasks_with_http_info(
         self,
@@ -3041,20 +2952,19 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListTasksResponse' result object.
         """
-        return (
-            await self.list_tasks_with_http_info(
-                items_per_page,
-                page,
-                action,
-                enabled,
-                source_id,
-                destination_id,
-                trigger_type,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListTasksResponse)
+        resp = await self.list_tasks_with_http_info(
+            items_per_page,
+            page,
+            action,
+            enabled,
+            source_id,
+            destination_id,
+            trigger_type,
+            sort,
+            order,
+            request_options,
+        )
+        return resp.deserialize(ListTasksResponse, resp.raw_data)
 
     async def list_tasks_v1_with_http_info(
         self,
@@ -3230,62 +3140,19 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListTasksResponseV1' result object.
         """
-        return (
-            await self.list_tasks_v1_with_http_info(
-                items_per_page,
-                page,
-                action,
-                enabled,
-                source_id,
-                destination_id,
-                trigger_type,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListTasksResponseV1)
-
-    async def list_transformation_models_with_http_info(
-        self, request_options: Optional[Union[dict, RequestOptions]] = None
-    ) -> ApiResponse[str]:
-        """
-        Retrieves a list of existing LLM transformation helpers.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the raw algoliasearch 'APIResponse' object.
-        """
-
-        return await self._transporter.request(
-            verb=Verb.GET,
-            path="/1/transformations/models",
-            request_options=self._request_options.merge(
-                user_request_options=request_options,
-            ),
-            use_read_transporter=False,
+        resp = await self.list_tasks_v1_with_http_info(
+            items_per_page,
+            page,
+            action,
+            enabled,
+            source_id,
+            destination_id,
+            trigger_type,
+            sort,
+            order,
+            request_options,
         )
-
-    async def list_transformation_models(
-        self, request_options: Optional[Union[dict, RequestOptions]] = None
-    ) -> TransformationModels:
-        """
-        Retrieves a list of existing LLM transformation helpers.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the deserialized response in a 'TransformationModels' result object.
-        """
-        return (
-            await self.list_transformation_models_with_http_info(request_options)
-        ).deserialize(TransformationModels)
+        return resp.deserialize(ListTasksResponseV1, resp.raw_data)
 
     async def list_transformations_with_http_info(
         self,
@@ -3298,7 +3165,8 @@ class IngestionClient:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -3318,8 +3186,8 @@ class IngestionClient:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3358,7 +3226,8 @@ class IngestionClient:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -3378,18 +3247,17 @@ class IngestionClient:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListTransformationsResponse' result object.
         """
-        return (
-            await self.list_transformations_with_http_info(
-                items_per_page, page, sort, order, request_options
-            )
-        ).deserialize(ListTransformationsResponse)
+        resp = await self.list_transformations_with_http_info(
+            items_per_page, page, sort, order, request_options
+        )
+        return resp.deserialize(ListTransformationsResponse, resp.raw_data)
 
     async def push_task_with_http_info(
         self,
@@ -3474,11 +3342,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunResponse' result object.
         """
-        return (
-            await self.push_task_with_http_info(
-                task_id, push_task_payload, request_options
-            )
-        ).deserialize(RunResponse)
+        resp = await self.push_task_with_http_info(
+            task_id, push_task_payload, request_options
+        )
+        return resp.deserialize(RunResponse, resp.raw_data)
 
     async def run_source_with_http_info(
         self,
@@ -3548,11 +3415,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunSourceResponse' result object.
         """
-        return (
-            await self.run_source_with_http_info(
-                source_id, run_source_payload, request_options
-            )
-        ).deserialize(RunSourceResponse)
+        resp = await self.run_source_with_http_info(
+            source_id, run_source_payload, request_options
+        )
+        return resp.deserialize(RunSourceResponse, resp.raw_data)
 
     async def run_task_with_http_info(
         self,
@@ -3609,9 +3475,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunResponse' result object.
         """
-        return (
-            await self.run_task_with_http_info(task_id, request_options)
-        ).deserialize(RunResponse)
+        resp = await self.run_task_with_http_info(task_id, request_options)
+        return resp.deserialize(RunResponse, resp.raw_data)
 
     async def run_task_v1_with_http_info(
         self,
@@ -3670,9 +3535,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunResponse' result object.
         """
-        return (
-            await self.run_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(RunResponse)
+        resp = await self.run_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(RunResponse, resp.raw_data)
 
     async def search_authentications_with_http_info(
         self,
@@ -3730,11 +3594,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Authentication]' result object.
         """
-        return (
-            await self.search_authentications_with_http_info(
-                authentication_search, request_options
-            )
-        ).deserialize(List[Authentication])
+        resp = await self.search_authentications_with_http_info(
+            authentication_search, request_options
+        )
+        return resp.deserialize(List[Authentication], resp.raw_data)
 
     async def search_destinations_with_http_info(
         self,
@@ -3792,11 +3655,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Destination]' result object.
         """
-        return (
-            await self.search_destinations_with_http_info(
-                destination_search, request_options
-            )
-        ).deserialize(List[Destination])
+        resp = await self.search_destinations_with_http_info(
+            destination_search, request_options
+        )
+        return resp.deserialize(List[Destination], resp.raw_data)
 
     async def search_sources_with_http_info(
         self,
@@ -3854,9 +3716,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Source]' result object.
         """
-        return (
-            await self.search_sources_with_http_info(source_search, request_options)
-        ).deserialize(List[Source])
+        resp = await self.search_sources_with_http_info(source_search, request_options)
+        return resp.deserialize(List[Source], resp.raw_data)
 
     async def search_tasks_with_http_info(
         self,
@@ -3914,9 +3775,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Task]' result object.
         """
-        return (
-            await self.search_tasks_with_http_info(task_search, request_options)
-        ).deserialize(List[Task])
+        resp = await self.search_tasks_with_http_info(task_search, request_options)
+        return resp.deserialize(List[Task], resp.raw_data)
 
     async def search_tasks_v1_with_http_info(
         self,
@@ -3974,9 +3834,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[TaskV1]' result object.
         """
-        return (
-            await self.search_tasks_v1_with_http_info(task_search, request_options)
-        ).deserialize(List[TaskV1])
+        resp = await self.search_tasks_v1_with_http_info(task_search, request_options)
+        return resp.deserialize(List[TaskV1], resp.raw_data)
 
     async def search_transformations_with_http_info(
         self,
@@ -4034,11 +3893,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Transformation]' result object.
         """
-        return (
-            await self.search_transformations_with_http_info(
-                transformation_search, request_options
-            )
-        ).deserialize(List[Transformation])
+        resp = await self.search_transformations_with_http_info(
+            transformation_search, request_options
+        )
+        return resp.deserialize(List[Transformation], resp.raw_data)
 
     async def trigger_docker_source_discover_with_http_info(
         self,
@@ -4097,11 +3955,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceWatchResponse' result object.
         """
-        return (
-            await self.trigger_docker_source_discover_with_http_info(
-                source_id, request_options
-            )
-        ).deserialize(SourceWatchResponse)
+        resp = await self.trigger_docker_source_discover_with_http_info(
+            source_id, request_options
+        )
+        return resp.deserialize(SourceWatchResponse, resp.raw_data)
 
     async def try_transformation_with_http_info(
         self,
@@ -4159,11 +4016,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationTryResponse' result object.
         """
-        return (
-            await self.try_transformation_with_http_info(
-                transformation_try, request_options
-            )
-        ).deserialize(TransformationTryResponse)
+        resp = await self.try_transformation_with_http_info(
+            transformation_try, request_options
+        )
+        return resp.deserialize(TransformationTryResponse, resp.raw_data)
 
     async def try_transformation_before_update_with_http_info(
         self,
@@ -4238,11 +4094,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationTryResponse' result object.
         """
-        return (
-            await self.try_transformation_before_update_with_http_info(
-                transformation_id, transformation_try, request_options
-            )
-        ).deserialize(TransformationTryResponse)
+        resp = await self.try_transformation_before_update_with_http_info(
+            transformation_id, transformation_try, request_options
+        )
+        return resp.deserialize(TransformationTryResponse, resp.raw_data)
 
     async def update_authentication_with_http_info(
         self,
@@ -4319,11 +4174,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AuthenticationUpdateResponse' result object.
         """
-        return (
-            await self.update_authentication_with_http_info(
-                authentication_id, authentication_update, request_options
-            )
-        ).deserialize(AuthenticationUpdateResponse)
+        resp = await self.update_authentication_with_http_info(
+            authentication_id, authentication_update, request_options
+        )
+        return resp.deserialize(AuthenticationUpdateResponse, resp.raw_data)
 
     async def update_destination_with_http_info(
         self,
@@ -4398,11 +4252,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DestinationUpdateResponse' result object.
         """
-        return (
-            await self.update_destination_with_http_info(
-                destination_id, destination_update, request_options
-            )
-        ).deserialize(DestinationUpdateResponse)
+        resp = await self.update_destination_with_http_info(
+            destination_id, destination_update, request_options
+        )
+        return resp.deserialize(DestinationUpdateResponse, resp.raw_data)
 
     async def update_source_with_http_info(
         self,
@@ -4477,11 +4330,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceUpdateResponse' result object.
         """
-        return (
-            await self.update_source_with_http_info(
-                source_id, source_update, request_options
-            )
-        ).deserialize(SourceUpdateResponse)
+        resp = await self.update_source_with_http_info(
+            source_id, source_update, request_options
+        )
+        return resp.deserialize(SourceUpdateResponse, resp.raw_data)
 
     async def update_task_with_http_info(
         self,
@@ -4546,9 +4398,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            await self.update_task_with_http_info(task_id, task_update, request_options)
-        ).deserialize(TaskUpdateResponse)
+        resp = await self.update_task_with_http_info(
+            task_id, task_update, request_options
+        )
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     async def update_task_v1_with_http_info(
         self,
@@ -4613,11 +4466,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            await self.update_task_v1_with_http_info(
-                task_id, task_update, request_options
-            )
-        ).deserialize(TaskUpdateResponse)
+        resp = await self.update_task_v1_with_http_info(
+            task_id, task_update, request_options
+        )
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     async def update_transformation_with_http_info(
         self,
@@ -4684,11 +4536,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationUpdateResponse' result object.
         """
-        return (
-            await self.update_transformation_with_http_info(
-                transformation_id, transformation_create, request_options
-            )
-        ).deserialize(TransformationUpdateResponse)
+        resp = await self.update_transformation_with_http_info(
+            transformation_id, transformation_create, request_options
+        )
+        return resp.deserialize(TransformationUpdateResponse, resp.raw_data)
 
     async def validate_source_with_http_info(
         self,
@@ -4741,9 +4592,8 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceWatchResponse' result object.
         """
-        return (
-            await self.validate_source_with_http_info(source_create, request_options)
-        ).deserialize(SourceWatchResponse)
+        resp = await self.validate_source_with_http_info(source_create, request_options)
+        return resp.deserialize(SourceWatchResponse, resp.raw_data)
 
     async def validate_source_before_update_with_http_info(
         self,
@@ -4818,11 +4668,10 @@ class IngestionClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceWatchResponse' result object.
         """
-        return (
-            await self.validate_source_before_update_with_http_info(
-                source_id, source_update, request_options
-            )
-        ).deserialize(SourceWatchResponse)
+        resp = await self.validate_source_before_update_with_http_info(
+            source_id, source_update, request_options
+        )
+        return resp.deserialize(SourceWatchResponse, resp.raw_data)
 
 
 class IngestionClientSync:
@@ -4867,9 +4716,10 @@ class IngestionClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: IngestionConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls, config: IngestionConfig, transporter: Optional[TransporterSync] = None
+    ) -> IngestionClientSync:
         """Allows creating a client with a customized `IngestionConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -4964,11 +4814,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AuthenticationCreateResponse' result object.
         """
-        return (
-            self.create_authentication_with_http_info(
-                authentication_create, request_options
-            )
-        ).deserialize(AuthenticationCreateResponse)
+        resp = self.create_authentication_with_http_info(
+            authentication_create, request_options
+        )
+        return resp.deserialize(AuthenticationCreateResponse, resp.raw_data)
 
     def create_destination_with_http_info(
         self,
@@ -5026,9 +4875,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DestinationCreateResponse' result object.
         """
-        return (
-            self.create_destination_with_http_info(destination_create, request_options)
-        ).deserialize(DestinationCreateResponse)
+        resp = self.create_destination_with_http_info(
+            destination_create, request_options
+        )
+        return resp.deserialize(DestinationCreateResponse, resp.raw_data)
 
     def create_source_with_http_info(
         self,
@@ -5086,9 +4936,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceCreateResponse' result object.
         """
-        return (
-            self.create_source_with_http_info(source_create, request_options)
-        ).deserialize(SourceCreateResponse)
+        resp = self.create_source_with_http_info(source_create, request_options)
+        return resp.deserialize(SourceCreateResponse, resp.raw_data)
 
     def create_task_with_http_info(
         self,
@@ -5142,9 +4991,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskCreateResponse' result object.
         """
-        return (
-            self.create_task_with_http_info(task_create, request_options)
-        ).deserialize(TaskCreateResponse)
+        resp = self.create_task_with_http_info(task_create, request_options)
+        return resp.deserialize(TaskCreateResponse, resp.raw_data)
 
     def create_task_v1_with_http_info(
         self,
@@ -5198,9 +5046,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskCreateResponse' result object.
         """
-        return (
-            self.create_task_v1_with_http_info(task_create, request_options)
-        ).deserialize(TaskCreateResponse)
+        resp = self.create_task_v1_with_http_info(task_create, request_options)
+        return resp.deserialize(TaskCreateResponse, resp.raw_data)
 
     def create_transformation_with_http_info(
         self,
@@ -5256,11 +5103,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationCreateResponse' result object.
         """
-        return (
-            self.create_transformation_with_http_info(
-                transformation_create, request_options
-            )
-        ).deserialize(TransformationCreateResponse)
+        resp = self.create_transformation_with_http_info(
+            transformation_create, request_options
+        )
+        return resp.deserialize(TransformationCreateResponse, resp.raw_data)
 
     def custom_delete_with_http_info(
         self,
@@ -5334,9 +5180,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -5408,9 +5253,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -5499,9 +5343,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -5590,9 +5433,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_authentication_with_http_info(
         self,
@@ -5653,11 +5495,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            self.delete_authentication_with_http_info(
-                authentication_id, request_options
-            )
-        ).deserialize(DeleteResponse)
+        resp = self.delete_authentication_with_http_info(
+            authentication_id, request_options
+        )
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     def delete_destination_with_http_info(
         self,
@@ -5716,9 +5557,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            self.delete_destination_with_http_info(destination_id, request_options)
-        ).deserialize(DeleteResponse)
+        resp = self.delete_destination_with_http_info(destination_id, request_options)
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     def delete_source_with_http_info(
         self,
@@ -5777,9 +5617,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            self.delete_source_with_http_info(source_id, request_options)
-        ).deserialize(DeleteResponse)
+        resp = self.delete_source_with_http_info(source_id, request_options)
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     def delete_task_with_http_info(
         self,
@@ -5828,9 +5667,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (self.delete_task_with_http_info(task_id, request_options)).deserialize(
-            DeleteResponse
-        )
+        resp = self.delete_task_with_http_info(task_id, request_options)
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     def delete_task_v1_with_http_info(
         self,
@@ -5879,9 +5717,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            self.delete_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(DeleteResponse)
+        resp = self.delete_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     def delete_transformation_with_http_info(
         self,
@@ -5932,11 +5769,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteResponse' result object.
         """
-        return (
-            self.delete_transformation_with_http_info(
-                transformation_id, request_options
-            )
-        ).deserialize(DeleteResponse)
+        resp = self.delete_transformation_with_http_info(
+            transformation_id, request_options
+        )
+        return resp.deserialize(DeleteResponse, resp.raw_data)
 
     def disable_task_with_http_info(
         self,
@@ -5995,9 +5831,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (self.disable_task_with_http_info(task_id, request_options)).deserialize(
-            TaskUpdateResponse
-        )
+        resp = self.disable_task_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     def disable_task_v1_with_http_info(
         self,
@@ -6060,9 +5895,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            self.disable_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(TaskUpdateResponse)
+        resp = self.disable_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     def enable_task_with_http_info(
         self,
@@ -6121,9 +5955,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (self.enable_task_with_http_info(task_id, request_options)).deserialize(
-            TaskUpdateResponse
-        )
+        resp = self.enable_task_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     def enable_task_v1_with_http_info(
         self,
@@ -6182,71 +6015,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            self.enable_task_v1_with_http_info(task_id, request_options)
-        ).deserialize(TaskUpdateResponse)
-
-    def generate_transformation_code_with_http_info(
-        self,
-        generate_transformation_code_payload: GenerateTransformationCodePayload,
-        request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> ApiResponse[str]:
-        """
-        Generates code for the selected model based on the given prompt.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param generate_transformation_code_payload: (required)
-        :type generate_transformation_code_payload: GenerateTransformationCodePayload
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the raw algoliasearch 'APIResponse' object.
-        """
-
-        if generate_transformation_code_payload is None:
-            raise ValueError(
-                "Parameter `generate_transformation_code_payload` is required when calling `generate_transformation_code`."
-            )
-
-        _data = {}
-        if generate_transformation_code_payload is not None:
-            _data = generate_transformation_code_payload
-
-        return self._transporter.request(
-            verb=Verb.POST,
-            path="/1/transformations/models",
-            request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
-                user_request_options=request_options,
-            ),
-            use_read_transporter=False,
-        )
-
-    def generate_transformation_code(
-        self,
-        generate_transformation_code_payload: GenerateTransformationCodePayload,
-        request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> GenerateTransformationCodeResponse:
-        """
-        Generates code for the selected model based on the given prompt.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param generate_transformation_code_payload: (required)
-        :type generate_transformation_code_payload: GenerateTransformationCodePayload
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the deserialized response in a 'GenerateTransformationCodeResponse' result object.
-        """
-        return (
-            self.generate_transformation_code_with_http_info(
-                generate_transformation_code_payload, request_options
-            )
-        ).deserialize(GenerateTransformationCodeResponse)
+        resp = self.enable_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     def get_authentication_with_http_info(
         self,
@@ -6307,9 +6077,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Authentication' result object.
         """
-        return (
-            self.get_authentication_with_http_info(authentication_id, request_options)
-        ).deserialize(Authentication)
+        resp = self.get_authentication_with_http_info(
+            authentication_id, request_options
+        )
+        return resp.deserialize(Authentication, resp.raw_data)
 
     def get_destination_with_http_info(
         self,
@@ -6368,9 +6139,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Destination' result object.
         """
-        return (
-            self.get_destination_with_http_info(destination_id, request_options)
-        ).deserialize(Destination)
+        resp = self.get_destination_with_http_info(destination_id, request_options)
+        return resp.deserialize(Destination, resp.raw_data)
 
     def get_event_with_http_info(
         self,
@@ -6442,9 +6212,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Event' result object.
         """
-        return (
-            self.get_event_with_http_info(run_id, event_id, request_options)
-        ).deserialize(Event)
+        resp = self.get_event_with_http_info(run_id, event_id, request_options)
+        return resp.deserialize(Event, resp.raw_data)
 
     def get_run_with_http_info(
         self,
@@ -6499,7 +6268,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Run' result object.
         """
-        return (self.get_run_with_http_info(run_id, request_options)).deserialize(Run)
+        resp = self.get_run_with_http_info(run_id, request_options)
+        return resp.deserialize(Run, resp.raw_data)
 
     def get_source_with_http_info(
         self,
@@ -6558,9 +6328,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Source' result object.
         """
-        return (self.get_source_with_http_info(source_id, request_options)).deserialize(
-            Source
-        )
+        resp = self.get_source_with_http_info(source_id, request_options)
+        return resp.deserialize(Source, resp.raw_data)
 
     def get_task_with_http_info(
         self,
@@ -6615,9 +6384,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Task' result object.
         """
-        return (self.get_task_with_http_info(task_id, request_options)).deserialize(
-            Task
-        )
+        resp = self.get_task_with_http_info(task_id, request_options)
+        return resp.deserialize(Task, resp.raw_data)
 
     def get_task_v1_with_http_info(
         self,
@@ -6674,9 +6442,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskV1' result object.
         """
-        return (self.get_task_v1_with_http_info(task_id, request_options)).deserialize(
-            TaskV1
-        )
+        resp = self.get_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(TaskV1, resp.raw_data)
 
     def get_transformation_with_http_info(
         self,
@@ -6735,9 +6502,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Transformation' result object.
         """
-        return (
-            self.get_transformation_with_http_info(transformation_id, request_options)
-        ).deserialize(Transformation)
+        resp = self.get_transformation_with_http_info(
+            transformation_id, request_options
+        )
+        return resp.deserialize(Transformation, resp.raw_data)
 
     def list_authentications_with_http_info(
         self,
@@ -6756,14 +6524,12 @@ class IngestionClientSync:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -6785,9 +6551,9 @@ class IngestionClientSync:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
@@ -6837,14 +6603,12 @@ class IngestionClientSync:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -6866,20 +6630,19 @@ class IngestionClientSync:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListAuthenticationsResponse' result object.
         """
-        return (
-            self.list_authentications_with_http_info(
-                items_per_page, page, type, platform, sort, order, request_options
-            )
-        ).deserialize(ListAuthenticationsResponse)
+        resp = self.list_authentications_with_http_info(
+            items_per_page, page, type, platform, sort, order, request_options
+        )
+        return resp.deserialize(ListAuthenticationsResponse, resp.raw_data)
 
     def list_destinations_with_http_info(
         self,
@@ -6897,6 +6660,10 @@ class IngestionClientSync:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
+        ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
         ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
@@ -6924,6 +6691,8 @@ class IngestionClientSync:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -6942,6 +6711,8 @@ class IngestionClientSync:
             _query_parameters.append(("type", type))
         if authentication_id is not None:
             _query_parameters.append(("authenticationID", authentication_id))
+        if transformation_id is not None:
+            _query_parameters.append(("transformationID", transformation_id))
         if sort is not None:
             _query_parameters.append(("sort", sort))
         if order is not None:
@@ -6974,6 +6745,10 @@ class IngestionClientSync:
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
         ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
+        ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
             Field(description="Property by which to sort the destinations."),
@@ -7000,6 +6775,8 @@ class IngestionClientSync:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -7007,17 +6784,17 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListDestinationsResponse' result object.
         """
-        return (
-            self.list_destinations_with_http_info(
-                items_per_page,
-                page,
-                type,
-                authentication_id,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListDestinationsResponse)
+        resp = self.list_destinations_with_http_info(
+            items_per_page,
+            page,
+            type,
+            authentication_id,
+            transformation_id,
+            sort,
+            order,
+            request_options,
+        )
+        return resp.deserialize(ListDestinationsResponse, resp.raw_data)
 
     def list_events_with_http_info(
         self,
@@ -7200,20 +6977,19 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListEventsResponse' result object.
         """
-        return (
-            self.list_events_with_http_info(
-                run_id,
-                items_per_page,
-                page,
-                status,
-                type,
-                sort,
-                order,
-                start_date,
-                end_date,
-                request_options,
-            )
-        ).deserialize(ListEventsResponse)
+        resp = self.list_events_with_http_info(
+            run_id,
+            items_per_page,
+            page,
+            status,
+            type,
+            sort,
+            order,
+            start_date,
+            end_date,
+            request_options,
+        )
+        return resp.deserialize(ListEventsResponse, resp.raw_data)
 
     def list_runs_with_http_info(
         self,
@@ -7393,20 +7169,19 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunListResponse' result object.
         """
-        return (
-            self.list_runs_with_http_info(
-                items_per_page,
-                page,
-                status,
-                type,
-                task_id,
-                sort,
-                order,
-                start_date,
-                end_date,
-                request_options,
-            )
-        ).deserialize(RunListResponse)
+        resp = self.list_runs_with_http_info(
+            items_per_page,
+            page,
+            status,
+            type,
+            task_id,
+            sort,
+            order,
+            start_date,
+            end_date,
+            request_options,
+        )
+        return resp.deserialize(RunListResponse, resp.raw_data)
 
     def list_sources_with_http_info(
         self,
@@ -7425,7 +7200,7 @@ class IngestionClientSync:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -7452,7 +7227,7 @@ class IngestionClientSync:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -7504,7 +7279,7 @@ class IngestionClientSync:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -7531,7 +7306,7 @@ class IngestionClientSync:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -7540,17 +7315,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListSourcesResponse' result object.
         """
-        return (
-            self.list_sources_with_http_info(
-                items_per_page,
-                page,
-                type,
-                authentication_id,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListSourcesResponse)
+        resp = self.list_sources_with_http_info(
+            items_per_page, page, type, authentication_id, sort, order, request_options
+        )
+        return resp.deserialize(ListSourcesResponse, resp.raw_data)
 
     def list_tasks_with_http_info(
         self,
@@ -7726,20 +7494,19 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListTasksResponse' result object.
         """
-        return (
-            self.list_tasks_with_http_info(
-                items_per_page,
-                page,
-                action,
-                enabled,
-                source_id,
-                destination_id,
-                trigger_type,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListTasksResponse)
+        resp = self.list_tasks_with_http_info(
+            items_per_page,
+            page,
+            action,
+            enabled,
+            source_id,
+            destination_id,
+            trigger_type,
+            sort,
+            order,
+            request_options,
+        )
+        return resp.deserialize(ListTasksResponse, resp.raw_data)
 
     def list_tasks_v1_with_http_info(
         self,
@@ -7915,62 +7682,19 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListTasksResponseV1' result object.
         """
-        return (
-            self.list_tasks_v1_with_http_info(
-                items_per_page,
-                page,
-                action,
-                enabled,
-                source_id,
-                destination_id,
-                trigger_type,
-                sort,
-                order,
-                request_options,
-            )
-        ).deserialize(ListTasksResponseV1)
-
-    def list_transformation_models_with_http_info(
-        self, request_options: Optional[Union[dict, RequestOptions]] = None
-    ) -> ApiResponse[str]:
-        """
-        Retrieves a list of existing LLM transformation helpers.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the raw algoliasearch 'APIResponse' object.
-        """
-
-        return self._transporter.request(
-            verb=Verb.GET,
-            path="/1/transformations/models",
-            request_options=self._request_options.merge(
-                user_request_options=request_options,
-            ),
-            use_read_transporter=False,
+        resp = self.list_tasks_v1_with_http_info(
+            items_per_page,
+            page,
+            action,
+            enabled,
+            source_id,
+            destination_id,
+            trigger_type,
+            sort,
+            order,
+            request_options,
         )
-
-    def list_transformation_models(
-        self, request_options: Optional[Union[dict, RequestOptions]] = None
-    ) -> TransformationModels:
-        """
-        Retrieves a list of existing LLM transformation helpers.
-
-        Required API Key ACLs:
-          - addObject
-                  - deleteIndex
-                  - editSettings
-
-        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the deserialized response in a 'TransformationModels' result object.
-        """
-        return (
-            self.list_transformation_models_with_http_info(request_options)
-        ).deserialize(TransformationModels)
+        return resp.deserialize(ListTasksResponseV1, resp.raw_data)
 
     def list_transformations_with_http_info(
         self,
@@ -7983,7 +7707,8 @@ class IngestionClientSync:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -8003,8 +7728,8 @@ class IngestionClientSync:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -8043,7 +7768,8 @@ class IngestionClientSync:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -8063,18 +7789,17 @@ class IngestionClientSync:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListTransformationsResponse' result object.
         """
-        return (
-            self.list_transformations_with_http_info(
-                items_per_page, page, sort, order, request_options
-            )
-        ).deserialize(ListTransformationsResponse)
+        resp = self.list_transformations_with_http_info(
+            items_per_page, page, sort, order, request_options
+        )
+        return resp.deserialize(ListTransformationsResponse, resp.raw_data)
 
     def push_task_with_http_info(
         self,
@@ -8159,9 +7884,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunResponse' result object.
         """
-        return (
-            self.push_task_with_http_info(task_id, push_task_payload, request_options)
-        ).deserialize(RunResponse)
+        resp = self.push_task_with_http_info(
+            task_id, push_task_payload, request_options
+        )
+        return resp.deserialize(RunResponse, resp.raw_data)
 
     def run_source_with_http_info(
         self,
@@ -8231,11 +7957,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunSourceResponse' result object.
         """
-        return (
-            self.run_source_with_http_info(
-                source_id, run_source_payload, request_options
-            )
-        ).deserialize(RunSourceResponse)
+        resp = self.run_source_with_http_info(
+            source_id, run_source_payload, request_options
+        )
+        return resp.deserialize(RunSourceResponse, resp.raw_data)
 
     def run_task_with_http_info(
         self,
@@ -8292,9 +8017,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunResponse' result object.
         """
-        return (self.run_task_with_http_info(task_id, request_options)).deserialize(
-            RunResponse
-        )
+        resp = self.run_task_with_http_info(task_id, request_options)
+        return resp.deserialize(RunResponse, resp.raw_data)
 
     def run_task_v1_with_http_info(
         self,
@@ -8353,9 +8077,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RunResponse' result object.
         """
-        return (self.run_task_v1_with_http_info(task_id, request_options)).deserialize(
-            RunResponse
-        )
+        resp = self.run_task_v1_with_http_info(task_id, request_options)
+        return resp.deserialize(RunResponse, resp.raw_data)
 
     def search_authentications_with_http_info(
         self,
@@ -8413,11 +8136,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Authentication]' result object.
         """
-        return (
-            self.search_authentications_with_http_info(
-                authentication_search, request_options
-            )
-        ).deserialize(List[Authentication])
+        resp = self.search_authentications_with_http_info(
+            authentication_search, request_options
+        )
+        return resp.deserialize(List[Authentication], resp.raw_data)
 
     def search_destinations_with_http_info(
         self,
@@ -8475,9 +8197,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Destination]' result object.
         """
-        return (
-            self.search_destinations_with_http_info(destination_search, request_options)
-        ).deserialize(List[Destination])
+        resp = self.search_destinations_with_http_info(
+            destination_search, request_options
+        )
+        return resp.deserialize(List[Destination], resp.raw_data)
 
     def search_sources_with_http_info(
         self,
@@ -8535,9 +8258,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Source]' result object.
         """
-        return (
-            self.search_sources_with_http_info(source_search, request_options)
-        ).deserialize(List[Source])
+        resp = self.search_sources_with_http_info(source_search, request_options)
+        return resp.deserialize(List[Source], resp.raw_data)
 
     def search_tasks_with_http_info(
         self,
@@ -8595,9 +8317,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Task]' result object.
         """
-        return (
-            self.search_tasks_with_http_info(task_search, request_options)
-        ).deserialize(List[Task])
+        resp = self.search_tasks_with_http_info(task_search, request_options)
+        return resp.deserialize(List[Task], resp.raw_data)
 
     def search_tasks_v1_with_http_info(
         self,
@@ -8655,9 +8376,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[TaskV1]' result object.
         """
-        return (
-            self.search_tasks_v1_with_http_info(task_search, request_options)
-        ).deserialize(List[TaskV1])
+        resp = self.search_tasks_v1_with_http_info(task_search, request_options)
+        return resp.deserialize(List[TaskV1], resp.raw_data)
 
     def search_transformations_with_http_info(
         self,
@@ -8715,11 +8435,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Transformation]' result object.
         """
-        return (
-            self.search_transformations_with_http_info(
-                transformation_search, request_options
-            )
-        ).deserialize(List[Transformation])
+        resp = self.search_transformations_with_http_info(
+            transformation_search, request_options
+        )
+        return resp.deserialize(List[Transformation], resp.raw_data)
 
     def trigger_docker_source_discover_with_http_info(
         self,
@@ -8778,11 +8497,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceWatchResponse' result object.
         """
-        return (
-            self.trigger_docker_source_discover_with_http_info(
-                source_id, request_options
-            )
-        ).deserialize(SourceWatchResponse)
+        resp = self.trigger_docker_source_discover_with_http_info(
+            source_id, request_options
+        )
+        return resp.deserialize(SourceWatchResponse, resp.raw_data)
 
     def try_transformation_with_http_info(
         self,
@@ -8840,9 +8558,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationTryResponse' result object.
         """
-        return (
-            self.try_transformation_with_http_info(transformation_try, request_options)
-        ).deserialize(TransformationTryResponse)
+        resp = self.try_transformation_with_http_info(
+            transformation_try, request_options
+        )
+        return resp.deserialize(TransformationTryResponse, resp.raw_data)
 
     def try_transformation_before_update_with_http_info(
         self,
@@ -8917,11 +8636,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationTryResponse' result object.
         """
-        return (
-            self.try_transformation_before_update_with_http_info(
-                transformation_id, transformation_try, request_options
-            )
-        ).deserialize(TransformationTryResponse)
+        resp = self.try_transformation_before_update_with_http_info(
+            transformation_id, transformation_try, request_options
+        )
+        return resp.deserialize(TransformationTryResponse, resp.raw_data)
 
     def update_authentication_with_http_info(
         self,
@@ -8998,11 +8716,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AuthenticationUpdateResponse' result object.
         """
-        return (
-            self.update_authentication_with_http_info(
-                authentication_id, authentication_update, request_options
-            )
-        ).deserialize(AuthenticationUpdateResponse)
+        resp = self.update_authentication_with_http_info(
+            authentication_id, authentication_update, request_options
+        )
+        return resp.deserialize(AuthenticationUpdateResponse, resp.raw_data)
 
     def update_destination_with_http_info(
         self,
@@ -9077,11 +8794,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DestinationUpdateResponse' result object.
         """
-        return (
-            self.update_destination_with_http_info(
-                destination_id, destination_update, request_options
-            )
-        ).deserialize(DestinationUpdateResponse)
+        resp = self.update_destination_with_http_info(
+            destination_id, destination_update, request_options
+        )
+        return resp.deserialize(DestinationUpdateResponse, resp.raw_data)
 
     def update_source_with_http_info(
         self,
@@ -9156,9 +8872,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceUpdateResponse' result object.
         """
-        return (
-            self.update_source_with_http_info(source_id, source_update, request_options)
-        ).deserialize(SourceUpdateResponse)
+        resp = self.update_source_with_http_info(
+            source_id, source_update, request_options
+        )
+        return resp.deserialize(SourceUpdateResponse, resp.raw_data)
 
     def update_task_with_http_info(
         self,
@@ -9223,9 +8940,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            self.update_task_with_http_info(task_id, task_update, request_options)
-        ).deserialize(TaskUpdateResponse)
+        resp = self.update_task_with_http_info(task_id, task_update, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     def update_task_v1_with_http_info(
         self,
@@ -9290,9 +9006,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TaskUpdateResponse' result object.
         """
-        return (
-            self.update_task_v1_with_http_info(task_id, task_update, request_options)
-        ).deserialize(TaskUpdateResponse)
+        resp = self.update_task_v1_with_http_info(task_id, task_update, request_options)
+        return resp.deserialize(TaskUpdateResponse, resp.raw_data)
 
     def update_transformation_with_http_info(
         self,
@@ -9359,11 +9074,10 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'TransformationUpdateResponse' result object.
         """
-        return (
-            self.update_transformation_with_http_info(
-                transformation_id, transformation_create, request_options
-            )
-        ).deserialize(TransformationUpdateResponse)
+        resp = self.update_transformation_with_http_info(
+            transformation_id, transformation_create, request_options
+        )
+        return resp.deserialize(TransformationUpdateResponse, resp.raw_data)
 
     def validate_source_with_http_info(
         self,
@@ -9416,9 +9130,8 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceWatchResponse' result object.
         """
-        return (
-            self.validate_source_with_http_info(source_create, request_options)
-        ).deserialize(SourceWatchResponse)
+        resp = self.validate_source_with_http_info(source_create, request_options)
+        return resp.deserialize(SourceWatchResponse, resp.raw_data)
 
     def validate_source_before_update_with_http_info(
         self,
@@ -9493,8 +9206,7 @@ class IngestionClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SourceWatchResponse' result object.
         """
-        return (
-            self.validate_source_before_update_with_http_info(
-                source_id, source_update, request_options
-            )
-        ).deserialize(SourceWatchResponse)
+        resp = self.validate_source_before_update_with_http_info(
+            source_id, source_update, request_options
+        )
+        return resp.deserialize(SourceWatchResponse, resp.raw_data)

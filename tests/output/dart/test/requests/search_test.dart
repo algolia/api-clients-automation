@@ -883,14 +883,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -916,14 +917,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -2090,10 +2092,10 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.restoreApiKey(
-        key: "myApiKey",
+        key: "ALGOLIA_API_KEY",
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/keys/myApiKey/restore');
+        expectPath(request.path, '/1/keys/ALGOLIA_API_KEY/restore');
         expect(request.method, 'post');
         expect(request.body, {});
       },
@@ -3979,7 +3981,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.updateApiKey(
-        key: "myApiKey",
+        key: "ALGOLIA_API_KEY",
         apiKey: ApiKey(
           acl: [
             Acl.fromJson("search"),
@@ -3991,7 +3993,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/keys/myApiKey');
+        expectPath(request.path, '/1/keys/ALGOLIA_API_KEY');
         expect(request.method, 'put');
         expectBody(request.body,
             """{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}""");

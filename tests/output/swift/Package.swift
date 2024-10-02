@@ -39,10 +39,6 @@ let libraries: [Target.Dependency] = [
         name: "Search",
         package: "algoliasearch-client-swift"
     ),
-    .product(
-        name: "Usage",
-        package: "algoliasearch-client-swift"
-    ),
 ]
 
 let package = Package(
@@ -84,6 +80,12 @@ let package = Package(
         ),
         .testTarget(
             name: "benchmark",
+            dependencies: [
+                .target(name: "Utils"),
+            ] + libraries
+        ),
+        .testTarget(
+            name: "manual",
             dependencies: [
                 .target(name: "Utils"),
             ] + libraries

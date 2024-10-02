@@ -38,10 +38,11 @@ final class SearchResponse {
     this.serverUsed,
     this.userData,
     this.queryID,
-    required this.page,
-    required this.nbHits,
-    required this.nbPages,
-    required this.hitsPerPage,
+    this.automaticInsights,
+    this.page,
+    this.nbHits,
+    this.nbPages,
+    this.hitsPerPage,
     required this.hits,
     required this.query,
     required this.params,
@@ -144,24 +145,28 @@ final class SearchResponse {
   @JsonKey(name: r'queryID')
   final String? queryID;
 
+  /// Whether automatic events collection is enabled for the application.
+  @JsonKey(name: r'_automaticInsights')
+  final bool? automaticInsights;
+
   /// Page of search results to retrieve.
   // minimum: 0
   @JsonKey(name: r'page')
-  final int page;
+  final int? page;
 
   /// Number of results (hits).
   @JsonKey(name: r'nbHits')
-  final int nbHits;
+  final int? nbHits;
 
   /// Number of pages of results.
   @JsonKey(name: r'nbPages')
-  final int nbPages;
+  final int? nbPages;
 
   /// Number of hits per page.
   // minimum: 1
   // maximum: 1000
   @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
+  final int? hitsPerPage;
 
   /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
   @JsonKey(name: r'hits')
@@ -200,6 +205,7 @@ final class SearchResponse {
           other.serverUsed == serverUsed &&
           other.userData == userData &&
           other.queryID == queryID &&
+          other.automaticInsights == automaticInsights &&
           other.page == page &&
           other.nbHits == nbHits &&
           other.nbPages == nbPages &&
@@ -231,6 +237,7 @@ final class SearchResponse {
       serverUsed.hashCode +
       userData.hashCode +
       queryID.hashCode +
+      automaticInsights.hashCode +
       page.hashCode +
       nbHits.hashCode +
       nbPages.hashCode +

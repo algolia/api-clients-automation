@@ -14,7 +14,7 @@ class SnippetSearchClient {
   void snippetForAddApiKey() {
     // >SEPARATOR addApiKey default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.addApiKey(
@@ -35,7 +35,7 @@ class SnippetSearchClient {
   void snippetForAddOrUpdateObject() {
     // >SEPARATOR addOrUpdateObject default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.addOrUpdateObject(
@@ -57,7 +57,7 @@ class SnippetSearchClient {
   void snippetForAppendSource() {
     // >SEPARATOR appendSource default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.appendSource(new Source().setSource("theSource").setDescription("theDescription"));
@@ -71,7 +71,7 @@ class SnippetSearchClient {
   void snippetForAssignUserId() {
     // >SEPARATOR assignUserId default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.assignUserId("userID", new AssignUserIdParams().setCluster("theCluster"));
@@ -85,7 +85,7 @@ class SnippetSearchClient {
   void snippetForBatch() {
     // >SEPARATOR batch addObject
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batch(
@@ -126,7 +126,7 @@ class SnippetSearchClient {
   void snippetForBatch1() {
     // >SEPARATOR batch clear
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batch(
@@ -156,7 +156,7 @@ class SnippetSearchClient {
   void snippetForBatch2() {
     // >SEPARATOR batch delete
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batch(
@@ -186,7 +186,7 @@ class SnippetSearchClient {
   void snippetForBatch3() {
     // >SEPARATOR batch deleteObject
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batch(
@@ -216,7 +216,7 @@ class SnippetSearchClient {
   void snippetForBatch4() {
     // >SEPARATOR batch partialUpdateObject
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batch(
@@ -246,7 +246,7 @@ class SnippetSearchClient {
   void snippetForBatch5() {
     // >SEPARATOR batch partialUpdateObjectNoCreate
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batch(
@@ -276,7 +276,7 @@ class SnippetSearchClient {
   void snippetForBatch6() {
     // >SEPARATOR batch updateObject
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batch(
@@ -306,7 +306,7 @@ class SnippetSearchClient {
   void snippetForBatchAssignUserIds() {
     // >SEPARATOR batchAssignUserIds default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batchAssignUserIds("userID", new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1", "user2")));
@@ -320,7 +320,7 @@ class SnippetSearchClient {
   void snippetForBatchDictionaryEntries() {
     // >SEPARATOR batchDictionaryEntries replace
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batchDictionaryEntries(
@@ -353,7 +353,7 @@ class SnippetSearchClient {
   void snippetForBatchDictionaryEntries1() {
     // >SEPARATOR batchDictionaryEntries delete
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batchDictionaryEntries(
@@ -376,7 +376,7 @@ class SnippetSearchClient {
   void snippetForBatchDictionaryEntries2() {
     // >SEPARATOR batchDictionaryEntries append
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.batchDictionaryEntries(
@@ -402,7 +402,7 @@ class SnippetSearchClient {
   void snippetForBrowse() {
     // >SEPARATOR browse default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.browse("<YOUR_INDEX_NAME>", Hit.class);
@@ -416,7 +416,7 @@ class SnippetSearchClient {
   void snippetForClearObjects() {
     // >SEPARATOR clearObjects default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.clearObjects("<YOUR_INDEX_NAME>");
@@ -430,7 +430,7 @@ class SnippetSearchClient {
   void snippetForClearRules() {
     // >SEPARATOR clearRules default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.clearRules("<YOUR_INDEX_NAME>");
@@ -444,7 +444,7 @@ class SnippetSearchClient {
   void snippetForClearSynonyms() {
     // >SEPARATOR clearSynonyms default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.clearSynonyms("<YOUR_INDEX_NAME>");
@@ -458,7 +458,7 @@ class SnippetSearchClient {
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -472,7 +472,7 @@ class SnippetSearchClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customGet("test/minimal");
@@ -486,7 +486,7 @@ class SnippetSearchClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customPost("test/minimal");
@@ -500,7 +500,7 @@ class SnippetSearchClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customPut("test/minimal");
@@ -514,7 +514,7 @@ class SnippetSearchClient {
   void snippetForDeleteApiKey() {
     // >SEPARATOR deleteApiKey default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteApiKey("myTestApiKey");
@@ -528,7 +528,7 @@ class SnippetSearchClient {
   void snippetForDeleteBy() {
     // >SEPARATOR deleteBy default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteBy("<YOUR_INDEX_NAME>", new DeleteByParams().setFilters("brand:brandName"));
@@ -542,7 +542,7 @@ class SnippetSearchClient {
   void snippetForDeleteIndex() {
     // >SEPARATOR deleteIndex default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteIndex("<YOUR_INDEX_NAME>");
@@ -556,7 +556,7 @@ class SnippetSearchClient {
   void snippetForDeleteObject() {
     // >SEPARATOR deleteObject default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
@@ -570,7 +570,7 @@ class SnippetSearchClient {
   void snippetForDeleteObjects() {
     // >SEPARATOR deleteObjects default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteObjects("<YOUR_INDEX_NAME>", Arrays.asList("1", "2"));
@@ -584,7 +584,7 @@ class SnippetSearchClient {
   void snippetForDeleteRule() {
     // >SEPARATOR deleteRule default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteRule("<YOUR_INDEX_NAME>", "id1");
@@ -598,7 +598,7 @@ class SnippetSearchClient {
   void snippetForDeleteSource() {
     // >SEPARATOR deleteSource default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteSource("theSource");
@@ -612,7 +612,7 @@ class SnippetSearchClient {
   void snippetForDeleteSynonym() {
     // >SEPARATOR deleteSynonym default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
@@ -626,7 +626,7 @@ class SnippetSearchClient {
   void snippetForGenerateSecuredApiKey() {
     // >SEPARATOR generateSecuredApiKey generate secured api key basic
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.generateSecuredApiKey(
@@ -643,7 +643,7 @@ class SnippetSearchClient {
   void snippetForGenerateSecuredApiKey1() {
     // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.generateSecuredApiKey(
@@ -674,7 +674,7 @@ class SnippetSearchClient {
   void snippetForGetApiKey() {
     // >SEPARATOR getApiKey default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getApiKey("myTestApiKey");
@@ -688,7 +688,7 @@ class SnippetSearchClient {
   void snippetForGetAppTask() {
     // >SEPARATOR getAppTask default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getAppTask(123L);
@@ -702,7 +702,7 @@ class SnippetSearchClient {
   void snippetForGetDictionaryLanguages() {
     // >SEPARATOR getDictionaryLanguages default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getDictionaryLanguages();
@@ -716,7 +716,7 @@ class SnippetSearchClient {
   void snippetForGetDictionarySettings() {
     // >SEPARATOR getDictionarySettings default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getDictionarySettings();
@@ -730,7 +730,7 @@ class SnippetSearchClient {
   void snippetForGetLogs() {
     // >SEPARATOR getLogs default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getLogs();
@@ -744,7 +744,7 @@ class SnippetSearchClient {
   void snippetForGetObject() {
     // >SEPARATOR getObject default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getObject("<YOUR_INDEX_NAME>", "uniqueID", Arrays.asList("attr1", "attr2"));
@@ -758,7 +758,7 @@ class SnippetSearchClient {
   void snippetForGetObjects() {
     // >SEPARATOR getObjects default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getObjects(
@@ -783,7 +783,7 @@ class SnippetSearchClient {
   void snippetForGetRule() {
     // >SEPARATOR getRule default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getRule("<YOUR_INDEX_NAME>", "qr-1725004648916");
@@ -797,7 +797,7 @@ class SnippetSearchClient {
   void snippetForGetSettings() {
     // >SEPARATOR getSettings default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getSettings("<YOUR_INDEX_NAME>");
@@ -811,7 +811,7 @@ class SnippetSearchClient {
   void snippetForGetSources() {
     // >SEPARATOR getSources default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getSources();
@@ -825,7 +825,7 @@ class SnippetSearchClient {
   void snippetForGetSynonym() {
     // >SEPARATOR getSynonym default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getSynonym("<YOUR_INDEX_NAME>", "id1");
@@ -839,7 +839,7 @@ class SnippetSearchClient {
   void snippetForGetTask() {
     // >SEPARATOR getTask default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getTask("<YOUR_INDEX_NAME>", 123L);
@@ -853,7 +853,7 @@ class SnippetSearchClient {
   void snippetForGetTopUserIds() {
     // >SEPARATOR getTopUserIds default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getTopUserIds();
@@ -867,7 +867,7 @@ class SnippetSearchClient {
   void snippetForGetUserId() {
     // >SEPARATOR getUserId default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getUserId("uniqueID");
@@ -881,7 +881,7 @@ class SnippetSearchClient {
   void snippetForHasPendingMappings() {
     // >SEPARATOR hasPendingMappings default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.hasPendingMappings();
@@ -895,7 +895,7 @@ class SnippetSearchClient {
   void snippetForIndexExists() {
     // >SEPARATOR indexExists indexExists
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.indexExists("<YOUR_INDEX_NAME>");
@@ -909,7 +909,7 @@ class SnippetSearchClient {
   void snippetForIndexExists1() {
     // >SEPARATOR indexExists indexNotExists
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.indexExists("<YOUR_INDEX_NAME>");
@@ -923,7 +923,7 @@ class SnippetSearchClient {
   void snippetForIndexExists2() {
     // >SEPARATOR indexExists indexExistsWithError
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.indexExists("<YOUR_INDEX_NAME>");
@@ -937,7 +937,7 @@ class SnippetSearchClient {
   void snippetForListApiKeys() {
     // >SEPARATOR listApiKeys default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.listApiKeys();
@@ -951,7 +951,7 @@ class SnippetSearchClient {
   void snippetForListClusters() {
     // >SEPARATOR listClusters default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.listClusters();
@@ -965,7 +965,7 @@ class SnippetSearchClient {
   void snippetForListIndices() {
     // >SEPARATOR listIndices default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.listIndices();
@@ -979,7 +979,7 @@ class SnippetSearchClient {
   void snippetForListUserIds() {
     // >SEPARATOR listUserIds default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.listUserIds();
@@ -993,7 +993,7 @@ class SnippetSearchClient {
   void snippetForMultipleBatch() {
     // >SEPARATOR multipleBatch default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.multipleBatch(
@@ -1023,7 +1023,7 @@ class SnippetSearchClient {
   void snippetForOperationIndex() {
     // >SEPARATOR operationIndex scopes
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.operationIndex(
@@ -1043,7 +1043,7 @@ class SnippetSearchClient {
   void snippetForOperationIndex1() {
     // >SEPARATOR operationIndex copy
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.operationIndex(
@@ -1060,7 +1060,7 @@ class SnippetSearchClient {
   void snippetForOperationIndex2() {
     // >SEPARATOR operationIndex move
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.operationIndex(
@@ -1077,7 +1077,7 @@ class SnippetSearchClient {
   void snippetForPartialUpdateObject() {
     // >SEPARATOR partialUpdateObject default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.partialUpdateObject(
@@ -1099,7 +1099,7 @@ class SnippetSearchClient {
   void snippetForPartialUpdateObjects() {
     // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.partialUpdateObjects(
@@ -1130,7 +1130,7 @@ class SnippetSearchClient {
   void snippetForPartialUpdateObjects1() {
     // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.partialUpdateObjects(
@@ -1161,7 +1161,7 @@ class SnippetSearchClient {
   void snippetForRemoveUserId() {
     // >SEPARATOR removeUserId default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.removeUserId("uniqueID");
@@ -1175,7 +1175,7 @@ class SnippetSearchClient {
   void snippetForReplaceAllObjects() {
     // >SEPARATOR replaceAllObjects default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.replaceAllObjects(
@@ -1254,7 +1254,7 @@ class SnippetSearchClient {
   void snippetForReplaceSources() {
     // >SEPARATOR replaceSources default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.replaceSources(Arrays.asList(new Source().setSource("theSource").setDescription("theDescription")));
@@ -1268,10 +1268,10 @@ class SnippetSearchClient {
   void snippetForRestoreApiKey() {
     // >SEPARATOR restoreApiKey default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.restoreApiKey("myApiKey");
+    client.restoreApiKey("ALGOLIA_API_KEY");
     // >LOG
     // SEPARATOR<
   }
@@ -1282,7 +1282,7 @@ class SnippetSearchClient {
   void snippetForSaveObject() {
     // >SEPARATOR saveObject default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.saveObject(
@@ -1304,7 +1304,7 @@ class SnippetSearchClient {
   void snippetForSaveObjects() {
     // >SEPARATOR saveObjects call saveObjects without error
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.saveObjects(
@@ -1334,7 +1334,7 @@ class SnippetSearchClient {
   void snippetForSaveObjects1() {
     // >SEPARATOR saveObjects saveObjects should report errors
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.saveObjects(
@@ -1364,7 +1364,7 @@ class SnippetSearchClient {
   void snippetForSaveRule() {
     // >SEPARATOR saveRule default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.saveRule(
@@ -1382,7 +1382,7 @@ class SnippetSearchClient {
   void snippetForSaveRules() {
     // >SEPARATOR saveRules default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.saveRules(
@@ -1408,7 +1408,7 @@ class SnippetSearchClient {
   void snippetForSaveSynonym() {
     // >SEPARATOR saveSynonym default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.saveSynonym(
@@ -1427,7 +1427,7 @@ class SnippetSearchClient {
   void snippetForSaveSynonyms() {
     // >SEPARATOR saveSynonyms default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.saveSynonyms(
@@ -1453,7 +1453,7 @@ class SnippetSearchClient {
   void snippetForSearch() {
     // >SEPARATOR search withHitsPerPage
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.search(
@@ -1471,7 +1471,7 @@ class SnippetSearchClient {
   void snippetForSearch1() {
     // >SEPARATOR search filterOnly
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.search(
@@ -1493,7 +1493,7 @@ class SnippetSearchClient {
   void snippetForSearch2() {
     // >SEPARATOR search filterOr
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.search(
@@ -1518,7 +1518,7 @@ class SnippetSearchClient {
   void snippetForSearch3() {
     // >SEPARATOR search filterNot
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.search(
@@ -1538,7 +1538,7 @@ class SnippetSearchClient {
   void snippetForSearch4() {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.search(
@@ -1560,7 +1560,7 @@ class SnippetSearchClient {
   void snippetForSearch5() {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.search(
@@ -1580,7 +1580,7 @@ class SnippetSearchClient {
   void snippetForSearchDictionaryEntries() {
     // >SEPARATOR searchDictionaryEntries default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
@@ -1594,7 +1594,7 @@ class SnippetSearchClient {
   void snippetForSearchForFacetValues() {
     // >SEPARATOR searchForFacetValues default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
@@ -1608,7 +1608,7 @@ class SnippetSearchClient {
   void snippetForSearchRules() {
     // >SEPARATOR searchRules default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.searchRules("<YOUR_INDEX_NAME>", new SearchRulesParams().setQuery("zorro"));
@@ -1622,7 +1622,7 @@ class SnippetSearchClient {
   void snippetForSearchSingleIndex() {
     // >SEPARATOR searchSingleIndex default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
@@ -1636,7 +1636,7 @@ class SnippetSearchClient {
   void snippetForSearchSynonyms() {
     // >SEPARATOR searchSynonyms default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.searchSynonyms("<YOUR_INDEX_NAME>");
@@ -1650,7 +1650,7 @@ class SnippetSearchClient {
   void snippetForSearchUserIds() {
     // >SEPARATOR searchUserIds default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.searchUserIds(new SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10));
@@ -1664,7 +1664,7 @@ class SnippetSearchClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.setClientApiKey("updated-api-key");
@@ -1678,7 +1678,7 @@ class SnippetSearchClient {
   void snippetForSetDictionarySettings() {
     // >SEPARATOR setDictionarySettings default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.setDictionarySettings(
@@ -1706,7 +1706,7 @@ class SnippetSearchClient {
   void snippetForSetSettings() {
     // >SEPARATOR setSettings default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.setSettings(
@@ -1723,11 +1723,11 @@ class SnippetSearchClient {
   void snippetForUpdateApiKey() {
     // >SEPARATOR updateApiKey default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.updateApiKey(
-      "myApiKey",
+      "ALGOLIA_API_KEY",
       new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
     );
     // >LOG
@@ -1740,7 +1740,7 @@ class SnippetSearchClient {
   void snippetForWaitForApiKey() {
     // >SEPARATOR waitForApiKey wait for api key helper - add
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
@@ -1754,7 +1754,7 @@ class SnippetSearchClient {
   void snippetForWaitForApiKey1() {
     // >SEPARATOR waitForApiKey wait for api key - update
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.waitForApiKey(
@@ -1779,7 +1779,7 @@ class SnippetSearchClient {
   void snippetForWaitForApiKey2() {
     // >SEPARATOR waitForApiKey wait for api key - delete
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
@@ -1793,7 +1793,7 @@ class SnippetSearchClient {
   void snippetForWaitForAppTask() {
     // >SEPARATOR waitForAppTask default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.waitForAppTask(123L);
@@ -1807,7 +1807,7 @@ class SnippetSearchClient {
   void snippetForWaitForTask() {
     // >SEPARATOR waitForTask default
     // Initialize the client
-    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.waitForTask("<YOUR_INDEX_NAME>", 123L);

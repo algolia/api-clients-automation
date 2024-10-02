@@ -11,6 +11,36 @@ final class RecommendClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"
     static let API_KEY = "my_api_key"
 
+    /// batch recommend rules
+    func testBatchRecommendRulesTest() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.batchRecommendRulesWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.relatedProducts
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/related-products/recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest() async throws {
         let configuration = try RecommendClientConfiguration(
@@ -321,7 +351,7 @@ final class RecommendClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -346,7 +376,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -369,7 +399,7 @@ final class RecommendClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -394,7 +424,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -815,16 +845,16 @@ final class RecommendClientRequestsTests: XCTestCase {
                             threshold: 42.1,
                             maxRecommendations: 10,
                             queryParameters: RecommendSearchParams(
-                                query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
+                                query: "myQuery"
                             ),
                             model: RelatedModel.relatedProducts,
                             objectID: "objectID",
                             fallbackParameters: FallbackParams(
-                                query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
+                                query: "myQuery"
                             )
                         )),
                 ])
@@ -907,17 +937,17 @@ final class RecommendClientRequestsTests: XCTestCase {
                             threshold: 42.1,
                             maxRecommendations: 10,
                             queryParameters: RecommendSearchParams(
-                                query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
+                                query: "myQuery"
                             ),
                             facetName: "myFacetName",
                             facetValue: "myFacetValue",
                             model: TrendingItemsModel.trendingItems,
-                            fallbackParameters: RecommendSearchParamsObject(
-                                query: "myQuery",
+                            fallbackParameters: FallbackParams(
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
+                                query: "myQuery"
                             )
                         )),
                 ])
@@ -1000,16 +1030,16 @@ final class RecommendClientRequestsTests: XCTestCase {
                     threshold: 21.7,
                     maxRecommendations: 10,
                     queryParameters: RecommendSearchParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query1")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query1")]),
+                        query: "myQuery"
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID1",
                     fallbackParameters: FallbackParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback1")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback1")]),
+                        query: "myQuery"
                     )
                 )),
                 RecommendationsRequest.relatedQuery(RelatedQuery(
@@ -1017,16 +1047,16 @@ final class RecommendClientRequestsTests: XCTestCase {
                     threshold: 21.7,
                     maxRecommendations: 10,
                     queryParameters: RecommendSearchParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query2")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query2")]),
+                        query: "myQuery"
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID2",
                     fallbackParameters: FallbackParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback2")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback2")]),
+                        query: "myQuery"
                     )
                 )),
             ]))

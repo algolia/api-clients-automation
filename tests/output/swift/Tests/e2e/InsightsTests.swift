@@ -65,7 +65,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_725_753_600_000)
+                timestamp: Int64(1_727_827_200_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -74,7 +74,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_725_753_600_000)
+                timestamp: Int64(1_727_827_200_000)
             )),
         ]))
         let responseBody = try XCTUnwrap(response.body)

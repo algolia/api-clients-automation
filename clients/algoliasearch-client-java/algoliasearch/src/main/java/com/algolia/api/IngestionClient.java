@@ -1291,70 +1291,6 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Generates code for the selected model based on the given prompt.
-   *
-   * @param generateTransformationCodePayload (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public GenerateTransformationCodeResponse generateTransformationCode(
-    @Nonnull GenerateTransformationCodePayload generateTransformationCodePayload,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(generateTransformationCodeAsync(generateTransformationCodePayload, requestOptions));
-  }
-
-  /**
-   * Generates code for the selected model based on the given prompt.
-   *
-   * @param generateTransformationCodePayload (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public GenerateTransformationCodeResponse generateTransformationCode(
-    @Nonnull GenerateTransformationCodePayload generateTransformationCodePayload
-  ) throws AlgoliaRuntimeException {
-    return this.generateTransformationCode(generateTransformationCodePayload, null);
-  }
-
-  /**
-   * (asynchronously) Generates code for the selected model based on the given prompt.
-   *
-   * @param generateTransformationCodePayload (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<GenerateTransformationCodeResponse> generateTransformationCodeAsync(
-    @Nonnull GenerateTransformationCodePayload generateTransformationCodePayload,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(
-      generateTransformationCodePayload,
-      "Parameter `generateTransformationCodePayload` is required when calling" + " `generateTransformationCode`."
-    );
-
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/1/transformations/models")
-      .setMethod("POST")
-      .setBody(generateTransformationCodePayload)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<GenerateTransformationCodeResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Generates code for the selected model based on the given prompt.
-   *
-   * @param generateTransformationCodePayload (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<GenerateTransformationCodeResponse> generateTransformationCodeAsync(
-    @Nonnull GenerateTransformationCodePayload generateTransformationCodePayload
-  ) throws AlgoliaRuntimeException {
-    return this.generateTransformationCodeAsync(generateTransformationCodePayload, null);
-  }
-
-  /**
    * Retrieves an authentication resource by its ID.
    *
    * @param authenticationID Unique identifier of an authentication resource. (required)
@@ -1752,9 +1688,9 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1778,9 +1714,9 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1821,9 +1757,9 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1857,9 +1793,9 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1902,6 +1838,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Destination type. (optional)
    * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
    * @param sort Property by which to sort the destinations. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1913,11 +1850,14 @@ public class IngestionClient extends ApiClient {
     Integer page,
     List<DestinationType> type,
     List<String> authenticationID,
+    String transformationID,
     DestinationSortKeys sort,
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(listDestinationsAsync(itemsPerPage, page, type, authenticationID, sort, order, requestOptions));
+    return LaunderThrowable.await(
+      listDestinationsAsync(itemsPerPage, page, type, authenticationID, transformationID, sort, order, requestOptions)
+    );
   }
 
   /**
@@ -1927,6 +1867,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Destination type. (optional)
    * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
    * @param sort Property by which to sort the destinations. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1936,10 +1877,11 @@ public class IngestionClient extends ApiClient {
     Integer page,
     List<DestinationType> type,
     List<String> authenticationID,
+    String transformationID,
     DestinationSortKeys sort,
     OrderKeys order
   ) throws AlgoliaRuntimeException {
-    return this.listDestinations(itemsPerPage, page, type, authenticationID, sort, order, null);
+    return this.listDestinations(itemsPerPage, page, type, authenticationID, transformationID, sort, order, null);
   }
 
   /**
@@ -1950,7 +1892,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListDestinationsResponse listDestinations(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listDestinations(null, null, null, null, null, null, requestOptions);
+    return this.listDestinations(null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -1959,7 +1901,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListDestinationsResponse listDestinations() throws AlgoliaRuntimeException {
-    return this.listDestinations(null, null, null, null, null, null, null);
+    return this.listDestinations(null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1969,6 +1911,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Destination type. (optional)
    * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
    * @param sort Property by which to sort the destinations. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1980,6 +1923,7 @@ public class IngestionClient extends ApiClient {
     Integer page,
     List<DestinationType> type,
     List<String> authenticationID,
+    String transformationID,
     DestinationSortKeys sort,
     OrderKeys order,
     RequestOptions requestOptions
@@ -1991,6 +1935,7 @@ public class IngestionClient extends ApiClient {
       .addQueryParameter("page", page)
       .addQueryParameter("type", type)
       .addQueryParameter("authenticationID", authenticationID)
+      .addQueryParameter("transformationID", transformationID)
       .addQueryParameter("sort", sort)
       .addQueryParameter("order", order)
       .build();
@@ -2004,6 +1949,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Destination type. (optional)
    * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
    * @param sort Property by which to sort the destinations. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2013,10 +1959,11 @@ public class IngestionClient extends ApiClient {
     Integer page,
     List<DestinationType> type,
     List<String> authenticationID,
+    String transformationID,
     DestinationSortKeys sort,
     OrderKeys order
   ) throws AlgoliaRuntimeException {
-    return this.listDestinationsAsync(itemsPerPage, page, type, authenticationID, sort, order, null);
+    return this.listDestinationsAsync(itemsPerPage, page, type, authenticationID, transformationID, sort, order, null);
   }
 
   /**
@@ -2027,7 +1974,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListDestinationsResponse> listDestinationsAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listDestinationsAsync(null, null, null, null, null, null, requestOptions);
+    return this.listDestinationsAsync(null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2036,7 +1983,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListDestinationsResponse> listDestinationsAsync() throws AlgoliaRuntimeException {
-    return this.listDestinationsAsync(null, null, null, null, null, null, null);
+    return this.listDestinationsAsync(null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2412,7 +2359,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Source type. Some sources require authentication. (optional)
    * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
+   *     that doesn't have an authentication. (optional)
    * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2438,7 +2385,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Source type. Some sources require authentication. (optional)
    * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
+   *     that doesn't have an authentication. (optional)
    * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2481,7 +2428,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Source type. Some sources require authentication. (optional)
    * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
+   *     that doesn't have an authentication. (optional)
    * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2517,7 +2464,7 @@ public class IngestionClient extends ApiClient {
    * @param page Page number of the paginated API response. (optional)
    * @param type Source type. Some sources require authentication. (optional)
    * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
+   *     that doesn't have an authentication. (optional)
    * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2904,54 +2851,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of existing LLM transformation helpers.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public TransformationModels listTransformationModels(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(listTransformationModelsAsync(requestOptions));
-  }
-
-  /**
-   * Retrieves a list of existing LLM transformation helpers.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public TransformationModels listTransformationModels() throws AlgoliaRuntimeException {
-    return this.listTransformationModels(null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of existing LLM transformation helpers.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<TransformationModels> listTransformationModelsAsync(RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder().setPath("/1/transformations/models").setMethod("GET").build();
-
-    return executeAsync(request, requestOptions, new TypeReference<TransformationModels>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of existing LLM transformation helpers.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<TransformationModels> listTransformationModelsAsync() throws AlgoliaRuntimeException {
-    return this.listTransformationModelsAsync(null);
-  }
-
-  /**
    * Retrieves a list of transformations.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
-   * @param sort Property by which to sort the list. (optional, default to desc)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2960,7 +2865,7 @@ public class IngestionClient extends ApiClient {
   public ListTransformationsResponse listTransformations(
     Integer itemsPerPage,
     Integer page,
-    SortKeys sort,
+    TransformationSortKeys sort,
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -2972,11 +2877,12 @@ public class IngestionClient extends ApiClient {
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
-   * @param sort Property by which to sort the list. (optional, default to desc)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTransformationsResponse listTransformations(Integer itemsPerPage, Integer page, SortKeys sort, OrderKeys order)
+  public ListTransformationsResponse listTransformations(Integer itemsPerPage, Integer page, TransformationSortKeys sort, OrderKeys order)
     throws AlgoliaRuntimeException {
     return this.listTransformations(itemsPerPage, page, sort, order, null);
   }
@@ -3006,7 +2912,8 @@ public class IngestionClient extends ApiClient {
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
-   * @param sort Property by which to sort the list. (optional, default to desc)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3015,7 +2922,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(
     Integer itemsPerPage,
     Integer page,
-    SortKeys sort,
+    TransformationSortKeys sort,
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -3035,14 +2942,15 @@ public class IngestionClient extends ApiClient {
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
-   * @param sort Property by which to sort the list. (optional, default to desc)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(
     Integer itemsPerPage,
     Integer page,
-    SortKeys sort,
+    TransformationSortKeys sort,
     OrderKeys order
   ) throws AlgoliaRuntimeException {
     return this.listTransformationsAsync(itemsPerPage, page, sort, order, null);

@@ -10,7 +10,7 @@ require "algolia"
 def snippet_for_add_ab_tests
   # >SEPARATOR addABTests default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.add_ab_tests(
@@ -39,7 +39,7 @@ end
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -59,7 +59,7 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -79,7 +79,7 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -99,7 +99,7 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -119,7 +119,7 @@ end
 def snippet_for_delete_ab_test
   # >SEPARATOR deleteABTest default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.delete_ab_test(42)
@@ -139,7 +139,7 @@ end
 def snippet_for_get_ab_test
   # >SEPARATOR getABTest default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_ab_test(42)
@@ -159,7 +159,7 @@ end
 def snippet_for_list_ab_tests
   # >SEPARATOR listABTests default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_ab_tests
@@ -179,7 +179,7 @@ end
 def snippet_for_schedule_ab_test
   # >SEPARATOR scheduleABTest default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.schedule_ab_test(
@@ -209,7 +209,7 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   client.set_client_api_key("updated-api-key")
@@ -223,7 +223,7 @@ end
 def snippet_for_stop_ab_test
   # >SEPARATOR stopABTest default
   # Initialize the client
-  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.stop_ab_test(42)

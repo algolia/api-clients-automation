@@ -15,7 +15,7 @@ class Snippet{{client}} {
   void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() {
     // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
-    {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
+    {{client}} client = new {{client}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"{{#hasRegionalHost}}, "ALGOLIA_APPLICATION_REGION"{{/hasRegionalHost}});
 
     // Call the API
     {{> tests/method}};

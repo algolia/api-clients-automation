@@ -13,7 +13,7 @@ export async function playground({ language, client }: { language: AllLanguage; 
       });
       break;
     case 'javascript':
-      await run(`yarn workspace javascript-playground start:${client}`);
+      await run(`yarn workspace javascript-playground start ${client}`, { language });
       break;
     case 'java':
       await run(

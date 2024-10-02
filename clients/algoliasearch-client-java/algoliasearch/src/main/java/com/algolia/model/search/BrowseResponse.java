@@ -86,6 +86,9 @@ public class BrowseResponse<T> {
   @JsonProperty("queryID")
   private String queryID;
 
+  @JsonProperty("_automaticInsights")
+  private Boolean automaticInsights;
+
   @JsonProperty("page")
   private Integer page;
 
@@ -425,6 +428,17 @@ public class BrowseResponse<T> {
     return queryID;
   }
 
+  public BrowseResponse<T> setAutomaticInsights(Boolean automaticInsights) {
+    this.automaticInsights = automaticInsights;
+    return this;
+  }
+
+  /** Whether automatic events collection is enabled for the application. */
+  @javax.annotation.Nullable
+  public Boolean getAutomaticInsights() {
+    return automaticInsights;
+  }
+
   public BrowseResponse<T> setPage(Integer page) {
     this.page = page;
     return this;
@@ -559,6 +573,7 @@ public class BrowseResponse<T> {
       Objects.equals(this.serverUsed, browseResponse.serverUsed) &&
       Objects.equals(this.userData, browseResponse.userData) &&
       Objects.equals(this.queryID, browseResponse.queryID) &&
+      Objects.equals(this.automaticInsights, browseResponse.automaticInsights) &&
       Objects.equals(this.page, browseResponse.page) &&
       Objects.equals(this.nbHits, browseResponse.nbHits) &&
       Objects.equals(this.nbPages, browseResponse.nbPages) &&
@@ -597,6 +612,7 @@ public class BrowseResponse<T> {
       serverUsed,
       userData,
       queryID,
+      automaticInsights,
       page,
       nbHits,
       nbPages,
@@ -636,6 +652,7 @@ public class BrowseResponse<T> {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    automaticInsights: ").append(toIndentedString(automaticInsights)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
     sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");

@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algoliasearch/src/model/fallback_params.dart';
 import 'package:algoliasearch/src/model/trending_facets_model.dart';
-import 'package:algoliasearch/src/model/search_params.dart';
+import 'package:algoliasearch/src/model/recommend_search_params.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -38,7 +38,7 @@ final class TrendingFacetsQuery {
   final int? maxRecommendations;
 
   @JsonKey(name: r'queryParameters')
-  final SearchParams? queryParameters;
+  final RecommendSearchParams? queryParameters;
 
   /// Facet attribute for which to retrieve trending facet values.
   @JsonKey(name: r'facetName')

@@ -6,8 +6,6 @@ import 'package:algoliasearch/src/model/rendering_content.dart';
 import 'package:algoliasearch/src/model/remove_words_if_no_results.dart';
 import 'package:algoliasearch/src/model/query_type.dart';
 import 'package:algoliasearch/src/model/exact_on_single_word_query.dart';
-import 'package:algoliasearch/src/model/semantic_search.dart';
-import 'package:algoliasearch/src/model/mode.dart';
 import 'package:algoliasearch/src/model/alternatives_as_exact.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -18,7 +16,6 @@ part 'fallback_params.g.dart';
 final class FallbackParams {
   /// Returns a new [FallbackParams] instance.
   const FallbackParams({
-    this.query,
     this.similarQuery,
     this.filters,
     this.facetFilters,
@@ -29,9 +26,6 @@ final class FallbackParams {
     this.restrictSearchableAttributes,
     this.facets,
     this.facetingAfterDistinct,
-    this.page,
-    this.offset,
-    this.length,
     this.aroundLatLng,
     this.aroundLatLngViaIP,
     this.aroundRadius,
@@ -50,9 +44,26 @@ final class FallbackParams {
     this.analyticsTags,
     this.percentileComputation,
     this.enableABTest,
+    this.query,
+    this.attributesForFaceting,
+    this.replicas,
+    this.paginationLimitedTo,
+    this.unretrievableAttributes,
+    this.disableTypoToleranceOnWords,
+    this.attributesToTransliterate,
+    this.camelCaseAttributes,
+    this.decompoundedAttributes,
+    this.indexLanguages,
+    this.disablePrefixOnAttributes,
+    this.allowCompressionOfIntegerArray,
+    this.numericAttributesForFiltering,
+    this.separatorsToIndex,
+    this.searchableAttributes,
+    this.userData,
+    this.customNormalization,
+    this.attributeForDistinct,
     this.attributesToRetrieve,
     this.ranking,
-    this.customRanking,
     this.relevancyStrictness,
     this.attributesToHighlight,
     this.attributesToSnippet,
@@ -60,7 +71,6 @@ final class FallbackParams {
     this.highlightPostTag,
     this.snippetEllipsisText,
     this.restrictHighlightAndSnippetArrays,
-    this.hitsPerPage,
     this.minWordSizefor1Typo,
     this.minWordSizefor2Typos,
     this.typoTolerance,
@@ -68,15 +78,12 @@ final class FallbackParams {
     this.disableTypoToleranceOnAttributes,
     this.ignorePlurals,
     this.removeStopWords,
-    this.keepDiacriticsOnCharacters,
     this.queryLanguages,
     this.decompoundQuery,
     this.enableRules,
     this.enablePersonalization,
     this.queryType,
     this.removeWordsIfNoResults,
-    this.mode,
-    this.semanticSearch,
     this.advancedSyntax,
     this.optionalWords,
     this.disableExactOnAttributes,
@@ -95,10 +102,6 @@ final class FallbackParams {
     this.enableReRanking,
     this.reRankingApplyFilter,
   });
-
-  /// Search query.
-  @JsonKey(name: r'query')
-  final String? query;
 
   /// Keywords to be used instead of the search query to conduct a more broader search.  Using the `similarQuery` parameter changes other settings:  - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords`.  Since the `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to narrow down the list of results.
   @JsonKey(name: r'similarQuery')
@@ -151,21 +154,6 @@ final class FallbackParams {
   /// Whether faceting should be applied after deduplication with `distinct`.  This leads to accurate facet counts when using faceting in combination with `distinct`. It's usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting, as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
   @JsonKey(name: r'facetingAfterDistinct')
   final bool? facetingAfterDistinct;
-
-  /// Page of search results to retrieve.
-  // minimum: 0
-  @JsonKey(name: r'page')
-  final int? page;
-
-  /// Position of the first hit to retrieve.
-  @JsonKey(name: r'offset')
-  final int? offset;
-
-  /// Number of hits to retrieve (used in combination with `offset`).
-  // minimum: 0
-  // maximum: 1000
-  @JsonKey(name: r'length')
-  final int? length;
 
   /// Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
   @JsonKey(name: r'aroundLatLng')
@@ -246,6 +234,79 @@ final class FallbackParams {
   @JsonKey(name: r'enableABTest')
   final bool? enableABTest;
 
+  /// Search query.
+  @JsonKey(name: r'query')
+  final String? query;
+
+  /// Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).  Facets are attributes that let you categorize search results. They can be used for filtering search results. By default, no attribute is used for faceting. Attribute names are case-sensitive.  **Modifiers**  - `filterOnly(\"ATTRIBUTE\")`.   Allows using this attribute as a filter, but doesn't evalue the facet values.  - `searchable(\"ATTRIBUTE\")`.   Allows searching for facet values.  - `afterDistinct(\"ATTRIBUTE\")`.   Evaluates the facet count _after_ deduplication with `distinct`.   This ensures accurate facet counts.   You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
+  @JsonKey(name: r'attributesForFaceting')
+  final List<String>? attributesForFaceting;
+
+  /// Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).  Replicas are copies of a primary index with the same records but different settings, synonyms, or rules. If you want to offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer by synced with the primary index.  **Modifier**  - `virtual(\"REPLICA\")`.   Create a virtual replica,   Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
+  @JsonKey(name: r'replicas')
+  final List<String>? replicas;
+
+  /// Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
+  // maximum: 20000
+  @JsonKey(name: r'paginationLimitedTo')
+  final int? paginationLimitedTo;
+
+  /// Attributes that can't be retrieved at query time.  This can be useful if you want to use an attribute for ranking or to [restrict access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/), but don't want to include it in the search results. Attribute names are case-sensitive.
+  @JsonKey(name: r'unretrievableAttributes')
+  final List<String>? unretrievableAttributes;
+
+  /// Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). This also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) for the specified words.
+  @JsonKey(name: r'disableTypoToleranceOnWords')
+  final List<String>? disableTypoToleranceOnWords;
+
+  /// Attributes, for which you want to support [Japanese transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead).  Transliteration supports searching in any of the Japanese writing systems. To support transliteration, you must set the indexing language to Japanese. Attribute names are case-sensitive.
+  @JsonKey(name: r'attributesToTransliterate')
+  final List<String>? attributesToTransliterate;
+
+  /// Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words. Attribute names are case-sensitive.
+  @JsonKey(name: r'camelCaseAttributes')
+  final List<String>? camelCaseAttributes;
+
+  /// Searchable attributes to which Algolia should apply [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) (decompounding). Attribute names are case-sensitive.  Compound words are formed by combining two or more individual words, and are particularly prevalent in Germanic languages—for example, \"firefighter\". With decompounding, the individual components are indexed separately.  You can specify different lists for different languages. Decompounding is supported for these languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and Norwegian (`no`). Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
+  @JsonKey(name: r'decompoundedAttributes')
+  final Object? decompoundedAttributes;
+
+  /// Languages for language-specific processing steps, such as word detection and dictionary settings.  **You should always specify an indexing language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+  @JsonKey(name: r'indexLanguages')
+  final List<SupportedLanguage>? indexLanguages;
+
+  /// Searchable attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search). Attribute names are case-sensitive.
+  @JsonKey(name: r'disablePrefixOnAttributes')
+  final List<String>? disablePrefixOnAttributes;
+
+  /// Whether arrays with exclusively non-negative integers should be compressed for better performance. If true, the compressed arrays may be reordered.
+  @JsonKey(name: r'allowCompressionOfIntegerArray')
+  final bool? allowCompressionOfIntegerArray;
+
+  /// Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters). Attribute names are case-sensitive.  By default, all numeric attributes are available as numerical filters. For faster indexing, reduce the number of numeric attributes.  If you want to turn off filtering for all numeric attributes, specifiy an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`.  **Modifier**  - `equalOnly(\"ATTRIBUTE\")`.   Support only filtering based on equality comparisons `=` and `!=`.
+  @JsonKey(name: r'numericAttributesForFiltering')
+  final List<String>? numericAttributesForFiltering;
+
+  /// Controls which separators are indexed.  Separators are all non-letter characters except spaces and currency characters, such as $€£¥. By default, separator characters aren't indexed. With `separatorsToIndex`, Algolia treats separator characters as separate words. For example, a search for `C#` would report two matches.
+  @JsonKey(name: r'separatorsToIndex')
+  final String? separatorsToIndex;
+
+  /// Attributes used for searching. Attribute names are case-sensitive.  By default, all attributes are searchable and the [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute) ranking criterion is turned off. With a non-empty list, Algolia only returns results with matches in the selected attributes. In addition, the Attribute ranking criterion is turned on: matches in attributes that are higher in the list of `searchableAttributes` rank first. To make matches in two attributes rank equally, include them in a comma-separated string, such as `\"title,alternate_title\"`. Attributes with the same priority are always unordered.  For more information, see [Searchable attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).  **Modifier**  - `unordered(\"ATTRIBUTE\")`.   Ignore the position of a match within the attribute.  Without modifier, matches at the beginning of an attribute rank higer than matches at the end.
+  @JsonKey(name: r'searchableAttributes')
+  final List<String>? searchableAttributes;
+
+  /// An object with custom data.  You can store up to 32kB as custom data.
+  @JsonKey(name: r'userData')
+  final Object? userData;
+
+  /// Characters and their normalized replacements. This overrides Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+  @JsonKey(name: r'customNormalization')
+  final Map<String, Map<String, String>>? customNormalization;
+
+  /// Attribute that should be used to establish groups of results. Attribute names are case-sensitive.  All records with the same value for this attribute are considered a group. You can combine `attributeForDistinct` with the `distinct` search parameter to control how many items per group are included in the search results.  If you want to use the same attribute also for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting. This applies faceting _after_ deduplication, which will result in accurate facet counts.
+  @JsonKey(name: r'attributeForDistinct')
+  final String? attributeForDistinct;
+
   /// Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
   @JsonKey(name: r'attributesToRetrieve')
   final List<String>? attributesToRetrieve;
@@ -253,10 +314,6 @@ final class FallbackParams {
   /// Determines the order in which Algolia returns your results.  By default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/). The tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/), you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  Before you modify the default setting, you should test your changes in the dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
   @JsonKey(name: r'ranking')
   final List<String>? ranking;
-
-  /// Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are case-sensitive.  The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes, or the other attributes will never be applied.
-  @JsonKey(name: r'customRanking')
-  final List<String>? customRanking;
 
   /// Relevancy threshold below which less relevant results aren't included in the results.  You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
   @JsonKey(name: r'relevancyStrictness')
@@ -285,12 +342,6 @@ final class FallbackParams {
   /// Whether to restrict highlighting and snippeting to items that at least partially matched the search query. By default, all items are highlighted and snippeted.
   @JsonKey(name: r'restrictHighlightAndSnippetArrays')
   final bool? restrictHighlightAndSnippetArrays;
-
-  /// Number of hits per page.
-  // minimum: 1
-  // maximum: 1000
-  @JsonKey(name: r'hitsPerPage')
-  final int? hitsPerPage;
 
   /// Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
   @JsonKey(name: r'minWordSizefor1Typo')
@@ -327,10 +378,6 @@ final class FallbackParams {
   @JsonKey(name: r'removeStopWords')
   final dynamic removeStopWords;
 
-  /// Characters for which diacritics should be preserved.  By default, Algolia removes diacritics from letters. For example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their diacritics.
-  @JsonKey(name: r'keepDiacriticsOnCharacters')
-  final String? keepDiacriticsOnCharacters;
-
   /// Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**.  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
   @JsonKey(name: r'queryLanguages')
   final List<SupportedLanguage>? queryLanguages;
@@ -352,12 +399,6 @@ final class FallbackParams {
 
   @JsonKey(name: r'removeWordsIfNoResults')
   final RemoveWordsIfNoResults? removeWordsIfNoResults;
-
-  @JsonKey(name: r'mode')
-  final Mode? mode;
-
-  @JsonKey(name: r'semanticSearch')
-  final SemanticSearch? semanticSearch;
 
   /// Whether to support phrase matching and excluding words from search queries.  Use the `advancedSyntaxFeatures` parameter to control which feature is supported.
   @JsonKey(name: r'advancedSyntax')
@@ -438,7 +479,6 @@ final class FallbackParams {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is FallbackParams &&
-          other.query == query &&
           other.similarQuery == similarQuery &&
           other.filters == filters &&
           other.facetFilters == facetFilters &&
@@ -449,9 +489,6 @@ final class FallbackParams {
           other.restrictSearchableAttributes == restrictSearchableAttributes &&
           other.facets == facets &&
           other.facetingAfterDistinct == facetingAfterDistinct &&
-          other.page == page &&
-          other.offset == offset &&
-          other.length == length &&
           other.aroundLatLng == aroundLatLng &&
           other.aroundLatLngViaIP == aroundLatLngViaIP &&
           other.aroundRadius == aroundRadius &&
@@ -470,9 +507,28 @@ final class FallbackParams {
           other.analyticsTags == analyticsTags &&
           other.percentileComputation == percentileComputation &&
           other.enableABTest == enableABTest &&
+          other.query == query &&
+          other.attributesForFaceting == attributesForFaceting &&
+          other.replicas == replicas &&
+          other.paginationLimitedTo == paginationLimitedTo &&
+          other.unretrievableAttributes == unretrievableAttributes &&
+          other.disableTypoToleranceOnWords == disableTypoToleranceOnWords &&
+          other.attributesToTransliterate == attributesToTransliterate &&
+          other.camelCaseAttributes == camelCaseAttributes &&
+          other.decompoundedAttributes == decompoundedAttributes &&
+          other.indexLanguages == indexLanguages &&
+          other.disablePrefixOnAttributes == disablePrefixOnAttributes &&
+          other.allowCompressionOfIntegerArray ==
+              allowCompressionOfIntegerArray &&
+          other.numericAttributesForFiltering ==
+              numericAttributesForFiltering &&
+          other.separatorsToIndex == separatorsToIndex &&
+          other.searchableAttributes == searchableAttributes &&
+          other.userData == userData &&
+          other.customNormalization == customNormalization &&
+          other.attributeForDistinct == attributeForDistinct &&
           other.attributesToRetrieve == attributesToRetrieve &&
           other.ranking == ranking &&
-          other.customRanking == customRanking &&
           other.relevancyStrictness == relevancyStrictness &&
           other.attributesToHighlight == attributesToHighlight &&
           other.attributesToSnippet == attributesToSnippet &&
@@ -481,7 +537,6 @@ final class FallbackParams {
           other.snippetEllipsisText == snippetEllipsisText &&
           other.restrictHighlightAndSnippetArrays ==
               restrictHighlightAndSnippetArrays &&
-          other.hitsPerPage == hitsPerPage &&
           other.minWordSizefor1Typo == minWordSizefor1Typo &&
           other.minWordSizefor2Typos == minWordSizefor2Typos &&
           other.typoTolerance == typoTolerance &&
@@ -490,15 +545,12 @@ final class FallbackParams {
               disableTypoToleranceOnAttributes &&
           other.ignorePlurals == ignorePlurals &&
           other.removeStopWords == removeStopWords &&
-          other.keepDiacriticsOnCharacters == keepDiacriticsOnCharacters &&
           other.queryLanguages == queryLanguages &&
           other.decompoundQuery == decompoundQuery &&
           other.enableRules == enableRules &&
           other.enablePersonalization == enablePersonalization &&
           other.queryType == queryType &&
           other.removeWordsIfNoResults == removeWordsIfNoResults &&
-          other.mode == mode &&
-          other.semanticSearch == semanticSearch &&
           other.advancedSyntax == advancedSyntax &&
           other.optionalWords == optionalWords &&
           other.disableExactOnAttributes == disableExactOnAttributes &&
@@ -520,7 +572,6 @@ final class FallbackParams {
 
   @override
   int get hashCode =>
-      query.hashCode +
       similarQuery.hashCode +
       filters.hashCode +
       facetFilters.hashCode +
@@ -531,9 +582,6 @@ final class FallbackParams {
       restrictSearchableAttributes.hashCode +
       facets.hashCode +
       facetingAfterDistinct.hashCode +
-      page.hashCode +
-      offset.hashCode +
-      length.hashCode +
       aroundLatLng.hashCode +
       aroundLatLngViaIP.hashCode +
       aroundRadius.hashCode +
@@ -552,9 +600,26 @@ final class FallbackParams {
       analyticsTags.hashCode +
       percentileComputation.hashCode +
       enableABTest.hashCode +
+      query.hashCode +
+      attributesForFaceting.hashCode +
+      replicas.hashCode +
+      paginationLimitedTo.hashCode +
+      unretrievableAttributes.hashCode +
+      disableTypoToleranceOnWords.hashCode +
+      attributesToTransliterate.hashCode +
+      camelCaseAttributes.hashCode +
+      decompoundedAttributes.hashCode +
+      indexLanguages.hashCode +
+      disablePrefixOnAttributes.hashCode +
+      allowCompressionOfIntegerArray.hashCode +
+      numericAttributesForFiltering.hashCode +
+      separatorsToIndex.hashCode +
+      searchableAttributes.hashCode +
+      userData.hashCode +
+      customNormalization.hashCode +
+      attributeForDistinct.hashCode +
       attributesToRetrieve.hashCode +
       ranking.hashCode +
-      customRanking.hashCode +
       relevancyStrictness.hashCode +
       attributesToHighlight.hashCode +
       attributesToSnippet.hashCode +
@@ -562,7 +627,6 @@ final class FallbackParams {
       highlightPostTag.hashCode +
       snippetEllipsisText.hashCode +
       restrictHighlightAndSnippetArrays.hashCode +
-      hitsPerPage.hashCode +
       minWordSizefor1Typo.hashCode +
       minWordSizefor2Typos.hashCode +
       typoTolerance.hashCode +
@@ -570,15 +634,12 @@ final class FallbackParams {
       disableTypoToleranceOnAttributes.hashCode +
       ignorePlurals.hashCode +
       removeStopWords.hashCode +
-      keepDiacriticsOnCharacters.hashCode +
       queryLanguages.hashCode +
       decompoundQuery.hashCode +
       enableRules.hashCode +
       enablePersonalization.hashCode +
       queryType.hashCode +
       removeWordsIfNoResults.hashCode +
-      mode.hashCode +
-      semanticSearch.hashCode +
       advancedSyntax.hashCode +
       optionalWords.hashCode +
       disableExactOnAttributes.hashCode +

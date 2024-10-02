@@ -9,7 +9,6 @@ const nodeOptions: Options = {
   ...getBaseNodeOptions(pkg, __dirname),
   dts: { entry: { 'node': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/node.ts' } },
   entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/node.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
-
   {{#isAlgoliasearchClient}}
   outDir: 'dist/lite',
   {{/isAlgoliasearchClient}}
@@ -19,18 +18,28 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
-    name: 'node{{#isAlgoliasearchClient}} lite{{/isAlgoliasearchClient}} cjs'
+    name: `node ${pkg.name} cjs`
   },
   {
     ...nodeOptions,
     format: 'esm',
-    name: 'node{{#isAlgoliasearchClient}} lite{{/isAlgoliasearchClient}} esm'
+    name: `node ${pkg.name} esm`
   },
+  {{^isAlgoliasearchClient}}
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: `fetch ${pkg.name} esm`,
+    dts: { entry: { 'fetch': 'builds/fetch.ts' } },
+    external: getDependencies(pkg, 'fetch'),
+    entry: ['builds/fetch.ts', 'src/*.ts'],
+  },
+  {{/isAlgoliasearchClient}}
   {{#isAlgoliasearchClient}}
   {
     ...nodeOptions,
     format: 'cjs',
-    name: 'node cjs',
+    name: 'node algoliasearch cjs',
     dts: { entry: { 'node': 'builds/node.ts' } },
     entry: ['builds/node.ts'],
     outDir: 'dist',
@@ -38,10 +47,19 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'esm',
-    name: 'node esm',
+    name: 'node algoliasearch esm',
     dts: { entry: { 'node': 'builds/node.ts' } },
     entry: ['builds/node.ts'],
     outDir: 'dist',
+  },
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: 'fetch algoliasearch esm',
+    dts: { entry: { 'fetch': 'builds/fetch.ts' } },
+    entry: ['builds/fetch.ts'],
+    outDir: 'dist',
+    external: getDependencies(pkg, 'fetch'),
   },
   {{/isAlgoliasearchClient}}
 ];
@@ -49,9 +67,8 @@ const nodeConfigs: Options[] = [
 const browserOptions: Options = {
   ...getBaseBrowserOptions(pkg, __dirname),
   {{^isAlgoliasearchClient}}
-  globalName: '{{apiName}}',
+  globalName: '{{clientName}}',
   {{/isAlgoliasearchClient}}
-
   {{#isAlgoliasearchClient}}
   globalName: 'lite',
   outDir: 'dist/lite',
@@ -62,7 +79,7 @@ const browserConfigs: Options[] = [
   {
     ...browserOptions,
     minify: false,
-    name: 'browser esm',
+    name: `browser ${pkg.name} esm`,
     dts: { entry: { 'browser': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts' } },
     entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
     {{#isAlgoliasearchClient}}
@@ -73,14 +90,14 @@ const browserConfigs: Options[] = [
     ...browserOptions,
     dts: false,
     minify: true,
-    name: 'browser min esm',
+    name: `browser ${pkg.name} min esm`,
     entry: {'builds/browser.min': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts'},
     external: [],
     {{#isAlgoliasearchClient}}
     noExternal: ['dom', '@algolia/client-common', '@algolia/requester-browser-xhr'],
     {{/isAlgoliasearchClient}}
     {{^isAlgoliasearchClient}}
-    noExternal: getDependencies(pkg, 'browser'),
+    noExternal: getDependencies(pkg, 'xhr'),
     {{/isAlgoliasearchClient}}
   },
   {{#isAlgoliasearchClient}}
@@ -102,7 +119,7 @@ const browserConfigs: Options[] = [
     entry: {'browser.min': 'builds/browser.ts'},
     outDir: 'dist',
     external: [],
-    noExternal: getDependencies(pkg, 'browser'),
+    noExternal: getDependencies(pkg, 'xhr'),
   }
   {{/isAlgoliasearchClient}}
 ];

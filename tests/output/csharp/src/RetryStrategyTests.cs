@@ -66,9 +66,9 @@ public class RetryStrategyTests
         {
           Url = "myhost.com",
           Accept = CallType.Read,
-          Up = true
-        }
-      }
+          Up = true,
+        },
+      },
     };
 
     var client = new SearchClient(searchConfig, httpMock.Object);
@@ -101,12 +101,12 @@ public class RetryStrategyTests
                     ProcessingTimeMS = 1,
                     Hits = new List<object>(),
                     Query = "",
-                    Params = ""
+                    Params = "",
                   },
                   JsonConfig.Options
                 )
               )
-            )
+            ),
           }
         )
       );

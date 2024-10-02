@@ -129,7 +129,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -139,10 +143,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -173,8 +177,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -187,8 +191,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -206,8 +210,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -227,8 +231,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -248,15 +252,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_get(
+            response = client.custom_get(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_get_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -271,56 +292,48 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.custom_get("test/minimal")
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
 
             // Call the API
-
             val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -362,7 +375,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -372,10 +389,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -406,8 +423,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -420,8 +437,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -439,8 +456,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -460,8 +477,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -481,15 +498,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_post(
+            response = client.custom_post(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_post_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -504,56 +538,48 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.custom_post("test/minimal")
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
 
             // Call the API
-
             val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -595,7 +621,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -605,10 +635,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -639,8 +669,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -653,8 +683,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -672,8 +702,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -693,8 +723,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -714,15 +744,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_put(
+            response = client.custom_put(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_put_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -737,56 +784,48 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.custom_put("test/minimal")
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
 
             // Call the API
-
             val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -822,7 +861,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -832,10 +875,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -867,8 +910,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -881,8 +924,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -901,8 +944,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -922,8 +965,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -943,15 +986,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.custom_delete(
+            response = client.custom_delete(
                 path="test/minimal",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.custom_delete_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -966,56 +1026,48 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.custom_delete("test/minimal")
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
 
             // Call the API
-
             val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1079,7 +1131,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -1089,10 +1145,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1124,8 +1180,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1138,8 +1194,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1158,8 +1214,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1179,8 +1235,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1200,15 +1256,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.get_user_token_profile(
+            response = client.get_user_token_profile(
                 user_token="UserToken",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.get_user_token_profile_with_http_info(
+                user_token="UserToken",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -1223,56 +1296,48 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.get_user_token_profile("UserToken")
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
 
             // Call the API
-
             val response = client.getUserTokenProfile(
               userToken = "UserToken"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1334,7 +1399,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -1344,10 +1413,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1379,8 +1448,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1393,8 +1462,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1413,8 +1482,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1434,8 +1503,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1455,15 +1524,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.delete_user_profile(
+            response = client.delete_user_profile(
                 user_token="UserToken",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.delete_user_profile_with_http_info(
+                user_token="UserToken",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -1478,56 +1564,48 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.delete_user_profile("UserToken")
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
 
             // Call the API
-
             val response = client.deleteUserProfile(
               userToken = "UserToken"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1566,7 +1644,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -1576,10 +1658,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1608,8 +1690,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1622,8 +1704,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1641,8 +1723,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1660,8 +1742,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1679,13 +1761,28 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.get_personalization_strategy()
+            response = client.get_personalization_strategy()
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.get_personalization_strategy_with_http_info()
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -1700,56 +1797,47 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.get_personalization_strategy
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            val response = client.getPersonalizationStrategy(
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
             )
 
+            // Call the API
+            val response = client.getPersonalizationStrategy(
+            )
 
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1801,7 +1889,11 @@ paths:
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
-              new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new PersonalizationConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
             );
 
             // Call the API
@@ -1815,11 +1907,11 @@ paths:
                     Score = 42,
                     EventName = "Algolia",
                     EventType = Enum.Parse<EventType>("Click"),
-                  }
+                  },
                 },
                 FacetScoring = new List<FacetScoring>
                 {
-                  new FacetScoring { Score = 42, FacetName = "Event", }
+                  new FacetScoring { Score = 42, FacetName = "Event" },
                 },
                 PersonalizationImpact = 42,
               }
@@ -1829,10 +1921,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            personalization.YOUR_APP_ID_REGION
+            personalization.ALGOLIA_APPLICATION_REGION
 
-            client, err := personalization.NewClient("YOUR_APP_ID",
-            "YOUR_API_KEY", personalization.US)
+            client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", personalization.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1867,8 +1959,8 @@ paths:
             // Initialize the client
 
             PersonalizationClient client = new
-            PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION");
+            PersonalizationClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1886,8 +1978,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1909,8 +2001,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1945,8 +2037,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = PersonalizationClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1978,13 +2070,17 @@ paths:
           source: >
             # Initialize the client
 
-            _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.set_personalization_strategy(
+            response = client.set_personalization_strategy(
                 personalization_strategy_params={
                     "eventScoring": [
                         {
@@ -2004,6 +2100,34 @@ paths:
             )
 
 
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.set_personalization_strategy_with_http_info(
+                personalization_strategy_params={
+                    "eventScoring": [
+                        {
+                            "score": 42,
+                            "eventName": "Algolia",
+                            "eventType": "click",
+                        },
+                    ],
+                    "facetScoring": [
+                        {
+                            "score": 42,
+                            "facetName": "Event",
+                        },
+                    ],
+                    "personalizationImpact": 42,
+                },
+            )
+
+
+            print(raw_response.raw_data)
+
+
             # >LOG
 
             # use the class directly
@@ -2016,15 +2140,15 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
-            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
+            client = Algolia::PersonalizationClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
             response = client.set_personalization_strategy(
               PersonalizationStrategyParams.new(
                 event_scoring: [EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
@@ -2033,28 +2157,23 @@ paths:
               )
             )
 
-
             # >LOG
-
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
+            val client = PersonalizationClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
 
             // Call the API
-
             val response = client.setPersonalizationStrategy(
               personalizationStrategyParams = PersonalizationStrategyParams(
                 eventScoring = Seq(
@@ -2074,19 +2193,16 @@ paths:
               )
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try PersonalizationClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API

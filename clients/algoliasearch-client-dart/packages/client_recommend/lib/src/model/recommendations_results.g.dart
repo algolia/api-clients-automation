@@ -66,16 +66,21 @@ RecommendationsResults _$RecommendationsResultsFromJson(
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
           queryID: $checkedConvert('queryID', (v) => v as String?),
-          page: $checkedConvert('page', (v) => (v as num).toInt()),
-          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
-          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
+          automaticInsights:
+              $checkedConvert('_automaticInsights', (v) => v as bool?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num?)?.toInt()),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num?)?.toInt()),
           hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           hits: $checkedConvert('hits', (v) => v as List<dynamic>),
         );
         return val;
       },
-      fieldKeyMap: const {'facetsStats': 'facets_stats'},
+      fieldKeyMap: const {
+        'facetsStats': 'facets_stats',
+        'automaticInsights': '_automaticInsights'
+      },
     );
 
 Map<String, dynamic> _$RecommendationsResultsToJson(
@@ -113,10 +118,11 @@ Map<String, dynamic> _$RecommendationsResultsToJson(
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
   writeNotNull('queryID', instance.queryID);
-  val['page'] = instance.page;
-  val['nbHits'] = instance.nbHits;
-  val['nbPages'] = instance.nbPages;
-  val['hitsPerPage'] = instance.hitsPerPage;
+  writeNotNull('_automaticInsights', instance.automaticInsights);
+  writeNotNull('page', instance.page);
+  writeNotNull('nbHits', instance.nbHits);
+  writeNotNull('nbPages', instance.nbPages);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
   val['hits'] = instance.hits.toList();
   return val;
 }

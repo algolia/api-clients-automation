@@ -75,9 +75,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     supportingFiles.add(new SupportingFile("version.mustache", "", "version.sbt"));
     supportingFiles.add(new SupportingFile("jsonSupport.mustache", modelFolder, "JsonSupport.scala"));
 
-    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
-    supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
-    supportingFiles.add(new SupportingFile("Bug_report.yml", ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
+    Helpers.addCommonSupportingFiles(supportingFiles, "");
 
     additionalProperties.put("isSearchClient", client.equals("search"));
     typeMapping.put("AnyType", "Any");

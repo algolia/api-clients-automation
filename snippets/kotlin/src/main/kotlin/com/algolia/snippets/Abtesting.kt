@@ -12,7 +12,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForAddABTests() {
     // >SEPARATOR addABTests default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.addABTests(
@@ -43,7 +43,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customDelete(
@@ -61,7 +61,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customGet(
@@ -79,7 +79,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customPost(
@@ -97,7 +97,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customPut(
@@ -115,7 +115,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForDeleteABTest() {
     // >SEPARATOR deleteABTest default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteABTest(
@@ -133,7 +133,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForGetABTest() {
     // >SEPARATOR getABTest default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getABTest(
@@ -151,7 +151,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForListABTests() {
     // >SEPARATOR listABTests default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listABTests()
@@ -167,7 +167,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForScheduleABTest() {
     // >SEPARATOR scheduleABTest default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.scheduleABTest(
@@ -199,7 +199,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     client.setClientApiKey(
@@ -215,7 +215,7 @@ class SnippetAbtestingClient {
   suspend fun snippetForStopABTest() {
     // >SEPARATOR stopABTest default
     // Initialize the client
-    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.stopABTest(

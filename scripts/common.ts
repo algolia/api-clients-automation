@@ -28,9 +28,7 @@ export const TODAY = new Date().toISOString().split('T')[0];
 export const CI = Boolean(process.env.CI);
 
 // This script is run by `yarn workspace ...`, which means the current working directory is `./script`
-const ROOT_DIR = path.resolve(process.cwd(), '..');
-
-export const ROOT_ENV_PATH = path.resolve(ROOT_DIR, '.env');
+export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 // Build `GENERATORS` from the `clients.config.json` file
 export const GENERATORS = Object.entries(clientsConfig).reduce(
@@ -192,7 +190,7 @@ export async function runComposerInstall(): Promise<void> {
 }
 
 export function ensureGitHubToken(): string {
-  // use process.env here to mock with jest
+  // use process.env here to mock with vitest
   if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }

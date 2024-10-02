@@ -31,6 +31,23 @@ class RecommendTest extends AnyFunSuite {
     )
   }
 
+  test("batch recommend rules") {
+    val (client, echo) = testClient()
+    val future = client.batchRecommendRules(
+      indexName = "indexName",
+      model = RecommendModels.withName("related-products")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/related-products/recommend/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
@@ -254,7 +271,7 @@ class RecommendTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -274,7 +291,7 @@ class RecommendTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -291,7 +308,7 @@ class RecommendTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -311,7 +328,7 @@ class RecommendTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -603,7 +620,7 @@ class RecommendTest extends AnyFunSuite {
             threshold = 42.1,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
               )
@@ -672,13 +689,13 @@ class RecommendTest extends AnyFunSuite {
             facetName = Some("myFacetName"),
             facetValue = Some("myFacetValue"),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
               )
             ),
             fallbackParameters = Some(
-              SearchParamsObject(
+              FallbackParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
               )
@@ -745,7 +762,7 @@ class RecommendTest extends AnyFunSuite {
             threshold = 21.7,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query1"))))
               )
@@ -764,7 +781,7 @@ class RecommendTest extends AnyFunSuite {
             threshold = 21.7,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query2"))))
               )

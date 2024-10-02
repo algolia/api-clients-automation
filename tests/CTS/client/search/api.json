@@ -24,6 +24,30 @@
     ]
   },
   {
+    "testName": "read transporter with POST method",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key"
+        }
+      },
+      {
+        "type": "method",
+        "method": "searchSingleIndex",
+        "parameters": {
+          "indexName": "indexName"
+        },
+        "expected": {
+          "type": "host",
+          "match": "test-app-id-dsn.algolia.net"
+        }
+      }
+    ]
+  },
+  {
     "testName": "calls api with correct write host",
     "autoCreateClient": false,
     "steps": [
@@ -58,15 +82,12 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6676
             },
             {
-              "host": "${{localhost}}",
               "port": 6677
             },
             {
-              "host": "${{localhost}}",
               "port": 6678
             }
           ]
@@ -98,7 +119,6 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6676
             }
           ]
@@ -120,7 +140,7 @@
             "kotlin": "Error(s) while processing the retry strategy",
             "php": "Impossible to connect, please check your Algolia Application Id.",
             "python": "Unreachable hosts",
-            "ruby": "Unreachable hosts. Last error for ${{localhost}}: Net::ReadTimeout with #<TCPSocket:(closed)>",
+            "ruby": "Unreachable hosts. Last error for %localhost%: Net::ReadTimeout with #<TCPSocket:(closed)>",
             "scala": "Error(s) while processing the retry strategy",
             "swift": "All hosts are unreachable. You can use 'exposeIntermediateErrors: true' in the config to investigate."
           }
@@ -139,7 +159,6 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6678
             }
           ],

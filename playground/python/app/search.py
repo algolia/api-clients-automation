@@ -17,10 +17,10 @@ async def main():
     print("client initialized", client)
 
     try:
-        await client.browse_objects(
-            index_name="api-clients-automation",
-            aggregator=lambda _resp: print("baaaaaaaaaaaaaaar", _resp.to_json()),
-        )
+        resp = await client.search(search_method_params={
+          "requests": [{"indexName": "api-clients-automation"}]
+        })
+        print(resp.to_dict())
     finally:
         await client.close()
 

@@ -10,7 +10,11 @@ require "algolia"
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -30,7 +34,11 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -50,7 +58,11 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -70,7 +82,11 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -90,7 +106,11 @@ end
 def snippet_for_delete_user_profile
   # >SEPARATOR deleteUserProfile default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.delete_user_profile("UserToken")
@@ -110,7 +130,11 @@ end
 def snippet_for_get_personalization_strategy
   # >SEPARATOR getPersonalizationStrategy default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.get_personalization_strategy
@@ -130,7 +154,11 @@ end
 def snippet_for_get_user_token_profile
   # >SEPARATOR getUserTokenProfile default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.get_user_token_profile("UserToken")
@@ -150,7 +178,11 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   client.set_client_api_key("updated-api-key")
@@ -164,7 +196,11 @@ end
 def snippet_for_set_personalization_strategy
   # >SEPARATOR setPersonalizationStrategy default
   # Initialize the client
-  client = Algolia::PersonalizationClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::PersonalizationClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.set_personalization_strategy(

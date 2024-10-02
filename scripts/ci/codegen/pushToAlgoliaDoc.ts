@@ -28,7 +28,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
     .map((coAuthor) => coAuthor.trim())
     .filter(Boolean);
 
-  if (!process.env.DRY_RUN && !lastCommitMessage.startsWith(commitStartRelease)) {
+  if (!process.env.FORCE && !lastCommitMessage.startsWith(commitStartRelease)) {
     return;
   }
 
@@ -84,15 +84,6 @@ async function pushToAlgoliaDoc(): Promise<void> {
     ].join('\n\n'),
     base: 'master',
     head: targetBranch,
-  });
-
-  await octokit.issues.createComment({
-    owner: OWNER,
-    repo: repository,
-    issue_number: data.number,
-    body: [
-      `[**Preview SLA changes&rarr;**](https://deploy-preview-${data.number}--algolia-docs.netlify.app/doc/libraries/supported-versions/)`,
-    ].join('\n\n'),
   });
 
   console.log(`Pull request created on ${OWNER}/${repository}`);

@@ -13,7 +13,7 @@ final class InsightsClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete default
         // Initialize the client
-        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
@@ -27,7 +27,7 @@ final class InsightsClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet default
         // Initialize the client
-        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
@@ -41,7 +41,7 @@ final class InsightsClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost default
         // Initialize the client
-        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
@@ -55,7 +55,7 @@ final class InsightsClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut default
         // Initialize the client
-        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
@@ -69,7 +69,7 @@ final class InsightsClientSnippet {
     func snippetForDeleteUserToken() async throws {
         // >SEPARATOR deleteUserToken default
         // Initialize the client
-        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         try await client.deleteUserToken(userToken: "test-user-1")
@@ -83,7 +83,7 @@ final class InsightsClientSnippet {
     func snippetForPushEvents() async throws {
         // >SEPARATOR pushEvents default
         // Initialize the client
-        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client
@@ -111,7 +111,7 @@ final class InsightsClientSnippet {
     func snippetForSetClientApiKey() async throws {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")

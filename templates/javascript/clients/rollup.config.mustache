@@ -6,10 +6,10 @@ export default [
       esModule: false,
       file: 'dist/{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.umd.js',
       {{#isAlgoliasearchClient}}
-      name: 'lite',
+      name: 'algoliasearch/lite',
       {{/isAlgoliasearchClient}}
       {{^isAlgoliasearchClient}}
-      name: '{{apiName}}',
+      name: '@algolia/{{packageName}}',
       {{/isAlgoliasearchClient}}
       format: 'umd',
       sourcemap: false,
@@ -18,7 +18,7 @@ export default [
         ['lite']: 'lite',
         {{/isAlgoliasearchClient}}
         {{^isAlgoliasearchClient}}
-        ['{{apiName}}']: '{{apiName}}',
+        ['{{clientName}}']: '{{clientName}}',
         {{/isAlgoliasearchClient}}
       },
     },

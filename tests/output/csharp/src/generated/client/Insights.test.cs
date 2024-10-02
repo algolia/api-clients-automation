@@ -47,7 +47,7 @@ public class InsightsClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.3.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.5.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -97,7 +97,7 @@ public class InsightsClientTests
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               Positions = new List<int> { 7, 6 },
             }
-          )
+          ),
         },
       }
     );
@@ -143,13 +143,16 @@ public class InsightsClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6683,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new InsightsClient(_config);
 

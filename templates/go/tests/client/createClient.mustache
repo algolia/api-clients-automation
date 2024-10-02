@@ -6,7 +6,7 @@ cfg = {{clientPrefix}}.{{clientName}}Configuration{
     Requester: echo,
     {{/useEchoRequester}}
     {{#hasCustomHosts}}
-    Hosts: []transport.StatefulHost{ {{#customHosts}}transport.NewStatefulHost("http", "{{host}}:{{port}}", call.IsReadWrite),{{/customHosts}} },
+    Hosts: []transport.StatefulHost{ {{#customHosts}}transport.NewStatefulHost("http", tests.GetLocalhost() + ":{{port}}", call.IsReadWrite),{{/customHosts}} },
     {{/hasCustomHosts}}
     {{#gzipEncoding}}
     Compression: compression.GZIP,

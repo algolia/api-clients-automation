@@ -48,7 +48,7 @@ case class TrendingFacetsQuery(
     indexName: String,
     threshold: Double,
     maxRecommendations: Option[Int] = scala.None,
-    queryParameters: Option[SearchParams] = scala.None,
+    queryParameters: Option[RecommendSearchParams] = scala.None,
     facetName: Option[Any] = scala.None,
     model: TrendingFacetsModel,
     fallbackParameters: Option[FallbackParams] = scala.None

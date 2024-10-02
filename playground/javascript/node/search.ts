@@ -1,9 +1,6 @@
 import { searchClient, apiClientVersion } from '@algolia/client-search';
 import { SearchQuery } from '@algolia/client-search/model';
 import { ApiError } from '@algolia/client-common';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** SEARCH_API_KEY *****';

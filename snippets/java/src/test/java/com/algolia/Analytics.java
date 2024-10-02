@@ -14,7 +14,7 @@ class SnippetAnalyticsClient {
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -28,7 +28,7 @@ class SnippetAnalyticsClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customGet("test/minimal");
@@ -42,7 +42,7 @@ class SnippetAnalyticsClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPost("test/minimal");
@@ -56,7 +56,7 @@ class SnippetAnalyticsClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPut("test/minimal");
@@ -70,7 +70,7 @@ class SnippetAnalyticsClient {
   void snippetForGetAddToCartRate() {
     // >SEPARATOR getAddToCartRate default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getAddToCartRate("index");
@@ -84,7 +84,7 @@ class SnippetAnalyticsClient {
   void snippetForGetAverageClickPosition() {
     // >SEPARATOR getAverageClickPosition default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getAverageClickPosition("index");
@@ -98,7 +98,7 @@ class SnippetAnalyticsClient {
   void snippetForGetClickPositions() {
     // >SEPARATOR getClickPositions default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getClickPositions("index");
@@ -112,7 +112,7 @@ class SnippetAnalyticsClient {
   void snippetForGetClickThroughRate() {
     // >SEPARATOR getClickThroughRate default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getClickThroughRate("index");
@@ -126,7 +126,7 @@ class SnippetAnalyticsClient {
   void snippetForGetConversionRate() {
     // >SEPARATOR getConversionRate default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getConversionRate("index");
@@ -140,7 +140,7 @@ class SnippetAnalyticsClient {
   void snippetForGetNoClickRate() {
     // >SEPARATOR getNoClickRate default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getNoClickRate("index");
@@ -154,7 +154,7 @@ class SnippetAnalyticsClient {
   void snippetForGetNoResultsRate() {
     // >SEPARATOR getNoResultsRate default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getNoResultsRate("index");
@@ -168,7 +168,7 @@ class SnippetAnalyticsClient {
   void snippetForGetPurchaseRate() {
     // >SEPARATOR getPurchaseRate default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getPurchaseRate("index");
@@ -182,7 +182,7 @@ class SnippetAnalyticsClient {
   void snippetForGetRevenue() {
     // >SEPARATOR getRevenue default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getRevenue("index");
@@ -196,7 +196,7 @@ class SnippetAnalyticsClient {
   void snippetForGetSearchesCount() {
     // >SEPARATOR getSearchesCount default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getSearchesCount("index");
@@ -210,7 +210,7 @@ class SnippetAnalyticsClient {
   void snippetForGetSearchesNoClicks() {
     // >SEPARATOR getSearchesNoClicks default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getSearchesNoClicks("index");
@@ -224,7 +224,7 @@ class SnippetAnalyticsClient {
   void snippetForGetSearchesNoResults() {
     // >SEPARATOR getSearchesNoResults default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getSearchesNoResults("index");
@@ -238,7 +238,7 @@ class SnippetAnalyticsClient {
   void snippetForGetStatus() {
     // >SEPARATOR getStatus default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getStatus("index");
@@ -252,7 +252,7 @@ class SnippetAnalyticsClient {
   void snippetForGetTopCountries() {
     // >SEPARATOR getTopCountries default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getTopCountries("index");
@@ -266,7 +266,7 @@ class SnippetAnalyticsClient {
   void snippetForGetTopFilterAttributes() {
     // >SEPARATOR getTopFilterAttributes default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getTopFilterAttributes("index");
@@ -280,7 +280,7 @@ class SnippetAnalyticsClient {
   void snippetForGetTopFilterForAttribute() {
     // >SEPARATOR getTopFilterForAttribute default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getTopFilterForAttribute("myAttribute", "index");
@@ -294,7 +294,7 @@ class SnippetAnalyticsClient {
   void snippetForGetTopFiltersNoResults() {
     // >SEPARATOR getTopFiltersNoResults default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getTopFiltersNoResults("index");
@@ -308,7 +308,7 @@ class SnippetAnalyticsClient {
   void snippetForGetTopHits() {
     // >SEPARATOR getTopHits default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getTopHits("index");
@@ -322,7 +322,7 @@ class SnippetAnalyticsClient {
   void snippetForGetTopSearches() {
     // >SEPARATOR getTopSearches default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getTopSearches("index");
@@ -336,7 +336,7 @@ class SnippetAnalyticsClient {
   void snippetForGetUsersCount() {
     // >SEPARATOR getUsersCount default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getUsersCount("index");
@@ -350,7 +350,7 @@ class SnippetAnalyticsClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.setClientApiKey("updated-api-key");

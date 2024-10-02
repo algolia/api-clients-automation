@@ -29,7 +29,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.3.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.4.0\).*/))
   end
 
   # calls api with default read timeouts
@@ -96,7 +96,13 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       )
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("`region` must be one of the following: de, us", e.message)
+      assert_equal(
+        "`region` must be one of the following: de, us".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -108,7 +114,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6683,
             accept: CallType::READ | CallType::WRITE

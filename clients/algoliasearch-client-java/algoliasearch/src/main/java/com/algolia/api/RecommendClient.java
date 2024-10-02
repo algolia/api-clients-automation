@@ -37,13 +37,246 @@ public class RecommendClient extends ApiClient {
     hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
 
     List<Host> commonHosts = new ArrayList<>();
-    hosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-1.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-2.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-3.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
 
     Collections.shuffle(commonHosts, new Random());
 
     return Stream.concat(hosts.stream(), commonHosts.stream()).collect(Collectors.toList());
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RecommendUpdatedAtResponse batchRecommendRules(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(batchRecommendRulesAsync(indexName, model, recommendRule, requestOptions));
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RecommendUpdatedAtResponse batchRecommendRules(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRules(indexName, model, recommendRule, null);
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RecommendUpdatedAtResponse batchRecommendRules(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRules(indexName, model, null, requestOptions);
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RecommendUpdatedAtResponse batchRecommendRules(@Nonnull String indexName, @Nonnull RecommendModels model)
+    throws AlgoliaRuntimeException {
+    return this.batchRecommendRules(indexName, model, null, null);
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.");
+
+    Parameters.requireNonNull(model, "Parameter `model` is required when calling `batchRecommendRules`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/{model}/recommend/rules/batch", indexName, model)
+      .setMethod("POST")
+      .setBody(recommendRule)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<RecommendUpdatedAtResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesAsync(indexName, model, recommendRule, null);
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesAsync(indexName, model, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(@Nonnull String indexName, @Nonnull RecommendModels model)
+    throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesAsync(indexName, model, null, null);
   }
 
   /**

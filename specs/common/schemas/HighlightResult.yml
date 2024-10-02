@@ -34,25 +34,11 @@ matchLevel:
   description: Whether the whole query string matches or only a part.
   enum: [none, partial, full]
 
-highlightResultOptionMap:
-  type: object
-  description: Surround words that match the query with HTML tags for highlighting.
-  additionalProperties:
-    x-additionalPropertiesName: attribute
-    $ref: '#/highlightResultOption'
-
-highlightResultOptionArray:
+highlightResultArray:
   type: array
   description: Surround words that match the query with HTML tags for highlighting.
   items:
-    $ref: '#/highlightResultOption'
-
-highlightResult:
-  oneOf:
-    - $ref: '#/highlightResultMap'
-    - $ref: '#/highlightResultOption'
-    - $ref: '#/highlightResultOptionMap'
-    - $ref: '#/highlightResultOptionArray'
+    $ref: '#/highlightResult'
 
 highlightResultMap:
   type: object
@@ -60,3 +46,9 @@ highlightResultMap:
   additionalProperties:
     x-additionalPropertiesName: attribute
     $ref: '#/highlightResult'
+
+highlightResult:
+  oneOf:
+    - $ref: '#/highlightResultOption'
+    - $ref: '#/highlightResultMap'
+    - $ref: '#/highlightResultArray'

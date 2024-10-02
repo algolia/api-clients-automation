@@ -86,6 +86,9 @@ public class RecommendationsResults {
   @JsonProperty("queryID")
   private String queryID;
 
+  @JsonProperty("_automaticInsights")
+  private Boolean automaticInsights;
+
   @JsonProperty("page")
   private Integer page;
 
@@ -416,13 +419,24 @@ public class RecommendationsResults {
     return queryID;
   }
 
+  public RecommendationsResults setAutomaticInsights(Boolean automaticInsights) {
+    this.automaticInsights = automaticInsights;
+    return this;
+  }
+
+  /** Whether automatic events collection is enabled for the application. */
+  @javax.annotation.Nullable
+  public Boolean getAutomaticInsights() {
+    return automaticInsights;
+  }
+
   public RecommendationsResults setPage(Integer page) {
     this.page = page;
     return this;
   }
 
   /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getPage() {
     return page;
   }
@@ -433,7 +447,7 @@ public class RecommendationsResults {
   }
 
   /** Number of results (hits). */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbHits() {
     return nbHits;
   }
@@ -444,7 +458,7 @@ public class RecommendationsResults {
   }
 
   /** Number of pages of results. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbPages() {
     return nbPages;
   }
@@ -455,7 +469,7 @@ public class RecommendationsResults {
   }
 
   /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -510,6 +524,7 @@ public class RecommendationsResults {
       Objects.equals(this.serverUsed, recommendationsResults.serverUsed) &&
       Objects.equals(this.userData, recommendationsResults.userData) &&
       Objects.equals(this.queryID, recommendationsResults.queryID) &&
+      Objects.equals(this.automaticInsights, recommendationsResults.automaticInsights) &&
       Objects.equals(this.page, recommendationsResults.page) &&
       Objects.equals(this.nbHits, recommendationsResults.nbHits) &&
       Objects.equals(this.nbPages, recommendationsResults.nbPages) &&
@@ -545,6 +560,7 @@ public class RecommendationsResults {
       serverUsed,
       userData,
       queryID,
+      automaticInsights,
       page,
       nbHits,
       nbPages,
@@ -581,6 +597,7 @@ public class RecommendationsResults {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    automaticInsights: ").append(toIndentedString(automaticInsights)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
     sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");

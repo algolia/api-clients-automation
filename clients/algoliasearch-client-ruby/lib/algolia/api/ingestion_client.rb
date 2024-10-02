@@ -961,60 +961,6 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
-    # Generates code for the selected model based on the given prompt.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param generate_transformation_code_payload [GenerateTransformationCodePayload]  (required)
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def generate_transformation_code_with_http_info(generate_transformation_code_payload, request_options = {})
-      # verify the required parameter 'generate_transformation_code_payload' is set
-      if @api_client.config.client_side_validation && generate_transformation_code_payload.nil?
-        raise(
-          ArgumentError,
-          "Parameter `generate_transformation_code_payload` is required when calling `generate_transformation_code`."
-        )
-      end
-
-      path = "/1/transformations/models"
-      query_params = {}
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body] || @api_client.object_to_http_body(generate_transformation_code_payload)
-
-      new_options = request_options.merge(
-        :operation => :"IngestionClient.generate_transformation_code",
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:POST, path, new_options)
-    end
-
-    # Generates code for the selected model based on the given prompt.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param generate_transformation_code_payload [GenerateTransformationCodePayload]  (required)
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [GenerateTransformationCodeResponse]
-    def generate_transformation_code(generate_transformation_code_payload, request_options = {})
-      response = generate_transformation_code_with_http_info(generate_transformation_code_payload, request_options)
-      @api_client.deserialize(
-        response.body,
-        request_options[:debug_return_type] || "Ingestion::GenerateTransformationCodeResponse"
-      )
-    end
-
     # Retrieves an authentication resource by its ID.
     #
     # Required API Key ACLs:
@@ -1426,8 +1372,8 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
-    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
-    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentications.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentications. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1495,8 +1441,8 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
-    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
-    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentications.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentications. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListAuthenticationsResponse]
@@ -1526,6 +1472,7 @@ module Algolia
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<DestinationType>] Destination type.
     # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param transformation_id [String] Get the list of destinations used by a transformation.
     # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1535,6 +1482,7 @@ module Algolia
       page = nil,
       type = nil,
       authentication_id = nil,
+      transformation_id = nil,
       sort = nil,
       order = nil,
       request_options = {}
@@ -1569,6 +1517,7 @@ module Algolia
         query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
       end
 
+      query_params[:transformationID] = transformation_id unless transformation_id.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1598,6 +1547,7 @@ module Algolia
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<DestinationType>] Destination type.
     # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param transformation_id [String] Get the list of destinations used by a transformation.
     # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1607,6 +1557,7 @@ module Algolia
       page = nil,
       type = nil,
       authentication_id = nil,
+      transformation_id = nil,
       sort = nil,
       order = nil,
       request_options = {}
@@ -1616,6 +1567,7 @@ module Algolia
         page,
         type,
         authentication_id,
+        transformation_id,
         sort,
         order,
         request_options
@@ -1883,7 +1835,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
     # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1955,7 +1907,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
     # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2231,47 +2183,6 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponseV1")
     end
 
-    # Retrieves a list of existing LLM transformation helpers.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def list_transformation_models_with_http_info(request_options = {})
-      path = "/1/transformations/models"
-      query_params = {}
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :"IngestionClient.list_transformation_models",
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
-    end
-
-    # Retrieves a list of existing LLM transformation helpers.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [TransformationModels]
-    def list_transformation_models(request_options = {})
-      response = list_transformation_models_with_http_info(request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TransformationModels")
-    end
-
     # Retrieves a list of transformations.
     #
     # Required API Key ACLs:
@@ -2280,7 +2191,7 @@ module Algolia
     #   - editSettings
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
-    # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
+    # @param sort [TransformationSortKeys] Property by which to sort the list of transformations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2343,7 +2254,7 @@ module Algolia
     #   - editSettings
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
-    # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
+    # @param sort [TransformationSortKeys] Property by which to sort the list of transformations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTransformationsResponse]

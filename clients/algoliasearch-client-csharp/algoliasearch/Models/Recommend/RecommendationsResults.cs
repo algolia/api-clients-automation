@@ -25,18 +25,10 @@ public partial class RecommendationsResults
   /// Initializes a new instance of the RecommendationsResults class.
   /// </summary>
   /// <param name="processingTimeMS">Time the server took to process the request, in milliseconds. (required).</param>
-  /// <param name="page">Page of search results to retrieve. (required) (default to 0).</param>
-  /// <param name="nbHits">Number of results (hits). (required).</param>
-  /// <param name="nbPages">Number of pages of results. (required).</param>
-  /// <param name="hitsPerPage">Number of hits per page. (required) (default to 20).</param>
   /// <param name="hits">hits (required).</param>
-  public RecommendationsResults(int processingTimeMS, int page, int nbHits, int nbPages, int hitsPerPage, List<RecommendationsHit> hits)
+  public RecommendationsResults(int processingTimeMS, List<RecommendationsHit> hits)
   {
     ProcessingTimeMS = processingTimeMS;
-    Page = page;
-    NbHits = nbHits;
-    NbPages = nbPages;
-    HitsPerPage = hitsPerPage;
     Hits = hits ?? throw new ArgumentNullException(nameof(hits));
   }
 
@@ -209,32 +201,39 @@ public partial class RecommendationsResults
   public string QueryID { get; set; }
 
   /// <summary>
+  /// Whether automatic events collection is enabled for the application.
+  /// </summary>
+  /// <value>Whether automatic events collection is enabled for the application.</value>
+  [JsonPropertyName("_automaticInsights")]
+  public bool? AutomaticInsights { get; set; }
+
+  /// <summary>
   /// Page of search results to retrieve.
   /// </summary>
   /// <value>Page of search results to retrieve.</value>
   [JsonPropertyName("page")]
-  public int Page { get; set; }
+  public int? Page { get; set; }
 
   /// <summary>
   /// Number of results (hits).
   /// </summary>
   /// <value>Number of results (hits).</value>
   [JsonPropertyName("nbHits")]
-  public int NbHits { get; set; }
+  public int? NbHits { get; set; }
 
   /// <summary>
   /// Number of pages of results.
   /// </summary>
   /// <value>Number of pages of results.</value>
   [JsonPropertyName("nbPages")]
-  public int NbPages { get; set; }
+  public int? NbPages { get; set; }
 
   /// <summary>
   /// Number of hits per page.
   /// </summary>
   /// <value>Number of hits per page.</value>
   [JsonPropertyName("hitsPerPage")]
-  public int HitsPerPage { get; set; }
+  public int? HitsPerPage { get; set; }
 
   /// <summary>
   /// Gets or Sets Hits
@@ -274,6 +273,7 @@ public partial class RecommendationsResults
     sb.Append("  ServerUsed: ").Append(ServerUsed).Append("\n");
     sb.Append("  UserData: ").Append(UserData).Append("\n");
     sb.Append("  QueryID: ").Append(QueryID).Append("\n");
+    sb.Append("  AutomaticInsights: ").Append(AutomaticInsights).Append("\n");
     sb.Append("  Page: ").Append(Page).Append("\n");
     sb.Append("  NbHits: ").Append(NbHits).Append("\n");
     sb.Append("  NbPages: ").Append(NbPages).Append("\n");
@@ -329,6 +329,7 @@ public partial class RecommendationsResults
         (ServerUsed == input.ServerUsed || (ServerUsed != null && ServerUsed.Equals(input.ServerUsed))) &&
         (UserData == input.UserData || (UserData != null && UserData.Equals(input.UserData))) &&
         (QueryID == input.QueryID || (QueryID != null && QueryID.Equals(input.QueryID))) &&
+        (AutomaticInsights == input.AutomaticInsights || AutomaticInsights.Equals(input.AutomaticInsights)) &&
         (Page == input.Page || Page.Equals(input.Page)) &&
         (NbHits == input.NbHits || NbHits.Equals(input.NbHits)) &&
         (NbPages == input.NbPages || NbPages.Equals(input.NbPages)) &&
@@ -417,6 +418,7 @@ public partial class RecommendationsResults
       {
         hashCode = (hashCode * 59) + QueryID.GetHashCode();
       }
+      hashCode = (hashCode * 59) + AutomaticInsights.GetHashCode();
       hashCode = (hashCode * 59) + Page.GetHashCode();
       hashCode = (hashCode * 59) + NbHits.GetHashCode();
       hashCode = (hashCode * 59) + NbPages.GetHashCode();

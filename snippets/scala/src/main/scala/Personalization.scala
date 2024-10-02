@@ -23,7 +23,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientCustomDelete(): Unit = {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customDelete[JObject](
@@ -43,7 +47,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientCustomGet(): Unit = {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customGet[JObject](
@@ -63,7 +71,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientCustomPost(): Unit = {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customPost[JObject](
@@ -83,7 +95,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientCustomPut(): Unit = {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customPut[JObject](
@@ -103,7 +119,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientDeleteUserProfile(): Unit = {
     // >SEPARATOR deleteUserProfile default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.deleteUserProfile(
@@ -123,7 +143,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientGetPersonalizationStrategy(): Unit = {
     // >SEPARATOR getPersonalizationStrategy default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.getPersonalizationStrategy(
@@ -142,7 +166,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientGetUserTokenProfile(): Unit = {
     // >SEPARATOR getUserTokenProfile default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.getUserTokenProfile(
@@ -162,7 +190,11 @@ class SnippetPersonalizationClient {
   def snippetForPersonalizationClientSetPersonalizationStrategy(): Unit = {
     // >SEPARATOR setPersonalizationStrategy default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.setPersonalizationStrategy(

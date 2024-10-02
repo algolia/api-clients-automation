@@ -12,6 +12,29 @@ use Algolia\AlgoliaSearch\Api\RecommendClient;
 class SnippetRecommendClient
 {
     /**
+     * Snippet for the BatchRecommendRules method.
+     *
+     * batch recommend rules
+     */
+    public function snippetForBatchRecommendRules(): void
+    {
+        // >SEPARATOR batchRecommendRules default
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->batchRecommendRules(
+            '<YOUR_INDEX_NAME>',
+            'related-products',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomDelete method.
      *
      * allow del method for a custom path with minimal parameters
@@ -20,7 +43,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customDelete(
@@ -42,7 +65,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customGet(
@@ -64,7 +87,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customPost(
@@ -86,7 +109,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customPut(
@@ -108,7 +131,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR deleteRecommendRule default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->deleteRecommendRule(
@@ -132,7 +155,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR getRecommendRule default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getRecommendRule(
@@ -156,7 +179,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR getRecommendStatus default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getRecommendStatus(
@@ -180,7 +203,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR getRecommendations default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getRecommendations(
@@ -209,7 +232,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR searchRecommendRules default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchRecommendRules(
@@ -232,7 +255,7 @@ class SnippetRecommendClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $client->setClientApiKey(

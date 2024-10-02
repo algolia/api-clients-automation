@@ -6,8 +6,7 @@
     "typeRoots": ["../node_modules/@types"],
     "types": ["node"],
     "lib": ["esnext", "dom"],
-    "outDir": "dist"
   },
   "include": ["**/*.ts", "./**.cjs", "**/*.mjs"],
-  "exclude": ["dist", "*.json", "node_modules", "**/*.test.ts"]
+  "exclude": ["dist", "*.json", "node_modules"]
 }

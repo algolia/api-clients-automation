@@ -1,11 +1,8 @@
 import { algoliasearch, SearchClient } from 'algoliasearch';
 import { liteClient } from 'algoliasearch/lite';
 import { ApiError } from '@algolia/client-common';
-import dotenv from 'dotenv';
 
 import type { SearchResponses } from 'algoliasearch';
-
-dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
@@ -30,6 +27,13 @@ async function testAlgoliasearch() {
           hitsPerPage: 50,
         },
       ],
+    });
+
+    client.generateSecuredApiKey({
+      parentApiKey: 'foo',
+      restrictions: {
+        validUntil: 200,
+      }
     });
 
     const resLite: SearchResponses = await clientLite.search({

@@ -72,6 +72,14 @@ module.exports = {
       ],
     },
     {
+      // actions yml linter
+      files: ['.github/**/*.yml'],
+
+      rules: {
+        'yml/no-empty-mapping-value': 0,
+      },
+    },
+    {
       // es linter
       files: ['*.ts', '*.js'],
 
@@ -193,6 +201,13 @@ module.exports = {
         ],
         '@typescript-eslint/prefer-optional-chain': 0,
       }
+    },
+    {
+      files: ['clients/algoliasearch-client-javascript/packages/**/__tests__/**/*.ts'],
+
+      extends: ["plugin:vitest/legacy-recommended"],
+
+      plugins: ['@vitest/eslint-plugin'],
     },
     {
       files: ['*.json'],

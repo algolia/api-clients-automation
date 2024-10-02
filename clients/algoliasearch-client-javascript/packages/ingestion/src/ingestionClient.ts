@@ -67,8 +67,6 @@ import type { DestinationCreateResponse } from '../model/destinationCreateRespon
 import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
 import type { Event } from '../model/event';
-import type { GenerateTransformationCodePayload } from '../model/generateTransformationCodePayload';
-import type { GenerateTransformationCodeResponse } from '../model/generateTransformationCodeResponse';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
 import type { ListEventsResponse } from '../model/listEventsResponse';
@@ -100,14 +98,13 @@ import type { TaskV1 } from '../model/taskV1';
 import type { Transformation } from '../model/transformation';
 import type { TransformationCreate } from '../model/transformationCreate';
 import type { TransformationCreateResponse } from '../model/transformationCreateResponse';
-import type { TransformationModels } from '../model/transformationModels';
 import type { TransformationSearch } from '../model/transformationSearch';
 import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationTryResponse } from '../model/transformationTryResponse';
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.3.1';
+export const apiClientVersion = '1.7.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -895,53 +892,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Generates code for the selected model based on the given prompt.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param generateTransformationCodePayload - The generateTransformationCodePayload object.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    generateTransformationCode(
-      generateTransformationCodePayload: GenerateTransformationCodePayload,
-      requestOptions?: RequestOptions,
-    ): Promise<GenerateTransformationCodeResponse> {
-      if (!generateTransformationCodePayload) {
-        throw new Error(
-          'Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`.',
-        );
-      }
-
-      if (!generateTransformationCodePayload.id) {
-        throw new Error(
-          'Parameter `generateTransformationCodePayload.id` is required when calling `generateTransformationCode`.',
-        );
-      }
-      if (!generateTransformationCodePayload.userPrompt) {
-        throw new Error(
-          'Parameter `generateTransformationCodePayload.userPrompt` is required when calling `generateTransformationCode`.',
-        );
-      }
-
-      const requestPath = '/1/transformations/models';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        queryParameters,
-        headers,
-        data: generateTransformationCodePayload,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves an authentication resource by its ID.
      *
      * Required API Key ACLs:
@@ -1223,8 +1173,8 @@ export function createIngestionClient({
      * @param listAuthentications.itemsPerPage - Number of items per page.
      * @param listAuthentications.page - Page number of the paginated API response.
      * @param listAuthentications.type - Type of authentication resource to retrieve.
-     * @param listAuthentications.platform - Ecommerce platform for which to retrieve authentication resources.
-     * @param listAuthentications.sort - Property by which to sort the list of authentication resources.
+     * @param listAuthentications.platform - Ecommerce platform for which to retrieve authentications.
+     * @param listAuthentications.sort - Property by which to sort the list of authentications.
      * @param listAuthentications.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1244,6 +1194,7 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (platform !== undefined) {
         queryParameters.platform = platform.toString();
       }
@@ -1278,18 +1229,18 @@ export function createIngestionClient({
      * @param listDestinations.page - Page number of the paginated API response.
      * @param listDestinations.type - Destination type.
      * @param listDestinations.authenticationID - Authentication ID used by destinations.
+     * @param listDestinations.transformationID - Get the list of destinations used by a transformation.
      * @param listDestinations.sort - Property by which to sort the destinations.
      * @param listDestinations.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listDestinations(
-      { itemsPerPage, page, type, authenticationID, sort, order }: ListDestinationsProps = {},
+      { itemsPerPage, page, type, authenticationID, transformationID, sort, order }: ListDestinationsProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListDestinationsResponse> {
       const requestPath = '/1/destinations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1299,8 +1250,12 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
+      }
+      if (transformationID !== undefined) {
+        queryParameters.transformationID = transformationID.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
@@ -1362,10 +1317,10 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1413,7 +1368,6 @@ export function createIngestionClient({
       const requestPath = '/1/runs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1432,7 +1386,6 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1465,7 +1418,7 @@ export function createIngestionClient({
      * @param listSources.itemsPerPage - Number of items per page.
      * @param listSources.page - Page number of the paginated API response.
      * @param listSources.type - Source type. Some sources require authentication.
-     * @param listSources.authenticationID - Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication resource.
+     * @param listSources.authenticationID - Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
      * @param listSources.sort - Property by which to sort the list of sources.
      * @param listSources.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1543,22 +1496,24 @@ export function createIngestionClient({
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
-
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
+
       if (destinationID !== undefined) {
         queryParameters.destinationID = destinationID.toString();
       }
+
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1616,7 +1571,6 @@ export function createIngestionClient({
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
-
       if (destinationID !== undefined) {
         queryParameters.destinationID = destinationID.toString();
       }
@@ -1641,31 +1595,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a list of existing LLM transformation helpers.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    listTransformationModels(requestOptions?: RequestOptions): Promise<TransformationModels> {
-      const requestPath = '/1/transformations/models';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves a list of transformations.
      *
      * Required API Key ACLs:
@@ -1676,7 +1605,7 @@ export function createIngestionClient({
      * @param listTransformations - The listTransformations object.
      * @param listTransformations.itemsPerPage - Number of items per page.
      * @param listTransformations.page - Page number of the paginated API response.
-     * @param listTransformations.sort - Property by which to sort the list.
+     * @param listTransformations.sort - Property by which to sort the list of transformations.
      * @param listTransformations.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1693,10 +1622,10 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }

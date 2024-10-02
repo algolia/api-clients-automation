@@ -13,29 +13,21 @@ snippetResultOption:
   x-discriminator-fields:
     - matchLevel
 
-snippetResultOptionMap:
-  type: object
-  description: Snippets that show the context around a matching search query.
-  additionalProperties:
-    x-additionalPropertiesName: attribute
-    $ref: '#/snippetResultOption'
-
-snippetResultOptionArray:
-  type: array
-  description: Snippets that show the context around a matching search query.
-  items:
-    $ref: '#/snippetResultOption'
-
-snippetResult:
-  oneOf:
-    - $ref: '#/snippetResultMap'
-    - $ref: '#/snippetResultOption'
-    - $ref: '#/snippetResultOptionMap'
-    - $ref: '#/snippetResultOptionArray'
-
 snippetResultMap:
   type: object
   description: Snippets that show the context around a matching search query.
   additionalProperties:
     x-additionalPropertiesName: attribute
     $ref: '#/snippetResult'
+
+snippetResultArray:
+  type: array
+  description: Snippets that show the context around a matching search query.
+  items:
+    $ref: '#/snippetResult'
+
+snippetResult:
+  oneOf:
+    - $ref: '#/snippetResultOption'
+    - $ref: '#/snippetResultMap'
+    - $ref: '#/snippetResultArray'

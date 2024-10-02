@@ -13,7 +13,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForCreateConfig() async throws {
         // >SEPARATOR createConfig default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(
@@ -36,7 +36,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
@@ -50,7 +50,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
@@ -64,7 +64,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
@@ -78,7 +78,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
@@ -92,7 +92,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForDeleteConfig() async throws {
         // >SEPARATOR deleteConfig default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.deleteConfig(indexName: "<YOUR_INDEX_NAME>")
@@ -106,7 +106,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForGetAllConfigs() async throws {
         // >SEPARATOR getAllConfigs default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getAllConfigs()
@@ -120,7 +120,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForGetConfig() async throws {
         // >SEPARATOR getConfig default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getConfig(indexName: "<YOUR_INDEX_NAME>")
@@ -134,7 +134,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForGetConfigStatus() async throws {
         // >SEPARATOR getConfigStatus default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getConfigStatus(indexName: "<YOUR_INDEX_NAME>")
@@ -148,7 +148,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForGetLogFile() async throws {
         // >SEPARATOR getLogFile default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getLogFile(indexName: "<YOUR_INDEX_NAME>")
@@ -162,7 +162,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForSetClientApiKey() async throws {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")
@@ -176,7 +176,7 @@ final class QuerySuggestionsClientSnippet {
     func snippetForUpdateConfig() async throws {
         // >SEPARATOR updateConfig default
         // Initialize the client
-        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try QuerySuggestionsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.updateConfig(

@@ -1,7 +1,10 @@
 {
   "csharp": {
     "import": {
-      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Recommend;"
+    },
+    "batchRecommendRules": {
+      "default": "var response = await client.BatchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\")\n);"
     },
     "customDelete": {
       "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
@@ -25,7 +28,7 @@
       "default": "var response = await client.GetRecommendStatusAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\"),\n  12345L\n);"
     },
     "getRecommendations": {
-      "default": "var response = await client.GetRecommendationsAsync(\n  new GetRecommendationsParams\n  {\n    Requests = new List<RecommendationsRequest>\n    {\n      new RecommendationsRequest(\n        new RelatedQuery\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          ObjectID = \"objectID\",\n          Model = Enum.Parse<RelatedModel>(\"RelatedProducts\"),\n          Threshold = 42.1,\n        }\n      )\n    },\n  }\n);"
+      "default": "var response = await client.GetRecommendationsAsync(\n  new GetRecommendationsParams\n  {\n    Requests = new List<RecommendationsRequest>\n    {\n      new RecommendationsRequest(\n        new RelatedQuery\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          ObjectID = \"objectID\",\n          Model = Enum.Parse<RelatedModel>(\"RelatedProducts\"),\n          Threshold = 42.1,\n        }\n      ),\n    },\n  }\n);"
     },
     "searchRecommendRules": {
       "default": "var response = await client.SearchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\")\n);"
@@ -34,12 +37,15 @@
       "default": "client.SetClientApiKey(\"updated-api-key\");"
     },
     "init": {
-      "default": "var client = new RecommendClient(new RecommendConfig(\"YOUR_APP_ID\", \"YOUR_API_KEY\"));"
+      "default": "var client = new RecommendClient(\n  new RecommendConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\n);"
     }
   },
   "dart": {
     "import": {
       "default": "import 'package:algolia_client_recommend/algolia_client_recommend.dart';"
+    },
+    "batchRecommendRules": {
+      "default": "final response = await client.batchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n);"
     },
     "customDelete": {
       "default": "final response = await client.customDelete(\n  path: \"test/minimal\",\n);"
@@ -72,12 +78,15 @@
       "default": "client.setClientApiKey(\n  apiKey: \"updated-api-key\",\n);"
     },
     "init": {
-      "default": "final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');"
+      "default": "final client = RecommendClient(\n    appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');"
     }
   },
   "go": {
     "import": {
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend\""
+    },
+    "batchRecommendRules": {
+      "default": "response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
       "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -110,12 +119,15 @@
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
-      "default": "client, err := recommend.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+      "default": "client, err := recommend.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
     }
   },
   "java": {
     "import": {
       "default": "import com.algolia.api.RecommendClient;\nimport com.algolia.model.recommend.*;"
+    },
+    "batchRecommendRules": {
+      "default": "client.batchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS);"
     },
     "customDelete": {
       "default": "client.customDelete(\"test/minimal\");"
@@ -148,12 +160,15 @@
       "default": "client.setClientApiKey(\"updated-api-key\");"
     },
     "init": {
-      "default": "RecommendClient client = new RecommendClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\");"
+      "default": "RecommendClient client = new RecommendClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\");"
     }
   },
   "javascript": {
     "import": {
       "default": "import { recommendClient } from '@algolia/recommend';"
+    },
+    "batchRecommendRules": {
+      "default": "const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });"
     },
     "customDelete": {
       "default": "const response = await client.customDelete({ path: 'test/minimal' });"
@@ -186,12 +201,15 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "init": {
-      "default": "const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');"
+      "default": "const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "kotlin": {
     "import": {
       "default": "import com.algolia.client.api.RecommendClient"
+    },
+    "batchRecommendRules": {
+      "default": "var response = client.batchRecommendRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  model = RecommendModels.entries.first { it.value == \"related-products\" },\n)"
     },
     "customDelete": {
       "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)"
@@ -224,12 +242,15 @@
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
     },
     "init": {
-      "default": "val client = RecommendClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\")"
+      "default": "val client = RecommendClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\")"
     }
   },
   "php": {
     "import": {
       "default": "use Algolia\\AlgoliaSearch\\Api\\RecommendClient;"
+    },
+    "batchRecommendRules": {
+      "default": "$response = $client->batchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n);"
     },
     "customDelete": {
       "default": "$response = $client->customDelete(\n    'test/minimal',\n);"
@@ -262,50 +283,56 @@
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
     },
     "init": {
-      "default": "$client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');"
+      "default": "$client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "python": {
     "import": {
-      "default": "from algoliasearch.recommend.client import RecommendClient"
+      "default": "from algoliasearch.recommend.client import RecommendClientSync"
+    },
+    "batchRecommendRules": {
+      "default": "response = client.batch_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.batch_recommend_rules_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customDelete": {
-      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customGet": {
-      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPost": {
-      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPut": {
-      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteRecommendRule": {
-      "default": "response = await _client.delete_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)"
+      "default": "response = client.delete_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_recommend_rule_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getRecommendRule": {
-      "default": "response = await _client.get_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)"
+      "default": "response = client.get_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_recommend_rule_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getRecommendStatus": {
-      "default": "response = await _client.get_recommend_status(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    task_id=12345,\n)"
+      "default": "response = client.get_recommend_status(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    task_id=12345,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_recommend_status_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    task_id=12345,\n)\n\nprint(raw_response.raw_data)"
     },
     "getRecommendations": {
-      "default": "response = await _client.get_recommendations(\n    get_recommendations_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"objectID\": \"objectID\",\n                \"model\": \"related-products\",\n                \"threshold\": 42.1,\n            },\n        ],\n    },\n)"
+      "default": "response = client.get_recommendations(\n    get_recommendations_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"objectID\": \"objectID\",\n                \"model\": \"related-products\",\n                \"threshold\": 42.1,\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_recommendations_with_http_info(\n    get_recommendations_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"objectID\": \"objectID\",\n                \"model\": \"related-products\",\n                \"threshold\": 42.1,\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchRecommendRules": {
-      "default": "response = await _client.search_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)"
+      "default": "response = client.search_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_recommend_rules_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)\n\nprint(raw_response.raw_data)"
     },
     "setClientApiKey": {
-      "default": "_client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
     },
     "init": {
-      "default": "_client = RecommendClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+      "default": "# In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.\nclient = RecommendClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
     }
   },
   "ruby": {
     "import": {
       "default": "require \"algolia\""
+    },
+    "batchRecommendRules": {
+      "default": "response = client.batch_recommend_rules(\"<YOUR_INDEX_NAME>\", \"related-products\")"
     },
     "customDelete": {
       "default": "response = client.custom_delete(\"test/minimal\")"
@@ -338,12 +365,15 @@
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "init": {
-      "default": "client = Algolia::RecommendClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+      "default": "client = Algolia::RecommendClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
     }
   },
   "scala": {
     "import": {
       "default": "import algoliasearch.api.RecommendClient"
+    },
+    "batchRecommendRules": {
+      "default": "val response = client.batchRecommendRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  model = RecommendModels.withName(\"related-products\")\n)"
     },
     "customDelete": {
       "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)"
@@ -373,12 +403,15 @@
       "default": "val response = client.searchRecommendRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  model = RecommendModels.withName(\"related-products\")\n)"
     },
     "init": {
-      "default": "val client = RecommendClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\")"
+      "default": "val client = RecommendClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\")"
     }
   },
   "swift": {
     "import": {
       "default": "import Recommend"
+    },
+    "batchRecommendRules": {
+      "default": "let response = try await client.batchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts\n)"
     },
     "customDelete": {
       "default": "let response = try await client.customDelete(path: \"test/minimal\")"
@@ -411,7 +444,7 @@
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
     },
     "init": {
-      "default": "let client = try RecommendClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\")"
+      "default": "let client = try RecommendClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\")"
     }
   }
 }

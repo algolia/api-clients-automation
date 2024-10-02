@@ -1,6 +1,6 @@
-import type { Rule } from 'eslint';
+import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isPairWithKey, isScalar } from '../utils';
+import { isPairWithKey, isScalar } from '../utils.js';
 
 const ACLs = [
   'search',
@@ -19,19 +19,24 @@ const ACLs = [
   'admin',
 ];
 
-export const validACL: Rule.RuleModule = {
+export const validACL = createRule('validACL', {
   meta: {
     docs: {
       description: 'x-acl enum must contains valid Algolia ACLs',
+      categories: null,
+      extensionRule: false,
+      layout: false,
     },
     messages: {
       validString: 'is not a string',
       validACL: `{{entry}} is not a valid Algolia ACL, must be one of: ${ACLs.join(', ')}.`,
       validArray: 'is not an array of string',
     },
+    type: 'layout',
+    schema: [],
   },
   create(context) {
-    if (!context.sourceCode.parserServices.isYAML) {
+    if (!context.getSourceCode().parserServices.isYAML) {
       return {};
     }
 
@@ -75,4 +80,4 @@ export const validACL: Rule.RuleModule = {
       },
     };
   },
-};
+});

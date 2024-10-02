@@ -58,14 +58,16 @@ public struct RecommendationsResults: Codable, JSONEncodable {
     /// Unique identifier for the query. This is used for [click
     /// analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
     public var queryID: String?
+    /// Whether automatic events collection is enabled for the application.
+    public var automaticInsights: Bool?
     /// Page of search results to retrieve.
-    public var page: Int
+    public var page: Int?
     /// Number of results (hits).
-    public var nbHits: Int
+    public var nbHits: Int?
     /// Number of pages of results.
-    public var nbPages: Int
+    public var nbPages: Int?
     /// Number of hits per page.
-    public var hitsPerPage: Int
+    public var hitsPerPage: Int?
     public var hits: [RecommendationsHit]
 
     public init(
@@ -93,10 +95,11 @@ public struct RecommendationsResults: Codable, JSONEncodable {
         serverUsed: String? = nil,
         userData: AnyCodable? = nil,
         queryID: String? = nil,
-        page: Int,
-        nbHits: Int,
-        nbPages: Int,
-        hitsPerPage: Int,
+        automaticInsights: Bool? = nil,
+        page: Int? = nil,
+        nbHits: Int? = nil,
+        nbPages: Int? = nil,
+        hitsPerPage: Int? = nil,
         hits: [RecommendationsHit]
     ) {
         self.abTestID = abTestID
@@ -123,6 +126,7 @@ public struct RecommendationsResults: Codable, JSONEncodable {
         self.serverUsed = serverUsed
         self.userData = userData
         self.queryID = queryID
+        self.automaticInsights = automaticInsights
         self.page = page
         self.nbHits = nbHits
         self.nbPages = nbPages
@@ -155,6 +159,7 @@ public struct RecommendationsResults: Codable, JSONEncodable {
         case serverUsed
         case userData
         case queryID
+        case automaticInsights = "_automaticInsights"
         case page
         case nbHits
         case nbPages
@@ -190,10 +195,11 @@ public struct RecommendationsResults: Codable, JSONEncodable {
         try container.encodeIfPresent(self.serverUsed, forKey: .serverUsed)
         try container.encodeIfPresent(self.userData, forKey: .userData)
         try container.encodeIfPresent(self.queryID, forKey: .queryID)
-        try container.encode(self.page, forKey: .page)
-        try container.encode(self.nbHits, forKey: .nbHits)
-        try container.encode(self.nbPages, forKey: .nbPages)
-        try container.encode(self.hitsPerPage, forKey: .hitsPerPage)
+        try container.encodeIfPresent(self.automaticInsights, forKey: .automaticInsights)
+        try container.encodeIfPresent(self.page, forKey: .page)
+        try container.encodeIfPresent(self.nbHits, forKey: .nbHits)
+        try container.encodeIfPresent(self.nbPages, forKey: .nbPages)
+        try container.encodeIfPresent(self.hitsPerPage, forKey: .hitsPerPage)
         try container.encode(self.hits, forKey: .hits)
     }
 }
@@ -224,6 +230,7 @@ extension RecommendationsResults: Equatable {
             lhs.serverUsed == rhs.serverUsed &&
             lhs.userData == rhs.userData &&
             lhs.queryID == rhs.queryID &&
+            lhs.automaticInsights == rhs.automaticInsights &&
             lhs.page == rhs.page &&
             lhs.nbHits == rhs.nbHits &&
             lhs.nbPages == rhs.nbPages &&
@@ -258,10 +265,11 @@ extension RecommendationsResults: Hashable {
         hasher.combine(self.serverUsed?.hashValue)
         hasher.combine(self.userData?.hashValue)
         hasher.combine(self.queryID?.hashValue)
-        hasher.combine(self.page.hashValue)
-        hasher.combine(self.nbHits.hashValue)
-        hasher.combine(self.nbPages.hashValue)
-        hasher.combine(self.hitsPerPage.hashValue)
+        hasher.combine(self.automaticInsights?.hashValue)
+        hasher.combine(self.page?.hashValue)
+        hasher.combine(self.nbHits?.hashValue)
+        hasher.combine(self.nbPages?.hashValue)
+        hasher.combine(self.hitsPerPage?.hashValue)
         hasher.combine(self.hits.hashValue)
     }
 }

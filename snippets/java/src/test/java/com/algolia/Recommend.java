@@ -8,13 +8,27 @@ import com.algolia.model.recommend.*;
 
 class SnippetRecommendClient {
 
+  // Snippet for the batchRecommendRules method.
+  //
+  // batch recommend rules
+  void snippetForBatchRecommendRules() {
+    // >SEPARATOR batchRecommendRules default
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.batchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS);
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the customDelete method.
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -28,7 +42,7 @@ class SnippetRecommendClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customGet("test/minimal");
@@ -42,7 +56,7 @@ class SnippetRecommendClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customPost("test/minimal");
@@ -56,7 +70,7 @@ class SnippetRecommendClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customPut("test/minimal");
@@ -70,7 +84,7 @@ class SnippetRecommendClient {
   void snippetForDeleteRecommendRule() {
     // >SEPARATOR deleteRecommendRule default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.deleteRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, "objectID");
@@ -84,7 +98,7 @@ class SnippetRecommendClient {
   void snippetForGetRecommendRule() {
     // >SEPARATOR getRecommendRule default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, "objectID");
@@ -98,7 +112,7 @@ class SnippetRecommendClient {
   void snippetForGetRecommendStatus() {
     // >SEPARATOR getRecommendStatus default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getRecommendStatus("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, 12345L);
@@ -112,7 +126,7 @@ class SnippetRecommendClient {
   void snippetForGetRecommendations() {
     // >SEPARATOR getRecommendations default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getRecommendations(
@@ -137,7 +151,7 @@ class SnippetRecommendClient {
   void snippetForSearchRecommendRules() {
     // >SEPARATOR searchRecommendRules default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.searchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS);
@@ -151,7 +165,7 @@ class SnippetRecommendClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.setClientApiKey("updated-api-key");

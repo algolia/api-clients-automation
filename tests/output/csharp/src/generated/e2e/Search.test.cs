@@ -118,7 +118,7 @@ public class SearchClientRequestTestsE2E
         {
           Requests = new List<SearchQuery>
           {
-            new SearchQuery(new SearchForHits { IndexName = "cts_e2e_search_empty_index", })
+            new SearchQuery(new SearchForHits { IndexName = "cts_e2e_search_empty_index" }),
           },
         }
       );
@@ -156,7 +156,7 @@ public class SearchClientRequestTestsE2E
                 AttributesToHighlight = new List<string> { "*" },
                 AttributesToRetrieve = new List<string> { "*" },
               }
-            )
+            ),
           },
         }
       );
@@ -192,7 +192,7 @@ public class SearchClientRequestTestsE2E
                 Type = Enum.Parse<SearchTypeFacet>("Facet"),
                 Facet = "editor",
               }
-            )
+            ),
           },
           Strategy = Enum.Parse<SearchStrategy>("StopIfEnoughMatches"),
         }
@@ -237,7 +237,7 @@ public class SearchClientRequestTestsE2E
                   new List<FacetFilters>
                   {
                     new FacetFilters("editor:'visual studio'"),
-                    new FacetFilters("editor:neovim")
+                    new FacetFilters("editor:neovim"),
                   }
                 ),
               }
@@ -250,7 +250,7 @@ public class SearchClientRequestTestsE2E
                   new List<FacetFilters>
                   {
                     new FacetFilters("editor:'visual studio'"),
-                    new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:neovim") })
+                    new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:neovim") }),
                   }
                 ),
               }
@@ -269,13 +269,13 @@ public class SearchClientRequestTestsE2E
                         new FacetFilters("editor:neovim"),
                         new FacetFilters(
                           new List<FacetFilters> { new FacetFilters("editor:goland") }
-                        )
+                        ),
                       }
-                    )
+                    ),
                   }
                 ),
               }
-            )
+            ),
           },
         }
       );
@@ -301,7 +301,7 @@ public class SearchClientRequestTestsE2E
     {
       var resp = await client.SearchDictionaryEntriesAsync(
         Enum.Parse<DictionaryType>("Stopwords"),
-        new SearchDictionaryEntriesParams { Query = "about", }
+        new SearchDictionaryEntriesParams { Query = "about" }
       );
       // Check status code 200
       Assert.NotNull(resp);
@@ -325,7 +325,7 @@ public class SearchClientRequestTestsE2E
     {
       var resp = await client.SearchRulesAsync(
         "cts_e2e_browse",
-        new SearchRulesParams { Query = "zorro", }
+        new SearchRulesParams { Query = "zorro" }
       );
       // Check status code 200
       Assert.NotNull(resp);
@@ -395,7 +395,7 @@ public class SearchClientRequestTestsE2E
     {
       var resp = await client.SetSettingsAsync(
         "cts_e2e_settings",
-        new IndexSettings { PaginationLimitedTo = 10, },
+        new IndexSettings { PaginationLimitedTo = 10 },
         true
       );
       // Check status code 200

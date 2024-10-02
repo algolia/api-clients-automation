@@ -9,9 +9,10 @@ dependencies:
   algolia_client_search: ^1.0.0
   algolia_client_insights: ^1.0.0
   algolia_client_recommend: ^1.0.0
-  test: ^1.24.3
+  test: ^1.25.8
   collection: ^1.17.2
-  test_api: ^0.6.0
+  test_api: ^0.7.3
 
+  algolia_client_core: any
 dev_dependencies:
-  lints: ^3.0.0
+  lints: ^4.0.0

@@ -6,14 +6,13 @@ package com.algolia.model.recommend;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /** FallbackParams */
 public class FallbackParams {
-
-  @JsonProperty("query")
-  private String query;
 
   @JsonProperty("similarQuery")
   private String similarQuery;
@@ -44,15 +43,6 @@ public class FallbackParams {
 
   @JsonProperty("facetingAfterDistinct")
   private Boolean facetingAfterDistinct;
-
-  @JsonProperty("page")
-  private Integer page;
-
-  @JsonProperty("offset")
-  private Integer offset;
-
-  @JsonProperty("length")
-  private Integer length;
 
   @JsonProperty("aroundLatLng")
   private String aroundLatLng;
@@ -108,14 +98,65 @@ public class FallbackParams {
   @JsonProperty("enableABTest")
   private Boolean enableABTest;
 
+  @JsonProperty("query")
+  private String query;
+
+  @JsonProperty("attributesForFaceting")
+  private List<String> attributesForFaceting;
+
+  @JsonProperty("replicas")
+  private List<String> replicas;
+
+  @JsonProperty("paginationLimitedTo")
+  private Integer paginationLimitedTo;
+
+  @JsonProperty("unretrievableAttributes")
+  private List<String> unretrievableAttributes;
+
+  @JsonProperty("disableTypoToleranceOnWords")
+  private List<String> disableTypoToleranceOnWords;
+
+  @JsonProperty("attributesToTransliterate")
+  private List<String> attributesToTransliterate;
+
+  @JsonProperty("camelCaseAttributes")
+  private List<String> camelCaseAttributes;
+
+  @JsonProperty("decompoundedAttributes")
+  private Object decompoundedAttributes;
+
+  @JsonProperty("indexLanguages")
+  private List<SupportedLanguage> indexLanguages;
+
+  @JsonProperty("disablePrefixOnAttributes")
+  private List<String> disablePrefixOnAttributes;
+
+  @JsonProperty("allowCompressionOfIntegerArray")
+  private Boolean allowCompressionOfIntegerArray;
+
+  @JsonProperty("numericAttributesForFiltering")
+  private List<String> numericAttributesForFiltering;
+
+  @JsonProperty("separatorsToIndex")
+  private String separatorsToIndex;
+
+  @JsonProperty("searchableAttributes")
+  private List<String> searchableAttributes;
+
+  @JsonProperty("userData")
+  private Object userData;
+
+  @JsonProperty("customNormalization")
+  private Map<String, Map<String, String>> customNormalization;
+
+  @JsonProperty("attributeForDistinct")
+  private String attributeForDistinct;
+
   @JsonProperty("attributesToRetrieve")
   private List<String> attributesToRetrieve;
 
   @JsonProperty("ranking")
   private List<String> ranking;
-
-  @JsonProperty("customRanking")
-  private List<String> customRanking;
 
   @JsonProperty("relevancyStrictness")
   private Integer relevancyStrictness;
@@ -138,9 +179,6 @@ public class FallbackParams {
   @JsonProperty("restrictHighlightAndSnippetArrays")
   private Boolean restrictHighlightAndSnippetArrays;
 
-  @JsonProperty("hitsPerPage")
-  private Integer hitsPerPage;
-
   @JsonProperty("minWordSizefor1Typo")
   private Integer minWordSizefor1Typo;
 
@@ -162,9 +200,6 @@ public class FallbackParams {
   @JsonProperty("removeStopWords")
   private RemoveStopWords removeStopWords;
 
-  @JsonProperty("keepDiacriticsOnCharacters")
-  private String keepDiacriticsOnCharacters;
-
   @JsonProperty("queryLanguages")
   private List<SupportedLanguage> queryLanguages;
 
@@ -182,12 +217,6 @@ public class FallbackParams {
 
   @JsonProperty("removeWordsIfNoResults")
   private RemoveWordsIfNoResults removeWordsIfNoResults;
-
-  @JsonProperty("mode")
-  private Mode mode;
-
-  @JsonProperty("semanticSearch")
-  private SemanticSearch semanticSearch;
 
   @JsonProperty("advancedSyntax")
   private Boolean advancedSyntax;
@@ -239,17 +268,6 @@ public class FallbackParams {
 
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
-
-  public FallbackParams setQuery(String query) {
-    this.query = query;
-    return this;
-  }
-
-  /** Search query. */
-  @javax.annotation.Nullable
-  public String getQuery() {
-    return query;
-  }
 
   public FallbackParams setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
@@ -416,39 +434,6 @@ public class FallbackParams {
   @javax.annotation.Nullable
   public Boolean getFacetingAfterDistinct() {
     return facetingAfterDistinct;
-  }
-
-  public FallbackParams setPage(Integer page) {
-    this.page = page;
-    return this;
-  }
-
-  /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nullable
-  public Integer getPage() {
-    return page;
-  }
-
-  public FallbackParams setOffset(Integer offset) {
-    this.offset = offset;
-    return this;
-  }
-
-  /** Position of the first hit to retrieve. */
-  @javax.annotation.Nullable
-  public Integer getOffset() {
-    return offset;
-  }
-
-  public FallbackParams setLength(Integer length) {
-    this.length = length;
-    return this;
-  }
-
-  /** Number of hits to retrieve (used in combination with `offset`). minimum: 0 maximum: 1000 */
-  @javax.annotation.Nullable
-  public Integer getLength() {
-    return length;
   }
 
   public FallbackParams setAroundLatLng(String aroundLatLng) {
@@ -735,6 +720,400 @@ public class FallbackParams {
     return enableABTest;
   }
 
+  public FallbackParams setQuery(String query) {
+    this.query = query;
+    return this;
+  }
+
+  /** Search query. */
+  @javax.annotation.Nullable
+  public String getQuery() {
+    return query;
+  }
+
+  public FallbackParams setAttributesForFaceting(List<String> attributesForFaceting) {
+    this.attributesForFaceting = attributesForFaceting;
+    return this;
+  }
+
+  public FallbackParams addAttributesForFaceting(String attributesForFacetingItem) {
+    if (this.attributesForFaceting == null) {
+      this.attributesForFaceting = new ArrayList<>();
+    }
+    this.attributesForFaceting.add(attributesForFacetingItem);
+    return this;
+  }
+
+  /**
+   * Attributes used for
+   * [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
+   * Facets are attributes that let you categorize search results. They can be used for filtering
+   * search results. By default, no attribute is used for faceting. Attribute names are
+   * case-sensitive. **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows using this attribute as a
+   * filter, but doesn't evalue the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching
+   * for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_
+   * deduplication with `distinct`. This ensures accurate facet counts. You can apply this modifier
+   * to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
+   */
+  @javax.annotation.Nullable
+  public List<String> getAttributesForFaceting() {
+    return attributesForFaceting;
+  }
+
+  public FallbackParams setReplicas(List<String> replicas) {
+    this.replicas = replicas;
+    return this;
+  }
+
+  public FallbackParams addReplicas(String replicasItem) {
+    if (this.replicas == null) {
+      this.replicas = new ArrayList<>();
+    }
+    this.replicas.add(replicasItem);
+    return this;
+  }
+
+  /**
+   * Creates [replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).
+   * Replicas are copies of a primary index with the same records but different settings, synonyms,
+   * or rules. If you want to offer a different ranking or sorting of your search results, you'll
+   * use replica indices. All index operations on a primary index are automatically forwarded to its
+   * replicas. To add a replica index, you must provide the complete set of replicas to this
+   * parameter. If you omit a replica from this list, the replica turns into a regular, standalone
+   * index that will no longer by synced with the primary index. **Modifier** -
+   * `virtual(\"REPLICA\")`. Create a virtual replica, Virtual replicas don't increase the number of
+   * records and are optimized for [Relevant
+   * sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
+   */
+  @javax.annotation.Nullable
+  public List<String> getReplicas() {
+    return replicas;
+  }
+
+  public FallbackParams setPaginationLimitedTo(Integer paginationLimitedTo) {
+    this.paginationLimitedTo = paginationLimitedTo;
+    return this;
+  }
+
+  /**
+   * Maximum number of search results that can be obtained through pagination. Higher pagination
+   * limits might slow down your search. For pagination limits above 1,000, the sorting of results
+   * beyond the 1,000th hit can't be guaranteed. maximum: 20000
+   */
+  @javax.annotation.Nullable
+  public Integer getPaginationLimitedTo() {
+    return paginationLimitedTo;
+  }
+
+  public FallbackParams setUnretrievableAttributes(List<String> unretrievableAttributes) {
+    this.unretrievableAttributes = unretrievableAttributes;
+    return this;
+  }
+
+  public FallbackParams addUnretrievableAttributes(String unretrievableAttributesItem) {
+    if (this.unretrievableAttributes == null) {
+      this.unretrievableAttributes = new ArrayList<>();
+    }
+    this.unretrievableAttributes.add(unretrievableAttributesItem);
+    return this;
+  }
+
+  /**
+   * Attributes that can't be retrieved at query time. This can be useful if you want to use an
+   * attribute for ranking or to [restrict
+   * access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),
+   * but don't want to include it in the search results. Attribute names are case-sensitive.
+   */
+  @javax.annotation.Nullable
+  public List<String> getUnretrievableAttributes() {
+    return unretrievableAttributes;
+  }
+
+  public FallbackParams setDisableTypoToleranceOnWords(List<String> disableTypoToleranceOnWords) {
+    this.disableTypoToleranceOnWords = disableTypoToleranceOnWords;
+    return this;
+  }
+
+  public FallbackParams addDisableTypoToleranceOnWords(String disableTypoToleranceOnWordsItem) {
+    if (this.disableTypoToleranceOnWords == null) {
+      this.disableTypoToleranceOnWords = new ArrayList<>();
+    }
+    this.disableTypoToleranceOnWords.add(disableTypoToleranceOnWordsItem);
+    return this;
+  }
+
+  /**
+   * Words for which you want to turn off [typo
+   * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+   * This also turns off [word splitting and
+   * concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+   * for the specified words.
+   */
+  @javax.annotation.Nullable
+  public List<String> getDisableTypoToleranceOnWords() {
+    return disableTypoToleranceOnWords;
+  }
+
+  public FallbackParams setAttributesToTransliterate(List<String> attributesToTransliterate) {
+    this.attributesToTransliterate = attributesToTransliterate;
+    return this;
+  }
+
+  public FallbackParams addAttributesToTransliterate(String attributesToTransliterateItem) {
+    if (this.attributesToTransliterate == null) {
+      this.attributesToTransliterate = new ArrayList<>();
+    }
+    this.attributesToTransliterate.add(attributesToTransliterateItem);
+    return this;
+  }
+
+  /**
+   * Attributes, for which you want to support [Japanese
+   * transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead).
+   * Transliteration supports searching in any of the Japanese writing systems. To support
+   * transliteration, you must set the indexing language to Japanese. Attribute names are
+   * case-sensitive.
+   */
+  @javax.annotation.Nullable
+  public List<String> getAttributesToTransliterate() {
+    return attributesToTransliterate;
+  }
+
+  public FallbackParams setCamelCaseAttributes(List<String> camelCaseAttributes) {
+    this.camelCaseAttributes = camelCaseAttributes;
+    return this;
+  }
+
+  public FallbackParams addCamelCaseAttributes(String camelCaseAttributesItem) {
+    if (this.camelCaseAttributes == null) {
+      this.camelCaseAttributes = new ArrayList<>();
+    }
+    this.camelCaseAttributes.add(camelCaseAttributesItem);
+    return this;
+  }
+
+  /**
+   * Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
+   * Attribute names are case-sensitive.
+   */
+  @javax.annotation.Nullable
+  public List<String> getCamelCaseAttributes() {
+    return camelCaseAttributes;
+  }
+
+  public FallbackParams setDecompoundedAttributes(Object decompoundedAttributes) {
+    this.decompoundedAttributes = decompoundedAttributes;
+    return this;
+  }
+
+  /**
+   * Searchable attributes to which Algolia should apply [word
+   * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
+   * (decompounding). Attribute names are case-sensitive. Compound words are formed by combining two
+   * or more individual words, and are particularly prevalent in Germanic languages—for example,
+   * \"firefighter\". With decompounding, the individual components are indexed separately. You can
+   * specify different lists for different languages. Decompounding is supported for these
+   * languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and
+   * Norwegian (`no`). Decompounding doesn't work for words with [non-spacing mark Unicode
+   * characters](https://www.charactercodes.net/category/non-spacing_mark). For example,
+   * `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
+   */
+  @javax.annotation.Nullable
+  public Object getDecompoundedAttributes() {
+    return decompoundedAttributes;
+  }
+
+  public FallbackParams setIndexLanguages(List<SupportedLanguage> indexLanguages) {
+    this.indexLanguages = indexLanguages;
+    return this;
+  }
+
+  public FallbackParams addIndexLanguages(SupportedLanguage indexLanguagesItem) {
+    if (this.indexLanguages == null) {
+      this.indexLanguages = new ArrayList<>();
+    }
+    this.indexLanguages.add(indexLanguagesItem);
+    return this;
+  }
+
+  /**
+   * Languages for language-specific processing steps, such as word detection and dictionary
+   * settings. **You should always specify an indexing language.** If you don't specify an indexing
+   * language, the search engine uses all [supported
+   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+   * or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This
+   * can lead to unexpected search results. For more information, see [Language-specific
+   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+   */
+  @javax.annotation.Nullable
+  public List<SupportedLanguage> getIndexLanguages() {
+    return indexLanguages;
+  }
+
+  public FallbackParams setDisablePrefixOnAttributes(List<String> disablePrefixOnAttributes) {
+    this.disablePrefixOnAttributes = disablePrefixOnAttributes;
+    return this;
+  }
+
+  public FallbackParams addDisablePrefixOnAttributes(String disablePrefixOnAttributesItem) {
+    if (this.disablePrefixOnAttributes == null) {
+      this.disablePrefixOnAttributes = new ArrayList<>();
+    }
+    this.disablePrefixOnAttributes.add(disablePrefixOnAttributesItem);
+    return this;
+  }
+
+  /**
+   * Searchable attributes for which you want to turn off [prefix
+   * matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+   * Attribute names are case-sensitive.
+   */
+  @javax.annotation.Nullable
+  public List<String> getDisablePrefixOnAttributes() {
+    return disablePrefixOnAttributes;
+  }
+
+  public FallbackParams setAllowCompressionOfIntegerArray(Boolean allowCompressionOfIntegerArray) {
+    this.allowCompressionOfIntegerArray = allowCompressionOfIntegerArray;
+    return this;
+  }
+
+  /**
+   * Whether arrays with exclusively non-negative integers should be compressed for better
+   * performance. If true, the compressed arrays may be reordered.
+   */
+  @javax.annotation.Nullable
+  public Boolean getAllowCompressionOfIntegerArray() {
+    return allowCompressionOfIntegerArray;
+  }
+
+  public FallbackParams setNumericAttributesForFiltering(List<String> numericAttributesForFiltering) {
+    this.numericAttributesForFiltering = numericAttributesForFiltering;
+    return this;
+  }
+
+  public FallbackParams addNumericAttributesForFiltering(String numericAttributesForFilteringItem) {
+    if (this.numericAttributesForFiltering == null) {
+      this.numericAttributesForFiltering = new ArrayList<>();
+    }
+    this.numericAttributesForFiltering.add(numericAttributesForFilteringItem);
+    return this;
+  }
+
+  /**
+   * Numeric attributes that can be used as [numerical
+   * filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
+   * Attribute names are case-sensitive. By default, all numeric attributes are available as
+   * numerical filters. For faster indexing, reduce the number of numeric attributes. If you want to
+   * turn off filtering for all numeric attributes, specifiy an attribute that doesn't exist in your
+   * index, such as `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support only
+   * filtering based on equality comparisons `=` and `!=`.
+   */
+  @javax.annotation.Nullable
+  public List<String> getNumericAttributesForFiltering() {
+    return numericAttributesForFiltering;
+  }
+
+  public FallbackParams setSeparatorsToIndex(String separatorsToIndex) {
+    this.separatorsToIndex = separatorsToIndex;
+    return this;
+  }
+
+  /**
+   * Controls which separators are indexed. Separators are all non-letter characters except spaces
+   * and currency characters, such as $€£¥. By default, separator characters aren't indexed. With
+   * `separatorsToIndex`, Algolia treats separator characters as separate words. For example, a
+   * search for `C#` would report two matches.
+   */
+  @javax.annotation.Nullable
+  public String getSeparatorsToIndex() {
+    return separatorsToIndex;
+  }
+
+  public FallbackParams setSearchableAttributes(List<String> searchableAttributes) {
+    this.searchableAttributes = searchableAttributes;
+    return this;
+  }
+
+  public FallbackParams addSearchableAttributes(String searchableAttributesItem) {
+    if (this.searchableAttributes == null) {
+      this.searchableAttributes = new ArrayList<>();
+    }
+    this.searchableAttributes.add(searchableAttributesItem);
+    return this;
+  }
+
+  /**
+   * Attributes used for searching. Attribute names are case-sensitive. By default, all attributes
+   * are searchable and the
+   * [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute)
+   * ranking criterion is turned off. With a non-empty list, Algolia only returns results with
+   * matches in the selected attributes. In addition, the Attribute ranking criterion is turned on:
+   * matches in attributes that are higher in the list of `searchableAttributes` rank first. To make
+   * matches in two attributes rank equally, include them in a comma-separated string, such as
+   * `\"title,alternate_title\"`. Attributes with the same priority are always unordered. For more
+   * information, see [Searchable
+   * attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
+   * **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute.
+   * Without modifier, matches at the beginning of an attribute rank higer than matches at the end.
+   */
+  @javax.annotation.Nullable
+  public List<String> getSearchableAttributes() {
+    return searchableAttributes;
+  }
+
+  public FallbackParams setUserData(Object userData) {
+    this.userData = userData;
+    return this;
+  }
+
+  /** An object with custom data. You can store up to 32kB as custom data. */
+  @javax.annotation.Nullable
+  public Object getUserData() {
+    return userData;
+  }
+
+  public FallbackParams setCustomNormalization(Map<String, Map<String, String>> customNormalization) {
+    this.customNormalization = customNormalization;
+    return this;
+  }
+
+  public FallbackParams putCustomNormalization(String key, Map<String, String> customNormalizationItem) {
+    if (this.customNormalization == null) {
+      this.customNormalization = new HashMap<>();
+    }
+    this.customNormalization.put(key, customNormalizationItem);
+    return this;
+  }
+
+  /**
+   * Characters and their normalized replacements. This overrides Algolia's default
+   * [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+   */
+  @javax.annotation.Nullable
+  public Map<String, Map<String, String>> getCustomNormalization() {
+    return customNormalization;
+  }
+
+  public FallbackParams setAttributeForDistinct(String attributeForDistinct) {
+    this.attributeForDistinct = attributeForDistinct;
+    return this;
+  }
+
+  /**
+   * Attribute that should be used to establish groups of results. Attribute names are
+   * case-sensitive. All records with the same value for this attribute are considered a group. You
+   * can combine `attributeForDistinct` with the `distinct` search parameter to control how many
+   * items per group are included in the search results. If you want to use the same attribute also
+   * for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting. This
+   * applies faceting _after_ deduplication, which will result in accurate facet counts.
+   */
+  @javax.annotation.Nullable
+  public String getAttributeForDistinct() {
+    return attributeForDistinct;
+  }
+
   public FallbackParams setAttributesToRetrieve(List<String> attributesToRetrieve) {
     this.attributesToRetrieve = attributesToRetrieve;
     return this;
@@ -790,36 +1169,6 @@ public class FallbackParams {
   @javax.annotation.Nullable
   public List<String> getRanking() {
     return ranking;
-  }
-
-  public FallbackParams setCustomRanking(List<String> customRanking) {
-    this.customRanking = customRanking;
-    return this;
-  }
-
-  public FallbackParams addCustomRanking(String customRankingItem) {
-    if (this.customRanking == null) {
-      this.customRanking = new ArrayList<>();
-    }
-    this.customRanking.add(customRankingItem);
-    return this;
-  }
-
-  /**
-   * Attributes to use as [custom
-   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
-   * Attribute names are case-sensitive. The custom ranking attributes decide which items are shown
-   * first if the other ranking criteria are equal. Records with missing values for your selected
-   * custom ranking attributes are always sorted last. Boolean attributes are sorted based on their
-   * alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the values of an
-   * attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an
-   * attribute, in descending order. If you use two or more custom ranking attributes, [reduce the
-   * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
-   * of your first attributes, or the other attributes will never be applied.
-   */
-  @javax.annotation.Nullable
-  public List<String> getCustomRanking() {
-    return customRanking;
   }
 
   public FallbackParams setRelevancyStrictness(Integer relevancyStrictness) {
@@ -937,17 +1286,6 @@ public class FallbackParams {
     return restrictHighlightAndSnippetArrays;
   }
 
-  public FallbackParams setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-    return this;
-  }
-
-  /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nullable
-  public Integer getHitsPerPage() {
-    return hitsPerPage;
-  }
-
   public FallbackParams setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
     return this;
@@ -1054,21 +1392,6 @@ public class FallbackParams {
     return removeStopWords;
   }
 
-  public FallbackParams setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
-    this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
-    return this;
-  }
-
-  /**
-   * Characters for which diacritics should be preserved. By default, Algolia removes diacritics
-   * from letters. For example, `é` becomes `e`. If this causes issues in your search, you can
-   * specify characters that should keep their diacritics.
-   */
-  @javax.annotation.Nullable
-  public String getKeepDiacriticsOnCharacters() {
-    return keepDiacriticsOnCharacters;
-  }
-
   public FallbackParams setQueryLanguages(List<SupportedLanguage> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
@@ -1162,28 +1485,6 @@ public class FallbackParams {
   @javax.annotation.Nullable
   public RemoveWordsIfNoResults getRemoveWordsIfNoResults() {
     return removeWordsIfNoResults;
-  }
-
-  public FallbackParams setMode(Mode mode) {
-    this.mode = mode;
-    return this;
-  }
-
-  /** Get mode */
-  @javax.annotation.Nullable
-  public Mode getMode() {
-    return mode;
-  }
-
-  public FallbackParams setSemanticSearch(SemanticSearch semanticSearch) {
-    this.semanticSearch = semanticSearch;
-    return this;
-  }
-
-  /** Get semanticSearch */
-  @javax.annotation.Nullable
-  public SemanticSearch getSemanticSearch() {
-    return semanticSearch;
   }
 
   public FallbackParams setAdvancedSyntax(Boolean advancedSyntax) {
@@ -1500,7 +1801,6 @@ public class FallbackParams {
     }
     FallbackParams fallbackParams = (FallbackParams) o;
     return (
-      Objects.equals(this.query, fallbackParams.query) &&
       Objects.equals(this.similarQuery, fallbackParams.similarQuery) &&
       Objects.equals(this.filters, fallbackParams.filters) &&
       Objects.equals(this.facetFilters, fallbackParams.facetFilters) &&
@@ -1511,9 +1811,6 @@ public class FallbackParams {
       Objects.equals(this.restrictSearchableAttributes, fallbackParams.restrictSearchableAttributes) &&
       Objects.equals(this.facets, fallbackParams.facets) &&
       Objects.equals(this.facetingAfterDistinct, fallbackParams.facetingAfterDistinct) &&
-      Objects.equals(this.page, fallbackParams.page) &&
-      Objects.equals(this.offset, fallbackParams.offset) &&
-      Objects.equals(this.length, fallbackParams.length) &&
       Objects.equals(this.aroundLatLng, fallbackParams.aroundLatLng) &&
       Objects.equals(this.aroundLatLngViaIP, fallbackParams.aroundLatLngViaIP) &&
       Objects.equals(this.aroundRadius, fallbackParams.aroundRadius) &&
@@ -1532,9 +1829,26 @@ public class FallbackParams {
       Objects.equals(this.analyticsTags, fallbackParams.analyticsTags) &&
       Objects.equals(this.percentileComputation, fallbackParams.percentileComputation) &&
       Objects.equals(this.enableABTest, fallbackParams.enableABTest) &&
+      Objects.equals(this.query, fallbackParams.query) &&
+      Objects.equals(this.attributesForFaceting, fallbackParams.attributesForFaceting) &&
+      Objects.equals(this.replicas, fallbackParams.replicas) &&
+      Objects.equals(this.paginationLimitedTo, fallbackParams.paginationLimitedTo) &&
+      Objects.equals(this.unretrievableAttributes, fallbackParams.unretrievableAttributes) &&
+      Objects.equals(this.disableTypoToleranceOnWords, fallbackParams.disableTypoToleranceOnWords) &&
+      Objects.equals(this.attributesToTransliterate, fallbackParams.attributesToTransliterate) &&
+      Objects.equals(this.camelCaseAttributes, fallbackParams.camelCaseAttributes) &&
+      Objects.equals(this.decompoundedAttributes, fallbackParams.decompoundedAttributes) &&
+      Objects.equals(this.indexLanguages, fallbackParams.indexLanguages) &&
+      Objects.equals(this.disablePrefixOnAttributes, fallbackParams.disablePrefixOnAttributes) &&
+      Objects.equals(this.allowCompressionOfIntegerArray, fallbackParams.allowCompressionOfIntegerArray) &&
+      Objects.equals(this.numericAttributesForFiltering, fallbackParams.numericAttributesForFiltering) &&
+      Objects.equals(this.separatorsToIndex, fallbackParams.separatorsToIndex) &&
+      Objects.equals(this.searchableAttributes, fallbackParams.searchableAttributes) &&
+      Objects.equals(this.userData, fallbackParams.userData) &&
+      Objects.equals(this.customNormalization, fallbackParams.customNormalization) &&
+      Objects.equals(this.attributeForDistinct, fallbackParams.attributeForDistinct) &&
       Objects.equals(this.attributesToRetrieve, fallbackParams.attributesToRetrieve) &&
       Objects.equals(this.ranking, fallbackParams.ranking) &&
-      Objects.equals(this.customRanking, fallbackParams.customRanking) &&
       Objects.equals(this.relevancyStrictness, fallbackParams.relevancyStrictness) &&
       Objects.equals(this.attributesToHighlight, fallbackParams.attributesToHighlight) &&
       Objects.equals(this.attributesToSnippet, fallbackParams.attributesToSnippet) &&
@@ -1542,7 +1856,6 @@ public class FallbackParams {
       Objects.equals(this.highlightPostTag, fallbackParams.highlightPostTag) &&
       Objects.equals(this.snippetEllipsisText, fallbackParams.snippetEllipsisText) &&
       Objects.equals(this.restrictHighlightAndSnippetArrays, fallbackParams.restrictHighlightAndSnippetArrays) &&
-      Objects.equals(this.hitsPerPage, fallbackParams.hitsPerPage) &&
       Objects.equals(this.minWordSizefor1Typo, fallbackParams.minWordSizefor1Typo) &&
       Objects.equals(this.minWordSizefor2Typos, fallbackParams.minWordSizefor2Typos) &&
       Objects.equals(this.typoTolerance, fallbackParams.typoTolerance) &&
@@ -1550,15 +1863,12 @@ public class FallbackParams {
       Objects.equals(this.disableTypoToleranceOnAttributes, fallbackParams.disableTypoToleranceOnAttributes) &&
       Objects.equals(this.ignorePlurals, fallbackParams.ignorePlurals) &&
       Objects.equals(this.removeStopWords, fallbackParams.removeStopWords) &&
-      Objects.equals(this.keepDiacriticsOnCharacters, fallbackParams.keepDiacriticsOnCharacters) &&
       Objects.equals(this.queryLanguages, fallbackParams.queryLanguages) &&
       Objects.equals(this.decompoundQuery, fallbackParams.decompoundQuery) &&
       Objects.equals(this.enableRules, fallbackParams.enableRules) &&
       Objects.equals(this.enablePersonalization, fallbackParams.enablePersonalization) &&
       Objects.equals(this.queryType, fallbackParams.queryType) &&
       Objects.equals(this.removeWordsIfNoResults, fallbackParams.removeWordsIfNoResults) &&
-      Objects.equals(this.mode, fallbackParams.mode) &&
-      Objects.equals(this.semanticSearch, fallbackParams.semanticSearch) &&
       Objects.equals(this.advancedSyntax, fallbackParams.advancedSyntax) &&
       Objects.equals(this.optionalWords, fallbackParams.optionalWords) &&
       Objects.equals(this.disableExactOnAttributes, fallbackParams.disableExactOnAttributes) &&
@@ -1582,7 +1892,6 @@ public class FallbackParams {
   @Override
   public int hashCode() {
     return Objects.hash(
-      query,
       similarQuery,
       filters,
       facetFilters,
@@ -1593,9 +1902,6 @@ public class FallbackParams {
       restrictSearchableAttributes,
       facets,
       facetingAfterDistinct,
-      page,
-      offset,
-      length,
       aroundLatLng,
       aroundLatLngViaIP,
       aroundRadius,
@@ -1614,9 +1920,26 @@ public class FallbackParams {
       analyticsTags,
       percentileComputation,
       enableABTest,
+      query,
+      attributesForFaceting,
+      replicas,
+      paginationLimitedTo,
+      unretrievableAttributes,
+      disableTypoToleranceOnWords,
+      attributesToTransliterate,
+      camelCaseAttributes,
+      decompoundedAttributes,
+      indexLanguages,
+      disablePrefixOnAttributes,
+      allowCompressionOfIntegerArray,
+      numericAttributesForFiltering,
+      separatorsToIndex,
+      searchableAttributes,
+      userData,
+      customNormalization,
+      attributeForDistinct,
       attributesToRetrieve,
       ranking,
-      customRanking,
       relevancyStrictness,
       attributesToHighlight,
       attributesToSnippet,
@@ -1624,7 +1947,6 @@ public class FallbackParams {
       highlightPostTag,
       snippetEllipsisText,
       restrictHighlightAndSnippetArrays,
-      hitsPerPage,
       minWordSizefor1Typo,
       minWordSizefor2Typos,
       typoTolerance,
@@ -1632,15 +1954,12 @@ public class FallbackParams {
       disableTypoToleranceOnAttributes,
       ignorePlurals,
       removeStopWords,
-      keepDiacriticsOnCharacters,
       queryLanguages,
       decompoundQuery,
       enableRules,
       enablePersonalization,
       queryType,
       removeWordsIfNoResults,
-      mode,
-      semanticSearch,
       advancedSyntax,
       optionalWords,
       disableExactOnAttributes,
@@ -1665,7 +1984,6 @@ public class FallbackParams {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class FallbackParams {\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    similarQuery: ").append(toIndentedString(similarQuery)).append("\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
     sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
@@ -1676,9 +1994,6 @@ public class FallbackParams {
     sb.append("    restrictSearchableAttributes: ").append(toIndentedString(restrictSearchableAttributes)).append("\n");
     sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    facetingAfterDistinct: ").append(toIndentedString(facetingAfterDistinct)).append("\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
-    sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
-    sb.append("    length: ").append(toIndentedString(length)).append("\n");
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
     sb.append("    aroundLatLngViaIP: ").append(toIndentedString(aroundLatLngViaIP)).append("\n");
     sb.append("    aroundRadius: ").append(toIndentedString(aroundRadius)).append("\n");
@@ -1697,9 +2012,26 @@ public class FallbackParams {
     sb.append("    analyticsTags: ").append(toIndentedString(analyticsTags)).append("\n");
     sb.append("    percentileComputation: ").append(toIndentedString(percentileComputation)).append("\n");
     sb.append("    enableABTest: ").append(toIndentedString(enableABTest)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    attributesForFaceting: ").append(toIndentedString(attributesForFaceting)).append("\n");
+    sb.append("    replicas: ").append(toIndentedString(replicas)).append("\n");
+    sb.append("    paginationLimitedTo: ").append(toIndentedString(paginationLimitedTo)).append("\n");
+    sb.append("    unretrievableAttributes: ").append(toIndentedString(unretrievableAttributes)).append("\n");
+    sb.append("    disableTypoToleranceOnWords: ").append(toIndentedString(disableTypoToleranceOnWords)).append("\n");
+    sb.append("    attributesToTransliterate: ").append(toIndentedString(attributesToTransliterate)).append("\n");
+    sb.append("    camelCaseAttributes: ").append(toIndentedString(camelCaseAttributes)).append("\n");
+    sb.append("    decompoundedAttributes: ").append(toIndentedString(decompoundedAttributes)).append("\n");
+    sb.append("    indexLanguages: ").append(toIndentedString(indexLanguages)).append("\n");
+    sb.append("    disablePrefixOnAttributes: ").append(toIndentedString(disablePrefixOnAttributes)).append("\n");
+    sb.append("    allowCompressionOfIntegerArray: ").append(toIndentedString(allowCompressionOfIntegerArray)).append("\n");
+    sb.append("    numericAttributesForFiltering: ").append(toIndentedString(numericAttributesForFiltering)).append("\n");
+    sb.append("    separatorsToIndex: ").append(toIndentedString(separatorsToIndex)).append("\n");
+    sb.append("    searchableAttributes: ").append(toIndentedString(searchableAttributes)).append("\n");
+    sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
+    sb.append("    customNormalization: ").append(toIndentedString(customNormalization)).append("\n");
+    sb.append("    attributeForDistinct: ").append(toIndentedString(attributeForDistinct)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    ranking: ").append(toIndentedString(ranking)).append("\n");
-    sb.append("    customRanking: ").append(toIndentedString(customRanking)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
     sb.append("    attributesToHighlight: ").append(toIndentedString(attributesToHighlight)).append("\n");
     sb.append("    attributesToSnippet: ").append(toIndentedString(attributesToSnippet)).append("\n");
@@ -1707,7 +2039,6 @@ public class FallbackParams {
     sb.append("    highlightPostTag: ").append(toIndentedString(highlightPostTag)).append("\n");
     sb.append("    snippetEllipsisText: ").append(toIndentedString(snippetEllipsisText)).append("\n");
     sb.append("    restrictHighlightAndSnippetArrays: ").append(toIndentedString(restrictHighlightAndSnippetArrays)).append("\n");
-    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    minWordSizefor1Typo: ").append(toIndentedString(minWordSizefor1Typo)).append("\n");
     sb.append("    minWordSizefor2Typos: ").append(toIndentedString(minWordSizefor2Typos)).append("\n");
     sb.append("    typoTolerance: ").append(toIndentedString(typoTolerance)).append("\n");
@@ -1715,15 +2046,12 @@ public class FallbackParams {
     sb.append("    disableTypoToleranceOnAttributes: ").append(toIndentedString(disableTypoToleranceOnAttributes)).append("\n");
     sb.append("    ignorePlurals: ").append(toIndentedString(ignorePlurals)).append("\n");
     sb.append("    removeStopWords: ").append(toIndentedString(removeStopWords)).append("\n");
-    sb.append("    keepDiacriticsOnCharacters: ").append(toIndentedString(keepDiacriticsOnCharacters)).append("\n");
     sb.append("    queryLanguages: ").append(toIndentedString(queryLanguages)).append("\n");
     sb.append("    decompoundQuery: ").append(toIndentedString(decompoundQuery)).append("\n");
     sb.append("    enableRules: ").append(toIndentedString(enableRules)).append("\n");
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    queryType: ").append(toIndentedString(queryType)).append("\n");
     sb.append("    removeWordsIfNoResults: ").append(toIndentedString(removeWordsIfNoResults)).append("\n");
-    sb.append("    mode: ").append(toIndentedString(mode)).append("\n");
-    sb.append("    semanticSearch: ").append(toIndentedString(semanticSearch)).append("\n");
     sb.append("    advancedSyntax: ").append(toIndentedString(advancedSyntax)).append("\n");
     sb.append("    optionalWords: ").append(toIndentedString(optionalWords)).append("\n");
     sb.append("    disableExactOnAttributes: ").append(toIndentedString(disableExactOnAttributes)).append("\n");

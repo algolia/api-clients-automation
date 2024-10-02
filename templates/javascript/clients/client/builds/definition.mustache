@@ -1,11 +1,12 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import { createHttpRequester } from '@algolia/requester-node-http';
-import { createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache,  ClientOptions, serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE, DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '@algolia/client-common';
+import { createFetchRequester } from '@algolia/requester-fetch';
+import { createNullLogger, createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache,  ClientOptions, serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE, DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '@algolia/client-common';
 
-import { create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{apiName}}';
+import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{clientName}}';
 
 {{#hasRegionalHost}}
-import { Region, REGIONS } from '../src/{{apiName}}';
+import { Region, REGIONS } from '../src/{{clientName}}';
 {{/hasRegionalHost}}
 
 {{! We don't use `export *` to prevent exposing the factory, to avoid confusion for the user }}
@@ -19,7 +20,7 @@ export {
   isScheduleTrigger,
   isSubscriptionTrigger,
   {{/isIngestionClient}}
-} from '../src/{{apiName}}';
+} from '../src/{{clientName}}';
 export * from '../model';
 
 {{#isSearchClient}}
@@ -31,11 +32,11 @@ import {createHmac} from 'node:crypto';
 {{/nodeSearchHelpers}}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function {{apiName}}(
+export function {{clientName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
   options?: ClientOptions
-): {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} {
+): {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} {
   if (!appId || typeof appId !== 'string') {
     throw new Error("`appId` is missing.");
   }

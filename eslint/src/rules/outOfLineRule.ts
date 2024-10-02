@@ -1,6 +1,7 @@
-import type { Rule } from 'eslint';
+import { RuleModule } from 'eslint-plugin-yml/lib/types.js';
+import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isNullable, isPairWithKey } from '../utils';
+import { isNullable, isPairWithKey } from '../utils.js';
 
 export function createOutOfLineRule({
   property,
@@ -12,18 +13,23 @@ export function createOutOfLineRule({
   description?: string;
   messageId?: string;
   message?: string;
-}): Rule.RuleModule {
-  const rule: Rule.RuleModule = {
+}): RuleModule {
+  return createRule(`${property}OutOfLine`, {
     meta: {
       docs: {
         description,
+        categories: null,
+        extensionRule: false,
+        layout: false,
       },
       messages: {
         [messageId]: message,
       },
+      type: 'layout',
+      schema: [],
     },
     create(context) {
-      if (!context.sourceCode.parserServices.isYAML) {
+      if (!context.getSourceCode().parserServices.isYAML) {
         return {};
       }
 
@@ -59,6 +65,5 @@ export function createOutOfLineRule({
         },
       };
     },
-  };
-  return rule;
+  });
 }

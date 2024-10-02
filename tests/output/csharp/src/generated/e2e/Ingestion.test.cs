@@ -119,7 +119,7 @@ public class IngestionClientRequestTestsE2E
         new List<AuthenticationType>
         {
           Enum.Parse<AuthenticationType>("Basic"),
-          Enum.Parse<AuthenticationType>("Algolia")
+          Enum.Parse<AuthenticationType>("Algolia"),
         },
         new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
         Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
@@ -152,7 +152,7 @@ public class IngestionClientRequestTestsE2E
           {
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
           },
         }
       );
@@ -183,7 +183,7 @@ public class IngestionClientRequestTestsE2E
           {
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
           },
         }
       );

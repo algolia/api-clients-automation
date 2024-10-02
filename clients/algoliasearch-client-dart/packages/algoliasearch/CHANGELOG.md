@@ -1,3 +1,19 @@
+## [1.25.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.2...1.25.0)
+
+- [788483537](https://github.com/algolia/api-clients-automation/commit/788483537) chore(clients): add workflow to auto-close PR ([#3834](https://github.com/algolia/api-clients-automation/pull/3834)) by [@shortcuts](https://github.com/shortcuts/)
+- [e59dd41d5](https://github.com/algolia/api-clients-automation/commit/e59dd41d5) fix(specs): API key description will be obfuscated ([#3840](https://github.com/algolia/api-clients-automation/pull/3840)) by [@kai687](https://github.com/kai687/)
+- [dc28c0268](https://github.com/algolia/api-clients-automation/commit/dc28c0268) feat(specs): add recommend batch rules endpoint ([#3782](https://github.com/algolia/api-clients-automation/pull/3782)) by [@raed667](https://github.com/raed667/)
+- [6f58ae2dc](https://github.com/algolia/api-clients-automation/commit/6f58ae2dc) chore(deps): dependencies 2024-09-30 ([#3842](https://github.com/algolia/api-clients-automation/pull/3842)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [1.24.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.1...1.24.2)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+
+## [1.24.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.0...1.24.1)
+
+- [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
+- [08d8ee6de](https://github.com/algolia/api-clients-automation/commit/08d8ee6de) chore(deps): dependencies 2024-09-16 [skip-bc] ([#3704](https://github.com/algolia/api-clients-automation/pull/3704)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.24.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.23.4...1.24.0)
 
 - [2c65a8d11](https://github.com/algolia/api-clients-automation/commit/2c65a8d11) feat(clients): helper to switch API key in use ([#3616](https://github.com/algolia/api-clients-automation/pull/3616)) by [@Fluf22](https://github.com/Fluf22/)

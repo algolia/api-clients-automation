@@ -1,13 +1,15 @@
 // {{generationBanner}}
+import { describe, test, expect } from 'vitest';
+
 import { {{client}} } from '{{{import}}}';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/client-common';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 import type { RequestOptions } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
+const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: nodeEchoRequester() });
 
 {{#blocksRequests}}
 describe('{{operationId}}', () => {
@@ -30,7 +32,3 @@ describe('{{operationId}}', () => {
 })
 
 {{/blocksRequests}}
-
-{{#isSearchClient}}
-{{> tests/requests/helpers}}
-{{/isSearchClient}}

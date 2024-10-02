@@ -37,8 +37,19 @@ public class SearchClientTests
     Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
   }
 
-  [Fact(DisplayName = "calls api with correct write host")]
+  [Fact(DisplayName = "read transporter with POST method")]
   public async Task ApiTest1()
+  {
+    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
+
+    await client.SearchSingleIndexAsync<Hit>("indexName");
+    EchoResponse result = _echo.LastResponse;
+
+    Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
+  }
+
+  [Fact(DisplayName = "calls api with correct write host")]
+  public async Task ApiTest2()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
 
@@ -49,7 +60,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "tests the retry strategy")]
-  public async Task ApiTest2()
+  public async Task ApiTest3()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -58,7 +69,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6676,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -67,7 +81,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6677,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -76,13 +93,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6678,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -96,7 +116,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "tests the retry strategy error")]
-  public async Task ApiTest3()
+  public async Task ApiTest4()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -105,13 +125,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6676,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -126,7 +149,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "test the compression strategy")]
-  public async Task ApiTest4()
+  public async Task ApiTest5()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -135,14 +158,17 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6678,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
+        },
       },
-      Compression = CompressionType.Gzip
+      Compression = CompressionType.Gzip,
     };
     var client = new SearchClient(_config);
 
@@ -180,7 +206,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.3.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.5.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -217,13 +243,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -305,13 +334,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -332,13 +364,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -359,13 +394,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -465,13 +503,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -481,7 +522,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
         },
         true
       );
@@ -504,13 +545,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -520,7 +564,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
-          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
         },
         false
       );
@@ -543,13 +587,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6679,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -567,7 +614,7 @@ public class SearchClientTests
           new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
           new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
           new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
-          new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } }
+          new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } },
         },
         3
       );
@@ -590,13 +637,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -606,7 +656,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
         }
       );
 
@@ -628,13 +678,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -645,7 +698,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
         }
       );
     });
@@ -665,13 +718,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6683,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -708,13 +764,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -742,13 +801,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -763,7 +825,7 @@ public class SearchClientTests
           {
             Enum.Parse<Acl>("Search"),
             Enum.Parse<Acl>("AddObject"),
-            Enum.Parse<Acl>("DeleteObject")
+            Enum.Parse<Acl>("DeleteObject"),
           },
           Indexes = new List<string> { "Movies", "Books" },
           Referers = new List<string> { "*google.com", "*algolia.com" },
@@ -791,13 +853,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -821,13 +886,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -852,13 +920,16 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 

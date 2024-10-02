@@ -28,14 +28,14 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
 
       for (const [sampleName, sample] of Object.entries(samples)) {
         const sampleMatch = sample.match(
-          /.*Initialize the client.*\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)(#|\/\/) >LOG/,
+          /.*Initialize the client.*([\s\S]*?)(#|\/\/) Call the API([\s\S]*?)(#|\/\/) >LOG/,
         );
         if (!sampleMatch) {
           continue;
         }
 
         const initLine = sampleMatch[1];
-        const callLine = sampleMatch[5];
+        const callLine = sampleMatch[3];
 
         if (!('init' in snippetSamples[language])) {
           snippetSamples[language].init = {

@@ -42,7 +42,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.3.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.5.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -85,14 +85,14 @@ class QuerySuggestionsTest {
   fun `throws when region is not given`() = runTest {
     assertFails {
       val client = QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "")
-    }.let { error -> assertError(error, "`region` is required and must be one of the following: eu, us") }
+    }.let { error -> assertError(error, "`region` is required and must be one of the following: eu, us".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
       val client = QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-    }.let { error -> assertError(error, "`region` is required and must be one of the following: eu, us") }
+    }.let { error -> assertError(error, "`region` is required and must be one of the following: eu, us".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
@@ -102,7 +102,7 @@ class QuerySuggestionsTest {
 
   @Test
   fun `switch API key`() = runTest {
-    val client = QuerySuggestionsClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    val client = QuerySuggestionsClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
         customGet(
