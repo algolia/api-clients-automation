@@ -194,7 +194,7 @@
     {{^isSyncClient}}async {{/isSyncClient}}def generate_secured_api_key(
         self,
         parent_api_key: str,
-        restrictions: Optional[SecuredApiKeyRestrictions] = SecuredApiKeyRestrictions(),
+        restrictions: Optional[Union[dict, SecuredApiKeyRestrictions]] = SecuredApiKeyRestrictions(),
     ) -> str:
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
