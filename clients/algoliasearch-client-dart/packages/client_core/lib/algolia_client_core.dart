@@ -3,7 +3,7 @@
 /// This library provides the essential logic for configuring and executing
 /// HTTP requests to the Algolia API. It includes support for retry strategies
 /// and comprehensive exception handling.
-library algolia_client_core;
+library;
 
 export 'src/algolia_exception.dart';
 export 'src/api_client.dart';
