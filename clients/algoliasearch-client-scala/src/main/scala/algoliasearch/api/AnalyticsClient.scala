@@ -580,9 +580,10 @@ class AnalyticsClient(
     * @param endDate
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -625,9 +626,10 @@ class AnalyticsClient(
     * @param endDate
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -693,9 +695,10 @@ class AnalyticsClient(
     * @param endDate
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -741,9 +744,10 @@ class AnalyticsClient(
     * @param endDate
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -793,9 +797,10 @@ class AnalyticsClient(
     * @param endDate
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -846,9 +851,10 @@ class AnalyticsClient(
     * @param endDate
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -900,9 +906,10 @@ class AnalyticsClient(
     * @param endDate
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -961,9 +968,10 @@ class AnalyticsClient(
     * @param direction
     *   Sorting direction of the results: ascending or descending.
     * @param limit
-    *   Number of items to return.
+    *   Number of items to return. Combined with the `offset` parameter, only the first 1000 items can be retrieved.
     * @param offset
-    *   Position of the first item to return.
+    *   Position of the first item to return. Combined with the `limit` parameter, only the first 1000 items can be
+    *   retrieved.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
