@@ -24,6 +24,7 @@ jobs:
     if: ${{ github.event.number }}
     permissions:
       pull-requests: write
+      issues: write
     steps:
       - uses: actions/checkout@v4
 
