@@ -19,7 +19,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   await configureGitHubAuthor();
 
-  const baseBranch = await run('git branch --show-current');
+  const baseBranch = process.env.BRANCH_NAME || (await run('git branch --show-current'));
   const isMainBranch = baseBranch === MAIN_BRANCH;
   const IS_RELEASE_COMMIT = (await run('git log -1 --format="%s"')).startsWith(commitStartPrepareRelease);
   console.log(`Checking codegen status on '${baseBranch}'.`);
