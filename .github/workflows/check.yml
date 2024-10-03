@@ -29,7 +29,7 @@ jobs:
 
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           message: |
             ### 🪓 The generated code will be pushed at the end of the CI.
 
@@ -532,7 +532,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Download all artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -575,14 +575,14 @@ jobs:
         id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
         env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
 
       - name: update generation comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           message: |
             ### No code generated
 
@@ -594,7 +594,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           message: |
             ### ✔️ Code generated!
 
