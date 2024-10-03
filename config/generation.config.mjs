@@ -110,6 +110,7 @@ export const patterns = [
 
   'tests/output/python/poetry.lock',
   '!tests/output/python/**/__init__.py',
+  'tests/output/python/requirements.txt',
 
   // Ruby
   '!clients/algoliasearch-client-ruby/**',
@@ -151,10 +152,12 @@ export const patterns = [
   '!clients/algoliasearch-client-swift/Sources/zlib/**',
 
   'tests/output/swift/Package.swift',
-  '!tests/output/swift/handwritten/**',
+  '!tests/output/swift/manual/**',
   '!tests/output/swift/Utils/**',
   'guides/.gitignore',
   'guides/swift/.swiftformat',
 
   'clients/**/LICENSE',
+
+  'yarn.lock',
 ];
