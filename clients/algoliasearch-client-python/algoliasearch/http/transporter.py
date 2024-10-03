@@ -60,6 +60,7 @@ class Transporter(BaseTransporter):
                         method=verb,
                         url=url,
                         headers=request_options.headers,
+                        query_parameters=request_options.query_parameters,
                         data=request_options.data,
                         proxy=proxy,
                     )
