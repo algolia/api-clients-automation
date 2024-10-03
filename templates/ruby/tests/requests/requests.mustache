@@ -17,7 +17,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit:
   {{#tests}}
   # {{{testName}}}
   def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}
-    req = @client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+    req = @{{> tests/method}}
 
     {{#request}}
     assert_equal(:{{#lambda.lowercase}}{{method}}{{/lambda.lowercase}}, req.method)

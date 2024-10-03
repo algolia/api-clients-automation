@@ -82,6 +82,7 @@ public class TestsRequest extends TestsGenerator {
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, false);
 
     bundle.put("e2eApiKey", client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY");
+    bundle.put("useEchoRequester", true);
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();

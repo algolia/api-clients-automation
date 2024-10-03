@@ -76,6 +76,6 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
     Map<String, Object> context = (Map<String, Object>) fragment.context();
     snippet.addMethodCall(context, paramsType, operation);
 
-    writer.write(adaptor.compileTemplate(executor, context, "tests/client/method.mustache"));
+    writer.write(adaptor.compileTemplate(executor, context, "tests/method.mustache"));
   }
 }

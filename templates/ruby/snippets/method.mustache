@@ -14,8 +14,8 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}
   {{> snippets/init}}
 
   # Call the API
-  {{#hasResponse}}response = {{/hasResponse}}client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
-  
+  {{#hasResponse}}response = {{/hasResponse}}{{> tests/method}}
+
   # >LOG
   {{#hasResponse}}
   # use the class directly

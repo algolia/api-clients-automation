@@ -4,13 +4,15 @@ package com.algolia.methods.snippets;
 {{> snippets/import}}
 // IMPORT<
 
+import java.util.*;
+
 class Snippet{{client}} {
   {{#blocksRequests}}
   {{#snippets}}
   // Snippet for the {{method}} method.
   //
   // {{{description}}}
-  void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() {
+  void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() throws Exception {
     // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
     {{> snippets/init}}
