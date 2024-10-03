@@ -8,7 +8,7 @@ async def main():
   movies = requests.get(url).json()
 
   # Connect and authenticate with your Algolia app
-  {{> snippets/init}}
+  _{{> snippets/init}}
 
   # Save records in Algolia index
   {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
