@@ -1,5 +1,8 @@
 package org.example
 {{> snippets/import}}
+{{#isSearchClient}}
+import com.algolia.client.extensions.*
+{{/isSearchClient}}
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
