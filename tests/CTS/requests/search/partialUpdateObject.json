@@ -95,5 +95,26 @@
         }
       }
     }
+  },
+  {
+    "testName": "Partial update with createIfNotExists false",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": "value"
+      },
+      "createIfNotExists": false
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": "value"
+      },
+      "queryParameters": {
+        "createIfNotExists": false
+      }
+    }
   }
 ]
