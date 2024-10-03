@@ -167,6 +167,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -413,6 +415,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -661,6 +665,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -903,6 +909,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1134,6 +1142,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1362,6 +1372,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -1594,6 +1606,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1822,6 +1836,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -2066,6 +2082,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2291,6 +2309,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -2527,6 +2547,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2762,6 +2784,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -3009,6 +3033,8 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
+
+            //
 
             const client = monitoringClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');

@@ -1,0 +1,318 @@
+{
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Insights;"
+    },
+    "customDelete": {
+      "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "var response = await client.CustomGetAsync(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "var response = await client.CustomPostAsync(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
+    },
+    "deleteUserToken": {
+      "default": "await client.DeleteUserTokenAsync(\"test-user-1\");"
+    },
+    "pushEvents": {
+      "default": "var response = await client.PushEventsAsync(\n  new InsightsEvents\n  {\n    Events = new List<EventsItems>\n    {\n      new EventsItems(\n        new ClickedObjectIDsAfterSearch\n        {\n          EventType = Enum.Parse<ClickEvent>(\"Click\"),\n          EventName = \"Product Clicked\",\n          Index = \"products\",\n          UserToken = \"user-123456\",\n          AuthenticatedUserToken = \"user-123456\",\n          Timestamp = 1641290601962L,\n          ObjectIDs = new List<string> { \"9780545139700\", \"9780439784542\" },\n          QueryID = \"43b15df305339e827f0ac0bdc5ebcaa7\",\n          Positions = new List<int> { 7, 6 },\n        }\n      ),\n    },\n  }\n);"
+    },
+    "setClientApiKey": {
+      "default": "client.SetClientApiKey(\"updated-api-key\");"
+    },
+    "init": {
+      "default": "var client = new InsightsClient(\n  new InsightsConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")\n);"
+    }
+  },
+  "dart": {
+    "import": {
+      "default": "import 'package:algolia_client_insights/algolia_client_insights.dart';"
+    },
+    "customDelete": {
+      "default": "final response = await client.customDelete(\n  path: \"test/minimal\",\n);"
+    },
+    "customGet": {
+      "default": "final response = await client.customGet(\n  path: \"test/minimal\",\n);"
+    },
+    "customPost": {
+      "default": "final response = await client.customPost(\n  path: \"test/minimal\",\n);"
+    },
+    "customPut": {
+      "default": "final response = await client.customPut(\n  path: \"test/minimal\",\n);"
+    },
+    "deleteUserToken": {
+      "default": "await client.deleteUserToken(\n  userToken: \"test-user-1\",\n);"
+    },
+    "pushEvents": {
+      "default": "final response = await client.pushEvents(\n  insightsEvents: InsightsEvents(\n    events: [\n      ClickedObjectIDsAfterSearch(\n        eventType: ClickEvent.fromJson(\"click\"),\n        eventName: \"Product Clicked\",\n        index: \"products\",\n        userToken: \"user-123456\",\n        authenticatedUserToken: \"user-123456\",\n        timestamp: 1641290601962,\n        objectIDs: [\n          \"9780545139700\",\n          \"9780439784542\",\n        ],\n        queryID: \"43b15df305339e827f0ac0bdc5ebcaa7\",\n        positions: [\n          7,\n          6,\n        ],\n      ),\n    ],\n  ),\n);"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey: \"updated-api-key\",\n);"
+    },
+    "init": {
+      "default": "final client = InsightsClient(\n    appId: 'ALGOLIA_APPLICATION_ID',\n    apiKey: 'ALGOLIA_API_KEY',\n    region: 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
+  "go": {
+    "import": {
+      "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/insights\""
+    },
+    "customDelete": {
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customGet": {
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPost": {
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPut": {
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteUserToken": {
+      "default": "err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(\n  \"test-user-1\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "pushEvents": {
+      "default": "response, err := client.PushEvents(client.NewApiPushEventsRequest(\n\n  insights.NewEmptyInsightsEvents().SetEvents(\n    []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(\n      insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent(\"click\")).SetEventName(\"Product Clicked\").SetIndex(\"products\").SetUserToken(\"user-123456\").SetAuthenticatedUserToken(\"user-123456\").SetTimestamp(1641290601962).SetObjectIDs(\n        []string{\"9780545139700\", \"9780439784542\"}).SetQueryID(\"43b15df305339e827f0ac0bdc5ebcaa7\").SetPositions(\n        []int32{7, 6}))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "setClientApiKey": {
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "init": {
+      "default": "client, err := insights.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", insights.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.InsightsClient;\nimport com.algolia.model.insights.*;"
+    },
+    "customDelete": {
+      "default": "client.customDelete(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "client.customGet(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "client.customPost(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "client.customPut(\"test/minimal\");"
+    },
+    "deleteUserToken": {
+      "default": "client.deleteUserToken(\"test-user-1\");"
+    },
+    "pushEvents": {
+      "default": "client.pushEvents(\n  new InsightsEvents()\n    .setEvents(\n      Arrays.asList(\n        new ClickedObjectIDsAfterSearch()\n          .setEventType(ClickEvent.CLICK)\n          .setEventName(\"Product Clicked\")\n          .setIndex(\"products\")\n          .setUserToken(\"user-123456\")\n          .setAuthenticatedUserToken(\"user-123456\")\n          .setTimestamp(1641290601962L)\n          .setObjectIDs(Arrays.asList(\"9780545139700\", \"9780439784542\"))\n          .setQueryID(\"43b15df305339e827f0ac0bdc5ebcaa7\")\n          .setPositions(Arrays.asList(7, 6))\n      )\n    )\n);"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\"updated-api-key\");"
+    },
+    "init": {
+      "default": "InsightsClient client = new InsightsClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
+    }
+  },
+  "javascript": {
+    "import": {
+      "default": "import { insightsClient } from '@algolia/client-insights';"
+    },
+    "customDelete": {
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });"
+    },
+    "customGet": {
+      "default": "const response = await client.customGet({ path: 'test/minimal' });"
+    },
+    "customPost": {
+      "default": "const response = await client.customPost({ path: 'test/minimal' });"
+    },
+    "customPut": {
+      "default": "const response = await client.customPut({ path: 'test/minimal' });"
+    },
+    "deleteUserToken": {
+      "default": "await client.deleteUserToken({ userToken: 'test-user-1' });"
+    },
+    "pushEvents": {
+      "default": "const response = await client.pushEvents({\n  events: [\n    {\n      eventType: 'click',\n      eventName: 'Product Clicked',\n      index: 'products',\n      userToken: 'user-123456',\n      authenticatedUserToken: 'user-123456',\n      timestamp: 1641290601962,\n      objectIDs: ['9780545139700', '9780439784542'],\n      queryID: '43b15df305339e827f0ac0bdc5ebcaa7',\n      positions: [7, 6],\n    },\n  ],\n});"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "init": {
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+    }
+  },
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.InsightsClient"
+    },
+    "customDelete": {
+      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)"
+    },
+    "customGet": {
+      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)"
+    },
+    "customPost": {
+      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)"
+    },
+    "customPut": {
+      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)"
+    },
+    "deleteUserToken": {
+      "default": "client.deleteUserToken(\n  userToken = \"test-user-1\",\n)"
+    },
+    "pushEvents": {
+      "default": "var response = client.pushEvents(\n  insightsEvents = InsightsEvents(\n    events = listOf(\n      ClickedObjectIDsAfterSearch(\n        eventType = ClickEvent.entries.first { it.value == \"click\" },\n        eventName = \"Product Clicked\",\n        index = \"products\",\n        userToken = \"user-123456\",\n        authenticatedUserToken = \"user-123456\",\n        timestamp = 1641290601962L,\n        objectIDs = listOf(\"9780545139700\", \"9780439784542\"),\n        queryID = \"43b15df305339e827f0ac0bdc5ebcaa7\",\n        positions = listOf(7, 6),\n      ),\n    ),\n  ),\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
+    },
+    "init": {
+      "default": "val client = InsightsClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\InsightsClient;"
+    },
+    "customDelete": {
+      "default": "$response = $client->customDelete(\n    'test/minimal',\n);"
+    },
+    "customGet": {
+      "default": "$response = $client->customGet(\n    'test/minimal',\n);"
+    },
+    "customPost": {
+      "default": "$response = $client->customPost(\n    'test/minimal',\n);"
+    },
+    "customPut": {
+      "default": "$response = $client->customPut(\n    'test/minimal',\n);"
+    },
+    "deleteUserToken": {
+      "default": "$client->deleteUserToken(\n    'test-user-1',\n);"
+    },
+    "pushEvents": {
+      "default": "$response = $client->pushEvents(\n    ['events' => [\n        ['eventType' => 'click',\n            'eventName' => 'Product Clicked',\n            'index' => 'products',\n            'userToken' => 'user-123456',\n            'authenticatedUserToken' => 'user-123456',\n            'timestamp' => 1641290601962,\n            'objectIDs' => [\n                '9780545139700',\n\n                '9780439784542',\n            ],\n            'queryID' => '43b15df305339e827f0ac0bdc5ebcaa7',\n            'positions' => [\n                7,\n\n                6,\n            ],\n        ],\n    ],\n    ],\n);"
+    },
+    "setClientApiKey": {
+      "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
+    },
+    "init": {
+      "default": "$client = InsightsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.insights.client import InsightsClientSync"
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+    },
+    "deleteUserToken": {
+      "default": "client.delete_user_token(\n    user_token=\"test-user-1\",\n)\n\n# Skip deserialization\nclient.delete_user_token_with_http_info(\n    user_token=\"test-user-1\",\n)"
+    },
+    "pushEvents": {
+      "default": "response = client.push_events(\n    insights_events={\n        \"events\": [\n            {\n                \"eventType\": \"click\",\n                \"eventName\": \"Product Clicked\",\n                \"index\": \"products\",\n                \"userToken\": \"user-123456\",\n                \"authenticatedUserToken\": \"user-123456\",\n                \"timestamp\": 1641290601962,\n                \"objectIDs\": [\n                    \"9780545139700\",\n                    \"9780439784542\",\n                ],\n                \"queryID\": \"43b15df305339e827f0ac0bdc5ebcaa7\",\n                \"positions\": [\n                    7,\n                    6,\n                ],\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.push_events_with_http_info(\n    insights_events={\n        \"events\": [\n            {\n                \"eventType\": \"click\",\n                \"eventName\": \"Product Clicked\",\n                \"index\": \"products\",\n                \"userToken\": \"user-123456\",\n                \"authenticatedUserToken\": \"user-123456\",\n                \"timestamp\": 1641290601962,\n                \"objectIDs\": [\n                    \"9780545139700\",\n                    \"9780439784542\",\n                ],\n                \"queryID\": \"43b15df305339e827f0ac0bdc5ebcaa7\",\n                \"positions\": [\n                    7,\n                    6,\n                ],\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+    },
+    "init": {
+      "default": "# In an asynchronous context, you can use InsightsClient instead, which exposes the exact same methods.\nclient = InsightsClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\"test/minimal\")"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\"test/minimal\")"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\"test/minimal\")"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\"test/minimal\")"
+    },
+    "deleteUserToken": {
+      "default": "client.delete_user_token(\"test-user-1\")"
+    },
+    "pushEvents": {
+      "default": "response = client.push_events(\n  InsightsEvents.new(\n    events: [\n      ClickedObjectIDsAfterSearch.new(\n        event_type: \"click\",\n        event_name: \"Product Clicked\",\n        index: \"products\",\n        user_token: \"user-123456\",\n        authenticated_user_token: \"user-123456\",\n        timestamp: 1641290601962,\n        object_ids: [\"9780545139700\", \"9780439784542\"],\n        query_id: \"43b15df305339e827f0ac0bdc5ebcaa7\",\n        positions: [7, 6]\n      )\n    ]\n  )\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\"updated-api-key\")"
+    },
+    "init": {
+      "default": "client = Algolia::InsightsClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.InsightsClient"
+    },
+    "customDelete": {
+      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customGet": {
+      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customPost": {
+      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customPut": {
+      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "deleteUserToken": {
+      "default": "client.deleteUserToken(\n  userToken = \"test-user-1\"\n)"
+    },
+    "pushEvents": {
+      "default": "val response = client.pushEvents(\n  insightsEvents = InsightsEvents(\n    events = Seq(\n      ClickedObjectIDsAfterSearch(\n        eventType = ClickEvent.withName(\"click\"),\n        eventName = \"Product Clicked\",\n        index = \"products\",\n        userToken = \"user-123456\",\n        authenticatedUserToken = Some(\"user-123456\"),\n        timestamp = Some(1641290601962L),\n        objectIDs = Seq(\"9780545139700\", \"9780439784542\"),\n        queryID = \"43b15df305339e827f0ac0bdc5ebcaa7\",\n        positions = Seq(7, 6)\n      )\n    )\n  )\n)"
+    },
+    "init": {
+      "default": "val client = InsightsClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = Option(\"ALGOLIA_APPLICATION_REGION\")\n)"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import Insights"
+    },
+    "customDelete": {
+      "default": "let response = try await client.customDelete(path: \"test/minimal\")"
+    },
+    "customGet": {
+      "default": "let response = try await client.customGet(path: \"test/minimal\")"
+    },
+    "customPost": {
+      "default": "let response = try await client.customPost(path: \"test/minimal\")"
+    },
+    "customPut": {
+      "default": "let response = try await client.customPut(path: \"test/minimal\")"
+    },
+    "deleteUserToken": {
+      "default": "try await client.deleteUserToken(userToken: \"test-user-1\")"
+    },
+    "pushEvents": {
+      "default": "let response = try await client\n    .pushEvents(insightsEvents: InsightsEvents(events: [\n        EventsItems\n            .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(\n                eventName: \"Product Clicked\",\n                eventType: ClickEvent.click,\n                index: \"products\",\n                objectIDs: [\"9780545139700\", \"9780439784542\"],\n                positions: [7, 6],\n                queryID: \"43b15df305339e827f0ac0bdc5ebcaa7\",\n                userToken: \"user-123456\",\n                authenticatedUserToken: \"user-123456\",\n                timestamp: Int64(1_641_290_601_962)\n            )),\n    ]))"
+    },
+    "setClientApiKey": {
+      "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
+    },
+    "init": {
+      "default": "let client = try InsightsClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
+    }
+  }
+}

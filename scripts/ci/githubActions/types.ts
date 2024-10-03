@@ -40,9 +40,9 @@ export type ClientMatrix = {
      */
     testsToStore: string;
     /**
-     * The snippets output path to store in the artifact.
+     * The guides output path folder to store in the artifact.
      */
-    snippetsToStore: string;
+    guidesToStore: string;
     /**
      * The version of the language to run, used for the setup step.
      */
