@@ -1,0 +1,9 @@
+{
+  "saveObjectsMovies": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "movies_index",
+      "objects": "$var: movies"
+    }
+  }
+}

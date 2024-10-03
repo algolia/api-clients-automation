@@ -214,8 +214,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -461,8 +463,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -708,8 +712,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -950,8 +956,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1213,8 +1221,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1498,8 +1508,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1779,8 +1791,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2066,8 +2080,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2364,8 +2380,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2661,8 +2679,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2921,8 +2941,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -3221,8 +3243,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -3485,8 +3509,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -3758,8 +3784,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4032,8 +4060,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4314,8 +4344,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4611,8 +4643,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4882,8 +4916,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -5179,8 +5215,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -5477,8 +5515,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -5774,8 +5814,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6071,8 +6113,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6350,8 +6394,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6607,8 +6653,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6861,20 +6909,32 @@ components:
     Limit:
       in: query
       name: limit
-      description: Number of items to return.
+      description: >
+        Number of items to return.
+
+
+        Combined with the `offset` parameter, only the first 1000 items can be
+        retrieved.
       required: false
       schema:
         type: integer
         default: 10
+        maximum: 1000
     Offset:
       in: query
       name: offset
-      description: Position of the first item to return.
+      description: >
+        Position of the first item to return.
+
+
+        Combined with the `limit` parameter, only the first 1000 items can be
+        retrieved.
       required: false
       schema:
         type: integer
         default: 0
         minimum: 0
+        maximum: 1000
     Tags:
       name: tags
       in: query

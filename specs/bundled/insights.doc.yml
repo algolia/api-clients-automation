@@ -222,8 +222,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -482,8 +484,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -742,8 +746,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -997,8 +1003,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1734,8 +1742,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2138,8 +2148,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API

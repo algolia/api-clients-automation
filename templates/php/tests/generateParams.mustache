@@ -2,6 +2,9 @@
 {{#isNull}}
   null,
 {{/isNull}}
+{{#isVerbatim}}
+  {{{value}}}
+{{/isVerbatim}}
 {{#isString}}
   "{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}",
 {{/isString}}

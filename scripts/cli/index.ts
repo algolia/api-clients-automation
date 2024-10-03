@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
+import { buildClients, buildPlaygrounds, buildSnippets, buildGuides } from '../buildLanguages.js';
 import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
 import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
@@ -9,6 +9,7 @@ import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
+import { guidesGenerateMany } from '../guides/generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
 import { generateVersionsHistory } from '../release/versionsHistory.js';
@@ -104,6 +105,17 @@ buildCommand
     setVerbose(Boolean(verbose));
 
     await buildSnippets(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+  });
+
+buildCommand
+  .command('guides')
+  .description('Build a specified guides')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildGuides(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
   });
 
 buildCommand
@@ -237,6 +249,23 @@ program
     setVerbose(Boolean(verbose));
 
     await snippetsGenerateMany(generatorList({ language, client, clientList }));
+  });
+
+program
+  .command('guides')
+  .description('Generate the guides')
+  .addArgument(args.language)
+  .addArgument(args.clients)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
+    setVerbose(Boolean(verbose));
+
+    await guidesGenerateMany(generatorList({ language, client, clientList }));
   });
 
 program
