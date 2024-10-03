@@ -59,7 +59,7 @@
         self,
         key: str,
         operation: str,
-        api_key: Optional[ApiKey] = None,
+        api_key: Optional[Union[ApiKey, dict[str, Any]]] = None,
         max_retries: int = 50,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
