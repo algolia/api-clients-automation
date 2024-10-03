@@ -1,0 +1,12 @@
+import requests
+{{> snippets/import}}
+
+# Fetch sample dataset
+url = "https://dashboard.algolia.com/sample_datasets/movie.json"
+movies = requests.get(url).json()
+
+# Connect and authenticate with your Algolia app
+{{> snippets/init}}
+
+# Save records in Algolia index
+{{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}

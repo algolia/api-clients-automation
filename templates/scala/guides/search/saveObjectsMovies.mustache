@@ -1,0 +1,33 @@
+import scala.io.Source
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+{{> snippets/import}}
+
+import org.json4s.native.JsonMethods
+import org.json4s.jvalue2extractable
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+    implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+
+    // Fetch sample dataset
+    val url = "https://dashboard.algolia.com/sample_datasets/movie.json"
+    val result = Source.fromURL(url).mkString
+    val movies = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
+
+    // Connect and authenticate with your Algolia app
+    {{> snippets/init}}
+
+    // Save records in Algolia index
+    try {
+      Await.result(
+        {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}},
+        Duration(100, "sec")
+      )
+    } catch {
+      case e: Exception => println(e)
+    }
+  }
+}
