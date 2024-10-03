@@ -58,7 +58,7 @@ class Transporter(BaseTransporter):
             try:
                 async with timeout(self._timeout / 1000):
                     resp = await self._session.request(
-                        method=verb.__str__(),
+                        method=verb,
                         url=url,
                         headers=request_options.headers,
                         data=request_options.data,
