@@ -12,8 +12,8 @@ class Program
         // read json file from url
         var url = "https://dashboard.algolia.com/sample_datasets/movie.json";
         var httpClient = new HttpClient();
-        var response = await httpClient.GetAsync(url)
-        var content = await response.Content.ReadAsStringAsync()
+        var response = await httpClient.GetAsync(url);
+        var content = await response.Content.ReadAsStringAsync();
 
         // parse json
         var movies = JsonSerializer.Deserialize<List<dynamic>>(content);
