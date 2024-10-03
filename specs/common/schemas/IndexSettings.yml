@@ -1001,6 +1001,8 @@ renderingContent:
       $ref: '#/facetOrdering'
     redirect:
       $ref: '#/redirectURL'
+    widgets:
+      $ref: '#/widgets'
   x-categories:
     - Advanced
 
