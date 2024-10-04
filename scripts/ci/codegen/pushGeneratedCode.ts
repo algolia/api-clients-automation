@@ -8,7 +8,7 @@ import text, { commitStartPrepareRelease } from './text.js';
 
 async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');
-  return (await run(`git pull origin ${baseBranch}`)).includes('Already up to date.');
+  return (await run(`git pull origin "${baseBranch}"`)).includes('Already up to date.');
 }
 
 /**
