@@ -22,6 +22,8 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
 
   'tests/output/csharp/global.json',
+  'guides/csharp/.config/**',
+  'guides/csharp/.gitignore',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',
@@ -47,6 +49,7 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/utils/*',
 
   '!tests/output/go/go.*',
+  'guides/go/.golangci.yml',
 
   // Java
   '!clients/algoliasearch-client-java/**',
@@ -132,6 +135,9 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/extension/**',
 
+  'guides/scala/.scalafmt.conf',
+  'guides/scala/.gitignore',
+
   // Swift
   'clients/algoliasearch-client-swift/**',
   '!clients/algoliasearch-client-swift/*',
@@ -147,6 +153,8 @@ export const patterns = [
   'tests/output/swift/Package.swift',
   '!tests/output/swift/handwritten/**',
   '!tests/output/swift/Utils/**',
+  'guides/.gitignore',
+  'guides/swift/.swiftformat',
 
   'clients/**/LICENSE',
 ];

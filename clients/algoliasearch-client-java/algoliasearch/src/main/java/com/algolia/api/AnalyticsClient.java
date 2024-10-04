@@ -2008,8 +2008,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2036,8 +2038,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2086,8 +2090,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2126,8 +2132,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2175,8 +2183,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2202,8 +2212,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2249,8 +2261,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2288,8 +2302,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2387,8 +2403,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2414,8 +2432,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2460,8 +2480,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2499,8 +2521,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2548,8 +2572,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2578,8 +2604,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2630,8 +2658,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2673,8 +2703,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2729,8 +2761,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2763,8 +2797,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2823,8 +2859,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2870,8 +2908,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2932,8 +2972,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2963,8 +3005,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3018,8 +3062,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3062,8 +3108,10 @@ public class AnalyticsClient extends ApiClient {
    * @param search Search query. (optional)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3123,8 +3171,10 @@ public class AnalyticsClient extends ApiClient {
    *     (optional, default to false)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3161,8 +3211,10 @@ public class AnalyticsClient extends ApiClient {
    *     (optional, default to false)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3216,8 +3268,10 @@ public class AnalyticsClient extends ApiClient {
    *     (optional, default to false)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3267,8 +3321,10 @@ public class AnalyticsClient extends ApiClient {
    *     (optional, default to false)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3326,8 +3382,10 @@ public class AnalyticsClient extends ApiClient {
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3380,8 +3438,10 @@ public class AnalyticsClient extends ApiClient {
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3439,8 +3499,10 @@ public class AnalyticsClient extends ApiClient {
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3495,8 +3557,10 @@ public class AnalyticsClient extends ApiClient {
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of items to return. (optional, default to 10)
-   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. Combined with the `offset` parameter, only the first
+   *     1000 items can be retrieved. (optional, default to 10)
+   * @param offset Position of the first item to return. Combined with the `limit` parameter, only
+   *     the first 1000 items can be retrieved. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
