@@ -1001,6 +1001,8 @@ renderingContent:
       $ref: '#/facetOrdering'
     redirect:
       $ref: '#/redirectURL'
+    widgets:
+      $ref: '#/widgets'
   x-categories:
     - Advanced
 
@@ -1021,6 +1023,58 @@ facetOrdering:
       $ref: '#/facets'
     values:
       $ref: '#/values'
+
+widgets:
+  description: widgets returned from any rules that are applied to the current search.
+  type: object
+  additionalProperties: false
+  properties:
+    banners:
+      $ref: '#/banners'
+
+banners:
+  description: banners defined in the merchandising studio for the given search.
+  type: array
+  additionalProperties: false
+  properties:
+    banners:
+      $ref: '#/banner'
+
+banner:
+  description: a search banner with image and url.
+  type: object
+  additionalProperties: false
+  properties:
+    image:
+      $ref: '#/bannerImage'
+    link:
+      $ref: '#/bannerLink'
+
+bannerLink:
+  description: link for a banner defined in merchandising studio.
+  type: object
+  additionalProperties: false
+  properties:
+    url:
+      type: string
+
+bannerImage:
+  description: image of a search banner.
+  type: object
+  additionalProperties: false
+  properties:
+    urls:
+      $ref: '#/bannerImageUrl'
+    title:
+      type: string
+
+bannerImageUrl:
+  description: url for a search banner image.
+  type: array
+  additionalProperties: false
+  properties:
+    url:
+      type: string
 
 facets:
   description: Order of facet names.

@@ -71,8 +71,8 @@ public partial class RenderingContent
     }
 
     return
-        (FacetOrdering == input.FacetOrdering || (FacetOrdering != null && FacetOrdering.Equals(input.FacetOrdering))) &&
-        (Redirect == input.Redirect || (Redirect != null && Redirect.Equals(input.Redirect)));
+      (FacetOrdering == input.FacetOrdering || (FacetOrdering != null && FacetOrdering.Equals(input.FacetOrdering))) &&
+      (Redirect == input.Redirect || (Redirect != null && Redirect.Equals(input.Redirect)));
   }
 
   /// <summary>
