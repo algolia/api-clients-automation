@@ -269,40 +269,40 @@
       "default": "from algoliasearch.query_suggestions.client import QuerySuggestionsClientSync"
     },
     "createConfig": {
-      "default": "response = client.create_config(\n    configuration_with_index={\n        \"indexName\": \"<YOUR_INDEX_NAME>\",\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_config_with_http_info(\n    configuration_with_index={\n        \"indexName\": \"<YOUR_INDEX_NAME>\",\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.create_config(\n    configuration_with_index={\n        \"indexName\": \"<YOUR_INDEX_NAME>\",\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "deleteConfig": {
-      "default": "response = client.delete_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_config_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
     },
     "getAllConfigs": {
-      "default": "response = client.get_all_configs()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_all_configs_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_all_configs()"
     },
     "getConfig": {
-      "default": "response = client.get_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_config_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
     },
     "getConfigStatus": {
-      "default": "response = client.get_config_status(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_config_status_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_config_status(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
     },
     "getLogFile": {
-      "default": "response = client.get_log_file(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_log_file_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_log_file(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
     },
     "setClientApiKey": {
-      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "updateConfig": {
-      "default": "response = client.update_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    configuration={\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_config_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    configuration={\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.update_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    configuration={\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use QuerySuggestionsClient instead, which exposes the exact same methods.\nclient = QuerySuggestionsClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"

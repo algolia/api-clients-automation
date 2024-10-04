@@ -1,6 +1,6 @@
 class Helpers:
     def unwrap(self, resp):
-        """ converts the object response to its dictionary form, if it's a list, every items are iterated on and we call to_dict on it, otherwise we just call to_dict """
+        """converts the object response to its dictionary form, if it's a list, every items are iterated on and we call to_dict on it, otherwise we just call to_dict"""
         if isinstance(resp, list):
             _res = []
             for _, r in enumerate(resp):

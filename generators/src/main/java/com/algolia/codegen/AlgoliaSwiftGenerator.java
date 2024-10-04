@@ -38,6 +38,11 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "aroundradiusall",
     "automaticfacetfilter",
     "automaticfacetfilters",
+    "banner",
+    "bannerimage",
+    "bannerimageurl",
+    "bannerlink",
+    "banners",
     "baseindexsettings",
     "basesearchparams",
     "basesearchparamswithoutquery",
@@ -109,7 +114,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "timerange",
     "typotolerance",
     "typotoleranceenum",
-    "value"
+    "value",
+    "widgets"
   );
 
   // This is used for the CTS generation

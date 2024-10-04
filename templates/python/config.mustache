@@ -11,10 +11,13 @@ from algoliasearch.http.base_config import BaseConfig
 
 
 class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
-    def __init__(self, app_id: str, api_key: str{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> None:
+    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
         super().__init__(app_id, api_key)
 
         user_agent = UserAgent().add("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}")
+
+        assert app_id, "`app_id` is missing."
+        assert api_key, "`api_key` is missing."
 
         self.headers = {
             "x-algolia-application-id": app_id,
@@ -40,7 +43,7 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
         if {{^fallbackToAliasHost}}not region or {{/fallbackToAliasHost}}(region is not None and region not in _regions):
             raise ValueError(f"`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: {', '.join(_regions)}")
 
-        self.hosts = HostsCollection([Host({{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region))])
+        self.hosts = HostsCollection([Host({{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region or ""))])
         {{/hasRegionalHost}}
 
         {{^hasRegionalHost}}

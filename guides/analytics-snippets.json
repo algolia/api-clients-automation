@@ -503,79 +503,79 @@
       "default": "from algoliasearch.analytics.client import AnalyticsClientSync"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "getAddToCartRate": {
-      "default": "response = client.get_add_to_cart_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_add_to_cart_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_add_to_cart_rate(\n    index=\"index\",\n)"
     },
     "getAverageClickPosition": {
-      "default": "response = client.get_average_click_position(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_average_click_position_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_average_click_position(\n    index=\"index\",\n)"
     },
     "getClickPositions": {
-      "default": "response = client.get_click_positions(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_click_positions_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_click_positions(\n    index=\"index\",\n)"
     },
     "getClickThroughRate": {
-      "default": "response = client.get_click_through_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_click_through_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_click_through_rate(\n    index=\"index\",\n)"
     },
     "getConversionRate": {
-      "default": "response = client.get_conversion_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_conversion_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_conversion_rate(\n    index=\"index\",\n)"
     },
     "getNoClickRate": {
-      "default": "response = client.get_no_click_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_no_click_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_no_click_rate(\n    index=\"index\",\n)"
     },
     "getNoResultsRate": {
-      "default": "response = client.get_no_results_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_no_results_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_no_results_rate(\n    index=\"index\",\n)"
     },
     "getPurchaseRate": {
-      "default": "response = client.get_purchase_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_purchase_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_purchase_rate(\n    index=\"index\",\n)"
     },
     "getRevenue": {
-      "default": "response = client.get_revenue(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_revenue_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_revenue(\n    index=\"index\",\n)"
     },
     "getSearchesCount": {
-      "default": "response = client.get_searches_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_searches_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_searches_count(\n    index=\"index\",\n)"
     },
     "getSearchesNoClicks": {
-      "default": "response = client.get_searches_no_clicks(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_searches_no_clicks_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_searches_no_clicks(\n    index=\"index\",\n)"
     },
     "getSearchesNoResults": {
-      "default": "response = client.get_searches_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_searches_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_searches_no_results(\n    index=\"index\",\n)"
     },
     "getStatus": {
-      "default": "response = client.get_status(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_status_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_status(\n    index=\"index\",\n)"
     },
     "getTopCountries": {
-      "default": "response = client.get_top_countries(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_countries_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_countries(\n    index=\"index\",\n)"
     },
     "getTopFilterAttributes": {
-      "default": "response = client.get_top_filter_attributes(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_filter_attributes_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_filter_attributes(\n    index=\"index\",\n)"
     },
     "getTopFilterForAttribute": {
-      "default": "response = client.get_top_filter_for_attribute(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_filter_for_attribute_with_http_info(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_filter_for_attribute(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)"
     },
     "getTopFiltersNoResults": {
-      "default": "response = client.get_top_filters_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_filters_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_filters_no_results(\n    index=\"index\",\n)"
     },
     "getTopHits": {
-      "default": "response = client.get_top_hits(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_hits_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_hits(\n    index=\"index\",\n)"
     },
     "getTopSearches": {
-      "default": "response = client.get_top_searches(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_searches_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_searches(\n    index=\"index\",\n)"
     },
     "getUsersCount": {
-      "default": "response = client.get_users_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_users_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_users_count(\n    index=\"index\",\n)"
     },
     "setClientApiKey": {
-      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.\nclient = AnalyticsClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
