@@ -251,37 +251,37 @@
       "default": "from algoliasearch.abtesting.client import AbtestingClientSync"
     },
     "addABTests": {
-      "default": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.add_ab_tests_with_http_info(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "deleteABTest": {
-      "default": "response = client.delete_ab_test(\n    id=42,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_ab_test_with_http_info(\n    id=42,\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_ab_test(\n    id=42,\n)"
     },
     "getABTest": {
-      "default": "response = client.get_ab_test(\n    id=42,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_ab_test_with_http_info(\n    id=42,\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_ab_test(\n    id=42,\n)"
     },
     "listABTests": {
-      "default": "response = client.list_ab_tests()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_ab_tests_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_ab_tests()"
     },
     "scheduleABTest": {
-      "default": "response = client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.schedule_ab_test_with_http_info(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
     },
     "setClientApiKey": {
-      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "stopABTest": {
-      "default": "response = client.stop_ab_test(\n    id=42,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.stop_ab_test_with_http_info(\n    id=42,\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.stop_ab_test(\n    id=42,\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use AbtestingClient instead, which exposes the exact same methods.\nclient = AbtestingClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"

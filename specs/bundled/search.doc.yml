@@ -446,29 +446,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -710,29 +692,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -974,29 +938,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1234,29 +1180,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1514,29 +1442,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_single_index_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1872,37 +1782,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_with_http_info(
-                search_method_params={
-                    "requests": [
-                        {
-                            "indexName": "<YOUR_INDEX_NAME>",
-                            "query": "<YOUR_QUERY>",
-                            "hitsPerPage": 50,
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2199,30 +2083,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_for_facet_values_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                facet_name="facetName",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2519,29 +2384,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.browse_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2857,33 +2704,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                body={
-                    "objectID": "id",
-                    "test": "val",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3143,29 +2968,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_index_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3461,34 +3268,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-                attributes_to_retrieve=[
-                    "attr1",
-                    "attr2",
-                ],
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3786,33 +3570,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.add_or_update_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-                body={
-                    "key": "value",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4070,30 +3832,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4362,32 +4105,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_by_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                delete_by_params={
-                    "filters": "brand:brandName",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4634,29 +4356,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.clear_objects_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4996,33 +4700,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.partial_update_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-                attributes_to_update={
-                    "attributeId": "new value",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5420,47 +5102,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.batch_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                batch_write_params={
-                    "requests": [
-                        {
-                            "action": "addObject",
-                            "body": {
-                                "key": "bar",
-                                "foo": "1",
-                            },
-                        },
-                        {
-                            "action": "addObject",
-                            "body": {
-                                "key": "baz",
-                                "foo": "2",
-                            },
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5863,39 +5509,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.multiple_batch_with_http_info(
-                batch_params={
-                    "requests": [
-                        {
-                            "action": "addObject",
-                            "body": {
-                                "key": "value",
-                            },
-                            "indexName": "<YOUR_INDEX_NAME>",
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6281,40 +5899,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_objects_with_http_info(
-                get_objects_params={
-                    "requests": [
-                        {
-                            "attributesToRetrieve": [
-                                "attr1",
-                                "attr2",
-                            ],
-                            "objectID": "uniqueID",
-                            "indexName": "<YOUR_INDEX_NAME>",
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6577,29 +6166,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_settings_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6896,36 +6467,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.set_settings_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                index_settings={
-                    "attributesForFaceting": [
-                        "actor",
-                        "filterOnly(category)",
-                        "searchable(publisher)",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7188,30 +6734,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_synonym_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7543,40 +7070,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_synonym_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-                synonym_hit={
-                    "objectID": "id1",
-                    "type": "synonym",
-                    "synonyms": [
-                        "car",
-                        "vehicule",
-                        "auto",
-                    ],
-                },
-                forward_to_replicas=True,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7841,30 +7339,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_synonym_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8243,52 +7722,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_synonyms_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                synonym_hit=[
-                    {
-                        "objectID": "id1",
-                        "type": "synonym",
-                        "synonyms": [
-                            "car",
-                            "vehicule",
-                            "auto",
-                        ],
-                    },
-                    {
-                        "objectID": "id2",
-                        "type": "onewaysynonym",
-                        "input": "iphone",
-                        "synonyms": [
-                            "ephone",
-                            "aphone",
-                            "yphone",
-                        ],
-                    },
-                ],
-                forward_to_replicas=True,
-                replace_existing_synonyms=True,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8563,29 +8001,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.clear_synonyms_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8848,29 +8268,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_synonyms_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9111,27 +8513,11 @@ paths:
             response = client.list_api_keys()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_api_keys_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9431,38 +8817,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.add_api_key_with_http_info(
-                api_key={
-                    "acl": [
-                        "search",
-                        "addObject",
-                    ],
-                    "description": "my new api key",
-                    "validity": 300,
-                    "maxQueriesPerIPPerHour": 100,
-                    "maxHitsPerQuery": 20,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9730,29 +9089,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_api_key_with_http_info(
-                key="myTestApiKey",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10061,38 +9402,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_api_key_with_http_info(
-                key="ALGOLIA_API_KEY",
-                api_key={
-                    "acl": [
-                        "search",
-                        "addObject",
-                    ],
-                    "validity": 300,
-                    "maxQueriesPerIPPerHour": 100,
-                    "maxHitsPerQuery": 20,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10356,29 +9670,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_api_key_with_http_info(
-                key="myTestApiKey",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10630,29 +9926,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.restore_api_key_with_http_info(
-                key="ALGOLIA_API_KEY",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10904,30 +10182,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="qr-1725004648916",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11242,39 +10501,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-                rule={
-                    "objectID": "id1",
-                    "conditions": [
-                        {
-                            "pattern": "apple",
-                            "anchoring": "contains",
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11543,30 +10774,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11954,51 +11166,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                rules=[
-                    {
-                        "objectID": "a-rule-id",
-                        "conditions": [
-                            {
-                                "pattern": "smartphone",
-                                "anchoring": "contains",
-                            },
-                        ],
-                    },
-                    {
-                        "objectID": "a-second-rule-id",
-                        "conditions": [
-                            {
-                                "pattern": "apple",
-                                "anchoring": "contains",
-                            },
-                        ],
-                    },
-                ],
-                forward_to_replicas=False,
-                clear_existing_rules=True,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12284,29 +11456,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.clear_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12617,32 +11771,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                search_rules_params={
-                    "query": "zorro",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13068,51 +12201,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.batch_dictionary_entries_with_http_info(
-                dictionary_name="plurals",
-                batch_dictionary_entries_params={
-                    "clearExistingDictionaryEntries": True,
-                    "requests": [
-                        {
-                            "action": "addEntry",
-                            "body": {
-                                "objectID": "1",
-                                "language": "en",
-                                "word": "fancy",
-                                "words": [
-                                    "believe",
-                                    "algolia",
-                                ],
-                                "decomposition": [
-                                    "trust",
-                                    "algolia",
-                                ],
-                                "state": "enabled",
-                            },
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13444,32 +12537,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_dictionary_entries_with_http_info(
-                dictionary_name="stopwords",
-                search_dictionary_entries_params={
-                    "query": "about",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13713,27 +12785,11 @@ paths:
             response = client.get_dictionary_settings()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_dictionary_settings_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14041,37 +13097,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.set_dictionary_settings_with_http_info(
-                dictionary_settings_params={
-                    "disableStandardEntries": {
-                        "plurals": {
-                            "fr": False,
-                            "en": False,
-                            "ru": True,
-                        },
-                    },
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14323,27 +13353,11 @@ paths:
             response = client.get_dictionary_languages()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_dictionary_languages_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14618,32 +13632,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.assign_user_id_with_http_info(
-                x_algolia_user_id="userID",
-                assign_user_id_params={
-                    "cluster": "theCluster",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14898,27 +13891,11 @@ paths:
             response = client.list_user_ids()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_user_ids_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15221,36 +14198,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.batch_assign_user_ids_with_http_info(
-                x_algolia_user_id="userID",
-                batch_assign_user_ids_params={
-                    "cluster": "theCluster",
-                    "users": [
-                        "user1",
-                        "user2",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15514,27 +14466,11 @@ paths:
             response = client.get_top_user_ids()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_user_ids_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15781,29 +14717,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_user_id_with_http_info(
-                user_id="uniqueID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -16050,29 +14968,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.remove_user_id_with_http_info(
-                user_id="uniqueID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -16313,27 +15213,11 @@ paths:
             response = client.list_clusters()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_clusters_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -16696,34 +15580,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_user_ids_with_http_info(
-                search_user_ids_params={
-                    "query": "test",
-                    "clusterName": "theClusterName",
-                    "page": 5,
-                    "hitsPerPage": 10,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -16995,27 +15856,11 @@ paths:
             response = client.has_pending_mappings()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.has_pending_mappings_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -17243,27 +16088,11 @@ paths:
             response = client.get_sources()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_sources_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -17542,34 +16371,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.replace_sources_with_http_info(
-                source=[
-                    {
-                        "source": "theSource",
-                        "description": "theDescription",
-                    },
-                ],
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -17837,32 +16643,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.append_source_with_http_info(
-                source={
-                    "source": "theSource",
-                    "description": "theDescription",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -18123,29 +16908,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_source_with_http_info(
-                source="theSource",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -18556,27 +17323,11 @@ paths:
             response = client.get_logs()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_logs_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -18822,29 +17573,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_app_task_with_http_info(
-                task_id=123,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -19110,30 +17843,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_task_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                task_id=123,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -19496,37 +18210,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.operation_index_with_http_info(
-                index_name="<SOURCE_INDEX_NAME>",
-                operation_index_params={
-                    "operation": "move",
-                    "destination": "<DESTINATION_INDEX_NAME>",
-                    "scope": [
-                        "rules",
-                        "settings",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -19778,27 +18466,11 @@ paths:
             response = client.list_indices()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_indices_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >

@@ -215,31 +215,31 @@
       "default": "from algoliasearch.personalization.client import PersonalizationClientSync"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "deleteUserProfile": {
-      "default": "response = client.delete_user_profile(\n    user_token=\"UserToken\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_user_profile_with_http_info(\n    user_token=\"UserToken\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_user_profile(\n    user_token=\"UserToken\",\n)"
     },
     "getPersonalizationStrategy": {
-      "default": "response = client.get_personalization_strategy()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_personalization_strategy_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_personalization_strategy()"
     },
     "getUserTokenProfile": {
-      "default": "response = client.get_user_token_profile(\n    user_token=\"UserToken\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_user_token_profile_with_http_info(\n    user_token=\"UserToken\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_user_token_profile(\n    user_token=\"UserToken\",\n)"
     },
     "setClientApiKey": {
-      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "setPersonalizationStrategy": {
-      "default": "response = client.set_personalization_strategy(\n    personalization_strategy_params={\n        \"eventScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.set_personalization_strategy_with_http_info(\n    personalization_strategy_params={\n        \"eventScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.set_personalization_strategy(\n    personalization_strategy_params={\n        \"eventScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use PersonalizationClient instead, which exposes the exact same methods.\nclient = PersonalizationClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
