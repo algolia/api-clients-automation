@@ -1097,178 +1097,178 @@
       "default": "from algoliasearch.ingestion.client import IngestionClientSync"
     },
     "createAuthentication": {
-      "default": "response = client.create_authentication(\n    authentication_create={\n        \"type\": \"oauth\",\n        \"name\": \"authName\",\n        \"input\": {\n            \"url\": \"http://test.oauth\",\n            \"client_id\": \"myID\",\n            \"client_secret\": \"mySecret\",\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_authentication_with_http_info(\n    authentication_create={\n        \"type\": \"oauth\",\n        \"name\": \"authName\",\n        \"input\": {\n            \"url\": \"http://test.oauth\",\n            \"client_id\": \"myID\",\n            \"client_secret\": \"mySecret\",\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.create_authentication(\n    authentication_create={\n        \"type\": \"oauth\",\n        \"name\": \"authName\",\n        \"input\": {\n            \"url\": \"http://test.oauth\",\n            \"client_id\": \"myID\",\n            \"client_secret\": \"mySecret\",\n        },\n    },\n)"
     },
     "createDestination": {
-      "default": "response = client.create_destination(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_destination_with_http_info(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.create_destination(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)"
     },
     "createSource": {
-      "default": "response = client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_source_with_http_info(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)"
     },
     "createTask": {
-      "default": "response = client.create_task(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"action\": \"replace\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_task_with_http_info(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"action\": \"replace\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.create_task(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"action\": \"replace\",\n    },\n)"
     },
     "createTaskV1": {
-      "default": "response = client.create_task_v1(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_task_v1_with_http_info(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.create_task_v1(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n    },\n)"
     },
     "createTransformation": {
-      "default": "response = client.create_transformation(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.create_transformation_with_http_info(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.create_transformation(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "deleteAuthentication": {
-      "default": "response = client.delete_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_authentication_with_http_info(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "deleteDestination": {
-      "default": "response = client.delete_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_destination_with_http_info(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "deleteSource": {
-      "default": "response = client.delete_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_source_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "deleteTask": {
-      "default": "response = client.delete_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "deleteTaskV1": {
-      "default": "response = client.delete_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "deleteTransformation": {
-      "default": "response = client.delete_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.delete_transformation_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.delete_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "disableTask": {
-      "default": "response = client.disable_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.disable_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.disable_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "disableTaskV1": {
-      "default": "response = client.disable_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.disable_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.disable_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "enableTask": {
-      "default": "response = client.enable_task(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.enable_task_with_http_info(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.enable_task(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
     },
     "enableTaskV1": {
-      "default": "response = client.enable_task_v1(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.enable_task_v1_with_http_info(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.enable_task_v1(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
     },
     "getAuthentication": {
-      "default": "response = client.get_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_authentication_with_http_info(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "getDestination": {
-      "default": "response = client.get_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_destination_with_http_info(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "getEvent": {
-      "default": "response = client.get_event(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    event_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_event_with_http_info(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    event_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_event(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    event_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)"
     },
     "getRun": {
-      "default": "response = client.get_run(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_run_with_http_info(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_run(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "getSource": {
-      "default": "response = client.get_source(\n    source_id=\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_source_with_http_info(\n    source_id=\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_source(\n    source_id=\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)"
     },
     "getTask": {
-      "default": "response = client.get_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "getTaskV1": {
-      "default": "response = client.get_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "getTransformation": {
-      "default": "response = client.get_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_transformation_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "listAuthentications": {
-      "default": "response = client.list_authentications()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_authentications_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_authentications()"
     },
     "listDestinations": {
-      "default": "response = client.list_destinations()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_destinations_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_destinations()"
     },
     "listEvents": {
-      "default": "response = client.list_events(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_events_with_http_info(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_events(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "listRuns": {
-      "default": "response = client.list_runs()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_runs_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_runs()"
     },
     "listSources": {
-      "default": "response = client.list_sources()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_sources_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_sources()"
     },
     "listTasks": {
-      "default": "response = client.list_tasks()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_tasks_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_tasks()"
     },
     "listTasksV1": {
-      "default": "response = client.list_tasks_v1()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_tasks_v1_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_tasks_v1()"
     },
     "listTransformations": {
-      "default": "response = client.list_transformations()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.list_transformations_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.list_transformations()"
     },
     "pushTask": {
-      "default": "response = client.push_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.push_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.push_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)"
     },
     "runSource": {
-      "default": "response = client.run_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    run_source_payload={\n        \"indexToInclude\": [\n            \"products_us\",\n            \"products eu\",\n        ],\n        \"entityIDs\": [\n            \"1234\",\n            \"5678\",\n        ],\n        \"entityType\": \"product\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.run_source_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    run_source_payload={\n        \"indexToInclude\": [\n            \"products_us\",\n            \"products eu\",\n        ],\n        \"entityIDs\": [\n            \"1234\",\n            \"5678\",\n        ],\n        \"entityType\": \"product\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.run_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    run_source_payload={\n        \"indexToInclude\": [\n            \"products_us\",\n            \"products eu\",\n        ],\n        \"entityIDs\": [\n            \"1234\",\n            \"5678\",\n        ],\n        \"entityType\": \"product\",\n    },\n)"
     },
     "runTask": {
-      "default": "response = client.run_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.run_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.run_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "runTaskV1": {
-      "default": "response = client.run_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.run_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.run_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "searchAuthentications": {
-      "default": "response = client.search_authentications(\n    authentication_search={\n        \"authenticationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_authentications_with_http_info(\n    authentication_search={\n        \"authenticationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.search_authentications(\n    authentication_search={\n        \"authenticationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)"
     },
     "searchDestinations": {
-      "default": "response = client.search_destinations(\n    destination_search={\n        \"destinationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_destinations_with_http_info(\n    destination_search={\n        \"destinationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.search_destinations(\n    destination_search={\n        \"destinationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)"
     },
     "searchSources": {
-      "default": "response = client.search_sources(\n    source_search={\n        \"sourceIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_sources_with_http_info(\n    source_search={\n        \"sourceIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.search_sources(\n    source_search={\n        \"sourceIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)"
     },
     "searchTasks": {
-      "default": "response = client.search_tasks(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_tasks_with_http_info(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.search_tasks(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)"
     },
     "searchTasksV1": {
-      "default": "response = client.search_tasks_v1(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_tasks_v1_with_http_info(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.search_tasks_v1(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)"
     },
     "searchTransformations": {
-      "default": "response = client.search_transformations(\n    transformation_search={\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.search_transformations_with_http_info(\n    transformation_search={\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.search_transformations(\n    transformation_search={\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)"
     },
     "setClientApiKey": {
-      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "triggerDockerSourceDiscover": {
-      "default": "response = client.trigger_docker_source_discover(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.trigger_docker_source_discover_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.trigger_docker_source_discover(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
     "tryTransformation": {
-      "default": "response = client.try_transformation(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.try_transformation_with_http_info(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.try_transformation(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)"
     },
     "tryTransformationBeforeUpdate": {
-      "default": "response = client.try_transformation_before_update(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.try_transformation_before_update_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.try_transformation_before_update(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)"
     },
     "updateAuthentication": {
-      "default": "response = client.update_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_authentication_with_http_info(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.update_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)"
     },
     "updateDestination": {
-      "default": "response = client.update_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destination_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_destination_with_http_info(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destination_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.update_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destination_update={\n        \"name\": \"newName\",\n    },\n)"
     },
     "updateSource": {
-      "default": "response = client.update_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_source_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.update_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)"
     },
     "updateTask": {
-      "default": "response = client.update_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n        \"cron\": \"* * * * *\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_task_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n        \"cron\": \"* * * * *\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.update_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n        \"cron\": \"* * * * *\",\n    },\n)"
     },
     "updateTaskV1": {
-      "default": "response = client.update_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_task_v1_with_http_info(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.update_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)"
     },
     "updateTransformation": {
-      "default": "response = client.update_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.update_transformation_with_http_info(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.update_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
     },
     "validateSource": {
-      "default": "response = client.validate_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.validate_source_with_http_info(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.validate_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)"
     },
     "validateSourceBeforeUpdate": {
-      "default": "response = client.validate_source_before_update(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.validate_source_before_update_with_http_info(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.validate_source_before_update(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.\nclient = IngestionClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"

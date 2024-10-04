@@ -207,25 +207,25 @@
       "default": "from algoliasearch.insights.client import InsightsClientSync"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "deleteUserToken": {
-      "default": "client.delete_user_token(\n    user_token=\"test-user-1\",\n)\n\n# Skip deserialization\nclient.delete_user_token_with_http_info(\n    user_token=\"test-user-1\",\n)"
+      "default": "client.delete_user_token(\n    user_token=\"test-user-1\",\n)"
     },
     "pushEvents": {
-      "default": "response = client.push_events(\n    insights_events={\n        \"events\": [\n            {\n                \"eventType\": \"click\",\n                \"eventName\": \"Product Clicked\",\n                \"index\": \"products\",\n                \"userToken\": \"user-123456\",\n                \"authenticatedUserToken\": \"user-123456\",\n                \"timestamp\": 1641290601962,\n                \"objectIDs\": [\n                    \"9780545139700\",\n                    \"9780439784542\",\n                ],\n                \"queryID\": \"43b15df305339e827f0ac0bdc5ebcaa7\",\n                \"positions\": [\n                    7,\n                    6,\n                ],\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.push_events_with_http_info(\n    insights_events={\n        \"events\": [\n            {\n                \"eventType\": \"click\",\n                \"eventName\": \"Product Clicked\",\n                \"index\": \"products\",\n                \"userToken\": \"user-123456\",\n                \"authenticatedUserToken\": \"user-123456\",\n                \"timestamp\": 1641290601962,\n                \"objectIDs\": [\n                    \"9780545139700\",\n                    \"9780439784542\",\n                ],\n                \"queryID\": \"43b15df305339e827f0ac0bdc5ebcaa7\",\n                \"positions\": [\n                    7,\n                    6,\n                ],\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.push_events(\n    insights_events={\n        \"events\": [\n            {\n                \"eventType\": \"click\",\n                \"eventName\": \"Product Clicked\",\n                \"index\": \"products\",\n                \"userToken\": \"user-123456\",\n                \"authenticatedUserToken\": \"user-123456\",\n                \"timestamp\": 1641290601962,\n                \"objectIDs\": [\n                    \"9780545139700\",\n                    \"9780439784542\",\n                ],\n                \"queryID\": \"43b15df305339e827f0ac0bdc5ebcaa7\",\n                \"positions\": [\n                    7,\n                    6,\n                ],\n            },\n        ],\n    },\n)"
     },
     "setClientApiKey": {
-      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use InsightsClient instead, which exposes the exact same methods.\nclient = InsightsClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"

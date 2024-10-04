@@ -305,46 +305,46 @@
       "default": "from algoliasearch.monitoring.client import MonitoringClientSync"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "getClusterIncidents": {
-      "default": "response = client.get_cluster_incidents(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_cluster_incidents_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_cluster_incidents(\n    clusters=\"c1-de\",\n)"
     },
     "getClusterStatus": {
-      "default": "response = client.get_cluster_status(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_cluster_status_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_cluster_status(\n    clusters=\"c1-de\",\n)"
     },
     "getIncidents": {
-      "default": "response = client.get_incidents()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_incidents_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_incidents()"
     },
     "getIndexingTime": {
-      "default": "response = client.get_indexing_time(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_indexing_time_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_indexing_time(\n    clusters=\"c1-de\",\n)"
     },
     "getLatency": {
-      "default": "response = client.get_latency(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_latency_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_latency(\n    clusters=\"c1-de\",\n)"
     },
     "getMetrics": {
-      "default": "response = client.get_metrics(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_metrics_with_http_info(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_metrics(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)"
     },
     "getReachability": {
-      "default": "response = client.get_reachability(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_reachability_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_reachability(\n    clusters=\"c1-de\",\n)"
     },
     "getServers": {
-      "default": "response = client.get_servers()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_servers_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_servers()"
     },
     "getStatus": {
-      "default": "response = client.get_status()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_status_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_status()"
     },
     "setClientApiKey": {
-      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use MonitoringClient instead, which exposes the exact same methods.\nclient = MonitoringClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
