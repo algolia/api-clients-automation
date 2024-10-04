@@ -12,7 +12,7 @@ Task {
 
     do {
         // Save records in Algolia index
-        _ = try await {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+        {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
         exit(EXIT_SUCCESS)
     } catch {
         print(error.localizedDescription)
