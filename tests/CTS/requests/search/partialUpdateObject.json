@@ -104,7 +104,7 @@
       "attributesToUpdate": {
         "attributeId": "value"
       },
-      "createIfNotExists": false
+      "createIfNotExists": "false"
     },
     "request": {
       "path": "/1/indexes/theIndexName/uniqueID/partial",
