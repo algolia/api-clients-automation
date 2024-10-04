@@ -42,7 +42,9 @@ RUN echo "export PATH=$PATH:/usr/local/bin/python" >> ~/.profile \
     && echo "export PATH=$PATH:/usr/local/bin/pip" >> ~/.profile \
     && pip install --upgrade pip pipx && pipx ensurepath \
     && pipx install poetry
-
+ENV VIRTUAL_ENV=/opt/env
+RUN python -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
