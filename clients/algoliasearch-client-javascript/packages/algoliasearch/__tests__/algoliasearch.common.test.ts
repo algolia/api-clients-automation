@@ -4,7 +4,7 @@ import {
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 import type { EchoResponse } from '@algolia/requester-testing';
-import { describe, test, expect } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { browserEchoRequester } from '../../requester-testing/src/browserEchoRequester';
 import { algoliasearch, apiClientVersion } from '../builds/browser';

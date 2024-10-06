@@ -9,8 +9,6 @@
   ],
   "scripts": {
     "build": "esbuild --bundle --minify --platform=node --outdir=dist --out-extension:.js=.cjs --log-level=error src/index.ts",
-    "lint": "eslint --ext=ts .",
-    "lint:fix": "eslint --ext=ts --fix .",
     "test": "tsc --noEmit && vitest"
   },
   "devDependencies": {

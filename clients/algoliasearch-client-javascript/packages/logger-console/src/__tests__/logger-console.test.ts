@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 
 import { LogLevelEnum } from '@algolia/client-common';
-import { vi, beforeEach, describe, test, expect } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { createConsoleLogger } from '../logger';
 
