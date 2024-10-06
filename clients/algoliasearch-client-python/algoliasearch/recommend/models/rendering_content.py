@@ -20,10 +20,12 @@ else:
 
 from algoliasearch.recommend.models.facet_ordering import FacetOrdering
 from algoliasearch.recommend.models.redirect_url import RedirectURL
+from algoliasearch.recommend.models.widgets import Widgets
 
 _ALIASES = {
     "facet_ordering": "facetOrdering",
     "redirect": "redirect",
+    "widgets": "widgets",
 }
 
 
@@ -38,6 +40,7 @@ class RenderingContent(BaseModel):
 
     facet_ordering: Optional[FacetOrdering] = None
     redirect: Optional[RedirectURL] = None
+    widgets: Optional[Widgets] = None
 
     model_config = ConfigDict(
         use_enum_values=True,
@@ -80,6 +83,11 @@ class RenderingContent(BaseModel):
         obj["redirect"] = (
             RedirectURL.from_dict(obj["redirect"])
             if obj.get("redirect") is not None
+            else None
+        )
+        obj["widgets"] = (
+            Widgets.from_dict(obj["widgets"])
+            if obj.get("widgets") is not None
             else None
         )
 

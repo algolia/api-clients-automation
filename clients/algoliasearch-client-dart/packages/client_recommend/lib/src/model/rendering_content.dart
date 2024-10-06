@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_recommend/src/model/facet_ordering.dart';
 import 'package:algolia_client_recommend/src/model/redirect_url.dart';
+import 'package:algolia_client_recommend/src/model/widgets.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,6 +14,7 @@ final class RenderingContent {
   const RenderingContent({
     this.facetOrdering,
     this.redirect,
+    this.widgets,
   });
 
   @JsonKey(name: r'facetOrdering')
@@ -21,15 +23,20 @@ final class RenderingContent {
   @JsonKey(name: r'redirect')
   final RedirectURL? redirect;
 
+  @JsonKey(name: r'widgets')
+  final Widgets? widgets;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is RenderingContent &&
           other.facetOrdering == facetOrdering &&
-          other.redirect == redirect;
+          other.redirect == redirect &&
+          other.widgets == widgets;
 
   @override
-  int get hashCode => facetOrdering.hashCode + redirect.hashCode;
+  int get hashCode =>
+      facetOrdering.hashCode + redirect.hashCode + widgets.hashCode;
 
   factory RenderingContent.fromJson(Map<String, dynamic> json) =>
       _$RenderingContentFromJson(json);
