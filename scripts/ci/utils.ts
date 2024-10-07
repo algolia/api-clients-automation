@@ -29,13 +29,11 @@ export async function getNbGitDiff({
 }>): Promise<number> {
   const checkHead = head === null ? '' : `...${head}`;
 
-  console.log(`comparing "${branch}${checkHead}"`);
-
   return parseInt(
     (
-      (await run(`git add -N . && git diff --shortstat "${branch}${checkHead}" -- ${path} | wc -l`, {
+      await run(`git add -N . && git diff --shortstat "${branch}${checkHead}" -- ${path} | wc -l`, {
         cwd,
-      })) || '0'
+      })
     ).trim(),
     10,
   );

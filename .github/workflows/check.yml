@@ -531,6 +531,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Download all artifacts
