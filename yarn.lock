@@ -106,7 +106,7 @@ __metadata:
     eslint-plugin-jsdoc: "npm:50.3.1"
     eslint-plugin-json: "npm:4.0.1"
     eslint-plugin-prettier: "npm:5.2.1"
-    eslint-plugin-unused-imports: "npm:3.2.0"
+    eslint-plugin-unused-imports: "npm:4.1.4"
     eslint-plugin-yml: "npm:1.14.0"
     husky: "npm:9.1.6"
     lint-staged: "npm:15.2.10"
@@ -4372,18 +4372,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-unused-imports@npm:3.2.0":
-  version: 3.2.0
-  resolution: "eslint-plugin-unused-imports@npm:3.2.0"
-  dependencies:
-    eslint-rule-composer: "npm:^0.3.0"
+"eslint-plugin-unused-imports@npm:4.1.4":
+  version: 4.1.4
+  resolution: "eslint-plugin-unused-imports@npm:4.1.4"
   peerDependencies:
-    "@typescript-eslint/eslint-plugin": 6 - 7
-    eslint: 8
+    "@typescript-eslint/eslint-plugin": ^8.0.0-0 || ^7.0.0 || ^6.0.0 || ^5.0.0
+    eslint: ^9.0.0 || ^8.0.0
   peerDependenciesMeta:
     "@typescript-eslint/eslint-plugin":
       optional: true
-  checksum: 10/05ce3ae4278245caeb25af28aa6832ecd59d664633f31b1dd498798d27cb7f959e2af1b8feeef789a87755541f47b222156c29420f1777d4c5f022e842171ed7
+  checksum: 10/8e987028ad925ce1e04c01dcae70adbf44c2878a8b15c4327b33a2861e471d7fe00f6fe213fbd2b936f3fcefc8ccabb0d778aa1d6e0e0387a3dc7fe150cd4ed4
   languageName: node
   linkType: hard
 
@@ -4399,13 +4397,6 @@ __metadata:
   peerDependencies:
     eslint: ">=6.0.0"
   checksum: 10/11611f94aced40d688f1d7c28d378e713149f0fa0711a6459865f37f994fb47395a94c4c27241e8749e9746b34d6a869aa3074793a5d3b5c4fe499a3946abbfe
-  languageName: node
-  linkType: hard
-
-"eslint-rule-composer@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "eslint-rule-composer@npm:0.3.0"
-  checksum: 10/c751e71243c6750de553ca0f586a71c7e9d43864bcbd0536639f287332e3f1ed3337bb0db07020652fa90937ceb63b6cc14c0f71fb227e8fc20ca44ee67e837f
   languageName: node
   linkType: hard
 
