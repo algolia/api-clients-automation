@@ -21,13 +21,9 @@ export function getPatterns() {
   const entries = patterns;
   for (const [language, { tests }] of Object.entries(clientConfig)) {
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/client/**`);
-    entries.unshift(
-      `tests/output/${language}/${tests.outputFolder}/requests/**`,
-    );
+    entries.unshift(`tests/output/${language}/${tests.outputFolder}/requests/**`);
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/e2e/**`);
-    entries.unshift(
-      `tests/output/${language}/${tests.outputFolder}/benchmark/**`,
-    );
+    entries.unshift(`tests/output/${language}/${tests.outputFolder}/benchmark/**`);
   }
   return entries;
 }
@@ -38,9 +34,7 @@ async function preCommit(log) {
     await run('git merge HEAD');
   } catch (e) {
     if (e.exitCode === 128) {
-      console.log(
-        'Skipping the pre-commit check because a merge is in progress',
-      );
+      console.log('Skipping the pre-commit check because a merge is in progress');
       return;
     }
   }
@@ -50,13 +44,7 @@ async function preCommit(log) {
   const toUnstage = micromatch.match(stagedFiles, getPatterns());
 
   // the snippets and guides are yarn workspaces, so the yarn.lock file can change when they are updated, but the CI will take care of it
-  if (
-    (
-      await run(
-        'git diff --name-only --cached -- {guides,snippet}/javascript | wc -l',
-      )
-    ).trim() !== '0'
-  ) {
+  if ((await run('git diff --name-only --cached -- {guides,snippet}/javascript | wc -l')).trim() !== '0') {
     toUnstage.push('yarn.lock');
   }
 
@@ -66,10 +54,7 @@ async function preCommit(log) {
 
   if (log) {
     toUnstage.forEach((file) =>
-      console.log(
-        chalk.black.bgYellow('[INFO]'),
-        `Generated file found, unstaging: ${file}`,
-      ),
+      console.log(chalk.black.bgYellow('[INFO]'), `Generated file found, unstaging: ${file}`),
     );
   }
   await run(`git restore --staged ${toUnstage.join(' ')}`);
