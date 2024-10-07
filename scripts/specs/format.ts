@@ -114,11 +114,11 @@ export async function transformBundle({
         }
 
         for (const harRequestHeader of harRequest.headers) {
-          if (harRequestHeader.name === bundledSpec.components.securitySchemes.appId.name) {
+          if (harRequestHeader.name === bundledSpec.components.securitySchemes.appId?.name) {
             harRequestHeader.value = 'ALGOLIA_APPLICATION_ID';
           }
 
-          if (harRequestHeader.name === bundledSpec.components.securitySchemes.apiKey.name) {
+          if (harRequestHeader.name === bundledSpec.components.securitySchemes.apiKey?.name) {
             harRequestHeader.value = 'ALGOLIA_API_KEY';
           }
         }
