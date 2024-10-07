@@ -4771,6 +4771,52 @@ components:
       properties:
         url:
           type: string
+    bannerImageUrl:
+      description: url for a search banner image.
+      type: array
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+    bannerImage:
+      description: image of a search banner.
+      type: object
+      additionalProperties: false
+      properties:
+        urls:
+          $ref: '#/components/schemas/bannerImageUrl'
+        title:
+          type: string
+    bannerLink:
+      description: link for a banner defined in merchandising studio.
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+    banner:
+      description: a search banner with image and url.
+      type: object
+      additionalProperties: false
+      properties:
+        image:
+          $ref: '#/components/schemas/bannerImage'
+        link:
+          $ref: '#/components/schemas/bannerLink'
+    banners:
+      description: banners defined in the merchandising studio for the given search.
+      type: array
+      additionalProperties: false
+      properties:
+        banners:
+          $ref: '#/components/schemas/banner'
+    widgets:
+      description: widgets returned from any rules that are applied to the current search.
+      type: object
+      additionalProperties: false
+      properties:
+        banners:
+          $ref: '#/components/schemas/banners'
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
@@ -4787,6 +4833,8 @@ components:
           $ref: '#/components/schemas/facetOrdering'
         redirect:
           $ref: '#/components/schemas/redirectURL'
+        widgets:
+          $ref: '#/components/schemas/widgets'
       x-categories:
         - Advanced
     reRankingApplyFilter:

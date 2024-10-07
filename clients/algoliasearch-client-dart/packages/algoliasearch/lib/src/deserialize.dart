@@ -4,6 +4,11 @@ import 'package:algoliasearch/src/model/alternatives_as_exact.dart';
 import 'package:algoliasearch/src/model/api_key.dart';
 import 'package:algoliasearch/src/model/around_radius_all.dart';
 import 'package:algoliasearch/src/model/automatic_facet_filter.dart';
+import 'package:algoliasearch/src/model/banner.dart';
+import 'package:algoliasearch/src/model/banner_image.dart';
+import 'package:algoliasearch/src/model/banner_image_url.dart';
+import 'package:algoliasearch/src/model/banner_link.dart';
+import 'package:algoliasearch/src/model/banners.dart';
 import 'package:algoliasearch/src/model/base_get_api_key_response.dart';
 import 'package:algoliasearch/src/model/base_index_settings.dart';
 import 'package:algoliasearch/src/model/base_recommend_index_settings.dart';
@@ -97,6 +102,7 @@ import 'package:algoliasearch/src/model/trending_items_model.dart';
 import 'package:algoliasearch/src/model/trending_items_query.dart';
 import 'package:algoliasearch/src/model/typo_tolerance_enum.dart';
 import 'package:algoliasearch/src/model/value.dart';
+import 'package:algoliasearch/src/model/widgets.dart';
 import 'package:algoliasearch/src/model/with_primary.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
@@ -131,6 +137,17 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AutomaticFacetFilter':
       return AutomaticFacetFilter.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Banner':
+      return Banner.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImage':
+      return BannerImage.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImageUrl':
+      return BannerImageUrl.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BannerLink':
+      return BannerLink.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Banners':
+      return Banners.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BaseGetApiKeyResponse':
       return BaseGetApiKeyResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -375,6 +392,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return TypoToleranceEnum.fromJson(value) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Widgets':
+      return Widgets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'WithPrimary':
       return WithPrimary.fromJson(value as Map<String, dynamic>) as ReturnType;
     default:

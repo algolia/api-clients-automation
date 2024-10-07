@@ -34,5 +34,6 @@ package algoliasearch.recommend
   */
 case class RenderingContent(
     facetOrdering: Option[FacetOrdering] = scala.None,
-    redirect: Option[RedirectURL] = scala.None
+    redirect: Option[RedirectURL] = scala.None,
+    widgets: Option[Widgets] = scala.None
 )
