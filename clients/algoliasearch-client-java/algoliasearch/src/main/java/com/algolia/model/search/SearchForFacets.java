@@ -485,9 +485,10 @@ public class SearchForFacets implements SearchQuery {
 
   /**
    * Coordinates for the center of a circle, expressed as a comma-separated string of latitude and
-   * longitude. Only records included within circle around this central location are included in the
-   * results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius`
-   * settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
+   * longitude. Only records included within a circle around this central location are included in
+   * the results. The radius of the circle is determined by the `aroundRadius` and
+   * `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon`
+   * or `insideBoundingBox`.
    */
   @javax.annotation.Nullable
   public String getAroundLatLng() {
@@ -1252,7 +1253,7 @@ public class SearchForFacets implements SearchQuery {
    * `optionalWords` has less than 10 words, the required number of matched words increases by 1:
    * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If
    * `optionalWords` has 10 or more words, the number of required matched words increases by the
-   * number of optional words dividied by 5 (rounded down). For example, with 18 optional words:
+   * number of optional words divided by 5 (rounded down). For example, with 18 optional words:
    * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words. For more
    * information, see [Optional
    * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
@@ -1279,7 +1280,7 @@ public class SearchForFacets implements SearchQuery {
    * Searchable attributes for which you want to [turn off the Exact ranking
    * criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
    * Attribute names are case-sensitive. This can be useful for attributes with long values, where
-   * the likelyhood of an exact match is high, such as product descriptions. Turning off the Exact
+   * the likelihood of an exact match is high, such as product descriptions. Turning off the Exact
    * ranking criterion for these attributes favors exact matching on other attributes. This reduces
    * the impact of individual attributes with a lot of content on ranking.
    */
@@ -1371,7 +1372,7 @@ public class SearchForFacets implements SearchQuery {
    * and a search for `home`, records matching either \"home\" or \"house\" are included in the
    * search results, and either \"home\" or \"house\" are highlighted. With
    * `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,
-   * but all occurences of \"house\" are replaced by \"home\" in the highlighted response.
+   * but all occurrences of \"house\" are replaced by \"home\" in the highlighted response.
    */
   @javax.annotation.Nullable
   public Boolean getReplaceSynonymsInHighlight() {

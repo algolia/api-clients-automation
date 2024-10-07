@@ -443,9 +443,10 @@ public class FallbackParams {
 
   /**
    * Coordinates for the center of a circle, expressed as a comma-separated string of latitude and
-   * longitude. Only records included within circle around this central location are included in the
-   * results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius`
-   * settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
+   * longitude. Only records included within a circle around this central location are included in
+   * the results. The radius of the circle is determined by the `aroundRadius` and
+   * `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon`
+   * or `insideBoundingBox`.
    */
   @javax.annotation.Nullable
   public String getAroundLatLng() {
@@ -749,8 +750,8 @@ public class FallbackParams {
    * [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
    * Facets are attributes that let you categorize search results. They can be used for filtering
    * search results. By default, no attribute is used for faceting. Attribute names are
-   * case-sensitive. **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows using this attribute as a
-   * filter, but doesn't evalue the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching
+   * case-sensitive. **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows the attribute to be used as
+   * a filter but doesn't evaluate the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching
    * for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_
    * deduplication with `distinct`. This ensures accurate facet counts. You can apply this modifier
    * to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
@@ -781,7 +782,7 @@ public class FallbackParams {
    * use replica indices. All index operations on a primary index are automatically forwarded to its
    * replicas. To add a replica index, you must provide the complete set of replicas to this
    * parameter. If you omit a replica from this list, the replica turns into a regular, standalone
-   * index that will no longer by synced with the primary index. **Modifier** -
+   * index that will no longer be synced with the primary index. **Modifier** -
    * `virtual(\"REPLICA\")`. Create a virtual replica, Virtual replicas don't increase the number of
    * records and are optimized for [Relevant
    * sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
@@ -1005,9 +1006,9 @@ public class FallbackParams {
    * Numeric attributes that can be used as [numerical
    * filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
    * Attribute names are case-sensitive. By default, all numeric attributes are available as
-   * numerical filters. For faster indexing, reduce the number of numeric attributes. If you want to
-   * turn off filtering for all numeric attributes, specifiy an attribute that doesn't exist in your
-   * index, such as `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support only
+   * numerical filters. For faster indexing, reduce the number of numeric attributes. To turn off
+   * filtering for all numeric attributes, specify an attribute that doesn't exist in your index,
+   * such as `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support only
    * filtering based on equality comparisons `=` and `!=`.
    */
   @javax.annotation.Nullable
@@ -1056,7 +1057,8 @@ public class FallbackParams {
    * information, see [Searchable
    * attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
    * **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute.
-   * Without modifier, matches at the beginning of an attribute rank higer than matches at the end.
+   * Without a modifier, matches at the beginning of an attribute rank higher than matches at the
+   * end.
    */
   @javax.annotation.Nullable
   public List<String> getSearchableAttributes() {
@@ -1526,7 +1528,7 @@ public class FallbackParams {
    * `optionalWords` has less than 10 words, the required number of matched words increases by 1:
    * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If
    * `optionalWords` has 10 or more words, the number of required matched words increases by the
-   * number of optional words dividied by 5 (rounded down). For example, with 18 optional words:
+   * number of optional words divided by 5 (rounded down). For example, with 18 optional words:
    * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words. For more
    * information, see [Optional
    * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
@@ -1553,7 +1555,7 @@ public class FallbackParams {
    * Searchable attributes for which you want to [turn off the Exact ranking
    * criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
    * Attribute names are case-sensitive. This can be useful for attributes with long values, where
-   * the likelyhood of an exact match is high, such as product descriptions. Turning off the Exact
+   * the likelihood of an exact match is high, such as product descriptions. Turning off the Exact
    * ranking criterion for these attributes favors exact matching on other attributes. This reduces
    * the impact of individual attributes with a lot of content on ranking.
    */
@@ -1645,7 +1647,7 @@ public class FallbackParams {
    * and a search for `home`, records matching either \"home\" or \"house\" are included in the
    * search results, and either \"home\" or \"house\" are highlighted. With
    * `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,
-   * but all occurences of \"house\" are replaced by \"home\" in the highlighted response.
+   * but all occurrences of \"house\" are replaced by \"home\" in the highlighted response.
    */
   @javax.annotation.Nullable
   public Boolean getReplaceSynonymsInHighlight() {
