@@ -2,6 +2,11 @@ import 'package:algolia_client_recommend/src/model/advanced_syntax_features.dart
 import 'package:algolia_client_recommend/src/model/alternatives_as_exact.dart';
 import 'package:algolia_client_recommend/src/model/around_radius_all.dart';
 import 'package:algolia_client_recommend/src/model/auto_facet_filter.dart';
+import 'package:algolia_client_recommend/src/model/banner.dart';
+import 'package:algolia_client_recommend/src/model/banner_image.dart';
+import 'package:algolia_client_recommend/src/model/banner_image_url.dart';
+import 'package:algolia_client_recommend/src/model/banner_link.dart';
+import 'package:algolia_client_recommend/src/model/banners.dart';
 import 'package:algolia_client_recommend/src/model/base_index_settings.dart';
 import 'package:algolia_client_recommend/src/model/base_recommend_index_settings.dart';
 import 'package:algolia_client_recommend/src/model/base_recommend_request.dart';
@@ -76,6 +81,7 @@ import 'package:algolia_client_recommend/src/model/trending_items_model.dart';
 import 'package:algolia_client_recommend/src/model/trending_items_query.dart';
 import 'package:algolia_client_recommend/src/model/typo_tolerance_enum.dart';
 import 'package:algolia_client_recommend/src/model/value.dart';
+import 'package:algolia_client_recommend/src/model/widgets.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -105,6 +111,17 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AutoFacetFilter':
       return AutoFacetFilter.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Banner':
+      return Banner.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImage':
+      return BannerImage.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImageUrl':
+      return BannerImageUrl.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BannerLink':
+      return BannerLink.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Banners':
+      return Banners.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BaseIndexSettings':
       return BaseIndexSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -297,6 +314,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return TypoToleranceEnum.fromJson(value) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Widgets':
+      return Widgets.fromJson(value as Map<String, dynamic>) as ReturnType;
     default:
       RegExpMatch? match;
 

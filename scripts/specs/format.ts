@@ -65,7 +65,7 @@ export async function transformBundle({
 
   if (docs) {
     const snippets = transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples)));
-    await fsp.writeFile(toAbsolutePath(`snippets/guides/${clientName}-snippets.json`), snippets);
+    await fsp.writeFile(toAbsolutePath(`guides/${clientName}-snippets.json`), snippets);
   }
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {

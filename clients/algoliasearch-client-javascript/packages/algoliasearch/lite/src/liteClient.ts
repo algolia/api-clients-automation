@@ -22,7 +22,7 @@ import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '5.6.1';
+export const apiClientVersion = '5.7.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -243,7 +243,7 @@ export function createLiteClient({
     },
 
     /**
-     * Sends multiple search request to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+     * Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
      *
      * Required API Key ACLs:
      * - search.

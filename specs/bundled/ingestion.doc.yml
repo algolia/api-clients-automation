@@ -222,8 +222,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -298,29 +300,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -469,8 +453,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -545,29 +531,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -716,8 +684,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -792,29 +762,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -958,8 +910,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1035,29 +989,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1216,8 +1152,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1286,27 +1224,11 @@ paths:
             response = client.list_authentications()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_authentications_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1474,8 +1396,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1576,37 +1500,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.create_authentication_with_http_info(
-                authentication_create={
-                    "type": "oauth",
-                    "name": "authName",
-                    "input": {
-                        "url": "http://test.oauth",
-                        "client_id": "myID",
-                        "client_secret": "mySecret",
-                    },
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1791,8 +1689,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1881,34 +1781,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_authentications_with_http_info(
-                authentication_search={
-                    "authenticationIDs": [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2066,8 +1943,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2143,29 +2022,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_authentication_with_http_info(
-                authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2321,8 +2182,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2408,32 +2271,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_authentication_with_http_info(
-                authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                authentication_update={
-                    "name": "newName",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2592,8 +2434,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2669,29 +2513,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_authentication_with_http_info(
-                authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2854,8 +2680,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2924,27 +2752,11 @@ paths:
             response = client.list_destinations()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_destinations_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3107,8 +2919,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -3207,36 +3021,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.create_destination_with_http_info(
-                destination_create={
-                    "type": "search",
-                    "name": "destinationName",
-                    "input": {
-                        "indexName": "<YOUR_INDEX_NAME>",
-                    },
-                    "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3421,8 +3210,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -3511,34 +3302,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_destinations_with_http_info(
-                destination_search={
-                    "destinationIDs": [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3698,8 +3466,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -3775,29 +3545,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_destination_with_http_info(
-                destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3953,8 +3705,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4040,32 +3794,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_destination_with_http_info(
-                destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                destination_update={
-                    "name": "newName",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4223,8 +3956,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4300,29 +4035,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_destination_with_http_info(
-                destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4483,8 +4200,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4553,27 +4272,11 @@ paths:
             response = client.list_sources()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_sources_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4752,8 +4455,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -4869,43 +4574,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.create_source_with_http_info(
-                source_create={
-                    "type": "commercetools",
-                    "name": "sourceName",
-                    "input": {
-                        "storeKeys": [
-                            "myStore",
-                        ],
-                        "locales": [
-                            "de",
-                        ],
-                        "url": "http://commercetools.com",
-                        "projectKey": "keyID",
-                    },
-                    "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5119,8 +4792,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -5236,43 +4911,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.validate_source_with_http_info(
-                source_create={
-                    "type": "commercetools",
-                    "name": "sourceName",
-                    "input": {
-                        "storeKeys": [
-                            "myStore",
-                        ],
-                        "locales": [
-                            "de",
-                        ],
-                        "url": "http://commercetools.com",
-                        "projectKey": "keyID",
-                    },
-                    "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5473,8 +5116,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -5563,34 +5208,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_sources_with_http_info(
-                source_search={
-                    "sourceIDs": [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5746,8 +5368,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -5823,29 +5447,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_source_with_http_info(
-                source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6000,8 +5606,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6087,32 +5695,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_source_with_http_info(
-                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                source_update={
-                    "name": "newName",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6270,8 +5857,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6347,29 +5936,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_source_with_http_info(
-                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6528,8 +6099,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6615,32 +6188,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.validate_source_before_update_with_http_info(
-                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                source_update={
-                    "name": "newName",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6799,8 +6351,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -6876,29 +6430,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.trigger_docker_source_discover_with_http_info(
-                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7082,8 +6618,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -7193,40 +6731,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.run_source_with_http_info(
-                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                run_source_payload={
-                    "indexToInclude": [
-                        "products_us",
-                        "products eu",
-                    ],
-                    "entityIDs": [
-                        "1234",
-                        "5678",
-                    ],
-                    "entityType": "product",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7412,8 +6921,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -7482,27 +6993,11 @@ paths:
             response = client.list_tasks_v1()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_tasks_v1_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7666,8 +7161,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -7766,36 +7263,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.create_task_v1_with_http_info(
-                task_create={
-                    "sourceID": "search",
-                    "destinationID": "destinationName",
-                    "trigger": {
-                        "type": "onDemand",
-                    },
-                    "action": "replace",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7989,8 +7461,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -8086,35 +7560,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_tasks_v1_with_http_info(
-                task_search={
-                    "taskIDs": [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                        "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8283,8 +7733,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -8360,29 +7812,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_task_v1_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8537,8 +7971,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -8624,32 +8060,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_task_v1_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                task_update={
-                    "enabled": False,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8803,8 +8218,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -8880,29 +8297,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_task_v1_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9054,8 +8453,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -9131,29 +8532,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.run_task_v1_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9304,8 +8687,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -9381,29 +8766,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.enable_task_v1_with_http_info(
-                task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9555,8 +8922,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -9632,29 +9001,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.disable_task_v1_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9818,8 +9169,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -9888,27 +9241,11 @@ paths:
             response = client.list_tasks()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_tasks_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10059,8 +9396,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -10147,33 +9486,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.create_task_with_http_info(
-                task_create={
-                    "sourceID": "search",
-                    "destinationID": "destinationName",
-                    "action": "replace",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10354,8 +9671,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -10451,35 +9770,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_tasks_with_http_info(
-                task_search={
-                    "taskIDs": [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                        "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10646,8 +9941,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -10723,29 +10020,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_task_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10895,8 +10174,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -10985,33 +10266,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_task_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                task_update={
-                    "enabled": False,
-                    "cron": "* * * * *",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11164,8 +10423,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -11241,29 +10502,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_task_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11415,8 +10658,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -11492,29 +10737,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.run_task_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11726,8 +10953,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -11858,44 +11087,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.push_task_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                push_task_payload={
-                    "action": "addObject",
-                    "records": [
-                        {
-                            "key": "bar",
-                            "foo": "1",
-                            "objectID": "o",
-                        },
-                        {
-                            "key": "baz",
-                            "foo": "2",
-                            "objectID": "k",
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12082,8 +11278,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -12159,29 +11357,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.enable_task_with_http_info(
-                task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12331,8 +11511,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -12408,29 +11590,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.disable_task_with_http_info(
-                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12590,8 +11754,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -12660,27 +11826,11 @@ paths:
             response = client.list_transformations()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_transformations_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12832,8 +11982,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -12920,33 +12072,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.create_transformation_with_http_info(
-                transformation_create={
-                    "code": "foo",
-                    "name": "bar",
-                    "description": "baz",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13123,8 +12253,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -13216,34 +12348,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.try_transformation_with_http_info(
-                transformation_try={
-                    "code": "foo",
-                    "sampleRecord": {
-                        "bar": "baz",
-                    },
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13423,8 +12532,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -13520,35 +12631,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_transformations_with_http_info(
-                transformation_search={
-                    "transformationIDs": [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                        "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13715,8 +12802,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -13792,29 +12881,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_transformation_with_http_info(
-                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13973,8 +13044,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -14066,34 +13139,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_transformation_with_http_info(
-                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                transformation_create={
-                    "code": "foo",
-                    "name": "bar",
-                    "description": "baz",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14248,8 +13298,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -14325,29 +13377,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_transformation_with_http_info(
-                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14519,8 +13553,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -14617,36 +13653,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response =
-            client.try_transformation_before_update_with_http_info(
-                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                transformation_try={
-                    "code": "foo",
-                    "sampleRecord": {
-                        "bar": "baz",
-                    },
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14817,8 +13828,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -14887,27 +13900,11 @@ paths:
             response = client.list_runs()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_runs_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15054,8 +14051,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -15131,29 +14130,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_run_with_http_info(
-                run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15337,8 +14318,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -15414,29 +14397,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_events_with_http_info(
-                run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15586,8 +14551,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = ingestionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -15668,30 +14635,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_event_with_http_info(
-                run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >

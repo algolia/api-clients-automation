@@ -222,8 +222,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -298,29 +300,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -482,8 +466,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -558,29 +544,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -742,8 +710,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -818,29 +788,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -997,8 +949,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1074,29 +1028,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1734,8 +1670,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1878,49 +1816,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.push_events_with_http_info(
-                insights_events={
-                    "events": [
-                        {
-                            "eventType": "click",
-                            "eventName": "Product Clicked",
-                            "index": "products",
-                            "userToken": "user-123456",
-                            "authenticatedUserToken": "user-123456",
-                            "timestamp": 1641290601962,
-                            "objectIDs": [
-                                "9780545139700",
-                                "9780439784542",
-                            ],
-                            "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
-                            "positions": [
-                                7,
-                                6,
-                            ],
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2138,8 +2038,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2198,13 +2100,6 @@ paths:
             # Call the API
 
             client.delete_user_token(
-                user_token="test-user-1",
-            )
-
-
-            # Skip deserialization
-
-            client.delete_user_token_with_http_info(
                 user_token="test-user-1",
             )
 

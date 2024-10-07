@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Search API
   description: >
-    The Algolia Search API lets you search, configure, and mange your indices
+    The Algolia Search API lets you search, configure, and manage your indices
     and records.
 
 
@@ -42,7 +42,7 @@ info:
     ## Retry strategy
 
 
-    To guarantee a high availability, implement a retry strategy for all API
+    To guarantee high availability, implement a retry strategy for all API
     requests using the URLs of your servers as fallbacks:
 
 
@@ -233,10 +233,10 @@ tags:
 
       Rules are _if-then_ statements that you can use to curate search results.
 
-      Rules have _conditions_ which can trigger _consequences_.
+      Rules have _conditions_ that can trigger _consequences_.
 
       Consequences are changes to the search results, such as changing the order
-      of search results, or boosting a facet.
+      of search results or boosting a facet.
 
       This can be useful for tuning specific queries or for merchandising.
     externalDocs:
@@ -369,6 +369,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -444,29 +446,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -631,6 +615,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -706,29 +692,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -893,6 +861,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -968,29 +938,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1150,6 +1102,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1226,29 +1180,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1319,7 +1255,7 @@ paths:
         - search
       summary: Search an index
       description: >
-        Searches a single index and return matching search results (_hits_).
+        Searches a single index and returns matching search results (_hits_).
 
 
         This method lets you retrieve up to 1,000 hits.
@@ -1428,6 +1364,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1504,29 +1442,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_single_index_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1599,7 +1519,7 @@ paths:
         - search
       summary: Search multiple indices
       description: >
-        Sends multiple search request to one or more indices.
+        Sends multiple search requests to one or more indices.
 
 
         This can be useful in these cases:
@@ -1761,6 +1681,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1860,37 +1782,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_with_http_info(
-                search_method_params={
-                    "requests": [
-                        {
-                            "indexName": "<YOUR_INDEX_NAME>",
-                            "query": "<YOUR_QUERY>",
-                            "hitsPerPage": 50,
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2106,6 +2002,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2185,30 +2083,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_for_facet_values_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                facet_name="facetName",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2322,7 +2201,7 @@ paths:
 
         - `optionalFilters`: `[]`
 
-        - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to
+        - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
         `true`)
 
 
@@ -2427,6 +2306,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2503,29 +2384,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.browse_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2621,7 +2484,7 @@ paths:
       requestBody:
         required: true
         description: >-
-          The record, a schemaless object with attributes that are useful in the
+          The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
         content:
           application/json:
@@ -2746,6 +2609,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2839,33 +2704,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                body={
-                    "objectID": "id",
-                    "test": "val",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3047,6 +2890,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3123,29 +2968,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_index_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3347,6 +3174,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3439,34 +3268,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-                attributes_to_retrieve=[
-                    "attr1",
-                    "attr2",
-                ],
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3558,7 +3364,7 @@ paths:
       requestBody:
         required: true
         description: >-
-          The record, a schemaless object with attributes that are useful in the
+          The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
         content:
           application/json:
@@ -3669,6 +3475,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3762,33 +3570,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.add_or_update_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-                body={
-                    "key": "value",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3965,6 +3751,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -4044,30 +3832,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4250,6 +4019,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -4334,32 +4105,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_by_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                delete_by_params={
-                    "filters": "brand:brandName",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4528,6 +4278,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -4604,29 +4356,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.clear_objects_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4697,7 +4431,7 @@ paths:
       summary: Add or update attributes
       x-codegen-request-body-name: attributesToUpdate
       description: >
-        Adds new attributes to a record, or update existing ones.
+        Adds new attributes to a record, or updates existing ones.
 
 
         - If a record with the specified object ID doesn't exist,
@@ -4736,8 +4470,8 @@ paths:
         the whole object update. For example, if you pass an IncrementSet value
         of 2 for the version attribute, and the current value of the attribute
         is 1, the engine updates the object. If the object doesn't exist yet,
-        the engine only creates it if you pass an IncrementSet value that's
-        greater than 0.
+        the engine only creates it if you pass an IncrementSet value greater
+        than 0.
 
 
         You can specify an operation by providing an object with the attribute
@@ -4871,6 +4605,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -4964,33 +4700,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.partial_update_object_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-                attributes_to_update={
-                    "attributeId": "new value",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5241,6 +4955,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -5386,47 +5102,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.batch_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                batch_write_params={
-                    "requests": [
-                        {
-                            "action": "addObject",
-                            "body": {
-                                "key": "bar",
-                                "foo": "1",
-                            },
-                        },
-                        {
-                            "action": "addObject",
-                            "body": {
-                                "key": "baz",
-                                "foo": "2",
-                            },
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5720,6 +5400,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -5827,39 +5509,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.multiple_batch_with_http_info(
-                batch_params={
-                    "requests": [
-                        {
-                            "action": "addObject",
-                            "body": {
-                                "key": "value",
-                            },
-                            "indexName": "<YOUR_INDEX_NAME>",
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6137,6 +5791,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6243,40 +5899,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_objects_with_http_info(
-                get_objects_params={
-                    "requests": [
-                        {
-                            "attributesToRetrieve": [
-                                "attr1",
-                                "attr2",
-                            ],
-                            "objectID": "uniqueID",
-                            "indexName": "<YOUR_INDEX_NAME>",
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6461,6 +6088,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6537,29 +6166,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_settings_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6758,6 +6369,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6854,36 +6467,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.set_settings_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                index_settings={
-                    "attributesForFaceting": [
-                        "actor",
-                        "filterOnly(category)",
-                        "searchable(publisher)",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6965,7 +6553,7 @@ paths:
         - settings
       summary: Retrieve a synonym
       description: |
-        Retrieves a syonym by its ID.
+        Retrieves a synonym by its ID.
         To find the object IDs for your synonyms,
         use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
       parameters:
@@ -7065,6 +6653,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -7144,30 +6734,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_synonym_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7387,6 +6958,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -7497,40 +7070,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_synonym_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-                synonym_hit={
-                    "objectID": "id1",
-                    "type": "synonym",
-                    "synonyms": [
-                        "car",
-                        "vehicule",
-                        "auto",
-                    ],
-                },
-                forward_to_replicas=True,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -7714,6 +7258,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -7793,30 +7339,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_synonym_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8046,6 +7573,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8193,52 +7722,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_synonyms_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                synonym_hit=[
-                    {
-                        "objectID": "id1",
-                        "type": "synonym",
-                        "synonyms": [
-                            "car",
-                            "vehicule",
-                            "auto",
-                        ],
-                    },
-                    {
-                        "objectID": "id2",
-                        "type": "onewaysynonym",
-                        "input": "iphone",
-                        "synonyms": [
-                            "ephone",
-                            "aphone",
-                            "yphone",
-                        ],
-                    },
-                ],
-                forward_to_replicas=True,
-                replace_existing_synonyms=True,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8435,6 +7923,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8511,29 +8001,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.clear_synonyms_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8718,6 +8190,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8794,29 +8268,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_synonyms_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -8986,6 +8442,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -9055,27 +8513,11 @@ paths:
             response = client.list_api_keys()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_api_keys_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9268,6 +8710,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -9373,38 +8817,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.add_api_key_with_http_info(
-                api_key={
-                    "acl": [
-                        "search",
-                        "addObject",
-                    ],
-                    "description": "my new api key",
-                    "validity": 300,
-                    "maxQueriesPerIPPerHour": 100,
-                    "maxHitsPerQuery": 20,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9595,6 +9012,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -9670,29 +9089,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_api_key_with_http_info(
-                key="myTestApiKey",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -9897,6 +9298,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -9999,38 +9402,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.update_api_key_with_http_info(
-                key="ALGOLIA_API_KEY",
-                api_key={
-                    "acl": [
-                        "search",
-                        "addObject",
-                    ],
-                    "validity": 300,
-                    "maxQueriesPerIPPerHour": 100,
-                    "maxHitsPerQuery": 20,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10217,6 +9593,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -10292,29 +9670,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_api_key_with_http_info(
-                key="myTestApiKey",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10488,6 +9848,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -10564,29 +9926,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.restore_api_key_with_http_info(
-                key="ALGOLIA_API_KEY",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -10757,6 +10101,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -10836,30 +10182,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="qr-1725004648916",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11065,6 +10392,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -11172,39 +10501,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-                rule={
-                    "objectID": "id1",
-                    "conditions": [
-                        {
-                            "pattern": "apple",
-                            "anchoring": "contains",
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11392,6 +10693,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -11471,30 +10774,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -11734,6 +11018,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -11880,51 +11166,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.save_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                rules=[
-                    {
-                        "objectID": "a-rule-id",
-                        "conditions": [
-                            {
-                                "pattern": "smartphone",
-                                "anchoring": "contains",
-                            },
-                        ],
-                    },
-                    {
-                        "objectID": "a-second-rule-id",
-                        "conditions": [
-                            {
-                                "pattern": "apple",
-                                "anchoring": "contains",
-                            },
-                        ],
-                    },
-                ],
-                forward_to_replicas=False,
-                clear_existing_rules=True,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12132,6 +11378,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -12208,29 +11456,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.clear_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12455,6 +11685,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -12539,32 +11771,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                search_rules_params={
-                    "query": "zorro",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -12836,6 +12047,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -12988,51 +12201,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.batch_dictionary_entries_with_http_info(
-                dictionary_name="plurals",
-                batch_dictionary_entries_params={
-                    "clearExistingDictionaryEntries": True,
-                    "requests": [
-                        {
-                            "action": "addEntry",
-                            "body": {
-                                "objectID": "1",
-                                "language": "en",
-                                "word": "fancy",
-                                "words": [
-                                    "believe",
-                                    "algolia",
-                                ],
-                                "decomposition": [
-                                    "trust",
-                                    "algolia",
-                                ],
-                                "state": "enabled",
-                            },
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13276,6 +12449,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -13362,32 +12537,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_dictionary_entries_with_http_info(
-                dictionary_name="stopwords",
-                search_dictionary_entries_params={
-                    "query": "about",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13560,6 +12714,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -13629,27 +12785,11 @@ paths:
             response = client.get_dictionary_settings()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_dictionary_settings_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -13861,6 +13001,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -13955,37 +13097,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.set_dictionary_settings_with_http_info(
-                dictionary_settings_params={
-                    "disableStandardEntries": {
-                        "plurals": {
-                            "fr": False,
-                            "en": False,
-                            "ru": True,
-                        },
-                    },
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14166,6 +13282,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -14235,27 +13353,11 @@ paths:
             response = client.get_dictionary_languages()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_dictionary_languages_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14442,6 +13544,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -14528,32 +13632,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.assign_user_id_with_http_info(
-                x_algolia_user_id="userID",
-                assign_user_id_params={
-                    "cluster": "theCluster",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -14737,6 +13820,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -14806,27 +13891,11 @@ paths:
             response = client.list_user_ids()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_user_ids_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15031,6 +14100,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -15127,36 +14198,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.batch_assign_user_ids_with_http_info(
-                x_algolia_user_id="userID",
-                batch_assign_user_ids_params={
-                    "cluster": "theCluster",
-                    "users": [
-                        "user1",
-                        "user2",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15349,6 +14395,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -15418,27 +14466,11 @@ paths:
             response = client.get_top_user_ids()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_user_ids_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15608,6 +14640,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -15683,29 +14717,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_user_id_with_http_info(
-                user_id="uniqueID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -15875,6 +14891,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -15950,29 +14968,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.remove_user_id_with_http_info(
-                user_id="uniqueID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -16142,6 +15142,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -16211,27 +15213,11 @@ paths:
             response = client.list_clusters()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_clusters_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -16498,6 +15484,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -16592,34 +15580,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_user_ids_with_http_info(
-                search_user_ids_params={
-                    "query": "test",
-                    "clusterName": "theClusterName",
-                    "page": 5,
-                    "hitsPerPage": 10,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -16820,6 +15785,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -16889,27 +15856,11 @@ paths:
             response = client.has_pending_mappings()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.has_pending_mappings_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -17066,6 +16017,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -17135,27 +16088,11 @@ paths:
             response = client.get_sources()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_sources_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -17342,6 +16279,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -17432,34 +16371,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.replace_sources_with_http_info(
-                source=[
-                    {
-                        "source": "theSource",
-                        "description": "theDescription",
-                    },
-                ],
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -17641,6 +16557,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -17725,32 +16643,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.append_source_with_http_info(
-                source={
-                    "source": "theSource",
-                    "description": "theDescription",
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -17934,6 +16831,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -18009,29 +16908,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_source_with_http_info(
-                source="theSource",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -18371,6 +17252,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -18440,27 +17323,11 @@ paths:
             response = client.get_logs()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_logs_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -18629,6 +17496,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -18704,29 +17573,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_app_task_with_http_info(
-                task_id=123,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -18911,6 +17762,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -18990,30 +17843,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_task_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                task_id=123,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -19119,7 +17953,7 @@ paths:
         - Moving a source index that doesn't exist is ignored without returning
         an error.
 
-        - When moving an index, the analytics data keep their original name and
+        - When moving an index, the analytics data keeps its original name, and
         a new set of analytics data is started for the new name.
           To access the original analytics in the dashboard, create an index with the original name.
         - If the destination index has replicas, moving will overwrite the
@@ -19275,6 +18109,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -19374,37 +18210,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.operation_index_with_http_info(
-                index_name="<SOURCE_INDEX_NAME>",
-                operation_index_params={
-                    "operation": "move",
-                    "destination": "<DESTINATION_INDEX_NAME>",
-                    "scope": [
-                        "rules",
-                        "settings",
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -19585,6 +18395,8 @@ paths:
           source: >
             // Initialize the client
 
+            //
+
             const client = searchClient('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -19654,27 +18466,11 @@ paths:
             response = client.list_indices()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_indices_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -19917,7 +18713,9 @@ components:
 
 
         You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`,
-        `>=`. Comparsions are precise up to 3 decimals.
+        `>=`.
+
+        Comparisons are precise up to 3 decimals.
 
         You can also provide ranges: `facet:<lower> TO <upper>`. The range
         includes the lower and upper boundaries.
@@ -19976,7 +18774,7 @@ components:
         string of latitude and longitude.
 
 
-        Only records included within circle around this central location are
+        Only records included within a circle around this central location are
         included in the results.
 
         The radius of the circle is determined by the `aroundRadius` and
@@ -20506,8 +19304,8 @@ components:
 
 
         If typo tolerance is true, `min`, or `strict`, [word splitting and
-        concetenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
-        is also active.
+        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+        are also active.
       oneOf:
         - type: boolean
           default: true
@@ -20590,7 +19388,7 @@ components:
         Determines if and how query words are interpreted as prefixes.
 
 
-        By default, only the last query word is treated as prefix
+        By default, only the last query word is treated as a prefix
         (`prefixLast`).
 
         To turn off prefix search, use `prefixNone`.
@@ -20836,13 +19634,59 @@ components:
       properties:
         url:
           type: string
+    bannerImageUrl:
+      description: url for a search banner image.
+      type: array
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+    bannerImage:
+      description: image of a search banner.
+      type: object
+      additionalProperties: false
+      properties:
+        urls:
+          $ref: '#/components/schemas/bannerImageUrl'
+        title:
+          type: string
+    bannerLink:
+      description: link for a banner defined in merchandising studio.
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+    banner:
+      description: a search banner with image and url.
+      type: object
+      additionalProperties: false
+      properties:
+        image:
+          $ref: '#/components/schemas/bannerImage'
+        link:
+          $ref: '#/components/schemas/bannerLink'
+    banners:
+      description: banners defined in the merchandising studio for the given search.
+      type: array
+      additionalProperties: false
+      properties:
+        banners:
+          $ref: '#/components/schemas/banner'
+    widgets:
+      description: widgets returned from any rules that are applied to the current search.
+      type: object
+      additionalProperties: false
+      properties:
+        banners:
+          $ref: '#/components/schemas/banners'
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
 
 
-        You can use this to control aspects of your search UI, such as, the
-        order of facet names and values
+        You can use this to control aspects of your search UI, such as the order
+        of facet names and values
 
         without changing your frontend code.
       type: object
@@ -20852,6 +19696,8 @@ components:
           $ref: '#/components/schemas/facetOrdering'
         redirect:
           $ref: '#/components/schemas/redirectURL'
+        widgets:
+          $ref: '#/components/schemas/widgets'
       x-categories:
         - Advanced
     reRankingApplyFilter:
@@ -21301,8 +20147,8 @@ components:
             matched words increases by 1:
               results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
             - If `optionalWords` has 10 or more words, the number of required
-            matched words increases by the number of optional words dividied by
-            5 (rounded down).
+            matched words increases by the number of optional words divided by 5
+            (rounded down).
               For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
 
             For more information, see [Optional
@@ -21325,7 +20171,7 @@ components:
 
 
             This can be useful for attributes with long values, where the
-            likelyhood of an exact match is high,
+            likelihood of an exact match is high,
 
             such as product descriptions.
 
@@ -21405,7 +20251,7 @@ components:
             With `replaceSynonymsInHighlight` set to `true`, a search for `home`
             still matches the same records,
 
-            but all occurences of "house" are replaced by "home" in the
+            but all occurrences of "house" are replaced by "home" in the
             highlighted response.
           default: false
           x-categories:
@@ -22360,7 +21206,7 @@ components:
 
 
             - `filterOnly("ATTRIBUTE")`.
-              Allows using this attribute as a filter, but doesn't evalue the facet values.
+              Allows the attribute to be used as a filter but doesn't evaluate the facet values.
 
             - `searchable("ATTRIBUTE")`.
               Allows searching for facet values.
@@ -22397,7 +21243,7 @@ components:
             replicas to this parameter.
 
             If you omit a replica from this list, the replica turns into a
-            regular, standalone index that will no longer by synced with the
+            regular, standalone index that will no longer be synced with the
             primary index.
 
 
@@ -22601,8 +21447,8 @@ components:
             For faster indexing, reduce the number of numeric attributes.
 
 
-            If you want to turn off filtering for all numeric attributes,
-            specifiy an attribute that doesn't exist in your index, such as
+            To turn off filtering for all numeric attributes, specify an
+            attribute that doesn't exist in your index, such as
             `NO_NUMERIC_FILTERING`.
 
 
@@ -22676,8 +21522,8 @@ components:
             - `unordered("ATTRIBUTE")`.
               Ignore the position of a match within the attribute.
 
-            Without modifier, matches at the beginning of an attribute rank
-            higer than matches at the end.
+            Without a modifier, matches at the beginning of an attribute rank
+            higher than matches at the end.
           default: []
           x-categories:
             - Attributes
@@ -22953,7 +21799,7 @@ components:
 
 
             Creating an API key fails if the request is made from an IP address
-            that's outside the restricted range.
+            outside the restricted range.
           example: typoTolerance=strict&restrictSources=192.168.1.0/24
           default: ''
         referers:
@@ -23018,12 +21864,12 @@ components:
       description: |
         Which part of the search query the pattern should match:
 
-        - `startsWith`. The pattern must match the begginning of the query.
+        - `startsWith`. The pattern must match the beginning of the query.
         - `endsWith`. The pattern must match the end of the query.
         - `is`. The pattern must match the query exactly.
         - `contains`. The pattern must match anywhere in the query.
 
-        Empty queries are only allowed as pattern with `anchoring: is`.
+        Empty queries are only allowed as patterns with `anchoring: is`.
       enum:
         - is
         - startsWith

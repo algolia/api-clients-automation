@@ -1,8 +1,18 @@
+_ALIASES = {
+    {{#vars}}
+      "{{name}}": "{{{baseName}}}",
+    {{/vars}}
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
+
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
 {{> model_description}}
 
 {{#vars}}
-    {{name}}: {{^required}}Optional[{{/required}}{{{dataType}}}{{^required}}]{{/required}} = Field({{^required}}default=None, {{/required}}alias="{{{baseName}}}")
+    {{name}}: {{^required}}Optional[{{/required}}{{{dataType}}}{{^required}}]{{/required}}{{^required}} = None{{/required}}
     {{#description}}
     """ {{{.}}} """
     {{/description}}
@@ -64,6 +74,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        alias_generator=_alias_generator,
         {{#isAdditionalPropertiesTrue}}
         extra='allow',
         {{/isAdditionalPropertiesTrue}}
@@ -129,7 +140,9 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{/items.isContainer}}
         {{/items.isEnumOrRef}}
         {{#items.isEnumOrRef}}
-        obj["{{{baseName}}}"] = dict((_k, _v) for _k, _v in obj.get("{{{baseName}}}").items())
+        {{{baseName}}} = obj.get("{{{baseName}}}")
+        if {{{baseName}}} is not None:
+            obj["{{{baseName}}}"] = dict((_k, _v) for _k, _v in {{{baseName}}}.items())
         {{/items.isEnumOrRef}}
         {{/items.isPrimitiveType}}
         {{/isMap}}

@@ -1,4 +1,4 @@
-/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. ## Client
+/** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
   * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
   * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
@@ -6,7 +6,7 @@
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
-  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * Retry strategy To guarantee high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
   * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
@@ -86,9 +86,9 @@ import algoliasearch.search.SupportedLanguage._
   *   Number of hits to retrieve (used in combination with `offset`).
   * @param aroundLatLng
   *   Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude. Only
-  *   records included within circle around this central location are included in the results. The radius of the circle
-  *   is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also
-  *   specify `insidePolygon` or `insideBoundingBox`.
+  *   records included within a circle around this central location are included in the results. The radius of the
+  *   circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you
+  *   also specify `insidePolygon` or `insideBoundingBox`.
   * @param aroundLatLngViaIP
   *   Whether to obtain the coordinates from the request's IP address.
   * @param minimumAroundRadius
@@ -247,13 +247,13 @@ import algoliasearch.search.SupportedLanguage._
   *   search results increases for every 1,000 records: - If `optionalWords` has less than 10 words, the required number
   *   of matched words increases by 1: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched
   *   words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of
-  *   optional words dividied by 5 (rounded down). For example, with 18 optional words: results 1 to 1,000 require 1
+  *   optional words divided by 5 (rounded down). For example, with 18 optional words: results 1 to 1,000 require 1
   *   matched word, results 1,001 to 2000 need 4 matched words. For more information, see [Optional
   *   words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
   * @param disableExactOnAttributes
   *   Searchable attributes for which you want to [turn off the Exact ranking
   *   criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
-  *   Attribute names are case-sensitive. This can be useful for attributes with long values, where the likelyhood of an
+  *   Attribute names are case-sensitive. This can be useful for attributes with long values, where the likelihood of an
   *   exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes
   *   favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content
   *   on ranking.
@@ -272,7 +272,7 @@ import algoliasearch.search.SupportedLanguage._
   *   even if a synonym matches. For example, with `home` as a synonym for `house` and a search for `home`, records
   *   matching either \"home\" or \"house\" are included in the search results, and either \"home\" or \"house\" are
   *   highlighted. With `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,
-  *   but all occurences of \"house\" are replaced by \"home\" in the highlighted response.
+  *   but all occurrences of \"house\" are replaced by \"home\" in the highlighted response.
   * @param minProximity
   *   Minimum proximity score for two matching words. This adjusts the [Proximity ranking
   *   criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)

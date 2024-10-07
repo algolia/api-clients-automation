@@ -9,6 +9,11 @@ import 'package:algolia_client_search/src/model/api_key_operation.dart';
 import 'package:algolia_client_search/src/model/around_radius_all.dart';
 import 'package:algolia_client_search/src/model/assign_user_id_params.dart';
 import 'package:algolia_client_search/src/model/automatic_facet_filter.dart';
+import 'package:algolia_client_search/src/model/banner.dart';
+import 'package:algolia_client_search/src/model/banner_image.dart';
+import 'package:algolia_client_search/src/model/banner_image_url.dart';
+import 'package:algolia_client_search/src/model/banner_link.dart';
+import 'package:algolia_client_search/src/model/banners.dart';
 import 'package:algolia_client_search/src/model/base_get_api_key_response.dart';
 import 'package:algolia_client_search/src/model/base_index_settings.dart';
 import 'package:algolia_client_search/src/model/base_search_params.dart';
@@ -149,6 +154,7 @@ import 'package:algolia_client_search/src/model/user_highlight_result.dart';
 import 'package:algolia_client_search/src/model/user_hit.dart';
 import 'package:algolia_client_search/src/model/user_id.dart';
 import 'package:algolia_client_search/src/model/value.dart';
+import 'package:algolia_client_search/src/model/widgets.dart';
 import 'package:algolia_client_search/src/model/with_primary.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
@@ -195,6 +201,17 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AutomaticFacetFilter':
       return AutomaticFacetFilter.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Banner':
+      return Banner.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImage':
+      return BannerImage.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImageUrl':
+      return BannerImageUrl.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BannerLink':
+      return BannerLink.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Banners':
+      return Banners.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BaseGetApiKeyResponse':
       return BaseGetApiKeyResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -563,6 +580,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return UserId.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Widgets':
+      return Widgets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'WithPrimary':
       return WithPrimary.fromJson(value as Map<String, dynamic>) as ReturnType;
     default:

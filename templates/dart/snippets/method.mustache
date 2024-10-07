@@ -1,6 +1,6 @@
 // {{generationBanner}}
 // >IMPORT
-import '{{{import}}}';
+{{> snippets/import}}
 // IMPORT<
 
 {{#blocksRequests}}
@@ -11,7 +11,7 @@ import '{{{import}}}';
 void snippetFor{{method}}{{testIndex}}() async {
   // >SEPARATOR {{method}} {{testName}}
   // Initialize the client
-  final client = {{client}}(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY'{{#hasRegionalHost}}, region: 'ALGOLIA_APPLICATION_REGION'{{/hasRegionalHost}});
+  {{> snippets/init}}
   
   // Call the API
   {{#hasResponse}}final response = {{/hasResponse}}{{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}(

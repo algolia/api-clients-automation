@@ -1,4 +1,5 @@
 {{#isNull}}empty(){{/isNull}}
+{{#isVerbatim}}{{{value}}}{{/isVerbatim}}
 {{#isString}}"{{#lambda.escapeDollar}}{{{value}}}{{/lambda.escapeDollar}}"{{/isString}}
 {{#isNumber}}{{{value}}}{{/isNumber}}
 {{#isBoolean}}{{{value}}}{{/isBoolean}}

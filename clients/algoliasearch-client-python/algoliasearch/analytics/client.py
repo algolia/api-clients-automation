@@ -8,10 +8,10 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, Optional, Union
 from urllib.parse import quote
 
-from pydantic import Field, StrictBool, StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictStr
 from typing_extensions import Annotated
 
 if version_info >= (3, 11):
@@ -77,8 +77,9 @@ from algoliasearch.analytics.models.get_users_count_response import (
 )
 from algoliasearch.analytics.models.order_by import OrderBy
 from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.serializer import bodySerializer
+from algoliasearch.http.serializer import body_serializer
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
@@ -103,7 +104,7 @@ class AnalyticsClient:
     """
 
     _transporter: Transporter
-    _config: AnalyticsConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -115,7 +116,9 @@ class AnalyticsClient:
         config: Optional[AnalyticsConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = AnalyticsConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = AnalyticsConfig(app_id, api_key, region)
@@ -167,7 +170,7 @@ class AnalyticsClient:
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     async def custom_delete_with_http_info(
         self,
@@ -200,11 +203,11 @@ class AnalyticsClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -275,11 +278,11 @@ class AnalyticsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -354,11 +357,11 @@ class AnalyticsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -369,7 +372,7 @@ class AnalyticsClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -446,11 +449,11 @@ class AnalyticsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -461,7 +464,7 @@ class AnalyticsClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -549,16 +552,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_add_to_cart_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -661,16 +664,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_average_click_position`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -773,16 +776,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_click_positions`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -885,16 +888,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_click_through_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -997,16 +1000,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_conversion_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1109,16 +1112,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_no_click_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1221,16 +1224,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_no_results_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1333,16 +1336,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_purchase_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1445,16 +1448,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_revenue`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1557,16 +1560,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_searches_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1639,11 +1642,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1665,9 +1673,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -1680,20 +1688,20 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_searches_no_clicks`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1721,11 +1729,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1747,9 +1760,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -1777,11 +1790,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1803,9 +1821,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -1818,20 +1836,20 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_searches_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1859,11 +1877,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1885,9 +1908,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -1919,10 +1942,10 @@ class AnalyticsClient:
         if index is None:
             raise ValueError("Parameter `index` is required when calling `get_status`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1969,11 +1992,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1995,9 +2023,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2010,20 +2038,20 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_countries`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2051,11 +2079,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2077,9 +2110,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2110,11 +2143,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2138,9 +2176,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2153,22 +2191,22 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_filter_attributes`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2199,11 +2237,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2227,9 +2270,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2261,11 +2304,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2291,9 +2339,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2311,22 +2359,22 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_filter_for_attribute`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2360,11 +2408,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2390,9 +2443,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2431,11 +2484,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2459,9 +2517,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2474,22 +2532,22 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_filters_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2520,11 +2578,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2548,9 +2611,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2593,11 +2656,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2625,9 +2693,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2640,26 +2708,26 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_hits`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2702,11 +2770,16 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2734,9 +2807,9 @@ class AnalyticsClient:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2784,24 +2857,35 @@ class AnalyticsClient:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2831,9 +2915,9 @@ class AnalyticsClient:
         :type order_by: OrderBy
         :param direction: Sorting direction of the results: ascending or descending.
         :type direction: Direction
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -2846,28 +2930,28 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_searches`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if order_by is not None:
-            _query_parameters.append(("orderBy", order_by))
+            _query_parameters["orderBy"] = order_by
         if direction is not None:
-            _query_parameters.append(("direction", direction))
+            _query_parameters["direction"] = direction
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2906,24 +2990,35 @@ class AnalyticsClient:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2953,9 +3048,9 @@ class AnalyticsClient:
         :type order_by: OrderBy
         :param direction: Sorting direction of the results: ascending or descending.
         :type direction: Direction
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -3023,16 +3118,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_users_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -3109,7 +3204,7 @@ class AnalyticsClientSync:
     """
 
     _transporter: TransporterSync
-    _config: AnalyticsConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -3121,7 +3216,9 @@ class AnalyticsClientSync:
         config: Optional[AnalyticsConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = AnalyticsConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = AnalyticsConfig(app_id, api_key, region)
@@ -3172,7 +3269,7 @@ class AnalyticsClientSync:
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     def custom_delete_with_http_info(
         self,
@@ -3205,11 +3302,11 @@ class AnalyticsClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -3278,11 +3375,11 @@ class AnalyticsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3357,11 +3454,11 @@ class AnalyticsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -3372,7 +3469,7 @@ class AnalyticsClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3447,11 +3544,11 @@ class AnalyticsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -3462,7 +3559,7 @@ class AnalyticsClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3548,16 +3645,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_add_to_cart_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3660,16 +3757,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_average_click_position`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3772,16 +3869,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_click_positions`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3884,16 +3981,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_click_through_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3996,16 +4093,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_conversion_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4108,16 +4205,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_no_click_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4220,16 +4317,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_no_results_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4332,16 +4429,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_purchase_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4444,16 +4541,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_revenue`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4556,16 +4653,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_searches_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4638,11 +4735,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4664,9 +4766,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -4679,20 +4781,20 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_searches_no_clicks`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4720,11 +4822,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4746,9 +4853,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -4776,11 +4883,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4802,9 +4914,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -4817,20 +4929,20 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_searches_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4858,11 +4970,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4884,9 +5001,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -4918,10 +5035,10 @@ class AnalyticsClientSync:
         if index is None:
             raise ValueError("Parameter `index` is required when calling `get_status`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4968,11 +5085,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4994,9 +5116,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5009,20 +5131,20 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_countries`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5050,11 +5172,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5076,9 +5203,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5109,11 +5236,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5137,9 +5269,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5152,22 +5284,22 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_filter_attributes`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5198,11 +5330,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5226,9 +5363,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5260,11 +5397,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5290,9 +5432,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5310,22 +5452,22 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_filter_for_attribute`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5359,11 +5501,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5389,9 +5536,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5430,11 +5577,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5458,9 +5610,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5473,22 +5625,22 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_filters_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5519,11 +5671,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5547,9 +5704,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5592,11 +5749,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5624,9 +5786,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5639,26 +5801,26 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_hits`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5701,11 +5863,16 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5733,9 +5900,9 @@ class AnalyticsClientSync:
         :type start_date: str
         :param end_date: End date of the period to analyze, in `YYYY-MM-DD` format.
         :type end_date: str
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5783,24 +5950,35 @@ class AnalyticsClientSync:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5830,9 +6008,9 @@ class AnalyticsClientSync:
         :type order_by: OrderBy
         :param direction: Sorting direction of the results: ascending or descending.
         :type direction: Direction
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -5845,28 +6023,28 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_searches`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if order_by is not None:
-            _query_parameters.append(("orderBy", order_by))
+            _query_parameters["orderBy"] = order_by
         if direction is not None:
-            _query_parameters.append(("direction", direction))
+            _query_parameters["direction"] = direction
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5905,24 +6083,35 @@ class AnalyticsClientSync:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(
+                description="Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         offset: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=0)]],
+            Field(
+                description="Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. "
+            ),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5952,9 +6141,9 @@ class AnalyticsClientSync:
         :type order_by: OrderBy
         :param direction: Sorting direction of the results: ascending or descending.
         :type direction: Direction
-        :param limit: Number of items to return.
+        :param limit: Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
         :type limit: int
-        :param offset: Position of the first item to return.
+        :param offset: Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
         :type offset: int
         :param tags: Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
         :type tags: str
@@ -6022,16 +6211,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_users_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,

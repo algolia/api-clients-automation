@@ -30,7 +30,7 @@ export type Generator = Record<string, any> & {
   additionalProperties: AdditionalProperties;
 };
 
-export type GeneratorMode = 'client' | 'snippets' | 'tests';
+export type GeneratorMode = 'client' | 'guides' | 'snippets' | 'tests';
 
 export type RunOptions = {
   errorMessage?: string;

@@ -46,13 +46,14 @@ if version_info >= (3, 11):
 else:
   from typing_extensions import Self
 
-from algoliasearch.http.helpers import create_iterable, create_iterable_sync, RetryTimeout
-from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer
 from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.base_config import BaseConfig
+from algoliasearch.http.exceptions import RequestException, ValidUntilNotFoundException
+from algoliasearch.http.helpers import create_iterable, create_iterable_sync, RetryTimeout
 from algoliasearch.http.request_options import RequestOptions
+from algoliasearch.http.serializer import body_serializer, QueryParametersSerializer
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
-from algoliasearch.http.exceptions import RequestException, ValidUntilNotFoundException
 
 from algoliasearch.{{packageName}}.config import {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}

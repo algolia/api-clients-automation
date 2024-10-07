@@ -201,8 +201,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -277,29 +279,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -448,8 +432,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -524,29 +510,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -695,8 +663,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -771,29 +741,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -937,8 +889,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1014,29 +968,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1237,8 +1173,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1357,42 +1295,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.add_ab_tests_with_http_info(
-                add_ab_tests_request={
-                    "endAt": "2022-12-31T00:00:00.000Z",
-                    "name": "myABTest",
-                    "variants": [
-                        {
-                            "index": "AB_TEST_1",
-                            "trafficPercentage": 30,
-                        },
-                        {
-                            "index": "AB_TEST_2",
-                            "trafficPercentage": 50,
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1488,8 +1395,21 @@ paths:
       summary: List all A/B tests
       description: Lists all A/B tests you configured for this application.
       parameters:
-        - $ref: '#/components/parameters/Offset'
-        - $ref: '#/components/parameters/Limit'
+        - name: offset
+          in: query
+          description: Position of the first item to return.
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: limit
+          in: query
+          description: Number of items to return.
+          required: false
+          schema:
+            type: integer
+            default: 10
         - name: indexPrefix
           in: query
           description: >-
@@ -1608,8 +1528,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1678,27 +1600,11 @@ paths:
             response = client.list_ab_tests()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.list_ab_tests_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1851,8 +1757,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -1927,29 +1835,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_ab_test_with_http_info(
-                id=42,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2103,8 +1993,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2179,29 +2071,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_ab_test_with_http_info(
-                id=42,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2358,8 +2232,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2434,29 +2310,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.stop_ab_test_with_http_info(
-                id=42,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2664,8 +2522,10 @@ paths:
           source: >
             // Initialize the client
 
+            // Replace 'us' with your Algolia Application Region
+
             const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            'ALGOLIA_API_KEY', 'us');
 
 
             // Call the API
@@ -2788,43 +2648,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.schedule_ab_test_with_http_info(
-                schedule_ab_tests_request={
-                    "endAt": "2022-12-31T00:00:00.000Z",
-                    "scheduledAt": "2022-11-31T00:00:00.000Z",
-                    "name": "myABTest",
-                    "variants": [
-                        {
-                            "index": "AB_TEST_1",
-                            "trafficPercentage": 30,
-                        },
-                        {
-                            "index": "AB_TEST_2",
-                            "trafficPercentage": 50,
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2950,23 +2778,6 @@ components:
       schema:
         type: object
         additionalProperties: true
-    Offset:
-      in: query
-      name: offset
-      description: Position of the first item to return.
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    Limit:
-      in: query
-      name: limit
-      description: Number of items to return.
-      required: false
-      schema:
-        type: integer
-        default: 10
     ID:
       in: path
       name: id

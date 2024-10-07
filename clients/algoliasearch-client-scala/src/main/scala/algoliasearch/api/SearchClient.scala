@@ -161,7 +161,7 @@ class SearchClient(
     * @param objectID
     *   Unique record identifier.
     * @param body
-    *   The record, a schemaless object with attributes that are useful in the context of search and discovery.
+    *   The record. A schemaless object with attributes that are useful in the context of search and discovery.
     */
   def addOrUpdateObject(indexName: String, objectID: String, body: Any, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
@@ -314,8 +314,8 @@ class SearchClient(
     * proximity, geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
     * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`:
     * `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` -
-    * `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you
-    * send these parameters with your browse requests, they'll be ignored.
+    * `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send
+    * these parameters with your browse requests, they'll be ignored.
     *
     * Required API Key ACLs:
     *   - browse
@@ -925,7 +925,7 @@ class SearchClient(
       execute[Seq[Source]](request, requestOptions)
     }
 
-  /** Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search`
+  /** Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search`
     * operation](#tag/Synonyms/operation/searchSynonyms).
     *
     * Required API Key ACLs:
@@ -1153,7 +1153,7 @@ class SearchClient(
     * Related guide: [Copy
     * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
     * **Move** - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index,
-    * the analytics data keep their original name and a new set of analytics data is started for the new name. To access
+    * the analytics data keeps its original name, and a new set of analytics data is started for the new name. To access
     * the original analytics in the dashboard, create an index with the original name. - If the destination index has
     * replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide:
     * [Move
@@ -1182,7 +1182,7 @@ class SearchClient(
     execute[UpdatedAtResponse](request, requestOptions)
   }
 
-  /** Adds new attributes to a record, or update existing ones. - If a record with the specified object ID doesn't
+  /** Adds new attributes to a record, or updates existing ones. - If a record with the specified object ID doesn't
     * exist, a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet,
     * this method creates a new index. - You can use any first-level attribute but not nested attributes. If you specify
     * a nested attribute, the engine treats it as a replacement for its first-level ancestor. To update an attribute
@@ -1198,10 +1198,10 @@ class SearchClient(
     * the provided value is greater than the current value, and otherwise ignore the whole object update. For example,
     * if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the
     * engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet
-    * value that's greater than 0. You can specify an operation by providing an object with the attribute to update as
-    * the key and its value being an object with the following properties: - _operation: the operation to apply on the
-    * attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value
-    * to add or remove.
+    * value greater than 0. You can specify an operation by providing an object with the attribute to update as the key
+    * and its value being an object with the following properties: - _operation: the operation to apply on the attribute
+    * \- value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or
+    * remove.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1314,7 +1314,7 @@ class SearchClient(
     * @param indexName
     *   Name of the index on which to perform the operation.
     * @param body
-    *   The record, a schemaless object with attributes that are useful in the context of search and discovery.
+    *   The record. A schemaless object with attributes that are useful in the context of search and discovery.
     */
   def saveObject(indexName: String, body: Any, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -1467,7 +1467,7 @@ class SearchClient(
     execute[UpdatedAtResponse](request, requestOptions)
   }
 
-  /** Sends multiple search request to one or more indices. This can be useful in these cases: - Different indices for
+  /** Sends multiple search requests to one or more indices. This can be useful in these cases: - Different indices for
     * different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the
     * same index—for example, with different filters.
     *
@@ -1578,7 +1578,7 @@ class SearchClient(
     execute[SearchRulesResponse](request, requestOptions)
   }
 
-  /** Searches a single index and return matching search results (_hits_). This method lets you retrieve up to 1,000
+  /** Searches a single index and returns matching search results (_hits_). This method lets you retrieve up to 1,000
     * hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the
     * `paginatedLimitedTo` index setting.
     *

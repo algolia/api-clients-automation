@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Algolia.Search.Models.Search;
 
 /// <summary>
-/// Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as, the order of facet names and values without changing your frontend code. 
+/// Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as the order of facet names and values without changing your frontend code. 
 /// </summary>
 public partial class RenderingContent
 {
@@ -36,6 +36,12 @@ public partial class RenderingContent
   public RedirectURL Redirect { get; set; }
 
   /// <summary>
+  /// Gets or Sets Widgets
+  /// </summary>
+  [JsonPropertyName("widgets")]
+  public Widgets Widgets { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -45,6 +51,7 @@ public partial class RenderingContent
     sb.Append("class RenderingContent {\n");
     sb.Append("  FacetOrdering: ").Append(FacetOrdering).Append("\n");
     sb.Append("  Redirect: ").Append(Redirect).Append("\n");
+    sb.Append("  Widgets: ").Append(Widgets).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -72,7 +79,8 @@ public partial class RenderingContent
 
     return
         (FacetOrdering == input.FacetOrdering || (FacetOrdering != null && FacetOrdering.Equals(input.FacetOrdering))) &&
-        (Redirect == input.Redirect || (Redirect != null && Redirect.Equals(input.Redirect)));
+        (Redirect == input.Redirect || (Redirect != null && Redirect.Equals(input.Redirect))) &&
+        (Widgets == input.Widgets || (Widgets != null && Widgets.Equals(input.Widgets)));
   }
 
   /// <summary>
@@ -91,6 +99,10 @@ public partial class RenderingContent
       if (Redirect != null)
       {
         hashCode = (hashCode * 59) + Redirect.GetHashCode();
+      }
+      if (Widgets != null)
+      {
+        hashCode = (hashCode * 59) + Widgets.GetHashCode();
       }
       return hashCode;
     }

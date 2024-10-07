@@ -104,25 +104,6 @@ HitsPerPage:
     type: integer
     default: 100
 
-Offset:
-  in: query
-  name: offset
-  description: Position of the first item to return.
-  required: false
-  schema:
-    type: integer
-    default: 0
-    minimum: 0
-
-Limit:
-  in: query
-  name: limit
-  description: Number of items to return.
-  required: false
-  schema:
-    type: integer
-    default: 10
-
 # misc
 objectID:
   type: string

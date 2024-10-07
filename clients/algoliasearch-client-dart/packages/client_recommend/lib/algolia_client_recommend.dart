@@ -1,5 +1,5 @@
 // A sub-package of the AlgoliaSearch library, offering recommend-specific functionalities for enhanced search and discovery in Dart/Flutter apps.
-library algolia_client_recommend;
+library;
 
 export 'package:algolia_client_core/algolia_client_core.dart';
 
@@ -9,6 +9,11 @@ export 'src/model/advanced_syntax_features.dart';
 export 'src/model/alternatives_as_exact.dart';
 export 'src/model/around_radius_all.dart';
 export 'src/model/auto_facet_filter.dart';
+export 'src/model/banner.dart';
+export 'src/model/banner_image.dart';
+export 'src/model/banner_image_url.dart';
+export 'src/model/banner_link.dart';
+export 'src/model/banners.dart';
 export 'src/model/base_index_settings.dart';
 export 'src/model/base_recommend_index_settings.dart';
 export 'src/model/base_recommend_request.dart';
@@ -83,5 +88,6 @@ export 'src/model/trending_items_model.dart';
 export 'src/model/trending_items_query.dart';
 export 'src/model/typo_tolerance_enum.dart';
 export 'src/model/value.dart';
+export 'src/model/widgets.dart';
 
 export 'src/extension.dart';

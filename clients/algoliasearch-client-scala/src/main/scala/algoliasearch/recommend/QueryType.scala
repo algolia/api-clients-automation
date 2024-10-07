@@ -33,7 +33,7 @@ import org.json4s._
 
 sealed trait QueryType
 
-/** Determines if and how query words are interpreted as prefixes. By default, only the last query word is treated as
+/** Determines if and how query words are interpreted as prefixes. By default, only the last query word is treated as a
   * prefix (`prefixLast`). To turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats all query words
   * as prefixes. This might lead to counterintuitive results and makes your search slower. For more information, see
   * [Prefix

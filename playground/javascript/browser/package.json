@@ -10,10 +10,10 @@
   "dependencies": {
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
     "instantsearch.css": "8.5.1",
-    "instantsearch.js": "4.74.1",
+    "instantsearch.js": "4.74.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-instantsearch": "7.13.1"
+    "react-instantsearch": "7.13.2"
   },
   "devDependencies": {
     "@parcel/core": "2.12.0",
