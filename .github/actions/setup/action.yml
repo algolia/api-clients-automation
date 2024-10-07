@@ -183,7 +183,7 @@ runs:
       # BY GitHub Staff developer: redsun82
       # IN pull request: https://github.com/github/codeql/pull/16153
       # uses: swift-actions/setup-swift@v2
-      uses: redsun82/setup-swift@b2b6f77ab14f6a9b136b520dc53ec8eca27d2b99
+      uses: redsun82/setup-swift@362f49f31da2f5f4f851657046bdd1290d03edc8
       with:
         swift-version: ${{ inputs.version }}
 
