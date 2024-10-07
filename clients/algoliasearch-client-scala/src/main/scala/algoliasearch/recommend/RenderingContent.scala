@@ -29,7 +29,7 @@
   */
 package algoliasearch.recommend
 
-/** Extra data that can be used in the search UI. You can use this to control aspects of your search UI, such as, the
+/** Extra data that can be used in the search UI. You can use this to control aspects of your search UI, such as the
   * order of facet names and values without changing your frontend code.
   */
 case class RenderingContent(
