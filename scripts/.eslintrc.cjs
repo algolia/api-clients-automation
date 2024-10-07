@@ -33,6 +33,7 @@ module.exports = {
     ],
     '@typescript-eslint/sort-type-union-intersection-members': 0,
     complexity: 0,
+    'max-depth': 0,
     'no-param-reassign': 0,
     '@typescript-eslint/consistent-type-assertions': 0,
     '@typescript-eslint/consistent-type-imports': 0,

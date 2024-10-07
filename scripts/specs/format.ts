@@ -1,7 +1,8 @@
 import fsp from 'fs/promises';
 
+import oas2har from '@har-sdk/oas';
+import { HarRequest, HTTPSnippet } from 'httpsnippet';
 import yaml from 'js-yaml';
-import OpenAPISnippet from 'openapi-snippet';
 
 import { Cache } from '../cache.js';
 import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
@@ -60,6 +61,7 @@ export async function transformBundle({
   }
 
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
+  const harRequests = await oas2har.oas2har(bundledSpec as any, { includeVendorExamples: true });
   const tagsDefinitions = bundledSpec.tags;
   const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : ({} as SnippetSamples);
 
@@ -101,19 +103,30 @@ export async function transformBundle({
         }
       }
 
-      try {
-        const results = OpenAPISnippet.getEndpointSnippets(bundledSpec, pathKey, method, ['shell_curl']);
+      // skip custom path for cURL
+      if (pathKey !== '/{path}') {
+        const harRequest = harRequests.find((baseHarRequest) =>
+          baseHarRequest.url.includes(pathKey.replace('{indexName}', 'ALGOLIA_INDEX_NAME')),
+        );
 
-        if (results.snippets.length > 0) {
-          specMethod['x-codeSamples'].push({
-            lang: 'cURL',
-            label: 'curl',
-            source: results.snippets[0].content,
-          });
+        if (!harRequest?.headers) {
+          break;
         }
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(`unable to generate cURL snippet for path ${pathKey}.${method}: `, err);
+        for (const harRequestHeader of harRequest.headers) {
+          if (harRequestHeader.name === bundledSpec.components.securitySchemes.appId.name) {
+            harRequestHeader.value = 'ALGOLIA_APPLICATION_ID';
+          }
+
+          if (harRequestHeader.name === bundledSpec.components.securitySchemes.apiKey.name) {
+            harRequestHeader.value = 'ALGOLIA_API_KEY';
+          }
+        }
+
+        specMethod['x-codeSamples'].push({
+          lang: 'cURL',
+          label: 'curl',
+          source: new HTTPSnippet(harRequest as HarRequest).convert('shell', 'curl', { indent: '\t' }),
+        });
       }
 
       if (!bundledSpec.paths[pathKey][method].tags) {
