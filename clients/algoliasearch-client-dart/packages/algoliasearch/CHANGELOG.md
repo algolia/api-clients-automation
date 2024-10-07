@@ -1,3 +1,8 @@
+## [1.26.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.25.0...1.26.0)
+
+- [bed119166](https://github.com/algolia/api-clients-automation/commit/bed119166) feat(specs): add support for widgets / banners in search for the csharp client ([#3870](https://github.com/algolia/api-clients-automation/pull/3870)) by [@Kalmar99](https://github.com/Kalmar99/)
+- [844e57f35](https://github.com/algolia/api-clients-automation/commit/844e57f35) fix(specs): correct typos is Search API ([#3898](https://github.com/algolia/api-clients-automation/pull/3898)) by [@gazconroy](https://github.com/gazconroy/)
+
 ## [1.25.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.2...1.25.0)
 
 - [788483537](https://github.com/algolia/api-clients-automation/commit/788483537) chore(clients): add workflow to auto-close PR ([#3834](https://github.com/algolia/api-clients-automation/pull/3834)) by [@shortcuts](https://github.com/shortcuts/)
