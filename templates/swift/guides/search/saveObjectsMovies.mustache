@@ -6,7 +6,7 @@ import Foundation
 import Core
 {{> snippets/import}}
 
-func saveObjectsMovies() async throws {
+Task {
     let url = URL(string: "https://dashboard.algolia.com/sample_datasets/movie.json")!
     var data: Data? = nil
     #if os(Linux) // For linux interop
@@ -22,7 +22,11 @@ func saveObjectsMovies() async throws {
     do {
         // Save records in Algolia index
         {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+        exit(EXIT_SUCCESS)
     } catch {
         print(error.localizedDescription)
+        exit(EXIT_FAILURE)
     }
 }
+
+RunLoop.current.run()

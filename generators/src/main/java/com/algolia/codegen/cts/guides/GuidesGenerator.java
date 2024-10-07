@@ -39,11 +39,14 @@ public class GuidesGenerator extends TestsGenerator {
 
     File templates = new File("templates/" + language + "/guides/" + client);
     for (File f : templates.listFiles()) {
+      String fileName = f.getName().replace(".mustache", "");
+
+      if (language.equals("swift")) {
+        fileName = Helpers.capitalize(fileName) + "/main";
+      }
+
       supportingFiles.add(
-        new SupportingFile(
-          "guides/" + client + "/" + f.getName(),
-          "guides/" + language + outputFolder + f.getName().replace(".mustache", "") + extension
-        )
+        new SupportingFile("guides/" + client + "/" + f.getName(), "guides/" + language + outputFolder + fileName + extension)
       );
     }
   }
@@ -54,6 +57,14 @@ public class GuidesGenerator extends TestsGenerator {
       bundle.put("isSearchClient", true);
     }
     bundle.put("isSyncClient", true);
-    // nothing to do here, the mustache uses dynamicSnippets lambda
+
+    if (language.equals("swift")) {
+      File templates = new File("templates/" + language + "/guides/" + client);
+      bundle.put(
+        "guides",
+        Arrays.stream(templates.listFiles()).map(File::getName).map(name -> Helpers.capitalize(name.replace(".mustache", ""))).toArray()
+      );
+    }
+    // no data to add to the bundle, the mustache uses dynamicSnippets lambda
   }
 }

@@ -3,6 +3,13 @@
 
 import PackageDescription
 
+let dependencies: [Target.Dependency] = [{{#packageList}}
+  .product(
+    name: "{{{.}}}",
+    package: "algoliasearch-client-swift"
+  ),{{/packageList}}
+]
+
 let package = Package(
   name: "AlgoliaSearchClientGuides",
   platforms: [
@@ -15,14 +22,12 @@ let package = Package(
       .package(path: "../../clients/algoliasearch-client-swift")
   ],
   targets: [
-    .executableTarget(
-      name: "AlgoliaSearchClientGuides",
-      dependencies: [{{#packageList}}
-        .product(
-          name: "{{{.}}}",
-          package: "algoliasearch-client-swift"
-        ),{{/packageList}}
-      ]
-    )
+    {{#guides}}
+      .executableTarget(
+        name: "{{{.}}}",
+        dependencies: dependencies,
+        path: "Sources/{{{.}}}"
+      ),
+    {{/guides}}
   ]
 )
