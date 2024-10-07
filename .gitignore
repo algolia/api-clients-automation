@@ -20,6 +20,7 @@ target
 **/.DS_Store
 .gradle
 build
+.build
 pom.xml
 
 dist
