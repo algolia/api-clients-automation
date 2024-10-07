@@ -87,7 +87,7 @@ __metadata:
     "@stylistic/eslint-plugin": "npm:2.8.0"
     "@typescript-eslint/eslint-plugin": "npm:8.8.0"
     "@typescript-eslint/parser": "npm:8.8.0"
-    "@vitest/eslint-plugin": "npm:1.1.4"
+    "@vitest/eslint-plugin": "npm:1.1.6"
     eslint: "npm:8.57.1"
     eslint-config-algolia: "npm:23.1.7"
     eslint-config-prettier: "npm:9.1.0"
@@ -2404,22 +2404,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/eslint-plugin@npm:1.1.4":
-  version: 1.1.4
-  resolution: "@vitest/eslint-plugin@npm:1.1.4"
+"@vitest/eslint-plugin@npm:1.1.6":
+  version: 1.1.6
+  resolution: "@vitest/eslint-plugin@npm:1.1.6"
   peerDependencies:
     "@typescript-eslint/utils": ">= 8.0"
     eslint: ">= 8.57.0"
     typescript: ">= 5.0.0"
     vitest: "*"
   peerDependenciesMeta:
-    "@typescript-eslint/utils":
-      optional: true
     typescript:
       optional: true
-    vitest:
-      optional: true
-  checksum: 10/becfa0d0c67c06f19f77e409e067e38499e4ceb0c19a4e3a928c727a95372c3918056edddf11632d0e20773d0aa9ea27b68ff8692daf22f115f4e065812be09c
+  checksum: 10/43401d8f009b5151421e52d942111de59175db8f24e483e308b30b9f0dbb019a20599e0b78af1eb8c7ed80a905cd1883dc8cc9c927a822b9877152b766d0a31f
   languageName: node
   linkType: hard
 
