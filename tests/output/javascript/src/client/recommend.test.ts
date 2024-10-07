@@ -49,7 +49,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.7.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.8.0\).*/);
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
