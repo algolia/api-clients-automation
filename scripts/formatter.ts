@@ -38,7 +38,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'javascript':
       await run(
-        `yarn oxlint -c ${toAbsolutePath('oxlintrc.json')} --fix --fix-suggestions --fix-dangerously --disable-react-plugin --promise-plugin --node-plugin --security-plugin --import-plugin ${cwd} && yarn prettier --write ${cwd}`,
+        `yarn oxlint -c ${toAbsolutePath('oxlintrc.json')} --fix --fix-suggestions --fix-dangerously --disable-react-plugin --promise-plugin --node-plugin --security-plugin --import-plugin ${cwd} && yarn prettier --write ${cwd} --ignore-path=${toAbsolutePath('.prettierignore')}`,
         { language },
       );
       break;
