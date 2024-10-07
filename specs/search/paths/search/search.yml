@@ -9,7 +9,7 @@ post:
     - search
   summary: Search multiple indices
   description: |
-    Sends multiple search request to one or more indices.
+    Sends multiple search requests to one or more indices.
 
     This can be useful in these cases:
 

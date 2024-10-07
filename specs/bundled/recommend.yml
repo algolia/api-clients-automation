@@ -810,7 +810,9 @@ components:
 
 
         You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`,
-        `>=`. Comparsions are precise up to 3 decimals.
+        `>=`.
+
+        Comparisons are precise up to 3 decimals.
 
         You can also provide ranges: `facet:<lower> TO <upper>`. The range
         includes the lower and upper boundaries.
@@ -925,7 +927,7 @@ components:
         string of latitude and longitude.
 
 
-        Only records included within circle around this central location are
+        Only records included within a circle around this central location are
         included in the results.
 
         The radius of the circle is determined by the `aroundRadius` and
@@ -1403,7 +1405,7 @@ components:
 
 
             - `filterOnly("ATTRIBUTE")`.
-              Allows using this attribute as a filter, but doesn't evalue the facet values.
+              Allows the attribute to be used as a filter but doesn't evaluate the facet values.
 
             - `searchable("ATTRIBUTE")`.
               Allows searching for facet values.
@@ -1440,7 +1442,7 @@ components:
             replicas to this parameter.
 
             If you omit a replica from this list, the replica turns into a
-            regular, standalone index that will no longer by synced with the
+            regular, standalone index that will no longer be synced with the
             primary index.
 
 
@@ -1644,8 +1646,8 @@ components:
             For faster indexing, reduce the number of numeric attributes.
 
 
-            If you want to turn off filtering for all numeric attributes,
-            specifiy an attribute that doesn't exist in your index, such as
+            To turn off filtering for all numeric attributes, specify an
+            attribute that doesn't exist in your index, such as
             `NO_NUMERIC_FILTERING`.
 
 
@@ -1719,8 +1721,8 @@ components:
             - `unordered("ATTRIBUTE")`.
               Ignore the position of a match within the attribute.
 
-            Without modifier, matches at the beginning of an attribute rank
-            higer than matches at the end.
+            Without a modifier, matches at the beginning of an attribute rank
+            higher than matches at the end.
           default: []
           x-categories:
             - Attributes
@@ -1985,8 +1987,8 @@ components:
 
 
         If typo tolerance is true, `min`, or `strict`, [word splitting and
-        concetenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
-        is also active.
+        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+        are also active.
       oneOf:
         - type: boolean
           default: true
@@ -2177,7 +2179,7 @@ components:
         Determines if and how query words are interpreted as prefixes.
 
 
-        By default, only the last query word is treated as prefix
+        By default, only the last query word is treated as a prefix
         (`prefixLast`).
 
         To turn off prefix search, use `prefixNone`.
@@ -2277,7 +2279,7 @@ components:
         matched words increases by 1:
           results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
         - If `optionalWords` has 10 or more words, the number of required
-        matched words increases by the number of optional words dividied by 5
+        matched words increases by the number of optional words divided by 5
         (rounded down).
           For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
 
@@ -2299,7 +2301,7 @@ components:
         Attribute names are case-sensitive.
 
 
-        This can be useful for attributes with long values, where the likelyhood
+        This can be useful for attributes with long values, where the likelihood
         of an exact match is high,
 
         such as product descriptions.
@@ -2459,7 +2461,7 @@ components:
         With `replaceSynonymsInHighlight` set to `true`, a search for `home`
         still matches the same records,
 
-        but all occurences of "house" are replaced by "home" in the highlighted
+        but all occurrences of "house" are replaced by "home" in the highlighted
         response.
       default: false
       x-categories:
@@ -2691,8 +2693,8 @@ components:
         Extra data that can be used in the search UI.
 
 
-        You can use this to control aspects of your search UI, such as, the
-        order of facet names and values
+        You can use this to control aspects of your search UI, such as the order
+        of facet names and values
 
         without changing your frontend code.
       type: object
