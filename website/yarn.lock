@@ -224,9 +224,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@algolia/ui-library@npm:6.4.0":
-  version: 6.4.0
-  resolution: "@algolia/ui-library@npm:6.4.0"
+"@algolia/ui-library@npm:7.0.5":
+  version: 7.0.5
+  resolution: "@algolia/ui-library@npm:7.0.5"
   dependencies:
     "@algolia/fragments.js": "npm:^2.0.0-beta.12"
     "@emotion/react": "npm:^11.4.1"
@@ -235,7 +235,7 @@ __metadata:
   peerDependencies:
     react: 17.0.1
     react-dom: ^17.0.1
-  checksum: 10/bcabfd695d65970350fc76064b9992ca385f56630ed5829937e8207c7e07f6d23febc7e6a7328a057e92e96776adabc7b39793729e887d1c96dc06309ab5a0d3
+  checksum: 10/b538df4e51cf96f4ded5a8b6f5f060c3e8c07b8e652842796363f4871f12e5b3466389c28f532d8a26d44989e5019f6869ccb3598182c7d902512441a9349000
   languageName: node
   linkType: hard
 
@@ -12464,7 +12464,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "website@workspace:."
   dependencies:
-    "@algolia/ui-library": "npm:6.4.0"
+    "@algolia/ui-library": "npm:7.0.5"
     "@docusaurus/core": "npm:3.5.2"
     "@docusaurus/preset-classic": "npm:3.5.2"
     "@docusaurus/types": "npm:3.5.2"
