@@ -30,9 +30,9 @@ export async function getNbGitDiff({
 
   return parseInt(
     (
-      await run(`git add -N . && git diff --shortstat "${branch}${checkHead}" -- ${path} | wc -l`, {
+      (await run(`git add -N . && git diff --shortstat "${branch}${checkHead}" -- ${path} | wc -l`, {
         cwd,
-      })
+      })) || '0'
     ).trim(),
     10,
   );
