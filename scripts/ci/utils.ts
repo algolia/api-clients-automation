@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fsp from 'fs/promises';
 import { resolve } from 'path';
 
@@ -27,6 +28,8 @@ export async function getNbGitDiff({
   cwd: string;
 }>): Promise<number> {
   const checkHead = head === null ? '' : `...${head}`;
+
+  console.log(`comparing "${branch}${checkHead}"`);
 
   return parseInt(
     (
