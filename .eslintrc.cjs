@@ -121,7 +121,7 @@ module.exports = {
         '@typescript-eslint/no-namespace': 0,
         'import/dynamic-import-chunkname': 0,
 
-        'unused-imports/no-unused-imports-ts': 2,
+        'unused-imports/no-unused-imports': 2,
         '@typescript-eslint/no-unused-vars': 2,
         '@typescript-eslint/consistent-indexed-object-style': 2,
         '@typescript-eslint/member-ordering': [
@@ -204,8 +204,6 @@ module.exports = {
     },
     {
       files: ['clients/algoliasearch-client-javascript/packages/**/__tests__/**/*.ts'],
-
-      extends: ["plugin:vitest/legacy-recommended"],
 
       plugins: ['@vitest/eslint-plugin'],
     },
