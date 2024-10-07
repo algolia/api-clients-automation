@@ -14,4 +14,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: git push -d origin generated/${{ github.head_ref }} || true
+      - run: git push -d origin "generated/${{ github.head_ref }}" || true
