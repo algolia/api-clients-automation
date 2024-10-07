@@ -1,20 +1,19 @@
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import { type Hit } from 'instantsearch.js';
-import React from 'react';
 import {
+  Carousel,
   Configure,
   Hits,
   InstantSearch,
   RelatedProducts,
-  Carousel,
 } from 'react-instantsearch';
 
-import './App.css';
 import 'instantsearch.css/themes/satellite.css';
+import './App.css';
 
 const searchClient = algoliasearch(
   'latency',
-  '6be0576ff61c053d5f9a3225e2a90f76'
+  '6be0576ff61c053d5f9a3225e2a90f76',
 );
 
 export function Product({ pid }: { pid: string }) {
