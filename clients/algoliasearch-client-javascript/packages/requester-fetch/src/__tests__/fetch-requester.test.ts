@@ -1,10 +1,10 @@
+import crossFetch from 'cross-fetch';
 import type http from 'http';
+import nock from 'nock';
 import { Readable } from 'stream';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
-import crossFetch from 'cross-fetch';
-import nock from 'nock';
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
 import { createFetchRequester } from '../..';
 import {

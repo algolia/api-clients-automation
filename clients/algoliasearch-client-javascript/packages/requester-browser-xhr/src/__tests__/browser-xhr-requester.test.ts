@@ -1,9 +1,9 @@
 import type http from 'http';
-
-import type { EndRequest } from '@algolia/client-common';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import type { MockRequest, MockResponse } from 'xhr-mock';
 import mock from 'xhr-mock';
+
+import type { EndRequest } from '@algolia/client-common';
 
 import { createXhrRequester } from '../..';
 import {

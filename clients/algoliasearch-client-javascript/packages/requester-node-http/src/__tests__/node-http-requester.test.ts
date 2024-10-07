@@ -1,10 +1,10 @@
 import http from 'http';
 import https from 'https';
+import nock from 'nock';
 import { Readable } from 'stream';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
-import nock from 'nock';
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
 import { createHttpRequester } from '../..';
 import {

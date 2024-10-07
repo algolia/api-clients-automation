@@ -9,7 +9,6 @@ import type {
   Transporter,
   TransporterOptions,
 } from '../types';
-
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
 import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
