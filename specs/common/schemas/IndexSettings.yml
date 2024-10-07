@@ -29,7 +29,7 @@ baseIndexSettings:
         **Modifiers**
 
         - `filterOnly("ATTRIBUTE")`.
-          Allows using this attribute as a filter, but doesn't evalue the facet values.
+          Allows the attribute to be used as a filter but doesn't evaluate the facet values.
 
         - `searchable("ATTRIBUTE")`.
           Allows searching for facet values.
@@ -53,7 +53,7 @@ baseIndexSettings:
         If you want to offer a different ranking or sorting of your search results, you'll use replica indices.
         All index operations on a primary index are automatically forwarded to its replicas.
         To add a replica index, you must provide the complete set of replicas to this parameter.
-        If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer by synced with the primary index.
+        If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer be synced with the primary index.
 
         **Modifier**
 
@@ -196,7 +196,7 @@ baseIndexSettings:
         By default, all numeric attributes are available as numerical filters.
         For faster indexing, reduce the number of numeric attributes.
 
-        If you want to turn off filtering for all numeric attributes, specifiy an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`.
+        To turn off filtering for all numeric attributes, specify an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`.
 
         **Modifier**
 
@@ -246,7 +246,7 @@ baseIndexSettings:
         - `unordered("ATTRIBUTE")`.
           Ignore the position of a match within the attribute.
 
-        Without modifier, matches at the beginning of an attribute rank higer than matches at the end.
+        Without a modifier, matches at the beginning of an attribute rank higher than matches at the end.
       default: []
       x-categories:
         - Attributes
@@ -587,7 +587,7 @@ indexSettingsAsSearchParams:
 
         - If `optionalWords` has less than 10 words, the required number of matched words increases by 1:
           results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-        - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words dividied by 5 (rounded down).
+        - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).
           For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
 
         For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
@@ -604,7 +604,7 @@ indexSettingsAsSearchParams:
         Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
         Attribute names are case-sensitive.
 
-        This can be useful for attributes with long values, where the likelyhood of an exact match is high,
+        This can be useful for attributes with long values, where the likelihood of an exact match is high,
         such as product descriptions.
         Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes.
         This reduces the impact of individual attributes with a lot of content on ranking.
@@ -663,7 +663,7 @@ indexSettingsAsSearchParams:
         and either "home" or "house" are highlighted.
 
         With `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,
-        but all occurences of "house" are replaced by "home" in the highlighted response.
+        but all occurrences of "house" are replaced by "home" in the highlighted response.
       default: false
       x-categories:
         - Highlighting and Snippeting
@@ -802,7 +802,7 @@ queryType:
   description: |
     Determines if and how query words are interpreted as prefixes.
 
-    By default, only the last query word is treated as prefix (`prefixLast`).
+    By default, only the last query word is treated as a prefix (`prefixLast`).
     To turn off prefix search, use `prefixNone`.
     Avoid `prefixAll`, which treats all query words as prefixes.
     This might lead to counterintuitive results and makes your search slower.
@@ -925,7 +925,7 @@ typoTolerance:
   description: |
     Whether [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) is enabled and how it is applied.
 
-    If typo tolerance is true, `min`, or `strict`, [word splitting and concetenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) is also active.
+    If typo tolerance is true, `min`, or `strict`, [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) are also active.
   oneOf:
     - type: boolean
       default: true
@@ -992,7 +992,7 @@ renderingContent:
   description: |
     Extra data that can be used in the search UI.
 
-    You can use this to control aspects of your search UI, such as, the order of facet names and values
+    You can use this to control aspects of your search UI, such as the order of facet names and values
     without changing your frontend code.
   type: object
   additionalProperties: false

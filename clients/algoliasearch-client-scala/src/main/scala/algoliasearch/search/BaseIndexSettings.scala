@@ -1,4 +1,4 @@
-/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. ## Client
+/** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
   * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
   * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
@@ -6,7 +6,7 @@
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
-  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * Retry strategy To guarantee high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
   * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
@@ -41,7 +41,7 @@ import algoliasearch.search.SupportedLanguage._
   *   Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
   *   Facets are attributes that let you categorize search results. They can be used for filtering search results. By
   *   default, no attribute is used for faceting. Attribute names are case-sensitive. **Modifiers** -
-  *   `filterOnly(\"ATTRIBUTE\")`. Allows using this attribute as a filter, but doesn't evalue the facet values. -
+  *   `filterOnly(\"ATTRIBUTE\")`. Allows the attribute to be used as a filter but doesn't evaluate the facet values. -
   *   `searchable(\"ATTRIBUTE\")`. Allows searching for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the
   *   facet count _after_ deduplication with `distinct`. This ensures accurate facet counts. You can apply this modifier
   *   to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
@@ -52,7 +52,7 @@ import algoliasearch.search.SupportedLanguage._
   *   offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a
   *   primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete
   *   set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular,
-  *   standalone index that will no longer by synced with the primary index. **Modifier** - `virtual(\"REPLICA\")`.
+  *   standalone index that will no longer be synced with the primary index. **Modifier** - `virtual(\"REPLICA\")`.
   *   Create a virtual replica, Virtual replicas don't increase the number of records and are optimized for [Relevant
   *   sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
   * @param paginationLimitedTo
@@ -106,8 +106,8 @@ import algoliasearch.search.SupportedLanguage._
   *   Numeric attributes that can be used as [numerical
   *   filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
   *   Attribute names are case-sensitive. By default, all numeric attributes are available as numerical filters. For
-  *   faster indexing, reduce the number of numeric attributes. If you want to turn off filtering for all numeric
-  *   attributes, specifiy an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`. **Modifier** -
+  *   faster indexing, reduce the number of numeric attributes. To turn off filtering for all numeric attributes,
+  *   specify an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`. **Modifier** -
   *   `equalOnly(\"ATTRIBUTE\")`. Support only filtering based on equality comparisons `=` and `!=`.
   * @param separatorsToIndex
   *   Controls which separators are indexed. Separators are all non-letter characters except spaces and currency
@@ -123,8 +123,8 @@ import algoliasearch.search.SupportedLanguage._
   *   comma-separated string, such as `\"title,alternate_title\"`. Attributes with the same priority are always
   *   unordered. For more information, see [Searchable
   *   attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
-  *   **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute. Without modifier,
-  *   matches at the beginning of an attribute rank higer than matches at the end.
+  *   **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute. Without a
+  *   modifier, matches at the beginning of an attribute rank higher than matches at the end.
   * @param userData
   *   An object with custom data. You can store up to 32kB as custom data.
   * @param customNormalization

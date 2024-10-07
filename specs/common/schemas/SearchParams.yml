@@ -321,7 +321,7 @@ aroundLatLng:
   description: |
     Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.
 
-    Only records included within circle around this central location are included in the results.
+    Only records included within a circle around this central location are included in the results.
     The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings.
     This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
   example: '40.71,-74.01'
@@ -455,7 +455,8 @@ numericFilters:
 
     **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**
 
-    You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`, `>=`. Comparsions are precise up to 3 decimals.
+    You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`, `>=`.
+    Comparisons are precise up to 3 decimals.
     You can also provide ranges: `facet:<lower> TO <upper>`. The range includes the lower and upper boundaries.
     The same combination rules apply as for `facetFilters`.
   example: [['inStock = 1', 'deliveryDate < 1441755506'], 'price < 1000']
