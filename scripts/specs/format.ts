@@ -104,7 +104,7 @@ export async function transformBundle({
       }
 
       // skip custom path for cURL
-      if (pathKey !== '/{path}') {
+      if (pathKey !== '/{path}' && specMethod['x-codeSamples']) {
         const harRequest = harRequests.find((baseHarRequest) =>
           baseHarRequest.url.includes(pathKey.replace('{indexName}', 'ALGOLIA_INDEX_NAME')),
         );
