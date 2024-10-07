@@ -92,7 +92,7 @@ final class BaseRecommendSearchParams {
   @JsonKey(name: r'facetingAfterDistinct')
   final bool? facetingAfterDistinct;
 
-  /// Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
+  /// Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within a circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
   @JsonKey(name: r'aroundLatLng')
   final String? aroundLatLng;
 

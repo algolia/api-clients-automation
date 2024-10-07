@@ -28,14 +28,19 @@ export async function getNbGitDiff({
 }>): Promise<number> {
   const checkHead = head === null ? '' : `...${head}`;
 
-  return parseInt(
+  const changes = parseInt(
     (
-      await run(`git add -N . && git diff --shortstat ${branch}${checkHead} -- ${path} | wc -l`, {
+      await run(`git add -N . && git diff --shortstat "${branch}${checkHead}" -- ${path} | wc -l`, {
         cwd,
       })
     ).trim(),
     10,
   );
+  if (isNaN(changes)) {
+    return 0;
+  }
+
+  return changes;
 }
 
 export async function cloneRepository({

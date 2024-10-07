@@ -16,8 +16,8 @@ import java.util.logging.Logger;
  * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/)
  * is enabled and how it is applied. If typo tolerance is true, `min`, or `strict`, [word splitting
  * and
- * concetenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
- * is also active.
+ * concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+ * are also active.
  */
 @JsonDeserialize(using = TypoTolerance.Deserializer.class)
 public interface TypoTolerance {

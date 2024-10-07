@@ -62,7 +62,7 @@ put:
     - $ref: '../../../common/parameters.yml#/ObjectID'
   requestBody:
     required: true
-    description: The record, a schemaless object with attributes that are useful in the context of search and discovery.
+    description: The record. A schemaless object with attributes that are useful in the context of search and discovery.
     content:
       application/json:
         schema:

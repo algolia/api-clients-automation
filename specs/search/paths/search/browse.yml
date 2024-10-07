@@ -28,7 +28,7 @@ post:
     - `getRankingInfo`: `false`
     - `ignorePlurals`: `false`
     - `optionalFilters`: `[]`
-    - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)
+    - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)
 
     If you send these parameters with your browse requests, they'll be ignored.
   parameters:

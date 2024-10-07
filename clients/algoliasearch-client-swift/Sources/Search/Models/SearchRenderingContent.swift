@@ -6,20 +6,27 @@ import Foundation
     import Core
 #endif
 
-/// Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as, the
+/// Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as the
 /// order of facet names and values without changing your frontend code.
 public struct SearchRenderingContent: Codable, JSONEncodable {
     public var facetOrdering: SearchFacetOrdering?
     public var redirect: SearchRedirectURL?
+    public var widgets: SearchWidgets?
 
-    public init(facetOrdering: SearchFacetOrdering? = nil, redirect: SearchRedirectURL? = nil) {
+    public init(
+        facetOrdering: SearchFacetOrdering? = nil,
+        redirect: SearchRedirectURL? = nil,
+        widgets: SearchWidgets? = nil
+    ) {
         self.facetOrdering = facetOrdering
         self.redirect = redirect
+        self.widgets = widgets
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case facetOrdering
         case redirect
+        case widgets
     }
 
     // Encodable protocol methods
@@ -28,13 +35,15 @@ public struct SearchRenderingContent: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.facetOrdering, forKey: .facetOrdering)
         try container.encodeIfPresent(self.redirect, forKey: .redirect)
+        try container.encodeIfPresent(self.widgets, forKey: .widgets)
     }
 }
 
 extension SearchRenderingContent: Equatable {
     public static func ==(lhs: SearchRenderingContent, rhs: SearchRenderingContent) -> Bool {
         lhs.facetOrdering == rhs.facetOrdering &&
-            lhs.redirect == rhs.redirect
+            lhs.redirect == rhs.redirect &&
+            lhs.widgets == rhs.widgets
     }
 }
 
@@ -42,5 +51,6 @@ extension SearchRenderingContent: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.facetOrdering?.hashValue)
         hasher.combine(self.redirect?.hashValue)
+        hasher.combine(self.widgets?.hashValue)
     }
 }
