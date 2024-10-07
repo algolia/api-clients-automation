@@ -53,6 +53,7 @@ public class GuidesGenerator extends TestsGenerator {
     if (this.client.equals("search")) {
       bundle.put("isSearchClient", true);
     }
+    bundle.put("isSyncClient", true);
     // nothing to do here, the mustache uses dynamicSnippets lambda
   }
 }
