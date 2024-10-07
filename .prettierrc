@@ -1,10 +1,7 @@
 {
   "trailingComma": "all",
   "singleQuote": true,
-  "plugins": [
-    "prettier-plugin-java",
-    "prettier-plugin-organize-imports"
-  ],
+  "plugins": [ "prettier-plugin-java" ],
   "overrides": [
     {
       "files": "*.java",
@@ -13,7 +10,7 @@
       }
     },
     {
-      "files": ["*.ts", "*.js"],
+      "files": ["*.ts", "*.js", "*.mjs", "*.cjs"],
       "options": {
         "arrowParens": "always",
         "bracketSpacing": true,
