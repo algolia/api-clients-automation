@@ -44,7 +44,7 @@ export async function pushGeneratedCode(): Promise<void> {
     await run(`git push -d origin generated/${baseBranch} || true`);
 
     console.log(`Creating branch for generated code: '${branchToPush}'`);
-    await run(`git checkout -b ${branchToPush}`);
+    await run(`git checkout -B ${branchToPush}`);
   }
 
   if (!(await isUpToDate(baseBranch))) {
@@ -55,7 +55,7 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
-  let message = await run(`git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`);
+  let message = await run(`git show -s ${baseBranch} --format=%s ${text.commitEndMessage} ${skipCi}"`);
   const authors = await run(
     `git show -s ${baseBranch} --format="
 
