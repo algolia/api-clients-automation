@@ -21,7 +21,7 @@ jobs:
   notification:
     runs-on: ubuntu-22.04
     timeout-minutes: 1
-    if: ${{ github.event.number }}
+    if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
     permissions:
       pull-requests: write
     steps:
@@ -29,7 +29,7 @@ jobs:
 
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           message: |
             ### 🪓 The generated code will be pushed at the end of the CI.
 
@@ -265,7 +265,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
@@ -379,7 +379,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
@@ -482,24 +482,24 @@ jobs:
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
 
       - name: Download artifacts
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         uses: ./scripts/ci/actions/restore-artifacts
+        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         with:
           type: languages
           languages: |
             swift
 
       - name: Setup
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         uses: ./.github/actions/setup
+        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         with:
           type: minimal
           language: swift
           version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
 
       - name: Run tests on macOS
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         id: run-test
+        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         continue-on-error: true
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v ${{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
 
@@ -533,6 +533,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Download all artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -571,17 +572,12 @@ jobs:
           } >> "$GITHUB_OUTPUT"
           rm -rf tests/output/**/benchmarkResult.json
 
-      - name: Extract branch name
-        id: extract_branch
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        
       - name: Push generated code
         id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
-          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
 
       - name: update generation comment
         uses: marocchino/sticky-pull-request-comment@v2
