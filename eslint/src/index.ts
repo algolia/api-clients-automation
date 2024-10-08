@@ -43,4 +43,4 @@ function parseForESLint(): any {
   };
 }
 
-export { rules, parseForESLint };
+export { parseForESLint, rules };

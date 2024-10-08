@@ -146,7 +146,7 @@ jobs:
         run: yarn scripts:test
 
       - name: Lint custom eslint plugin
-        run: yarn workspace eslint-plugin-automation-custom lint
+        run: yarn cli format javascript eslint
 
       - name: Test custom eslint plugin
         run: yarn workspace eslint-plugin-automation-custom test

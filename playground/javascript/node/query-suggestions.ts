@@ -1,10 +1,8 @@
-import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 import { ApiError } from '@algolia/client-common';
+import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
-const apiKey =
-  process.env.ALGOLIA_QUERY_SUGGESTIONS_KEY ||
-  '**** QUERY_SUGGESTIONS_KEY *****';
+const apiKey = process.env.ALGOLIA_QUERY_SUGGESTIONS_KEY || '**** QUERY_SUGGESTIONS_KEY *****';
 
 // Init client with appId and apiKey
 const client = querySuggestionsClient(appId, apiKey, 'us');

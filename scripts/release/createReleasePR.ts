@@ -8,26 +8,26 @@ import semver from 'semver';
 import generationCommitText, { isGeneratedCommit } from '../ci/codegen/text.js';
 import { getNbGitDiff } from '../ci/utils.js';
 import {
+  CI,
+  configureGitHubAuthor,
+  ensureGitHubToken,
+  getOctokit,
+  gitBranchExists,
   LANGUAGES,
-  run,
   MAIN_BRANCH,
   OWNER,
   REPO,
-  getOctokit,
-  ensureGitHubToken,
-  TODAY,
-  CI,
-  gitBranchExists,
-  setVerbose,
-  configureGitHubAuthor,
   ROOT_DIR,
+  run,
+  setVerbose,
+  TODAY,
 } from '../common.js';
 import { getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
 
 import { getFileChanges, getLastReleasedTag } from './common.js';
 import TEXT from './text.js';
-import type { Versions, ParsedCommit, Commit, Changelog, Scope, CommitType } from './types.js';
+import type { Changelog, Commit, CommitType, ParsedCommit, Scope, Versions } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
 import { generateVersionsHistory } from './versionsHistory.js';
 

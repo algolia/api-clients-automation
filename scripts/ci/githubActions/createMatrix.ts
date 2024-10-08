@@ -4,7 +4,7 @@ import fsp from 'fs/promises';
 import { setOutput } from '@actions/core';
 
 import { CLIENTS, createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.js';
-import { getLanguageFolder, getTestExtension, getTestOutputFolder, getClientsConfigField } from '../../config.js';
+import { getClientsConfigField, getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
 
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
 import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';

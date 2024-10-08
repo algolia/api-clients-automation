@@ -1,5 +1,5 @@
-import { recommendClient } from '@algolia/recommend';
 import { ApiError } from '@algolia/client-common';
+import { recommendClient } from '@algolia/recommend';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
@@ -32,8 +32,6 @@ async function testGetRecommendations() {
     console.log('[ERROR] GetRecommendations', e);
   }
 }
-
-
 
 async function testRecommend() {
   await testGetRecommendations();
