@@ -5,7 +5,11 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import generationCommitText, { isGeneratedCommit } from '../ci/codegen/text.js';
+import generationCommitText, {
+  commitStartPrepareRelease,
+  commitStartRelease,
+  isGeneratedCommit,
+} from '../ci/codegen/text.js';
 import { getNbGitDiff } from '../ci/utils.js';
 import {
   CI,
@@ -116,7 +120,11 @@ export async function parseCommit(commit: string): Promise<Commit> {
   }
 
   // for generated commits, we just report the languages so that the changes are attributed to the correct language and commit
-  if (isGeneratedCommit(message)) {
+  if (
+    isGeneratedCommit(message) ||
+    message.includes(commitStartPrepareRelease) ||
+    message.includes(commitStartRelease)
+  ) {
     return {
       generated: true,
       languages: [...languageScopes] as Language[],
