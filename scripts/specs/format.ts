@@ -126,7 +126,7 @@ export async function transformBundle({
         specMethod['x-codeSamples'].push({
           lang: 'cURL',
           label: 'curl',
-          source: new HTTPSnippet(harRequest as HarRequest).convert('shell', 'curl', { indent: '\t' }),
+          source: `${new HTTPSnippet(harRequest as HarRequest).convert('shell', 'curl')}`,
         });
       }
 
