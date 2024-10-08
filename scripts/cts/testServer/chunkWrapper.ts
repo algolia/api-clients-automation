@@ -1,8 +1,8 @@
 import type { Server } from 'http';
 
 import { expect } from 'chai';
-import express from 'express';
 import type { Express } from 'express';
+import express from 'express';
 
 import { setupServer } from '.';
 

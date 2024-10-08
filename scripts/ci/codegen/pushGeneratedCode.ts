@@ -8,7 +8,7 @@ import text, { commitStartPrepareRelease } from './text.js';
 
 async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');
-  return (await run(`git pull origin "${baseBranch}"`)).includes('Already up to date.');
+  return (await run(`git pull origin ${baseBranch}`)).includes('Already up to date.');
 }
 
 /**
@@ -19,7 +19,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   await configureGitHubAuthor();
 
-  const baseBranch = process.env.BRANCH_NAME || (await run('git branch --show-current'));
+  const baseBranch = await run('git branch --show-current');
   const isMainBranch = baseBranch === MAIN_BRANCH;
   const IS_RELEASE_COMMIT = (await run('git log -1 --format="%s"')).startsWith(commitStartPrepareRelease);
   console.log(`Checking codegen status on '${baseBranch}'.`);
@@ -41,10 +41,10 @@ export async function pushGeneratedCode(): Promise<void> {
   const branchToPush = isMainBranch ? baseBranch : `generated/${baseBranch}`;
 
   if (!isMainBranch) {
-    await run(`git push -d origin "generated/${baseBranch}" || true`);
+    await run(`git push -d origin generated/${baseBranch} || true`);
 
     console.log(`Creating branch for generated code: '${branchToPush}'`);
-    await run(`git checkout -b "${branchToPush}"`);
+    await run(`git checkout -B ${branchToPush}`);
   }
 
   if (!(await isUpToDate(baseBranch))) {
@@ -55,10 +55,9 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
-  let message = await run(`git show -s "${baseBranch}" --format="%s ${text.commitEndMessage} ${skipCi}"`);
+  let message = await run(`git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`);
   const authors = await run(
-    `git show -s "${baseBranch}" --format="
-
+    `git show -s ${baseBranch} --format="
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)"`,
   );
@@ -72,8 +71,8 @@ Co-authored-by: %an <%ae>
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
   await run('git add .');
-  await run(`git commit -m "${message}"`);
-  await run(`git push origin "${branchToPush}"`);
+  await run(`git commit -m "${message.replaceAll('"', '\\"')}"`);
+  await run(`git push origin ${branchToPush}`);
 
   setOutput('GENERATED_COMMIT', await run('git rev-parse HEAD'));
 }

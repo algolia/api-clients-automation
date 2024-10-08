@@ -5,11 +5,11 @@ import { HarRequest, HTTPSnippet } from 'httpsnippet';
 import yaml from 'js-yaml';
 
 import { Cache } from '../cache.js';
-import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
+import { exists, GENERATORS, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Spec } from '../types.js';
 
-import { getCodeSampleLabel, transformSnippetsToCodeSamples, transformCodeSamplesToGuideMethods } from './snippets.js';
+import { getCodeSampleLabel, transformCodeSamplesToGuideMethods, transformSnippetsToCodeSamples } from './snippets.js';
 import type { SnippetSamples } from './types.js';
 
 export async function lintCommon(useCache: boolean): Promise<void> {

@@ -3,15 +3,15 @@ import fsp from 'fs/promises';
 import { resolve } from 'path';
 
 import {
-  gitCommit,
-  run,
-  toAbsolutePath,
-  ensureGitHubToken,
-  OWNER,
   configureGitHubAuthor,
+  ensureGitHubToken,
   getOctokit,
-  setVerbose,
   gitBranchExists,
+  gitCommit,
+  OWNER,
+  run,
+  setVerbose,
+  toAbsolutePath,
 } from '../../common.js';
 import { getNbGitDiff } from '../utils.js';
 

@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import micromatch from 'micromatch';
+import { describe, expect, it } from 'vitest';
 
 import { getPatterns } from '../pre-commit.mjs';
 

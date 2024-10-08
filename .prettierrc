@@ -2,13 +2,25 @@
   "trailingComma": "all",
   "singleQuote": true,
   "plugins": [
-    "prettier-plugin-java"
+    "prettier-plugin-java",
+    "prettier-plugin-organize-imports"
   ],
   "overrides": [
     {
       "files": "*.java",
       "options": {
         "printWidth": 140
+      }
+    },
+    {
+      "files": ["*.ts", "*.js", "*.mjs", "*.cjs"],
+      "options": {
+        "arrowParens": "always",
+        "bracketSpacing": true,
+        "bracketSameLine": false,
+        "printWidth": 120,
+        "useTabs": false,
+        "quoteProps": "as-needed"
       }
     }
   ]

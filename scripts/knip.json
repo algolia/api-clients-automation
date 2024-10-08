@@ -13,16 +13,8 @@
         "husky/pre-commit.mjs",
         "release/createReleasePR.ts"
       ],
-      "project": [
-        "**/*.test.ts",
-        "**/*.ts",
-        "**/*.cjs",
-        "**/*.mjs"
-      ]
+      "project": ["**/*.test.ts", "**/*.ts", "**/*.cjs", "**/*.mjs"]
     }
   },
-  "ignore": [
-    "dist",
-    "**/builddir"
-  ]
+  "ignore": ["dist", "**/builddir"]
 }
