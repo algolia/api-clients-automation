@@ -1,0 +1,11 @@
+linters:
+  disable:
+    - ineffassign
+    - staticcheck
+
+issues:
+  exclude-generated: disable
+
+run:
+  concurrency: 2
+  timeout: 10m
