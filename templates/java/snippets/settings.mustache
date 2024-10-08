@@ -1,6 +1,6 @@
 rootProject.name = 'java-tests'
 
-includeBuild('../../clients/algoliasearch-client-java') {
+includeBuild('../../../clients/algoliasearch-client-java') {
     dependencySubstitution {
         substitute module('com.algolia:algoliasearch') using project(':algoliasearch')
     }

@@ -4,9 +4,8 @@ export const patterns = [
   'specs/bundled/*.json',
 
   'clients/**',
-  'guides/**',
-  'snippets/**/.*',
-  'snippets/**',
+  'docs/**',
+  'docs/**/.*',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
   'clients/**/.github/**',

@@ -11,7 +11,8 @@ type BuildType = 'client' | 'guides' | 'playground' | 'snippets';
  * Build code for a specific language.
  */
 async function buildLanguage(language: Language, gens: Generator[], buildType: BuildType): Promise<void> {
-  const cwd = buildType === 'client' ? getLanguageFolder(language) : `./${buildType}/${language}`;
+  const baseCwd = buildType === 'playground' ? '.' : './docs';
+  const cwd = buildType === 'client' ? getLanguageFolder(language) : `${baseCwd}/${buildType}/${language}`;
   const spinner = createSpinner(`building ${buildType} for '${language}'`);
   switch (language) {
     case 'csharp':
