@@ -1,9 +1,8 @@
-import { personalizationClient } from '@algolia/client-personalization';
 import { ApiError } from '@algolia/client-common';
+import { personalizationClient } from '@algolia/client-personalization';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
-const apiKey =
-  process.env.ALGOLIA_RECOMMENDATION_KEY || '**** RECOMMENDATION_API_KEY *****';
+const apiKey = process.env.ALGOLIA_RECOMMENDATION_KEY || '**** RECOMMENDATION_API_KEY *****';
 
 // Init client with appId and apiKey
 const client = personalizationClient(appId, apiKey, 'eu');

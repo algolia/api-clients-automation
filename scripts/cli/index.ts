@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds, buildSnippets, buildGuides } from '../buildLanguages.js';
+import { buildClients, buildGuides, buildPlaygrounds, buildSnippets } from '../buildLanguages.js';
 import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
 import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
@@ -18,7 +18,7 @@ import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
 
 import type { LangArg } from './utils.js';
-import { ALL, getClientChoices, generatorList, transformSelection, PROMPT_CLIENTS, PROMPT_LANGUAGES } from './utils.js';
+import { ALL, generatorList, getClientChoices, PROMPT_CLIENTS, PROMPT_LANGUAGES, transformSelection } from './utils.js';
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),

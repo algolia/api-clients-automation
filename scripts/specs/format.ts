@@ -7,7 +7,7 @@ import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Spec } from '../types.js';
 
-import { getCodeSampleLabel, transformSnippetsToCodeSamples, transformCodeSamplesToGuideMethods } from './snippets.js';
+import { getCodeSampleLabel, transformCodeSamplesToGuideMethods, transformSnippetsToCodeSamples } from './snippets.js';
 import type { SnippetSamples } from './types.js';
 
 export async function lintCommon(useCache: boolean): Promise<void> {

@@ -3,6 +3,8 @@ node_modules
 .env
 .pnp.cjs
 .parcel-cache
+**/.parcel-cache
+**/.nx
 
 yarn-error.log
 debug.log

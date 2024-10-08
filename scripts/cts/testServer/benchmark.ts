@@ -4,8 +4,8 @@ import type { Server } from 'http';
 
 import { expect } from 'chai';
 import chalk from 'chalk';
-import express from 'express';
 import type { Express } from 'express';
+import express from 'express';
 
 import { CI, toAbsolutePath } from '../../common';
 
