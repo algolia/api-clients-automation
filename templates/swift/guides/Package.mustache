@@ -4,24 +4,19 @@
 import PackageDescription
 
 let package = Package(
-  name: "AlgoliaSearchClientSnippets",
+  name: "AlgoliaSearchClientGuides",
   platforms: [
     .iOS(.v13),
     .macOS(.v11),
     .tvOS(.v13),
     .watchOS(.v6),
   ],
-  products: [
-      .library(
-          name: "AlgoliaSearchClientSnippets",
-          targets: ["AlgoliaSearchClientSnippets"]),
-  ],
   dependencies: [
       .package(path: "../../clients/algoliasearch-client-swift")
   ],
   targets: [
-    .target(
-      name: "AlgoliaSearchClientSnippets",
+    .executableTarget(
+      name: "AlgoliaSearchClientGuides",
       dependencies: [{{#packageList}}
         .product(
           name: "{{{.}}}",

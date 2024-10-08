@@ -1,0 +1,28 @@
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.util.List;
+
+{{> snippets/import}}
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class saveObjectsMovies {
+  public static void main(String[] args) throws Exception {
+    // Fetch sample dataset
+    URL url = new URI("https://dashboard.algolia.com/sample_datasets/movie.json").toURL();
+    InputStream stream = url.openStream();
+    ObjectMapper mapper = new ObjectMapper();
+    List<JsonNode> movies = mapper.readValue(stream, new TypeReference<List<JsonNode>>() {});
+    stream.close();
+
+    // Connect and authenticate with your Algolia app
+    {{> snippets/init}}
+
+    // Save records in Algolia index
+    {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}};
+    client.close();
+  }
+}
