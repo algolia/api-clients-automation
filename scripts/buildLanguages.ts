@@ -65,7 +65,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       break;
     case 'swift':
       // make this work in the playground
-      if (buildType === 'client') {
+      if (buildType !== 'playground') {
         await run('swift build -Xswiftc -suppress-warnings', { cwd, language });
       }
       break;
