@@ -7,7 +7,6 @@ require_relative '../helpers'
 Dotenv.load('../../.env')
 
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E < Test::Unit::TestCase
-  include Algolia::{{{modelModule}}}
   def setup
     @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
       ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
