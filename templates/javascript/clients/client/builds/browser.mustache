@@ -1,7 +1,5 @@
 // {{{generationBanner}}}
 
-export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>;
-
 {{> client/builds/definition}}
   return create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     appId,
@@ -26,3 +24,5 @@ export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnTyp
     ...options,
   });
 }
+
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>;

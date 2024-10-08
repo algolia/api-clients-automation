@@ -1,7 +1,7 @@
 import type { Server } from 'http';
 
-import express from 'express';
 import type { Express } from 'express';
+import express from 'express';
 
 import { createSpinner } from '../../spinners';
 import type { CTSType } from '../runCts';

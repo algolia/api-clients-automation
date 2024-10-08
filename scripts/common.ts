@@ -2,8 +2,8 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import { Octokit } from '@octokit/rest';
-import { execaCommand, execa } from 'execa';
 import type { ExecaError } from 'execa';
+import { execa, execaCommand } from 'execa';
 import { remove } from 'fs-extra';
 
 import clientsConfig from '../config/clients.config.json' assert { type: 'json' };

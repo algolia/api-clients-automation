@@ -32,19 +32,17 @@
 
 ## 💡 Getting Started
 
-
 To get started, you first need to install @algolia/ingestion (or any other available API client package).
 All of our clients comes with type definition, and are available for both browser and node environments.
 
 ### With a package manager
 
-
 ```bash
-yarn add @algolia/ingestion@1.7.0
+yarn add @algolia/ingestion@1.8.0
 # or
-npm install @algolia/ingestion@1.7.0
+npm install @algolia/ingestion@1.8.0
 # or
-pnpm add @algolia/ingestion@1.7.0
+pnpm add @algolia/ingestion@1.8.0
 ```
 
 ### Without a package manager
@@ -52,7 +50,7 @@ pnpm add @algolia/ingestion@1.7.0
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/ingestion@1.7.0/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/ingestion@1.8.0/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage

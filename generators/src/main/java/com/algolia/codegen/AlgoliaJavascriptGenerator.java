@@ -46,7 +46,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     Helpers.setGenerationBanner(additionalProperties);
 
     languageSpecificPrimitives.add("Record");
+    languageSpecificPrimitives.add("Record<string, unknown>");
     instantiationTypes.put("map", "Record");
+    instantiationTypes.put("object", "Record<string, unknown>");
+    typeMapping.put("object", "Record<string, unknown>");
     // clear all supported files to avoid unwanted ones
     supportingFiles.clear();
 

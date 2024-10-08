@@ -28,7 +28,7 @@ class TestInsightsClientE2E < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1728086400000,
+            timestamp: 1728345600000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -38,7 +38,7 @@ class TestInsightsClientE2E < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1728086400000,
+            timestamp: 1728345600000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
@@ -55,7 +55,7 @@ class TestInsightsClientE2E < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1728086400000,
+            timestamp: 1728345600000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -65,7 +65,7 @@ class TestInsightsClientE2E < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1728086400000,
+            timestamp: 1728345600000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
