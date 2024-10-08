@@ -38,7 +38,7 @@ export function serializeQueryParameters(parameters: QueryParameters): string {
           Object.prototype.toString.call(parameters[key]) === '[object Array]'
             ? parameters[key].join(',')
             : parameters[key],
-        ).replaceAll('+', '%20')}`,
+        ).replace(/\+/g, '%20')}`,
     )
     .join('&');
 }
