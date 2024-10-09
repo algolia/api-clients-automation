@@ -66,7 +66,7 @@ export async function removeExistingCodegen({ language, client, output }: Genera
       baseApiFolder = 'algoliasearch';
       break;
     case 'ruby':
-      clientModel = clientName.toLowerCase();
+      clientModel = client;
       clientApi = `${toSnakeCase(clientName)}_client.rb`;
       break;
     case 'scala':
