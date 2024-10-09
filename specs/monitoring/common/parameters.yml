@@ -3,7 +3,7 @@ Clusters:
   name: clusters
   in: path
   required: true
-  description: Subset of clusters, separated by comma.
+  description: Subset of clusters, separated by commas.
   schema:
     # The `correct` (?) schema should be type array/items string,
     # But the SDK generator expects a string, because it can't replace a list of strings in the URL.

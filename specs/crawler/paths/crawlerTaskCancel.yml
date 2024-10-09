@@ -4,8 +4,8 @@ post:
   description: |
     Cancels a blocking task.
 
-    Tasks that ran into an error block the futher schedule of your Crawler.
-    To unblock the crawler, you can cancel the blocking task.
+    Tasks that ran into an error will block your crawler's schedule.
+    To unblock the crawler, cancel the blocking task.
   tags:
     - tasks
   parameters:

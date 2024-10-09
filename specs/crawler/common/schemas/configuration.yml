@@ -9,7 +9,7 @@ Configuration:
     actions:
       type: array
       description: |
-        Instructions how to process crawled URLs.
+        Instructions about how to process crawled URLs.
 
         Each action defines:
 
@@ -31,7 +31,7 @@ Configuration:
         The API key must have the following access control list (ACL) permissions:
         `search`, `browse`, `listIndexes`, `addObject`, `deleteObject`, `deleteIndex`, `settings`, `editSettings`.
         The API key must not be the admin API key of the application.
-        The API key must have access to the indices which the crawler is supposed to create.
+        The API key must have access to create the indices that the crawler will use.
         For example, if `indexPrefix` is `crawler_`, the API key must have access to all `crawler_*` indices.
     appId:
       $ref: '../parameters.yml#/applicationID'
@@ -54,7 +54,7 @@ Configuration:
       description: |
         References to external data sources for enriching the extracted records.
 
-        For more information, see [Enrich extrated records with external data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data/).
+        For more information, see [Enrich extracted records with external data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data/).
       maxItems: 10
       items:
         type: string
