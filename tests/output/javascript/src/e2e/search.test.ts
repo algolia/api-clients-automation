@@ -28,6 +28,21 @@ describe('browse', () => {
   });
 });
 
+describe('getObject', () => {
+  test('search with a real object', async () => {
+    const resp = await client.getObject({ indexName: 'cts_e2e_browse', objectID: 'Batman and Robin' });
+
+    const expectedBody = {
+      objectID: 'Batman and Robin',
+      title: 'Batman and Robin',
+      year: 1949,
+      cast: ['Robert Lowery', 'Johnny Duncan', 'Jane Adams'],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
+});
+
 describe('getRule', () => {
   test('getRule', async () => {
     const resp = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });

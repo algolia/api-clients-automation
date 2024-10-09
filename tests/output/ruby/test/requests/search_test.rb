@@ -833,6 +833,18 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # search with a real object
+  def test_get_object1
+    req = @client.get_object_with_http_info("cts_e2e_browse", "Batman and Robin")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/indexes/cts_e2e_browse/Batman%20and%20Robin", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getObjects
   def test_get_objects
     req = @client.get_objects_with_http_info(

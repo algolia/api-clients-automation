@@ -28,6 +28,18 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
+  # search with a real object
+  def test_get_object1
+    res = @client.get_object_with_http_info("cts_e2e_browse", "Batman and Robin")
+
+    assert_equal(res.status, 200)
+    res = @client.get_object("cts_e2e_browse", "Batman and Robin")
+    expected_body = JSON.parse(
+      "{\"objectID\":\"Batman and Robin\",\"title\":\"Batman and Robin\",\"year\":1949,\"cast\":[\"Robert Lowery\",\"Johnny Duncan\",\"Jane Adams\"]}"
+    )
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
   # getRule
   def test_get_rule
     res = @client.get_rule_with_http_info("cts_e2e_browse", "qr-1725004648916")
