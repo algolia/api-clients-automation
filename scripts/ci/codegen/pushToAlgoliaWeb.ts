@@ -104,7 +104,7 @@ async function pushToAlgoliaWeb(): Promise<void> {
     title: message,
     body: [
       'This PR is automatically created by https://github.com/algolia/api-clients-automation',
-      'It contains the latest generated code snippets.',
+      'It contains the latest generated guides.',
     ].join('\n\n'),
     base: 'master',
     head: targetBranch,
