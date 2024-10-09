@@ -26,6 +26,10 @@ function getFolder(buildType: BuildType, language: Language): string {
  * Build code for a specific language.
  */
 async function buildLanguage(language: Language, gens: Generator[], buildType: BuildType): Promise<void> {
+  if (!gens || gens.length === 0) {
+    return;
+  }
+
   const cwd = getFolder(buildType, language);
   const spinner = createSpinner(`building ${buildType} for '${language}'`);
   switch (language) {
@@ -101,8 +105,9 @@ export async function buildLanguages(generators: Generator[], scope: BuildType):
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const generatorsMap = generators.reduce(
     (map, gen) => {
-      if (!(gen.language in map)) {
-        map[gen.language] = [];
+      // TODO: remove this when guides are mandatory and implemented in every clients
+      if (scope === 'guides' && !existsSync(toAbsolutePath(`docs/guides/${gen.language}`))) {
+        return map;
       }
 
       // there is no monitoring client for now
@@ -110,9 +115,8 @@ export async function buildLanguages(generators: Generator[], scope: BuildType):
         return map;
       }
 
-      // TODO: remove this when guides are mandatory and implemented in every clients
-      if (scope === 'guides' && !existsSync(toAbsolutePath(`docs/guides/${gen.language}`))) {
-        return map;
+      if (!(gen.language in map)) {
+        map[gen.language] = [];
       }
 
       map[gen.language].push(gen);
