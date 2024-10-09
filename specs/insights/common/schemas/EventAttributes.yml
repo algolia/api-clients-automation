@@ -13,7 +13,7 @@ eventName:
 index:
   type: string
   description: Index name (case-sensitive) to which the event's items belong.
-  example: YourIndexName
+  example: ALGOLIA_INDEX_NAME
 
 userToken:
   type: string
