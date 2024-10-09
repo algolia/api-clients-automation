@@ -71,6 +71,31 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
+    /// search with a real object
+    func testGetObjectTest1() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.getObjectWithHTTPInfo(
+            indexName: "cts_e2e_browse",
+            objectID: "Batman and Robin"
+        )
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"objectID\":\"Batman and Robin\",\"title\":\"Batman and Robin\",\"year\":1949,\"cast\":[\"Robert Lowery\",\"Johnny Duncan\",\"Jane Adams\"]}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
     /// getRule
     func testGetRuleTest() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {

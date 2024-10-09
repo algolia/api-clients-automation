@@ -1237,6 +1237,17 @@ public class SearchClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "search with a real object")]
+  public async Task GetObjectTest1()
+  {
+    await client.GetObjectAsync("cts_e2e_browse", "Batman and Robin");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/cts_e2e_browse/Batman%20and%20Robin", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "getObjects")]
   public async Task GetObjectsTest()
   {

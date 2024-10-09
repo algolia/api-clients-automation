@@ -64,7 +64,7 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
     }
 
     const ppath = toAbsolutePath(
-      `snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(clientName, gen.language)}${gen.snippets.extension}`,
+      `docs/snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(clientName, gen.language)}${gen.snippets.extension}`,
     );
 
     if (!(await exists(ppath))) {

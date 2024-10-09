@@ -43,6 +43,21 @@ class SearchTest {
   }
 
   @Test
+  fun `search with a real object1`() = runTest {
+    client.runTest(
+      call = {
+        getObject(
+          indexName = "cts_e2e_browse",
+          objectID = "Batman and Robin",
+        )
+      },
+      response = {
+        JSONAssert.assertEquals("{\"objectID\":\"Batman and Robin\",\"title\":\"Batman and Robin\",\"year\":1949,\"cast\":[\"Robert Lowery\",\"Johnny Duncan\",\"Jane Adams\"]}", Json.encodeToString(it), JSONCompareMode.LENIENT)
+      },
+    )
+  }
+
+  @Test
   fun `getRule`() = runTest {
     client.runTest(
       call = {

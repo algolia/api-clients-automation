@@ -2,21 +2,21 @@ import { Argument, program } from 'commander';
 import semver from 'semver';
 
 import { buildClients, buildGuides, buildPlaygrounds, buildSnippets } from '../buildLanguages.js';
-import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
+import { CI, CLIENTS, LANGUAGES, run, setVerbose, toAbsolutePath } from '../common.js';
 import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
+import { docsGenerateMany } from '../docs/generate.js';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
-import { guidesGenerateMany } from '../guides/generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
 import { generateVersionsHistory } from '../release/versionsHistory.js';
-import { snippetsGenerateMany } from '../snippets/generate.js';
 import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
 
+import { existsSync } from 'node:fs';
 import type { LangArg } from './utils.js';
 import { ALL, generatorList, getClientChoices, PROMPT_CLIENTS, PROMPT_LANGUAGES, transformSelection } from './utils.js';
 
@@ -248,7 +248,7 @@ program
 
     setVerbose(Boolean(verbose));
 
-    await snippetsGenerateMany(generatorList({ language, client, clientList }));
+    await docsGenerateMany(generatorList({ language, client, clientList }), 'snippets');
   });
 
 program
@@ -265,7 +265,12 @@ program
 
     setVerbose(Boolean(verbose));
 
-    await guidesGenerateMany(generatorList({ language, client, clientList }));
+    await docsGenerateMany(
+      generatorList({ language, client, clientList }).filter((gen) =>
+        existsSync(toAbsolutePath(`templates/${gen.language}/guides/${gen.client}`)),
+      ),
+      'guides',
+    );
   });
 
 program

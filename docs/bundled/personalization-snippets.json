@@ -1,0 +1,350 @@
+{
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Personalization;"
+    },
+    "customDelete": {
+      "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "var response = await client.CustomGetAsync(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "var response = await client.CustomPostAsync(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
+    },
+    "deleteUserProfile": {
+      "default": "var response = await client.DeleteUserProfileAsync(\"UserToken\");"
+    },
+    "getPersonalizationStrategy": {
+      "default": "var response = await client.GetPersonalizationStrategyAsync();"
+    },
+    "getUserTokenProfile": {
+      "default": "var response = await client.GetUserTokenProfileAsync(\"UserToken\");"
+    },
+    "setClientApiKey": {
+      "default": "client.SetClientApiKey(\"updated-api-key\");"
+    },
+    "setPersonalizationStrategy": {
+      "default": "var response = await client.SetPersonalizationStrategyAsync(\n  new PersonalizationStrategyParams\n  {\n    EventScoring = new List<EventScoring>\n    {\n      new EventScoring\n      {\n        Score = 42,\n        EventName = \"Algolia\",\n        EventType = Enum.Parse<EventType>(\"Click\"),\n      },\n    },\n    FacetScoring = new List<FacetScoring>\n    {\n      new FacetScoring { Score = 42, FacetName = \"Event\" },\n    },\n    PersonalizationImpact = 42,\n  }\n);"
+    },
+    "init": {
+      "default": "var client = new PersonalizationClient(\n  new PersonalizationConfig(\n    \"ALGOLIA_APPLICATION_ID\",\n    \"ALGOLIA_API_KEY\",\n    \"ALGOLIA_APPLICATION_REGION\"\n  )\n);"
+    }
+  },
+  "dart": {},
+  "go": {
+    "import": {
+      "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/personalization\""
+    },
+    "customDelete": {
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customGet": {
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPost": {
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPut": {
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteUserProfile": {
+      "default": "response, err := client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(\n  \"UserToken\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getPersonalizationStrategy": {
+      "default": "response, err := client.GetPersonalizationStrategy()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getUserTokenProfile": {
+      "default": "response, err := client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(\n  \"UserToken\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "setClientApiKey": {
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "setPersonalizationStrategy": {
+      "default": "response, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(\n\n  personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(\n    []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName(\"Algolia\").SetEventType(personalization.EventType(\"click\"))}).SetFacetScoring(\n    []personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName(\"Event\")}).SetPersonalizationImpact(42),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "init": {
+      "default": "client, err := personalization.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.PersonalizationClient;\nimport com.algolia.model.personalization.*;"
+    },
+    "customDelete": {
+      "default": "client.customDelete(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "client.customGet(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "client.customPost(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "client.customPut(\"test/minimal\");"
+    },
+    "deleteUserProfile": {
+      "default": "client.deleteUserProfile(\"UserToken\");"
+    },
+    "getPersonalizationStrategy": {
+      "default": "client.getPersonalizationStrategy();"
+    },
+    "getUserTokenProfile": {
+      "default": "client.getUserTokenProfile(\"UserToken\");"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\"updated-api-key\");"
+    },
+    "setPersonalizationStrategy": {
+      "default": "client.setPersonalizationStrategy(\n  new PersonalizationStrategyParams()\n    .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName(\"Algolia\").setEventType(EventType.CLICK)))\n    .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName(\"Event\")))\n    .setPersonalizationImpact(42)\n);"
+    },
+    "init": {
+      "default": "PersonalizationClient client = new PersonalizationClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
+    }
+  },
+  "javascript": {
+    "import": {
+      "default": "import { personalizationClient } from '@algolia/client-personalization';"
+    },
+    "customDelete": {
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });"
+    },
+    "customGet": {
+      "default": "const response = await client.customGet({ path: 'test/minimal' });"
+    },
+    "customPost": {
+      "default": "const response = await client.customPost({ path: 'test/minimal' });"
+    },
+    "customPut": {
+      "default": "const response = await client.customPut({ path: 'test/minimal' });"
+    },
+    "deleteUserProfile": {
+      "default": "const response = await client.deleteUserProfile({ userToken: 'UserToken' });"
+    },
+    "getPersonalizationStrategy": {
+      "default": "const response = await client.getPersonalizationStrategy();"
+    },
+    "getUserTokenProfile": {
+      "default": "const response = await client.getUserTokenProfile({ userToken: 'UserToken' });"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "setPersonalizationStrategy": {
+      "default": "const response = await client.setPersonalizationStrategy({\n  eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],\n  facetScoring: [{ score: 42, facetName: 'Event' }],\n  personalizationImpact: 42,\n});"
+    },
+    "init": {
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = personalizationClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+    }
+  },
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.PersonalizationClient"
+    },
+    "customDelete": {
+      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)"
+    },
+    "customGet": {
+      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)"
+    },
+    "customPost": {
+      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)"
+    },
+    "customPut": {
+      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)"
+    },
+    "deleteUserProfile": {
+      "default": "var response = client.deleteUserProfile(\n  userToken = \"UserToken\",\n)"
+    },
+    "getPersonalizationStrategy": {
+      "default": "var response = client.getPersonalizationStrategy()"
+    },
+    "getUserTokenProfile": {
+      "default": "var response = client.getUserTokenProfile(\n  userToken = \"UserToken\",\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
+    },
+    "setPersonalizationStrategy": {
+      "default": "var response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = listOf(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.entries.first { it.value == \"click\" },\n      ),\n    ),\n    facetScoring = listOf(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\",\n      ),\n    ),\n    personalizationImpact = 42,\n  ),\n)"
+    },
+    "init": {
+      "default": "val client = PersonalizationClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\PersonalizationClient;"
+    },
+    "customDelete": {
+      "default": "$response = $client->customDelete(\n    'test/minimal',\n);"
+    },
+    "customGet": {
+      "default": "$response = $client->customGet(\n    'test/minimal',\n);"
+    },
+    "customPost": {
+      "default": "$response = $client->customPost(\n    'test/minimal',\n);"
+    },
+    "customPut": {
+      "default": "$response = $client->customPut(\n    'test/minimal',\n);"
+    },
+    "deleteUserProfile": {
+      "default": "$response = $client->deleteUserProfile(\n    'UserToken',\n);"
+    },
+    "getPersonalizationStrategy": {
+      "default": "$response = $client->getPersonalizationStrategy();"
+    },
+    "getUserTokenProfile": {
+      "default": "$response = $client->getUserTokenProfile(\n    'UserToken',\n);"
+    },
+    "setClientApiKey": {
+      "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
+    },
+    "setPersonalizationStrategy": {
+      "default": "$response = $client->setPersonalizationStrategy(\n    ['eventScoring' => [\n        ['score' => 42,\n            'eventName' => 'Algolia',\n            'eventType' => 'click',\n        ],\n    ],\n        'facetScoring' => [\n            ['score' => 42,\n                'facetName' => 'Event',\n            ],\n        ],\n        'personalizationImpact' => 42,\n    ],\n);"
+    },
+    "init": {
+      "default": "$client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.personalization.client import PersonalizationClientSync"
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
+    },
+    "deleteUserProfile": {
+      "default": "response = client.delete_user_profile(\n    user_token=\"UserToken\",\n)"
+    },
+    "getPersonalizationStrategy": {
+      "default": "response = client.get_personalization_strategy()"
+    },
+    "getUserTokenProfile": {
+      "default": "response = client.get_user_token_profile(\n    user_token=\"UserToken\",\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+    },
+    "setPersonalizationStrategy": {
+      "default": "response = client.set_personalization_strategy(\n    personalization_strategy_params={\n        \"eventScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)"
+    },
+    "init": {
+      "default": "# In an asynchronous context, you can use PersonalizationClient instead, which exposes the exact same methods.\nclient = PersonalizationClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\"test/minimal\")"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\"test/minimal\")"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\"test/minimal\")"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\"test/minimal\")"
+    },
+    "deleteUserProfile": {
+      "default": "response = client.delete_user_profile(\"UserToken\")"
+    },
+    "getPersonalizationStrategy": {
+      "default": "response = client.get_personalization_strategy"
+    },
+    "getUserTokenProfile": {
+      "default": "response = client.get_user_token_profile(\"UserToken\")"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\"updated-api-key\")"
+    },
+    "setPersonalizationStrategy": {
+      "default": "response = client.set_personalization_strategy(\n  Algolia::Personalization::PersonalizationStrategyParams.new(\n    event_scoring: [Algolia::Personalization::EventScoring.new(score: 42, event_name: \"Algolia\", event_type: \"click\")],\n    facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: \"Event\")],\n    personalization_impact: 42\n  )\n)"
+    },
+    "init": {
+      "default": "client = Algolia::PersonalizationClient.create(\n  \"ALGOLIA_APPLICATION_ID\",\n  \"ALGOLIA_API_KEY\",\n  \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.PersonalizationClient"
+    },
+    "customDelete": {
+      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customGet": {
+      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customPost": {
+      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customPut": {
+      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "deleteUserProfile": {
+      "default": "val response = client.deleteUserProfile(\n  userToken = \"UserToken\"\n)"
+    },
+    "getPersonalizationStrategy": {
+      "default": "val response = client.getPersonalizationStrategy(\n)"
+    },
+    "getUserTokenProfile": {
+      "default": "val response = client.getUserTokenProfile(\n  userToken = \"UserToken\"\n)"
+    },
+    "setPersonalizationStrategy": {
+      "default": "val response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = Seq(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.withName(\"click\")\n      )\n    ),\n    facetScoring = Seq(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\"\n      )\n    ),\n    personalizationImpact = 42\n  )\n)"
+    },
+    "init": {
+      "default": "val client = PersonalizationClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import Personalization"
+    },
+    "customDelete": {
+      "default": "let response = try await client.customDelete(path: \"test/minimal\")"
+    },
+    "customGet": {
+      "default": "let response = try await client.customGet(path: \"test/minimal\")"
+    },
+    "customPost": {
+      "default": "let response = try await client.customPost(path: \"test/minimal\")"
+    },
+    "customPut": {
+      "default": "let response = try await client.customPut(path: \"test/minimal\")"
+    },
+    "deleteUserProfile": {
+      "default": "let response = try await client.deleteUserProfile(userToken: \"UserToken\")"
+    },
+    "getPersonalizationStrategy": {
+      "default": "let response = try await client.getPersonalizationStrategy()"
+    },
+    "getUserTokenProfile": {
+      "default": "let response = try await client.getUserTokenProfile(userToken: \"UserToken\")"
+    },
+    "setClientApiKey": {
+      "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
+    },
+    "setPersonalizationStrategy": {
+      "default": "let response = try await client\n    .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(\n        eventScoring: [EventScoring(\n            score: 42,\n            eventName: \"Algolia\",\n            eventType: PersonalizationEventType.click\n        )],\n        facetScoring: [FacetScoring(score: 42, facetName: \"Event\")],\n        personalizationImpact: 42\n    ))"
+    },
+    "init": {
+      "default": "let client = try PersonalizationClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
+    }
+  }
+}

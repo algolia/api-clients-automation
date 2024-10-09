@@ -39,7 +39,7 @@ public class SnippetsGenerator extends TestsGenerator {
     supportingFiles.add(
       new SupportingFile(
         "snippets/method.mustache",
-        "snippets/" + language + outputFolder + Helpers.createClientName(client, language) + extension
+        "docs/snippets/" + language + outputFolder + Helpers.createClientName(client, language) + extension
       )
     );
   }

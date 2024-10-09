@@ -1298,6 +1298,23 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `search with a real object1`() = runTest {
+    client.runTest(
+      call = {
+        getObject(
+          indexName = "cts_e2e_browse",
+          objectID = "Batman and Robin",
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/cts_e2e_browse/Batman%20and%20Robin".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getObjects
 
   @Test

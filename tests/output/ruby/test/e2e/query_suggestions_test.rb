@@ -8,7 +8,6 @@ require_relative "../helpers"
 Dotenv.load("../../.env")
 
 class TestQuerySuggestionsClientE2E < Test::Unit::TestCase
-  include Algolia::QuerySuggestions
   def setup
     @client = Algolia::QuerySuggestionsClient.create(
       ENV.fetch("ALGOLIA_APPLICATION_ID", nil),
