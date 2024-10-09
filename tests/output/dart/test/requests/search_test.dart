@@ -1468,6 +1468,28 @@ void main() {
     ),
   );
 
+  // getObject
+  test(
+    'search with a real object',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getObject(
+        indexName: "cts_e2e_browse",
+        objectID: "Batman and Robin",
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/cts_e2e_browse/Batman%20and%20Robin');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getObjects
   test(
     'getObjects',

@@ -37,6 +37,5 @@ public class GoCTSManager implements CTSManager {
   public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
     supportingFiles.add(new SupportingFile("snippets/.golangci.mustache", output + "/go/.golangci.yml"));
     supportingFiles.add(new SupportingFile("snippets/go.mod.mustache", output + "/go/go.mod"));
-    supportingFiles.add(new SupportingFile("snippets/go.sum.mustache", output + "/go/go.sum"));
   }
 }

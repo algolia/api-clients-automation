@@ -7,11 +7,26 @@ import type { Generator, Language } from './types.js';
 
 type BuildType = 'client' | 'guides' | 'playground' | 'snippets';
 
+function getFolder(buildType: BuildType, language: Language): string {
+  switch (buildType) {
+    case 'client':
+      return getLanguageFolder(language);
+    case 'guides':
+      return `docs/guides/${language}`;
+    case 'playground':
+      return `playground/${language}`;
+    case 'snippets':
+      return `docs/snippets/${language}`;
+    default:
+      throw new Error(`Unknown build type: ${buildType}`);
+  }
+}
+
 /**
  * Build code for a specific language.
  */
 async function buildLanguage(language: Language, gens: Generator[], buildType: BuildType): Promise<void> {
-  const cwd = buildType === 'client' ? getLanguageFolder(language) : `./${buildType}/${language}`;
+  const cwd = getFolder(buildType, language);
   const spinner = createSpinner(`building ${buildType} for '${language}'`);
   switch (language) {
     case 'csharp':
@@ -103,7 +118,7 @@ export async function buildSnippets(languages: Language[]): Promise<void> {
 export async function buildGuides(languages: Language[]): Promise<void> {
   await Promise.all(
     languages.map((lang) => {
-      if (!existsSync(toAbsolutePath(`guides/${lang}`))) {
+      if (!existsSync(toAbsolutePath(`docs/guides/${lang}`))) {
         return Promise.resolve();
       }
 

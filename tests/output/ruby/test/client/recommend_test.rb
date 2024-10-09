@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientRecommendClient < Test::Unit::TestCase
-  include Algolia::Recommend
   # calls api with correct read host
   def test_api0
 

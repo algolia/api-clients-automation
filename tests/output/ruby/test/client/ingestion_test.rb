@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientIngestionClient < Test::Unit::TestCase
-  include Algolia::Ingestion
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::IngestionClient.create(

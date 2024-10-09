@@ -1,0 +1,440 @@
+{
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.QuerySuggestions;"
+    },
+    "createConfig": {
+      "default": "var response = await client.CreateConfigAsync(\n  new ConfigurationWithIndex\n  {\n    IndexName = \"<YOUR_INDEX_NAME>\",\n    SourceIndices = new List<SourceIndex>\n    {\n      new SourceIndex\n      {\n        IndexName = \"<YOUR_INDEX_NAME>\",\n        Facets = new List<Facet> { new Facet { Attribute = \"test\" } },\n        Generate = new List<List<string>>\n        {\n          new List<string> { \"facetA\", \"facetB\" },\n          new List<string> { \"facetC\" },\n        },\n      },\n    },\n    Languages = new Languages(new List<string> { \"french\" }),\n    Exclude = new List<string> { \"test\" },\n  }\n);"
+    },
+    "customDelete": {
+      "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "var response = await client.CustomGetAsync(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "var response = await client.CustomPostAsync(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
+    },
+    "deleteConfig": {
+      "default": "var response = await client.DeleteConfigAsync(\"<YOUR_INDEX_NAME>\");"
+    },
+    "getAllConfigs": {
+      "default": "var response = await client.GetAllConfigsAsync();"
+    },
+    "getConfig": {
+      "default": "var response = await client.GetConfigAsync(\"<YOUR_INDEX_NAME>\");"
+    },
+    "getConfigStatus": {
+      "default": "var response = await client.GetConfigStatusAsync(\"<YOUR_INDEX_NAME>\");"
+    },
+    "getLogFile": {
+      "default": "var response = await client.GetLogFileAsync(\"<YOUR_INDEX_NAME>\");"
+    },
+    "setClientApiKey": {
+      "default": "client.SetClientApiKey(\"updated-api-key\");"
+    },
+    "updateConfig": {
+      "default": "var response = await client.UpdateConfigAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration\n  {\n    SourceIndices = new List<SourceIndex>\n    {\n      new SourceIndex\n      {\n        IndexName = \"<YOUR_INDEX_NAME>\",\n        Facets = new List<Facet> { new Facet { Attribute = \"test\" } },\n        Generate = new List<List<string>>\n        {\n          new List<string> { \"facetA\", \"facetB\" },\n          new List<string> { \"facetC\" },\n        },\n      },\n    },\n    Languages = new Languages(new List<string> { \"french\" }),\n    Exclude = new List<string> { \"test\" },\n  }\n);"
+    },
+    "init": {
+      "default": "var client = new QuerySuggestionsClient(\n  new QuerySuggestionsConfig(\n    \"ALGOLIA_APPLICATION_ID\",\n    \"ALGOLIA_API_KEY\",\n    \"ALGOLIA_APPLICATION_REGION\"\n  )\n);"
+    }
+  },
+  "dart": {},
+  "go": {
+    "import": {
+      "default": "import suggestions \"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions\""
+    },
+    "createConfig": {
+      "default": "response, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customDelete": {
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customGet": {
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPost": {
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPut": {
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteConfig": {
+      "default": "response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getAllConfigs": {
+      "default": "response, err := client.GetAllConfigs()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getConfig": {
+      "default": "response, err := client.GetConfig(client.NewApiGetConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getConfigStatus": {
+      "default": "response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getLogFile": {
+      "default": "response, err := client.GetLogFile(client.NewApiGetLogFileRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "setClientApiKey": {
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "updateConfig": {
+      "default": "response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "init": {
+      "default": "client, err := suggestions.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.QuerySuggestionsClient;\nimport com.algolia.model.querysuggestions.*;"
+    },
+    "createConfig": {
+      "default": "client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"<YOUR_INDEX_NAME>\")\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
+    },
+    "customDelete": {
+      "default": "client.customDelete(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "client.customGet(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "client.customPost(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "client.customPut(\"test/minimal\");"
+    },
+    "deleteConfig": {
+      "default": "client.deleteConfig(\"<YOUR_INDEX_NAME>\");"
+    },
+    "getAllConfigs": {
+      "default": "client.getAllConfigs();"
+    },
+    "getConfig": {
+      "default": "client.getConfig(\"<YOUR_INDEX_NAME>\");"
+    },
+    "getConfigStatus": {
+      "default": "client.getConfigStatus(\"<YOUR_INDEX_NAME>\");"
+    },
+    "getLogFile": {
+      "default": "client.getLogFile(\"<YOUR_INDEX_NAME>\");"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\"updated-api-key\");"
+    },
+    "updateConfig": {
+      "default": "client.updateConfig(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration()\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
+    },
+    "init": {
+      "default": "QuerySuggestionsClient client = new QuerySuggestionsClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
+    }
+  },
+  "javascript": {
+    "import": {
+      "default": "import { querySuggestionsClient } from '@algolia/client-query-suggestions';"
+    },
+    "createConfig": {
+      "default": "const response = await client.createConfig({\n  indexName: 'theIndexName',\n  sourceIndices: [\n    { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },\n  ],\n  languages: ['french'],\n  exclude: ['test'],\n});"
+    },
+    "customDelete": {
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });"
+    },
+    "customGet": {
+      "default": "const response = await client.customGet({ path: 'test/minimal' });"
+    },
+    "customPost": {
+      "default": "const response = await client.customPost({ path: 'test/minimal' });"
+    },
+    "customPut": {
+      "default": "const response = await client.customPut({ path: 'test/minimal' });"
+    },
+    "deleteConfig": {
+      "default": "const response = await client.deleteConfig({ indexName: 'theIndexName' });"
+    },
+    "getAllConfigs": {
+      "default": "const response = await client.getAllConfigs();"
+    },
+    "getConfig": {
+      "default": "const response = await client.getConfig({ indexName: 'cts_e2e_browse_query_suggestions' });"
+    },
+    "getConfigStatus": {
+      "default": "const response = await client.getConfigStatus({ indexName: 'theIndexName' });"
+    },
+    "getLogFile": {
+      "default": "const response = await client.getLogFile({ indexName: 'theIndexName' });"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "updateConfig": {
+      "default": "const response = await client.updateConfig({\n  indexName: 'theIndexName',\n  configuration: {\n    sourceIndices: [\n      { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },\n    ],\n    languages: ['french'],\n    exclude: ['test'],\n  },\n});"
+    },
+    "init": {
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+    }
+  },
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.QuerySuggestionsClient"
+    },
+    "createConfig": {
+      "default": "var response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    sourceIndices = listOf(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = listOf(\n          Facet(\n            attribute = \"test\",\n          ),\n        ),\n        generate = listOf(listOf(\"facetA\", \"facetB\"), listOf(\"facetC\")),\n      ),\n    ),\n    languages = Languages.of(listOf(\"french\")),\n    exclude = listOf(\"test\"),\n  ),\n)"
+    },
+    "customDelete": {
+      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)"
+    },
+    "customGet": {
+      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)"
+    },
+    "customPost": {
+      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)"
+    },
+    "customPut": {
+      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)"
+    },
+    "deleteConfig": {
+      "default": "var response = client.deleteConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "getAllConfigs": {
+      "default": "var response = client.getAllConfigs()"
+    },
+    "getConfig": {
+      "default": "var response = client.getConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "getConfigStatus": {
+      "default": "var response = client.getConfigStatus(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "getLogFile": {
+      "default": "var response = client.getLogFile(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
+    },
+    "updateConfig": {
+      "default": "var response = client.updateConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  configuration = Configuration(\n    sourceIndices = listOf(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = listOf(\n          Facet(\n            attribute = \"test\",\n          ),\n        ),\n        generate = listOf(listOf(\"facetA\", \"facetB\"), listOf(\"facetC\")),\n      ),\n    ),\n    languages = Languages.of(listOf(\"french\")),\n    exclude = listOf(\"test\"),\n  ),\n)"
+    },
+    "init": {
+      "default": "val client = QuerySuggestionsClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\QuerySuggestionsClient;"
+    },
+    "createConfig": {
+      "default": "$response = $client->createConfig(\n    ['indexName' => '<YOUR_INDEX_NAME>',\n        'sourceIndices' => [\n            ['indexName' => '<YOUR_INDEX_NAME>',\n                'facets' => [\n                    ['attribute' => 'test',\n                    ],\n                ],\n                'generate' => [\n                    [\n                        'facetA',\n\n                        'facetB',\n                    ],\n\n                    [\n                        'facetC',\n                    ],\n                ],\n            ],\n        ],\n        'languages' => [\n            'french',\n        ],\n        'exclude' => [\n            'test',\n        ],\n    ],\n);"
+    },
+    "customDelete": {
+      "default": "$response = $client->customDelete(\n    'test/minimal',\n);"
+    },
+    "customGet": {
+      "default": "$response = $client->customGet(\n    'test/minimal',\n);"
+    },
+    "customPost": {
+      "default": "$response = $client->customPost(\n    'test/minimal',\n);"
+    },
+    "customPut": {
+      "default": "$response = $client->customPut(\n    'test/minimal',\n);"
+    },
+    "deleteConfig": {
+      "default": "$response = $client->deleteConfig(\n    '<YOUR_INDEX_NAME>',\n);"
+    },
+    "getAllConfigs": {
+      "default": "$response = $client->getAllConfigs();"
+    },
+    "getConfig": {
+      "default": "$response = $client->getConfig(\n    '<YOUR_INDEX_NAME>',\n);"
+    },
+    "getConfigStatus": {
+      "default": "$response = $client->getConfigStatus(\n    '<YOUR_INDEX_NAME>',\n);"
+    },
+    "getLogFile": {
+      "default": "$response = $client->getLogFile(\n    '<YOUR_INDEX_NAME>',\n);"
+    },
+    "setClientApiKey": {
+      "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
+    },
+    "updateConfig": {
+      "default": "$response = $client->updateConfig(\n    '<YOUR_INDEX_NAME>',\n    ['sourceIndices' => [\n        ['indexName' => '<YOUR_INDEX_NAME>',\n            'facets' => [\n                ['attribute' => 'test',\n                ],\n            ],\n            'generate' => [\n                [\n                    'facetA',\n\n                    'facetB',\n                ],\n\n                [\n                    'facetC',\n                ],\n            ],\n        ],\n    ],\n        'languages' => [\n            'french',\n        ],\n        'exclude' => [\n            'test',\n        ],\n    ],\n);"
+    },
+    "init": {
+      "default": "$client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.query_suggestions.client import QuerySuggestionsClientSync"
+    },
+    "createConfig": {
+      "default": "response = client.create_config(\n    configuration_with_index={\n        \"indexName\": \"<YOUR_INDEX_NAME>\",\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)"
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
+    },
+    "deleteConfig": {
+      "default": "response = client.delete_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "getAllConfigs": {
+      "default": "response = client.get_all_configs()"
+    },
+    "getConfig": {
+      "default": "response = client.get_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "getConfigStatus": {
+      "default": "response = client.get_config_status(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "getLogFile": {
+      "default": "response = client.get_log_file(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+    },
+    "updateConfig": {
+      "default": "response = client.update_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    configuration={\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)"
+    },
+    "init": {
+      "default": "# In an asynchronous context, you can use QuerySuggestionsClient instead, which exposes the exact same methods.\nclient = QuerySuggestionsClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "createConfig": {
+      "default": "response = client.create_config(\n  Algolia::QuerySuggestions::ConfigurationWithIndex.new(\n    index_name: \"<YOUR_INDEX_NAME>\",\n    source_indices: [\n      Algolia::QuerySuggestions::SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Algolia::QuerySuggestions::Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)"
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\"test/minimal\")"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\"test/minimal\")"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\"test/minimal\")"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\"test/minimal\")"
+    },
+    "deleteConfig": {
+      "default": "response = client.delete_config(\"<YOUR_INDEX_NAME>\")"
+    },
+    "getAllConfigs": {
+      "default": "response = client.get_all_configs"
+    },
+    "getConfig": {
+      "default": "response = client.get_config(\"<YOUR_INDEX_NAME>\")"
+    },
+    "getConfigStatus": {
+      "default": "response = client.get_config_status(\"<YOUR_INDEX_NAME>\")"
+    },
+    "getLogFile": {
+      "default": "response = client.get_log_file(\"<YOUR_INDEX_NAME>\")"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\"updated-api-key\")"
+    },
+    "updateConfig": {
+      "default": "response = client.update_config(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::QuerySuggestions::Configuration.new(\n    source_indices: [\n      Algolia::QuerySuggestions::SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Algolia::QuerySuggestions::Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)"
+    },
+    "init": {
+      "default": "client = Algolia::QuerySuggestionsClient.create(\n  \"ALGOLIA_APPLICATION_ID\",\n  \"ALGOLIA_API_KEY\",\n  \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.QuerySuggestionsClient"
+    },
+    "createConfig": {
+      "default": "val response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)"
+    },
+    "customDelete": {
+      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customGet": {
+      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customPost": {
+      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "customPut": {
+      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)"
+    },
+    "deleteConfig": {
+      "default": "val response = client.deleteConfig(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+    },
+    "getAllConfigs": {
+      "default": "val response = client.getAllConfigs(\n)"
+    },
+    "getConfig": {
+      "default": "val response = client.getConfig(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+    },
+    "getConfigStatus": {
+      "default": "val response = client.getConfigStatus(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+    },
+    "getLogFile": {
+      "default": "val response = client.getLogFile(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+    },
+    "updateConfig": {
+      "default": "val response = client.updateConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  configuration = Configuration(\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)"
+    },
+    "init": {
+      "default": "val client = QuerySuggestionsClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import QuerySuggestions"
+    },
+    "createConfig": {
+      "default": "let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(\n    sourceIndices: [SourceIndex(\n        indexName: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n    )],\n    languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n    exclude: [\"test\"],\n    indexName: \"<YOUR_INDEX_NAME>\"\n))"
+    },
+    "customDelete": {
+      "default": "let response = try await client.customDelete(path: \"test/minimal\")"
+    },
+    "customGet": {
+      "default": "let response = try await client.customGet(path: \"test/minimal\")"
+    },
+    "customPost": {
+      "default": "let response = try await client.customPost(path: \"test/minimal\")"
+    },
+    "customPut": {
+      "default": "let response = try await client.customPut(path: \"test/minimal\")"
+    },
+    "deleteConfig": {
+      "default": "let response = try await client.deleteConfig(indexName: \"<YOUR_INDEX_NAME>\")"
+    },
+    "getAllConfigs": {
+      "default": "let response = try await client.getAllConfigs()"
+    },
+    "getConfig": {
+      "default": "let response = try await client.getConfig(indexName: \"<YOUR_INDEX_NAME>\")"
+    },
+    "getConfigStatus": {
+      "default": "let response = try await client.getConfigStatus(indexName: \"<YOUR_INDEX_NAME>\")"
+    },
+    "getLogFile": {
+      "default": "let response = try await client.getLogFile(indexName: \"<YOUR_INDEX_NAME>\")"
+    },
+    "setClientApiKey": {
+      "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
+    },
+    "updateConfig": {
+      "default": "let response = try await client.updateConfig(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    configuration: QuerySuggestionsConfiguration(\n        sourceIndices: [SourceIndex(\n            indexName: \"<YOUR_INDEX_NAME>\",\n            facets: [Facet(attribute: \"test\")],\n            generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n        )],\n        languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n        exclude: [\"test\"]\n    )\n)"
+    },
+    "init": {
+      "default": "let client = try QuerySuggestionsClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
+    }
+  }
+}

@@ -1765,6 +1765,27 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// search with a real object
+    func testGetObjectTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getObjectWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "Batman and Robin")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/Batman%20and%20Robin")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// getObjects
     func testGetObjectsTest() async throws {
         let configuration = try SearchClientConfiguration(

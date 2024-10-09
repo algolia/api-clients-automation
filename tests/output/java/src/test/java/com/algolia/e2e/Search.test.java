@@ -51,6 +51,21 @@ class SearchClientRequestsTestsE2E {
   }
 
   @Test
+  @DisplayName("search with a real object")
+  void getObjectTest1() {
+    Object res = client.getObject("cts_e2e_browse", "Batman and Robin");
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"Batman and Robin\",\"title\":\"Batman and" +
+        " Robin\",\"year\":1949,\"cast\":[\"Robert Lowery\",\"Johnny Duncan\",\"Jane" +
+        " Adams\"]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getRule")
   void getRuleTest() {
     Rule res = client.getRule("cts_e2e_browse", "qr-1725004648916");

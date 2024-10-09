@@ -765,6 +765,18 @@ describe('getObject', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({ attributesToRetrieve: 'attr1%2Cattr2' });
   });
+
+  test('search with a real object', async () => {
+    const req = (await client.getObject({
+      indexName: 'cts_e2e_browse',
+      objectID: 'Batman and Robin',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/Batman%20and%20Robin');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('getObjects', () => {

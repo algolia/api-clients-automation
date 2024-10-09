@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestPersonalizationClient < Test::Unit::TestCase
-  include Algolia::Personalization
   def setup
     @client = Algolia::PersonalizationClient.create(
       "APP_ID",
@@ -322,9 +321,11 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # set setPersonalizationStrategy
   def test_set_personalization_strategy
     req = @client.set_personalization_strategy_with_http_info(
-      PersonalizationStrategyParams.new(
-        event_scoring: [EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
-        facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
+      Algolia::Personalization::PersonalizationStrategyParams.new(
+        event_scoring: [
+          Algolia::Personalization::EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")
+        ],
+        facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: "Event")],
         personalization_impact: 42
       )
     )
