@@ -4,5 +4,5 @@ KeyString:
   required: true
   schema:
     type: string
-    example: YourAPIKey
+    example: ALGOLIA_API_KEY
   description: API key.

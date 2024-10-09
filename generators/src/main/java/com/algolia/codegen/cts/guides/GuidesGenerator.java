@@ -42,7 +42,7 @@ public class GuidesGenerator extends TestsGenerator {
       supportingFiles.add(
         new SupportingFile(
           "guides/" + client + "/" + f.getName(),
-          "guides/" + language + outputFolder + f.getName().replace(".mustache", "") + extension
+          "docs/guides/" + language + outputFolder + f.getName().replace(".mustache", "") + extension
         )
       );
     }
@@ -50,6 +50,10 @@ public class GuidesGenerator extends TestsGenerator {
 
   @Override
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
+    if (this.client.equals("search")) {
+      bundle.put("isSearchClient", true);
+    }
+    bundle.put("isSyncClient", true);
     // nothing to do here, the mustache uses dynamicSnippets lambda
   }
 }
