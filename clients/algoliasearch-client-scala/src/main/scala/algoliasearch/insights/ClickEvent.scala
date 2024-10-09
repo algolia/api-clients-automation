@@ -3,7 +3,7 @@
   * personalization, smarter search results, and analytics that help you optimize your user experience. ## Client
   * libraries Use Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the
   * Insights API. See: [Algolia's
-  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ## Base URLs
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/). ## Base URLs
   * The base URLs for making requests to the Insights API are: - `https://insights.us.algolia.io` -
   * `https://insights.de.algolia.io` - `https//insights.algolia.io` (routes requests to the closest of the above
   * servers, based on your geographical location) **All requests must use HTTPS.** ## Authentication To authenticate
@@ -15,7 +15,7 @@
   * with rate-limiting information as headers. Successful responses return a `2xx` status. Client errors return a `4xx`
   * status. Server errors are indicated by a `5xx` status. Error responses have a `message` property with more
   * information. The Insights API doesn't validate if the event parameters such as `indexName`, `objectIDs`, or
-  * `userToken`, correspond to anything in the Search API. It justs checks if they're formatted correctly. Check the
+  * `userToken`, correspond to anything in the Search API. It just checks if they're formatted correctly. Check the
   * [Events](https://dashboard.algolia.com/events/health) health section, whether your events can be used for Algolia
   * features such as Analytics, or Dynamic Re-Ranking. ## Version The current version of the Insights API is version 1,
   * as indicated by the `/1/` in each endpoint's URL.

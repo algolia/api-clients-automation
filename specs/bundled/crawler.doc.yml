@@ -20,7 +20,7 @@ info:
     ## Availability and authentication
 
 
-    Acess to the Crawler API is available with the [Crawler
+    Access to the Crawler API is available with the [Crawler
     add-on](https://www.algolia.com/pricing/).
 
 
@@ -110,8 +110,8 @@ tags:
       It's easiest to make configuration changes in the [Crawler
       dashboard](https://crawler.algolia.com/admin/).
 
-      The editor has autocomplete and builtin validation so you can try your
-      configuration changes before comitting them.
+      The editor has autocomplete and built-in validation so you can try your
+      configuration changes before committing them.
   - name: crawlers
     x-displayName: Crawler
     description: |
@@ -687,8 +687,8 @@ paths:
       description: |
         Cancels a blocking task.
 
-        Tasks that ran into an error block the futher schedule of your Crawler.
-        To unblock the crawler, you can cancel the blocking task.
+        Tasks that ran into an error will block your crawler's schedule.
+        To unblock the crawler, cancel the blocking task.
       tags:
         - tasks
       parameters:
@@ -2910,7 +2910,7 @@ components:
         actions:
           type: array
           description: >
-            Instructions how to process crawled URLs.
+            Instructions about how to process crawled URLs.
 
 
             Each action defines:
@@ -2945,8 +2945,8 @@ components:
 
             The API key must not be the admin API key of the application.
 
-            The API key must have access to the indices which the crawler is
-            supposed to create.
+            The API key must have access to create the indices that the crawler
+            will use.
 
             For example, if `indexPrefix` is `crawler_`, the API key must have
             access to all `crawler_*` indices.
@@ -2975,7 +2975,7 @@ components:
             records.
 
 
-            For more information, see [Enrich extrated records with external
+            For more information, see [Enrich extracted records with external
             data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data/).
           maxItems: 10
           items:

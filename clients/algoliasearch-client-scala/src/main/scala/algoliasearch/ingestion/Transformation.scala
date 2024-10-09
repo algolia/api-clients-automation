@@ -10,11 +10,8 @@
   * be JSON objects. ## Response status and errors Response bodies are JSON objects. Deleting a user token returns an
   * empty response body with rate-limiting information as headers. Successful responses return a `2xx` status. Client
   * errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
-  * property with more information. The Insights API doesn't validate if the event parameters such as `indexName`,
-  * `objectIDs`, or `userToken`, correspond to anything in the Search API. It justs checks if they're formatted
-  * correctly. Check the [Events](https://dashboard.algolia.com/events/health) health section, whether your events can
-  * be used for Algolia features such as Analytics, or Dynamic Re-Ranking. ## Version The current version of the
-  * Insights API is version 1, as indicated by the `/1/` in each endpoint's URL.
+  * property with more information. ## Version The current version of the Ingestion API is version 1, as indicated by
+  * the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -28,7 +25,7 @@ package algoliasearch.ingestion
   * @param transformationID
   *   Universally unique identifier (UUID) of a transformation.
   * @param authenticationIDs
-  *   The authentications associated for the current transformation.
+  *   The authentications associated with the current transformation.
   * @param code
   *   The source code of the transformation.
   * @param name
