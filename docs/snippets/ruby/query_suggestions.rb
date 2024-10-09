@@ -18,12 +18,12 @@ def snippet_for_create_config
 
   # Call the API
   response = client.create_config(
-    ConfigurationWithIndex.new(
+    Algolia::QuerySuggestions::ConfigurationWithIndex.new(
       index_name: "<YOUR_INDEX_NAME>",
       source_indices: [
-        SourceIndex.new(
+        Algolia::QuerySuggestions::SourceIndex.new(
           index_name: "<YOUR_INDEX_NAME>",
-          facets: [Facet.new(attribute: "test")],
+          facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
           generate: [["facetA", "facetB"], ["facetC"]]
         )
       ],
@@ -290,11 +290,11 @@ def snippet_for_update_config
   # Call the API
   response = client.update_config(
     "<YOUR_INDEX_NAME>",
-    Configuration.new(
+    Algolia::QuerySuggestions::Configuration.new(
       source_indices: [
-        SourceIndex.new(
+        Algolia::QuerySuggestions::SourceIndex.new(
           index_name: "<YOUR_INDEX_NAME>",
-          facets: [Facet.new(attribute: "test")],
+          facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
           generate: [["facetA", "facetB"], ["facetC"]]
         )
       ],

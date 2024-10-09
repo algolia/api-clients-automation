@@ -14,12 +14,12 @@ def snippet_for_add_ab_tests
 
   # Call the API
   response = client.add_ab_tests(
-    AddABTestsRequest.new(
+    Algolia::Abtesting::AddABTestsRequest.new(
       end_at: "2022-12-31T00:00:00.000Z",
       name: "myABTest",
       variants: [
-        AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
-        AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+        Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+        Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
       ]
     )
   )
@@ -183,13 +183,13 @@ def snippet_for_schedule_ab_test
 
   # Call the API
   response = client.schedule_ab_test(
-    ScheduleABTestsRequest.new(
+    Algolia::Abtesting::ScheduleABTestsRequest.new(
       end_at: "2022-12-31T00:00:00.000Z",
       scheduled_at: "2022-11-31T00:00:00.000Z",
       name: "myABTest",
       variants: [
-        AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
-        AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+        Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+        Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
       ]
     )
   )

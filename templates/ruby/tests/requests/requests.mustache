@@ -3,7 +3,6 @@ require 'algolia'
 require 'test/unit'
 
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit::TestCase
-  include Algolia::{{{modelModule}}}
   def setup
     @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
       'APP_ID',

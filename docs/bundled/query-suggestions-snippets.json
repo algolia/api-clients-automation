@@ -313,7 +313,7 @@
       "default": "require \"algolia\""
     },
     "createConfig": {
-      "default": "response = client.create_config(\n  ConfigurationWithIndex.new(\n    index_name: \"<YOUR_INDEX_NAME>\",\n    source_indices: [\n      SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)"
+      "default": "response = client.create_config(\n  Algolia::QuerySuggestions::ConfigurationWithIndex.new(\n    index_name: \"<YOUR_INDEX_NAME>\",\n    source_indices: [\n      Algolia::QuerySuggestions::SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Algolia::QuerySuggestions::Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)"
     },
     "customDelete": {
       "default": "response = client.custom_delete(\"test/minimal\")"
@@ -346,7 +346,7 @@
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "updateConfig": {
-      "default": "response = client.update_config(\n  \"<YOUR_INDEX_NAME>\",\n  Configuration.new(\n    source_indices: [\n      SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)"
+      "default": "response = client.update_config(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::QuerySuggestions::Configuration.new(\n    source_indices: [\n      Algolia::QuerySuggestions::SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Algolia::QuerySuggestions::Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)"
     },
     "init": {
       "default": "client = Algolia::QuerySuggestionsClient.create(\n  \"ALGOLIA_APPLICATION_ID\",\n  \"ALGOLIA_API_KEY\",\n  \"ALGOLIA_APPLICATION_REGION\"\n)"

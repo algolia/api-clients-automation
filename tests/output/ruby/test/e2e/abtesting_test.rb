@@ -8,7 +8,6 @@ require_relative "../helpers"
 Dotenv.load("../../.env")
 
 class TestAbtestingClientE2E < Test::Unit::TestCase
-  include Algolia::Abtesting
   def setup
     @client = Algolia::AbtestingClient.create(
       ENV.fetch("ALGOLIA_APPLICATION_ID", nil),

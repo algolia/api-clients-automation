@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestAbtestingClient < Test::Unit::TestCase
-  include Algolia::Abtesting
   def setup
     @client = Algolia::AbtestingClient.create(
       "APP_ID",
@@ -16,12 +15,12 @@ class TestAbtestingClient < Test::Unit::TestCase
   # addABTests with minimal parameters
   def test_add_ab_tests
     req = @client.add_ab_tests_with_http_info(
-      AddABTestsRequest.new(
+      Algolia::Abtesting::AddABTestsRequest.new(
         end_at: "2022-12-31T00:00:00.000Z",
         name: "myABTest",
         variants: [
-          AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
-          AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
         ]
       )
     )
@@ -362,13 +361,13 @@ class TestAbtestingClient < Test::Unit::TestCase
   # scheduleABTest with minimal parameters
   def test_schedule_ab_test
     req = @client.schedule_ab_test_with_http_info(
-      ScheduleABTestsRequest.new(
+      Algolia::Abtesting::ScheduleABTestsRequest.new(
         end_at: "2022-12-31T00:00:00.000Z",
         scheduled_at: "2022-11-31T00:00:00.000Z",
         name: "myABTest",
         variants: [
-          AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
-          AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
         ]
       )
     )

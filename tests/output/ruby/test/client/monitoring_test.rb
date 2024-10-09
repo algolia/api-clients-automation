@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientMonitoringClient < Test::Unit::TestCase
-  include Algolia::Monitoring
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::MonitoringClient.create(

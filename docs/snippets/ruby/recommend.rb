@@ -174,9 +174,9 @@ def snippet_for_get_recommendations
 
   # Call the API
   response = client.get_recommendations(
-    GetRecommendationsParams.new(
+    Algolia::Recommend::GetRecommendationsParams.new(
       requests: [
-        RelatedQuery.new(
+        Algolia::Recommend::RelatedQuery.new(
           index_name: "<YOUR_INDEX_NAME>",
           object_id: "objectID",
           model: "related-products",

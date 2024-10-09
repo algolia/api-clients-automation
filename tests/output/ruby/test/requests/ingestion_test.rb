@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestIngestionClient < Test::Unit::TestCase
-  include Algolia::Ingestion
   def setup
     @client = Algolia::IngestionClient.create(
       "APP_ID",
@@ -16,10 +15,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # createAuthenticationOAuth
   def test_create_authentication
     req = @client.create_authentication_with_http_info(
-      AuthenticationCreate.new(
+      Algolia::Ingestion::AuthenticationCreate.new(
         type: "oauth",
         name: "authName",
-        input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+        input: Algolia::Ingestion::AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
       )
     )
 
@@ -38,10 +37,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # createAuthenticationAlgolia
   def test_create_authentication1
     req = @client.create_authentication_with_http_info(
-      AuthenticationCreate.new(
+      Algolia::Ingestion::AuthenticationCreate.new(
         type: "algolia",
         name: "authName",
-        input: AuthAlgolia.new(app_id: "ALGOLIA_APPLICATION_ID", api_key: "ALGOLIA_API_KEY")
+        input: Algolia::Ingestion::AuthAlgolia.new(app_id: "ALGOLIA_APPLICATION_ID", api_key: "ALGOLIA_API_KEY")
       )
     )
 
@@ -60,10 +59,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # createDestination
   def test_create_destination
     req = @client.create_destination_with_http_info(
-      DestinationCreate.new(
+      Algolia::Ingestion::DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: DestinationIndexName.new(index_name: "full_name______"),
+        input: Algolia::Ingestion::DestinationIndexName.new(index_name: "full_name______"),
         authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       )
     )
@@ -83,10 +82,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # with transformationIDs
   def test_create_destination1
     req = @client.create_destination_with_http_info(
-      DestinationCreate.new(
+      Algolia::Ingestion::DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: DestinationIndexName.new(index_name: "full_name______"),
+        input: Algolia::Ingestion::DestinationIndexName.new(index_name: "full_name______"),
         transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
       )
     )
@@ -106,10 +105,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # createSource
   def test_create_source
     req = @client.create_source_with_http_info(
-      SourceCreate.new(
+      Algolia::Ingestion::SourceCreate.new(
         type: "commercetools",
         name: "sourceName",
-        input: SourceCommercetools.new(
+        input: Algolia::Ingestion::SourceCommercetools.new(
           store_keys: ["myStore"],
           locales: ["de"],
           url: "http://commercetools.com",
@@ -133,7 +132,9 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # push
   def test_create_source1
-    req = @client.create_source_with_http_info(SourceCreate.new(type: "push", name: "pushezpourentrer"))
+    req = @client.create_source_with_http_info(
+      Algolia::Ingestion::SourceCreate.new(type: "push", name: "pushezpourentrer")
+    )
 
     assert_equal(:post, req.method)
     assert_equal("/1/sources", req.path)
@@ -145,7 +146,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # task without cron
   def test_create_task
     req = @client.create_task_with_http_info(
-      TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
+      Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
     )
 
     assert_equal(:post, req.method)
@@ -161,7 +162,12 @@ class TestIngestionClient < Test::Unit::TestCase
   # task with cron
   def test_create_task1
     req = @client.create_task_with_http_info(
-      TaskCreate.new(source_id: "search", destination_id: "destinationName", cron: "* * * * *", action: "replace")
+      Algolia::Ingestion::TaskCreate.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        cron: "* * * * *",
+        action: "replace"
+      )
     )
 
     assert_equal(:post, req.method)
@@ -179,12 +185,14 @@ class TestIngestionClient < Test::Unit::TestCase
   # task shopify
   def test_create_task2
     req = @client.create_task_with_http_info(
-      TaskCreate.new(
+      Algolia::Ingestion::TaskCreate.new(
         source_id: "search",
         destination_id: "destinationName",
         cron: "* * * * *",
         action: "replace",
-        input: DockerStreamsInput.new(streams: [DockerStreams.new(name: "foo", sync_mode: "incremental")])
+        input: Algolia::Ingestion::DockerStreamsInput.new(
+          streams: [Algolia::Ingestion::DockerStreams.new(name: "foo", sync_mode: "incremental")]
+        )
       )
     )
 
@@ -203,10 +211,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # createTaskOnDemand
   def test_create_task_v1
     req = @client.create_task_v1_with_http_info(
-      TaskCreateV1.new(
+      Algolia::Ingestion::TaskCreateV1.new(
         source_id: "search",
         destination_id: "destinationName",
-        trigger: OnDemandTriggerInput.new(type: "onDemand"),
+        trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: "onDemand"),
         action: "replace"
       )
     )
@@ -226,10 +234,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # createTaskSchedule
   def test_create_task_v11
     req = @client.create_task_v1_with_http_info(
-      TaskCreateV1.new(
+      Algolia::Ingestion::TaskCreateV1.new(
         source_id: "search",
         destination_id: "destinationName",
-        trigger: ScheduleTriggerInput.new(type: "schedule", cron: "* * * * *"),
+        trigger: Algolia::Ingestion::ScheduleTriggerInput.new(type: "schedule", cron: "* * * * *"),
         action: "replace"
       )
     )
@@ -249,10 +257,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # createTaskSubscription
   def test_create_task_v12
     req = @client.create_task_v1_with_http_info(
-      TaskCreateV1.new(
+      Algolia::Ingestion::TaskCreateV1.new(
         source_id: "search",
         destination_id: "destinationName",
-        trigger: OnDemandTriggerInput.new(type: "onDemand"),
+        trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: "onDemand"),
         action: "replace"
       )
     )
@@ -272,12 +280,14 @@ class TestIngestionClient < Test::Unit::TestCase
   # task shopify
   def test_create_task_v13
     req = @client.create_task_v1_with_http_info(
-      TaskCreateV1.new(
+      Algolia::Ingestion::TaskCreateV1.new(
         source_id: "search",
         destination_id: "destinationName",
-        trigger: OnDemandTriggerInput.new(type: "onDemand"),
+        trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: "onDemand"),
         action: "replace",
-        input: DockerStreamsInput.new(streams: [DockerStreams.new(name: "foo", sync_mode: "incremental")])
+        input: Algolia::Ingestion::DockerStreamsInput.new(
+          streams: [Algolia::Ingestion::DockerStreams.new(name: "foo", sync_mode: "incremental")]
+        )
       )
     )
 
@@ -296,7 +306,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # createTransformation
   def test_create_transformation
     req = @client.create_transformation_with_http_info(
-      TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+      Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
     )
 
     assert_equal(:post, req.method)
@@ -909,11 +919,11 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_push_task
     req = @client.push_task_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      PushTaskPayload.new(
+      Algolia::Ingestion::PushTaskPayload.new(
         action: "addObject",
         records: [
-          PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-          PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
         ]
       )
     )
@@ -934,7 +944,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_run_source
     req = @client.run_source_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      RunSourcePayload.new(
+      Algolia::Ingestion::RunSourcePayload.new(
         index_to_include: ["products_us", "products eu"],
         entity_ids: ["1234", "5678"],
         entity_type: "product"
@@ -976,7 +986,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # searchAuthentications
   def test_search_authentications
     req = @client.search_authentications_with_http_info(
-      AuthenticationSearch.new(
+      Algolia::Ingestion::AuthenticationSearch.new(
         authentication_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
       )
     )
@@ -996,7 +1006,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # searchDestinations
   def test_search_destinations
     req = @client.search_destinations_with_http_info(
-      DestinationSearch.new(
+      Algolia::Ingestion::DestinationSearch.new(
         destination_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
       )
     )
@@ -1016,7 +1026,9 @@ class TestIngestionClient < Test::Unit::TestCase
   # searchSources
   def test_search_sources
     req = @client.search_sources_with_http_info(
-      SourceSearch.new(source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"])
+      Algolia::Ingestion::SourceSearch.new(
+        source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -1032,7 +1044,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # searchTasks
   def test_search_tasks
     req = @client.search_tasks_with_http_info(
-      TaskSearch.new(
+      Algolia::Ingestion::TaskSearch.new(
         task_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -1056,7 +1068,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # searchTasksV1
   def test_search_tasks_v1
     req = @client.search_tasks_v1_with_http_info(
-      TaskSearch.new(
+      Algolia::Ingestion::TaskSearch.new(
         task_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -1080,7 +1092,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # searchTransformations
   def test_search_transformations
     req = @client.search_transformations_with_http_info(
-      TransformationSearch.new(
+      Algolia::Ingestion::TransformationSearch.new(
         transformation_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -1113,7 +1125,9 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # tryTransformation
   def test_try_transformation
-    req = @client.try_transformation_with_http_info(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
+    req = @client.try_transformation_with_http_info(
+      Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    )
 
     assert_equal(:post, req.method)
     assert_equal("/1/transformations/try", req.path)
@@ -1125,14 +1139,18 @@ class TestIngestionClient < Test::Unit::TestCase
   # with authentications
   def test_try_transformation1
     req = @client.try_transformation_with_http_info(
-      TransformationTry.new(
+      Algolia::Ingestion::TransformationTry.new(
         code: "foo",
         sample_record: {bar: "baz"},
         authentications: [
-          AuthenticationCreate.new(
+          Algolia::Ingestion::AuthenticationCreate.new(
             type: "oauth",
             name: "authName",
-            input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+            input: Algolia::Ingestion::AuthOAuth.new(
+              url: "http://test.oauth",
+              client_id: "myID",
+              client_secret: "mySecret"
+            )
           )
         ]
       )
@@ -1154,7 +1172,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_try_transformation_before_update
     req = @client.try_transformation_before_update_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+      Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
     )
 
     assert_equal(:post, req.method)
@@ -1168,14 +1186,18 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_try_transformation_before_update1
     req = @client.try_transformation_before_update_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      TransformationTry.new(
+      Algolia::Ingestion::TransformationTry.new(
         code: "foo",
         sample_record: {bar: "baz"},
         authentications: [
-          AuthenticationCreate.new(
+          Algolia::Ingestion::AuthenticationCreate.new(
             type: "oauth",
             name: "authName",
-            input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+            input: Algolia::Ingestion::AuthOAuth.new(
+              url: "http://test.oauth",
+              client_id: "myID",
+              client_secret: "mySecret"
+            )
           )
         ]
       )
@@ -1197,7 +1219,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_authentication
     req = @client.update_authentication_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      AuthenticationUpdate.new(name: "newName")
+      Algolia::Ingestion::AuthenticationUpdate.new(name: "newName")
     )
 
     assert_equal(:patch, req.method)
@@ -1211,7 +1233,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_destination
     req = @client.update_destination_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      DestinationUpdate.new(name: "newName")
+      Algolia::Ingestion::DestinationUpdate.new(name: "newName")
     )
 
     assert_equal(:patch, req.method)
@@ -1225,7 +1247,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_source
     req = @client.update_source_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      SourceUpdate.new(name: "newName")
+      Algolia::Ingestion::SourceUpdate.new(name: "newName")
     )
 
     assert_equal(:patch, req.method)
@@ -1239,7 +1261,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_task
     req = @client.update_task_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      TaskUpdate.new(enabled: false, cron: "* * * * *")
+      Algolia::Ingestion::TaskUpdate.new(enabled: false, cron: "* * * * *")
     )
 
     assert_equal(:patch, req.method)
@@ -1253,7 +1275,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_task_v1
     req = @client.update_task_v1_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      TaskUpdateV1.new(enabled: false)
+      Algolia::Ingestion::TaskUpdateV1.new(enabled: false)
     )
 
     assert_equal(:patch, req.method)
@@ -1267,7 +1289,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_transformation
     req = @client.update_transformation_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+      Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
     )
 
     assert_equal(:put, req.method)
@@ -1280,10 +1302,10 @@ class TestIngestionClient < Test::Unit::TestCase
   # validateSource
   def test_validate_source
     req = @client.validate_source_with_http_info(
-      SourceCreate.new(
+      Algolia::Ingestion::SourceCreate.new(
         type: "commercetools",
         name: "sourceName",
-        input: SourceCommercetools.new(
+        input: Algolia::Ingestion::SourceCommercetools.new(
           store_keys: ["myStore"],
           locales: ["de"],
           url: "http://commercetools.com",
@@ -1309,7 +1331,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_validate_source_before_update
     req = @client.validate_source_before_update_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      SourceUpdate.new(name: "newName")
+      Algolia::Ingestion::SourceUpdate.new(name: "newName")
     )
 
     assert_equal(:post, req.method)

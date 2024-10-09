@@ -1279,22 +1279,22 @@
       "default": "require \"algolia\""
     },
     "createAuthentication": {
-      "default": "response = client.create_authentication(\n  AuthenticationCreate.new(\n    type: \"oauth\",\n    name: \"authName\",\n    input: AuthOAuth.new(url: \"http://test.oauth\", client_id: \"myID\", client_secret: \"mySecret\")\n  )\n)"
+      "default": "response = client.create_authentication(\n  Algolia::Ingestion::AuthenticationCreate.new(\n    type: \"oauth\",\n    name: \"authName\",\n    input: Algolia::Ingestion::AuthOAuth.new(url: \"http://test.oauth\", client_id: \"myID\", client_secret: \"mySecret\")\n  )\n)"
     },
     "createDestination": {
-      "default": "response = client.create_destination(\n  DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: DestinationIndexName.new(index_name: \"<YOUR_INDEX_NAME>\"),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)"
+      "default": "response = client.create_destination(\n  Algolia::Ingestion::DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: Algolia::Ingestion::DestinationIndexName.new(index_name: \"<YOUR_INDEX_NAME>\"),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)"
     },
     "createSource": {
-      "default": "response = client.create_source(\n  SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)"
+      "default": "response = client.create_source(\n  Algolia::Ingestion::SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: Algolia::Ingestion::SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)"
     },
     "createTask": {
-      "default": "response = client.create_task(\n  TaskCreate.new(source_id: \"search\", destination_id: \"destinationName\", action: \"replace\")\n)"
+      "default": "response = client.create_task(\n  Algolia::Ingestion::TaskCreate.new(source_id: \"search\", destination_id: \"destinationName\", action: \"replace\")\n)"
     },
     "createTaskV1": {
-      "default": "response = client.create_task_v1(\n  TaskCreateV1.new(\n    source_id: \"search\",\n    destination_id: \"destinationName\",\n    trigger: OnDemandTriggerInput.new(type: \"onDemand\"),\n    action: \"replace\"\n  )\n)"
+      "default": "response = client.create_task_v1(\n  Algolia::Ingestion::TaskCreateV1.new(\n    source_id: \"search\",\n    destination_id: \"destinationName\",\n    trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: \"onDemand\"),\n    action: \"replace\"\n  )\n)"
     },
     "createTransformation": {
-      "default": "response = client.create_transformation(TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\"))"
+      "default": "response = client.create_transformation(\n  Algolia::Ingestion::TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\")\n)"
     },
     "customDelete": {
       "default": "response = client.custom_delete(\"test/minimal\")"
@@ -1387,10 +1387,10 @@
       "default": "response = client.list_transformations"
     },
     "pushTask": {
-      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      PushTaskRecords.new(key: \"bar\", foo: \"1\", object_id: \"o\"),\n      PushTaskRecords.new(key: \"baz\", foo: \"2\", object_id: \"k\")\n    ]\n  )\n)"
+      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      Algolia::Ingestion::PushTaskRecords.new(key: \"bar\", foo: \"1\", object_id: \"o\"),\n      Algolia::Ingestion::PushTaskRecords.new(key: \"baz\", foo: \"2\", object_id: \"k\")\n    ]\n  )\n)"
     },
     "runSource": {
-      "default": "response = client.run_source(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  RunSourcePayload.new(\n    index_to_include: [\"products_us\", \"products eu\"],\n    entity_ids: [\"1234\", \"5678\"],\n    entity_type: \"product\"\n  )\n)"
+      "default": "response = client.run_source(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::RunSourcePayload.new(\n    index_to_include: [\"products_us\", \"products eu\"],\n    entity_ids: [\"1234\", \"5678\"],\n    entity_type: \"product\"\n  )\n)"
     },
     "runTask": {
       "default": "response = client.run_task(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
@@ -1399,22 +1399,22 @@
       "default": "response = client.run_task_v1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "searchAuthentications": {
-      "default": "response = client.search_authentications(\n  AuthenticationSearch.new(\n    authentication_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]\n  )\n)"
+      "default": "response = client.search_authentications(\n  Algolia::Ingestion::AuthenticationSearch.new(\n    authentication_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]\n  )\n)"
     },
     "searchDestinations": {
-      "default": "response = client.search_destinations(\n  DestinationSearch.new(\n    destination_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]\n  )\n)"
+      "default": "response = client.search_destinations(\n  Algolia::Ingestion::DestinationSearch.new(\n    destination_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]\n  )\n)"
     },
     "searchSources": {
-      "default": "response = client.search_sources(\n  SourceSearch.new(source_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"])\n)"
+      "default": "response = client.search_sources(\n  Algolia::Ingestion::SourceSearch.new(\n    source_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]\n  )\n)"
     },
     "searchTasks": {
-      "default": "response = client.search_tasks(\n  TaskSearch.new(\n    task_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)"
+      "default": "response = client.search_tasks(\n  Algolia::Ingestion::TaskSearch.new(\n    task_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)"
     },
     "searchTasksV1": {
-      "default": "response = client.search_tasks_v1(\n  TaskSearch.new(\n    task_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)"
+      "default": "response = client.search_tasks_v1(\n  Algolia::Ingestion::TaskSearch.new(\n    task_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)"
     },
     "searchTransformations": {
-      "default": "response = client.search_transformations(\n  TransformationSearch.new(\n    transformation_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)"
+      "default": "response = client.search_transformations(\n  Algolia::Ingestion::TransformationSearch.new(\n    transformation_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"
@@ -1423,34 +1423,34 @@
       "default": "response = client.trigger_docker_source_discover(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "tryTransformation": {
-      "default": "response = client.try_transformation(TransformationTry.new(code: \"foo\", sample_record: {bar: \"baz\"}))"
+      "default": "response = client.try_transformation(\n  Algolia::Ingestion::TransformationTry.new(code: \"foo\", sample_record: {bar: \"baz\"})\n)"
     },
     "tryTransformationBeforeUpdate": {
-      "default": "response = client.try_transformation_before_update(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  TransformationTry.new(code: \"foo\", sample_record: {bar: \"baz\"})\n)"
+      "default": "response = client.try_transformation_before_update(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::TransformationTry.new(code: \"foo\", sample_record: {bar: \"baz\"})\n)"
     },
     "updateAuthentication": {
-      "default": "response = client.update_authentication(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  AuthenticationUpdate.new(name: \"newName\")\n)"
+      "default": "response = client.update_authentication(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::AuthenticationUpdate.new(name: \"newName\")\n)"
     },
     "updateDestination": {
-      "default": "response = client.update_destination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", DestinationUpdate.new(name: \"newName\"))"
+      "default": "response = client.update_destination(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::DestinationUpdate.new(name: \"newName\")\n)"
     },
     "updateSource": {
-      "default": "response = client.update_source(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", SourceUpdate.new(name: \"newName\"))"
+      "default": "response = client.update_source(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::SourceUpdate.new(name: \"newName\")\n)"
     },
     "updateTask": {
-      "default": "response = client.update_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  TaskUpdate.new(enabled: false, cron: \"* * * * *\")\n)"
+      "default": "response = client.update_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::TaskUpdate.new(enabled: false, cron: \"* * * * *\")\n)"
     },
     "updateTaskV1": {
-      "default": "response = client.update_task_v1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", TaskUpdateV1.new(enabled: false))"
+      "default": "response = client.update_task_v1(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::TaskUpdateV1.new(enabled: false)\n)"
     },
     "updateTransformation": {
-      "default": "response = client.update_transformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\")\n)"
+      "default": "response = client.update_transformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\")\n)"
     },
     "validateSource": {
-      "default": "response = client.validate_source(\n  SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)"
+      "default": "response = client.validate_source(\n  Algolia::Ingestion::SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: Algolia::Ingestion::SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)"
     },
     "validateSourceBeforeUpdate": {
-      "default": "response = client.validate_source_before_update(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  SourceUpdate.new(name: \"newName\")\n)"
+      "default": "response = client.validate_source_before_update(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::SourceUpdate.new(name: \"newName\")\n)"
     },
     "init": {
       "default": "client = Algolia::IngestionClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")"

@@ -1560,12 +1560,12 @@ paths:
 
             # Call the API
             response = client.create_config(
-              ConfigurationWithIndex.new(
+              Algolia::QuerySuggestions::ConfigurationWithIndex.new(
                 index_name: "<YOUR_INDEX_NAME>",
                 source_indices: [
-                  SourceIndex.new(
+                  Algolia::QuerySuggestions::SourceIndex.new(
                     index_name: "<YOUR_INDEX_NAME>",
-                    facets: [Facet.new(attribute: "test")],
+                    facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                   )
                 ],

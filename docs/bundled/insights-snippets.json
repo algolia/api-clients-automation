@@ -251,7 +251,7 @@
       "default": "client.delete_user_token(\"test-user-1\")"
     },
     "pushEvents": {
-      "default": "response = client.push_events(\n  InsightsEvents.new(\n    events: [\n      ClickedObjectIDsAfterSearch.new(\n        event_type: \"click\",\n        event_name: \"Product Clicked\",\n        index: \"products\",\n        user_token: \"user-123456\",\n        authenticated_user_token: \"user-123456\",\n        timestamp: 1641290601962,\n        object_ids: [\"9780545139700\", \"9780439784542\"],\n        query_id: \"43b15df305339e827f0ac0bdc5ebcaa7\",\n        positions: [7, 6]\n      )\n    ]\n  )\n)"
+      "default": "response = client.push_events(\n  Algolia::Insights::InsightsEvents.new(\n    events: [\n      Algolia::Insights::ClickedObjectIDsAfterSearch.new(\n        event_type: \"click\",\n        event_name: \"Product Clicked\",\n        index: \"products\",\n        user_token: \"user-123456\",\n        authenticated_user_token: \"user-123456\",\n        timestamp: 1641290601962,\n        object_ids: [\"9780545139700\", \"9780439784542\"],\n        query_id: \"43b15df305339e827f0ac0bdc5ebcaa7\",\n        positions: [7, 6]\n      )\n    ]\n  )\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"

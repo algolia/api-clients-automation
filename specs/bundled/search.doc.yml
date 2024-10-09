@@ -1809,8 +1809,10 @@ paths:
             # Call the API
 
             response = client.search(
-              SearchMethodParams.new(
-                requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50)]
+              Algolia::Search::SearchMethodParams.new(
+                requests: [
+                  Algolia::Search::SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50)
+                ]
               )
             )
 
@@ -3685,7 +3687,7 @@ paths:
             # Call the API
 
             response = client.delete_by("<YOUR_INDEX_NAME>",
-            DeleteByParams.new(filters: "brand:brandName"))
+            Algolia::Search::DeleteByParams.new(filters: "brand:brandName"))
 
 
             # >LOG
@@ -4701,10 +4703,10 @@ paths:
 
             response = client.batch(
               "<YOUR_INDEX_NAME>",
-              BatchWriteParams.new(
+              Algolia::Search::BatchWriteParams.new(
                 requests: [
-                  BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
-                  BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+                  Algolia::Search::BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
+                  Algolia::Search::BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
                 ]
               )
             )
@@ -5117,8 +5119,14 @@ paths:
             # Call the API
 
             response = client.multiple_batch(
-              BatchParams.new(
-                requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "<YOUR_INDEX_NAME>")]
+              Algolia::Search::BatchParams.new(
+                requests: [
+                  Algolia::Search::MultipleBatchRequest.new(
+                    action: "addObject",
+                    body: {key: "value"},
+                    index_name: "<YOUR_INDEX_NAME>"
+                  )
+                ]
               )
             )
 
@@ -5517,9 +5525,9 @@ paths:
             # Call the API
 
             response = client.get_objects(
-              GetObjectsParams.new(
+              Algolia::Search::GetObjectsParams.new(
                 requests: [
-                  GetObjectsRequest.new(
+                  Algolia::Search::GetObjectsRequest.new(
                     attributes_to_retrieve: ["attr1", "attr2"],
                     object_id: "uniqueID",
                     index_name: "<YOUR_INDEX_NAME>"
@@ -6104,7 +6112,9 @@ paths:
 
             response = client.set_settings(
               "<YOUR_INDEX_NAME>",
-              IndexSettings.new(attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"])
+              Algolia::Search::IndexSettings.new(
+                attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
+              )
             )
 
 
@@ -6843,8 +6853,13 @@ paths:
             response = client.save_synonyms(
               "<YOUR_INDEX_NAME>",
               [
-                SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
-                SynonymHit.new(object_id: "id2", type: "onewaysynonym", input: "iphone", synonyms: ["ephone", "aphone", "yphone"])
+                Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+                Algolia::Search::SynonymHit.new(
+                  object_id: "id2",
+                  type: "onewaysynonym",
+                  input: "iphone",
+                  synonyms: ["ephone", "aphone", "yphone"]
+                )
               ],
               true,
               true
@@ -7972,7 +7987,7 @@ paths:
             # Call the API
 
             response = client.add_api_key(
-              ApiKey.new(
+              Algolia::Search::ApiKey.new(
                 acl: ["search", "addObject"],
                 description: "my new api key",
                 validity: 300,
@@ -9300,8 +9315,14 @@ paths:
             response = client.save_rules(
               "<YOUR_INDEX_NAME>",
               [
-                Rule.new(object_id: "a-rule-id", conditions: [Condition.new(pattern: "smartphone", anchoring: "contains")]),
-                Rule.new(object_id: "a-second-rule-id", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
+                Algolia::Search::Rule.new(
+                  object_id: "a-rule-id",
+                  conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")]
+                ),
+                Algolia::Search::Rule.new(
+                  object_id: "a-second-rule-id",
+                  conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+                )
               ],
               false,
               true
@@ -9921,7 +9942,7 @@ paths:
             # Call the API
 
             response = client.search_rules("<YOUR_INDEX_NAME>",
-            SearchRulesParams.new(query: "zorro"))
+            Algolia::Search::SearchRulesParams.new(query: "zorro"))
 
 
             # >LOG
@@ -10362,12 +10383,12 @@ paths:
 
             response = client.batch_dictionary_entries(
               "plurals",
-              BatchDictionaryEntriesParams.new(
+              Algolia::Search::BatchDictionaryEntriesParams.new(
                 clear_existing_dictionary_entries: true,
                 requests: [
-                  BatchDictionaryEntriesRequest.new(
+                  Algolia::Search::BatchDictionaryEntriesRequest.new(
                     action: "addEntry",
-                    body: DictionaryEntry.new(
+                    body: Algolia::Search::DictionaryEntry.new(
                       object_id: "1",
                       language: "en",
                       word: "fancy",
@@ -10696,8 +10717,10 @@ paths:
 
             # Call the API
 
-            response = client.search_dictionary_entries("stopwords",
-            SearchDictionaryEntriesParams.new(query: "about"))
+            response = client.search_dictionary_entries(
+              "stopwords",
+              Algolia::Search::SearchDictionaryEntriesParams.new(query: "about")
+            )
 
 
             # >LOG
@@ -11265,8 +11288,8 @@ paths:
             # Call the API
 
             response = client.set_dictionary_settings(
-              DictionarySettingsParams.new(
-                disable_standard_entries: StandardEntries.new(plurals: {fr: false, en: false, ru: true})
+              Algolia::Search::DictionarySettingsParams.new(
+                disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})
               )
             )
 
@@ -11816,7 +11839,7 @@ paths:
             # Call the API
 
             response = client.assign_user_id("userID",
-            AssignUserIdParams.new(cluster: "theCluster"))
+            Algolia::Search::AssignUserIdParams.new(cluster: "theCluster"))
 
 
             # >LOG
@@ -12405,7 +12428,7 @@ paths:
 
             response = client.batch_assign_user_ids(
               "userID",
-              BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
+              Algolia::Search::BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
             )
 
 
@@ -13597,7 +13620,7 @@ paths:
             # Call the API
 
             response = client.search_user_ids(
-              SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
+              Algolia::Search::SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
             )
 
 
@@ -14413,8 +14436,9 @@ paths:
 
             # Call the API
 
-            response = client.replace_sources([Source.new(source: "theSource",
-            description: "theDescription")])
+            response =
+            client.replace_sources([Algolia::Search::Source.new(source:
+            "theSource", description: "theDescription")])
 
 
             # >LOG
@@ -14693,8 +14717,8 @@ paths:
 
             # Call the API
 
-            response = client.append_source(Source.new(source: "theSource",
-            description: "theDescription"))
+            response = client.append_source(Algolia::Search::Source.new(source:
+            "theSource", description: "theDescription"))
 
 
             # >LOG
@@ -16280,7 +16304,11 @@ paths:
 
             response = client.operation_index(
               "<SOURCE_INDEX_NAME>",
-              OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>", scope: ["rules", "settings"])
+              Algolia::Search::OperationIndexParams.new(
+                operation: "move",
+                destination: "<DESTINATION_INDEX_NAME>",
+                scope: ["rules", "settings"]
+              )
             )
 
 
