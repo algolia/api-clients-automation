@@ -804,7 +804,7 @@ components:
     index:
       type: string
       description: Index name (case-sensitive) to which the event's items belong.
-      example: YourIndexName
+      example: ALGOLIA_INDEX_NAME
     objectIDs:
       type: array
       description: Object IDs of the records that are part of the event.
