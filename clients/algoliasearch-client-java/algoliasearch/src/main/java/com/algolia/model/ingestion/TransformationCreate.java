@@ -70,7 +70,7 @@ public class TransformationCreate {
     return this;
   }
 
-  /** The authentications associated for the current transformation. */
+  /** The authentications associated with the current transformation. */
   @javax.annotation.Nullable
   public List<String> getAuthenticationIDs() {
     return authenticationIDs;

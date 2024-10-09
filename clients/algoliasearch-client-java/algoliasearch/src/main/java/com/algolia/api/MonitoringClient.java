@@ -452,7 +452,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves known incidents for the selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -464,7 +464,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves known incidents for the selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IncidentsResponse getClusterIncidents(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -474,7 +474,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves known incidents for the selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -491,7 +491,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves known incidents for the selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IncidentsResponse> getClusterIncidentsAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -501,7 +501,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves the status of selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -513,7 +513,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves the status of selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public StatusResponse getClusterStatus(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -523,7 +523,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the status of selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -540,7 +540,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the status of selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<StatusResponse> getClusterStatusAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -592,7 +592,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves average times for indexing operations for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -604,7 +604,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves average times for indexing operations for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IndexingTimeResponse getIndexingTime(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -614,7 +614,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves average times for indexing operations for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -631,7 +631,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves average times for indexing operations for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IndexingTimeResponse> getIndexingTimeAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -641,7 +641,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves the average latency for search requests for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -653,7 +653,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves the average latency for search requests for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public LatencyResponse getLatency(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -663,7 +663,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the average latency for search requests for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -680,7 +680,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the average latency for search requests for selected clusters.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<LatencyResponse> getLatencyAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -784,7 +784,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Test whether clusters are reachable or not.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -797,7 +797,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * Test whether clusters are reachable or not.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Map<String, Map<String, Boolean>> getReachability(@Nonnull String clusters) throws AlgoliaRuntimeException {
@@ -807,7 +807,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Test whether clusters are reachable or not.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -823,7 +823,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Test whether clusters are reachable or not.
    *
-   * @param clusters Subset of clusters, separated by comma. (required)
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Map<String, Map<String, Boolean>>> getReachabilityAsync(@Nonnull String clusters)
