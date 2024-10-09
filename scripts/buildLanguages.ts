@@ -48,11 +48,13 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
           packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
         );
         await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd, language });
-      } else if (buildType === 'playground') {
-        await run('yarn build', { cwd: `${cwd}/node`, language });
-      } else {
-        await run('yarn tsc --noEmit', { cwd, language });
+        break;
       }
+
+      await run(`yarn tsc ${gens.reduce((prev, curr) => `${prev} ${curr.client}.ts`, '')} --noEmit`, {
+        cwd: buildType === 'playground' ? `${cwd}/node` : cwd,
+        language,
+      });
 
       break;
     case 'java':
@@ -89,12 +91,22 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
   spinner.succeed();
 }
 
-export async function buildClients(generators: Generator[]): Promise<void> {
+export async function buildLanguages(generators: Generator[], scope: BuildType): Promise<void> {
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const generatorsMap = generators.reduce(
     (map, gen) => {
       if (!(gen.language in map)) {
         map[gen.language] = [];
+      }
+
+      // there is no monitoring client for now
+      if (gen.client === 'monitoring') {
+        return map;
+      }
+
+      // TODO: remove this when guides are mandatory and implemented in every clients
+      if (scope === 'guides' && !existsSync(toAbsolutePath(`docs/guides/${gen.language}`))) {
+        return map;
       }
 
       map[gen.language].push(gen);
@@ -104,25 +116,5 @@ export async function buildClients(generators: Generator[]): Promise<void> {
     {} as Record<Language, Generator[]>,
   );
 
-  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], 'client')));
-}
-
-export async function buildPlaygrounds(languages: Language[]): Promise<void> {
-  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'playground')));
-}
-
-export async function buildSnippets(languages: Language[]): Promise<void> {
-  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'snippets')));
-}
-
-export async function buildGuides(languages: Language[]): Promise<void> {
-  await Promise.all(
-    languages.map((lang) => {
-      if (!existsSync(toAbsolutePath(`docs/guides/${lang}`))) {
-        return Promise.resolve();
-      }
-
-      return buildLanguage(lang, [], 'guides');
-    }),
-  );
+  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], scope)));
 }

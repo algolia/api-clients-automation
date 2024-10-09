@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "tsc && node --env-file=../../.env dist/$0.js",
-    "build": "tsc"
+    "start": "tsc && node --env-file=../../.env dist/$0.js"
   },
   "dependencies": {
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting",
