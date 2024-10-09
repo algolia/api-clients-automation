@@ -87,7 +87,7 @@ async function pushToAlgoliaWeb(): Promise<void> {
 
   await configureGitHubAuthor(tempGitDir);
 
-  const message = 'feat: update specs and supported versions';
+  const message = 'feat: update generated guides';
   await run('git add .', { cwd: tempGitDir });
   await gitCommit({
     message,
@@ -106,7 +106,7 @@ async function pushToAlgoliaWeb(): Promise<void> {
       'This PR is automatically created by https://github.com/algolia/api-clients-automation',
       'It contains the latest generated guides.',
     ].join('\n\n'),
-    base: 'master',
+    base: 'develop',
     head: targetBranch,
   });
 
