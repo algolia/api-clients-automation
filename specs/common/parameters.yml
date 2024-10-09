@@ -6,7 +6,7 @@ IndexName:
   required: true
   schema:
     type: string
-    example: YourIndexName
+    example: ALGOLIA_INDEX_NAME
 
 ObjectID:
   name: objectID
@@ -24,7 +24,7 @@ Index:
   required: true
   schema:
     type: string
-    example: YourIndexName
+    example: ALGOLIA_INDEX_NAME
 
 StartDate:
   in: query

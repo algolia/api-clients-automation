@@ -1205,6 +1205,12 @@ paths:
             let response = try await client.getStatus()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/status \
+              --header 'accept: application/json'
   /1/status/{clusters}:
     get:
       summary: Retrieve cluster status
@@ -1635,6 +1641,12 @@ paths:
             let response = try await client.getIncidents()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/incidents \
+              --header 'accept: application/json'
   /1/incidents/{clusters}:
     get:
       summary: Retrieve cluster incidents
@@ -2077,6 +2089,13 @@ paths:
             let response = try await client.getServers()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/inventory/servers \
+              --header 'accept: application/json' \
+              --header 'x-algolia-application-id: ZHVtbXkgYmluYXJ5IHNhbXBsZQA='
   /1/latency/{clusters}:
     get:
       summary: Retrieve search latency times

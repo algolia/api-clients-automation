@@ -1,9 +1,11 @@
 import fsp from 'fs/promises';
 
+import oas2har from '@har-sdk/oas';
+import { HarRequest, HTTPSnippet } from 'httpsnippet';
 import yaml from 'js-yaml';
 
 import { Cache } from '../cache.js';
-import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
+import { exists, GENERATORS, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Spec } from '../types.js';
 
@@ -59,6 +61,7 @@ export async function transformBundle({
   }
 
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
+  const harRequests = await oas2har.oas2har(bundledSpec as any, { includeVendorExamples: true });
   const tagsDefinitions = bundledSpec.tags;
   const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : ({} as SnippetSamples);
 
@@ -98,6 +101,33 @@ export async function transformBundle({
             source: Object.values(snippetSamples[gen.language][specMethod.operationId])[0],
           });
         }
+      }
+
+      // skip custom path for cURL
+      if (pathKey !== '/{path}' && specMethod['x-codeSamples']) {
+        const harRequest = harRequests.find((baseHarRequest) =>
+          baseHarRequest.url.includes(pathKey.replace('{indexName}', 'ALGOLIA_INDEX_NAME')),
+        );
+
+        if (!harRequest?.headers) {
+          break;
+        }
+
+        for (const harRequestHeader of harRequest.headers) {
+          if (harRequestHeader.name === bundledSpec.components.securitySchemes.appId?.name) {
+            harRequestHeader.value = 'ALGOLIA_APPLICATION_ID';
+          }
+
+          if (harRequestHeader.name === bundledSpec.components.securitySchemes.apiKey?.name) {
+            harRequestHeader.value = 'ALGOLIA_API_KEY';
+          }
+        }
+
+        specMethod['x-codeSamples'].push({
+          lang: 'cURL',
+          label: 'curl',
+          source: `${new HTTPSnippet(harRequest as HarRequest).convert('shell', 'curl')}`,
+        });
       }
 
       if (!bundledSpec.paths[pathKey][method].tags) {
