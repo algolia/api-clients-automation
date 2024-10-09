@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 
-import { run, toAbsolutePath } from './common.js';
+import { createClientName, run, toAbsolutePath } from './common.js';
 import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
@@ -51,8 +51,14 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
         break;
       }
 
-      await run(`yarn tsc ${gens.reduce((prev, curr) => `${prev} ${curr.client}.ts`, '')} --noEmit`, {
-        cwd: buildType === 'playground' ? `${cwd}/node` : cwd,
+      let fileNames = '';
+
+      if (buildType !== 'guides') {
+        fileNames = gens.reduce((prev, curr) => `${prev} ${createClientName(curr.client, curr.language)}.ts`, '');
+      }
+
+      await run(`yarn tsc ${fileNames} --noEmit`, {
+        cwd: buildType === 'playground' ? `${cwd}/node` : `${cwd}/src`,
         language,
       });
 
