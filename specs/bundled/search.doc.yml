@@ -134,23 +134,23 @@ servers:
   - url: https://{appId}.algolia.net
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-1.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-2.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-3.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-dsn.algolia.net
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
 security:
   - appId: []
     apiKey: []
@@ -1507,6 +1507,16 @@ paths:
             client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/query \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
   /1/indexes/*/queries:
     post:
       tags:
@@ -1862,6 +1872,16 @@ paths:
                     indexName: "<YOUR_INDEX_NAME>"
                 ))]))
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/*/queries' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"requests":[{"params":"hitsPerPage=2&getRankingInfo=1","indexName":"products","type":"default"}],"strategy":"none"}'
   /1/indexes/{indexName}/facets/{facetName}/query:
     post:
       tags:
@@ -2449,6 +2469,16 @@ paths:
             client.browse(indexName: "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/browse \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
   /1/indexes/{indexName}:
     post:
       tags:
@@ -2773,6 +2803,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/query \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
     delete:
       tags:
         - Indices
@@ -3033,6 +3073,16 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/query \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
   /1/indexes/{indexName}/{objectID}:
     get:
       tags:
@@ -3381,266 +3431,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.AddOrUpdateObjectAsync(
-              "<YOUR_INDEX_NAME>",
-              "uniqueID",
-              new Dictionary<string, string> { { "key", "value" } }
-            );
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.addOrUpdateObject(
-              indexName: "<YOUR_INDEX_NAME>",
-              objectID: "uniqueID",
-              body: {
-                'key': "value",
-              },
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"},
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.addOrUpdateObject(
-              "<YOUR_INDEX_NAME>",
-              "uniqueID",
-              new HashMap() {
-                {
-                  put("key", "value");
-                }
-              }
-            );
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.addOrUpdateObject({
-              indexName: 'indexName',
-              objectID: 'uniqueID',
-              body: { key: 'value' },
-            });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.addOrUpdateObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              body = buildJsonObject {
-                put(
-                  "key",
-                  JsonPrimitive("value"),
-                )
-              },
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->addOrUpdateObject(
-                '<YOUR_INDEX_NAME>',
-                'uniqueID',
-                ['key' => 'value',
-                ],
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.add_or_update_object(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-                body={
-                    "key": "value",
-                },
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.add_or_update_object("<YOUR_INDEX_NAME>",
-            "uniqueID", {key: "value"})
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.addOrUpdateObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              body = JObject(List(JField("key", JString("value"))))
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.addOrUpdateObject(
-                indexName: "<YOUR_INDEX_NAME>",
-                objectID: "uniqueID",
-                body: ["key": "value"]
-            )
-
-            // >LOG
     delete:
       tags:
         - Records
@@ -3671,233 +3461,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.DeleteObjectAsync("<YOUR_INDEX_NAME>",
-            "uniqueID");
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.deleteObject(
-              indexName: "<YOUR_INDEX_NAME>",
-              objectID: "uniqueID",
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.DeleteObject(client.NewApiDeleteObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.deleteObject({ indexName:
-            '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.deleteObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->deleteObject(
-                '<YOUR_INDEX_NAME>',
-                'uniqueID',
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_object(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="uniqueID",
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_object("<YOUR_INDEX_NAME>", "uniqueID")
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.deleteObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID"
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.deleteObject(indexName:
-            "<YOUR_INDEX_NAME>", objectID: "uniqueID")
-
-            // >LOG
   /1/indexes/{indexName}/deleteByQuery:
     post:
       tags:
@@ -4176,6 +3739,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/deleteByQuery \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"aroundLatLng":"40.71,-74.01","aroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]]}'
   /1/indexes/{indexName}/clear:
     post:
       tags:
@@ -4421,6 +3994,14 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/clear \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/{objectID}/partial:
     post:
       tags:
@@ -5192,6 +4773,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/batch \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"batch":{"summary":"Batch indexing request","value":{"requests":[{"action":"addObject","body":{"name":"Betty Jane McCamey","company":"Vita Foods Inc.","email":"betty@mccamey.com"}},{"action":"addObject","body":{"name":"Gayla geimer","company":"Ortman McCain Co.","email":"gayla@geimer.com"}}]}}}'
   /1/indexes/*/batch:
     post:
       tags:
@@ -5590,6 +5181,16 @@ paths:
             )]))
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/*/batch' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"requests":[{"action":"addObject","indexName":"contacts","body":{"name":"Betty Jane McCamey","company":"Vita Foods Inc.","email":"betty@mccamey.com"}},{"action":"addObject","indexName":"public_contacts","body":{"name":"Gayla Geimer","company":"Ortman McCain Co.","email":"gayla@geimer.com"}}]}'
   /1/indexes/*/objects:
     post:
       tags:
@@ -5985,6 +5586,16 @@ paths:
                     indexName: "<YOUR_INDEX_NAME>"
                 )]))
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/*/objects' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"requests":[{"attributesToRetrieve":["author","title","content"],"objectID":"product-1","indexName":"books"}]}'
   /1/indexes/{indexName}/settings:
     get:
       tags:
@@ -6231,6 +5842,14 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/settings \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - Indices
@@ -6544,6 +6163,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/settings \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/synonyms/{objectID}:
     get:
       tags:
@@ -6853,304 +6480,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.SaveSynonymAsync(
-              "<YOUR_INDEX_NAME>",
-              "id1",
-              new SynonymHit
-              {
-                ObjectID = "id1",
-                Type = Enum.Parse<SynonymType>("Synonym"),
-                Synonyms = new List<string> { "car", "vehicule", "auto" },
-              },
-              true
-            );
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.saveSynonym(
-              indexName: "<YOUR_INDEX_NAME>",
-              objectID: "id1",
-              synonymHit: SynonymHit(
-                objectID: "id1",
-                type: SynonymType.fromJson("synonym"),
-                synonyms: [
-                  "car",
-                  "vehicule",
-                  "auto",
-                ],
-              ),
-              forwardToReplicas: true,
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-              search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-                []string{"car", "vehicule", "auto"}),
-            ).WithForwardToReplicas(true))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.saveSynonym(
-              "<YOUR_INDEX_NAME>",
-              "id1",
-              new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
-              true
-            );
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.saveSynonym({
-              indexName: 'indexName',
-              objectID: 'id1',
-              synonymHit: { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
-              forwardToReplicas: true,
-            });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.saveSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-              synonymHit = SynonymHit(
-                objectID = "id1",
-                type = SynonymType.entries.first { it.value == "synonym" },
-                synonyms = listOf("car", "vehicule", "auto"),
-              ),
-              forwardToReplicas = true,
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->saveSynonym(
-                '<YOUR_INDEX_NAME>',
-                'id1',
-                ['objectID' => 'id1',
-                    'type' => 'synonym',
-                    'synonyms' => [
-                        'car',
-
-                        'vehicule',
-
-                        'auto',
-                    ],
-                ],
-                true,
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.save_synonym(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-                synonym_hit={
-                    "objectID": "id1",
-                    "type": "synonym",
-                    "synonyms": [
-                        "car",
-                        "vehicule",
-                        "auto",
-                    ],
-                },
-                forward_to_replicas=True,
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.save_synonym(
-              "<YOUR_INDEX_NAME>",
-              "id1",
-              SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
-              true
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.saveSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-              synonymHit = SynonymHit(
-                objectID = "id1",
-                `type` = SynonymType.withName("synonym"),
-                synonyms = Some(Seq("car", "vehicule", "auto"))
-              ),
-              forwardToReplicas = Some(true)
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.saveSynonym(
-                indexName: "<YOUR_INDEX_NAME>",
-                objectID: "id1",
-                synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
-                forwardToReplicas: true
-            )
-
-            // >LOG
     delete:
       tags:
         - Synonyms
@@ -7178,233 +6507,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.DeleteSynonymAsync("<YOUR_INDEX_NAME>",
-            "id1");
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.deleteSynonym(
-              indexName: "<YOUR_INDEX_NAME>",
-              objectID: "id1",
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.deleteSynonym({ indexName:
-            'indexName', objectID: 'id1' });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.deleteSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->deleteSynonym(
-                '<YOUR_INDEX_NAME>',
-                'id1',
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_synonym(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_synonym("<YOUR_INDEX_NAME>", "id1")
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.deleteSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1"
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.deleteSynonym(indexName:
-            "<YOUR_INDEX_NAME>", objectID: "id1")
-
-            // >LOG
   /1/indexes/{indexName}/synonyms/batch:
     post:
       tags:
@@ -7822,6 +6924,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/synonyms/batch?forwardToReplicas=true&replaceExistingSynonyms=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '[{"objectID":"synonymID","type":"onewaysynonym","synonyms":["vehicle","auto"],"input":"car","word":"car","corrections":["vehicle","auto"],"placeholder":"<Street>","replacements":["street","st"]}]'
   /1/indexes/{indexName}/synonyms/clear:
     post:
       tags:
@@ -8066,6 +7178,14 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/synonyms/clear?forwardToReplicas=true' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/synonyms/search:
     post:
       tags:
@@ -8333,6 +7453,16 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/synonyms/search \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"query":"","type":"onewaysynonym","page":0,"hitsPerPage":20}'
   /1/keys:
     get:
       tags:
@@ -8577,6 +7707,14 @@ paths:
             let response = try await client.listApiKeys()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/keys \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     post:
       tags:
         - Api Keys
@@ -8901,6 +8039,14 @@ paths:
             ))
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/keys \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/keys/{key}:
     get:
       tags:
@@ -9197,292 +8343,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.UpdateApiKeyAsync(
-              "ALGOLIA_API_KEY",
-              new ApiKey
-              {
-                Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
-                Validity = 300,
-                MaxQueriesPerIPPerHour = 100,
-                MaxHitsPerQuery = 20,
-              }
-            );
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.updateApiKey(
-              key: "ALGOLIA_API_KEY",
-              apiKey: ApiKey(
-                acl: [
-                  Acl.fromJson("search"),
-                  Acl.fromJson("addObject"),
-                ],
-                validity: 300,
-                maxQueriesPerIPPerHour: 100,
-                maxHitsPerQuery: 20,
-              ),
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
-              "ALGOLIA_API_KEY",
-              search.NewEmptyApiKey().SetAcl(
-                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.updateApiKey(
-              "ALGOLIA_API_KEY",
-              new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
-            );
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.updateApiKey({
-              key: 'ALGOLIA_API_KEY',
-              apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
-            });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.updateApiKey(
-              key = "ALGOLIA_API_KEY",
-              apiKey = ApiKey(
-                acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
-                validity = 300,
-                maxQueriesPerIPPerHour = 100,
-                maxHitsPerQuery = 20,
-              ),
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->updateApiKey(
-                'ALGOLIA_API_KEY',
-                ['acl' => [
-                    'search',
-
-                    'addObject',
-                ],
-                    'validity' => 300,
-                    'maxQueriesPerIPPerHour' => 100,
-                    'maxHitsPerQuery' => 20,
-                ],
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.update_api_key(
-                key="ALGOLIA_API_KEY",
-                api_key={
-                    "acl": [
-                        "search",
-                        "addObject",
-                    ],
-                    "validity": 300,
-                    "maxQueriesPerIPPerHour": 100,
-                    "maxHitsPerQuery": 20,
-                },
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.update_api_key(
-              "ALGOLIA_API_KEY",
-              ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.updateApiKey(
-              key = "ALGOLIA_API_KEY",
-              apiKey = ApiKey(
-                acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
-                validity = Some(300),
-                maxQueriesPerIPPerHour = Some(100),
-                maxHitsPerQuery = Some(20)
-              )
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.updateApiKey(
-                key: "ALGOLIA_API_KEY",
-                apiKey: ApiKey(
-                    acl: [Acl.search, Acl.addObject],
-                    maxHitsPerQuery: 20,
-                    maxQueriesPerIPPerHour: 100,
-                    validity: 300
-                )
-            )
-
-            // >LOG
     delete:
       tags:
         - Api Keys
@@ -9515,225 +8375,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.DeleteApiKeyAsync("myTestApiKey");
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.deleteApiKey(
-              key: "myTestApiKey",
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
-              "myTestApiKey",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.deleteApiKey("myTestApiKey");
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.deleteApiKey({ key: 'myTestApiKey' });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.deleteApiKey(
-              key = "myTestApiKey",
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->deleteApiKey(
-                'myTestApiKey',
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_api_key(
-                key="myTestApiKey",
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_api_key("myTestApiKey")
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.deleteApiKey(
-              key = "myTestApiKey"
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.deleteApiKey(key: "myTestApiKey")
-
-            // >LOG
   /1/keys/{key}/restore:
     post:
       tags:
@@ -10288,306 +8929,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.SaveRuleAsync(
-              "<YOUR_INDEX_NAME>",
-              "id1",
-              new Rule
-              {
-                ObjectID = "id1",
-                Conditions = new List<Condition>
-                {
-                  new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
-                },
-              }
-            );
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.saveRule(
-              indexName: "<YOUR_INDEX_NAME>",
-              objectID: "id1",
-              rule: Rule(
-                objectID: "id1",
-                conditions: [
-                  Condition(
-                    pattern: "apple",
-                    anchoring: Anchoring.fromJson("contains"),
-                  ),
-                ],
-              ),
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err := client.SaveRule(client.NewApiSaveRuleRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-              search.NewEmptyRule().SetObjectID("id1").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}),
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.saveRule(
-              "<YOUR_INDEX_NAME>",
-              "id1",
-              new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
-            );
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.saveRule({
-              indexName: 'indexName',
-              objectID: 'id1',
-              rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
-            });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.saveRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-              rule = Rule(
-                objectID = "id1",
-                conditions = listOf(
-                  Condition(
-                    pattern = "apple",
-                    anchoring = Anchoring.entries.first { it.value == "contains" },
-                  ),
-                ),
-              ),
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->saveRule(
-                '<YOUR_INDEX_NAME>',
-                'id1',
-                ['objectID' => 'id1',
-                    'conditions' => [
-                        ['pattern' => 'apple',
-                            'anchoring' => 'contains',
-                        ],
-                    ],
-                ],
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.save_rule(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-                rule={
-                    "objectID": "id1",
-                    "conditions": [
-                        {
-                            "pattern": "apple",
-                            "anchoring": "contains",
-                        },
-                    ],
-                },
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.save_rule(
-              "<YOUR_INDEX_NAME>",
-              "id1",
-              Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.saveRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-              rule = Rule(
-                objectID = "id1",
-                conditions = Some(
-                  Seq(
-                    Condition(
-                      pattern = Some("apple"),
-                      anchoring = Some(Anchoring.withName("contains"))
-                    )
-                  )
-                )
-              )
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.saveRule(
-                indexName: "<YOUR_INDEX_NAME>",
-                objectID: "id1",
-                rule: Rule(
-                    objectID: "id1",
-                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
-                )
-            )
-
-            // >LOG
     delete:
       tags:
         - Rules
@@ -10614,232 +8955,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>",
-            "id1");
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.deleteRule(
-              indexName: "<YOUR_INDEX_NAME>",
-              objectID: "id1",
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.deleteRule("<YOUR_INDEX_NAME>", "id1");
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.deleteRule({ indexName: 'indexName',
-            objectID: 'id1' });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.deleteRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->deleteRule(
-                '<YOUR_INDEX_NAME>',
-                'id1',
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_rule(
-                index_name="<YOUR_INDEX_NAME>",
-                object_id="id1",
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_rule("<YOUR_INDEX_NAME>", "id1")
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.deleteRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1"
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.deleteRule(indexName:
-            "<YOUR_INDEX_NAME>", objectID: "id1")
-
-            // >LOG
   /1/indexes/{indexName}/rules/batch:
     post:
       tags:
@@ -11278,6 +9393,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/rules/batch?forwardToReplicas=true&clearExistingRules=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '[{"objectID":"lorem","conditions":[{"pattern":"{facet:genre}","anchoring":"is","alternatives":false,"context":"mobile","filters":"genre:comedy"}],"consequence":{"params":{"similarQuery":"comedy drama crime Macy Buscemi","filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"sumOrFiltersScores":false,"restrictSearchableAttributes":["title","author"],"facets":["*"],"facetingAfterDistinct":false,"page":0,"offset":42,"length":0,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"naturalLanguages":[],"ruleContexts":["mobile"],"personalizationImpact":100,"userToken":"test-user-123","getRankingInfo":false,"synonyms":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"percentileComputation":true,"enableABTest":true,"attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"customRanking":["desc(popularity)","asc(price)"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"keepDiacriticsOnCharacters":"øé","queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","mode":"keywordSearch","semanticSearch":{"eventSources":["lorem"]},"advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[]}},"enableReRanking":true,"reRankingApplyFilter":[[]],"query":{"remove":["lorem"],"edits":[{"type":"remove","delete":"lorem","insert":"lorem"}]},"automaticFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}],"automaticOptionalFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}]},"promote":[{"objectIDs":["test-record-123"],"position":0}],"filterPromotes":false,"hide":[{"objectID":"test-record-123"}],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}]'
   /1/indexes/{indexName}/rules/clear:
     post:
       tags:
@@ -11521,6 +9646,14 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/rules/clear?forwardToReplicas=true' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/rules/search:
     post:
       tags:
@@ -11844,6 +9977,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/rules/search \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"query":"","anchoring":"is","context":"mobile","page":0,"hitsPerPage":20,"enabled":true}'
   /1/dictionaries/{dictionaryName}/batch:
     post:
       tags:
@@ -12849,6 +10992,14 @@ paths:
             let response = try await client.getDictionarySettings()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/dictionaries/*/settings' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - Dictionaries
@@ -13175,6 +11326,14 @@ paths:
                     ]))
                 )
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/dictionaries/*/settings' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/dictionaries/*/languages:
     get:
       tags:
@@ -13417,6 +11576,14 @@ paths:
             let response = try await client.getDictionaryLanguages()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/dictionaries/*/languages' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/clusters/mapping:
     post:
       tags:
@@ -13703,6 +11870,17 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --header 'x-algolia-user-id: user1' \
+              --data '{"cluster":"c11-test"}'
     get:
       tags:
         - Clusters
@@ -13955,6 +12133,17 @@ paths:
             let response = try await client.listUserIds()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --header 'x-algolia-user-id: user1' \
+              --data '{"cluster":"c11-test"}'
   /1/clusters/mapping/batch:
     post:
       tags:
@@ -14272,6 +12461,17 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping/batch \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --header 'x-algolia-user-id: user1' \
+              --data '{"cluster":"c11-test","users":["einstein","bohr","feynman"]}'
   /1/clusters/mapping/top:
     get:
       tags:
@@ -14530,6 +12730,14 @@ paths:
             let response = try await client.getTopUserIds()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping/top \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/clusters/mapping/{userID}:
     get:
       tags:
@@ -14813,225 +13021,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new SearchClient(new
-            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.RemoveUserIdAsync("uniqueID");
-
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client =
-                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.removeUserId(
-              userID: "uniqueID",
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.RemoveUserId(client.NewApiRemoveUserIdRequest(
-              "uniqueID",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.removeUserId("uniqueID");
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            //
-
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.removeUserId({ userID: 'uniqueID' });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.removeUserId(
-              userID = "uniqueID",
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->removeUserId(
-                'uniqueID',
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use SearchClient instead,
-            which exposes the exact same methods.
-
-            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.remove_user_id(
-                user_id="uniqueID",
-            )
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.remove_user_id("uniqueID")
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
-            "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.removeUserId(
-              userID = "uniqueID"
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.removeUserId(userID: "uniqueID")
-
-            // >LOG
   /1/clusters:
     get:
       tags:
@@ -15277,6 +13266,17 @@ paths:
             let response = try await client.listClusters()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --header 'x-algolia-user-id: user1' \
+              --data '{"cluster":"c11-test"}'
   /1/clusters/mapping/search:
     post:
       tags:
@@ -15657,6 +13657,16 @@ paths:
             ))
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping/search \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"query":"lorem","clusterName":"c11-test","page":0,"hitsPerPage":20}'
   /1/clusters/mapping/pending:
     get:
       tags:
@@ -15920,6 +13930,14 @@ paths:
             let response = try await client.hasPendingMappings()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/clusters/mapping/pending?getClusters=true' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/security/sources:
     get:
       tags:
@@ -16152,6 +14170,14 @@ paths:
             let response = try await client.getSources()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/security/sources \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - Vaults
@@ -16445,6 +14471,14 @@ paths:
             )])
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/security/sources \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/security/sources/append:
     post:
       tags:
@@ -16714,6 +14748,16 @@ paths:
             ))
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/security/sources/append \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"source":"10.0.0.1/32","description":"Server subnet"}'
   /1/security/sources/{source}:
     delete:
       tags:
@@ -17387,6 +15431,14 @@ paths:
             let response = try await client.getLogs()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/logs?offset=0&length=10&indexName=products&type=all' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/task/{taskID}:
     get:
       tags:
@@ -18289,6 +16341,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/operation \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"operation":"copy","destination":"products","scope":["settings"]}'
   /1/indexes:
     get:
       tags:
@@ -18530,6 +16592,16 @@ paths:
             let response = try await client.listIndices()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/query \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
 components:
   securitySchemes:
     appId:
@@ -22716,7 +20788,7 @@ components:
       required: true
       schema:
         type: string
-        example: YourIndexName
+        example: ALGOLIA_INDEX_NAME
     ObjectID:
       name: objectID
       in: path
@@ -22753,7 +20825,7 @@ components:
       required: true
       schema:
         type: string
-        example: YourAPIKey
+        example: ALGOLIA_API_KEY
       description: API key.
     ObjectIDRule:
       in: path

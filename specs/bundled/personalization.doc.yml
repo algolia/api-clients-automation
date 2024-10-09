@@ -1735,6 +1735,14 @@ paths:
             let response = try await client.getPersonalizationStrategy()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/strategies/personalization \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     post:
       tags:
         - strategies
@@ -2077,6 +2085,14 @@ paths:
                     personalizationImpact: 42
                 ))
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/strategies/personalization \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
