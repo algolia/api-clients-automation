@@ -1,0 +1,24 @@
+name: Push snippets to AlgoliaWeb
+
+on: workflow_dispatch
+
+jobs:
+  push:
+    name: Manual trigger push for onboarding guides
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Setup
+        id: setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - run: yarn workspace scripts pushToAlgoliaWeb
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          FORCE: true
