@@ -45,9 +45,9 @@ public class SwiftCTSManager implements CTSManager {
     supportingFiles.add(new SupportingFile("snippets/.swiftformat.mustache", output + "/swift", ".swiftformat"));
     supportingFiles.add(new SupportingFile("snippets/.gitignore.mustache", output + "/swift", ".gitignore"));
 
-    if (output.equals("snippets")) {
+    if (output.equals("docs/snippets")) {
       supportingFiles.add(new SupportingFile("snippets/Package.mustache", output + "/swift", "Package.swift"));
-    } else if (output.equals("guides")) {
+    } else if (output.equals("docs/guides")) {
       supportingFiles.add(new SupportingFile("guides/Package.mustache", output + "/swift", "Package.swift"));
     }
   }
