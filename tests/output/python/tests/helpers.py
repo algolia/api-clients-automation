@@ -6,6 +6,8 @@ class Helpers:
             for _, r in enumerate(resp):
                 _res.append(r.to_dict())
             return _res
+        if isinstance(resp, dict):
+            return resp
         return resp.to_dict()
 
     def union(self, expected, received):

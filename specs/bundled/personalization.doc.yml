@@ -1735,6 +1735,14 @@ paths:
             let response = try await client.getPersonalizationStrategy()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/strategies/personalization \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     post:
       tags:
         - strategies
@@ -2009,9 +2017,9 @@ paths:
 
             # Call the API
             response = client.set_personalization_strategy(
-              PersonalizationStrategyParams.new(
-                event_scoring: [EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
-                facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
+              Algolia::Personalization::PersonalizationStrategyParams.new(
+                event_scoring: [Algolia::Personalization::EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
+                facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: "Event")],
                 personalization_impact: 42
               )
             )
@@ -2077,6 +2085,14 @@ paths:
                     personalizationImpact: 42
                 ))
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/strategies/personalization \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:

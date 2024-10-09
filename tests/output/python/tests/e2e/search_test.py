@@ -43,6 +43,30 @@ class TestSearchClientE2E:
             == _expected_body
         )
 
+    async def test_get_object_1(self):
+        """
+        search with a real object
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_object_with_http_info(
+            index_name="cts_e2e_browse",
+            object_id="Batman and Robin",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).get_object(
+            index_name="cts_e2e_browse",
+            object_id="Batman and Robin",
+        )
+        _expected_body = loads(
+            """{"objectID":"Batman and Robin","title":"Batman and Robin","year":1949,"cast":["Robert Lowery","Johnny Duncan","Jane Adams"]}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
     async def test_get_rule_(self):
         """
         getRule
@@ -464,6 +488,30 @@ class TestSearchClientSyncE2E:
         )
         _expected_body = loads(
             """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}"""
+        )
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
+    def test_get_object_1(self):
+        """
+        search with a real object
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_object_with_http_info(
+            index_name="cts_e2e_browse",
+            object_id="Batman and Robin",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).get_object(
+            index_name="cts_e2e_browse",
+            object_id="Batman and Robin",
+        )
+        _expected_body = loads(
+            """{"objectID":"Batman and Robin","title":"Batman and Robin","year":1949,"cast":["Robert Lowery","Johnny Duncan","Jane Adams"]}"""
         )
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))
