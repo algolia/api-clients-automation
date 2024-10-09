@@ -118,7 +118,7 @@ export async function buildSnippets(languages: Language[]): Promise<void> {
 export async function buildGuides(languages: Language[]): Promise<void> {
   await Promise.all(
     languages.map((lang) => {
-      if (!existsSync(toAbsolutePath(`guides/${lang}`))) {
+      if (!existsSync(toAbsolutePath(`docs/guides/${lang}`))) {
         return Promise.resolve();
       }
 
