@@ -16,7 +16,6 @@ import {
 } from '../../common.js';
 import { getNbGitDiff } from '../utils.js';
 
-import {} from 'fs';
 import { getClientsConfigField } from '../../config.js';
 import { commitStartRelease } from './text.js';
 
