@@ -110,11 +110,6 @@ export async function buildLanguages(generators: Generator[], scope: BuildType):
         return map;
       }
 
-      // there is no monitoring client for now
-      if (gen.client === 'monitoring') {
-        return map;
-      }
-
       if (!(gen.language in map)) {
         map[gen.language] = [];
       }
