@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "tsc && node --env-file=../../.env dist/$0.js",
-    "build": "tsc"
+    "start": "tsc && node --env-file=../../.env dist/$0.js"
   },
   "dependencies": {
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting",
@@ -16,6 +15,7 @@
     "@algolia/client-query-suggestions": "link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions",
     "@algolia/client-search": "link:../../../clients/algoliasearch-client-javascript/packages/client-search",
     "@algolia/ingestion": "link:../../../clients/algoliasearch-client-javascript/packages/ingestion",
+    "@algolia/monitoring": "link:../../../clients/algoliasearch-client-javascript/packages/monitoring",
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend",
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http",
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
