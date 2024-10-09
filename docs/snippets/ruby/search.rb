@@ -14,7 +14,7 @@ def snippet_for_add_api_key
 
   # Call the API
   response = client.add_api_key(
-    ApiKey.new(
+    Algolia::Search::ApiKey.new(
       acl: ["search", "addObject"],
       description: "my new api key",
       validity: 300,
@@ -61,7 +61,7 @@ def snippet_for_append_source
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.append_source(Source.new(source: "theSource", description: "theDescription"))
+  response = client.append_source(Algolia::Search::Source.new(source: "theSource", description: "theDescription"))
 
   # >LOG
   # use the class directly
@@ -81,7 +81,7 @@ def snippet_for_assign_user_id
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.assign_user_id("userID", AssignUserIdParams.new(cluster: "theCluster"))
+  response = client.assign_user_id("userID", Algolia::Search::AssignUserIdParams.new(cluster: "theCluster"))
 
   # >LOG
   # use the class directly
@@ -103,10 +103,10 @@ def snippet_for_batch
   # Call the API
   response = client.batch(
     "<YOUR_INDEX_NAME>",
-    BatchWriteParams.new(
+    Algolia::Search::BatchWriteParams.new(
       requests: [
-        BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
-        BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+        Algolia::Search::BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
+        Algolia::Search::BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
       ]
     )
   )
@@ -131,7 +131,9 @@ def snippet_for_batch1
   # Call the API
   response = client.batch(
     "<YOUR_INDEX_NAME>",
-    BatchWriteParams.new(requests: [BatchRequest.new(action: "clear", body: {key: "value"})])
+    Algolia::Search::BatchWriteParams.new(
+      requests: [Algolia::Search::BatchRequest.new(action: "clear", body: {key: "value"})]
+    )
   )
 
   # >LOG
@@ -154,7 +156,9 @@ def snippet_for_batch2
   # Call the API
   response = client.batch(
     "<YOUR_INDEX_NAME>",
-    BatchWriteParams.new(requests: [BatchRequest.new(action: "delete", body: {key: "value"})])
+    Algolia::Search::BatchWriteParams.new(
+      requests: [Algolia::Search::BatchRequest.new(action: "delete", body: {key: "value"})]
+    )
   )
 
   # >LOG
@@ -177,7 +181,9 @@ def snippet_for_batch3
   # Call the API
   response = client.batch(
     "<YOUR_INDEX_NAME>",
-    BatchWriteParams.new(requests: [BatchRequest.new(action: "deleteObject", body: {key: "value"})])
+    Algolia::Search::BatchWriteParams.new(
+      requests: [Algolia::Search::BatchRequest.new(action: "deleteObject", body: {key: "value"})]
+    )
   )
 
   # >LOG
@@ -200,7 +206,9 @@ def snippet_for_batch4
   # Call the API
   response = client.batch(
     "<YOUR_INDEX_NAME>",
-    BatchWriteParams.new(requests: [BatchRequest.new(action: "partialUpdateObject", body: {key: "value"})])
+    Algolia::Search::BatchWriteParams.new(
+      requests: [Algolia::Search::BatchRequest.new(action: "partialUpdateObject", body: {key: "value"})]
+    )
   )
 
   # >LOG
@@ -223,7 +231,9 @@ def snippet_for_batch5
   # Call the API
   response = client.batch(
     "<YOUR_INDEX_NAME>",
-    BatchWriteParams.new(requests: [BatchRequest.new(action: "partialUpdateObjectNoCreate", body: {key: "value"})])
+    Algolia::Search::BatchWriteParams.new(
+      requests: [Algolia::Search::BatchRequest.new(action: "partialUpdateObjectNoCreate", body: {key: "value"})]
+    )
   )
 
   # >LOG
@@ -246,7 +256,9 @@ def snippet_for_batch6
   # Call the API
   response = client.batch(
     "<YOUR_INDEX_NAME>",
-    BatchWriteParams.new(requests: [BatchRequest.new(action: "updateObject", body: {key: "value"})])
+    Algolia::Search::BatchWriteParams.new(
+      requests: [Algolia::Search::BatchRequest.new(action: "updateObject", body: {key: "value"})]
+    )
   )
 
   # >LOG
@@ -269,7 +281,7 @@ def snippet_for_batch_assign_user_ids
   # Call the API
   response = client.batch_assign_user_ids(
     "userID",
-    BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
+    Algolia::Search::BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
   )
 
   # >LOG
@@ -292,12 +304,12 @@ def snippet_for_batch_dictionary_entries
   # Call the API
   response = client.batch_dictionary_entries(
     "plurals",
-    BatchDictionaryEntriesParams.new(
+    Algolia::Search::BatchDictionaryEntriesParams.new(
       clear_existing_dictionary_entries: true,
       requests: [
-        BatchDictionaryEntriesRequest.new(
+        Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "addEntry",
-          body: DictionaryEntry.new(
+          body: Algolia::Search::DictionaryEntry.new(
             object_id: "1",
             language: "en",
             word: "fancy",
@@ -330,9 +342,14 @@ def snippet_for_batch_dictionary_entries1
   # Call the API
   response = client.batch_dictionary_entries(
     "plurals",
-    BatchDictionaryEntriesParams.new(
+    Algolia::Search::BatchDictionaryEntriesParams.new(
       clear_existing_dictionary_entries: true,
-      requests: [BatchDictionaryEntriesRequest.new(action: "deleteEntry", body: DictionaryEntry.new(object_id: "1"))]
+      requests: [
+        Algolia::Search::BatchDictionaryEntriesRequest.new(
+          action: "deleteEntry",
+          body: Algolia::Search::DictionaryEntry.new(object_id: "1")
+        )
+      ]
     )
   )
 
@@ -356,11 +373,11 @@ def snippet_for_batch_dictionary_entries2
   # Call the API
   response = client.batch_dictionary_entries(
     "stopwords",
-    BatchDictionaryEntriesParams.new(
+    Algolia::Search::BatchDictionaryEntriesParams.new(
       requests: [
-        BatchDictionaryEntriesRequest.new(
+        Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "addEntry",
-          body: DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
+          body: Algolia::Search::DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
         )
       ]
     )
@@ -564,7 +581,7 @@ def snippet_for_delete_by
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.delete_by("<YOUR_INDEX_NAME>", DeleteByParams.new(filters: "brand:brandName"))
+  response = client.delete_by("<YOUR_INDEX_NAME>", Algolia::Search::DeleteByParams.new(filters: "brand:brandName"))
 
   # >LOG
   # use the class directly
@@ -706,7 +723,7 @@ def snippet_for_generate_secured_api_key
   # Call the API
   response = client.generate_secured_api_key(
     "2640659426d5107b6e47d75db9cbaef8",
-    SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: ["Movies"])
+    Algolia::Search::SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: ["Movies"])
   )
 
   # >LOG
@@ -729,13 +746,13 @@ def snippet_for_generate_secured_api_key1
   # Call the API
   response = client.generate_secured_api_key(
     "2640659426d5107b6e47d75db9cbaef8",
-    SecuredApiKeyRestrictions.new(
+    Algolia::Search::SecuredApiKeyRestrictions.new(
       valid_until: 2524604400,
       restrict_indices: ["Movies", "cts_e2e_settings"],
       restrict_sources: "192.168.1.0/24",
       filters: "category:Book OR category:Ebook AND _tags:published",
       user_token: "user123",
-      search_params: SearchParamsObject.new(
+      search_params: Algolia::Search::SearchParamsObject.new(
         query: "batman",
         typo_tolerance: "strict",
         around_radius: "all",
@@ -885,9 +902,9 @@ def snippet_for_get_objects
 
   # Call the API
   response = client.get_objects(
-    GetObjectsParams.new(
+    Algolia::Search::GetObjectsParams.new(
       requests: [
-        GetObjectsRequest.new(
+        Algolia::Search::GetObjectsRequest.new(
           attributes_to_retrieve: ["attr1", "attr2"],
           object_id: "uniqueID",
           index_name: "<YOUR_INDEX_NAME>"
@@ -1215,8 +1232,14 @@ def snippet_for_multiple_batch
 
   # Call the API
   response = client.multiple_batch(
-    BatchParams.new(
-      requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "<YOUR_INDEX_NAME>")]
+    Algolia::Search::BatchParams.new(
+      requests: [
+        Algolia::Search::MultipleBatchRequest.new(
+          action: "addObject",
+          body: {key: "value"},
+          index_name: "<YOUR_INDEX_NAME>"
+        )
+      ]
     )
   )
 
@@ -1240,7 +1263,11 @@ def snippet_for_operation_index
   # Call the API
   response = client.operation_index(
     "<SOURCE_INDEX_NAME>",
-    OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>", scope: ["rules", "settings"])
+    Algolia::Search::OperationIndexParams.new(
+      operation: "move",
+      destination: "<DESTINATION_INDEX_NAME>",
+      scope: ["rules", "settings"]
+    )
   )
 
   # >LOG
@@ -1263,7 +1290,7 @@ def snippet_for_operation_index1
   # Call the API
   response = client.operation_index(
     "<SOURCE_INDEX_NAME>",
-    OperationIndexParams.new(operation: "copy", destination: "<DESTINATION_INDEX_NAME>")
+    Algolia::Search::OperationIndexParams.new(operation: "copy", destination: "<DESTINATION_INDEX_NAME>")
   )
 
   # >LOG
@@ -1286,7 +1313,7 @@ def snippet_for_operation_index2
   # Call the API
   response = client.operation_index(
     "<SOURCE_INDEX_NAME>",
-    OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>")
+    Algolia::Search::OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>")
   )
 
   # >LOG
@@ -1430,7 +1457,7 @@ def snippet_for_replace_sources
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.replace_sources([Source.new(source: "theSource", description: "theDescription")])
+  response = client.replace_sources([Algolia::Search::Source.new(source: "theSource", description: "theDescription")])
 
   # >LOG
   # use the class directly
@@ -1539,7 +1566,10 @@ def snippet_for_save_rule
   response = client.save_rule(
     "<YOUR_INDEX_NAME>",
     "id1",
-    Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
+    Algolia::Search::Rule.new(
+      object_id: "id1",
+      conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+    )
   )
 
   # >LOG
@@ -1563,8 +1593,14 @@ def snippet_for_save_rules
   response = client.save_rules(
     "<YOUR_INDEX_NAME>",
     [
-      Rule.new(object_id: "a-rule-id", conditions: [Condition.new(pattern: "smartphone", anchoring: "contains")]),
-      Rule.new(object_id: "a-second-rule-id", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
+      Algolia::Search::Rule.new(
+        object_id: "a-rule-id",
+        conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")]
+      ),
+      Algolia::Search::Rule.new(
+        object_id: "a-second-rule-id",
+        conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+      )
     ],
     false,
     true
@@ -1591,7 +1627,7 @@ def snippet_for_save_synonym
   response = client.save_synonym(
     "<YOUR_INDEX_NAME>",
     "id1",
-    SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+    Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
     true
   )
 
@@ -1616,8 +1652,13 @@ def snippet_for_save_synonyms
   response = client.save_synonyms(
     "<YOUR_INDEX_NAME>",
     [
-      SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
-      SynonymHit.new(object_id: "id2", type: "onewaysynonym", input: "iphone", synonyms: ["ephone", "aphone", "yphone"])
+      Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+      Algolia::Search::SynonymHit.new(
+        object_id: "id2",
+        type: "onewaysynonym",
+        input: "iphone",
+        synonyms: ["ephone", "aphone", "yphone"]
+      )
     ],
     true,
     true
@@ -1642,8 +1683,10 @@ def snippet_for_search
 
   # Call the API
   response = client.search(
-    SearchMethodParams.new(
-      requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50)]
+    Algolia::Search::SearchMethodParams.new(
+      requests: [
+        Algolia::Search::SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50)
+      ]
     )
   )
 
@@ -1666,9 +1709,13 @@ def snippet_for_search1
 
   # Call the API
   response = client.search(
-    SearchMethodParams.new(
+    Algolia::Search::SearchMethodParams.new(
       requests: [
-        SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", filters: "actor:Scarlett Johansson")
+        Algolia::Search::SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>",
+          query: "<YOUR_QUERY>",
+          filters: "actor:Scarlett Johansson"
+        )
       ]
     )
   )
@@ -1692,9 +1739,9 @@ def snippet_for_search2
 
   # Call the API
   response = client.search(
-    SearchMethodParams.new(
+    Algolia::Search::SearchMethodParams.new(
       requests: [
-        SearchForHits.new(
+        Algolia::Search::SearchForHits.new(
           index_name: "<YOUR_INDEX_NAME>",
           query: "<YOUR_QUERY>",
           filters: "actor:Tom Cruise OR actor:Scarlett Johansson"
@@ -1722,9 +1769,13 @@ def snippet_for_search3
 
   # Call the API
   response = client.search(
-    SearchMethodParams.new(
+    Algolia::Search::SearchMethodParams.new(
       requests: [
-        SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", filters: "NOT actor:Nicolas Cage")
+        Algolia::Search::SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>",
+          query: "<YOUR_QUERY>",
+          filters: "NOT actor:Nicolas Cage"
+        )
       ]
     )
   )
@@ -1748,8 +1799,14 @@ def snippet_for_search4
 
   # Call the API
   response = client.search(
-    SearchMethodParams.new(
-      requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["author", "genre"])]
+    Algolia::Search::SearchMethodParams.new(
+      requests: [
+        Algolia::Search::SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>",
+          query: "<YOUR_QUERY>",
+          facets: ["author", "genre"]
+        )
+      ]
     )
   )
 
@@ -1772,8 +1829,10 @@ def snippet_for_search5
 
   # Call the API
   response = client.search(
-    SearchMethodParams.new(
-      requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["*"])]
+    Algolia::Search::SearchMethodParams.new(
+      requests: [
+        Algolia::Search::SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["*"])
+      ]
     )
   )
 
@@ -1795,7 +1854,10 @@ def snippet_for_search_dictionary_entries
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.search_dictionary_entries("stopwords", SearchDictionaryEntriesParams.new(query: "about"))
+  response = client.search_dictionary_entries(
+    "stopwords",
+    Algolia::Search::SearchDictionaryEntriesParams.new(query: "about")
+  )
 
   # >LOG
   # use the class directly
@@ -1835,7 +1897,7 @@ def snippet_for_search_rules
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.search_rules("<YOUR_INDEX_NAME>", SearchRulesParams.new(query: "zorro"))
+  response = client.search_rules("<YOUR_INDEX_NAME>", Algolia::Search::SearchRulesParams.new(query: "zorro"))
 
   # >LOG
   # use the class directly
@@ -1896,7 +1958,7 @@ def snippet_for_search_user_ids
 
   # Call the API
   response = client.search_user_ids(
-    SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
+    Algolia::Search::SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
   )
 
   # >LOG
@@ -1932,8 +1994,8 @@ def snippet_for_set_dictionary_settings
 
   # Call the API
   response = client.set_dictionary_settings(
-    DictionarySettingsParams.new(
-      disable_standard_entries: StandardEntries.new(plurals: {fr: false, en: false, ru: true})
+    Algolia::Search::DictionarySettingsParams.new(
+      disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})
     )
   )
 
@@ -1957,7 +2019,9 @@ def snippet_for_set_settings
   # Call the API
   response = client.set_settings(
     "<YOUR_INDEX_NAME>",
-    IndexSettings.new(attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"])
+    Algolia::Search::IndexSettings.new(
+      attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
+    )
   )
 
   # >LOG
@@ -1980,7 +2044,12 @@ def snippet_for_update_api_key
   # Call the API
   response = client.update_api_key(
     "ALGOLIA_API_KEY",
-    ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
+    Algolia::Search::ApiKey.new(
+      acl: ["search", "addObject"],
+      validity: 300,
+      max_queries_per_ip_per_hour: 100,
+      max_hits_per_query: 20
+    )
   )
 
   # >LOG
@@ -2024,7 +2093,7 @@ def snippet_for_wait_for_api_key1
   response = client.wait_for_api_key(
     "api-key-update-operation-test-ruby",
     "update",
-    ApiKey.new(
+    Algolia::Search::ApiKey.new(
       description: "my updated api key",
       acl: ["search", "addObject", "deleteObject"],
       indexes: ["Movies", "Books"],

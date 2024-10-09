@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestQuerySuggestionsClient < Test::Unit::TestCase
-  include Algolia::QuerySuggestions
   def setup
     @client = Algolia::QuerySuggestionsClient.create(
       "APP_ID",
@@ -16,12 +15,12 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   # createConfig
   def test_create_config
     req = @client.create_config_with_http_info(
-      ConfigurationWithIndex.new(
+      Algolia::QuerySuggestions::ConfigurationWithIndex.new(
         index_name: "theIndexName",
         source_indices: [
-          SourceIndex.new(
+          Algolia::QuerySuggestions::SourceIndex.new(
             index_name: "testIndex",
-            facets: [Facet.new(attribute: "test")],
+            facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
             generate: [["facetA", "facetB"], ["facetC"]]
           )
         ],
@@ -376,11 +375,11 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   def test_update_config
     req = @client.update_config_with_http_info(
       "theIndexName",
-      Configuration.new(
+      Algolia::QuerySuggestions::Configuration.new(
         source_indices: [
-          SourceIndex.new(
+          Algolia::QuerySuggestions::SourceIndex.new(
             index_name: "testIndex",
-            facets: [Facet.new(attribute: "test")],
+            facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
             generate: [["facetA", "facetB"], ["facetC"]]
           )
         ],

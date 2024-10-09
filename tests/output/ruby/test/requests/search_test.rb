@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestSearchClient < Test::Unit::TestCase
-  include Algolia::Search
   def setup
     @client = Algolia::SearchClient.create(
       "APP_ID",
@@ -16,7 +15,7 @@ class TestSearchClient < Test::Unit::TestCase
   # addApiKey
   def test_add_api_key
     req = @client.add_api_key_with_http_info(
-      ApiKey.new(
+      Algolia::Search::ApiKey.new(
         acl: ["search", "addObject"],
         description: "my new api key",
         validity: 300,
@@ -50,7 +49,9 @@ class TestSearchClient < Test::Unit::TestCase
 
   # appendSource
   def test_append_source
-    req = @client.append_source_with_http_info(Source.new(source: "theSource", description: "theDescription"))
+    req = @client.append_source_with_http_info(
+      Algolia::Search::Source.new(source: "theSource", description: "theDescription")
+    )
 
     assert_equal(:post, req.method)
     assert_equal("/1/security/sources/append", req.path)
@@ -61,7 +62,10 @@ class TestSearchClient < Test::Unit::TestCase
 
   # assignUserId
   def test_assign_user_id
-    req = @client.assign_user_id_with_http_info("userID", AssignUserIdParams.new(cluster: "theCluster"))
+    req = @client.assign_user_id_with_http_info(
+      "userID",
+      Algolia::Search::AssignUserIdParams.new(cluster: "theCluster")
+    )
 
     assert_equal(:post, req.method)
     assert_equal("/1/clusters/mapping", req.path)
@@ -77,7 +81,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_assign_user_id1
     req = @client.assign_user_id_with_http_info(
       "user id with spaces",
-      AssignUserIdParams.new(cluster: "cluster with spaces")
+      Algolia::Search::AssignUserIdParams.new(cluster: "cluster with spaces")
     )
 
     assert_equal(:post, req.method)
@@ -94,10 +98,10 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch
     req = @client.batch_with_http_info(
       "<YOUR_INDEX_NAME>",
-      BatchWriteParams.new(
+      Algolia::Search::BatchWriteParams.new(
         requests: [
-          BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
-          BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+          Algolia::Search::BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
+          Algolia::Search::BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
         ]
       )
     )
@@ -118,7 +122,9 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch1
     req = @client.batch_with_http_info(
       "<YOUR_INDEX_NAME>",
-      BatchWriteParams.new(requests: [BatchRequest.new(action: "clear", body: {key: "value"})])
+      Algolia::Search::BatchWriteParams.new(
+        requests: [Algolia::Search::BatchRequest.new(action: "clear", body: {key: "value"})]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -135,7 +141,9 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch2
     req = @client.batch_with_http_info(
       "<YOUR_INDEX_NAME>",
-      BatchWriteParams.new(requests: [BatchRequest.new(action: "delete", body: {key: "value"})])
+      Algolia::Search::BatchWriteParams.new(
+        requests: [Algolia::Search::BatchRequest.new(action: "delete", body: {key: "value"})]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -152,7 +160,9 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch3
     req = @client.batch_with_http_info(
       "<YOUR_INDEX_NAME>",
-      BatchWriteParams.new(requests: [BatchRequest.new(action: "deleteObject", body: {key: "value"})])
+      Algolia::Search::BatchWriteParams.new(
+        requests: [Algolia::Search::BatchRequest.new(action: "deleteObject", body: {key: "value"})]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -169,7 +179,9 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch4
     req = @client.batch_with_http_info(
       "<YOUR_INDEX_NAME>",
-      BatchWriteParams.new(requests: [BatchRequest.new(action: "partialUpdateObject", body: {key: "value"})])
+      Algolia::Search::BatchWriteParams.new(
+        requests: [Algolia::Search::BatchRequest.new(action: "partialUpdateObject", body: {key: "value"})]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -186,7 +198,9 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch5
     req = @client.batch_with_http_info(
       "<YOUR_INDEX_NAME>",
-      BatchWriteParams.new(requests: [BatchRequest.new(action: "partialUpdateObjectNoCreate", body: {key: "value"})])
+      Algolia::Search::BatchWriteParams.new(
+        requests: [Algolia::Search::BatchRequest.new(action: "partialUpdateObjectNoCreate", body: {key: "value"})]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -203,7 +217,9 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch6
     req = @client.batch_with_http_info(
       "<YOUR_INDEX_NAME>",
-      BatchWriteParams.new(requests: [BatchRequest.new(action: "updateObject", body: {key: "value"})])
+      Algolia::Search::BatchWriteParams.new(
+        requests: [Algolia::Search::BatchRequest.new(action: "updateObject", body: {key: "value"})]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -220,7 +236,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch_assign_user_ids
     req = @client.batch_assign_user_ids_with_http_info(
       "userID",
-      BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
+      Algolia::Search::BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
     )
 
     assert_equal(:post, req.method)
@@ -237,12 +253,12 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch_dictionary_entries
     req = @client.batch_dictionary_entries_with_http_info(
       "plurals",
-      BatchDictionaryEntriesParams.new(
+      Algolia::Search::BatchDictionaryEntriesParams.new(
         clear_existing_dictionary_entries: true,
         requests: [
-          BatchDictionaryEntriesRequest.new(
+          Algolia::Search::BatchDictionaryEntriesRequest.new(
             action: "addEntry",
-            body: DictionaryEntry.new(
+            body: Algolia::Search::DictionaryEntry.new(
               object_id: "1",
               language: "en",
               word: "fancy",
@@ -271,9 +287,14 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch_dictionary_entries1
     req = @client.batch_dictionary_entries_with_http_info(
       "plurals",
-      BatchDictionaryEntriesParams.new(
+      Algolia::Search::BatchDictionaryEntriesParams.new(
         clear_existing_dictionary_entries: true,
-        requests: [BatchDictionaryEntriesRequest.new(action: "deleteEntry", body: DictionaryEntry.new(object_id: "1"))]
+        requests: [
+          Algolia::Search::BatchDictionaryEntriesRequest.new(
+            action: "deleteEntry",
+            body: Algolia::Search::DictionaryEntry.new(object_id: "1")
+          )
+        ]
       )
     )
 
@@ -293,11 +314,11 @@ class TestSearchClient < Test::Unit::TestCase
   def test_batch_dictionary_entries2
     req = @client.batch_dictionary_entries_with_http_info(
       "stopwords",
-      BatchDictionaryEntriesParams.new(
+      Algolia::Search::BatchDictionaryEntriesParams.new(
         requests: [
-          BatchDictionaryEntriesRequest.new(
+          Algolia::Search::BatchDictionaryEntriesRequest.new(
             action: "addEntry",
-            body: DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
+            body: Algolia::Search::DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
           )
         ]
       )
@@ -330,7 +351,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_browse1
     req = @client.browse_with_http_info(
       "indexName",
-      BrowseParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+      Algolia::Search::BrowseParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
     )
 
     assert_equal(:post, req.method)
@@ -342,7 +363,7 @@ class TestSearchClient < Test::Unit::TestCase
 
   # browse allow a cursor in parameters
   def test_browse2
-    req = @client.browse_with_http_info("indexName", BrowseParamsObject.new(cursor: "test"))
+    req = @client.browse_with_http_info("indexName", Algolia::Search::BrowseParamsObject.new(cursor: "test"))
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/indexName/browse", req.path)
@@ -665,7 +686,10 @@ class TestSearchClient < Test::Unit::TestCase
 
   # deleteBy
   def test_delete_by
-    req = @client.delete_by_with_http_info("theIndexName", DeleteByParams.new(filters: "brand:brandName"))
+    req = @client.delete_by_with_http_info(
+      "theIndexName",
+      Algolia::Search::DeleteByParams.new(filters: "brand:brandName")
+    )
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/theIndexName/deleteByQuery", req.path)
@@ -848,9 +872,9 @@ class TestSearchClient < Test::Unit::TestCase
   # getObjects
   def test_get_objects
     req = @client.get_objects_with_http_info(
-      GetObjectsParams.new(
+      Algolia::Search::GetObjectsParams.new(
         requests: [
-          GetObjectsRequest.new(
+          Algolia::Search::GetObjectsRequest.new(
             attributes_to_retrieve: ["attr1", "attr2"],
             object_id: "uniqueID",
             index_name: "theIndexName"
@@ -1054,8 +1078,14 @@ class TestSearchClient < Test::Unit::TestCase
   # multipleBatch
   def test_multiple_batch
     req = @client.multiple_batch_with_http_info(
-      BatchParams.new(
-        requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "theIndexName")]
+      Algolia::Search::BatchParams.new(
+        requests: [
+          Algolia::Search::MultipleBatchRequest.new(
+            action: "addObject",
+            body: {key: "value"},
+            index_name: "theIndexName"
+          )
+        ]
       )
     )
 
@@ -1075,7 +1105,11 @@ class TestSearchClient < Test::Unit::TestCase
   def test_operation_index
     req = @client.operation_index_with_http_info(
       "<SOURCE_INDEX_NAME>",
-      OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>", scope: ["rules", "settings"])
+      Algolia::Search::OperationIndexParams.new(
+        operation: "move",
+        destination: "<DESTINATION_INDEX_NAME>",
+        scope: ["rules", "settings"]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -1094,7 +1128,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_operation_index1
     req = @client.operation_index_with_http_info(
       "<SOURCE_INDEX_NAME>",
-      OperationIndexParams.new(operation: "copy", destination: "<DESTINATION_INDEX_NAME>")
+      Algolia::Search::OperationIndexParams.new(operation: "copy", destination: "<DESTINATION_INDEX_NAME>")
     )
 
     assert_equal(:post, req.method)
@@ -1111,7 +1145,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_operation_index2
     req = @client.operation_index_with_http_info(
       "<SOURCE_INDEX_NAME>",
-      OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>")
+      Algolia::Search::OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>")
     )
 
     assert_equal(:post, req.method)
@@ -1197,7 +1231,9 @@ class TestSearchClient < Test::Unit::TestCase
 
   # replaceSources
   def test_replace_sources
-    req = @client.replace_sources_with_http_info([Source.new(source: "theSource", description: "theDescription")])
+    req = @client.replace_sources_with_http_info(
+      [Algolia::Search::Source.new(source: "theSource", description: "theDescription")]
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/security/sources", req.path)
@@ -1232,7 +1268,10 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_rule_with_http_info(
       "indexName",
       "id1",
-      Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
+      Algolia::Search::Rule.new(
+        object_id: "id1",
+        conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+      )
     )
 
     assert_equal(:put, req.method)
@@ -1250,31 +1289,38 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_rule_with_http_info(
       "indexName",
       "id1",
-      Rule.new(
+      Algolia::Search::Rule.new(
         object_id: "id1",
-        conditions: [Condition.new(pattern: "apple", anchoring: "contains", alternatives: false, context: "search")],
-        consequence: Consequence.new(
-          params: ConsequenceParams.new(
+        conditions: [
+          Algolia::Search::Condition.new(
+            pattern: "apple",
+            anchoring: "contains",
+            alternatives: false,
+            context: "search"
+          )
+        ],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
             filters: "brand:apple",
-            query: ConsequenceQueryObject.new(
+            query: Algolia::Search::ConsequenceQueryObject.new(
               remove: ["algolia"],
               edits: [
-                Edit.new(type: "remove", delete: "abc", insert: "cde"),
-                Edit.new(type: "replace", delete: "abc", insert: "cde")
+                Algolia::Search::Edit.new(type: "remove", delete: "abc", insert: "cde"),
+                Algolia::Search::Edit.new(type: "replace", delete: "abc", insert: "cde")
               ]
             )
           ),
-          hide: [ConsequenceHide.new(object_id: "321")],
+          hide: [Algolia::Search::ConsequenceHide.new(object_id: "321")],
           filter_promotes: false,
           user_data: {:"algolia" => "aloglia"},
           promote: [
-            PromoteObjectID.new(object_id: "abc", position: 3),
-            PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)
+            Algolia::Search::PromoteObjectID.new(object_id: "abc", position: 3),
+            Algolia::Search::PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)
           ]
         ),
         description: "test",
         enabled: true,
-        validity: [TimeRange.new(from: 1656670273, _until: 1656670277)]
+        validity: [Algolia::Search::TimeRange.new(from: 1656670273, _until: 1656670277)]
       ),
       true
     )
@@ -1296,8 +1342,14 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_rules_with_http_info(
       "<YOUR_INDEX_NAME>",
       [
-        Rule.new(object_id: "a-rule-id", conditions: [Condition.new(pattern: "smartphone", anchoring: "contains")]),
-        Rule.new(object_id: "a-second-rule-id", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
+        Algolia::Search::Rule.new(
+          object_id: "a-rule-id",
+          conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")]
+        ),
+        Algolia::Search::Rule.new(
+          object_id: "a-second-rule-id",
+          conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+        )
       ],
       false,
       true
@@ -1320,31 +1372,38 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_rules_with_http_info(
       "<YOUR_INDEX_NAME>",
       [
-        Rule.new(
+        Algolia::Search::Rule.new(
           object_id: "id1",
-          conditions: [Condition.new(pattern: "apple", anchoring: "contains", alternatives: false, context: "search")],
-          consequence: Consequence.new(
-            params: ConsequenceParams.new(
+          conditions: [
+            Algolia::Search::Condition.new(
+              pattern: "apple",
+              anchoring: "contains",
+              alternatives: false,
+              context: "search"
+            )
+          ],
+          consequence: Algolia::Search::Consequence.new(
+            params: Algolia::Search::ConsequenceParams.new(
               filters: "brand:apple",
-              query: ConsequenceQueryObject.new(
+              query: Algolia::Search::ConsequenceQueryObject.new(
                 remove: ["algolia"],
                 edits: [
-                  Edit.new(type: "remove", delete: "abc", insert: "cde"),
-                  Edit.new(type: "replace", delete: "abc", insert: "cde")
+                  Algolia::Search::Edit.new(type: "remove", delete: "abc", insert: "cde"),
+                  Algolia::Search::Edit.new(type: "replace", delete: "abc", insert: "cde")
                 ]
               )
             ),
-            hide: [ConsequenceHide.new(object_id: "321")],
+            hide: [Algolia::Search::ConsequenceHide.new(object_id: "321")],
             filter_promotes: false,
             user_data: {:"algolia" => "aloglia"},
             promote: [
-              PromoteObjectID.new(object_id: "abc", position: 3),
-              PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)
+              Algolia::Search::PromoteObjectID.new(object_id: "abc", position: 3),
+              Algolia::Search::PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)
             ]
           ),
           description: "test",
           enabled: true,
-          validity: [TimeRange.new(from: 1656670273, _until: 1656670277)]
+          validity: [Algolia::Search::TimeRange.new(from: 1656670273, _until: 1656670277)]
         )
       ],
       true,
@@ -1368,7 +1427,7 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_synonym_with_http_info(
       "indexName",
       "id1",
-      SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+      Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
       true
     )
 
@@ -1387,8 +1446,8 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_synonyms_with_http_info(
       "<YOUR_INDEX_NAME>",
       [
-        SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
-        SynonymHit.new(
+        Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+        Algolia::Search::SynonymHit.new(
           object_id: "id2",
           type: "onewaysynonym",
           input: "iphone",
@@ -1414,8 +1473,10 @@ class TestSearchClient < Test::Unit::TestCase
   # withHitsPerPage
   def test_search
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
-        requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50)]
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50)
+        ]
       )
     )
 
@@ -1432,9 +1493,13 @@ class TestSearchClient < Test::Unit::TestCase
   # filterOnly
   def test_search1
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", filters: "actor:Scarlett Johansson")
+          Algolia::Search::SearchForHits.new(
+            index_name: "<YOUR_INDEX_NAME>",
+            query: "<YOUR_QUERY>",
+            filters: "actor:Scarlett Johansson"
+          )
         ]
       )
     )
@@ -1454,9 +1519,9 @@ class TestSearchClient < Test::Unit::TestCase
   # filterOr
   def test_search2
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "<YOUR_INDEX_NAME>",
             query: "<YOUR_QUERY>",
             filters: "actor:Tom Cruise OR actor:Scarlett Johansson"
@@ -1480,9 +1545,13 @@ class TestSearchClient < Test::Unit::TestCase
   # filterNot
   def test_search3
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", filters: "NOT actor:Nicolas Cage")
+          Algolia::Search::SearchForHits.new(
+            index_name: "<YOUR_INDEX_NAME>",
+            query: "<YOUR_QUERY>",
+            filters: "NOT actor:Nicolas Cage"
+          )
         ]
       )
     )
@@ -1502,7 +1571,9 @@ class TestSearchClient < Test::Unit::TestCase
   # search for a single hits request with minimal parameters
   def test_search4
     req = @client.search_with_http_info(
-      SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")])
+      Algolia::Search::SearchMethodParams.new(
+        requests: [Algolia::Search::SearchForHits.new(index_name: "cts_e2e_search_empty_index")]
+      )
     )
 
     assert_equal(:post, req.method)
@@ -1515,9 +1586,9 @@ class TestSearchClient < Test::Unit::TestCase
   # search with highlight and snippet results
   def test_search5
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_highlight_snippet_results",
             query: "vim",
             attributes_to_snippet: ["*:20"],
@@ -1543,9 +1614,13 @@ class TestSearchClient < Test::Unit::TestCase
   # retrieveFacets
   def test_search6
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["author", "genre"])
+          Algolia::Search::SearchForHits.new(
+            index_name: "<YOUR_INDEX_NAME>",
+            query: "<YOUR_QUERY>",
+            facets: ["author", "genre"]
+          )
         ]
       )
     )
@@ -1565,8 +1640,10 @@ class TestSearchClient < Test::Unit::TestCase
   # retrieveFacetsWildcard
   def test_search7
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
-        requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["*"])]
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["*"])
+        ]
       )
     )
 
@@ -1583,8 +1660,10 @@ class TestSearchClient < Test::Unit::TestCase
   # search for a single facet request with minimal parameters
   def test_search8
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
-        requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")],
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")
+        ],
         strategy: "stopIfEnoughMatches"
       )
     )
@@ -1604,8 +1683,15 @@ class TestSearchClient < Test::Unit::TestCase
   # search for a single hits request with all parameters
   def test_search9
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
-        requests: [SearchForHits.new(index_name: "theIndexName", query: "myQuery", hits_per_page: 50, type: "default")]
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForHits.new(
+            index_name: "theIndexName",
+            query: "myQuery",
+            hits_per_page: 50,
+            type: "default"
+          )
+        ]
       )
     )
 
@@ -1624,9 +1710,9 @@ class TestSearchClient < Test::Unit::TestCase
   # search for a single facet request with all parameters
   def test_search10
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForFacets.new(
+          Algolia::Search::SearchForFacets.new(
             index_name: "theIndexName",
             type: "facet",
             facet: "theFacet",
@@ -1654,11 +1740,11 @@ class TestSearchClient < Test::Unit::TestCase
   # search for multiple mixed requests in multiple indices with minimal parameters
   def test_search11
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(index_name: "theIndexName"),
-          SearchForFacets.new(index_name: "theIndexName2", type: "facet", facet: "theFacet"),
-          SearchForHits.new(index_name: "theIndexName", type: "default")
+          Algolia::Search::SearchForHits.new(index_name: "theIndexName"),
+          Algolia::Search::SearchForFacets.new(index_name: "theIndexName2", type: "facet", facet: "theFacet"),
+          Algolia::Search::SearchForHits.new(index_name: "theIndexName", type: "default")
         ],
         strategy: "stopIfEnoughMatches"
       )
@@ -1679,9 +1765,9 @@ class TestSearchClient < Test::Unit::TestCase
   # search for multiple mixed requests in multiple indices with all parameters
   def test_search12
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForFacets.new(
+          Algolia::Search::SearchForFacets.new(
             index_name: "theIndexName",
             type: "facet",
             facet: "theFacet",
@@ -1689,7 +1775,12 @@ class TestSearchClient < Test::Unit::TestCase
             query: "theQuery",
             max_facet_hits: 50
           ),
-          SearchForHits.new(index_name: "theIndexName", query: "myQuery", hits_per_page: 50, type: "default")
+          Algolia::Search::SearchForHits.new(
+            index_name: "theIndexName",
+            query: "myQuery",
+            hits_per_page: 50,
+            type: "default"
+          )
         ],
         strategy: "stopIfEnoughMatches"
       )
@@ -1710,9 +1801,9 @@ class TestSearchClient < Test::Unit::TestCase
   # search filters accept all of the possible shapes
   def test_search13
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "theIndexName",
             facet_filters: "mySearch:filters",
             re_ranking_apply_filter: "mySearch:filters",
@@ -1720,7 +1811,7 @@ class TestSearchClient < Test::Unit::TestCase
             numeric_filters: "mySearch:filters",
             optional_filters: "mySearch:filters"
           ),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "theIndexName",
             facet_filters: ["mySearch:filters", ["mySearch:filters", ["mySearch:filters"]]],
             re_ranking_apply_filter: ["mySearch:filters", ["mySearch:filters"]],
@@ -1747,18 +1838,21 @@ class TestSearchClient < Test::Unit::TestCase
   # search filters end to end
   def test_search14
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(index_name: "cts_e2e_search_facet", filters: "editor:'visual studio' OR editor:neovim"),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            filters: "editor:'visual studio' OR editor:neovim"
+          ),
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", "editor:neovim"]
           ),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", ["editor:neovim"]]
           ),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", ["editor:neovim", ["editor:goland"]]]
           )
@@ -1781,9 +1875,9 @@ class TestSearchClient < Test::Unit::TestCase
   # search with all search parameters
   def test_search15
     req = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             advanced_syntax: true,
             advanced_syntax_features: ["exactPhrase"],
             allow_typos_on_numeric_tokens: true,
@@ -1847,10 +1941,10 @@ class TestSearchClient < Test::Unit::TestCase
             relevancy_strictness: 0,
             remove_stop_words: true,
             remove_words_if_no_results: "allOptional",
-            rendering_content: RenderingContent.new(
-              facet_ordering: FacetOrdering.new(
-                facets: Facets.new(order: ["a", "b"]),
-                values: {a: Value.new(order: ["b"], sort_remaining_by: "count")}
+            rendering_content: Algolia::Search::RenderingContent.new(
+              facet_ordering: Algolia::Search::FacetOrdering.new(
+                facets: Algolia::Search::Facets.new(order: ["a", "b"]),
+                values: {a: Algolia::Search::Value.new(order: ["b"], sort_remaining_by: "count")}
               )
             ),
             replace_synonyms_in_highlight: true,
@@ -1888,7 +1982,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_dictionary_entries
     req = @client.search_dictionary_entries_with_http_info(
       "stopwords",
-      SearchDictionaryEntriesParams.new(query: "about")
+      Algolia::Search::SearchDictionaryEntriesParams.new(query: "about")
     )
 
     assert_equal(:post, req.method)
@@ -1902,7 +1996,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_dictionary_entries1
     req = @client.search_dictionary_entries_with_http_info(
       "compounds",
-      SearchDictionaryEntriesParams.new(query: "foo", page: 4, hits_per_page: 2, language: "fr")
+      Algolia::Search::SearchDictionaryEntriesParams.new(query: "foo", page: 4, hits_per_page: 2, language: "fr")
     )
 
     assert_equal(:post, req.method)
@@ -1931,7 +2025,11 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.search_for_facet_values_with_http_info(
       "indexName",
       "facetName",
-      SearchForFacetValuesRequest.new(params: "query=foo&facetFilters=['bar']", facet_query: "foo", max_facet_hits: 42)
+      Algolia::Search::SearchForFacetValuesRequest.new(
+        params: "query=foo&facetFilters=['bar']",
+        facet_query: "foo",
+        max_facet_hits: 42
+      )
     )
 
     assert_equal(:post, req.method)
@@ -1946,7 +2044,7 @@ class TestSearchClient < Test::Unit::TestCase
 
   # searchRules
   def test_search_rules
-    req = @client.search_rules_with_http_info("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
+    req = @client.search_rules_with_http_info("cts_e2e_browse", Algolia::Search::SearchRulesParams.new(query: "zorro"))
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/cts_e2e_browse/rules/search", req.path)
@@ -1981,7 +2079,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_single_index2
     req = @client.search_single_index_with_http_info(
       "indexName",
-      SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+      Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
     )
 
     assert_equal(:post, req.method)
@@ -1995,7 +2093,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_single_index3
     req = @client.search_single_index_with_http_info(
       "cts_e2e_browse",
-      SearchParamsObject.new(
+      Algolia::Search::SearchParamsObject.new(
         query: "batman mask of the phantasm",
         attributes_to_retrieve: ["*"],
         attributes_to_snippet: ["*:20"]
@@ -2029,7 +2127,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_synonyms1
     req = @client.search_synonyms_with_http_info(
       "indexName",
-      SearchSynonymsParams.new(query: "myQuery", type: "altcorrection1", page: 10, hits_per_page: 10)
+      Algolia::Search::SearchSynonymsParams.new(query: "myQuery", type: "altcorrection1", page: 10, hits_per_page: 10)
     )
 
     assert_equal(:post, req.method)
@@ -2045,7 +2143,12 @@ class TestSearchClient < Test::Unit::TestCase
   # searchUserIds
   def test_search_user_ids
     req = @client.search_user_ids_with_http_info(
-      SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
+      Algolia::Search::SearchUserIdsParams.new(
+        query: "test",
+        cluster_name: "theClusterName",
+        page: 5,
+        hits_per_page: 10
+      )
     )
 
     assert_equal(:post, req.method)
@@ -2061,8 +2164,8 @@ class TestSearchClient < Test::Unit::TestCase
   # get setDictionarySettings results with minimal parameters
   def test_set_dictionary_settings
     req = @client.set_dictionary_settings_with_http_info(
-      DictionarySettingsParams.new(
-        disable_standard_entries: StandardEntries.new(plurals: {fr: false, en: false, ru: true})
+      Algolia::Search::DictionarySettingsParams.new(
+        disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})
       )
     )
 
@@ -2079,8 +2182,8 @@ class TestSearchClient < Test::Unit::TestCase
   # get setDictionarySettings results with all parameters
   def test_set_dictionary_settings1
     req = @client.set_dictionary_settings_with_http_info(
-      DictionarySettingsParams.new(
-        disable_standard_entries: StandardEntries.new(
+      Algolia::Search::DictionarySettingsParams.new(
+        disable_standard_entries: Algolia::Search::StandardEntries.new(
           plurals: {fr: false, en: false, ru: true},
           stopwords: {fr: false},
           compounds: {ru: true}
@@ -2104,7 +2207,9 @@ class TestSearchClient < Test::Unit::TestCase
   def test_set_settings
     req = @client.set_settings_with_http_info(
       "<YOUR_INDEX_NAME>",
-      IndexSettings.new(attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"])
+      Algolia::Search::IndexSettings.new(
+        attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
+      )
     )
 
     assert_equal(:put, req.method)
@@ -2119,7 +2224,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings with minimal parameters
   def test_set_settings1
-    req = @client.set_settings_with_http_info("cts_e2e_settings", IndexSettings.new(pagination_limited_to: 10), true)
+    req = @client.set_settings_with_http_info(
+      "cts_e2e_settings",
+      Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+      true
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/cts_e2e_settings/settings", req.path)
@@ -2130,7 +2239,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow boolean `typoTolerance`
   def test_set_settings2
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(typo_tolerance: true), true)
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(typo_tolerance: true),
+      true
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2141,7 +2254,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow enum `typoTolerance`
   def test_set_settings3
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(typo_tolerance: "min"), true)
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(typo_tolerance: "min"),
+      true
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2152,7 +2269,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow boolean `ignorePlurals`
   def test_set_settings4
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(ignore_plurals: true), true)
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(ignore_plurals: true),
+      true
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2163,7 +2284,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow list of string `ignorePlurals`
   def test_set_settings5
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(ignore_plurals: ["fr"]), true)
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(ignore_plurals: ["fr"]),
+      true
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2174,7 +2299,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow boolean `removeStopWords`
   def test_set_settings6
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(remove_stop_words: true), true)
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(remove_stop_words: true),
+      true
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2185,7 +2314,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow list of string `removeStopWords`
   def test_set_settings7
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(remove_stop_words: ["fr"]), true)
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(remove_stop_words: ["fr"]),
+      true
+    )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2196,7 +2329,7 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow boolean `distinct`
   def test_set_settings8
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(distinct: true), true)
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(distinct: true), true)
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2207,7 +2340,7 @@ class TestSearchClient < Test::Unit::TestCase
 
   # setSettings allow integers for `distinct`
   def test_set_settings9
-    req = @client.set_settings_with_http_info("theIndexName", IndexSettings.new(distinct: 1), true)
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(distinct: 1), true)
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
@@ -2220,7 +2353,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_set_settings10
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      IndexSettings.new(
+      Algolia::Search::IndexSettings.new(
         advanced_syntax: true,
         advanced_syntax_features: ["exactPhrase"],
         allow_compression_of_integer_array: true,
@@ -2269,10 +2402,10 @@ class TestSearchClient < Test::Unit::TestCase
         relevancy_strictness: 10,
         remove_stop_words: false,
         remove_words_if_no_results: "lastWords",
-        rendering_content: RenderingContent.new(
-          facet_ordering: FacetOrdering.new(
-            facets: Facets.new(order: ["a", "b"]),
-            values: {a: Value.new(order: ["b"], sort_remaining_by: "count")}
+        rendering_content: Algolia::Search::RenderingContent.new(
+          facet_ordering: Algolia::Search::FacetOrdering.new(
+            facets: Algolia::Search::Facets.new(order: ["a", "b"]),
+            values: {a: Algolia::Search::Value.new(order: ["b"], sort_remaining_by: "count")}
           )
         ),
         replace_synonyms_in_highlight: true,
@@ -2280,7 +2413,7 @@ class TestSearchClient < Test::Unit::TestCase
         response_fields: ["algolia"],
         restrict_highlight_and_snippet_arrays: true,
         searchable_attributes: ["foo"],
-        semantic_search: SemanticSearch.new(event_sources: ["foo"]),
+        semantic_search: Algolia::Search::SemanticSearch.new(event_sources: ["foo"]),
         separators_to_index: "bar",
         snippet_ellipsis_text: "---",
         sort_facet_values_by: "date",
@@ -2306,7 +2439,12 @@ class TestSearchClient < Test::Unit::TestCase
   def test_update_api_key
     req = @client.update_api_key_with_http_info(
       "ALGOLIA_API_KEY",
-      ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
+      Algolia::Search::ApiKey.new(
+        acl: ["search", "addObject"],
+        validity: 300,
+        max_queries_per_ip_per_hour: 100,
+        max_hits_per_query: 20
+      )
     )
 
     assert_equal(:put, req.method)

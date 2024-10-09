@@ -1972,33 +1972,33 @@
       "default": "require \"algolia\""
     },
     "addApiKey": {
-      "default": "response = client.add_api_key(\n  ApiKey.new(\n    acl: [\"search\", \"addObject\"],\n    description: \"my new api key\",\n    validity: 300,\n    max_queries_per_ip_per_hour: 100,\n    max_hits_per_query: 20\n  )\n)"
+      "default": "response = client.add_api_key(\n  Algolia::Search::ApiKey.new(\n    acl: [\"search\", \"addObject\"],\n    description: \"my new api key\",\n    validity: 300,\n    max_queries_per_ip_per_hour: 100,\n    max_hits_per_query: 20\n  )\n)"
     },
     "addOrUpdateObject": {
       "default": "response = client.add_or_update_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\", {key: \"value\"})"
     },
     "appendSource": {
-      "default": "response = client.append_source(Source.new(source: \"theSource\", description: \"theDescription\"))"
+      "default": "response = client.append_source(Algolia::Search::Source.new(source: \"theSource\", description: \"theDescription\"))"
     },
     "assignUserId": {
-      "default": "response = client.assign_user_id(\"userID\", AssignUserIdParams.new(cluster: \"theCluster\"))"
+      "default": "response = client.assign_user_id(\"userID\", Algolia::Search::AssignUserIdParams.new(cluster: \"theCluster\"))"
     },
     "batch": {
-      "addObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  BatchWriteParams.new(\n    requests: [\n      BatchRequest.new(action: \"addObject\", body: {key: \"bar\", foo: \"1\"}),\n      BatchRequest.new(action: \"addObject\", body: {key: \"baz\", foo: \"2\"})\n    ]\n  )\n)",
-      "clear": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  BatchWriteParams.new(requests: [BatchRequest.new(action: \"clear\", body: {key: \"value\"})])\n)",
-      "delete": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  BatchWriteParams.new(requests: [BatchRequest.new(action: \"delete\", body: {key: \"value\"})])\n)",
-      "deleteObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  BatchWriteParams.new(requests: [BatchRequest.new(action: \"deleteObject\", body: {key: \"value\"})])\n)",
-      "partialUpdateObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  BatchWriteParams.new(requests: [BatchRequest.new(action: \"partialUpdateObject\", body: {key: \"value\"})])\n)",
-      "partialUpdateObjectNoCreate": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  BatchWriteParams.new(requests: [BatchRequest.new(action: \"partialUpdateObjectNoCreate\", body: {key: \"value\"})])\n)",
-      "updateObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  BatchWriteParams.new(requests: [BatchRequest.new(action: \"updateObject\", body: {key: \"value\"})])\n)"
+      "addObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BatchWriteParams.new(\n    requests: [\n      Algolia::Search::BatchRequest.new(action: \"addObject\", body: {key: \"bar\", foo: \"1\"}),\n      Algolia::Search::BatchRequest.new(action: \"addObject\", body: {key: \"baz\", foo: \"2\"})\n    ]\n  )\n)",
+      "clear": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BatchWriteParams.new(\n    requests: [Algolia::Search::BatchRequest.new(action: \"clear\", body: {key: \"value\"})]\n  )\n)",
+      "delete": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BatchWriteParams.new(\n    requests: [Algolia::Search::BatchRequest.new(action: \"delete\", body: {key: \"value\"})]\n  )\n)",
+      "deleteObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BatchWriteParams.new(\n    requests: [Algolia::Search::BatchRequest.new(action: \"deleteObject\", body: {key: \"value\"})]\n  )\n)",
+      "partialUpdateObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BatchWriteParams.new(\n    requests: [Algolia::Search::BatchRequest.new(action: \"partialUpdateObject\", body: {key: \"value\"})]\n  )\n)",
+      "partialUpdateObjectNoCreate": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BatchWriteParams.new(\n    requests: [Algolia::Search::BatchRequest.new(action: \"partialUpdateObjectNoCreate\", body: {key: \"value\"})]\n  )\n)",
+      "updateObject": "response = client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BatchWriteParams.new(\n    requests: [Algolia::Search::BatchRequest.new(action: \"updateObject\", body: {key: \"value\"})]\n  )\n)"
     },
     "batchAssignUserIds": {
-      "default": "response = client.batch_assign_user_ids(\n  \"userID\",\n  BatchAssignUserIdsParams.new(cluster: \"theCluster\", users: [\"user1\", \"user2\"])\n)"
+      "default": "response = client.batch_assign_user_ids(\n  \"userID\",\n  Algolia::Search::BatchAssignUserIdsParams.new(cluster: \"theCluster\", users: [\"user1\", \"user2\"])\n)"
     },
     "batchDictionaryEntries": {
-      "replace": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [\n      BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: DictionaryEntry.new(\n          object_id: \"1\",\n          language: \"en\",\n          word: \"fancy\",\n          words: [\"believe\", \"algolia\"],\n          decomposition: [\"trust\", \"algolia\"],\n          state: \"enabled\"\n        )\n      )\n    ]\n  )\n)",
-      "delete": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [BatchDictionaryEntriesRequest.new(action: \"deleteEntry\", body: DictionaryEntry.new(object_id: \"1\"))]\n  )\n)",
-      "append": "response = client.batch_dictionary_entries(\n  \"stopwords\",\n  BatchDictionaryEntriesParams.new(\n    requests: [\n      BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: DictionaryEntry.new(object_id: \"1\", language: \"en\", additional: \"try me\")\n      )\n    ]\n  )\n)"
+      "replace": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: Algolia::Search::DictionaryEntry.new(\n          object_id: \"1\",\n          language: \"en\",\n          word: \"fancy\",\n          words: [\"believe\", \"algolia\"],\n          decomposition: [\"trust\", \"algolia\"],\n          state: \"enabled\"\n        )\n      )\n    ]\n  )\n)",
+      "delete": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"deleteEntry\",\n        body: Algolia::Search::DictionaryEntry.new(object_id: \"1\")\n      )\n    ]\n  )\n)",
+      "append": "response = client.batch_dictionary_entries(\n  \"stopwords\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: Algolia::Search::DictionaryEntry.new(object_id: \"1\", language: \"en\", additional: \"try me\")\n      )\n    ]\n  )\n)"
     },
     "browse": {
       "default": "response = client.browse(\"<YOUR_INDEX_NAME>\")"
@@ -2028,7 +2028,7 @@
       "default": "response = client.delete_api_key(\"myTestApiKey\")"
     },
     "deleteBy": {
-      "default": "response = client.delete_by(\"<YOUR_INDEX_NAME>\", DeleteByParams.new(filters: \"brand:brandName\"))"
+      "default": "response = client.delete_by(\"<YOUR_INDEX_NAME>\", Algolia::Search::DeleteByParams.new(filters: \"brand:brandName\"))"
     },
     "deleteIndex": {
       "default": "response = client.delete_index(\"<YOUR_INDEX_NAME>\")"
@@ -2049,8 +2049,8 @@
       "default": "response = client.delete_synonym(\"<YOUR_INDEX_NAME>\", \"id1\")"
     },
     "generateSecuredApiKey": {
-      "generate secured api key basic": "response = client.generate_secured_api_key(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: [\"Movies\"])\n)",
-      "generate secured api key with searchParams": "response = client.generate_secured_api_key(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  SecuredApiKeyRestrictions.new(\n    valid_until: 2524604400,\n    restrict_indices: [\"Movies\", \"cts_e2e_settings\"],\n    restrict_sources: \"192.168.1.0/24\",\n    filters: \"category:Book OR category:Ebook AND _tags:published\",\n    user_token: \"user123\",\n    search_params: SearchParamsObject.new(\n      query: \"batman\",\n      typo_tolerance: \"strict\",\n      around_radius: \"all\",\n      mode: \"neuralSearch\",\n      hits_per_page: 10,\n      optional_words: [\"one\", \"two\"]\n    )\n  )\n)"
+      "generate secured api key basic": "response = client.generate_secured_api_key(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  Algolia::Search::SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: [\"Movies\"])\n)",
+      "generate secured api key with searchParams": "response = client.generate_secured_api_key(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  Algolia::Search::SecuredApiKeyRestrictions.new(\n    valid_until: 2524604400,\n    restrict_indices: [\"Movies\", \"cts_e2e_settings\"],\n    restrict_sources: \"192.168.1.0/24\",\n    filters: \"category:Book OR category:Ebook AND _tags:published\",\n    user_token: \"user123\",\n    search_params: Algolia::Search::SearchParamsObject.new(\n      query: \"batman\",\n      typo_tolerance: \"strict\",\n      around_radius: \"all\",\n      mode: \"neuralSearch\",\n      hits_per_page: 10,\n      optional_words: [\"one\", \"two\"]\n    )\n  )\n)"
     },
     "getApiKey": {
       "default": "response = client.get_api_key(\"myTestApiKey\")"
@@ -2071,7 +2071,7 @@
       "default": "response = client.get_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\", [\"attr1\", \"attr2\"])"
     },
     "getObjects": {
-      "default": "response = client.get_objects(\n  GetObjectsParams.new(\n    requests: [\n      GetObjectsRequest.new(\n        attributes_to_retrieve: [\"attr1\", \"attr2\"],\n        object_id: \"uniqueID\",\n        index_name: \"<YOUR_INDEX_NAME>\"\n      )\n    ]\n  )\n)"
+      "default": "response = client.get_objects(\n  Algolia::Search::GetObjectsParams.new(\n    requests: [\n      Algolia::Search::GetObjectsRequest.new(\n        attributes_to_retrieve: [\"attr1\", \"attr2\"],\n        object_id: \"uniqueID\",\n        index_name: \"<YOUR_INDEX_NAME>\"\n      )\n    ]\n  )\n)"
     },
     "getRule": {
       "default": "response = client.get_rule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\")"
@@ -2115,12 +2115,12 @@
       "default": "response = client.list_user_ids"
     },
     "multipleBatch": {
-      "default": "response = client.multiple_batch(\n  BatchParams.new(\n    requests: [MultipleBatchRequest.new(action: \"addObject\", body: {key: \"value\"}, index_name: \"<YOUR_INDEX_NAME>\")]\n  )\n)"
+      "default": "response = client.multiple_batch(\n  Algolia::Search::BatchParams.new(\n    requests: [\n      Algolia::Search::MultipleBatchRequest.new(\n        action: \"addObject\",\n        body: {key: \"value\"},\n        index_name: \"<YOUR_INDEX_NAME>\"\n      )\n    ]\n  )\n)"
     },
     "operationIndex": {
-      "scopes": "response = client.operation_index(\n  \"<SOURCE_INDEX_NAME>\",\n  OperationIndexParams.new(operation: \"move\", destination: \"<DESTINATION_INDEX_NAME>\", scope: [\"rules\", \"settings\"])\n)",
-      "copy": "response = client.operation_index(\n  \"<SOURCE_INDEX_NAME>\",\n  OperationIndexParams.new(operation: \"copy\", destination: \"<DESTINATION_INDEX_NAME>\")\n)",
-      "move": "response = client.operation_index(\n  \"<SOURCE_INDEX_NAME>\",\n  OperationIndexParams.new(operation: \"move\", destination: \"<DESTINATION_INDEX_NAME>\")\n)"
+      "scopes": "response = client.operation_index(\n  \"<SOURCE_INDEX_NAME>\",\n  Algolia::Search::OperationIndexParams.new(\n    operation: \"move\",\n    destination: \"<DESTINATION_INDEX_NAME>\",\n    scope: [\"rules\", \"settings\"]\n  )\n)",
+      "copy": "response = client.operation_index(\n  \"<SOURCE_INDEX_NAME>\",\n  Algolia::Search::OperationIndexParams.new(operation: \"copy\", destination: \"<DESTINATION_INDEX_NAME>\")\n)",
+      "move": "response = client.operation_index(\n  \"<SOURCE_INDEX_NAME>\",\n  Algolia::Search::OperationIndexParams.new(operation: \"move\", destination: \"<DESTINATION_INDEX_NAME>\")\n)"
     },
     "partialUpdateObject": {
       "default": "response = client.partial_update_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\", {attributeId: \"new value\"})"
@@ -2136,7 +2136,7 @@
       "default": "response = client.replace_all_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    {objectID: \"1\", name: \"Adam\"},\n    {objectID: \"2\", name: \"Benoit\"},\n    {objectID: \"3\", name: \"Cyril\"},\n    {objectID: \"4\", name: \"David\"},\n    {objectID: \"5\", name: \"Eva\"},\n    {objectID: \"6\", name: \"Fiona\"},\n    {objectID: \"7\", name: \"Gael\"},\n    {objectID: \"8\", name: \"Hugo\"},\n    {objectID: \"9\", name: \"Igor\"},\n    {objectID: \"10\", name: \"Julia\"}\n  ],\n  3\n)"
     },
     "replaceSources": {
-      "default": "response = client.replace_sources([Source.new(source: \"theSource\", description: \"theDescription\")])"
+      "default": "response = client.replace_sources([Algolia::Search::Source.new(source: \"theSource\", description: \"theDescription\")])"
     },
     "restoreApiKey": {
       "default": "response = client.restore_api_key(\"ALGOLIA_API_KEY\")"
@@ -2149,33 +2149,33 @@
       "saveObjects should report errors": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}]\n)"
     },
     "saveRule": {
-      "default": "response = client.save_rule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Rule.new(object_id: \"id1\", conditions: [Condition.new(pattern: \"apple\", anchoring: \"contains\")])\n)"
+      "default": "response = client.save_rule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Algolia::Search::Rule.new(\n    object_id: \"id1\",\n    conditions: [Algolia::Search::Condition.new(pattern: \"apple\", anchoring: \"contains\")]\n  )\n)"
     },
     "saveRules": {
-      "default": "response = client.save_rules(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    Rule.new(object_id: \"a-rule-id\", conditions: [Condition.new(pattern: \"smartphone\", anchoring: \"contains\")]),\n    Rule.new(object_id: \"a-second-rule-id\", conditions: [Condition.new(pattern: \"apple\", anchoring: \"contains\")])\n  ],\n  false,\n  true\n)"
+      "default": "response = client.save_rules(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    Algolia::Search::Rule.new(\n      object_id: \"a-rule-id\",\n      conditions: [Algolia::Search::Condition.new(pattern: \"smartphone\", anchoring: \"contains\")]\n    ),\n    Algolia::Search::Rule.new(\n      object_id: \"a-second-rule-id\",\n      conditions: [Algolia::Search::Condition.new(pattern: \"apple\", anchoring: \"contains\")]\n    )\n  ],\n  false,\n  true\n)"
     },
     "saveSynonym": {
-      "default": "response = client.save_synonym(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  SynonymHit.new(object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n  true\n)"
+      "default": "response = client.save_synonym(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Algolia::Search::SynonymHit.new(object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n  true\n)"
     },
     "saveSynonyms": {
-      "default": "response = client.save_synonyms(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    SynonymHit.new(object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n    SynonymHit.new(object_id: \"id2\", type: \"onewaysynonym\", input: \"iphone\", synonyms: [\"ephone\", \"aphone\", \"yphone\"])\n  ],\n  true,\n  true\n)"
+      "default": "response = client.save_synonyms(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    Algolia::Search::SynonymHit.new(object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n    Algolia::Search::SynonymHit.new(\n      object_id: \"id2\",\n      type: \"onewaysynonym\",\n      input: \"iphone\",\n      synonyms: [\"ephone\", \"aphone\", \"yphone\"]\n    )\n  ],\n  true,\n  true\n)"
     },
     "search": {
-      "withHitsPerPage": "response = client.search(\n  SearchMethodParams.new(\n    requests: [SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", hits_per_page: 50)]\n  )\n)",
-      "filterOnly": "response = client.search(\n  SearchMethodParams.new(\n    requests: [\n      SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", filters: \"actor:Scarlett Johansson\")\n    ]\n  )\n)",
-      "filterOr": "response = client.search(\n  SearchMethodParams.new(\n    requests: [\n      SearchForHits.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        query: \"<YOUR_QUERY>\",\n        filters: \"actor:Tom Cruise OR actor:Scarlett Johansson\"\n      )\n    ]\n  )\n)",
-      "filterNot": "response = client.search(\n  SearchMethodParams.new(\n    requests: [\n      SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", filters: \"NOT actor:Nicolas Cage\")\n    ]\n  )\n)",
-      "retrieveFacets": "response = client.search(\n  SearchMethodParams.new(\n    requests: [SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", facets: [\"author\", \"genre\"])]\n  )\n)",
-      "retrieveFacetsWildcard": "response = client.search(\n  SearchMethodParams.new(\n    requests: [SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", facets: [\"*\"])]\n  )\n)"
+      "withHitsPerPage": "response = client.search(\n  Algolia::Search::SearchMethodParams.new(\n    requests: [\n      Algolia::Search::SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", hits_per_page: 50)\n    ]\n  )\n)",
+      "filterOnly": "response = client.search(\n  Algolia::Search::SearchMethodParams.new(\n    requests: [\n      Algolia::Search::SearchForHits.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        query: \"<YOUR_QUERY>\",\n        filters: \"actor:Scarlett Johansson\"\n      )\n    ]\n  )\n)",
+      "filterOr": "response = client.search(\n  Algolia::Search::SearchMethodParams.new(\n    requests: [\n      Algolia::Search::SearchForHits.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        query: \"<YOUR_QUERY>\",\n        filters: \"actor:Tom Cruise OR actor:Scarlett Johansson\"\n      )\n    ]\n  )\n)",
+      "filterNot": "response = client.search(\n  Algolia::Search::SearchMethodParams.new(\n    requests: [\n      Algolia::Search::SearchForHits.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        query: \"<YOUR_QUERY>\",\n        filters: \"NOT actor:Nicolas Cage\"\n      )\n    ]\n  )\n)",
+      "retrieveFacets": "response = client.search(\n  Algolia::Search::SearchMethodParams.new(\n    requests: [\n      Algolia::Search::SearchForHits.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        query: \"<YOUR_QUERY>\",\n        facets: [\"author\", \"genre\"]\n      )\n    ]\n  )\n)",
+      "retrieveFacetsWildcard": "response = client.search(\n  Algolia::Search::SearchMethodParams.new(\n    requests: [\n      Algolia::Search::SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", facets: [\"*\"])\n    ]\n  )\n)"
     },
     "searchDictionaryEntries": {
-      "default": "response = client.search_dictionary_entries(\"stopwords\", SearchDictionaryEntriesParams.new(query: \"about\"))"
+      "default": "response = client.search_dictionary_entries(\n  \"stopwords\",\n  Algolia::Search::SearchDictionaryEntriesParams.new(query: \"about\")\n)"
     },
     "searchForFacetValues": {
       "default": "response = client.search_for_facet_values(\"<YOUR_INDEX_NAME>\", \"facetName\")"
     },
     "searchRules": {
-      "default": "response = client.search_rules(\"<YOUR_INDEX_NAME>\", SearchRulesParams.new(query: \"zorro\"))"
+      "default": "response = client.search_rules(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchRulesParams.new(query: \"zorro\"))"
     },
     "searchSingleIndex": {
       "default": "response = client.search_single_index(\"<YOUR_INDEX_NAME>\")"
@@ -2184,23 +2184,23 @@
       "default": "response = client.search_synonyms(\"<YOUR_INDEX_NAME>\")"
     },
     "searchUserIds": {
-      "default": "response = client.search_user_ids(\n  SearchUserIdsParams.new(query: \"test\", cluster_name: \"theClusterName\", page: 5, hits_per_page: 10)\n)"
+      "default": "response = client.search_user_ids(\n  Algolia::Search::SearchUserIdsParams.new(query: \"test\", cluster_name: \"theClusterName\", page: 5, hits_per_page: 10)\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "setDictionarySettings": {
-      "default": "response = client.set_dictionary_settings(\n  DictionarySettingsParams.new(\n    disable_standard_entries: StandardEntries.new(plurals: {fr: false, en: false, ru: true})\n  )\n)"
+      "default": "response = client.set_dictionary_settings(\n  Algolia::Search::DictionarySettingsParams.new(\n    disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})\n  )\n)"
     },
     "setSettings": {
-      "default": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  IndexSettings.new(attributes_for_faceting: [\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"])\n)"
+      "default": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(\n    attributes_for_faceting: [\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"]\n  )\n)"
     },
     "updateApiKey": {
-      "default": "response = client.update_api_key(\n  \"ALGOLIA_API_KEY\",\n  ApiKey.new(acl: [\"search\", \"addObject\"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)\n)"
+      "default": "response = client.update_api_key(\n  \"ALGOLIA_API_KEY\",\n  Algolia::Search::ApiKey.new(\n    acl: [\"search\", \"addObject\"],\n    validity: 300,\n    max_queries_per_ip_per_hour: 100,\n    max_hits_per_query: 20\n  )\n)"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "response = client.wait_for_api_key(\"api-key-add-operation-test-ruby\", \"add\")",
-      "wait for api key - update": "response = client.wait_for_api_key(\n  \"api-key-update-operation-test-ruby\",\n  \"update\",\n  ApiKey.new(\n    description: \"my updated api key\",\n    acl: [\"search\", \"addObject\", \"deleteObject\"],\n    indexes: [\"Movies\", \"Books\"],\n    referers: [\"*google.com\", \"*algolia.com\"],\n    validity: 305,\n    max_queries_per_ip_per_hour: 95,\n    max_hits_per_query: 20\n  )\n)",
+      "wait for api key - update": "response = client.wait_for_api_key(\n  \"api-key-update-operation-test-ruby\",\n  \"update\",\n  Algolia::Search::ApiKey.new(\n    description: \"my updated api key\",\n    acl: [\"search\", \"addObject\", \"deleteObject\"],\n    indexes: [\"Movies\", \"Books\"],\n    referers: [\"*google.com\", \"*algolia.com\"],\n    validity: 305,\n    max_queries_per_ip_per_hour: 95,\n    max_hits_per_query: 20\n  )\n)",
       "wait for api key - delete": "response = client.wait_for_api_key(\"api-key-delete-operation-test-ruby\", \"delete\")"
     },
     "waitForAppTask": {

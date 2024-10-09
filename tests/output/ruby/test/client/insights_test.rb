@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientInsightsClient < Test::Unit::TestCase
-  include Algolia::Insights
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::InsightsClient.create(
@@ -68,9 +67,9 @@ class TestClientInsightsClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.push_events_with_http_info(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          ClickedObjectIDsAfterSearch.new(
+          Algolia::Insights::ClickedObjectIDsAfterSearch.new(
             event_type: "click",
             event_name: "Product Clicked",
             index: "products",

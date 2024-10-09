@@ -274,7 +274,7 @@
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "setPersonalizationStrategy": {
-      "default": "response = client.set_personalization_strategy(\n  PersonalizationStrategyParams.new(\n    event_scoring: [EventScoring.new(score: 42, event_name: \"Algolia\", event_type: \"click\")],\n    facet_scoring: [FacetScoring.new(score: 42, facet_name: \"Event\")],\n    personalization_impact: 42\n  )\n)"
+      "default": "response = client.set_personalization_strategy(\n  Algolia::Personalization::PersonalizationStrategyParams.new(\n    event_scoring: [Algolia::Personalization::EventScoring.new(score: 42, event_name: \"Algolia\", event_type: \"click\")],\n    facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: \"Event\")],\n    personalization_impact: 42\n  )\n)"
     },
     "init": {
       "default": "client = Algolia::PersonalizationClient.create(\n  \"ALGOLIA_APPLICATION_ID\",\n  \"ALGOLIA_API_KEY\",\n  \"ALGOLIA_APPLICATION_REGION\"\n)"

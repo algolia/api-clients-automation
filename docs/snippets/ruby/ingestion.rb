@@ -14,10 +14,10 @@ def snippet_for_create_authentication
 
   # Call the API
   response = client.create_authentication(
-    AuthenticationCreate.new(
+    Algolia::Ingestion::AuthenticationCreate.new(
       type: "oauth",
       name: "authName",
-      input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+      input: Algolia::Ingestion::AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
     )
   )
 
@@ -40,10 +40,10 @@ def snippet_for_create_destination
 
   # Call the API
   response = client.create_destination(
-    DestinationCreate.new(
+    Algolia::Ingestion::DestinationCreate.new(
       type: "search",
       name: "destinationName",
-      input: DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+      input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
       authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
   )
@@ -67,10 +67,10 @@ def snippet_for_create_source
 
   # Call the API
   response = client.create_source(
-    SourceCreate.new(
+    Algolia::Ingestion::SourceCreate.new(
       type: "commercetools",
       name: "sourceName",
-      input: SourceCommercetools.new(
+      input: Algolia::Ingestion::SourceCommercetools.new(
         store_keys: ["myStore"],
         locales: ["de"],
         url: "http://commercetools.com",
@@ -99,7 +99,7 @@ def snippet_for_create_task
 
   # Call the API
   response = client.create_task(
-    TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
+    Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
   )
 
   # >LOG
@@ -121,10 +121,10 @@ def snippet_for_create_task_v1
 
   # Call the API
   response = client.create_task_v1(
-    TaskCreateV1.new(
+    Algolia::Ingestion::TaskCreateV1.new(
       source_id: "search",
       destination_id: "destinationName",
-      trigger: OnDemandTriggerInput.new(type: "onDemand"),
+      trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: "onDemand"),
       action: "replace"
     )
   )
@@ -147,7 +147,9 @@ def snippet_for_create_transformation
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
-  response = client.create_transformation(TransformationCreate.new(code: "foo", name: "bar", description: "baz"))
+  response = client.create_transformation(
+    Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+  )
 
   # >LOG
   # use the class directly
@@ -769,11 +771,11 @@ def snippet_for_push_task
   # Call the API
   response = client.push_task(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    PushTaskPayload.new(
+    Algolia::Ingestion::PushTaskPayload.new(
       action: "addObject",
       records: [
-        PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-        PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
       ]
     )
   )
@@ -798,7 +800,7 @@ def snippet_for_run_source
   # Call the API
   response = client.run_source(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    RunSourcePayload.new(
+    Algolia::Ingestion::RunSourcePayload.new(
       index_to_include: ["products_us", "products eu"],
       entity_ids: ["1234", "5678"],
       entity_type: "product"
@@ -864,7 +866,7 @@ def snippet_for_search_authentications
 
   # Call the API
   response = client.search_authentications(
-    AuthenticationSearch.new(
+    Algolia::Ingestion::AuthenticationSearch.new(
       authentication_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
     )
   )
@@ -888,7 +890,7 @@ def snippet_for_search_destinations
 
   # Call the API
   response = client.search_destinations(
-    DestinationSearch.new(
+    Algolia::Ingestion::DestinationSearch.new(
       destination_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
     )
   )
@@ -912,7 +914,9 @@ def snippet_for_search_sources
 
   # Call the API
   response = client.search_sources(
-    SourceSearch.new(source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"])
+    Algolia::Ingestion::SourceSearch.new(
+      source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
+    )
   )
 
   # >LOG
@@ -934,7 +938,7 @@ def snippet_for_search_tasks
 
   # Call the API
   response = client.search_tasks(
-    TaskSearch.new(
+    Algolia::Ingestion::TaskSearch.new(
       task_ids: [
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -962,7 +966,7 @@ def snippet_for_search_tasks_v1
 
   # Call the API
   response = client.search_tasks_v1(
-    TaskSearch.new(
+    Algolia::Ingestion::TaskSearch.new(
       task_ids: [
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -990,7 +994,7 @@ def snippet_for_search_transformations
 
   # Call the API
   response = client.search_transformations(
-    TransformationSearch.new(
+    Algolia::Ingestion::TransformationSearch.new(
       transformation_ids: [
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -1051,7 +1055,9 @@ def snippet_for_try_transformation
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
-  response = client.try_transformation(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
+  response = client.try_transformation(
+    Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+  )
 
   # >LOG
   # use the class directly
@@ -1073,7 +1079,7 @@ def snippet_for_try_transformation_before_update
   # Call the API
   response = client.try_transformation_before_update(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
   )
 
   # >LOG
@@ -1096,7 +1102,7 @@ def snippet_for_update_authentication
   # Call the API
   response = client.update_authentication(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    AuthenticationUpdate.new(name: "newName")
+    Algolia::Ingestion::AuthenticationUpdate.new(name: "newName")
   )
 
   # >LOG
@@ -1117,7 +1123,10 @@ def snippet_for_update_destination
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
-  response = client.update_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", DestinationUpdate.new(name: "newName"))
+  response = client.update_destination(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::DestinationUpdate.new(name: "newName")
+  )
 
   # >LOG
   # use the class directly
@@ -1137,7 +1146,10 @@ def snippet_for_update_source
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
-  response = client.update_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f", SourceUpdate.new(name: "newName"))
+  response = client.update_source(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::SourceUpdate.new(name: "newName")
+  )
 
   # >LOG
   # use the class directly
@@ -1159,7 +1171,7 @@ def snippet_for_update_task
   # Call the API
   response = client.update_task(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    TaskUpdate.new(enabled: false, cron: "* * * * *")
+    Algolia::Ingestion::TaskUpdate.new(enabled: false, cron: "* * * * *")
   )
 
   # >LOG
@@ -1180,7 +1192,10 @@ def snippet_for_update_task_v1
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
-  response = client.update_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdateV1.new(enabled: false))
+  response = client.update_task_v1(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::TaskUpdateV1.new(enabled: false)
+  )
 
   # >LOG
   # use the class directly
@@ -1202,7 +1217,7 @@ def snippet_for_update_transformation
   # Call the API
   response = client.update_transformation(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+    Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
   )
 
   # >LOG
@@ -1224,10 +1239,10 @@ def snippet_for_validate_source
 
   # Call the API
   response = client.validate_source(
-    SourceCreate.new(
+    Algolia::Ingestion::SourceCreate.new(
       type: "commercetools",
       name: "sourceName",
-      input: SourceCommercetools.new(
+      input: Algolia::Ingestion::SourceCommercetools.new(
         store_keys: ["myStore"],
         locales: ["de"],
         url: "http://commercetools.com",
@@ -1257,7 +1272,7 @@ def snippet_for_validate_source_before_update
   # Call the API
   response = client.validate_source_before_update(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    SourceUpdate.new(name: "newName")
+    Algolia::Ingestion::SourceUpdate.new(name: "newName")
   )
 
   # >LOG

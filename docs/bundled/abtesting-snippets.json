@@ -292,7 +292,7 @@
       "default": "require \"algolia\""
     },
     "addABTests": {
-      "default": "response = client.add_ab_tests(\n  AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    variants: [\n      AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+      "default": "response = client.add_ab_tests(\n  Algolia::Abtesting::AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    variants: [\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
     },
     "customDelete": {
       "default": "response = client.custom_delete(\"test/minimal\")"
@@ -316,7 +316,7 @@
       "default": "response = client.list_ab_tests"
     },
     "scheduleABTest": {
-      "default": "response = client.schedule_ab_test(\n  ScheduleABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    scheduled_at: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    variants: [\n      AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+      "default": "response = client.schedule_ab_test(\n  Algolia::Abtesting::ScheduleABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    scheduled_at: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    variants: [\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"

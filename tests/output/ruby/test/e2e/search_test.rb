@@ -8,7 +8,6 @@ require_relative "../helpers"
 Dotenv.load("../../.env")
 
 class TestSearchClientE2E < Test::Unit::TestCase
-  include Algolia::Search
   def setup
     @client = Algolia::SearchClient.create(
       ENV.fetch("ALGOLIA_APPLICATION_ID", nil),
@@ -67,12 +66,16 @@ class TestSearchClientE2E < Test::Unit::TestCase
   # search for a single hits request with minimal parameters
   def test_search4
     res = @client.search_with_http_info(
-      SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")])
+      Algolia::Search::SearchMethodParams.new(
+        requests: [Algolia::Search::SearchForHits.new(index_name: "cts_e2e_search_empty_index")]
+      )
     )
 
     assert_equal(res.status, 200)
     res = @client.search(
-      SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")])
+      Algolia::Search::SearchMethodParams.new(
+        requests: [Algolia::Search::SearchForHits.new(index_name: "cts_e2e_search_empty_index")]
+      )
     )
     expected_body = JSON.parse(
       "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}"
@@ -83,9 +86,9 @@ class TestSearchClientE2E < Test::Unit::TestCase
   # search with highlight and snippet results
   def test_search5
     res = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_highlight_snippet_results",
             query: "vim",
             attributes_to_snippet: ["*:20"],
@@ -98,9 +101,9 @@ class TestSearchClientE2E < Test::Unit::TestCase
 
     assert_equal(res.status, 200)
     res = @client.search(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_highlight_snippet_results",
             query: "vim",
             attributes_to_snippet: ["*:20"],
@@ -119,16 +122,20 @@ class TestSearchClientE2E < Test::Unit::TestCase
   # search for a single facet request with minimal parameters
   def test_search8
     res = @client.search_with_http_info(
-      SearchMethodParams.new(
-        requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")],
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")
+        ],
         strategy: "stopIfEnoughMatches"
       )
     )
 
     assert_equal(res.status, 200)
     res = @client.search(
-      SearchMethodParams.new(
-        requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")],
+      Algolia::Search::SearchMethodParams.new(
+        requests: [
+          Algolia::Search::SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")
+        ],
         strategy: "stopIfEnoughMatches"
       )
     )
@@ -141,18 +148,21 @@ class TestSearchClientE2E < Test::Unit::TestCase
   # search filters end to end
   def test_search14
     res = @client.search_with_http_info(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(index_name: "cts_e2e_search_facet", filters: "editor:'visual studio' OR editor:neovim"),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            filters: "editor:'visual studio' OR editor:neovim"
+          ),
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", "editor:neovim"]
           ),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", ["editor:neovim"]]
           ),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", ["editor:neovim", ["editor:goland"]]]
           )
@@ -162,18 +172,21 @@ class TestSearchClientE2E < Test::Unit::TestCase
 
     assert_equal(res.status, 200)
     res = @client.search(
-      SearchMethodParams.new(
+      Algolia::Search::SearchMethodParams.new(
         requests: [
-          SearchForHits.new(index_name: "cts_e2e_search_facet", filters: "editor:'visual studio' OR editor:neovim"),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            filters: "editor:'visual studio' OR editor:neovim"
+          ),
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", "editor:neovim"]
           ),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", ["editor:neovim"]]
           ),
-          SearchForHits.new(
+          Algolia::Search::SearchForHits.new(
             index_name: "cts_e2e_search_facet",
             facet_filters: ["editor:'visual studio'", ["editor:neovim", ["editor:goland"]]]
           )
@@ -190,11 +203,14 @@ class TestSearchClientE2E < Test::Unit::TestCase
   def test_search_dictionary_entries
     res = @client.search_dictionary_entries_with_http_info(
       "stopwords",
-      SearchDictionaryEntriesParams.new(query: "about")
+      Algolia::Search::SearchDictionaryEntriesParams.new(query: "about")
     )
 
     assert_equal(res.status, 200)
-    res = @client.search_dictionary_entries("stopwords", SearchDictionaryEntriesParams.new(query: "about"))
+    res = @client.search_dictionary_entries(
+      "stopwords",
+      Algolia::Search::SearchDictionaryEntriesParams.new(query: "about")
+    )
     expected_body = JSON.parse(
       "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}"
     )
@@ -203,10 +219,10 @@ class TestSearchClientE2E < Test::Unit::TestCase
 
   # searchRules
   def test_search_rules
-    res = @client.search_rules_with_http_info("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
+    res = @client.search_rules_with_http_info("cts_e2e_browse", Algolia::Search::SearchRulesParams.new(query: "zorro"))
 
     assert_equal(res.status, 200)
-    res = @client.search_rules("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
+    res = @client.search_rules("cts_e2e_browse", Algolia::Search::SearchRulesParams.new(query: "zorro"))
     expected_body = JSON.parse(
       "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"\u00C6on Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}"
     )
@@ -224,7 +240,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
   def test_search_single_index3
     res = @client.search_single_index_with_http_info(
       "cts_e2e_browse",
-      SearchParamsObject.new(
+      Algolia::Search::SearchParamsObject.new(
         query: "batman mask of the phantasm",
         attributes_to_retrieve: ["*"],
         attributes_to_snippet: ["*:20"]
@@ -234,7 +250,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(res.status, 200)
     res = @client.search_single_index(
       "cts_e2e_browse",
-      SearchParamsObject.new(
+      Algolia::Search::SearchParamsObject.new(
         query: "batman mask of the phantasm",
         attributes_to_retrieve: ["*"],
         attributes_to_snippet: ["*:20"]
@@ -248,7 +264,11 @@ class TestSearchClientE2E < Test::Unit::TestCase
 
   # setSettings with minimal parameters
   def test_set_settings1
-    res = @client.set_settings_with_http_info("cts_e2e_settings", IndexSettings.new(pagination_limited_to: 10), true)
+    res = @client.set_settings_with_http_info(
+      "cts_e2e_settings",
+      Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+      true
+    )
 
     assert_equal(res.status, 200)
   end

@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestInsightsClient < Test::Unit::TestCase
-  include Algolia::Insights
   def setup
     @client = Algolia::InsightsClient.create(
       "APP_ID",
@@ -298,9 +297,9 @@ class TestInsightsClient < Test::Unit::TestCase
   # pushEvents
   def test_push_events
     req = @client.push_events_with_http_info(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          ClickedObjectIDsAfterSearch.new(
+          Algolia::Insights::ClickedObjectIDsAfterSearch.new(
             event_type: "click",
             event_name: "Product Clicked",
             index: "products",
@@ -330,9 +329,9 @@ class TestInsightsClient < Test::Unit::TestCase
   # Many events type
   def test_push_events1
     req = @client.push_events_with_http_info(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          ConvertedObjectIDsAfterSearch.new(
+          Algolia::Insights::ConvertedObjectIDsAfterSearch.new(
             event_type: "conversion",
             event_name: "Product Purchased",
             index: "products",
@@ -342,7 +341,7 @@ class TestInsightsClient < Test::Unit::TestCase
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
-          ViewedObjectIDs.new(
+          Algolia::Insights::ViewedObjectIDs.new(
             event_type: "view",
             event_name: "Product Detail Page Viewed",
             index: "products",
@@ -370,9 +369,9 @@ class TestInsightsClient < Test::Unit::TestCase
   # ConvertedObjectIDsAfterSearch
   def test_push_events2
     req = @client.push_events_with_http_info(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          ConvertedObjectIDsAfterSearch.new(
+          Algolia::Insights::ConvertedObjectIDsAfterSearch.new(
             event_type: "conversion",
             event_name: "Product Purchased",
             index: "products",
@@ -401,9 +400,9 @@ class TestInsightsClient < Test::Unit::TestCase
   # ViewedObjectIDs
   def test_push_events3
     req = @client.push_events_with_http_info(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          ViewedObjectIDs.new(
+          Algolia::Insights::ViewedObjectIDs.new(
             event_type: "view",
             event_name: "Product Detail Page Viewed",
             index: "products",
@@ -431,9 +430,9 @@ class TestInsightsClient < Test::Unit::TestCase
   # AddedToCartObjectIDs
   def test_push_events4
     req = @client.push_events_with_http_info(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          AddedToCartObjectIDsAfterSearch.new(
+          Algolia::Insights::AddedToCartObjectIDsAfterSearch.new(
             event_type: "conversion",
             event_subtype: "addToCart",
             event_name: "Product Added To Cart",
@@ -444,8 +443,8 @@ class TestInsightsClient < Test::Unit::TestCase
             timestamp: 1641290601962,
             object_ids: ["9780545139700", "9780439784542"],
             object_data: [
-              ObjectDataAfterSearch.new(price: 19.99, quantity: 10, discount: 2.5),
-              ObjectDataAfterSearch.new(price: "8$", quantity: 7, discount: "30%")
+              Algolia::Insights::ObjectDataAfterSearch.new(price: 19.99, quantity: 10, discount: 2.5),
+              Algolia::Insights::ObjectDataAfterSearch.new(price: "8$", quantity: 7, discount: "30%")
             ],
             currency: "USD"
           )

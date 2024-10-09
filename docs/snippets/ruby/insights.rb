@@ -108,9 +108,9 @@ def snippet_for_push_events
 
   # Call the API
   response = client.push_events(
-    InsightsEvents.new(
+    Algolia::Insights::InsightsEvents.new(
       events: [
-        ClickedObjectIDsAfterSearch.new(
+        Algolia::Insights::ClickedObjectIDsAfterSearch.new(
           event_type: "click",
           event_name: "Product Clicked",
           index: "products",

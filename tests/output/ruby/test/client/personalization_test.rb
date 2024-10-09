@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientPersonalizationClient < Test::Unit::TestCase
-  include Algolia::Personalization
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::PersonalizationClient.create(
