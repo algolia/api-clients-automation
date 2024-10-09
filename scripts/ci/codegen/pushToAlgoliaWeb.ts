@@ -1,13 +1,14 @@
 import fsp from 'fs/promises';
-
 import { resolve } from 'path';
 
 import {
   configureGitHubAuthor,
   ensureGitHubToken,
+  exists,
   getOctokit,
   gitBranchExists,
   gitCommit,
+  LANGUAGES,
   OWNER,
   run,
   setVerbose,
@@ -15,37 +16,41 @@ import {
 } from '../../common.js';
 import { getNbGitDiff } from '../utils.js';
 
+import {} from 'fs';
+import { getClientsConfigField } from '../../config.js';
 import { commitStartRelease } from './text.js';
 
-const languageFiles = {
-  csharp: 'guides/csharp/src/saveObjectsMovies.cs',
-  go: 'guides/go/src/saveObjectsMovies.go',
-  java: 'guides/java/src/test/java/com/algolia/saveObjectsMovies.java',
-  javascript: 'guides/javascript/src/saveObjectsMovies.ts',
-  kotlin: 'guides/kotlin/src/main/kotlin/com/algolia/snippets/saveObjectsMovies.kt',
-  php: 'guides/php/src/saveObjectsMovies.php',
-  python: 'guides/python/saveObjectsMovies.py',
-  ruby: 'guides/ruby/saveObjectsMovies.rb',
-  scala: 'guides/scala/src/main/scala/saveObjectsMovies.scala',
-  swift: 'guides/swift/Sources/saveObjectsMovies.swift',
-};
-const generateJSON = async (outputFile: string): Promise<void> => {
-  const filesPromises = Object.entries(languageFiles).map(async (p) => {
-    const snippet = await fsp.readFile(toAbsolutePath(p[1]), 'utf-8');
+async function generateJSON(outputFile: string): Promise<void> {
+  const guides = {};
+  for (const language of LANGUAGES) {
+    if (!(await exists(toAbsolutePath(`docs/guides/${language}`)))) {
+      continue;
+    }
 
-    return [
-      [p[0]],
-      snippet
+    const pathToGuides = toAbsolutePath(
+      `docs/guides/${language}/${getClientsConfigField(language, ['snippets', 'outputFolder'])}`,
+    );
+    const files = await fsp.readdir(pathToGuides);
+    for (const file of files) {
+      const extension = getClientsConfigField(language, ['snippets', 'extension']);
+      if (!file.endsWith(extension)) {
+        continue;
+      }
+
+      const guideName = file.replaceAll(extension, '');
+      if (!guides[guideName]) {
+        guides[guideName] = {};
+      }
+
+      guides[guideName][language] = (await fsp.readFile(`${pathToGuides}/${file}`, 'utf-8'))
         .replace('ALGOLIA_APPLICATION_ID', 'YourApplicationID')
         .replace('ALGOLIA_API_KEY', 'YourWriteAPIKey')
-        .replace('<YOUR_INDEX_NAME>', 'movies_index'),
-    ];
-  });
+        .replace('<YOUR_INDEX_NAME>', 'movies_index');
+    }
+  }
 
-  const files = await Promise.all(filesPromises);
-
-  await fsp.writeFile(outputFile, JSON.stringify(Object.fromEntries(files), null, 2));
-};
+  await fsp.writeFile(outputFile, JSON.stringify(guides, null, 2));
+}
 
 async function pushToAlgoliaWeb(): Promise<void> {
   const githubToken = ensureGitHubToken();
@@ -62,22 +67,24 @@ async function pushToAlgoliaWeb(): Promise<void> {
     return;
   }
 
-  console.log(`Pushing to ${OWNER}/${repository}`);
-
   const targetBranch = 'feat/automated-update-from-api-clients-automation-repository';
   const githubURL = `https://${githubToken}:${githubToken}@github.com/${OWNER}/${repository}`;
   const tempGitDir = resolve(process.env.RUNNER_TEMP! || toAbsolutePath('foo/local/test'), repository);
   await fsp.rm(tempGitDir, { force: true, recursive: true });
   await run(`git clone --depth 1 ${githubURL} ${tempGitDir}`);
+
+  const outputFile = toAbsolutePath(`${tempGitDir}/_client/src/routes/launchpad/onboarding-snippets.json`);
+
+  console.log(`Generating JSON output file from guides at path ${outputFile}`);
+
+  await generateJSON(outputFile);
+
+  console.log(`Pushing to ${OWNER}/${repository}`);
   if (await gitBranchExists(targetBranch, tempGitDir)) {
     await run(`git fetch origin ${targetBranch}`, { cwd: tempGitDir });
     await run(`git push -d origin ${targetBranch}`, { cwd: tempGitDir });
   }
   await run(`git checkout -B ${targetBranch}`, { cwd: tempGitDir });
-
-  const pathToSnippets = toAbsolutePath(`${tempGitDir}/_client/src/routes/launchpad/onboarding-snippets.json`);
-
-  await generateJSON(pathToSnippets);
 
   if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
     console.log('❎ Skipping push to AlgoliaWeb because there is no change.');
