@@ -1535,7 +1535,7 @@ components:
       required: true
       schema:
         type: string
-        example: YourIndexName
+        example: ALGOLIA_INDEX_NAME
     ClickAnalytics:
       in: query
       name: clickAnalytics

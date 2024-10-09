@@ -63,11 +63,11 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       testsGenerators.add(new TestsClient(ctsManager, true));
       testsGenerators.add(new TestsClient(ctsManager, false));
     } else if (mode.equals("snippets")) {
-      ctsManager.addSnippetsSupportingFiles(supportingFiles, mode);
+      ctsManager.addSnippetsSupportingFiles(supportingFiles, "docs/" + mode);
 
       testsGenerators.add(new SnippetsGenerator(ctsManager));
     } else if (mode.equals("guides")) {
-      ctsManager.addSnippetsSupportingFiles(supportingFiles, mode);
+      ctsManager.addSnippetsSupportingFiles(supportingFiles, "docs/" + mode);
 
       testsGenerators.add(new GuidesGenerator(ctsManager));
     } else {

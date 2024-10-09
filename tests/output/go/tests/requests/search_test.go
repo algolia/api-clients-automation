@@ -1015,6 +1015,17 @@ func TestSearch_GetObject(t *testing.T) {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
+	t.Run("search with a real object", func(t *testing.T) {
+		_, err := client.GetObject(client.NewApiGetObjectRequest(
+			"cts_e2e_browse", "Batman and Robin",
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/cts_e2e_browse/Batman%20and%20Robin", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
 }
 
 func TestSearch_GetObjects(t *testing.T) {

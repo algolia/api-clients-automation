@@ -1126,6 +1126,21 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_object_1(self):
+        """
+        search with a real object
+        """
+        _req = await self._client.get_object_with_http_info(
+            index_name="cts_e2e_browse",
+            object_id="Batman and Robin",
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_browse/Batman%20and%20Robin"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_objects_(self):
         """
         getObjects
@@ -4319,6 +4334,21 @@ class TestSearchClientSync:
             _req.query_parameters.items()
             == {"attributesToRetrieve": "attr1%2Cattr2"}.items()
         )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_object_1(self):
+        """
+        search with a real object
+        """
+        _req = self._client.get_object_with_http_info(
+            index_name="cts_e2e_browse",
+            object_id="Batman and Robin",
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_browse/Batman%20and%20Robin"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 

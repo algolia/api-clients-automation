@@ -1231,6 +1231,24 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('search with a real object')]
+    public function testGetObject1(): void
+    {
+        $client = $this->getClient();
+        $client->getObject(
+            'cts_e2e_browse',
+            'Batman and Robin',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/cts_e2e_browse/Batman%20and%20Robin',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('getObjects')]
     public function testGetObjects(): void
     {
