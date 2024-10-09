@@ -25,7 +25,6 @@ generateSecuredApiKey: ({
     .sort()
     .reduce(
       (acc, key) => {
-        // eslint-disable-next-line no-param-reassign
         acc[key] = (mergedRestrictions as any)[key];
         return acc;
       },

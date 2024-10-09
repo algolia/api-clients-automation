@@ -5,7 +5,6 @@ import { CI, isVerbose } from './common.js';
 class SpinnerStatic {
   private maybeText(text?: string): void {
     if (text !== undefined) {
-      // eslint-disable-next-line no-console
       console.log(text);
     }
   }

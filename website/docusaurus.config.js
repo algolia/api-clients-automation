@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/no-commonjs */
 const remarkSmartypants = require('remark-smartypants');
 
 /** @type {import('@docusaurus/types').Config} */
@@ -23,8 +21,7 @@ const remarkSmartypants = require('remark-smartypants');
           docs: {
             path: 'docs',
             sidebarPath: 'sidebars.js',
-            editUrl:
-              'https://github.com/algolia/api-clients-automation/edit/main/website/',
+            editUrl: 'https://github.com/algolia/api-clients-automation/edit/main/website/',
             showLastUpdateAuthor: true,
             showLastUpdateTime: true,
             remarkPlugins: [[remarkSmartypants, { dashes: 'oldschool' }]],

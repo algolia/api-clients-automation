@@ -703,7 +703,7 @@ public class ParametersWithDataType {
 
     for (CodegenModel oneOf : model.interfaceModels) {
       // Somehow the dataType can be in lower case?
-      if (oneOf.dataType.toLowerCase().equals(paramType.toLowerCase())) {
+      if (oneOf.dataType.equalsIgnoreCase(paramType)) {
         return oneOf;
       }
     }
