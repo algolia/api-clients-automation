@@ -3,8 +3,8 @@ name: Push snippets to AlgoliaWeb
 on: workflow_dispatch
 
 jobs:
-  release:
-    name: Scheduled Release
+  push:
+    name: Manual trigger push for onboarding guides
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
