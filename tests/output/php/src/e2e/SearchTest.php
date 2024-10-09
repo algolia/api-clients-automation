@@ -37,6 +37,20 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('search with a real object')]
+    public function testGetObject1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->getObject(
+            'cts_e2e_browse',
+            'Batman and Robin',
+        );
+
+        $expected = json_decode('{"objectID":"Batman and Robin","title":"Batman and Robin","year":1949,"cast":["Robert Lowery","Johnny Duncan","Jane Adams"]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('getRule')]
     public function testGetRule(): void
     {

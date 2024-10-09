@@ -225,7 +225,7 @@ module {{moduleName}}
     # @return [{{{returnType}}}{{^returnType}}nil{{/returnType}}]
     def {{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{^required}}{{paramName}}=nil, {{/required}}{{/allParams}}request_options = {})
       {{#returnType}}response = {{/returnType}}{{operationId}}_with_http_info({{#allParams}}{{paramName}}, {{/allParams}}request_options)
-      {{#returnType}}@api_client.deserialize(response.body, request_options[:debug_return_type]{{#vendorExtensions}}{{#returnProperty}} || '{{#isArray}}Array<{{{modelModule}}}::{{complexType}}>{{/isArray}}{{^isArray}}{{^x-is-custom-request}}{{{modelModule}}}::{{/x-is-custom-request}}{{{dataType}}}{{/isArray}}'{{/returnProperty}}{{/vendorExtensions}}){{/returnType}}{{^returnType}}nil{{/returnType}}
+      {{#returnType}}@api_client.deserialize(response.body, request_options[:debug_return_type]{{#vendorExtensions}}{{#returnProperty}} || '{{#isArray}}Array<{{{modelModule}}}::{{complexType}}>{{/isArray}}{{^isArray}}{{^isPrimitiveType}}{{^isMap}}{{{modelModule}}}::{{/isMap}}{{/isPrimitiveType}}{{{dataType}}}{{/isArray}}'{{/returnProperty}}{{/vendorExtensions}}){{/returnType}}{{^returnType}}nil{{/returnType}}
     end
 {{^-last}}
 

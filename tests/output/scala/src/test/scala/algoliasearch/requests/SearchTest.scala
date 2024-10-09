@@ -1255,6 +1255,21 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("search with a real object1") {
+    val (client, echo) = testClient()
+    val future = client.getObject(
+      indexName = "cts_e2e_browse",
+      objectID = "Batman and Robin"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/cts_e2e_browse/Batman%20and%20Robin")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getObjects") {
     val (client, echo) = testClient()
     val future = client.getObjects(
