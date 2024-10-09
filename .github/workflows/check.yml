@@ -222,7 +222,7 @@ jobs:
         run: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).buildCommand }}
 
       - name: Build the playground
-        run: yarn cli build playground javascript
+        run: yarn cli build playground javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Run common and requester tests
         run: cd clients/algoliasearch-client-javascript && yarn test ${{ !contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun, 'algoliasearch') && '--ignore algoliasearch' || '' }}
@@ -279,13 +279,13 @@ jobs:
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
       
       - name: Build the snippets to check validity
-        run: yarn cli build snippets javascript
+        run: yarn cli build snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Generate code guides
         run: yarn cli guides javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Build the guides to check validity
-        run: yarn cli build guides javascript
+        run: yarn cli build guides javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Zip artifact before storing
         run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
@@ -689,7 +689,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
-      - name: Push generation to the Algolia docs
+      - name: Push specs and snippets to algolia/doc
         run: yarn workspace scripts pushToAlgoliaDoc
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Push guides to algolia/AlgoliaWeb
+        run: yarn workspace scripts pushToAlgoliaWeb
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}

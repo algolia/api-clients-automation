@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 
-import { run, toAbsolutePath } from './common.js';
+import { createClientName, run, toAbsolutePath } from './common.js';
 import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
@@ -26,6 +26,10 @@ function getFolder(buildType: BuildType, language: Language): string {
  * Build code for a specific language.
  */
 async function buildLanguage(language: Language, gens: Generator[], buildType: BuildType): Promise<void> {
+  if (!gens || gens.length === 0) {
+    return;
+  }
+
   const cwd = getFolder(buildType, language);
   const spinner = createSpinner(`building ${buildType} for '${language}'`);
   switch (language) {
@@ -48,11 +52,22 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
           packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
         );
         await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd, language });
-      } else if (buildType === 'playground') {
-        await run('yarn build', { cwd: `${cwd}/node`, language });
-      } else {
-        await run('yarn tsc --noEmit', { cwd, language });
+        break;
       }
+
+      let fileNames = '';
+
+      if (buildType !== 'guides') {
+        fileNames = gens.reduce((prev, curr) => `${prev} ${createClientName(curr.client, curr.language)}.ts`, '');
+      } else if (!fileNames.includes('search')) {
+        // only search is needed for guides right now, if it's not being built, no need to validate guides
+        break;
+      }
+
+      await run(`yarn tsc ${fileNames} --noEmit`, {
+        cwd: buildType === 'playground' ? `${cwd}/node` : `${cwd}/src`,
+        language,
+      });
 
       break;
     case 'java':
@@ -89,10 +104,15 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
   spinner.succeed();
 }
 
-export async function buildClients(generators: Generator[]): Promise<void> {
+export async function buildLanguages(generators: Generator[], scope: BuildType): Promise<void> {
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const generatorsMap = generators.reduce(
     (map, gen) => {
+      // TODO: remove this when guides are mandatory and implemented in every clients
+      if (scope === 'guides' && !existsSync(toAbsolutePath(`docs/guides/${gen.language}`))) {
+        return map;
+      }
+
       if (!(gen.language in map)) {
         map[gen.language] = [];
       }
@@ -104,25 +124,5 @@ export async function buildClients(generators: Generator[]): Promise<void> {
     {} as Record<Language, Generator[]>,
   );
 
-  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], 'client')));
-}
-
-export async function buildPlaygrounds(languages: Language[]): Promise<void> {
-  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'playground')));
-}
-
-export async function buildSnippets(languages: Language[]): Promise<void> {
-  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'snippets')));
-}
-
-export async function buildGuides(languages: Language[]): Promise<void> {
-  await Promise.all(
-    languages.map((lang) => {
-      if (!existsSync(toAbsolutePath(`docs/guides/${lang}`))) {
-        return Promise.resolve();
-      }
-
-      return buildLanguage(lang, [], 'guides');
-    }),
-  );
+  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], scope)));
 }

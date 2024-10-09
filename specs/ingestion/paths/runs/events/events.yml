@@ -2,7 +2,7 @@ get:
   tags:
     - observability
   summary: List task run events
-  description: Retrieves a list of events for a task run, identified by it's ID.
+  description: Retrieves a list of events for a task run, identified by its ID.
   operationId: listEvents
   x-acl:
     - addObject
