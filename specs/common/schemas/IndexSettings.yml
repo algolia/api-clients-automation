@@ -1036,9 +1036,8 @@ banners:
   description: banners defined in the merchandising studio for the given search.
   type: array
   additionalProperties: false
-  properties:
-    banners:
-      $ref: '#/banner'
+  items:
+    $ref: '#/banner'
 
 banner:
   description: a search banner with image and url.
@@ -1064,13 +1063,15 @@ bannerImage:
   additionalProperties: false
   properties:
     urls:
-      $ref: '#/bannerImageUrl'
+      type: array
+      items:
+        $ref: '#/bannerImageUrl'
     title:
       type: string
 
 bannerImageUrl:
   description: url for a search banner image.
-  type: array
+  type: object
   additionalProperties: false
   properties:
     url:
