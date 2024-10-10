@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { setOutput } from '@actions/core';
 
 import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.js';

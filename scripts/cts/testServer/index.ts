@@ -57,14 +57,12 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
 
   // 404 handler
   app.use((req, res) => {
-    // eslint-disable-next-line no-console
     console.error('endpoint not implemented for', req.method, req.url);
     res.status(404).json({ message: 'not found' });
   });
 
   // catch all error handler
   app.use((err, _req, res, _) => {
-    // eslint-disable-next-line no-console
     console.error(err.message);
     res.status(500).send({ message: err.message });
   });

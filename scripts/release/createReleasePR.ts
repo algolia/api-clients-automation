@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import path from 'path';
 
 import chalk from 'chalk';
@@ -291,7 +290,6 @@ async function getCommits(force?: boolean): Promise<{
       chalk.black.bgYellow('[INFO]'),
       'Skipping release because no valid commit has been added since `released` tag.',
     );
-    // eslint-disable-next-line no-process-exit
     process.exit(0);
   }
 

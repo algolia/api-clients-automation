@@ -16,21 +16,19 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
-  private String CLIENT;
-
   @Override
   public String getName() {
     return "algolia-csharp";
   }
 
-  public String getClientName(String client) {
+  public static String getClientName(String client) {
     return Helpers.createClientName(client, "csharp");
   }
 
   @Override
   public void processOpts() {
     String version = Helpers.getClientConfigField("csharp", "packageVersion");
-    CLIENT = (String) additionalProperties.get("client");
+    String client = (String) additionalProperties.get("client");
 
     setLibrary("httpclient");
 
@@ -45,8 +43,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     additionalProperties.put("sourceFolder", "");
     additionalProperties.put("netCoreProjectFile", true);
     additionalProperties.put("targetFramework", "netstandard2.1;netstandard2.0");
-    additionalProperties.put("isSearchClient", CLIENT.equals("search"));
-    additionalProperties.put("apiPackageName", getClientName(CLIENT));
+    additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("apiPackageName", getClientName(client));
     additionalProperties.put("equatable", false);
     additionalProperties.put("disallowAdditionalPropertiesIfNotPresent", true);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
@@ -58,7 +56,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
     setApiNameSuffix(Helpers.API_SUFFIX);
 
-    String packageName = getClientName(CLIENT);
+    String packageName = getClientName(client);
     setPackageName("");
     setApiPackage("Clients");
     setModelPackage("Models/" + packageName);
