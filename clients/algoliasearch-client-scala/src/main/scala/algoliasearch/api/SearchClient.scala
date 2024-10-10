@@ -335,6 +335,7 @@ class SearchClient(
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/browse")
       .withBody(browseParams)
+      .withRead(true)
       .build()
     execute[BrowseResponse](request, requestOptions)
   }

@@ -678,6 +678,7 @@ public class SearchClient extends ApiClient {
       .setPath("/1/indexes/{indexName}/browse", indexName)
       .setMethod("POST")
       .setBody(browseParams)
+      .setRead(true)
       .build();
     return executeAsync(request, requestOptions, BrowseResponse.class, innerType);
   }

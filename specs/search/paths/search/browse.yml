@@ -2,6 +2,7 @@ post:
   tags:
     - Search
   operationId: browse
+  x-use-read-transporter: true
   x-acl:
     - browse
   summary: Browse for records

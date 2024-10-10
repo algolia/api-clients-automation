@@ -374,6 +374,7 @@ final class SearchClient implements ApiClient {
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/browse'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
+      isRead: true,
       body: browseParams?.toJson(),
     );
     final response = await _retryStrategy.execute(
