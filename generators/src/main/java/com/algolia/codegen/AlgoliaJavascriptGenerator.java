@@ -148,8 +148,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   private void setDefaultGeneratorOptions() {
     String clientName = CLIENT + Helpers.API_SUFFIX;
     String packageName = getPackageName((String) additionalProperties.get("client"));
-    List<String> clientList = Helpers.getClientListForLanguage("javascript");
-    clientList.removeIf(c -> c.equals("algoliasearch"));
 
     additionalProperties.put("apiName", CLIENT);
     additionalProperties.put("clientName", clientName);
@@ -157,7 +155,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
-    additionalProperties.put("isAvailableInAlgoliasearch", clientList.contains(CLIENT));
+    additionalProperties.put("isAvailableInAlgoliasearch", !CLIENT.equals("algoliasearch"));
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
     additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);
@@ -168,14 +166,18 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       List<Map<String, Object>> packages = Helpers.getClientConfigList("javascript", "clients");
       for (Map<String, Object> pkg : packages) {
         String name = ((String) pkg.get("output")).replace("clients/algoliasearch-client-javascript/packages/", "");
-        if (name.equals("algoliasearch")) {
+        if (name.contains("search")) {
           continue;
         }
 
         var dependency = new HashMap<String, Object>();
-        dependency.put("name", name);
-        dependency.put("package", "@algolia/" + name);
-        dependency.put("version", Helpers.getPackageJsonVersion(name));
+        dependency.put("dependencyName", Helpers.createClientName((String) pkg.get("name"), "javascript"));
+        dependency.put("dependencyPackage", "@algolia/" + name);
+        dependency.put("dependencyVersion", Helpers.getPackageJsonVersion(name));
+        dependency.put(
+          "dependencyHasRegionalHosts",
+          !name.contains("search") && !name.contains("recommend") && !name.contains("monitoring")
+        );
 
         dependencies.add(dependency);
       }

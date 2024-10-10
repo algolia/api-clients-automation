@@ -1,30 +1,28 @@
 // {{{generationBanner}}}
 
 import type { ClientOptions } from '@algolia/client-common';
-import type { AbtestingClient, Region as AbtestingRegion } from "@algolia/client-abtesting"
-import type { AnalyticsClient, Region as AnalyticsRegion } from "@algolia/client-analytics"
-import type { PersonalizationClient, Region as PersonalizationRegion } from "@algolia/client-personalization"
-import type { RecommendClient } from "@algolia/recommend"
-import type { SearchClient } from "@algolia/client-search"
 
-import { abtestingClient } from '@algolia/client-abtesting';
-import { analyticsClient } from '@algolia/client-analytics';
-import { personalizationClient } from '@algolia/client-personalization';
-import { searchClient } from '@algolia/client-search';
-import { recommendClient } from '@algolia/recommend';
+{{#dependencies}}
+import { {{{dependencyName}}}Client } from '{{{dependencyPackage}}}';
+import type { {{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}Client } from '{{{dependencyPackage}}}';
+{{/dependencies}}
 
 import type {
   InitClientOptions,
-  InitClientRegion,
+  {{#dependencies}}
+  {{#dependencyHasRegionalHosts}}
+  {{#lambda.titlecase}}{{{dependencyName}}}Region{{/lambda.titlecase}},
+  {{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}},
+  {{/dependencyHasRegionalHosts}}
+  {{/dependencies}}
 } from './models';
 
 export * from './models';
 
 export type Algoliasearch = SearchClient & {
-    initRecommend: (initOptions?: InitClientOptions)=> RecommendClient;
-    initAnalytics: (initOptions?: InitClientOptions & InitClientRegion<AnalyticsRegion>)=> AnalyticsClient;
-    initAbtesting: (initOptions?: InitClientOptions & InitClientRegion<AbtestingRegion>)=> AbtestingClient;
-    initPersonalization: (initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>)=> PersonalizationClient;
+    {{#dependencies}}
+    init{{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}: (initOptions: InitClientOptions {{#dependencyHasRegionalHosts}}& {{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}}{{/dependencyHasRegionalHosts}}) => {{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}Client;
+    {{/dependencies}}
 };
 
 export function algoliasearch(appId: string, apiKey: string, options?: ClientOptions): Algoliasearch {
@@ -40,43 +38,19 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
 
   return {
     ...client,
+
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
       return client.transporter.algoliaAgent.value;
     },
-    initRecommend: (initOptions: InitClientOptions = {}): RecommendClient => {
-      return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
+
+    {{#dependencies}}
+    init{{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}: (initOptions: InitClientOptions {{#dependencyHasRegionalHosts}}& {{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}}{{/dependencyHasRegionalHosts}}): {{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}Client => {
+      return {{{dependencyName}}}Client(initOptions.appId || appId, initOptions.apiKey || apiKey, {{#dependencyHasRegionalHosts}}initOptions.region,{{/dependencyHasRegionalHosts}}initOptions.options);
     },
 
-    initAnalytics: (initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}): AnalyticsClient => {
-      return analyticsClient(
-        initOptions.appId || appId,
-        initOptions.apiKey || apiKey,
-        initOptions.region,
-        initOptions.options,
-      );
-    },
-
-    initAbtesting: (initOptions: InitClientOptions & InitClientRegion<AbtestingRegion> = {}): AbtestingClient => {
-      return abtestingClient(
-        initOptions.appId || appId,
-        initOptions.apiKey || apiKey,
-        initOptions.region,
-        initOptions.options,
-      );
-    },
-
-    initPersonalization: (
-      initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>,
-    ): PersonalizationClient => {
-      return personalizationClient(
-        initOptions.appId || appId,
-        initOptions.apiKey || apiKey,
-        initOptions.region,
-        initOptions.options,
-      );
-    },
+    {{/dependencies}}
   }
 }

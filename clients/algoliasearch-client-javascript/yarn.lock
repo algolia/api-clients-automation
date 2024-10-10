@@ -54,7 +54,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-insights@workspace:packages/client-insights":
+"@algolia/client-insights@npm:5.8.0, @algolia/client-insights@workspace:packages/client-insights":
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@workspace:packages/client-insights"
   dependencies:
@@ -88,7 +88,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-query-suggestions@workspace:packages/client-query-suggestions":
+"@algolia/client-query-suggestions@npm:5.8.0, @algolia/client-query-suggestions@workspace:packages/client-query-suggestions":
   version: 0.0.0-use.local
   resolution: "@algolia/client-query-suggestions@workspace:packages/client-query-suggestions"
   dependencies:
@@ -122,7 +122,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/ingestion@workspace:packages/ingestion":
+"@algolia/ingestion@npm:1.8.0, @algolia/ingestion@workspace:packages/ingestion":
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@workspace:packages/ingestion"
   dependencies:
@@ -155,7 +155,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/monitoring@workspace:packages/monitoring":
+"@algolia/monitoring@npm:1.8.0, @algolia/monitoring@workspace:packages/monitoring":
   version: 0.0.0-use.local
   resolution: "@algolia/monitoring@workspace:packages/monitoring"
   dependencies:
@@ -2088,8 +2088,12 @@ __metadata:
     "@algolia/client-abtesting": "npm:5.8.0"
     "@algolia/client-analytics": "npm:5.8.0"
     "@algolia/client-common": "npm:5.8.0"
+    "@algolia/client-insights": "npm:5.8.0"
     "@algolia/client-personalization": "npm:5.8.0"
+    "@algolia/client-query-suggestions": "npm:5.8.0"
     "@algolia/client-search": "npm:5.8.0"
+    "@algolia/ingestion": "npm:1.8.0"
+    "@algolia/monitoring": "npm:1.8.0"
     "@algolia/recommend": "npm:5.8.0"
     "@algolia/requester-browser-xhr": "npm:5.8.0"
     "@algolia/requester-fetch": "npm:5.8.0"

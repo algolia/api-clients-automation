@@ -1,9 +1,18 @@
 // {{{generationBanner}}}
 
-import type { AbtestingClient, Region as AbTestingRegion } from '@algolia/client-abtesting';
-import type { AnalyticsClient, Region as AnalyticsRegion } from '@algolia/client-analytics';
+{{#dependencies}}
+import type {
+  {{#lambda.titlecase}}{{{dependencyName}}}Client{{/lambda.titlecase}},
+  {{#dependencyHasRegionalHosts}}
+  Region as {{#lambda.titlecase}}{{{dependencyName}}}Region{{/lambda.titlecase}},
+  RegionOptions as {{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}},
+  {{/dependencyHasRegionalHosts}}
+} from '{{{dependencyPackage}}}';
+{{/dependencies}}
+
 import type { ClientOptions } from '@algolia/client-common';
 import type {
+  Action,
   AdvancedSyntaxFeatures,
   AlternativesAsExact,
   Anchoring,
@@ -32,6 +41,7 @@ import type {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
+  DeleteSourceProps,
   DeletedAtResponse,
   Distinct,
   Edit,
@@ -41,14 +51,16 @@ import type {
   Exhaustive,
   FacetFilters,
   FacetOrdering,
-  Facets,
   FacetStats,
+  Facets,
+  GetTaskProps,
   HighlightResult,
   HighlightResultOption,
   IgnorePlurals,
   IndexSettingsAsSearchParams,
-  MatchedGeoLocation,
+  Languages,
   MatchLevel,
+  MatchedGeoLocation,
   Mode,
   NumericFilters,
   OptionalFilters,
@@ -60,6 +72,7 @@ import type {
   QueryType,
   Range,
   RankingInfo,
+  ReRankingApplyFilter,
   Redirect,
   RedirectRuleIndexData,
   RedirectRuleIndexMetadata,
@@ -67,7 +80,6 @@ import type {
   RemoveStopWords,
   RemoveWordsIfNoResults,
   RenderingContent,
-  ReRankingApplyFilter,
   SearchPagination,
   SearchParams,
   SearchParamsObject,
@@ -76,6 +88,7 @@ import type {
   SnippetResult,
   SnippetResultOption,
   SortRemainingBy,
+  Source,
   SupportedLanguage,
   TagFilters,
   TaskStatus,
@@ -86,23 +99,25 @@ import type {
   Widgets,
 } from '@algolia/client-search';
 import { apiClientVersion } from '@algolia/client-search';
-import type { RecommendClient } from '@algolia/recommend';
+import {
+  Status,
+} from '@algolia/client-abtesting';
+import {
+  EventType,
+} from '@algolia/client-personalization';
 
-type Region = AbTestingRegion | AnalyticsRegion;
+type Region = {{#dependencies}} {{#dependencyHasRegionalHosts}}{{^-first}}|{{/-first}}{{#lambda.titlecase}}{{{dependencyName}}}Region{{/lambda.titlecase}} {{/dependencyHasRegionalHosts}}{{/dependencies}};
+type RegionOptions = {{#dependencies}} {{#dependencyHasRegionalHosts}}{{^-first}}|{{/-first}}{{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}} {{/dependencyHasRegionalHosts}}{{/dependencies}};
 
-export * from '@algolia/client-search';
-export * from '@algolia/recommend';
-export * from '@algolia/client-personalization';
-export * from '@algolia/client-analytics';
-export * from '@algolia/client-abtesting';
+{{#dependencies}}
+export * from '{{{dependencyPackage}}}';
+{{/dependencies}}
 
 export {
-  AbTestingRegion,
+  Action,
   AdvancedSyntaxFeatures,
   AlternativesAsExact,
-  AnalyticsRegion,
   Anchoring,
-  apiClientVersion,
   AroundPrecision,
   AroundRadius,
   AroundRadiusAll,
@@ -128,23 +143,27 @@ export {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
+  DeleteSourceProps,
   DeletedAtResponse,
   Distinct,
   Edit,
   EditType,
   ErrorBase,
+  EventType,
   ExactOnSingleWordQuery,
   Exhaustive,
   FacetFilters,
   FacetOrdering,
-  Facets,
   FacetStats,
+  Facets,
+  GetTaskProps,
   HighlightResult,
   HighlightResultOption,
   IgnorePlurals,
   IndexSettingsAsSearchParams,
-  MatchedGeoLocation,
+  Languages,
   MatchLevel,
+  MatchedGeoLocation,
   Mode,
   NumericFilters,
   OptionalFilters,
@@ -156,15 +175,16 @@ export {
   QueryType,
   Range,
   RankingInfo,
+  ReRankingApplyFilter,
   Redirect,
   RedirectRuleIndexData,
   RedirectRuleIndexMetadata,
   RedirectURL,
   Region,
+  RegionOptions,
   RemoveStopWords,
   RemoveWordsIfNoResults,
   RenderingContent,
-  ReRankingApplyFilter,
   SearchPagination,
   SearchParams,
   SearchParamsObject,
@@ -173,6 +193,8 @@ export {
   SnippetResult,
   SnippetResultOption,
   SortRemainingBy,
+  Source,
+  Status,
   SupportedLanguage,
   TagFilters,
   TaskStatus,
@@ -181,6 +203,13 @@ export {
   TypoToleranceEnum,
   Value,
   Widgets,
+  apiClientVersion,
+{{#dependencies}}
+  {{#dependencyHasRegionalHosts}}
+  {{#lambda.titlecase}}{{{dependencyName}}}Region{{/lambda.titlecase}},
+  {{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}},
+  {{/dependencyHasRegionalHosts}}
+{{/dependencies}}
 };
 
 /**
@@ -196,11 +225,4 @@ export type InitClientOptions = Partial<{
    */
   apiKey: string;
   options: ClientOptions;
-}>;
-
-export type InitClientRegion<TRegion> = Partial<{
-  /**
-   * Available regions of the initialized client.
-   */
-  region: TRegion;
 }>;
