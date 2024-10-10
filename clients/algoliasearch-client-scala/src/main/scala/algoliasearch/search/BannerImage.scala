@@ -36,6 +36,6 @@ package algoliasearch.search
 /** image of a search banner.
   */
 case class BannerImage(
-    urls: Option[BannerImageUrl] = scala.None,
+    urls: Option[Seq[BannerImageUrl]] = scala.None,
     title: Option[String] = scala.None
 )

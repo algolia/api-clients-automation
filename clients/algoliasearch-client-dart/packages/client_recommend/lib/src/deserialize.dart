@@ -6,7 +6,6 @@ import 'package:algolia_client_recommend/src/model/banner.dart';
 import 'package:algolia_client_recommend/src/model/banner_image.dart';
 import 'package:algolia_client_recommend/src/model/banner_image_url.dart';
 import 'package:algolia_client_recommend/src/model/banner_link.dart';
-import 'package:algolia_client_recommend/src/model/banners.dart';
 import 'package:algolia_client_recommend/src/model/base_index_settings.dart';
 import 'package:algolia_client_recommend/src/model/base_recommend_index_settings.dart';
 import 'package:algolia_client_recommend/src/model/base_recommend_request.dart';
@@ -120,8 +119,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'BannerLink':
       return BannerLink.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'Banners':
-      return Banners.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BaseIndexSettings':
       return BaseIndexSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;

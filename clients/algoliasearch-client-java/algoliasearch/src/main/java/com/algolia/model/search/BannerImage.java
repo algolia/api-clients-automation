@@ -5,25 +5,35 @@ package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** image of a search banner. */
 public class BannerImage {
 
   @JsonProperty("urls")
-  private BannerImageUrl urls;
+  private List<BannerImageUrl> urls;
 
   @JsonProperty("title")
   private String title;
 
-  public BannerImage setUrls(BannerImageUrl urls) {
+  public BannerImage setUrls(List<BannerImageUrl> urls) {
     this.urls = urls;
+    return this;
+  }
+
+  public BannerImage addUrls(BannerImageUrl urlsItem) {
+    if (this.urls == null) {
+      this.urls = new ArrayList<>();
+    }
+    this.urls.add(urlsItem);
     return this;
   }
 
   /** Get urls */
   @javax.annotation.Nullable
-  public BannerImageUrl getUrls() {
+  public List<BannerImageUrl> getUrls() {
     return urls;
   }
 

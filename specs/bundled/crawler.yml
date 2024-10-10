@@ -1884,7 +1884,7 @@ components:
           type: string
     bannerImageUrl:
       description: url for a search banner image.
-      type: array
+      type: object
       additionalProperties: false
       properties:
         url:
@@ -1895,7 +1895,9 @@ components:
       additionalProperties: false
       properties:
         urls:
-          $ref: '#/components/schemas/bannerImageUrl'
+          type: array
+          items:
+            $ref: '#/components/schemas/bannerImageUrl'
         title:
           type: string
     bannerLink:
@@ -1918,9 +1920,8 @@ components:
       description: banners defined in the merchandising studio for the given search.
       type: array
       additionalProperties: false
-      properties:
-        banners:
-          $ref: '#/components/schemas/banner'
+      items:
+        $ref: '#/components/schemas/banner'
     widgets:
       description: widgets returned from any rules that are applied to the current search.
       type: object

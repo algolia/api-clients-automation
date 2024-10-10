@@ -13,9 +13,9 @@ Widgets _$WidgetsFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Widgets(
           banners: $checkedConvert(
               'banners',
-              (v) => v == null
-                  ? null
-                  : Banners.fromJson(v as Map<String, dynamic>)),
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => Banner.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -30,6 +30,6 @@ Map<String, dynamic> _$WidgetsToJson(Widgets instance) {
     }
   }
 
-  writeNotNull('banners', instance.banners?.toJson());
+  writeNotNull('banners', instance.banners?.map((e) => e.toJson()).toList());
   return val;
 }
