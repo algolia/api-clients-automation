@@ -183,7 +183,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
     additionalProperties.put(OBJC_COMPATIBLE, false);
     additionalProperties.put(USE_BACKTICK_ESCAPES, true);
-    additionalProperties.put(VALIDATABLE, false);
     additionalProperties.put("hashableModels", true);
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));

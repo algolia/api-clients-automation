@@ -378,40 +378,6 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{
   if r.{{paramName}} == nil {
 	  return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
 	}{{/isEnumRef}}{{/isMap}}{{/isContainer}}{{/isPrimitiveType}}
-	{{#minItems}}
-	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minItems}} {
-		return nil, nil, reportError("{{paramName}} must have at least {{minItems}} elements")
-	}
-	{{/minItems}}
-	{{#maxItems}}
-	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxItems}} {
-		return nil, nil, reportError("{{paramName}} must have less than {{maxItems}} elements")
-	}
-	{{/maxItems}}
-	{{#minLength}}
-	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minLength}} {
-		return nil, nil, reportError("{{paramName}} must have at least {{minLength}} elements")
-	}
-	{{/minLength}}
-	{{#maxLength}}
-	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxLength}} {
-		return nil, nil, reportError("{{paramName}} must have less than {{maxLength}} elements")
-	}
-	{{/maxLength}}
-	{{#minimum}}
-	{{^isString}}
-	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} < {{minimum}} {
-	{{/isString}}
-		return nil, nil, reportError("{{paramName}} must be greater than {{minimum}}")
-	}
-	{{/minimum}}
-	{{#maximum}}
-	{{^isString}}
-	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} > {{maximum}} {
-	{{/isString}}
-		return nil, nil, reportError("{{paramName}} must be less than {{maximum}}")
-	}
-	{{/maximum}}
 	{{/required}}
 	{{/allParams}}
 
