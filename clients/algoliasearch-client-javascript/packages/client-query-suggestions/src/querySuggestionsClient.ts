@@ -30,10 +30,11 @@ import type {
   UpdateConfigProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.8.0';
+export const apiClientVersion = '5.8.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
+export type RegionOptions = { region: Region };
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'query-suggestions.{region}.algolia.com'.replace('{region}', region);
@@ -48,7 +49,7 @@ export function createQuerySuggestionsClient({
   algoliaAgents,
   region: regionOption,
   ...options
-}: CreateClientOptions & { region: Region }) {
+}: CreateClientOptions & RegionOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts(regionOption),

@@ -8,7 +8,6 @@ import 'package:algoliasearch/src/model/banner.dart';
 import 'package:algoliasearch/src/model/banner_image.dart';
 import 'package:algoliasearch/src/model/banner_image_url.dart';
 import 'package:algoliasearch/src/model/banner_link.dart';
-import 'package:algoliasearch/src/model/banners.dart';
 import 'package:algoliasearch/src/model/base_get_api_key_response.dart';
 import 'package:algoliasearch/src/model/base_index_settings.dart';
 import 'package:algoliasearch/src/model/base_recommend_index_settings.dart';
@@ -146,8 +145,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'BannerLink':
       return BannerLink.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'Banners':
-      return Banners.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BaseGetApiKeyResponse':
       return BaseGetApiKeyResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;

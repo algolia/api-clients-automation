@@ -42,7 +42,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "bannerimage",
     "bannerimageurl",
     "bannerlink",
-    "banners",
     "baseindexsettings",
     "basesearchparams",
     "basesearchparamswithoutquery",

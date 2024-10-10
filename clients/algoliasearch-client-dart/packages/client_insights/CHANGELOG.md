@@ -1,3 +1,8 @@
+## [1.26.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.0...1.26.1)
+
+- [434c99f80](https://github.com/algolia/api-clients-automation/commit/434c99f80) fix(specs): use the read transporter for browse ([#3938](https://github.com/algolia/api-clients-automation/pull/3938)) by [@millotp](https://github.com/millotp/)
+- [45d433d0a](https://github.com/algolia/api-clients-automation/commit/45d433d0a) fix(specs): correct type for banners [skip-bc] ([#3939](https://github.com/algolia/api-clients-automation/pull/3939)) by [@millotp](https://github.com/millotp/)
+
 ## [1.26.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.25.0...1.26.0)
 
 - [bed119166](https://github.com/algolia/api-clients-automation/commit/bed119166) feat(specs): add support for widgets / banners in search for the csharp client ([#3870](https://github.com/algolia/api-clients-automation/pull/3870)) by [@Kalmar99](https://github.com/Kalmar99/)

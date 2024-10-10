@@ -15,7 +15,7 @@ final class BannerImage {
   });
 
   @JsonKey(name: r'urls')
-  final BannerImageUrl? urls;
+  final List<BannerImageUrl>? urls;
 
   @JsonKey(name: r'title')
   final String? title;

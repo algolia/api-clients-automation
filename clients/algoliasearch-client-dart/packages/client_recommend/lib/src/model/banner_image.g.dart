@@ -13,9 +13,10 @@ BannerImage _$BannerImageFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = BannerImage(
           urls: $checkedConvert(
               'urls',
-              (v) => v == null
-                  ? null
-                  : BannerImageUrl.fromJson(v as Map<String, dynamic>)),
+              (v) => (v as List<dynamic>?)
+                  ?.map(
+                      (e) => BannerImageUrl.fromJson(e as Map<String, dynamic>))
+                  .toList()),
           title: $checkedConvert('title', (v) => v as String?),
         );
         return val;
@@ -31,7 +32,7 @@ Map<String, dynamic> _$BannerImageToJson(BannerImage instance) {
     }
   }
 
-  writeNotNull('urls', instance.urls?.toJson());
+  writeNotNull('urls', instance.urls?.map((e) => e.toJson()).toList());
   writeNotNull('title', instance.title);
   return val;
 }
