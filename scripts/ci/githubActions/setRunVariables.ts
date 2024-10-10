@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as core from '@actions/core';
 
 import { DEPENDENCIES, isBaseChanged } from './utils.js';

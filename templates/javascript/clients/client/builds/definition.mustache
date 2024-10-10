@@ -31,7 +31,6 @@ import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions,
 import {createHmac} from 'node:crypto';
 {{/nodeSearchHelpers}}
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function {{clientName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}

@@ -230,13 +230,18 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       boolean hasPathParams = !ope.pathParams.isEmpty();
 
       // If there is nothing but body params, we just check if it's a single param
-      if (hasBodyParams && !hasHeaderParams && !hasQueryParams && !hasPathParams) {
-        // At this point the single parameter is already an object, to avoid double wrapping
-        // we skip it
-        if (ope.bodyParams.size() == 1 && !ope.bodyParams.get(0).isArray) {
-          ope.vendorExtensions.put("x-is-single-body-param", true);
-          continue;
-        }
+      if (
+        hasBodyParams &&
+        !hasHeaderParams &&
+        !hasQueryParams &&
+        !hasPathParams &&
+        ope.bodyParams.size() == 1 &&
+        !ope.bodyParams.get(0).isArray
+      ) {
+        // At this point the single parameter is already an object, to avoid double wrapping we skip
+        // it
+        ope.vendorExtensions.put("x-is-single-body-param", true);
+        continue;
       }
 
       // Any other cases here are wrapped

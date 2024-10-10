@@ -71,7 +71,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
       testsGenerators.add(new GuidesGenerator(ctsManager));
     } else {
-      throw new RuntimeException("Unknown mode: " + mode);
+      throw new CTSException("Unknown mode: " + mode);
     }
 
     for (TestsGenerator testGen : testsGenerators) {

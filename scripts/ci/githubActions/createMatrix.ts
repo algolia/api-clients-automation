@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 import fsp from 'fs/promises';
 
 import { setOutput } from '@actions/core';

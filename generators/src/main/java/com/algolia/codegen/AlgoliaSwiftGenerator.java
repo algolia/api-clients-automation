@@ -142,7 +142,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     var camelizedName = camelize(name);
     if (isReservedModelName(camelizedName)) {
-      return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
+      return getClientName(client) + Helpers.capitalize(camelizedName);
     }
 
     return name;
@@ -155,7 +155,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return "algolia-swift";
   }
 
-  public String getClientName(String client) {
+  public static String getClientName(String client) {
     return Helpers.createClientName(client, "swift");
   }
 
@@ -413,10 +413,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       return "empty";
     }
 
-    if (enumUnknownDefaultCase) {
-      if (value.equals(enumUnknownDefaultCaseName)) {
-        return camelize(value, LOWERCASE_FIRST_LETTER);
-      }
+    if (enumUnknownDefaultCase && value.equals(enumUnknownDefaultCaseName)) {
+      return camelize(value, LOWERCASE_FIRST_LETTER);
     }
 
     // Reserved Name

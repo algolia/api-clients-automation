@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { components } from '@octokit/openapi-types';
 
 import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common';

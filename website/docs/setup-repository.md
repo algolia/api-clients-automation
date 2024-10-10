@@ -82,6 +82,7 @@ echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' > .bash_profile && source 
 ### Running renovate locally
 
 Running renovate on github can be tidious because it only works on the branch `main`, but you can run it locally with the CLI:
+
 ```sh
 npm install -g renovate
 
