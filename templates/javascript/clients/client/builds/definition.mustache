@@ -6,7 +6,7 @@ import { createNullLogger, createMemoryCache, createFallbackableCache, createBro
 import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{clientName}}';
 
 {{#hasRegionalHost}}
-import { Region, REGIONS } from '../src/{{clientName}}';
+import { Region, REGIONS, RegionOptions } from '../src/{{clientName}}';
 {{/hasRegionalHost}}
 
 {{! We don't use `export *` to prevent exposing the factory, to avoid confusion for the user }}
@@ -14,6 +14,7 @@ export {
   apiClientVersion,
   {{#hasRegionalHost}}
   Region,
+  RegionOptions,
   {{/hasRegionalHost}}
   {{#isIngestionClient}}
   isOnDemandTrigger,

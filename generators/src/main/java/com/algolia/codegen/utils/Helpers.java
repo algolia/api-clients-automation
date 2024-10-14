@@ -198,6 +198,22 @@ public class Helpers {
     return value.asText();
   }
 
+  /** Get the `field` value in the `config/clients.config.json` file for the given language */
+  public static List<Map<String, Object>> getClientConfigList(String language, String... fields) throws ConfigException {
+    if (fields.length == 0) {
+      throw new ConfigException("getClientConfigList requires at least one field");
+    }
+    JsonNode value = getClientConfig(language);
+    for (String field : fields) {
+      value = value.get(field);
+    }
+    try {
+      return new ObjectMapper().readerForListOf(Map.class).readValue(value);
+    } catch (IOException e) {
+      throw new ConfigException("Cannot convert value", e);
+    }
+  }
+
   public static List<String> getClientListForLanguage(String language) throws ConfigException {
     JsonNode value = getClientConfig(language);
     value = value.get("clients");

@@ -18,7 +18,7 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     authMode,
     algoliaAgents,{{#hasRegionalHost}} region: regionOption,{{/hasRegionalHost}}
     ...options
-  }: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
+  }: CreateClientOptions{{#hasRegionalHost}} & RegionOptions{{/hasRegionalHost}}) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts({{#hostWithAppID}}appIdOption{{/hostWithAppID}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),
