@@ -86,7 +86,12 @@ public class ModelPruner {
         }
       }
       for (CodegenParameter param : ope.allParams) {
-        CodegenModel paramType = getModel(param.baseType != null ? param.baseType : param.getSchema().getOpenApiType());
+        String paramName = param.baseType != null ? param.baseType : param.dataType;
+        // php has a fully qualified name for the parameter type
+        if (paramName.contains("\\")) {
+          paramName = paramName.substring(paramName.lastIndexOf("\\") + 1);
+        }
+        CodegenModel paramType = getModel(paramName);
         if (paramType != null) {
           visitedModels.add(paramType.name);
         }
