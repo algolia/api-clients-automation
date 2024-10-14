@@ -80,7 +80,7 @@ async function testAlgoliasearch() {
   }
 
   try {
-    const analyticsClient = client.initAnalytics();
+    const analyticsClient = client.initAnalytics({region: 'de'});
 
     const res = await analyticsClient.getTopFilterForAttribute({
       attribute: 'myAttribute1,myAttribute2',
@@ -97,7 +97,7 @@ async function testAlgoliasearch() {
   }
 
   try {
-    const abtestingClient = client.initAbtesting();
+    const abtestingClient = client.initAbtesting({region: 'us'});
 
     const res = await abtestingClient.getABTest({
       id: 42,
