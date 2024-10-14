@@ -120,12 +120,10 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-analytics": "{{analyticsVersion}}",
-    "@algolia/client-abtesting": "{{abtestingVersion}}",
-    "@algolia/client-personalization": "{{personalizationVersion}}",
-    "@algolia/client-search": "{{searchVersion}}",
+    {{#dependencies}}
+    "{{{dependencyPackage}}}": "{{{dependencyVersion}}}",
+    {{/dependencies}}
     "@algolia/client-common": "{{utilsPackageVersion}}",
-    "@algolia/recommend": "{{recommendVersion}}",
     "@algolia/requester-browser-xhr": "{{utilsPackageVersion}}",
     "@algolia/requester-node-http": "{{utilsPackageVersion}}",
     "@algolia/requester-fetch": "{{utilsPackageVersion}}"
