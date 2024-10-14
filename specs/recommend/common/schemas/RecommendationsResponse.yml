@@ -27,7 +27,6 @@ recommendHit:
   additionalProperties: true
   required:
     - objectID
-    - _score
   properties:
     objectID:
       $ref: '../../../common/parameters.yml#/objectID'
@@ -48,7 +47,6 @@ trendingFacetHit:
   type: object
   description: Trending facet hit.
   required:
-    - _score
     - facetName
     - facetValue
   properties:
