@@ -12,7 +12,7 @@ TrendingFacetHit _$TrendingFacetHitFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = TrendingFacetHit(
-          score: $checkedConvert('_score', (v) => (v as num).toDouble()),
+          score: $checkedConvert('_score', (v) => (v as num?)?.toDouble()),
           facetName: $checkedConvert('facetName', (v) => v as String),
           facetValue: $checkedConvert('facetValue', (v) => v as String),
         );
@@ -21,9 +21,17 @@ TrendingFacetHit _$TrendingFacetHitFromJson(Map<String, dynamic> json) =>
       fieldKeyMap: const {'score': '_score'},
     );
 
-Map<String, dynamic> _$TrendingFacetHitToJson(TrendingFacetHit instance) =>
-    <String, dynamic>{
-      '_score': instance.score,
-      'facetName': instance.facetName,
-      'facetValue': instance.facetValue,
-    };
+Map<String, dynamic> _$TrendingFacetHitToJson(TrendingFacetHit instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('_score', instance.score);
+  val['facetName'] = instance.facetName;
+  val['facetValue'] = instance.facetValue;
+  return val;
+}

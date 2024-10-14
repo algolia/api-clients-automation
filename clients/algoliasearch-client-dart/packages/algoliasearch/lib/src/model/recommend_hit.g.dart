@@ -24,7 +24,7 @@ RecommendHit _$RecommendHitFromJson(Map<String, dynamic> json) =>
                   : RankingInfo.fromJson(v as Map<String, dynamic>)),
           distinctSeqID:
               $checkedConvert('_distinctSeqID', (v) => (v as num?)?.toInt()),
-          score: $checkedConvert('_score', (v) => (v as num).toDouble()),
+          score: $checkedConvert('_score', (v) => (v as num?)?.toDouble()),
         );
         return val;
       },
@@ -61,6 +61,6 @@ Map<String, dynamic> _$RecommendHitToJson(RecommendHit instance) {
   writeNotNull('_snippetResult', instance.snippetResult);
   writeNotNull('_rankingInfo', instance.rankingInfo?.toJson());
   writeNotNull('_distinctSeqID', instance.distinctSeqID);
-  val['_score'] = instance.score;
+  writeNotNull('_score', instance.score);
   return val;
 }

@@ -16,7 +16,7 @@ final class RecommendHit extends DelegatingMap<String, dynamic> {
     this.snippetResult,
     this.rankingInfo,
     this.distinctSeqID,
-    required this.score,
+    this.score,
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
@@ -42,7 +42,7 @@ final class RecommendHit extends DelegatingMap<String, dynamic> {
   // minimum: 0
   // maximum: 100
   @JsonKey(name: r'_score')
-  final double score;
+  final double? score;
 
   @override
   bool operator ==(Object other) =>

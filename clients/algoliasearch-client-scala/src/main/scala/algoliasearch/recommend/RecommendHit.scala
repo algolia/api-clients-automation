@@ -49,7 +49,7 @@ case class RecommendHit(
     snippetResult: Option[Map[String, SnippetResult]] = scala.None,
     rankingInfo: Option[RankingInfo] = scala.None,
     distinctSeqID: Option[Int] = scala.None,
-    score: Double,
+    score: Option[Double] = scala.None,
     additionalProperties: Option[List[JField]] = None
 ) extends RecommendationsHitTrait
 

@@ -5602,7 +5602,6 @@ components:
       additionalProperties: true
       required:
         - objectID
-        - _score
       properties:
         objectID:
           $ref: '#/components/schemas/objectID'
@@ -5622,7 +5621,6 @@ components:
       type: object
       description: Trending facet hit.
       required:
-        - _score
         - facetName
         - facetValue
       properties:
