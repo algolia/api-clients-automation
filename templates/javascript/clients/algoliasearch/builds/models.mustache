@@ -111,6 +111,7 @@ type RegionOptions = {{#dependencies}} {{#dependencyHasRegionalHosts}}{{^-first}
 {{#dependencies}}
 export * from '{{{dependencyPackage}}}';
 {{/dependencies}}
+export * from '@algolia/client-search';
 
 export {
   Action,
