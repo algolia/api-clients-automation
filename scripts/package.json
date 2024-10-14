@@ -22,7 +22,7 @@
     "waitForAllReleases": "yarn runScript dist/ci/codegen/waitForAllReleases.js"
   },
   "devDependencies": {
-    "@actions/artifact": "2.1.10",
+    "@actions/artifact": "2.1.11",
     "@actions/core": "1.11.1",
     "@actions/exec": "1.1.1",
     "@actions/io": "1.1.3",

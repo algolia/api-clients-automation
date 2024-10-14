@@ -5,9 +5,9 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@actions/artifact@npm:2.1.10":
-  version: 2.1.10
-  resolution: "@actions/artifact@npm:2.1.10"
+"@actions/artifact@npm:2.1.11":
+  version: 2.1.11
+  resolution: "@actions/artifact@npm:2.1.11"
   dependencies:
     "@actions/core": "npm:^1.10.0"
     "@actions/github": "npm:^5.1.1"
@@ -19,11 +19,10 @@ __metadata:
     "@octokit/request-error": "npm:^5.0.0"
     "@protobuf-ts/plugin": "npm:^2.2.3-alpha.1"
     archiver: "npm:^7.0.1"
-    crypto: "npm:^1.0.1"
     jwt-decode: "npm:^3.1.2"
     twirp-ts: "npm:^2.5.0"
     unzip-stream: "npm:^0.3.1"
-  checksum: 10/ff6587bf2ce7f1d433608a36752a33a7ca89c7075802a41c24258ed6be4bd183e5e2a1aa8cfe2167878272e4054b0827244ab61ec2cfe0070bacfc3a2c773d8b
+  checksum: 10/8065a841cd7aeeb3d9cad20e8c75bd3ff545cf495a64010a51ba7590c0c1332536124e1f64af324d5d4983212eb4374247e97d997a0985ce3273f6fa5679eab5
   languageName: node
   linkType: hard
 
@@ -3051,13 +3050,6 @@ __metadata:
     shebang-command: "npm:^2.0.0"
     which: "npm:^2.0.1"
   checksum: 10/e1a13869d2f57d974de0d9ef7acbf69dc6937db20b918525a01dacb5032129bd552d290d886d981e99f1b624cb03657084cc87bd40f115c07ecf376821c729ce
-  languageName: node
-  linkType: hard
-
-"crypto@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "crypto@npm:1.0.1"
-  checksum: 10/087fe3165bd94c333a49e6ed66a0193911f63eac38a24f379b3001a5fe260a59c413646e53a0f67875ba13902b2686d81dc703cb2c147a4ec727dcdc04e5645e
   languageName: node
   linkType: hard
 
@@ -7116,7 +7108,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "scripts@workspace:scripts"
   dependencies:
-    "@actions/artifact": "npm:2.1.10"
+    "@actions/artifact": "npm:2.1.11"
     "@actions/core": "npm:1.11.1"
     "@actions/exec": "npm:1.1.1"
     "@actions/io": "npm:1.1.3"
