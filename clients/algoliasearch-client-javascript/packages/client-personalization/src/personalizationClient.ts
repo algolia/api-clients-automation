@@ -29,7 +29,6 @@ export const apiClientVersion = '5.8.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
-export type RegionOptions = { region: Region };
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'personalization.{region}.algolia.com'.replace('{region}', region);
@@ -44,7 +43,7 @@ export function createPersonalizationClient({
   algoliaAgents,
   region: regionOption,
   ...options
-}: CreateClientOptions & RegionOptions) {
+}: CreateClientOptions & { region: Region }) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts(regionOption),

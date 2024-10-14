@@ -25,7 +25,6 @@ export {
   isScheduleTrigger,
   isSubscriptionTrigger,
   Region,
-  RegionOptions,
 } from '../src/ingestionClient';
 
 export function ingestionClient(

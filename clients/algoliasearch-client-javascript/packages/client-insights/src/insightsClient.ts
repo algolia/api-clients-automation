@@ -25,7 +25,6 @@ export const apiClientVersion = '5.8.1';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
-export type RegionOptions = { region?: Region };
 
 function getDefaultHosts(region?: Region): Host[] {
   const url = !region ? 'insights.algolia.io' : 'insights.{region}.algolia.io'.replace('{region}', region);
@@ -40,7 +39,7 @@ export function createInsightsClient({
   algoliaAgents,
   region: regionOption,
   ...options
-}: CreateClientOptions & RegionOptions) {
+}: CreateClientOptions & { region?: Region }) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts(regionOption),
