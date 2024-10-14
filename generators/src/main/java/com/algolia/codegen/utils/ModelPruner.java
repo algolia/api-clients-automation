@@ -86,7 +86,7 @@ public class ModelPruner {
         }
       }
       for (CodegenParameter param : ope.allParams) {
-        CodegenModel paramType = getModel(param.baseType != null ? param.baseType : param.dataType);
+        CodegenModel paramType = getModel(param.baseType != null ? param.baseType : param.getSchema().getOpenApiType());
         if (paramType != null) {
           visitedModels.add(paramType.name);
         }
