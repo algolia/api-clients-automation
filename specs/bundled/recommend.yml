@@ -1497,8 +1497,8 @@ components:
             - wheel
             - 1X2BCD
           description: >
-            Words for which you want to turn off [typo
-            tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+            Creates a list of [words which require exact
+            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
 
             This also turns off [word splitting and
             concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
@@ -3508,7 +3508,6 @@ components:
       additionalProperties: true
       required:
         - objectID
-        - _score
       properties:
         objectID:
           $ref: '#/components/schemas/objectID'
@@ -3528,7 +3527,6 @@ components:
       type: object
       description: Trending facet hit.
       required:
-        - _score
         - facetName
         - facetValue
       properties:

@@ -26,7 +26,7 @@ public class TrendingFacetHit implements RecommendationsHit {
   }
 
   /** Recommendation score. minimum: 0 maximum: 100 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getScore() {
     return score;
   }
