@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     env:
-      CACHE_VERSION: 1 # bump this to run all clients on the CI.
+      CACHE_VERSION: 1.01 # bump this to run all clients on the CI.
     steps:
       - name: debugging - dump GitHub context
         env:
