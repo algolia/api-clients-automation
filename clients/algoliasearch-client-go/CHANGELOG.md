@@ -1,3 +1,7 @@
+## [4.5.2](https://github.com/algolia/algoliasearch-client-go/compare/4.5.1...4.5.2)
+
+- [ed203c6a7](https://github.com/algolia/api-clients-automation/commit/ed203c6a7) fix(go): better network error ([#3943](https://github.com/algolia/api-clients-automation/pull/3943)) by [@millotp](https://github.com/millotp/)
+
 ## [4.5.1](https://github.com/algolia/algoliasearch-client-go/compare/4.5.0...4.5.1)
 
 - [f516d0243](https://github.com/algolia/api-clients-automation/commit/f516d0243) fix(specs): Typos in API descriptions ([#3932](https://github.com/algolia/api-clients-automation/pull/3932)) by [@gazconroy](https://github.com/gazconroy/)
