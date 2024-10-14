@@ -44,7 +44,7 @@ __metadata:
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.16.4"
-    "@types/node": "npm:22.7.4"
+    "@types/node": "npm:22.7.5"
     jsdom: "npm:25.0.1"
     publint: "npm:0.2.11"
     ts-node: "npm:10.9.2"
@@ -145,7 +145,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.8.1"
     "@arethetypeswrong/cli": "npm:0.16.4"
-    "@types/node": "npm:22.7.4"
+    "@types/node": "npm:22.7.5"
     jsdom: "npm:25.0.1"
     publint: "npm:0.2.11"
     ts-node: "npm:10.9.2"
@@ -195,7 +195,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.8.1"
     "@arethetypeswrong/cli": "npm:0.16.4"
-    "@types/node": "npm:22.7.4"
+    "@types/node": "npm:22.7.5"
     jsdom: "npm:25.0.1"
     publint: "npm:0.2.11"
     tsup: "npm:8.3.0"
@@ -211,7 +211,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.8.1"
     "@arethetypeswrong/cli": "npm:0.16.4"
-    "@types/node": "npm:22.7.4"
+    "@types/node": "npm:22.7.5"
     cross-fetch: "npm:4.0.0"
     nock: "npm:13.5.5"
     publint: "npm:0.2.11"
@@ -227,7 +227,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.8.1"
     "@arethetypeswrong/cli": "npm:0.16.4"
-    "@types/node": "npm:22.7.4"
+    "@types/node": "npm:22.7.5"
     nock: "npm:13.5.5"
     publint: "npm:0.2.11"
     tsup: "npm:8.3.0"
@@ -245,7 +245,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.8.1"
     "@algolia/requester-node-http": "npm:5.8.1"
     "@arethetypeswrong/cli": "npm:0.16.4"
-    "@types/node": "npm:22.7.4"
+    "@types/node": "npm:22.7.5"
     publint: "npm:0.2.11"
     tsup: "npm:8.3.0"
     typescript: "npm:5.6.2"
@@ -1861,7 +1861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:22.7.5":
   version: 22.7.5
   resolution: "@types/node@npm:22.7.5"
   dependencies:
@@ -2070,7 +2070,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch-client-javascript@workspace:."
   dependencies:
-    "@types/node": "npm:22.7.4"
+    "@types/node": "npm:22.7.5"
     "@types/semver": "npm:7.5.8"
     bundlesize: "npm:0.18.2"
     execa: "npm:9.4.0"
