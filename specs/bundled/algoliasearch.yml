@@ -1569,7 +1569,6 @@ components:
     banners:
       description: banners defined in the merchandising studio for the given search.
       type: array
-      additionalProperties: false
       items:
         $ref: '#/components/schemas/banner'
     widgets:
