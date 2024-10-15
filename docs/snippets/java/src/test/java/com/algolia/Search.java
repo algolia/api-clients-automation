@@ -1097,7 +1097,7 @@ class SnippetSearchClient {
   //
   // call partialUpdateObjects with createIfNotExists=true
   void snippetForPartialUpdateObjects() throws Exception {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
@@ -1128,7 +1128,7 @@ class SnippetSearchClient {
   //
   // call partialUpdateObjects with createIfNotExists=false
   void snippetForPartialUpdateObjects1() throws Exception {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 

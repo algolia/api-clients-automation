@@ -158,8 +158,8 @@
       "default": "var response = await client.PartialUpdateObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new Dictionary<string, string> { { \"attributeId\", \"new value\" } }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n  },\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n  },\n  false\n);"
     },
     "removeUserId": {
       "default": "var response = await client.RemoveUserIdAsync(\"uniqueID\");"
@@ -404,8 +404,8 @@
       "default": "final response = await client.partialUpdateObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"uniqueID\",\n  attributesToUpdate: {\n    'attributeId': \"new value\",\n  },\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  createIfNotExists: true,\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"3\",\n      'name': \"Cyril\",\n    },\n    {\n      'objectID': \"4\",\n      'name': \"David\",\n    },\n  ],\n  createIfNotExists: false,\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  createIfNotExists: true,\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"3\",\n      'name': \"Cyril\",\n    },\n    {\n      'objectID': \"4\",\n      'name': \"David\",\n    },\n  ],\n  createIfNotExists: false,\n);"
     },
     "removeUserId": {
       "default": "final response = await client.removeUserId(\n  userID: \"uniqueID\",\n);"
@@ -650,8 +650,8 @@
       "default": "response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(\n  \"<YOUR_INDEX_NAME>\", \"uniqueID\", map[string]any{\"attributeId\": \"new value\"},\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"1\", \"name\": \"Adam\"}, map[string]any{\"objectID\": \"2\", \"name\": \"Benoit\"}},\n  search.WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"3\", \"name\": \"Cyril\"}, map[string]any{\"objectID\": \"4\", \"name\": \"David\"}},\n  search.WithCreateIfNotExists(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "call partialUpdateObjects with createIfNotExists=true": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"1\", \"name\": \"Adam\"}, map[string]any{\"objectID\": \"2\", \"name\": \"Benoit\"}},\n  search.WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "call partialUpdateObjects with createIfNotExists=false": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"3\", \"name\": \"Cyril\"}, map[string]any{\"objectID\": \"4\", \"name\": \"David\"}},\n  search.WithCreateIfNotExists(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "removeUserId": {
       "default": "response, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(\n  \"uniqueID\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -896,8 +896,8 @@
       "default": "client.partialUpdateObject(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new HashMap() {\n    {\n      put(\"attributeId\", \"new value\");\n    }\n  }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
     },
     "removeUserId": {
       "default": "client.removeUserId(\"uniqueID\");"
@@ -1142,8 +1142,8 @@
       "default": "const response = await client.partialUpdateObject({\n  indexName: 'theIndexName',\n  objectID: 'uniqueID',\n  attributesToUpdate: { attributeId: 'new value' },\n});"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  createIfNotExists: true,\n});",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n  ],\n  createIfNotExists: false,\n});"
+      "call partialUpdateObjects with createIfNotExists=true": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  createIfNotExists: true,\n});",
+      "call partialUpdateObjects with createIfNotExists=false": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n  ],\n  createIfNotExists: false,\n});"
     },
     "removeUserId": {
       "default": "const response = await client.removeUserId({ userID: 'uniqueID' });"
@@ -1388,8 +1388,8 @@
       "default": "var response = client.partialUpdateObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"uniqueID\",\n  attributesToUpdate = buildJsonObject {\n    put(\n      \"attributeId\",\n      JsonPrimitive(\"new value\"),\n    )\n  },\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"1\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Adam\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"2\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Benoit\"),\n      )\n    },\n  ),\n  createIfNotExists = true,\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"3\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Cyril\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"4\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"David\"),\n      )\n    },\n  ),\n  createIfNotExists = false,\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"1\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Adam\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"2\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Benoit\"),\n      )\n    },\n  ),\n  createIfNotExists = true,\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"3\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Cyril\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"4\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"David\"),\n      )\n    },\n  ),\n  createIfNotExists = false,\n)"
     },
     "removeUserId": {
       "default": "var response = client.removeUserId(\n  userID = \"uniqueID\",\n)"
@@ -1634,8 +1634,8 @@
       "default": "$response = $client->partialUpdateObject(\n    '<YOUR_INDEX_NAME>',\n    'uniqueID',\n    ['attributeId' => 'new value',\n    ],\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '3',\n            'name' => 'Cyril',\n        ],\n\n        ['objectID' => '4',\n            'name' => 'David',\n        ],\n    ],\n    false,\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '3',\n            'name' => 'Cyril',\n        ],\n\n        ['objectID' => '4',\n            'name' => 'David',\n        ],\n    ],\n    false,\n);"
     },
     "removeUserId": {
       "default": "$response = $client->removeUserId(\n    'uniqueID',\n);"
@@ -1880,8 +1880,8 @@
       "default": "response = client.partial_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_update={\n        \"attributeId\": \"new value\",\n    },\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)"
     },
     "removeUserId": {
       "default": "response = client.remove_user_id(\n    user_id=\"uniqueID\",\n)"
@@ -2126,8 +2126,8 @@
       "default": "response = client.partial_update_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\", {attributeId: \"new value\"})"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"3\", name: \"Cyril\"}, {objectID: \"4\", name: \"David\"}],\n  false\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"3\", name: \"Cyril\"}, {objectID: \"4\", name: \"David\"}],\n  false\n)"
     },
     "removeUserId": {
       "default": "response = client.remove_user_id(\"uniqueID\")"
@@ -2581,8 +2581,8 @@
       "default": "let response = try await client.partialUpdateObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"uniqueID\",\n    attributesToUpdate: [\"attributeId\": \"new value\"]\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"3\", \"name\": \"Cyril\"], [\"objectID\": \"4\", \"name\": \"David\"]],\n    createIfNotExists: false\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"3\", \"name\": \"Cyril\"], [\"objectID\": \"4\", \"name\": \"David\"]],\n    createIfNotExists: false\n)"
     },
     "removeUserId": {
       "default": "let response = try await client.removeUserId(userID: \"uniqueID\")"

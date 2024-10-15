@@ -126,7 +126,7 @@
         /// </summary>
         {{#readWriteVars}}
         {{#required}}
-        /// <param name="{{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}}">{{description}}{{^description}}{{nameInCamelCase}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{.}}){{/defaultValue}}.</param>
+        /// <param name="{{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}}">{{{description}}}{{^description}}{{nameInCamelCase}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}.</param>
         {{/required}}
         {{/readWriteVars}}
     {{#hasOnlyReadOnly}}

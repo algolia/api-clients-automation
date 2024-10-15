@@ -1242,7 +1242,7 @@ void snippetForpartialUpdateObject() async {
 //
 // call partialUpdateObjects with createIfNotExists=true
 void snippetForpartialUpdateObjects() async {
-  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1270,7 +1270,7 @@ void snippetForpartialUpdateObjects() async {
 //
 // call partialUpdateObjects with createIfNotExists=false
 void snippetForpartialUpdateObjects1() async {
-  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
