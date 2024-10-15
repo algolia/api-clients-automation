@@ -86,7 +86,12 @@ public class ModelPruner {
         }
       }
       for (CodegenParameter param : ope.allParams) {
-        CodegenModel paramType = getModel(param.baseType != null ? param.baseType : param.dataType);
+        String paramName = param.baseType != null ? param.baseType : param.dataType;
+        // php has a fully qualified name for the parameter type
+        if (paramName.contains("\\")) {
+          paramName = paramName.substring(paramName.lastIndexOf("\\") + 1);
+        }
+        CodegenModel paramType = getModel(paramName);
         if (paramType != null) {
           visitedModels.add(paramType.name);
         }
@@ -121,7 +126,8 @@ public class ModelPruner {
     String templateName = config.modelTemplateFiles().keySet().iterator().next();
 
     for (String modelName : toRemove) {
-      String filename = config.modelFilename(templateName, modelName);
+      String suffix = config.modelTemplateFiles().get(templateName);
+      String filename = config.modelFileFolder() + "/" + config.toModelFilename(modelName) + suffix;
       File file = new File(filename);
       if (file.exists()) {
         file.delete();
