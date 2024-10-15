@@ -1,3 +1,8 @@
+## [1.26.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.1...1.26.2)
+
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+
 ## [1.26.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.0...1.26.1)
 
 - [434c99f80](https://github.com/algolia/api-clients-automation/commit/434c99f80) fix(specs): use the read transporter for browse ([#3938](https://github.com/algolia/api-clients-automation/pull/3938)) by [@millotp](https://github.com/millotp/)

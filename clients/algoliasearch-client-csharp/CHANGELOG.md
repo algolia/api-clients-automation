@@ -1,3 +1,9 @@
+## [7.6.2](https://github.com/algolia/algoliasearch-client-csharp/compare/7.6.1...7.6.2)
+
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+- [95e4149a3](https://github.com/algolia/api-clients-automation/commit/95e4149a3) chore(deps): dependencies 2024-10-14 ([#3944](https://github.com/algolia/api-clients-automation/pull/3944)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [7.6.1](https://github.com/algolia/algoliasearch-client-csharp/compare/7.6.0...7.6.1)
 
 - [f516d0243](https://github.com/algolia/api-clients-automation/commit/f516d0243) fix(specs): Typos in API descriptions ([#3932](https://github.com/algolia/api-clients-automation/pull/3932)) by [@gazconroy](https://github.com/gazconroy/)

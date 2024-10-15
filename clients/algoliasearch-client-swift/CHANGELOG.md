@@ -1,3 +1,8 @@
+## [9.7.2](https://github.com/algolia/algoliasearch-client-swift/compare/9.7.1...9.7.2)
+
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+
 ## [9.7.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.7.0...9.7.1)
 
 - [06c48549b](https://github.com/algolia/api-clients-automation/commit/06c48549b) chore(swift): github releases are created by the monorepo ([#3928](https://github.com/algolia/api-clients-automation/pull/3928)) by [@Fluf22](https://github.com/Fluf22/)

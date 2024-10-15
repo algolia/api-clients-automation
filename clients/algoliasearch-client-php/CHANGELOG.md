@@ -1,3 +1,8 @@
+## [4.6.2](https://github.com/algolia/algoliasearch-client-php/compare/4.6.1...4.6.2)
+
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+
 ## [4.6.1](https://github.com/algolia/algoliasearch-client-php/compare/4.6.0...4.6.1)
 
 - [f516d0243](https://github.com/algolia/api-clients-automation/commit/f516d0243) fix(specs): Typos in API descriptions ([#3932](https://github.com/algolia/api-clients-automation/pull/3932)) by [@gazconroy](https://github.com/gazconroy/)

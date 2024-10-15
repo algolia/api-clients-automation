@@ -1,3 +1,8 @@
+## [3.5.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.5.1...3.5.2)
+
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+
 ## [3.5.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.5.0...3.5.1)
 
 - [8b343d2ee](https://github.com/algolia/api-clients-automation/commit/8b343d2ee) fix(ruby): only prefix model by client:: ([#3923](https://github.com/algolia/api-clients-automation/pull/3923)) by [@millotp](https://github.com/millotp/)
