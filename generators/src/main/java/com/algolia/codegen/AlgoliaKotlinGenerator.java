@@ -87,7 +87,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     typeMapping.put("list", "List");
     typeMapping.put("set", "Set");
     typeMapping.put("map", "Map");
-    typeMapping.put("AnyType", "Any");
+    typeMapping.put("AnyType", "JsonElement");
     typeMapping.put("object", "JsonObject"); // from kotlinx.serialization
 
     // Container types
