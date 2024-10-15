@@ -49,8 +49,6 @@ post:
                     type: string
                     description: Index from which to retrieve the records.
                     example: books
-          required:
-            - requests
   responses:
     '200':
       description: OK
