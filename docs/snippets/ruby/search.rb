@@ -1349,7 +1349,7 @@ end
 #
 # call partialUpdateObjects with createIfNotExists=true
 def snippet_for_partial_update_objects
-  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -1373,7 +1373,7 @@ end
 #
 # call partialUpdateObjects with createIfNotExists=false
 def snippet_for_partial_update_objects1
-  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 

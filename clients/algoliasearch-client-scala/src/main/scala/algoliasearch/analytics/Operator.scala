@@ -36,22 +36,22 @@ object Operator {
     override def toString = ":"
   }
   case object LessThan extends Operator {
-    override def toString = "&lt;"
+    override def toString = "<"
   }
   case object LessThanOrEqualTo extends Operator {
-    override def toString = "&lt;&#x3D;"
+    override def toString = "<="
   }
   case object Equal extends Operator {
-    override def toString = "&#x3D;"
+    override def toString = "="
   }
   case object NotEqual extends Operator {
-    override def toString = "!&#x3D;"
+    override def toString = "!="
   }
   case object GreaterThan extends Operator {
-    override def toString = "&gt;"
+    override def toString = ">"
   }
   case object GreaterThanOrEqualTo extends Operator {
-    override def toString = "&gt;&#x3D;"
+    override def toString = ">="
   }
   val values: Seq[Operator] =
     Seq(Colon, LessThan, LessThanOrEqualTo, Equal, NotEqual, GreaterThan, GreaterThanOrEqualTo)

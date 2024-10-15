@@ -24,7 +24,7 @@ class Snippet{{client}} {
     * {{{description}}}
     */
   def snippetFor{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): Unit = {
-    // >SEPARATOR {{method}} {{testName}}
+    // >SEPARATOR {{method}} {{{testName}}}
     // Initialize the client
     {{> snippets/init}}
 

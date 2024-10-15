@@ -1301,7 +1301,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientPartialUpdateObjects()
   {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -1326,7 +1326,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientPartialUpdateObjects1()
   {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 

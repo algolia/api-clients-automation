@@ -1514,7 +1514,7 @@ class SnippetSearchClient
      */
     public function snippetForPartialUpdateObjects(): void
     {
-        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1546,7 +1546,7 @@ class SnippetSearchClient
      */
     public function snippetForPartialUpdateObjects1(): void
     {
-        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
