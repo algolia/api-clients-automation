@@ -12,7 +12,7 @@ final class {{client}}Snippet {
   //
   // {{{description}}}
   func snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() async throws {
-    // >SEPARATOR {{method}} {{testName}}
+    // >SEPARATOR {{method}} {{{testName}}}
     // Initialize the client
     {{> snippets/init}}
 
