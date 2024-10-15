@@ -14,7 +14,7 @@
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend",
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http",
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
-    "typescript": "5.6.2"
+    "typescript": "5.6.3"
   },
   "packageManager": "yarn@4.5.0"
 }

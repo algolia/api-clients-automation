@@ -2138,9 +2138,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"instantsearch.js@npm:4.74.2":
-  version: 4.74.2
-  resolution: "instantsearch.js@npm:4.74.2"
+"instantsearch.js@npm:4.75.0":
+  version: 4.75.0
+  resolution: "instantsearch.js@npm:4.75.0"
   dependencies:
     "@algolia/events": "npm:^4.0.1"
     "@types/dom-speech-recognition": "npm:^0.0.1"
@@ -2156,7 +2156,7 @@ __metadata:
     search-insights: "npm:^2.15.0"
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
-  checksum: 10/7b4e6a3ad19e5aa8546ebef7362f0c8834b2a9d854b50dd6e1fb311aabfa0a61c53a6b3a87024d7a1115444fa022dab2c6a9e263b8276d142e9f50eb0e1a05c0
+  checksum: 10/1c516ba4fe0d02a294997c4968259646e19de69b4a6b8ac2fd1cdd9577cc4e936c9f9ca53382fcb638bb9a56b3f9339586d9e43a075956573e6371f04f93b6c7
   languageName: node
   linkType: hard
 
@@ -2259,13 +2259,13 @@ __metadata:
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     https-browserify: "npm:^1.0.0"
     instantsearch.css: "npm:8.5.1"
-    instantsearch.js: "npm:4.74.2"
+    instantsearch.js: "npm:4.75.0"
     parcel: "npm:2.12.0"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
-    react-instantsearch: "npm:7.13.2"
+    react-instantsearch: "npm:7.13.3"
     stream-http: "npm:^3.1.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     url: "npm:^0.11.0"
   languageName: unknown
   linkType: soft
@@ -3009,34 +3009,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-instantsearch-core@npm:7.13.2":
-  version: 7.13.2
-  resolution: "react-instantsearch-core@npm:7.13.2"
+"react-instantsearch-core@npm:7.13.3":
+  version: 7.13.3
+  resolution: "react-instantsearch-core@npm:7.13.3"
   dependencies:
     "@babel/runtime": "npm:^7.1.2"
     algoliasearch-helper: "npm:3.22.5"
-    instantsearch.js: "npm:4.74.2"
+    instantsearch.js: "npm:4.75.0"
     use-sync-external-store: "npm:^1.0.0"
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
     react: ">= 16.8.0 < 19"
-  checksum: 10/870bd7b0f3f7bc4b1ecc862ace1959b9c26ce2d4b871da8f0a6849e3e4f6bffeb47d102267d45e28deeb5d9002d8af9ab1f9e1b8b4850b0157f595d2c67bf848
+  checksum: 10/0f1bd12d8899148b1b5bae32ccf576a7b546c0cb17b927ffb083597f22478097c9bc2501a191e66e99cd6d5ba32f3c324f2cbcebcde1b01b6352bc062ab8bdf7
   languageName: node
   linkType: hard
 
-"react-instantsearch@npm:7.13.2":
-  version: 7.13.2
-  resolution: "react-instantsearch@npm:7.13.2"
+"react-instantsearch@npm:7.13.3":
+  version: 7.13.3
+  resolution: "react-instantsearch@npm:7.13.3"
   dependencies:
     "@babel/runtime": "npm:^7.1.2"
     instantsearch-ui-components: "npm:0.9.0"
-    instantsearch.js: "npm:4.74.2"
-    react-instantsearch-core: "npm:7.13.2"
+    instantsearch.js: "npm:4.75.0"
+    react-instantsearch-core: "npm:7.13.3"
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
     react: ">= 16.8.0 < 19"
     react-dom: ">= 16.8.0 < 19"
-  checksum: 10/b28cac01ccec73e07a41b9c310f225897c6fb59fc5c01fa02be1c2c26c042059d1c35efed186e7d1cab166673a262d61020587ed23ec5c8a054c19bf7d577dc1
+  checksum: 10/dea393ddc77d693df6ddc8aaec2ddb0da8dd87ec9d2c65bece1a4cf8db00ae62421db94b5ef52fd54dd22d5cb035244b36a2360ff21f12d254d0cea872edaa0e
   languageName: node
   linkType: hard
 
@@ -3395,23 +3395,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.6.2":
-  version: 5.6.2
-  resolution: "typescript@npm:5.6.2"
+"typescript@npm:5.6.3":
+  version: 5.6.3
+  resolution: "typescript@npm:5.6.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/f95365d4898f357823e93d334ecda9fcade54f009b397c7d05b7621cd9e865981033cf89ccde0f3e3a7b73b1fdbae18e92bc77db237b43e912f053fef0f9a53b
+  checksum: 10/c328e418e124b500908781d9f7b9b93cf08b66bf5936d94332b463822eea2f4e62973bfb3b8a745fdc038785cb66cf59d1092bac3ec2ac6a3e5854687f7833f1
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>":
-  version: 5.6.2
-  resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"
+"typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>":
+  version: 5.6.3
+  resolution: "typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/8bfc7ca0d9feca4c3fcbd6c70741abfcd714197d6448e68225ae71e462447d904d3bfba49759a8fbe4956d87f054e2d346833c8349c222daa594a2626d4e1be8
+  checksum: 10/00504c01ee42d470c23495426af07512e25e6546bce7e24572e72a9ca2e6b2e9bea63de4286c3cfea644874da1467dcfca23f4f98f7caf20f8b03c0213bb6837
   languageName: node
   linkType: hard
 
