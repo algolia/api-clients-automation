@@ -9,7 +9,7 @@ part 'trending_facet_hit.g.dart';
 final class TrendingFacetHit {
   /// Returns a new [TrendingFacetHit] instance.
   const TrendingFacetHit({
-    required this.score,
+    this.score,
     required this.facetName,
     required this.facetValue,
   });
@@ -18,7 +18,7 @@ final class TrendingFacetHit {
   // minimum: 0
   // maximum: 100
   @JsonKey(name: r'_score')
-  final double score;
+  final double? score;
 
   /// Facet attribute. To be used in combination with `facetValue`. If specified, only recommendations matching the facet filter will be returned.
   @JsonKey(name: r'facetName')
