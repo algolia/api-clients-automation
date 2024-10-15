@@ -14,7 +14,6 @@ Responses:
       application/json:
         schema:
           type: object
-          x-is-generic: true
   '400':
     $ref: '../responses/BadRequest.yml'
   '402':

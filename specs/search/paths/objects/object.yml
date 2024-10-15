@@ -35,7 +35,6 @@ get:
           schema:
             type: object
             description: The requested record.
-            x-is-generic: true
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
