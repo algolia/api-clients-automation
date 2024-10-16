@@ -15,7 +15,7 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     {{{description}}}
     */
     
-    // >SEPARATOR {{method}} {{testName}}
+    // >SEPARATOR {{method}} {{{testName}}}
     // Initialize the client{{#hasRegionalHost}} with your application region, eg. {{clientPrefix}}.ALGOLIA_APPLICATION_REGION{{/hasRegionalHost}}
     {{> snippets/init}}
 

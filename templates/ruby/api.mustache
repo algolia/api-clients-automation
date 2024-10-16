@@ -77,7 +77,7 @@ module {{moduleName}}
 
 {{#operation}}
     {{#notes}}
-    # {{.}}
+    # {{{.}}}
     {{/notes}}
     {{#vendorExtensions}}
     {{#x-acl.0}}
@@ -89,10 +89,10 @@ module {{moduleName}}
     {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}} (required)
 {{/required}}
 {{^required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
 {{/required}}
 {{/allParams}}
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -153,10 +153,10 @@ module {{moduleName}}
     {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}} (required)
 {{/required}}
 {{^required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
 {{/required}}
 {{/allParams}}
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

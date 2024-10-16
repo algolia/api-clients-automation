@@ -11,7 +11,7 @@ import type { RequestOptions } from '@algolia/client-common';
 //
 // {{{description}}}
 export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): {{#isAsyncMethod}}Promise<void>{{/isAsyncMethod}}{{^isAsyncMethod}}void{{/isAsyncMethod}} {
-  // >SEPARATOR {{method}} {{testName}}
+  // >SEPARATOR {{method}} {{{testName}}}
   // Initialize the client
   // {{#hasRegionalHost}}Replace '{{defaultRegion}}' with your Algolia Application Region{{/hasRegionalHost}}
   {{> snippets/init}}

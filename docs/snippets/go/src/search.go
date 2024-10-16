@@ -1782,7 +1782,7 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 	   call partialUpdateObjects with createIfNotExists=true
 	*/
 
-	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1812,7 +1812,7 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 	   call partialUpdateObjects with createIfNotExists=false
 	*/
 
-	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
