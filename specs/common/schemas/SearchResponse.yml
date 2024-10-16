@@ -49,7 +49,7 @@ baseSearchResponse:
       title: appliedRules
       type: array
       items:
-        additionalProperties: true
+        type: object
     exhaustiveFacetsCount:
       type: boolean
       description: See the `facetsCount` field of the `exhaustive` object in the response.

@@ -249,6 +249,11 @@
         "camelCaseAttributes": [
           "algolia"
         ],
+        "customNormalization": {
+          "algolia": {
+            "aloglia": "aglolia"
+          }
+        },
         "customRanking": [
           "algolia"
         ],
@@ -384,6 +389,11 @@
         "camelCaseAttributes": [
           "algolia"
         ],
+        "customNormalization": {
+          "algolia": {
+            "aloglia": "aglolia"
+          }
+        },
         "customRanking": [
           "algolia"
         ],
