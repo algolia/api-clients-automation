@@ -15,7 +15,6 @@ synonymHit:
       example: 'synonymID'
     type:
       $ref: './parameters.yml#/SynonymType'
-
     synonyms:
       type: array
       items:

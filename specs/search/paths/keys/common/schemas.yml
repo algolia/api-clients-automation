@@ -109,7 +109,7 @@ baseGetApiKeyResponse:
     createdAt:
       $ref: '../../../../common/responses/common.yml#/createdAtTimestamp'
   required:
-    - key
+    - value
     - createdAt
 
 addApiKeyResponse:
