@@ -73,7 +73,7 @@ import algoliasearch.search.Acl._
   *   Duration (in seconds) after which the API key expires. By default, API keys don't expire.
   */
 case class GetApiKeyResponse(
-    value: Option[String] = scala.None,
+    value: String,
     createdAt: Long,
     acl: Seq[Acl],
     description: Option[String] = scala.None,

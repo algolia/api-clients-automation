@@ -82,7 +82,7 @@ case class Variant(
     conversionCount: Int,
     conversionRate: Option[Double] = scala.None,
     currencies: Option[Map[String, Currency]] = scala.None,
-    description: String,
+    description: Option[String] = scala.None,
     estimatedSampleSize: Option[Int] = scala.None,
     filterEffects: Option[FilterEffects] = scala.None,
     index: String,

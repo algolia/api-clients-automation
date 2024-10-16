@@ -48,7 +48,7 @@ public class GetApiKeyResponse {
   }
 
   /** API key. */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getValue() {
     return value;
   }

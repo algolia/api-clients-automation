@@ -30,6 +30,9 @@ public class SearchResponse<T> implements SearchResult<T> {
   @JsonProperty("exhaustive")
   private Exhaustive exhaustive;
 
+  @JsonProperty("appliedRules")
+  private List<Object> appliedRules;
+
   @JsonProperty("exhaustiveFacetsCount")
   private Boolean exhaustiveFacetsCount;
 
@@ -182,6 +185,25 @@ public class SearchResponse<T> implements SearchResult<T> {
   @javax.annotation.Nullable
   public Exhaustive getExhaustive() {
     return exhaustive;
+  }
+
+  public SearchResponse<T> setAppliedRules(List<Object> appliedRules) {
+    this.appliedRules = appliedRules;
+    return this;
+  }
+
+  public SearchResponse<T> addAppliedRules(Object appliedRulesItem) {
+    if (this.appliedRules == null) {
+      this.appliedRules = new ArrayList<>();
+    }
+    this.appliedRules.add(appliedRulesItem);
+    return this;
+  }
+
+  /** Rules applied to the query. */
+  @javax.annotation.Nullable
+  public List<Object> getAppliedRules() {
+    return appliedRules;
   }
 
   public SearchResponse<T> setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
@@ -550,6 +572,7 @@ public class SearchResponse<T> implements SearchResult<T> {
       Objects.equals(this.aroundLatLng, searchResponse.aroundLatLng) &&
       Objects.equals(this.automaticRadius, searchResponse.automaticRadius) &&
       Objects.equals(this.exhaustive, searchResponse.exhaustive) &&
+      Objects.equals(this.appliedRules, searchResponse.appliedRules) &&
       Objects.equals(this.exhaustiveFacetsCount, searchResponse.exhaustiveFacetsCount) &&
       Objects.equals(this.exhaustiveNbHits, searchResponse.exhaustiveNbHits) &&
       Objects.equals(this.exhaustiveTypo, searchResponse.exhaustiveTypo) &&
@@ -589,6 +612,7 @@ public class SearchResponse<T> implements SearchResult<T> {
       aroundLatLng,
       automaticRadius,
       exhaustive,
+      appliedRules,
       exhaustiveFacetsCount,
       exhaustiveNbHits,
       exhaustiveTypo,
@@ -630,6 +654,7 @@ public class SearchResponse<T> implements SearchResult<T> {
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
     sb.append("    automaticRadius: ").append(toIndentedString(automaticRadius)).append("\n");
     sb.append("    exhaustive: ").append(toIndentedString(exhaustive)).append("\n");
+    sb.append("    appliedRules: ").append(toIndentedString(appliedRules)).append("\n");
     sb.append("    exhaustiveFacetsCount: ").append(toIndentedString(exhaustiveFacetsCount)).append("\n");
     sb.append("    exhaustiveNbHits: ").append(toIndentedString(exhaustiveNbHits)).append("\n");
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");

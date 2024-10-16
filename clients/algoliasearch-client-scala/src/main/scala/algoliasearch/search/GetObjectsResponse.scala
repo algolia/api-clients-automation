@@ -39,5 +39,5 @@ package algoliasearch.search
   *   Retrieved records.
   */
 case class GetObjectsResponse(
-    results: Seq[Any]
+    results: Option[Seq[Any]] = scala.None
 )

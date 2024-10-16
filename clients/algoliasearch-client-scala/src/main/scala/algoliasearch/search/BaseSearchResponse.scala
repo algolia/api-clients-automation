@@ -46,6 +46,8 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   *   Computed geographical location.
   * @param automaticRadius
   *   Distance from a central coordinate provided by `aroundLatLng`.
+  * @param appliedRules
+  *   Rules applied to the query.
   * @param exhaustiveFacetsCount
   *   See the `facetsCount` field of the `exhaustive` object in the response.
   * @param exhaustiveNbHits
@@ -92,6 +94,7 @@ case class BaseSearchResponse(
     aroundLatLng: Option[String] = scala.None,
     automaticRadius: Option[String] = scala.None,
     exhaustive: Option[Exhaustive] = scala.None,
+    appliedRules: Option[Seq[Any]] = scala.None,
     exhaustiveFacetsCount: Option[Boolean] = scala.None,
     exhaustiveNbHits: Option[Boolean] = scala.None,
     exhaustiveTypo: Option[Boolean] = scala.None,
@@ -131,6 +134,7 @@ class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
             "aroundLatLng",
             "automaticRadius",
             "exhaustive",
+            "appliedRules",
             "exhaustiveFacetsCount",
             "exhaustiveNbHits",
             "exhaustiveTypo",

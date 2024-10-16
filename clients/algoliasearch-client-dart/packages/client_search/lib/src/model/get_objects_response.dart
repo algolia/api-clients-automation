@@ -9,12 +9,12 @@ part 'get_objects_response.g.dart';
 final class GetObjectsResponse {
   /// Returns a new [GetObjectsResponse] instance.
   const GetObjectsResponse({
-    required this.results,
+    this.results,
   });
 
   /// Retrieved records.
   @JsonKey(name: r'results')
-  final List<Object> results;
+  final List<Object>? results;
 
   @override
   bool operator ==(Object other) =>

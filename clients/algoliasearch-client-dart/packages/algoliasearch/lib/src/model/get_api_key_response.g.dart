@@ -12,7 +12,7 @@ GetApiKeyResponse _$GetApiKeyResponseFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = GetApiKeyResponse(
-          value: $checkedConvert('value', (v) => v as String?),
+          value: $checkedConvert('value', (v) => v as String),
           createdAt: $checkedConvert('createdAt', (v) => (v as num).toInt()),
           acl: $checkedConvert(
               'acl',
@@ -37,7 +37,11 @@ GetApiKeyResponse _$GetApiKeyResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$GetApiKeyResponseToJson(GetApiKeyResponse instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'value': instance.value,
+    'createdAt': instance.createdAt,
+    'acl': instance.acl.map((e) => e.toJson()).toList(),
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -45,9 +49,6 @@ Map<String, dynamic> _$GetApiKeyResponseToJson(GetApiKeyResponse instance) {
     }
   }
 
-  writeNotNull('value', instance.value);
-  val['createdAt'] = instance.createdAt;
-  val['acl'] = instance.acl.map((e) => e.toJson()).toList();
   writeNotNull('description', instance.description);
   writeNotNull('indexes', instance.indexes);
   writeNotNull('maxHitsPerQuery', instance.maxHitsPerQuery);

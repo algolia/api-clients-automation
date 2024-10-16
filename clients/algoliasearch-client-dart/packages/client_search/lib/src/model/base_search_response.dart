@@ -19,6 +19,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
     this.aroundLatLng,
     this.automaticRadius,
     this.exhaustive,
+    this.appliedRules,
     this.exhaustiveFacetsCount,
     this.exhaustiveNbHits,
     this.exhaustiveTypo,
@@ -61,6 +62,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
 
   @JsonKey(name: r'exhaustive')
   final Exhaustive? exhaustive;
+
+  /// Rules applied to the query.
+  @JsonKey(name: r'appliedRules')
+  final List<Object>? appliedRules;
 
   /// See the `facetsCount` field of the `exhaustive` object in the response.
   @Deprecated('exhaustiveFacetsCount has been deprecated')
@@ -152,6 +157,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
           other.aroundLatLng == aroundLatLng &&
           other.automaticRadius == automaticRadius &&
           other.exhaustive == exhaustive &&
+          other.appliedRules == appliedRules &&
           other.exhaustiveFacetsCount == exhaustiveFacetsCount &&
           other.exhaustiveNbHits == exhaustiveNbHits &&
           other.exhaustiveTypo == exhaustiveTypo &&
@@ -181,6 +187,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       aroundLatLng.hashCode +
       automaticRadius.hashCode +
       exhaustive.hashCode +
+      appliedRules.hashCode +
       exhaustiveFacetsCount.hashCode +
       exhaustiveNbHits.hashCode +
       exhaustiveTypo.hashCode +
@@ -214,6 +221,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       aroundLatLng: instance.aroundLatLng,
       automaticRadius: instance.automaticRadius,
       exhaustive: instance.exhaustive,
+      appliedRules: instance.appliedRules,
       exhaustiveFacetsCount: instance.exhaustiveFacetsCount,
       exhaustiveNbHits: instance.exhaustiveNbHits,
       exhaustiveTypo: instance.exhaustiveTypo,

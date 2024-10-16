@@ -2413,6 +2413,12 @@ components:
                 default) to be processed (this can happen when a lot of typo
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
+        appliedRules:
+          description: Rules applied to the query.
+          title: appliedRules
+          type: array
+          items:
+            type: object
         exhaustiveFacetsCount:
           type: boolean
           description: >-
@@ -3395,7 +3401,7 @@ components:
         createdAt:
           $ref: '#/components/schemas/createdAtTimestamp'
       required:
-        - key
+        - value
         - createdAt
     acl:
       description: Access control list permissions.

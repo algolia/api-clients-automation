@@ -2888,7 +2888,6 @@ components:
         - searchCount
         - noResultCount
         - index
-        - description
         - conversionCount
         - clickCount
         - addToCartCount
@@ -2958,8 +2957,6 @@ components:
           $ref: '#/components/schemas/EmptySearch'
         minimumDetectableEffect:
           $ref: '#/components/schemas/MinimumDetectableEffect'
-      required:
-        - outliers
     ABTest:
       type: object
       additionalProperties: false

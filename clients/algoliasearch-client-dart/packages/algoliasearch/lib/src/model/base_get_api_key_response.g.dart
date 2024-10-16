@@ -13,7 +13,7 @@ BaseGetApiKeyResponse _$BaseGetApiKeyResponseFromJson(
       json,
       ($checkedConvert) {
         final val = BaseGetApiKeyResponse(
-          value: $checkedConvert('value', (v) => v as String?),
+          value: $checkedConvert('value', (v) => v as String),
           createdAt: $checkedConvert('createdAt', (v) => (v as num).toInt()),
         );
         return val;
@@ -21,16 +21,8 @@ BaseGetApiKeyResponse _$BaseGetApiKeyResponseFromJson(
     );
 
 Map<String, dynamic> _$BaseGetApiKeyResponseToJson(
-    BaseGetApiKeyResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('value', instance.value);
-  val['createdAt'] = instance.createdAt;
-  return val;
-}
+        BaseGetApiKeyResponse instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'createdAt': instance.createdAt,
+    };
