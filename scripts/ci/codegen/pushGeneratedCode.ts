@@ -53,21 +53,26 @@ export async function pushGeneratedCode(): Promise<void> {
     return;
   }
 
-  let baseMessage = IS_RELEASE_COMMIT && isMainBranch ? text.commitReleaseMessage : `%s ${text.commitEndMessage}`;
-
-  const commitMessage = await run(
-    `git show -s ${baseBranch} --format="${baseMessage}
+  const skipCi = isMainBranch ? '[skip ci]' : '';
+  let message = await run(`git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`);
+  const authors = await run(
+    `git show -s ${baseBranch} --format="
 
 
 Co-authored-by: %an <%ae>
-skip-checks: true
-%(trailers:key=Co-authored-by)
-%(trailers:key=skip-checks)"`,
+%(trailers:key=Co-authored-by)"`,
   );
+
+  if (IS_RELEASE_COMMIT && isMainBranch) {
+    console.log('Processing release commit');
+    message = `${text.commitReleaseMessage} [skip ci]`;
+  }
+
+  message += authors;
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
   await run('git add .');
-  await run(`git commit -m "${commitMessage.replaceAll('"', '\\"')}" --cleanup=verbatim`);
+  await run(`git commit -m "${message.replaceAll('"', '\\"')}"`);
   await run(`git push origin ${branchToPush}`);
 
   setOutput('GENERATED_COMMIT', await run('git rev-parse HEAD'));
