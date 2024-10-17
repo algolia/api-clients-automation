@@ -7,11 +7,10 @@
   * application ID. - `x-algolia-api-key`. An API key with the necessary permissions to make the request. The required
   * access control list (ACL) to make a request is listed in each endpoint's reference. You can find your application ID
   * and API key in the [Algolia dashboard](https://dashboard.algolia.com/account). ## Request format Request bodies must
-  * be JSON objects. ## Response status and errors Response bodies are JSON objects. Deleting a user token returns an
-  * empty response body with rate-limiting information as headers. Successful responses return a `2xx` status. Client
-  * errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
-  * property with more information. ## Version The current version of the Ingestion API is version 1, as indicated by
-  * the `/1/` in each endpoint's URL.
+  * be JSON objects. ## Response status and errors Response bodies are JSON objects. Successful responses return a `2xx`
+  * status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a
+  * `message` property with more information. ## Version The current version of the Ingestion API is version 1, as
+  * indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *

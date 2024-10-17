@@ -54,9 +54,6 @@ info:
 
     Response bodies are JSON objects.
 
-    Deleting a user token returns an empty response body with rate-limiting
-    information as headers.
-
 
     Successful responses return a `2xx` status. Client errors return a `4xx`
     status. Server errors are indicated by a `5xx` status.
