@@ -202,9 +202,7 @@ jobs:
         if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: |
           cd clients/algoliasearch-client-javascript/packages
-          ls | grep -v -E "(logger-console|client-common|requester-*|algoliasearch)" | xargs rm -rf
-          cd algoliasearch
-          ls | grep -v -E "__tests__" | xargs rm -rf
+          ls | grep -v -E "(logger-console|client-common|requester-*)" | xargs rm -rf src model builds dist __tests__ || true
 
       - name: Setup
         uses: ./.github/actions/setup
