@@ -61,8 +61,8 @@ export async function pushGeneratedCode(): Promise<void> {
 
 Co-authored-by: %an <%ae>
 skip-checks: true
-%(trailers:key=skip-checks)
-%(trailers:key=Co-authored-by)"`,
+%(trailers:key=Co-authored-by)
+%(trailers:key=skip-checks)"`,
   );
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
