@@ -29,8 +29,6 @@ import algoliasearch.ingestion.EventType._
   *   Universally unique identifier (UUID) of an event.
   * @param runID
   *   Universally unique identifier (UUID) of a task run.
-  * @param parentID
-  *   The parent event, the cause of this event.
   * @param batchSize
   *   The extracted record batch size.
   * @param publishedAt
@@ -39,7 +37,6 @@ import algoliasearch.ingestion.EventType._
 case class Event(
     eventID: String,
     runID: String,
-    parentID: Option[String] = scala.None,
     status: EventStatus,
     `type`: EventType,
     batchSize: Int,

@@ -18,9 +18,6 @@ public class Event {
   @JsonProperty("runID")
   private String runID;
 
-  @JsonProperty("parentID")
-  private String parentID;
-
   @JsonProperty("status")
   private EventStatus status;
 
@@ -56,17 +53,6 @@ public class Event {
   @javax.annotation.Nonnull
   public String getRunID() {
     return runID;
-  }
-
-  public Event setParentID(String parentID) {
-    this.parentID = parentID;
-    return this;
-  }
-
-  /** The parent event, the cause of this event. */
-  @javax.annotation.Nullable
-  public String getParentID() {
-    return parentID;
   }
 
   public Event setStatus(EventStatus status) {
@@ -144,7 +130,6 @@ public class Event {
     return (
       Objects.equals(this.eventID, event.eventID) &&
       Objects.equals(this.runID, event.runID) &&
-      Objects.equals(this.parentID, event.parentID) &&
       Objects.equals(this.status, event.status) &&
       Objects.equals(this.type, event.type) &&
       Objects.equals(this.batchSize, event.batchSize) &&
@@ -155,7 +140,7 @@ public class Event {
 
   @Override
   public int hashCode() {
-    return Objects.hash(eventID, runID, parentID, status, type, batchSize, data, publishedAt);
+    return Objects.hash(eventID, runID, status, type, batchSize, data, publishedAt);
   }
 
   @Override
@@ -164,7 +149,6 @@ public class Event {
     sb.append("class Event {\n");
     sb.append("    eventID: ").append(toIndentedString(eventID)).append("\n");
     sb.append("    runID: ").append(toIndentedString(runID)).append("\n");
-    sb.append("    parentID: ").append(toIndentedString(parentID)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    batchSize: ").append(toIndentedString(batchSize)).append("\n");
