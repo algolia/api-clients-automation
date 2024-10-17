@@ -2193,7 +2193,7 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
-     * search with minimal parameters
+     * search with searchParams
      */
     public function snippetForSearchSingleIndex(): void
     {
@@ -2204,6 +2204,11 @@ class SnippetSearchClient
         // Call the API
         $response = $client->searchSingleIndex(
             '<YOUR_INDEX_NAME>',
+            ['query' => 'myQuery',
+                'facetFilters' => [
+                    'tags:algolia',
+                ],
+            ],
         );
 
         // >LOG

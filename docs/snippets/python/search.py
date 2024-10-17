@@ -2247,7 +2247,7 @@ def snippet_for_search_single_index():
     """
     Snippet for the searchSingleIndex method.
 
-    search with minimal parameters
+    search with searchParams
     """
     # >SEPARATOR searchSingleIndex default
     # Initialize the client
@@ -2257,6 +2257,12 @@ def snippet_for_search_single_index():
     # Call the API
     response = client.search_single_index(
         index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "myQuery",
+            "facetFilters": [
+                "tags:algolia",
+            ],
+        },
     )
 
     # >LOG

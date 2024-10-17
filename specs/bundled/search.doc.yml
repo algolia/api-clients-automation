@@ -1297,8 +1297,18 @@ paths:
 
             // Call the API
 
-            var response = await
-            client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
+            var response = await client.SearchSingleIndexAsync<Hit>(
+              "<YOUR_INDEX_NAME>",
+              new SearchParams(
+                new SearchParamsObject
+                {
+                  Query = "myQuery",
+                  FacetFilters = new FacetFilters(
+                    new List<FacetFilters> { new FacetFilters("tags:algolia") }
+                  ),
+                }
+              )
+            );
 
             // >LOG
         - lang: dart
@@ -1311,6 +1321,12 @@ paths:
             // Call the API
             final response = await client.searchSingleIndex(
               indexName: "<YOUR_INDEX_NAME>",
+              searchParams: SearchParamsObject(
+                query: "myQuery",
+                facetFilters: [
+                  "tags:algolia",
+                ],
+              ),
             );
             // >LOG
         - lang: go
@@ -1332,8 +1348,9 @@ paths:
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
               "<YOUR_INDEX_NAME>",
-            ))
-
+            ).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+              search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+                []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1356,7 +1373,11 @@ paths:
 
             // Call the API
 
-            client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+            client.searchSingleIndex(
+              "<YOUR_INDEX_NAME>",
+              new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
+              Hit.class
+            );
 
             // >LOG
         - lang: javascript
@@ -1372,8 +1393,10 @@ paths:
 
             // Call the API
 
-            const response = await client.searchSingleIndex({ indexName:
-            'indexName' });
+            const response = await client.searchSingleIndex({
+              indexName: 'indexName',
+              searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+            });
 
 
             // >LOG
@@ -1394,6 +1417,10 @@ paths:
 
             var response = client.searchSingleIndex(
               indexName = "<YOUR_INDEX_NAME>",
+              searchParams = SearchParamsObject(
+                query = "myQuery",
+                facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
+              ),
             )
 
 
@@ -1415,6 +1442,11 @@ paths:
 
             $response = $client->searchSingleIndex(
                 '<YOUR_INDEX_NAME>',
+                ['query' => 'myQuery',
+                    'facetFilters' => [
+                        'tags:algolia',
+                    ],
+                ],
             );
 
 
@@ -1439,6 +1471,12 @@ paths:
 
             response = client.search_single_index(
                 index_name="<YOUR_INDEX_NAME>",
+                search_params={
+                    "query": "myQuery",
+                    "facetFilters": [
+                        "tags:algolia",
+                    ],
+                },
             )
 
 
@@ -1458,7 +1496,10 @@ paths:
 
             # Call the API
 
-            response = client.search_single_index("<YOUR_INDEX_NAME>")
+            response = client.search_single_index(
+              "<YOUR_INDEX_NAME>",
+              Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+            )
 
 
             # >LOG
@@ -1483,7 +1524,13 @@ paths:
             // Call the API
 
             val response = client.searchSingleIndex(
-              indexName = "<YOUR_INDEX_NAME>"
+              indexName = "<YOUR_INDEX_NAME>",
+              searchParams = Some(
+                SearchParamsObject(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+                )
+              )
             )
 
 
@@ -1504,7 +1551,13 @@ paths:
             // Call the API
 
             let response: SearchResponse<Hit> = try await
-            client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
+            client.searchSingleIndex(
+                indexName: "<YOUR_INDEX_NAME>",
+                searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                    query: "myQuery",
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
+                ))
+            )
 
             // >LOG
         - lang: cURL

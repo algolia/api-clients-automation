@@ -2455,7 +2455,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
-	   search with minimal parameters
+	   search with searchParams
 	*/
 
 	// >SEPARATOR searchSingleIndex default
@@ -2469,7 +2469,9 @@ func SnippetForSearchSingleIndexOfSearch() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>",
-	))
+	).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+			[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

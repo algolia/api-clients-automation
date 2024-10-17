@@ -2036,6 +2036,10 @@ class SnippetSearchClient {
     // Call the API
     var response = client.searchSingleIndex(
       indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        query = "myQuery",
+        facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
+      ),
     )
 
     // >LOG
