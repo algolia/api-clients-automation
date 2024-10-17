@@ -53,14 +53,10 @@ export async function pushGeneratedCode(): Promise<void> {
     return;
   }
 
-  let baseMessage = `%s ${text.commitEndMessage}`;
-  if (IS_RELEASE_COMMIT || isMainBranch) {
-    console.log('Processing release commit');
-    baseMessage = `${text.commitReleaseMessage} [skip ci]`;
-  }
+  let baseMessage = IS_RELEASE_COMMIT && isMainBranch ? text.commitReleaseMessage : `%s ${text.commitEndMessage}`;
 
   const commitMessage = await run(
-    `git show -s ${baseBranch} --format="${baseMessage}
+    `git show -s ${baseBranch} --format="${baseMessage} [skip-ci]
 
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)"`,
