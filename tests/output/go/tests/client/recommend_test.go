@@ -107,7 +107,7 @@ func TestRecommendcommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.5.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.5.2\).*`), echo.Header.Get("User-Agent"))
 }
 
 // calls api with default read timeouts
