@@ -56,9 +56,10 @@ export async function pushGeneratedCode(): Promise<void> {
   let baseMessage = IS_RELEASE_COMMIT && isMainBranch ? text.commitReleaseMessage : `%s ${text.commitEndMessage}`;
 
   const commitMessage = await run(
-    `git show -s ${baseBranch} --format="${baseMessage} [skip-ci]
+    `git show -s ${baseBranch} --format="${baseMessage}
 
 Co-authored-by: %an <%ae>
+%(trailers:key=skip-checks)"
 %(trailers:key=Co-authored-by)"`,
   );
 
