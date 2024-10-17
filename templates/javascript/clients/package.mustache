@@ -11,7 +11,7 @@
     "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
     "clean": "rm -rf ./dist || true",
     {{#isAlgoliasearchClient}}
-    "test": "vitest --run",
+    "test": "vitest --run --no-file-parallelism",
     {{/isAlgoliasearchClient}}
     "test:bundle": "publint . && attw --pack ."
   },
