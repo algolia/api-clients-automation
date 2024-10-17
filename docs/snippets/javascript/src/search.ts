@@ -1681,7 +1681,7 @@ export async function snippetForSearchRules(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
-// search with minimal parameters
+// search with searchParams
 export async function snippetForSearchSingleIndex(): Promise<void> {
   // >SEPARATOR searchSingleIndex default
   // Initialize the client
@@ -1689,7 +1689,10 @@ export async function snippetForSearchSingleIndex(): Promise<void> {
   const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
-  const response = await client.searchSingleIndex({ indexName: 'indexName' });
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+  });
 
   // >LOG
   // use typed response

@@ -1834,7 +1834,7 @@ void snippetForsearchRules() async {
 
 // Snippet for the searchSingleIndex method.
 //
-// search with minimal parameters
+// search with searchParams
 void snippetForsearchSingleIndex() async {
   // >SEPARATOR searchSingleIndex default
   // Initialize the client
@@ -1844,6 +1844,12 @@ void snippetForsearchSingleIndex() async {
   // Call the API
   final response = await client.searchSingleIndex(
     indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "myQuery",
+      facetFilters: [
+        "tags:algolia",
+      ],
+    ),
   );
   // >LOG
   // SEPARATOR<

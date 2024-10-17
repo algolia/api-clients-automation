@@ -1618,14 +1618,18 @@ class SnippetSearchClient {
 
   // Snippet for the searchSingleIndex method.
   //
-  // search with minimal parameters
+  // search with searchParams
   void snippetForSearchSingleIndex() throws Exception {
     // >SEPARATOR searchSingleIndex default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+    client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
+      Hit.class
+    );
     // >LOG
     // SEPARATOR<
   }
