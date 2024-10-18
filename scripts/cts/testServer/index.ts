@@ -11,6 +11,7 @@ import { benchmarkServer } from './benchmark';
 import { chunkWrapperServer } from './chunkWrapper';
 import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
+import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed';
 import { timeoutServer } from './timeout';
 import { timeoutServerBis } from './timeoutBis';
 import { waitForApiKeyServer } from './waitFor';
@@ -23,6 +24,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       gzipServer(),
       timeoutServerBis(),
       replaceAllObjectsServer(),
+      replaceAllObjectsServerFailed(),
       chunkWrapperServer(),
       waitForApiKeyServer(),
       apiKeyServer(),
