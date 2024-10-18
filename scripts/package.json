@@ -41,7 +41,7 @@
     "crc": "4.3.2",
     "dotenv": "16.4.5",
     "esbuild": "0.24.0",
-    "execa": "9.4.0",
+    "execa": "9.4.1",
     "express": "4.21.1",
     "folder-hash": "4.0.4",
     "fs-extra": "11.2.0",
