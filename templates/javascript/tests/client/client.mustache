@@ -11,7 +11,7 @@ const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return {{{clientName}}}(appId, apiKey, { requester: nodeEchoRequester() }){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isSearchClient}};
+  return {{{clientName}}}(appId, apiKey{{#isSearchClient}}, { requester: nodeEchoRequester() }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
 }
 
 {{#blocksClient}}
@@ -20,8 +20,8 @@ function createClient() {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient = {{{clientName}}}('foo', 'bar', { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'us'} {{/hasRegionalHost}}){{/isSearchClient}};
-    const headerClient = {{{clientName}}}('foo', 'bar', { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'us'} {{/hasRegionalHost}}){{/isSearchClient}};
+    const qpClient =  {{{clientName}}}('foo', 'bar'{{#isSearchClient}}, { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
+    const headerClient =  {{{clientName}}}('foo', 'bar'{{#isSearchClient}}, { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',

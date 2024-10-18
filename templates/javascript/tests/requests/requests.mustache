@@ -9,7 +9,7 @@ import type { RequestOptions } from '@algolia/client-common';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = {{{clientName}}}(appId, apiKey, { requester: nodeEchoRequester() }){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}});{{/isSearchClient}};
+const client = {{{clientName}}}(appId, apiKey{{#isSearchClient}}, { requester: nodeEchoRequester() }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
 
 {{#blocksRequests}}
 describe('{{operationId}}', () => {
