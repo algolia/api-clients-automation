@@ -1,7 +1,7 @@
 // {{generationBanner}}
 import { describe, test, expect } from 'vitest';
 
-import { {{client}}, {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} } from '{{{import}}}';
+import { {{{clientName}}} } from '{{{importPackage}}}';
 
 {{#blocksBenchmark}}
 {{> tests/client/tests}}

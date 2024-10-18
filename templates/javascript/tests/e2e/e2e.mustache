@@ -6,7 +6,7 @@ import { union } from '../helpers';
 import * as dotenv from 'dotenv';
 
 dotenv.config({path:'../../.env'});
-import { {{client}} } from '{{{import}}}';
+import { {{{clientName}}} } from '{{{importPackage}}}';
 import type { RequestOptions } from '@algolia/client-common';
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
@@ -17,8 +17,7 @@ if (!process.env.{{e2eApiKey}}) {
   throw new Error("please provide an `{{e2eApiKey}}` env var for e2e tests");
 }
 
-const client = {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}, {{#hasRegionalHost}}'{{{defaultRegion}}}'{{/hasRegionalHost}});
-
+const client = {{{clientName}}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isSearchClient}};
 
 {{#blocksE2E}}
 describe('{{operationId}}', () => {
