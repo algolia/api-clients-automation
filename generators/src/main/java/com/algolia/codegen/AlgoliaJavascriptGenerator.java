@@ -181,6 +181,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         dependencies.add(dependency);
       }
       additionalProperties.put("dependencies", dependencies);
+      additionalProperties.put("searchVersion", Helpers.getPackageJsonVersion("client-search"));
 
       // Files used to generate the `lite` client
       clientName = "lite" + Helpers.API_SUFFIX;
