@@ -3,15 +3,15 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import { describe, test, expect } from 'vitest';
 
-import { {{client}}, {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} } from '{{{import}}}';
+import { {{{clientName}}} } from '{{{importPackage}}}';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
-function createClient(): {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} {
-  return {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: nodeEchoRequester() });
+function createClient() {
+  return {{{clientName}}}(appId, apiKey, { requester: nodeEchoRequester() }){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isSearchClient}};
 }
 
 {{#blocksClient}}
@@ -20,14 +20,8 @@ function createClient(): {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient = {{client}}('foo', 'bar', {{#hasRegionalHost}}'us',{{/hasRegionalHost}}{
-      authMode: 'WithinQueryParameters',
-      requester: nodeEchoRequester(),
-    });
-    const headerClient = {{client}}('foo', 'bar', {{#hasRegionalHost}}'us',{{/hasRegionalHost}}{
-      authMode: 'WithinHeaders',
-      requester: nodeEchoRequester(),
-    });
+    const qpClient = {{{clientName}}}('foo', 'bar', { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'us'} {{/hasRegionalHost}}){{/isSearchClient}};
+    const headerClient = {{{clientName}}}('foo', 'bar', { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'us'} {{/hasRegionalHost}}){{/isSearchClient}};
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',
