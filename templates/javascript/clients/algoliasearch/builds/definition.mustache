@@ -1,8 +1,6 @@
 // {{{generationBanner}}}
 
 import type { ClientOptions } from '@algolia/client-common';
-import type { SearchClient } from '@algolia/client-search';
-import { searchClient } from '@algolia/client-search';
 
 {{#dependencies}}
 import { {{{dependencyName}}}Client } from '{{{dependencyPackage}}}';
@@ -23,7 +21,9 @@ export * from './models';
 
 export type Algoliasearch = SearchClient & {
     {{#dependencies}}
+    {{#withInitMethod}}
     init{{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}: (initOptions: InitClientOptions {{#dependencyHasRegionalHosts}}& {{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}}{{/dependencyHasRegionalHosts}}) => {{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}Client;
+    {{/withInitMethod}}
     {{/dependencies}}
 };
 
@@ -49,9 +49,11 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
     },
 
     {{#dependencies}}
+    {{#withInitMethod}}
     init{{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}: (initOptions: InitClientOptions {{#dependencyHasRegionalHosts}}& {{#lambda.titlecase}}{{{dependencyName}}}RegionOptions{{/lambda.titlecase}}{{/dependencyHasRegionalHosts}}): {{#lambda.titlecase}}{{{dependencyName}}}{{/lambda.titlecase}}Client => {
       return {{{dependencyName}}}Client(initOptions.appId || appId, initOptions.apiKey || apiKey, {{#dependencyHasRegionalHosts}}initOptions.region,{{/dependencyHasRegionalHosts}}initOptions.options);
     },
+    {{/withInitMethod}}
 
     {{/dependencies}}
   }

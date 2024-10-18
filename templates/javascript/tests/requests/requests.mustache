@@ -1,7 +1,7 @@
 // {{generationBanner}}
 import { describe, test, expect } from 'vitest';
 
-import { {{client}} } from '{{{import}}}';
+import { algoliasearch } from 'algoliasearch';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
 import type { RequestOptions } from '@algolia/client-common';
@@ -9,7 +9,8 @@ import type { RequestOptions } from '@algolia/client-common';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: nodeEchoRequester() });
+const algoliasearchClient = algoliasearch(appId, apiKey);
+const client = algoliasearchClient.{{{initMethod}}}({ {{#hasRegionalHost}}region:'{{{defaultRegion}}}',{{/hasRegionalHost}} options: { requester: nodeEchoRequester() }});
 
 {{#blocksRequests}}
 describe('{{operationId}}', () => {

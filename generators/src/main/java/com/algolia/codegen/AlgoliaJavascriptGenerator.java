@@ -165,7 +165,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       List<Map<String, Object>> packages = Helpers.getClientConfigList("javascript", "clients");
       for (Map<String, Object> pkg : packages) {
         String name = ((String) pkg.get("output")).replace("clients/algoliasearch-client-javascript/packages/", "");
-        if (name.contains("search")) {
+        if (name.contains("algoliasearch")) {
           continue;
         }
 
@@ -173,6 +173,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         dependency.put("dependencyName", Helpers.createClientName((String) pkg.get("name"), "javascript"));
         dependency.put("dependencyPackage", "@algolia/" + name);
         dependency.put("dependencyVersion", Helpers.getPackageJsonVersion(name));
+        dependency.put("withInitMethod", !name.contains("search"));
         dependency.put(
           "dependencyHasRegionalHosts",
           !name.contains("search") && !name.contains("recommend") && !name.contains("monitoring")
@@ -181,7 +182,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         dependencies.add(dependency);
       }
       additionalProperties.put("dependencies", dependencies);
-      additionalProperties.put("searchVersion", Helpers.getPackageJsonVersion("client-search"));
 
       // Files used to generate the `lite` client
       clientName = "lite" + Helpers.API_SUFFIX;
