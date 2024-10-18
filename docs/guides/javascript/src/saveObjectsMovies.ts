@@ -1,6 +1,6 @@
-import { searchClient } from '@algolia/client-search';
+import { algoliasearch } from 'algoliasearch';
 
-const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
 // Fetch and index objects in Algolia
 const processRecords = async () => {

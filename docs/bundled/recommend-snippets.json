@@ -165,7 +165,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { recommendClient } from '@algolia/recommend';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "batchRecommendRules": {
       "default": "const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });"
@@ -201,7 +201,7 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "init": {
-      "default": "//\nconst client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+      "default": "//\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();"
     }
   },
   "kotlin": {
