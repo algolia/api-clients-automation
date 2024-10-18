@@ -1,4 +1,4 @@
-## [5.8.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.8.1...5.8.2)
+## [5.9.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.9.0...5.9.1)
 
 - [b076b69ba](https://github.com/algolia/api-clients-automation/commit/b076b69ba) fix(javascript): missing search dependency ([#3988](https://github.com/algolia/api-clients-automation/pull/3988)) by [@shortcuts](https://github.com/shortcuts/)
 
