@@ -2155,7 +2155,7 @@ __metadata:
     "@types/node": "npm:22.7.5"
     "@types/semver": "npm:7.5.8"
     bundlesize: "npm:0.18.2"
-    execa: "npm:9.4.0"
+    execa: "npm:9.4.1"
     lerna: "npm:8.1.8"
     rollup: "npm:4.24.0"
     semver: "npm:7.6.3"
@@ -3819,9 +3819,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:9.4.0":
-  version: 9.4.0
-  resolution: "execa@npm:9.4.0"
+"execa@npm:9.4.1":
+  version: 9.4.1
+  resolution: "execa@npm:9.4.1"
   dependencies:
     "@sindresorhus/merge-streams": "npm:^4.0.0"
     cross-spawn: "npm:^7.0.3"
@@ -3835,7 +3835,7 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     strip-final-newline: "npm:^4.0.0"
     yoctocolors: "npm:^2.0.0"
-  checksum: 10/a92be5d2b5baa84e6ef32fc38c620e1f4b5990399e88661563933ffbcd7be1ea28cc96bef059f14d45fee289061980c9452d2abb4786f4c6f492f04767387a67
+  checksum: 10/a9b4177049ffe3d998746b789f7cd22ffc5583f789c322d8fa7601f3f630b5b27b97df6e0223c0dfb04305c639e67cbb69a8375c2529b85f5e23c03081fd47c2
   languageName: node
   linkType: hard
 
