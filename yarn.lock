@@ -79,7 +79,7 @@ __metadata:
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": "npm:2.13.13"
-    "@redocly/cli": "npm:1.25.5"
+    "@redocly/cli": "npm:1.25.7"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
@@ -1569,11 +1569,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:1.25.5":
-  version: 1.25.5
-  resolution: "@redocly/cli@npm:1.25.5"
+"@redocly/cli@npm:1.25.7":
+  version: 1.25.7
+  resolution: "@redocly/cli@npm:1.25.7"
   dependencies:
-    "@redocly/openapi-core": "npm:1.25.5"
+    "@redocly/openapi-core": "npm:1.25.7"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -1587,7 +1587,7 @@ __metadata:
     pluralize: "npm:^8.0.0"
     react: "npm:^17.0.0 || ^18.2.0"
     react-dom: "npm:^17.0.0 || ^18.2.0"
-    redoc: "npm:~2.1.5"
+    redoc: "npm:~2.2.0"
     semver: "npm:^7.5.2"
     simple-websocket: "npm:^9.0.0"
     styled-components: "npm:^6.0.7"
@@ -1595,7 +1595,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/050bef62300bcc581e80cb65d63611a8fe1744b1e3cf2c4c12e22b6c8634456a25ffce0d662ba8b2776564b53bc4846281938414637eadd518b35cdc77f48766
+  checksum: 10/9cb2f564dc023d826840ec331bec60889aac260edca2d6071e6d827b849a377f0cbdfb486506f878a09eca50c4509c5c99d12086cc51813195df4b569882c057
   languageName: node
   linkType: hard
 
@@ -1606,7 +1606,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:1.25.5, @redocly/openapi-core@npm:^1.4.0":
+"@redocly/openapi-core@npm:1.25.7":
+  version: 1.25.7
+  resolution: "@redocly/openapi-core@npm:1.25.7"
+  dependencies:
+    "@redocly/ajv": "npm:^8.11.2"
+    "@redocly/config": "npm:^0.12.1"
+    colorette: "npm:^1.2.0"
+    https-proxy-agent: "npm:^7.0.4"
+    js-levenshtein: "npm:^1.1.6"
+    js-yaml: "npm:^4.1.0"
+    lodash.isequal: "npm:^4.5.0"
+    minimatch: "npm:^5.0.1"
+    node-fetch: "npm:^2.6.1"
+    pluralize: "npm:^8.0.0"
+    yaml-ast-parser: "npm:0.0.43"
+  checksum: 10/adb2e259514522965c7792d20f95022a8d01799297864df8dbbac36d9cf42ad711efda4a1ae5a86a7c2b483dec995f21fc123f978652f70dc7182a320fc2df1e
+  languageName: node
+  linkType: hard
+
+"@redocly/openapi-core@npm:^1.4.0":
   version: 1.25.5
   resolution: "@redocly/openapi-core@npm:1.25.5"
   dependencies:
@@ -6789,9 +6808,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redoc@npm:~2.1.5":
-  version: 2.1.5
-  resolution: "redoc@npm:2.1.5"
+"redoc@npm:~2.2.0":
+  version: 2.2.0
+  resolution: "redoc@npm:2.2.0"
   dependencies:
     "@cfaester/enzyme-adapter-react-18": "npm:^0.8.0"
     "@redocly/openapi-core": "npm:^1.4.0"
@@ -6821,7 +6840,7 @@ __metadata:
     react: ^16.8.4 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.4 || ^17.0.0 || ^18.0.0
     styled-components: ^4.1.1 || ^5.1.1 || ^6.0.5
-  checksum: 10/8641be6f54c467cd2c38e52d1ae8912f9c37b48ecc81fe2fa11c754331441c1c2b30449631f989de648b211ac0507b9a890c1dc1a9205c7c8a0b71d3799bd6cd
+  checksum: 10/e37e64da7199fdbecbb6ab3a9ec3309cd987aafd4a5de68ec555c3bc6bd8bac0eb2ead48be1b7e146f1e7f66e95364c8b79469b039efdec2bd388898f37ba175
   languageName: node
   linkType: hard
 
