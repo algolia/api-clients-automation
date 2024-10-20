@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.13.13",
-    "@redocly/cli": "1.25.5",
+    "@redocly/cli": "1.25.7",
     "eslint": "8.57.1",
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-json": "4.0.1",
