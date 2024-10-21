@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 
 import { union } from '../helpers';
 
-import { querySuggestionsClient } from '@algolia/client-query-suggestions';
+import { algoliasearch } from 'algoliasearch';
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });
@@ -16,7 +16,9 @@ if (!process.env.ALGOLIA_ADMIN_KEY) {
   throw new Error('please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests');
 }
 
-const client = querySuggestionsClient(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY, 'us');
+const client = algoliasearch(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY).initQuerySuggestions({
+  region: 'us',
+});
 
 describe('getConfig', () => {
   test('Retrieve QS config e2e', async () => {

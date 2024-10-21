@@ -12,7 +12,7 @@ class Snippet{{client}} {
   {{#blocksRequests}}
   {{#snippets}}
   suspend fun snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() {
-      // >SEPARATOR {{method}} {{testName}}
+      // >SEPARATOR {{method}} {{{testName}}}
       // Initialize the client
       {{> snippets/init}}
 

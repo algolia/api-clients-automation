@@ -65,11 +65,19 @@ module {{moduleName}}
     # @return [void]
     def set_client_api_key(api_key)
       @api_client.set_client_api_key(api_key)
+
+      self
+    end
+
+    def add_user_agent_segment(segment, version = nil)
+      @api_client.config.add_user_agent_segment(segment, version)
+
+      self
     end
 
 {{#operation}}
     {{#notes}}
-    # {{.}}
+    # {{{.}}}
     {{/notes}}
     {{#vendorExtensions}}
     {{#x-acl.0}}
@@ -81,10 +89,10 @@ module {{moduleName}}
     {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}} (required)
 {{/required}}
 {{^required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
 {{/required}}
 {{/allParams}}
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -97,78 +105,8 @@ module {{moduleName}}
       if @api_client.config.client_side_validation && {{{paramName}}}.nil?
         raise ArgumentError, "Parameter `{{paramName}}` is required when calling `{{operationId}}`."
       end
-      {{#isEnum}}
-      {{^isContainer}}
-      # verify enum value
-      allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
-      if @api_client.config.client_side_validation && !allowable_values.include?({{{paramName}}})
-        raise ArgumentError, "invalid value for \"{{{paramName}}}\", must be one of #{allowable_values}"
-      end
-      {{/isContainer}}
-      {{/isEnum}}
       {{/required}}
       {{/isNullable}}
-      {{^required}}
-      {{#isEnum}}
-      {{#collectionFormat}}
-      allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
-      if @api_client.config.client_side_validation && !{{paramName}}.nil? && !{{{paramName}}}.all? { |item| allowable_values.include?(item) }
-        raise ArgumentError, "invalid value for \"{{{paramName}}}\", must include one of #{allowable_values}"
-      end
-      {{/collectionFormat}}
-      {{^collectionFormat}}
-      allowable_values = [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]
-      if @api_client.config.client_side_validation && !{{paramName}}.nil? && !allowable_values.include?({{{paramName}}})
-        raise ArgumentError, "invalid value for \"{{{paramName}}}\", must be one of #{allowable_values}"
-      end
-      {{/collectionFormat}}
-      {{/isEnum}}
-      {{/required}}
-      {{#hasValidation}}
-      {{#maxLength}}
-      if @api_client.config.client_side_validation && {{^required}}!{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}}.to_s.length > {{{maxLength}}}
-        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}"{{{paramName}}}"{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be smaller than or equal to {{{maxLength}}}.'
-      end
-
-      {{/maxLength}}
-      {{#minLength}}
-      if @api_client.config.client_side_validation && {{^required}}!{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}}.to_s.length < {{{minLength}}}
-        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}"{{{paramName}}}"{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be great than or equal to {{{minLength}}}.'
-      end
-
-      {{/minLength}}
-      {{#maximum}}
-      if @api_client.config.client_side_validation && {{^required}}!{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
-        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}"{{{paramName}}}"{{/required}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.'
-      end
-
-      {{/maximum}}
-      {{#minimum}}
-      if @api_client.config.client_side_validation && {{^required}}!{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
-        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}"{{{paramName}}}"{{/required}}" when calling {{classname}}.{{operationId}}, must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.'
-      end
-
-      {{/minimum}}
-      {{#pattern}}
-      pattern = {{{pattern}}}
-      if @api_client.config.client_side_validation && {{^required}}!{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}} !~ pattern
-        raise ArgumentError, "invalid value for '{{#required}}{{{paramName}}}{{/required}}{{^required}}\"{{{paramName}}}\"{{/required}}' when calling {{classname}}.{{operationId}}, must conform to the pattern #{pattern}."
-      end
-
-      {{/pattern}}
-      {{#maxItems}}
-      if @api_client.config.client_side_validation && {{^required}}!{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}}.length > {{{maxItems}}}
-        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}"{{{paramName}}}"{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{{maxItems}}}.'
-      end
-
-      {{/maxItems}}
-      {{#minItems}}
-      if @api_client.config.client_side_validation && {{^required}}!{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}{{/required}}.length < {{{minItems}}}
-        raise ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}"{{{paramName}}}"{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{{minItems}}}.'
-      end
-
-      {{/minItems}}
-      {{/hasValidation}}
       {{/allParams}}
       {{#vendorExtensions}}
       path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{#x-is-custom-request}}{{paramName}}.to_s{{/x-is-custom-request}}{{^x-is-custom-request}}Transport.encode_uri({{paramName}}.to_s){{/x-is-custom-request}}){{/pathParams}}
@@ -215,10 +153,10 @@ module {{moduleName}}
     {{/vendorExtensions}}
 {{#allParams}}
 {{#required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}} (required)
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}} (required)
 {{/required}}
 {{^required}}
-    # @param {{paramName}} [{{{dataType}}}] {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+    # @param {{paramName}} [{{{dataType}}}] {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
 {{/required}}
 {{/allParams}}
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

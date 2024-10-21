@@ -5,22 +5,32 @@ package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** widgets returned from any rules that are applied to the current search. */
 public class Widgets {
 
   @JsonProperty("banners")
-  private Banners banners;
+  private List<Banner> banners;
 
-  public Widgets setBanners(Banners banners) {
+  public Widgets setBanners(List<Banner> banners) {
     this.banners = banners;
     return this;
   }
 
-  /** Get banners */
+  public Widgets addBanners(Banner bannersItem) {
+    if (this.banners == null) {
+      this.banners = new ArrayList<>();
+    }
+    this.banners.add(bannersItem);
+    return this;
+  }
+
+  /** banners defined in the merchandising studio for the given search. */
   @javax.annotation.Nullable
-  public Banners getBanners() {
+  public List<Banner> getBanners() {
     return banners;
   }
 

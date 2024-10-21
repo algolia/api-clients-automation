@@ -625,37 +625,7 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
      */
     public function listInvalidProperties()
     {
-        $invalidProperties = [];
-
-        if (isset($this->container['paginationLimitedTo']) && ($this->container['paginationLimitedTo'] > 20000)) {
-            $invalidProperties[] = "invalid value for 'paginationLimitedTo', must be smaller than or equal to 20000.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be smaller than or equal to 1000.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] < 1)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['minProximity']) && ($this->container['minProximity'] > 7)) {
-            $invalidProperties[] = "invalid value for 'minProximity', must be smaller than or equal to 7.";
-        }
-
-        if (isset($this->container['minProximity']) && ($this->container['minProximity'] < 1)) {
-            $invalidProperties[] = "invalid value for 'minProximity', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['maxFacetHits']) && ($this->container['maxFacetHits'] > 100)) {
-            $invalidProperties[] = "invalid value for 'maxFacetHits', must be smaller than or equal to 100.";
-        }
-
-        if (isset($this->container['maxValuesPerFacet']) && ($this->container['maxValuesPerFacet'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'maxValuesPerFacet', must be smaller than or equal to 1000.";
-        }
-
-        return $invalidProperties;
+        return [];
     }
 
     /**
@@ -736,10 +706,6 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
      */
     public function setPaginationLimitedTo($paginationLimitedTo)
     {
-        if (!is_null($paginationLimitedTo) && ($paginationLimitedTo > 20000)) {
-            throw new \InvalidArgumentException('invalid value for $paginationLimitedTo when calling SettingsResponse., must be smaller than or equal to 20000.');
-        }
-
         $this->container['paginationLimitedTo'] = $paginationLimitedTo;
 
         return $this;
@@ -782,7 +748,7 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
     /**
      * Sets disableTypoToleranceOnWords.
      *
-     * @param null|string[] $disableTypoToleranceOnWords Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). This also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) for the specified words.
+     * @param null|string[] $disableTypoToleranceOnWords Creates a list of [words which require exact matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words). This also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) for the specified words.
      *
      * @return self
      */
@@ -974,7 +940,7 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
     /**
      * Sets separatorsToIndex.
      *
-     * @param null|string $separatorsToIndex Controls which separators are indexed.  Separators are all non-letter characters except spaces and currency characters, such as $€£¥. By default, separator characters aren't indexed. With `separatorsToIndex`, Algolia treats separator characters as separate words. For example, a search for `C#` would report two matches.
+     * @param null|string $separatorsToIndex Control which non-alphanumeric characters are indexed.  By default, Algolia ignores [non-alphanumeric characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters) like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`). To include such characters, define them with `separatorsToIndex`.  Separators are all non-letter characters except spaces and currency characters, such as $€£¥.  With `separatorsToIndex`, Algolia treats separator characters as separate words. For example, in a search for \"Disney+\", Algolia considers \"Disney\" and \"+\" as two separate words.
      *
      * @return self
      */
@@ -1340,13 +1306,6 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
      */
     public function setHitsPerPage($hitsPerPage)
     {
-        if (!is_null($hitsPerPage) && ($hitsPerPage > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SettingsResponse., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($hitsPerPage) && ($hitsPerPage < 1)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SettingsResponse., must be bigger than or equal to 1.');
-        }
-
         $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;
@@ -1845,7 +1804,7 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
     /**
      * Sets alternativesAsExact.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Search\AlternativesAsExact[] $alternativesAsExact Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY/NYC\" are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
+     * @param null|\Algolia\AlgoliaSearch\Model\Search\AlternativesAsExact[] $alternativesAsExact Determine which plurals and synonyms should be considered an exact matches.  By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example:  - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
      *
      * @return self
      */
@@ -1947,13 +1906,6 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
      */
     public function setMinProximity($minProximity)
     {
-        if (!is_null($minProximity) && ($minProximity > 7)) {
-            throw new \InvalidArgumentException('invalid value for $minProximity when calling SettingsResponse., must be smaller than or equal to 7.');
-        }
-        if (!is_null($minProximity) && ($minProximity < 1)) {
-            throw new \InvalidArgumentException('invalid value for $minProximity when calling SettingsResponse., must be bigger than or equal to 1.');
-        }
-
         $this->container['minProximity'] = $minProximity;
 
         return $this;
@@ -2002,10 +1954,6 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
      */
     public function setMaxFacetHits($maxFacetHits)
     {
-        if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
-            throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling SettingsResponse., must be smaller than or equal to 100.');
-        }
-
         $this->container['maxFacetHits'] = $maxFacetHits;
 
         return $this;
@@ -2030,10 +1978,6 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
      */
     public function setMaxValuesPerFacet($maxValuesPerFacet)
     {
-        if (!is_null($maxValuesPerFacet) && ($maxValuesPerFacet > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $maxValuesPerFacet when calling SettingsResponse., must be smaller than or equal to 1000.');
-        }
-
         $this->container['maxValuesPerFacet'] = $maxValuesPerFacet;
 
         return $this;

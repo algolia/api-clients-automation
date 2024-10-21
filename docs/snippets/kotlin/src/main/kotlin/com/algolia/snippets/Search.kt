@@ -1316,7 +1316,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForPartialUpdateObjects() {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1357,7 +1357,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForPartialUpdateObjects1() {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2036,6 +2036,10 @@ class SnippetSearchClient {
     // Call the API
     var response = client.searchSingleIndex(
       indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        query = "myQuery",
+        facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
+      ),
     )
 
     // >LOG

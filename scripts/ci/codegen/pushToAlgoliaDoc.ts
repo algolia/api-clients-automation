@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import fsp from 'fs/promises';
 import { resolve } from 'path';
 

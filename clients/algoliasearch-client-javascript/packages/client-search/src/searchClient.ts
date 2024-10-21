@@ -143,7 +143,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.8.0';
+export const apiClientVersion = '5.9.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -180,7 +180,6 @@ function getDefaultHosts(appId: string): Host[] {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createSearchClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
@@ -1029,6 +1028,7 @@ export function createSearchClient({
         queryParameters,
         headers,
         data: browseParams ? browseParams : {},
+        useReadTransporter: true,
       };
 
       return transporter.request(request, requestOptions);
@@ -2545,7 +2545,6 @@ export function createSearchClient({
           }),
         };
 
-        // eslint-disable-next-line no-param-reassign
         searchMethodParams = newSignatureRequest;
       }
 

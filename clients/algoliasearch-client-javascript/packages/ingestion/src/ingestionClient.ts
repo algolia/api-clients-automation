@@ -117,10 +117,11 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.8.0';
+export const apiClientVersion = '1.9.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
+export type RegionOptions = { region: Region };
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'data.{region}.algolia.com'.replace('{region}', region);
@@ -158,7 +159,6 @@ export function isSubscriptionTrigger(trigger: TaskCreateTrigger | Trigger): tri
   return trigger.type === 'subscription';
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createIngestionClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
@@ -166,7 +166,7 @@ export function createIngestionClient({
   algoliaAgents,
   region: regionOption,
   ...options
-}: CreateClientOptions & { region: Region }) {
+}: CreateClientOptions & RegionOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts(regionOption),
@@ -1268,7 +1268,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a list of events for a task run, identified by it\'s ID.
+     * Retrieves a list of events for a task run, identified by its ID.
      *
      * Required API Key ACLs:
      *  - addObject

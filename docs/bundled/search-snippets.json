@@ -158,8 +158,8 @@
       "default": "var response = await client.PartialUpdateObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new Dictionary<string, string> { { \"attributeId\", \"new value\" } }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n  },\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n  },\n  false\n);"
     },
     "removeUserId": {
       "default": "var response = await client.RemoveUserIdAsync(\"uniqueID\");"
@@ -210,7 +210,7 @@
       "default": "var response = await client.SearchRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchRulesParams { Query = \"zorro\" }\n);"
     },
     "searchSingleIndex": {
-      "default": "var response = await client.SearchSingleIndexAsync<Hit>(\"<YOUR_INDEX_NAME>\");"
+      "default": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(\n    new SearchParamsObject\n    {\n      Query = \"myQuery\",\n      FacetFilters = new FacetFilters(\n        new List<FacetFilters> { new FacetFilters(\"tags:algolia\") }\n      ),\n    }\n  )\n);"
     },
     "searchSynonyms": {
       "default": "var response = await client.SearchSynonymsAsync(\"<YOUR_INDEX_NAME>\");"
@@ -404,8 +404,8 @@
       "default": "final response = await client.partialUpdateObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"uniqueID\",\n  attributesToUpdate: {\n    'attributeId': \"new value\",\n  },\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  createIfNotExists: true,\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"3\",\n      'name': \"Cyril\",\n    },\n    {\n      'objectID': \"4\",\n      'name': \"David\",\n    },\n  ],\n  createIfNotExists: false,\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  createIfNotExists: true,\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"3\",\n      'name': \"Cyril\",\n    },\n    {\n      'objectID': \"4\",\n      'name': \"David\",\n    },\n  ],\n  createIfNotExists: false,\n);"
     },
     "removeUserId": {
       "default": "final response = await client.removeUserId(\n  userID: \"uniqueID\",\n);"
@@ -456,7 +456,7 @@
       "default": "final response = await client.searchRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchRulesParams: SearchRulesParams(\n    query: \"zorro\",\n  ),\n);"
     },
     "searchSingleIndex": {
-      "default": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
+      "default": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"myQuery\",\n    facetFilters: [\n      \"tags:algolia\",\n    ],\n  ),\n);"
     },
     "searchSynonyms": {
       "default": "final response = await client.searchSynonyms(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
@@ -650,8 +650,8 @@
       "default": "response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(\n  \"<YOUR_INDEX_NAME>\", \"uniqueID\", map[string]any{\"attributeId\": \"new value\"},\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"1\", \"name\": \"Adam\"}, map[string]any{\"objectID\": \"2\", \"name\": \"Benoit\"}},\n  search.WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"3\", \"name\": \"Cyril\"}, map[string]any{\"objectID\": \"4\", \"name\": \"David\"}},\n  search.WithCreateIfNotExists(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "call partialUpdateObjects with createIfNotExists=true": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"1\", \"name\": \"Adam\"}, map[string]any{\"objectID\": \"2\", \"name\": \"Benoit\"}},\n  search.WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "call partialUpdateObjects with createIfNotExists=false": "response, err := client.PartialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  []map[string]any{map[string]any{\"objectID\": \"3\", \"name\": \"Cyril\"}, map[string]any{\"objectID\": \"4\", \"name\": \"David\"}},\n  search.WithCreateIfNotExists(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "removeUserId": {
       "default": "response, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(\n  \"uniqueID\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -702,7 +702,7 @@
       "default": "response, err := client.SearchRules(client.NewApiSearchRulesRequest(\n  \"<YOUR_INDEX_NAME>\",\n).WithSearchRulesParams(\n  search.NewEmptySearchRulesParams().SetQuery(\"zorro\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSingleIndex": {
-      "default": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\",\n).WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"myQuery\").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(\n    []search.FacetFilters{*search.StringAsFacetFilters(\"tags:algolia\")})))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSynonyms": {
       "default": "response, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -896,8 +896,8 @@
       "default": "client.partialUpdateObject(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new HashMap() {\n    {\n      put(\"attributeId\", \"new value\");\n    }\n  }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
     },
     "removeUserId": {
       "default": "client.removeUserId(\"uniqueID\");"
@@ -948,7 +948,7 @@
       "default": "client.searchRules(\"<YOUR_INDEX_NAME>\", new SearchRulesParams().setQuery(\"zorro\"));"
     },
     "searchSingleIndex": {
-      "default": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", Hit.class);"
+      "default": "client.searchSingleIndex(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParamsObject().setQuery(\"myQuery\").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(\"tags:algolia\")))),\n  Hit.class\n);"
     },
     "searchSynonyms": {
       "default": "client.searchSynonyms(\"<YOUR_INDEX_NAME>\");"
@@ -985,7 +985,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { searchClient } from '@algolia/client-search';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "addApiKey": {
       "default": "const response = await client.addApiKey({\n  acl: ['search', 'addObject'],\n  description: 'my new api key',\n  validity: 300,\n  maxQueriesPerIPPerHour: 100,\n  maxHitsPerQuery: 20,\n});"
@@ -1142,8 +1142,8 @@
       "default": "const response = await client.partialUpdateObject({\n  indexName: 'theIndexName',\n  objectID: 'uniqueID',\n  attributesToUpdate: { attributeId: 'new value' },\n});"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  createIfNotExists: true,\n});",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n  ],\n  createIfNotExists: false,\n});"
+      "call partialUpdateObjects with createIfNotExists=true": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  createIfNotExists: true,\n});",
+      "call partialUpdateObjects with createIfNotExists=false": "const response = await client.partialUpdateObjects({\n  indexName: 'cts_e2e_partialUpdateObjects_javascript',\n  objects: [\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n  ],\n  createIfNotExists: false,\n});"
     },
     "removeUserId": {
       "default": "const response = await client.removeUserId({ userID: 'uniqueID' });"
@@ -1194,7 +1194,7 @@
       "default": "const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });"
     },
     "searchSingleIndex": {
-      "default": "const response = await client.searchSingleIndex({ indexName: 'indexName' });"
+      "default": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },\n});"
     },
     "searchSynonyms": {
       "default": "const response = await client.searchSynonyms({ indexName: 'indexName' });"
@@ -1226,7 +1226,7 @@
       "default": "const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });"
     },
     "init": {
-      "default": "//\nconst client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+      "default": "//\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "kotlin": {
@@ -1388,8 +1388,8 @@
       "default": "var response = client.partialUpdateObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"uniqueID\",\n  attributesToUpdate = buildJsonObject {\n    put(\n      \"attributeId\",\n      JsonPrimitive(\"new value\"),\n    )\n  },\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"1\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Adam\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"2\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Benoit\"),\n      )\n    },\n  ),\n  createIfNotExists = true,\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"3\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Cyril\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"4\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"David\"),\n      )\n    },\n  ),\n  createIfNotExists = false,\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"1\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Adam\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"2\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Benoit\"),\n      )\n    },\n  ),\n  createIfNotExists = true,\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "var response = client.partialUpdateObjects(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objects = listOf(\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"3\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"Cyril\"),\n      )\n    },\n    buildJsonObject {\n      put(\n        \"objectID\",\n        JsonPrimitive(\"4\"),\n      )\n      put(\n        \"name\",\n        JsonPrimitive(\"David\"),\n      )\n    },\n  ),\n  createIfNotExists = false,\n)"
     },
     "removeUserId": {
       "default": "var response = client.removeUserId(\n  userID = \"uniqueID\",\n)"
@@ -1440,7 +1440,7 @@
       "default": "var response = client.searchRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchRulesParams = SearchRulesParams(\n    query = \"zorro\",\n  ),\n)"
     },
     "searchSingleIndex": {
-      "default": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
+      "default": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"myQuery\",\n    facetFilters = FacetFilters.of(listOf(FacetFilters.of(\"tags:algolia\"))),\n  ),\n)"
     },
     "searchSynonyms": {
       "default": "var response = client.searchSynonyms(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
@@ -1634,8 +1634,8 @@
       "default": "$response = $client->partialUpdateObject(\n    '<YOUR_INDEX_NAME>',\n    'uniqueID',\n    ['attributeId' => 'new value',\n    ],\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '3',\n            'name' => 'Cyril',\n        ],\n\n        ['objectID' => '4',\n            'name' => 'David',\n        ],\n    ],\n    false,\n);"
+      "call partialUpdateObjects with createIfNotExists=true": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '1',\n            'name' => 'Adam',\n        ],\n\n        ['objectID' => '2',\n            'name' => 'Benoit',\n        ],\n    ],\n    true,\n);",
+      "call partialUpdateObjects with createIfNotExists=false": "$response = $client->partialUpdateObjects(\n    '<YOUR_INDEX_NAME>',\n    [\n        ['objectID' => '3',\n            'name' => 'Cyril',\n        ],\n\n        ['objectID' => '4',\n            'name' => 'David',\n        ],\n    ],\n    false,\n);"
     },
     "removeUserId": {
       "default": "$response = $client->removeUserId(\n    'uniqueID',\n);"
@@ -1686,7 +1686,7 @@
       "default": "$response = $client->searchRules(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'zorro',\n    ],\n);"
     },
     "searchSingleIndex": {
-      "default": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n);"
+      "default": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'myQuery',\n        'facetFilters' => [\n            'tags:algolia',\n        ],\n    ],\n);"
     },
     "searchSynonyms": {
       "default": "$response = $client->searchSynonyms(\n    '<YOUR_INDEX_NAME>',\n);"
@@ -1880,8 +1880,8 @@
       "default": "response = client.partial_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_update={\n        \"attributeId\": \"new value\",\n    },\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)"
     },
     "removeUserId": {
       "default": "response = client.remove_user_id(\n    user_id=\"uniqueID\",\n)"
@@ -1932,7 +1932,7 @@
       "default": "response = client.search_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)"
     },
     "searchSingleIndex": {
-      "default": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"myQuery\",\n        \"facetFilters\": [\n            \"tags:algolia\",\n        ],\n    },\n)"
     },
     "searchSynonyms": {
       "default": "response = client.search_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
@@ -2126,8 +2126,8 @@
       "default": "response = client.partial_update_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\", {attributeId: \"new value\"})"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"3\", name: \"Cyril\"}, {objectID: \"4\", name: \"David\"}],\n  false\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}],\n  true\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "response = client.partial_update_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"3\", name: \"Cyril\"}, {objectID: \"4\", name: \"David\"}],\n  false\n)"
     },
     "removeUserId": {
       "default": "response = client.remove_user_id(\"uniqueID\")"
@@ -2178,7 +2178,7 @@
       "default": "response = client.search_rules(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchRulesParams.new(query: \"zorro\"))"
     },
     "searchSingleIndex": {
-      "default": "response = client.search_single_index(\"<YOUR_INDEX_NAME>\")"
+      "default": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"myQuery\", facet_filters: [\"tags:algolia\"])\n)"
     },
     "searchSynonyms": {
       "default": "response = client.search_synonyms(\"<YOUR_INDEX_NAME>\")"
@@ -2401,7 +2401,7 @@
       "default": "val response = client.searchRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchRulesParams = Some(\n    SearchRulesParams(\n      query = Some(\"zorro\")\n    )\n  )\n)"
     },
     "searchSingleIndex": {
-      "default": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+      "default": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"myQuery\"),\n      facetFilters = Some(FacetFilters(Seq(FacetFilters(\"tags:algolia\"))))\n    )\n  )\n)"
     },
     "searchSynonyms": {
       "default": "val response = client.searchSynonyms(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
@@ -2581,8 +2581,8 @@
       "default": "let response = try await client.partialUpdateObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"uniqueID\",\n    attributesToUpdate: [\"attributeId\": \"new value\"]\n)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"3\", \"name\": \"Cyril\"], [\"objectID\": \"4\", \"name\": \"David\"]],\n    createIfNotExists: false\n)"
+      "call partialUpdateObjects with createIfNotExists=true": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"1\", \"name\": \"Adam\"], [\"objectID\": \"2\", \"name\": \"Benoit\"]],\n    createIfNotExists: true\n)",
+      "call partialUpdateObjects with createIfNotExists=false": "let response = try await client.partialUpdateObjects(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objects: [[\"objectID\": \"3\", \"name\": \"Cyril\"], [\"objectID\": \"4\", \"name\": \"David\"]],\n    createIfNotExists: false\n)"
     },
     "removeUserId": {
       "default": "let response = try await client.removeUserId(userID: \"uniqueID\")"
@@ -2633,7 +2633,7 @@
       "default": "let response = try await client.searchRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchRulesParams: SearchRulesParams(query: \"zorro\")\n)"
     },
     "searchSingleIndex": {
-      "default": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: \"<YOUR_INDEX_NAME>\")"
+      "default": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"myQuery\",\n        facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string(\"tags:algolia\")])\n    ))\n)"
     },
     "searchSynonyms": {
       "default": "let response = try await client.searchSynonyms(indexName: \"<YOUR_INDEX_NAME>\")"

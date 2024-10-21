@@ -1006,7 +1006,7 @@ final class SearchClientSnippet {
     ///
     /// call partialUpdateObjects with createIfNotExists=true
     func snippetForPartialUpdateObjects() async throws {
-        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -1024,7 +1024,7 @@ final class SearchClientSnippet {
     ///
     /// call partialUpdateObjects with createIfNotExists=false
     func snippetForPartialUpdateObjects1() async throws {
-        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -1422,14 +1422,20 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
-    /// search with minimal parameters
+    /// search with searchParams
     func snippetForSearchSingleIndex() async throws {
         // >SEPARATOR searchSingleIndex default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "myQuery",
+                facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
+            ))
+        )
         // >LOG
         // SEPARATOR<
     }

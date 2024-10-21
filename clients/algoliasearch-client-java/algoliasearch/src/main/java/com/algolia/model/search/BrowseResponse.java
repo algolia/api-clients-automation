@@ -29,6 +29,9 @@ public class BrowseResponse<T> {
   @JsonProperty("exhaustive")
   private Exhaustive exhaustive;
 
+  @JsonProperty("appliedRules")
+  private List<Object> appliedRules;
+
   @JsonProperty("exhaustiveFacetsCount")
   private Boolean exhaustiveFacetsCount;
 
@@ -171,6 +174,25 @@ public class BrowseResponse<T> {
   @javax.annotation.Nullable
   public Exhaustive getExhaustive() {
     return exhaustive;
+  }
+
+  public BrowseResponse<T> setAppliedRules(List<Object> appliedRules) {
+    this.appliedRules = appliedRules;
+    return this;
+  }
+
+  public BrowseResponse<T> addAppliedRules(Object appliedRulesItem) {
+    if (this.appliedRules == null) {
+      this.appliedRules = new ArrayList<>();
+    }
+    this.appliedRules.add(appliedRulesItem);
+    return this;
+  }
+
+  /** Rules applied to the query. */
+  @javax.annotation.Nullable
+  public List<Object> getAppliedRules() {
+    return appliedRules;
   }
 
   public BrowseResponse<T> setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
@@ -554,6 +576,7 @@ public class BrowseResponse<T> {
       Objects.equals(this.aroundLatLng, browseResponse.aroundLatLng) &&
       Objects.equals(this.automaticRadius, browseResponse.automaticRadius) &&
       Objects.equals(this.exhaustive, browseResponse.exhaustive) &&
+      Objects.equals(this.appliedRules, browseResponse.appliedRules) &&
       Objects.equals(this.exhaustiveFacetsCount, browseResponse.exhaustiveFacetsCount) &&
       Objects.equals(this.exhaustiveNbHits, browseResponse.exhaustiveNbHits) &&
       Objects.equals(this.exhaustiveTypo, browseResponse.exhaustiveTypo) &&
@@ -593,6 +616,7 @@ public class BrowseResponse<T> {
       aroundLatLng,
       automaticRadius,
       exhaustive,
+      appliedRules,
       exhaustiveFacetsCount,
       exhaustiveNbHits,
       exhaustiveTypo,
@@ -633,6 +657,7 @@ public class BrowseResponse<T> {
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
     sb.append("    automaticRadius: ").append(toIndentedString(automaticRadius)).append("\n");
     sb.append("    exhaustive: ").append(toIndentedString(exhaustive)).append("\n");
+    sb.append("    appliedRules: ").append(toIndentedString(appliedRules)).append("\n");
     sb.append("    exhaustiveFacetsCount: ").append(toIndentedString(exhaustiveFacetsCount)).append("\n");
     sb.append("    exhaustiveNbHits: ").append(toIndentedString(exhaustiveNbHits)).append("\n");
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");

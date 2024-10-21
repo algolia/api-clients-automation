@@ -11,7 +11,7 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}
 
     {{{description}}}
     """
-    # >SEPARATOR {{method}} {{testName}}
+    # >SEPARATOR {{method}} {{{testName}}}
     # Initialize the client
     # In an asynchronous context, you can use {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} instead, which exposes the exact same methods.
     {{> snippets/init}}

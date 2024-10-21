@@ -42,7 +42,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "bannerimage",
     "bannerimageurl",
     "bannerlink",
-    "banners",
     "baseindexsettings",
     "basesearchparams",
     "basesearchparamswithoutquery",
@@ -142,7 +141,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     var camelizedName = camelize(name);
     if (isReservedModelName(camelizedName)) {
-      return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
+      return getClientName(client) + Helpers.capitalize(camelizedName);
     }
 
     return name;
@@ -155,7 +154,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return "algolia-swift";
   }
 
-  public String getClientName(String client) {
+  public static String getClientName(String client) {
     return Helpers.createClientName(client, "swift");
   }
 
@@ -183,7 +182,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
     additionalProperties.put(OBJC_COMPATIBLE, false);
     additionalProperties.put(USE_BACKTICK_ESCAPES, true);
-    additionalProperties.put(VALIDATABLE, false);
     additionalProperties.put("hashableModels", true);
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
@@ -414,10 +412,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       return "empty";
     }
 
-    if (enumUnknownDefaultCase) {
-      if (value.equals(enumUnknownDefaultCaseName)) {
-        return camelize(value, LOWERCASE_FIRST_LETTER);
-      }
+    if (enumUnknownDefaultCase && value.equals(enumUnknownDefaultCaseName)) {
+      return camelize(value, LOWERCASE_FIRST_LETTER);
     }
 
     // Reserved Name

@@ -1,3 +1,25 @@
+## [5.9.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.9.0...5.9.1)
+
+- [b076b69ba](https://github.com/algolia/api-clients-automation/commit/b076b69ba) fix(javascript): missing search dependency ([#3988](https://github.com/algolia/api-clients-automation/pull/3988)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.9.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.8.1...5.9.0)
+
+- [56164aab9](https://github.com/algolia/api-clients-automation/commit/56164aab9) fix(javascript): do not publish ts ([#3966](https://github.com/algolia/api-clients-automation/pull/3966)) by [@shortcuts](https://github.com/shortcuts/)
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [21d09d3d3](https://github.com/algolia/api-clients-automation/commit/21d09d3d3) feat(javascript): add every APIs ([#3942](https://github.com/algolia/api-clients-automation/pull/3942)) by [@shortcuts](https://github.com/shortcuts/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+- [95e4149a3](https://github.com/algolia/api-clients-automation/commit/95e4149a3) chore(deps): dependencies 2024-10-14 ([#3944](https://github.com/algolia/api-clients-automation/pull/3944)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [8b879dead](https://github.com/algolia/api-clients-automation/commit/8b879dead) fix(specs): alternativesAsExact is plurals and synonyms ([#3974](https://github.com/algolia/api-clients-automation/pull/3974)) by [@gazconroy](https://github.com/gazconroy/)
+- [1a9b95e85](https://github.com/algolia/api-clients-automation/commit/1a9b95e85) fix(specs): Separators are non-alphanumeric characters ([#3978](https://github.com/algolia/api-clients-automation/pull/3978)) by [@gazconroy](https://github.com/gazconroy/)
+- [519fd9840](https://github.com/algolia/api-clients-automation/commit/519fd9840) fix(specs): multiple clients fixes ([#3971](https://github.com/algolia/api-clients-automation/pull/3971)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.8.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.8.0...5.8.1)
+
+- [f516d0243](https://github.com/algolia/api-clients-automation/commit/f516d0243) fix(specs): Typos in API descriptions ([#3932](https://github.com/algolia/api-clients-automation/pull/3932)) by [@gazconroy](https://github.com/gazconroy/)
+- [434c99f80](https://github.com/algolia/api-clients-automation/commit/434c99f80) fix(specs): use the read transporter for browse ([#3938](https://github.com/algolia/api-clients-automation/pull/3938)) by [@millotp](https://github.com/millotp/)
+- [6b07138e7](https://github.com/algolia/api-clients-automation/commit/6b07138e7) chore: apply codacy fixes ([#3935](https://github.com/algolia/api-clients-automation/pull/3935)) by [@millotp](https://github.com/millotp/)
+- [45d433d0a](https://github.com/algolia/api-clients-automation/commit/45d433d0a) fix(specs): correct type for banners [skip-bc] ([#3939](https://github.com/algolia/api-clients-automation/pull/3939)) by [@millotp](https://github.com/millotp/)
+
 ## [5.8.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.7.0...5.8.0)
 
 - [ad8e3d224](https://github.com/algolia/api-clients-automation/commit/ad8e3d224) fix(specs): update analytics and abtesting max pagination query limit ([#3696](https://github.com/algolia/api-clients-automation/pull/3696)) by [@febeck](https://github.com/febeck/)

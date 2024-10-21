@@ -184,16 +184,6 @@ class RecommendHit extends AbstractModel implements ModelInterface, \ArrayAccess
         if (!isset($this->container['objectID']) || null === $this->container['objectID']) {
             $invalidProperties[] = "'objectID' can't be null";
         }
-        if (!isset($this->container['score']) || null === $this->container['score']) {
-            $invalidProperties[] = "'score' can't be null";
-        }
-        if ($this->container['score'] > 100) {
-            $invalidProperties[] = "invalid value for 'score', must be smaller than or equal to 100.";
-        }
-
-        if ($this->container['score'] < 0) {
-            $invalidProperties[] = "invalid value for 'score', must be bigger than or equal to 0.";
-        }
 
         return $invalidProperties;
     }
@@ -332,7 +322,7 @@ class RecommendHit extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets score.
      *
-     * @return float
+     * @return null|float
      */
     public function getScore()
     {
@@ -342,19 +332,12 @@ class RecommendHit extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets score.
      *
-     * @param float $score recommendation score
+     * @param null|float $score recommendation score
      *
      * @return self
      */
     public function setScore($score)
     {
-        if ($score > 100) {
-            throw new \InvalidArgumentException('invalid value for $score when calling RecommendHit., must be smaller than or equal to 100.');
-        }
-        if ($score < 0) {
-            throw new \InvalidArgumentException('invalid value for $score when calling RecommendHit., must be bigger than or equal to 0.');
-        }
-
         $this->container['score'] = $score;
 
         return $this;

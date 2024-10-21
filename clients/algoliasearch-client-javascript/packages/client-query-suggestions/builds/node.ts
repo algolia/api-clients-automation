@@ -19,9 +19,8 @@ import { createQuerySuggestionsClient } from '../src/querySuggestionsClient';
 import { Region, REGIONS } from '../src/querySuggestionsClient';
 
 export * from '../model';
-export { apiClientVersion, Region } from '../src/querySuggestionsClient';
+export { apiClientVersion, Region, RegionOptions } from '../src/querySuggestionsClient';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function querySuggestionsClient(
   appId: string,
   apiKey: string,

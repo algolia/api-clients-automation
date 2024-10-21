@@ -41,6 +41,6 @@ package algoliasearch.search
   *   Timestamp when the object was created, in milliseconds since the Unix epoch.
   */
 case class BaseGetApiKeyResponse(
-    value: Option[String] = scala.None,
+    value: String,
     createdAt: Long
 )

@@ -169,7 +169,7 @@ class MonitoringClient(
   /** Retrieves known incidents for the selected clusters.
     *
     * @param clusters
-    *   Subset of clusters, separated by comma.
+    *   Subset of clusters, separated by commas.
     */
   def getClusterIncidents(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -187,7 +187,7 @@ class MonitoringClient(
   /** Retrieves the status of selected clusters.
     *
     * @param clusters
-    *   Subset of clusters, separated by comma.
+    *   Subset of clusters, separated by commas.
     */
   def getClusterStatus(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -219,7 +219,7 @@ class MonitoringClient(
   /** Retrieves average times for indexing operations for selected clusters.
     *
     * @param clusters
-    *   Subset of clusters, separated by comma.
+    *   Subset of clusters, separated by commas.
     */
   def getIndexingTime(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -237,7 +237,7 @@ class MonitoringClient(
   /** Retrieves the average latency for search requests for selected clusters.
     *
     * @param clusters
-    *   Subset of clusters, separated by comma.
+    *   Subset of clusters, separated by commas.
     */
   def getLatency(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -282,7 +282,7 @@ class MonitoringClient(
   /** Test whether clusters are reachable or not.
     *
     * @param clusters
-    *   Subset of clusters, separated by comma.
+    *   Subset of clusters, separated by commas.
     */
   def getReachability(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext

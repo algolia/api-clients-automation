@@ -1782,7 +1782,7 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 	   call partialUpdateObjects with createIfNotExists=true
 	*/
 
-	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1812,7 +1812,7 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 	   call partialUpdateObjects with createIfNotExists=false
 	*/
 
-	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -2455,7 +2455,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
-	   search with minimal parameters
+	   search with searchParams
 	*/
 
 	// >SEPARATOR searchSingleIndex default
@@ -2469,7 +2469,9 @@ func SnippetForSearchSingleIndexOfSearch() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>",
-	))
+	).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+			[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

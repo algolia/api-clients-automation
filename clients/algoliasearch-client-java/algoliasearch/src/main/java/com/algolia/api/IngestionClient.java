@@ -1987,7 +1987,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of events for a task run, identified by it's ID.
+   * Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @param itemsPerPage Number of items per page. (optional, default to 10)
@@ -2022,7 +2022,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of events for a task run, identified by it's ID.
+   * Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @param itemsPerPage Number of items per page. (optional, default to 10)
@@ -2052,7 +2052,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of events for a task run, identified by it's ID.
+   * Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2064,7 +2064,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of events for a task run, identified by it's ID.
+   * Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2074,7 +2074,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @param itemsPerPage Number of items per page. (optional, default to 10)
@@ -2121,7 +2121,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @param itemsPerPage Number of items per page. (optional, default to 10)
@@ -2151,7 +2151,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2164,7 +2164,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

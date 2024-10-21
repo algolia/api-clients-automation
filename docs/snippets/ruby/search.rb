@@ -1349,7 +1349,7 @@ end
 #
 # call partialUpdateObjects with createIfNotExists=true
 def snippet_for_partial_update_objects
-  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -1373,7 +1373,7 @@ end
 #
 # call partialUpdateObjects with createIfNotExists=false
 def snippet_for_partial_update_objects1
-  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -1910,14 +1910,17 @@ end
 
 # Snippet for the searchSingleIndex method.
 #
-# search with minimal parameters
+# search with searchParams
 def snippet_for_search_single_index
   # >SEPARATOR searchSingleIndex default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.search_single_index("<YOUR_INDEX_NAME>")
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+  )
 
   # >LOG
   # use the class directly

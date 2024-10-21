@@ -1301,7 +1301,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientPartialUpdateObjects()
   {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -1326,7 +1326,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientPartialUpdateObjects1()
   {
-    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -1885,7 +1885,7 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SearchSingleIndex method.
   ///
-  /// search with minimal parameters
+  /// search with searchParams
   /// </summary>
   public async Task SnippetForSearchClientSearchSingleIndex()
   {
@@ -1894,7 +1894,18 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "myQuery",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters> { new FacetFilters("tags:algolia") }
+          ),
+        }
+      )
+    );
     // >LOG
     // SEPARATOR<
   }

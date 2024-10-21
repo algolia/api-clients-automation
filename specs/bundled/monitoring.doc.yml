@@ -169,8 +169,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -400,8 +400,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -631,8 +631,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -857,8 +857,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1072,8 +1072,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1293,8 +1293,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1508,8 +1508,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1729,8 +1729,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1956,8 +1956,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2175,8 +2175,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2394,8 +2394,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2614,8 +2614,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2845,8 +2845,8 @@ paths:
 
             //
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -3022,7 +3022,7 @@ components:
       name: clusters
       in: path
       required: true
-      description: Subset of clusters, separated by comma.
+      description: Subset of clusters, separated by commas.
       schema:
         type: string
         example: c1-de,c2-de,c3-de

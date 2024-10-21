@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common';
 import { isPreRelease } from '../../release/versionsHistory';
 import type { Language } from '../../types';

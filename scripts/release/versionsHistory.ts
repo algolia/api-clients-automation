@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 // @ts-nocheck this file is broken while the VersionsHistory is unclear
 import fsp from 'fs/promises';
 
@@ -62,7 +61,6 @@ export function generateLanguageVersionsHistory(
   let prevTagVersion = '';
 
   for (const tag of tags) {
-    // eslint-disable-next-line prefer-const
     let [tagVersion, tagReleaseDate] = tag.split(/(?<=^\S+)\s/);
 
     // edge case for go which tags version with a v prefix

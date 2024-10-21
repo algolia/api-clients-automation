@@ -12,7 +12,7 @@ use Algolia\AlgoliaSearch\Model\ModelInterface;
  *
  * @category Class
  *
- * @description API request body for updating a task using the V1 shape, please use methods and types that don&#39;t contain the V1 suffix.
+ * @description API request body for updating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.
  */
 class TaskUpdateV1 extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
@@ -171,17 +171,7 @@ class TaskUpdateV1 extends AbstractModel implements ModelInterface, \ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalidProperties = [];
-
-        if (isset($this->container['failureThreshold']) && ($this->container['failureThreshold'] > 100)) {
-            $invalidProperties[] = "invalid value for 'failureThreshold', must be smaller than or equal to 100.";
-        }
-
-        if (isset($this->container['failureThreshold']) && ($this->container['failureThreshold'] < 0)) {
-            $invalidProperties[] = "invalid value for 'failureThreshold', must be bigger than or equal to 0.";
-        }
-
-        return $invalidProperties;
+        return [];
     }
 
     /**
@@ -310,13 +300,6 @@ class TaskUpdateV1 extends AbstractModel implements ModelInterface, \ArrayAccess
      */
     public function setFailureThreshold($failureThreshold)
     {
-        if (!is_null($failureThreshold) && ($failureThreshold > 100)) {
-            throw new \InvalidArgumentException('invalid value for $failureThreshold when calling TaskUpdateV1., must be smaller than or equal to 100.');
-        }
-        if (!is_null($failureThreshold) && ($failureThreshold < 0)) {
-            throw new \InvalidArgumentException('invalid value for $failureThreshold when calling TaskUpdateV1., must be bigger than or equal to 0.');
-        }
-
         $this->container['failureThreshold'] = $failureThreshold;
 
         return $this;

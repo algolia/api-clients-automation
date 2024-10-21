@@ -371,7 +371,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -617,7 +617,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -863,7 +863,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -1104,7 +1104,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -1297,8 +1297,18 @@ paths:
 
             // Call the API
 
-            var response = await
-            client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
+            var response = await client.SearchSingleIndexAsync<Hit>(
+              "<YOUR_INDEX_NAME>",
+              new SearchParams(
+                new SearchParamsObject
+                {
+                  Query = "myQuery",
+                  FacetFilters = new FacetFilters(
+                    new List<FacetFilters> { new FacetFilters("tags:algolia") }
+                  ),
+                }
+              )
+            );
 
             // >LOG
         - lang: dart
@@ -1311,6 +1321,12 @@ paths:
             // Call the API
             final response = await client.searchSingleIndex(
               indexName: "<YOUR_INDEX_NAME>",
+              searchParams: SearchParamsObject(
+                query: "myQuery",
+                facetFilters: [
+                  "tags:algolia",
+                ],
+              ),
             );
             // >LOG
         - lang: go
@@ -1332,8 +1348,9 @@ paths:
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
               "<YOUR_INDEX_NAME>",
-            ))
-
+            ).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+              search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+                []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1356,7 +1373,11 @@ paths:
 
             // Call the API
 
-            client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+            client.searchSingleIndex(
+              "<YOUR_INDEX_NAME>",
+              new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
+              Hit.class
+            );
 
             // >LOG
         - lang: javascript
@@ -1366,14 +1387,16 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
             // Call the API
 
-            const response = await client.searchSingleIndex({ indexName:
-            'indexName' });
+            const response = await client.searchSingleIndex({
+              indexName: 'indexName',
+              searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+            });
 
 
             // >LOG
@@ -1394,6 +1417,10 @@ paths:
 
             var response = client.searchSingleIndex(
               indexName = "<YOUR_INDEX_NAME>",
+              searchParams = SearchParamsObject(
+                query = "myQuery",
+                facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
+              ),
             )
 
 
@@ -1415,6 +1442,11 @@ paths:
 
             $response = $client->searchSingleIndex(
                 '<YOUR_INDEX_NAME>',
+                ['query' => 'myQuery',
+                    'facetFilters' => [
+                        'tags:algolia',
+                    ],
+                ],
             );
 
 
@@ -1439,6 +1471,12 @@ paths:
 
             response = client.search_single_index(
                 index_name="<YOUR_INDEX_NAME>",
+                search_params={
+                    "query": "myQuery",
+                    "facetFilters": [
+                        "tags:algolia",
+                    ],
+                },
             )
 
 
@@ -1458,7 +1496,10 @@ paths:
 
             # Call the API
 
-            response = client.search_single_index("<YOUR_INDEX_NAME>")
+            response = client.search_single_index(
+              "<YOUR_INDEX_NAME>",
+              Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+            )
 
 
             # >LOG
@@ -1483,7 +1524,13 @@ paths:
             // Call the API
 
             val response = client.searchSingleIndex(
-              indexName = "<YOUR_INDEX_NAME>"
+              indexName = "<YOUR_INDEX_NAME>",
+              searchParams = Some(
+                SearchParamsObject(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+                )
+              )
             )
 
 
@@ -1504,7 +1551,13 @@ paths:
             // Call the API
 
             let response: SearchResponse<Hit> = try await
-            client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
+            client.searchSingleIndex(
+                indexName: "<YOUR_INDEX_NAME>",
+                searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                    query: "myQuery",
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
+                ))
+            )
 
             // >LOG
         - lang: cURL
@@ -1693,7 +1746,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -2026,7 +2079,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -2177,6 +2230,7 @@ paths:
       tags:
         - Search
       operationId: browse
+      x-use-read-transporter: true
       x-acl:
         - browse
       summary: Browse for records
@@ -2330,7 +2384,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -2643,7 +2697,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -2934,7 +2988,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -3228,7 +3282,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -3586,7 +3640,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -3855,7 +3909,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -4190,7 +4244,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -4540,7 +4594,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -4995,7 +5049,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -5275,8 +5329,6 @@ paths:
                       type: object
                       description: Retrieved record.
                       x-is-generic: true
-                required:
-                  - results
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -5402,7 +5454,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -5709,7 +5761,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -5998,7 +6050,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -6292,7 +6344,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -6687,7 +6739,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -7052,7 +7104,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -7327,7 +7379,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -7589,7 +7641,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -7865,7 +7917,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -8175,7 +8227,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -8506,7 +8558,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -8759,7 +8811,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -9150,7 +9202,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -9423,7 +9475,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '[{"objectID":"lorem","conditions":[{"pattern":"{facet:genre}","anchoring":"is","alternatives":false,"context":"mobile","filters":"genre:comedy"}],"consequence":{"params":{"similarQuery":"comedy drama crime Macy Buscemi","filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"sumOrFiltersScores":false,"restrictSearchableAttributes":["title","author"],"facets":["*"],"facetingAfterDistinct":false,"page":0,"offset":42,"length":0,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"naturalLanguages":[],"ruleContexts":["mobile"],"personalizationImpact":100,"userToken":"test-user-123","getRankingInfo":false,"synonyms":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"percentileComputation":true,"enableABTest":true,"attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"customRanking":["desc(popularity)","asc(price)"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"keepDiacriticsOnCharacters":"øé","queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","mode":"keywordSearch","semanticSearch":{"eventSources":["lorem"]},"advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[]}},"enableReRanking":true,"reRankingApplyFilter":[[]],"query":{"remove":["lorem"],"edits":[{"type":"remove","delete":"lorem","insert":"lorem"}]},"automaticFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}],"automaticOptionalFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}]},"promote":[{"objectIDs":["test-record-123"],"position":0}],"filterPromotes":false,"hide":[{"objectID":"test-record-123"}],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}]'
+              --data '[{"objectID":"lorem","conditions":[{"pattern":"{facet:genre}","anchoring":"is","alternatives":false,"context":"mobile","filters":"genre:comedy"}],"consequence":{"params":{"similarQuery":"comedy drama crime Macy Buscemi","filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"sumOrFiltersScores":false,"restrictSearchableAttributes":["title","author"],"facets":["*"],"facetingAfterDistinct":false,"page":0,"offset":42,"length":0,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"naturalLanguages":[],"ruleContexts":["mobile"],"personalizationImpact":100,"userToken":"test-user-123","getRankingInfo":false,"synonyms":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"percentileComputation":true,"enableABTest":true,"attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"customRanking":["desc(popularity)","asc(price)"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"keepDiacriticsOnCharacters":"øé","queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","mode":"keywordSearch","semanticSearch":{"eventSources":["lorem"]},"advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"enableReRanking":true,"reRankingApplyFilter":[[]],"query":{"remove":["lorem"],"edits":[{"type":"remove","delete":"lorem","insert":"lorem"}]},"automaticFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}],"automaticOptionalFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}]},"promote":[{"objectIDs":["test-record-123"],"position":0}],"filterPromotes":false,"hide":[{"objectID":"test-record-123"}],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}]'
   /1/indexes/{indexName}/rules/clear:
     post:
       tags:
@@ -9526,7 +9578,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -9841,7 +9893,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -10213,7 +10265,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -10615,7 +10667,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -10882,7 +10934,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -11177,7 +11229,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -11466,7 +11518,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -11736,7 +11788,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -12023,7 +12075,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -12314,7 +12366,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -12620,7 +12672,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -12873,7 +12925,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -13156,7 +13208,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -13509,7 +13561,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -13820,7 +13872,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -14060,7 +14112,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -14330,7 +14382,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -14617,7 +14669,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -14901,7 +14953,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -15322,7 +15374,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -15574,7 +15626,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -15840,7 +15892,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -16187,7 +16239,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -16487,7 +16539,7 @@ paths:
 
             //
 
-            const client = searchClient('ALGOLIA_APPLICATION_ID',
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
 
@@ -17736,7 +17788,7 @@ components:
           type: string
     bannerImageUrl:
       description: url for a search banner image.
-      type: array
+      type: object
       additionalProperties: false
       properties:
         url:
@@ -17747,7 +17799,9 @@ components:
       additionalProperties: false
       properties:
         urls:
-          $ref: '#/components/schemas/bannerImageUrl'
+          type: array
+          items:
+            $ref: '#/components/schemas/bannerImageUrl'
         title:
           type: string
     bannerLink:
@@ -17769,10 +17823,8 @@ components:
     banners:
       description: banners defined in the merchandising studio for the given search.
       type: array
-      additionalProperties: false
-      properties:
-        banners:
-          $ref: '#/components/schemas/banner'
+      items:
+        $ref: '#/components/schemas/banner'
     widgets:
       description: widgets returned from any rules that are applied to the current search.
       type: object
@@ -18290,18 +18342,32 @@ components:
           items:
             $ref: '#/components/schemas/alternativesAsExact'
           description: >
-            Alternatives of query words that should be considered as exact
-            matches by the Exact ranking criterion.
+            Determine which plurals and synonyms should be considered an exact
+            matches.
+
+
+            By default, Algolia treats singular and plural forms of a word, and
+            single-word synonyms, as
+            [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
+            matches when searching.
+
+            For example:
+
+
+            - "swimsuit" and "swimsuits" are treated the same
+
+            - "swimsuit" and "swimwear" are treated the same (if they are
+            [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
 
             - `ignorePlurals`.
               Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
 
             - `singleWordSynonym`.
-              Single-word synonyms, such as "NY/NYC" are considered exact matches.
+              Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
 
             - `multiWordsSynonym`.
-              Multi-word synonyms, such as "NY/New York" are considered exact matches.
+              Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
           default:
             - ignorePlurals
             - singleWordSynonym
@@ -18601,6 +18667,12 @@ components:
                 default) to be processed (this can happen when a lot of typo
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
+        appliedRules:
+          description: Rules applied to the query.
+          title: appliedRules
+          type: array
+          items:
+            type: object
         exhaustiveFacetsCount:
           type: boolean
           description: >-
@@ -19398,8 +19470,8 @@ components:
             - wheel
             - 1X2BCD
           description: >
-            Words for which you want to turn off [typo
-            tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+            Creates a list of [words which require exact
+            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
 
             This also turns off [word splitting and
             concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
@@ -19567,18 +19639,25 @@ components:
           type: string
           example: +#
           description: >
-            Controls which separators are indexed.
+            Control which non-alphanumeric characters are indexed.
+
+
+            By default, Algolia ignores [non-alphanumeric
+            characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
+            like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`).
+
+            To include such characters, define them with `separatorsToIndex`.
 
 
             Separators are all non-letter characters except spaces and currency
             characters, such as $€£¥.
 
-            By default, separator characters aren't indexed.
 
             With `separatorsToIndex`, Algolia treats separator characters as
             separate words.
 
-            For example, a search for `C#` would report two matches.
+            For example, in a search for "Disney+", Algolia considers "Disney"
+            and "+" as two separate words.
           default: ''
           x-categories:
             - Typos
@@ -19796,7 +19875,7 @@ components:
         createdAt:
           $ref: '#/components/schemas/createdAtTimestamp'
       required:
-        - key
+        - value
         - createdAt
     acl:
       description: Access control list permissions.
@@ -20333,13 +20412,49 @@ components:
     parameters_page:
       type: integer
       minimum: 0
-      description: Requested page of the API response.
+      description: >
+        Requested page of the API response.
+
+
+        Algolia uses `page` and `hitsPerPage` to control how search results are
+        displayed
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+
+
+        - `hitsPerPage`: sets the number of search results (_hits_) displayed
+        per page.
+
+        - `page`: specifies the page number of the search results you want to
+        retrieve. Page numbering starts at 0, so the first page is `page=0`, the
+        second is `page=1`, and so on.
+
+
+        For example, to display 10 results per page starting from the third
+        page, set `hitsPerPage` to 10 and `page` to 2.
     parameters_hitsPerPage:
       type: integer
       default: 20
       minimum: 1
       maximum: 1000
-      description: Maximum number of hits per page.
+      description: >
+        Maximum number of hits per page.
+
+
+        Algolia uses `page` and `hitsPerPage` to control how search results are
+        displayed
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+
+
+        - `hitsPerPage`: sets the number of search results (_hits_) displayed
+        per page.
+
+        - `page`: specifies the page number of the search results you want to
+        retrieve. Page numbering starts at 0, so the first page is `page=0`, the
+        second is `page=1`, and so on.
+
+
+        For example, to display 10 results per page starting from the third
+        page, set `hitsPerPage` to 10 and `page` to 2.
     dictionaryType:
       type: string
       enum:

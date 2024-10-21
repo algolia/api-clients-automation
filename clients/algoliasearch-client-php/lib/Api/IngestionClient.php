@@ -38,7 +38,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.6.0';
+    public const VERSION = '4.6.2';
 
     /**
      * @var ApiWrapperInterface
@@ -317,7 +317,7 @@ class IngestionClient
      *                                    - $transformationCreate['code'] => (string) The source code of the transformation. (required)
      *                                    - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
      *                                    - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
-     *                                    - $transformationCreate['authenticationIDs'] => (array) The authentications associated for the current transformation.
+     *                                    - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
      *
      * @see TransformationCreate
      *
@@ -345,7 +345,7 @@ class IngestionClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -384,7 +384,7 @@ class IngestionClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -423,7 +423,7 @@ class IngestionClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -463,7 +463,7 @@ class IngestionClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -1225,17 +1225,6 @@ class IngestionClient
      */
     public function listAuthentications($itemsPerPage = null, $page = null, $type = null, $platform = null, $sort = null, $order = null, $requestOptions = [])
     {
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listAuthentications, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listAuthentications, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listAuthentications, must be bigger than or equal to 1.');
-        }
-
         $resourcePath = '/1/authentications';
         $queryParameters = [];
         $headers = [];
@@ -1295,17 +1284,6 @@ class IngestionClient
      */
     public function listDestinations($itemsPerPage = null, $page = null, $type = null, $authenticationID = null, $transformationID = null, $sort = null, $order = null, $requestOptions = [])
     {
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listDestinations, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listDestinations, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listDestinations, must be bigger than or equal to 1.');
-        }
-
         $resourcePath = '/1/destinations';
         $queryParameters = [];
         $headers = [];
@@ -1352,7 +1330,7 @@ class IngestionClient
     }
 
     /**
-     * Retrieves a list of events for a task run, identified by it's ID.
+     * Retrieves a list of events for a task run, identified by its ID.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1379,16 +1357,6 @@ class IngestionClient
             throw new \InvalidArgumentException(
                 'Parameter `runID` is required when calling `listEvents`.'
             );
-        }
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listEvents, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listEvents, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listEvents, must be bigger than or equal to 1.');
         }
 
         $resourcePath = '/1/runs/{runID}/events';
@@ -1463,17 +1431,6 @@ class IngestionClient
      */
     public function listRuns($itemsPerPage = null, $page = null, $status = null, $type = null, $taskID = null, $sort = null, $order = null, $startDate = null, $endDate = null, $requestOptions = [])
     {
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listRuns, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listRuns, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listRuns, must be bigger than or equal to 1.');
-        }
-
         $resourcePath = '/1/runs';
         $queryParameters = [];
         $headers = [];
@@ -1529,7 +1486,7 @@ class IngestionClient
      * @param int   $itemsPerPage     Number of items per page. (optional, default to 10)
      * @param int   $page             Page number of the paginated API response. (optional)
      * @param array $type             Source type. Some sources require authentication. (optional)
-     * @param array $authenticationID Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication. (optional)
+     * @param array $authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. (optional)
      * @param array $sort             Property by which to sort the list of sources. (optional)
      * @param array $order            Sort order of the response, ascending or descending. (optional)
      * @param array $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -1538,17 +1495,6 @@ class IngestionClient
      */
     public function listSources($itemsPerPage = null, $page = null, $type = null, $authenticationID = null, $sort = null, $order = null, $requestOptions = [])
     {
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listSources, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listSources, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listSources, must be bigger than or equal to 1.');
-        }
-
         $resourcePath = '/1/sources';
         $queryParameters = [];
         $headers = [];
@@ -1598,7 +1544,7 @@ class IngestionClient
      * @param int   $itemsPerPage   Number of items per page. (optional, default to 10)
      * @param int   $page           Page number of the paginated API response. (optional)
      * @param array $action         Actions for filtering the list of tasks. (optional)
-     * @param bool  $enabled        Whether to filter the list of tasks by the &#x60;enabled&#x60; status. (optional)
+     * @param bool  $enabled        Whether to filter the list of tasks by the `enabled` status. (optional)
      * @param array $sourceID       Source IDs for filtering the list of tasks. (optional)
      * @param array $destinationID  Destination IDs for filtering the list of tasks. (optional)
      * @param array $triggerType    Type of task trigger for filtering the list of tasks. (optional)
@@ -1610,17 +1556,6 @@ class IngestionClient
      */
     public function listTasks($itemsPerPage = null, $page = null, $action = null, $enabled = null, $sourceID = null, $destinationID = null, $triggerType = null, $sort = null, $order = null, $requestOptions = [])
     {
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTasks, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTasks, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listTasks, must be bigger than or equal to 1.');
-        }
-
         $resourcePath = '/2/tasks';
         $queryParameters = [];
         $headers = [];
@@ -1688,7 +1623,7 @@ class IngestionClient
      * @param int   $itemsPerPage   Number of items per page. (optional, default to 10)
      * @param int   $page           Page number of the paginated API response. (optional)
      * @param array $action         Actions for filtering the list of tasks. (optional)
-     * @param bool  $enabled        Whether to filter the list of tasks by the &#x60;enabled&#x60; status. (optional)
+     * @param bool  $enabled        Whether to filter the list of tasks by the `enabled` status. (optional)
      * @param array $sourceID       Source IDs for filtering the list of tasks. (optional)
      * @param array $destinationID  Destination IDs for filtering the list of tasks. (optional)
      * @param array $triggerType    Type of task trigger for filtering the list of tasks. (optional)
@@ -1700,17 +1635,6 @@ class IngestionClient
      */
     public function listTasksV1($itemsPerPage = null, $page = null, $action = null, $enabled = null, $sourceID = null, $destinationID = null, $triggerType = null, $sort = null, $order = null, $requestOptions = [])
     {
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTasksV1, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTasksV1, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listTasksV1, must be bigger than or equal to 1.');
-        }
-
         $resourcePath = '/1/tasks';
         $queryParameters = [];
         $headers = [];
@@ -1785,17 +1709,6 @@ class IngestionClient
      */
     public function listTransformations($itemsPerPage = null, $page = null, $sort = null, $order = null, $requestOptions = [])
     {
-        if (null !== $itemsPerPage && $itemsPerPage > 100) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTransformations, must be smaller than or equal to 100.');
-        }
-        if (null !== $itemsPerPage && $itemsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTransformations, must be bigger than or equal to 1.');
-        }
-
-        if (null !== $page && $page < 1) {
-            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listTransformations, must be bigger than or equal to 1.');
-        }
-
         $resourcePath = '/1/transformations';
         $queryParameters = [];
         $headers = [];
@@ -1829,7 +1742,7 @@ class IngestionClient
      *  - editSettings
      *
      * @param string $taskID          Unique identifier of a task. (required)
-     * @param array  $pushTaskPayload Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
+     * @param array  $pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
      *                                - $pushTaskPayload['action'] => (array)  (required)
      *                                - $pushTaskPayload['records'] => (array)  (required)
      *
@@ -2592,7 +2505,7 @@ class IngestionClient
      *                                     - $transformationCreate['code'] => (string) The source code of the transformation. (required)
      *                                     - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
      *                                     - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
-     *                                     - $transformationCreate['authenticationIDs'] => (array) The authentications associated for the current transformation.
+     *                                     - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
      *
      * @see TransformationCreate
      *

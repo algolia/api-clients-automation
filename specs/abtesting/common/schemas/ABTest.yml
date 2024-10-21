@@ -124,8 +124,6 @@ ABTestConfiguration:
       $ref: '#/EmptySearch'
     minimumDetectableEffect:
       $ref: '#/MinimumDetectableEffect'
-  required:
-    - outliers
 
 Outliers:
   type: object

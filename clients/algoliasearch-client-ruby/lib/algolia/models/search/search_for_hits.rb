@@ -184,7 +184,7 @@ module Algolia
 
       attr_accessor :exact_on_single_word_query
 
-      # Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY/NYC\" are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
+      # Determine which plurals and synonyms should be considered an exact matches.  By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example:  - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
       attr_accessor :alternatives_as_exact
 
       # Advanced search syntax features you want to support.  - `exactPhrase`.   Phrases in quotes must match exactly.   For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\".  - `excludeWords`.   Query words prefixed with a `-` must not occur in a record.   For example, `search -engine` matches records that contain \"search\" but not \"engine\".  This setting only has an effect if `advancedSyntax` is true.
@@ -793,134 +793,6 @@ module Algolia
         if attributes.key?(:type)
           self.type = attributes[:type]
         end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 0
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 0."
-        end
-
-        @page = page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] length Value to be assigned
-      def length=(length)
-        if length.nil?
-          raise ArgumentError, "length cannot be nil"
-        end
-
-        if length > 1000
-          raise ArgumentError, "invalid value for \"length\", must be smaller than or equal to 1000."
-        end
-
-        if length < 0
-          raise ArgumentError, "invalid value for \"length\", must be greater than or equal to 0."
-        end
-
-        @length = length
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] minimum_around_radius Value to be assigned
-      def minimum_around_radius=(minimum_around_radius)
-        if minimum_around_radius.nil?
-          raise ArgumentError, "minimum_around_radius cannot be nil"
-        end
-
-        if minimum_around_radius < 1
-          raise ArgumentError, "invalid value for \"minimum_around_radius\", must be greater than or equal to 1."
-        end
-
-        @minimum_around_radius = minimum_around_radius
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] personalization_impact Value to be assigned
-      def personalization_impact=(personalization_impact)
-        if personalization_impact.nil?
-          raise ArgumentError, "personalization_impact cannot be nil"
-        end
-
-        if personalization_impact > 100
-          raise ArgumentError, "invalid value for \"personalization_impact\", must be smaller than or equal to 100."
-        end
-
-        if personalization_impact < 0
-          raise ArgumentError, "invalid value for \"personalization_impact\", must be greater than or equal to 0."
-        end
-
-        @personalization_impact = personalization_impact
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] hits_per_page Value to be assigned
-      def hits_per_page=(hits_per_page)
-        if hits_per_page.nil?
-          raise ArgumentError, "hits_per_page cannot be nil"
-        end
-
-        if hits_per_page > 1000
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be smaller than or equal to 1000."
-        end
-
-        if hits_per_page < 1
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be greater than or equal to 1."
-        end
-
-        @hits_per_page = hits_per_page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] min_proximity Value to be assigned
-      def min_proximity=(min_proximity)
-        if min_proximity.nil?
-          raise ArgumentError, "min_proximity cannot be nil"
-        end
-
-        if min_proximity > 7
-          raise ArgumentError, "invalid value for \"min_proximity\", must be smaller than or equal to 7."
-        end
-
-        if min_proximity < 1
-          raise ArgumentError, "invalid value for \"min_proximity\", must be greater than or equal to 1."
-        end
-
-        @min_proximity = min_proximity
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] max_facet_hits Value to be assigned
-      def max_facet_hits=(max_facet_hits)
-        if max_facet_hits.nil?
-          raise ArgumentError, "max_facet_hits cannot be nil"
-        end
-
-        if max_facet_hits > 100
-          raise ArgumentError, "invalid value for \"max_facet_hits\", must be smaller than or equal to 100."
-        end
-
-        @max_facet_hits = max_facet_hits
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] max_values_per_facet Value to be assigned
-      def max_values_per_facet=(max_values_per_facet)
-        if max_values_per_facet.nil?
-          raise ArgumentError, "max_values_per_facet cannot be nil"
-        end
-
-        if max_values_per_facet > 1000
-          raise ArgumentError, "invalid value for \"max_values_per_facet\", must be smaller than or equal to 1000."
-        end
-
-        @max_values_per_facet = max_values_per_facet
       end
 
       # Checks equality by comparing each attribute.

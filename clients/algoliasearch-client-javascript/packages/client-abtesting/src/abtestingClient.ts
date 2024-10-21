@@ -29,10 +29,11 @@ import type {
   StopABTestProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.8.0';
+export const apiClientVersion = '5.9.1';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
+export type RegionOptions = { region?: Region };
 
 function getDefaultHosts(region?: Region): Host[] {
   const url = !region ? 'analytics.algolia.com' : 'analytics.{region}.algolia.com'.replace('{region}', region);
@@ -40,7 +41,6 @@ function getDefaultHosts(region?: Region): Host[] {
   return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createAbtestingClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
@@ -48,7 +48,7 @@ export function createAbtestingClient({
   algoliaAgents,
   region: regionOption,
   ...options
-}: CreateClientOptions & { region?: Region }) {
+}: CreateClientOptions & RegionOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts(regionOption),

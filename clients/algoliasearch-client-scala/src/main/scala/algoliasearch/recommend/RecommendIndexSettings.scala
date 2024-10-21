@@ -65,9 +65,9 @@ import algoliasearch.recommend.SupportedLanguage._
   *   access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/), but don't
   *   want to include it in the search results. Attribute names are case-sensitive.
   * @param disableTypoToleranceOnWords
-  *   Words for which you want to turn off [typo
-  *   tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). This also
-  *   turns off [word splitting and
+  *   Creates a list of [words which require exact
+  *   matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
+  *   This also turns off [word splitting and
   *   concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
   *   for the specified words.
   * @param attributesToTransliterate
@@ -111,9 +111,12 @@ import algoliasearch.recommend.SupportedLanguage._
   *   specify an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`. **Modifier** -
   *   `equalOnly(\"ATTRIBUTE\")`. Support only filtering based on equality comparisons `=` and `!=`.
   * @param separatorsToIndex
-  *   Controls which separators are indexed. Separators are all non-letter characters except spaces and currency
-  *   characters, such as $€£¥. By default, separator characters aren't indexed. With `separatorsToIndex`, Algolia
-  *   treats separator characters as separate words. For example, a search for `C#` would report two matches.
+  *   Control which non-alphanumeric characters are indexed. By default, Algolia ignores [non-alphanumeric
+  *   characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
+  *   like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`). To include such characters, define them with
+  *   `separatorsToIndex`. Separators are all non-letter characters except spaces and currency characters, such as $€£¥.
+  *   With `separatorsToIndex`, Algolia treats separator characters as separate words. For example, in a search for
+  *   \"Disney+\", Algolia considers \"Disney\" and \"+\" as two separate words.
   * @param searchableAttributes
   *   Attributes used for searching. Attribute names are case-sensitive. By default, all attributes are searchable and
   *   the
@@ -242,10 +245,15 @@ import algoliasearch.recommend.SupportedLanguage._
   *   favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content
   *   on ranking.
   * @param alternativesAsExact
-  *   Alternatives of query words that should be considered as exact matches by the Exact ranking criterion. -
-  *   `ignorePlurals`. Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
-  *   matches. - `singleWordSynonym`. Single-word synonyms, such as \"NY/NYC\" are considered exact matches. -
-  *   `multiWordsSynonym`. Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
+  *   Determine which plurals and synonyms should be considered an exact matches. By default, Algolia treats singular
+  *   and plural forms of a word, and single-word synonyms, as
+  *   [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
+  *   matches when searching. For example: - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and
+  *   \"swimwear\" are treated the same (if they are
+  *   [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
+  *   \- `ignorePlurals`. Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
+  *   matches. - `singleWordSynonym`. Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches. -
+  *   `multiWordsSynonym`. Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
   * @param advancedSyntaxFeatures
   *   Advanced search syntax features you want to support. - `exactPhrase`. Phrases in quotes must match exactly. For
   *   example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\". -

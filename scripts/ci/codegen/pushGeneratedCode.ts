@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { setOutput } from '@actions/core';
 
 import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.js';
@@ -58,6 +57,8 @@ export async function pushGeneratedCode(): Promise<void> {
   let message = await run(`git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`);
   const authors = await run(
     `git show -s ${baseBranch} --format="
+
+
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)"`,
   );

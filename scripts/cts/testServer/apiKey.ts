@@ -10,7 +10,6 @@ function addRoutes(app: Express): void {
   app.get('/check-api-key/1', (req: Request, res: Response) => {
     const headerName = 'x-algolia-api-key';
 
-    // eslint-disable-next-line no-unused-expressions
     expect(headerName in req.headers).to.be.true;
 
     const headerAPIKeyValue = req.headers[headerName];
@@ -21,7 +20,6 @@ function addRoutes(app: Express): void {
   app.get('/check-api-key/2', (req: Request, res: Response) => {
     const headerName = 'x-algolia-api-key';
 
-    // eslint-disable-next-line no-unused-expressions
     expect(headerName in req.headers).to.be.true;
 
     const headerAPIKeyValue = req.headers[headerName];

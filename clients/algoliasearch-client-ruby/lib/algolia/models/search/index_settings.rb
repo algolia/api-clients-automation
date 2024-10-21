@@ -19,7 +19,7 @@ module Algolia
       # Attributes that can't be retrieved at query time.  This can be useful if you want to use an attribute for ranking or to [restrict access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/), but don't want to include it in the search results. Attribute names are case-sensitive.
       attr_accessor :unretrievable_attributes
 
-      # Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). This also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) for the specified words.
+      # Creates a list of [words which require exact matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words). This also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) for the specified words.
       attr_accessor :disable_typo_tolerance_on_words
 
       # Attributes, for which you want to support [Japanese transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead).  Transliteration supports searching in any of the Japanese writing systems. To support transliteration, you must set the indexing language to Japanese. Attribute names are case-sensitive.
@@ -43,7 +43,7 @@ module Algolia
       # Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters). Attribute names are case-sensitive.  By default, all numeric attributes are available as numerical filters. For faster indexing, reduce the number of numeric attributes.  To turn off filtering for all numeric attributes, specify an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`.  **Modifier**  - `equalOnly(\"ATTRIBUTE\")`.   Support only filtering based on equality comparisons `=` and `!=`.
       attr_accessor :numeric_attributes_for_filtering
 
-      # Controls which separators are indexed.  Separators are all non-letter characters except spaces and currency characters, such as $€£¥. By default, separator characters aren't indexed. With `separatorsToIndex`, Algolia treats separator characters as separate words. For example, a search for `C#` would report two matches.
+      # Control which non-alphanumeric characters are indexed.  By default, Algolia ignores [non-alphanumeric characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters) like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`). To include such characters, define them with `separatorsToIndex`.  Separators are all non-letter characters except spaces and currency characters, such as $€£¥.  With `separatorsToIndex`, Algolia treats separator characters as separate words. For example, in a search for \"Disney+\", Algolia considers \"Disney\" and \"+\" as two separate words.
       attr_accessor :separators_to_index
 
       # Attributes used for searching. Attribute names are case-sensitive.  By default, all attributes are searchable and the [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute) ranking criterion is turned off. With a non-empty list, Algolia only returns results with matches in the selected attributes. In addition, the Attribute ranking criterion is turned on: matches in attributes that are higher in the list of `searchableAttributes` rank first. To make matches in two attributes rank equally, include them in a comma-separated string, such as `\"title,alternate_title\"`. Attributes with the same priority are always unordered.  For more information, see [Searchable attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).  **Modifier**  - `unordered(\"ATTRIBUTE\")`.   Ignore the position of a match within the attribute.  Without a modifier, matches at the beginning of an attribute rank higher than matches at the end.
@@ -143,7 +143,7 @@ module Algolia
 
       attr_accessor :exact_on_single_word_query
 
-      # Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY/NYC\" are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
+      # Determine which plurals and synonyms should be considered an exact matches.  By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example:  - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
       attr_accessor :alternatives_as_exact
 
       # Advanced search syntax features you want to support.  - `exactPhrase`.   Phrases in quotes must match exactly.   For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\".  - `excludeWords`.   Query words prefixed with a `-` must not occur in a record.   For example, `search -engine` matches records that contain \"search\" but not \"engine\".  This setting only has an effect if `advancedSyntax` is true.
@@ -645,84 +645,6 @@ module Algolia
         if attributes.key?(:re_ranking_apply_filter)
           self.re_ranking_apply_filter = attributes[:re_ranking_apply_filter]
         end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] pagination_limited_to Value to be assigned
-      def pagination_limited_to=(pagination_limited_to)
-        if pagination_limited_to.nil?
-          raise ArgumentError, "pagination_limited_to cannot be nil"
-        end
-
-        if pagination_limited_to > 20000
-          raise ArgumentError, "invalid value for \"pagination_limited_to\", must be smaller than or equal to 20000."
-        end
-
-        @pagination_limited_to = pagination_limited_to
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] hits_per_page Value to be assigned
-      def hits_per_page=(hits_per_page)
-        if hits_per_page.nil?
-          raise ArgumentError, "hits_per_page cannot be nil"
-        end
-
-        if hits_per_page > 1000
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be smaller than or equal to 1000."
-        end
-
-        if hits_per_page < 1
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be greater than or equal to 1."
-        end
-
-        @hits_per_page = hits_per_page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] min_proximity Value to be assigned
-      def min_proximity=(min_proximity)
-        if min_proximity.nil?
-          raise ArgumentError, "min_proximity cannot be nil"
-        end
-
-        if min_proximity > 7
-          raise ArgumentError, "invalid value for \"min_proximity\", must be smaller than or equal to 7."
-        end
-
-        if min_proximity < 1
-          raise ArgumentError, "invalid value for \"min_proximity\", must be greater than or equal to 1."
-        end
-
-        @min_proximity = min_proximity
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] max_facet_hits Value to be assigned
-      def max_facet_hits=(max_facet_hits)
-        if max_facet_hits.nil?
-          raise ArgumentError, "max_facet_hits cannot be nil"
-        end
-
-        if max_facet_hits > 100
-          raise ArgumentError, "invalid value for \"max_facet_hits\", must be smaller than or equal to 100."
-        end
-
-        @max_facet_hits = max_facet_hits
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] max_values_per_facet Value to be assigned
-      def max_values_per_facet=(max_values_per_facet)
-        if max_values_per_facet.nil?
-          raise ArgumentError, "max_values_per_facet cannot be nil"
-        end
-
-        if max_values_per_facet > 1000
-          raise ArgumentError, "invalid value for \"max_values_per_facet\", must be smaller than or equal to 1000."
-        end
-
-        @max_values_per_facet = max_values_per_facet
       end
 
       # Checks equality by comparing each attribute.

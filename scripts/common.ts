@@ -108,7 +108,6 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
     } else {
       // it's already logged in the verbose case
       if (!isVerbose()) {
-        // eslint-disable-next-line no-console
         console.log((err as ExecaError).all);
       }
       throw new Error(`command failed: ${command}`);

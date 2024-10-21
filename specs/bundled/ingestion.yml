@@ -54,9 +54,6 @@ info:
 
     Response bodies are JSON objects.
 
-    Deleting a user token returns an empty response body with rate-limiting
-    information as headers.
-
 
     Successful responses return a `2xx` status. Client errors return a `4xx`
     status. Server errors are indicated by a `5xx` status.
@@ -64,23 +61,10 @@ info:
     Error responses have a `message` property with more information.
 
 
-    The Insights API doesn't validate if the event parameters such as
-    `indexName`, `objectIDs`, or `userToken`,
-
-    correspond to anything in the Search API. It justs checks if they're
-    formatted correctly.
-
-    Check the [Events](https://dashboard.algolia.com/events/health) health
-    section,
-
-    whether your events can be used for Algolia features such as Analytics, or
-    Dynamic Re-Ranking.
-
-
     ## Version
 
 
-    The current version of the Insights API is version 1, as indicated by the
+    The current version of the Ingestion API is version 1, as indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
@@ -1659,7 +1643,7 @@ paths:
       tags:
         - ingestion
       summary: List task run events
-      description: Retrieves a list of events for a task run, identified by it's ID.
+      description: Retrieves a list of events for a task run, identified by its ID.
       operationId: listEvents
       x-acl:
         - addObject
@@ -3125,10 +3109,6 @@ components:
           $ref: '#/components/schemas/eventID'
         runID:
           $ref: '#/components/schemas/runID'
-        parentID:
-          type: string
-          description: The parent event, the cause of this event.
-          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
         status:
           $ref: '#/components/schemas/EventStatus'
         type:
@@ -3883,7 +3863,7 @@ components:
         - updatedAt
         - createdAt
     AuthenticationIDs:
-      description: The authentications associated for the current transformation.
+      description: The authentications associated with the current transformation.
       type: array
       items:
         $ref: '#/components/schemas/authenticationID'

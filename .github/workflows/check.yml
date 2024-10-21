@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     env:
-      CACHE_VERSION: 1 # bump this to run all clients on the CI.
+      CACHE_VERSION: 1.01 # bump this to run all clients on the CI.
     steps:
       - name: debugging - dump GitHub context
         env:
@@ -199,12 +199,10 @@ jobs:
           type: specs
 
       - name: Remove generated clients
-        if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
+        if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: |
           cd clients/algoliasearch-client-javascript/packages
-          ls | grep -v -E "(client-common|requester-*|algoliasearch)" | xargs rm -rf
-          cd algoliasearch
-          ls | grep -v -E "__tests__" | xargs rm -rf
+          find . -mindepth 1 -maxdepth 1 ! -name 'requester-*' ! -name 'logger-*' ! -name 'client-common' -type d -exec rm -rf {}/src {}/model {}/dist {}/builds \;
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -228,11 +226,11 @@ jobs:
         run: cd clients/algoliasearch-client-javascript && yarn test ${{ !contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun, 'algoliasearch') && '--ignore algoliasearch' || '' }}
 
       - name: Test JavaScript bundle size
-        if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
+        if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:size
 
       - name: Test JavaScript bundle and types
-        if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
+        if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:bundle
 
       - name: Remove previous CTS output
@@ -335,7 +333,7 @@ jobs:
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Update composer.lock
-        if: ${{ matrix.client.language == 'php' && startsWith(env.head_ref, 'chore/renovateBaseBranch')  && matrix.client.isMainVersion }}
+        if: ${{ matrix.client.language == 'php' && startsWith(github.head_ref, 'chore/renovateBaseBranch')  && matrix.client.isMainVersion }}
         run: cd ${{ matrix.client.path }} && composer update
 
       - name: Check for file duplicates in Swift
@@ -689,7 +687,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
-      - name: Push generation to the Algolia docs
+      - name: Push specs and snippets to algolia/doc
         run: yarn workspace scripts pushToAlgoliaDoc
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Push guides to algolia/AlgoliaWeb
+        run: yarn workspace scripts pushToAlgoliaWeb
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}

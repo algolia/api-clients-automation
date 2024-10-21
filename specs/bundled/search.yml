@@ -551,6 +551,7 @@ paths:
       tags:
         - search
       operationId: browse
+      x-use-read-transporter: true
       x-acl:
         - browse
       summary: Browse for records
@@ -1216,8 +1217,6 @@ paths:
                       type: object
                       description: Retrieved record.
                       x-is-generic: true
-                required:
-                  - results
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -4775,7 +4774,7 @@ components:
           type: string
     bannerImageUrl:
       description: url for a search banner image.
-      type: array
+      type: object
       additionalProperties: false
       properties:
         url:
@@ -4786,7 +4785,9 @@ components:
       additionalProperties: false
       properties:
         urls:
-          $ref: '#/components/schemas/bannerImageUrl'
+          type: array
+          items:
+            $ref: '#/components/schemas/bannerImageUrl'
         title:
           type: string
     bannerLink:
@@ -4808,10 +4809,8 @@ components:
     banners:
       description: banners defined in the merchandising studio for the given search.
       type: array
-      additionalProperties: false
-      properties:
-        banners:
-          $ref: '#/components/schemas/banner'
+      items:
+        $ref: '#/components/schemas/banner'
     widgets:
       description: widgets returned from any rules that are applied to the current search.
       type: object
@@ -5329,18 +5328,32 @@ components:
           items:
             $ref: '#/components/schemas/alternativesAsExact'
           description: >
-            Alternatives of query words that should be considered as exact
-            matches by the Exact ranking criterion.
+            Determine which plurals and synonyms should be considered an exact
+            matches.
+
+
+            By default, Algolia treats singular and plural forms of a word, and
+            single-word synonyms, as
+            [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
+            matches when searching.
+
+            For example:
+
+
+            - "swimsuit" and "swimsuits" are treated the same
+
+            - "swimsuit" and "swimwear" are treated the same (if they are
+            [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
 
             - `ignorePlurals`.
               Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
 
             - `singleWordSynonym`.
-              Single-word synonyms, such as "NY/NYC" are considered exact matches.
+              Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
 
             - `multiWordsSynonym`.
-              Multi-word synonyms, such as "NY/New York" are considered exact matches.
+              Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
           default:
             - ignorePlurals
             - singleWordSynonym
@@ -5640,6 +5653,12 @@ components:
                 default) to be processed (this can happen when a lot of typo
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
+        appliedRules:
+          description: Rules applied to the query.
+          title: appliedRules
+          type: array
+          items:
+            type: object
         exhaustiveFacetsCount:
           type: boolean
           description: >-
@@ -6437,8 +6456,8 @@ components:
             - wheel
             - 1X2BCD
           description: >
-            Words for which you want to turn off [typo
-            tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+            Creates a list of [words which require exact
+            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
 
             This also turns off [word splitting and
             concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
@@ -6606,18 +6625,25 @@ components:
           type: string
           example: +#
           description: >
-            Controls which separators are indexed.
+            Control which non-alphanumeric characters are indexed.
+
+
+            By default, Algolia ignores [non-alphanumeric
+            characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
+            like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`).
+
+            To include such characters, define them with `separatorsToIndex`.
 
 
             Separators are all non-letter characters except spaces and currency
             characters, such as $€£¥.
 
-            By default, separator characters aren't indexed.
 
             With `separatorsToIndex`, Algolia treats separator characters as
             separate words.
 
-            For example, a search for `C#` would report two matches.
+            For example, in a search for "Disney+", Algolia considers "Disney"
+            and "+" as two separate words.
           default: ''
           x-categories:
             - Typos
@@ -6835,7 +6861,7 @@ components:
         createdAt:
           $ref: '#/components/schemas/createdAtTimestamp'
       required:
-        - key
+        - value
         - createdAt
     acl:
       description: Access control list permissions.
@@ -7372,13 +7398,49 @@ components:
     parameters_page:
       type: integer
       minimum: 0
-      description: Requested page of the API response.
+      description: >
+        Requested page of the API response.
+
+
+        Algolia uses `page` and `hitsPerPage` to control how search results are
+        displayed
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+
+
+        - `hitsPerPage`: sets the number of search results (_hits_) displayed
+        per page.
+
+        - `page`: specifies the page number of the search results you want to
+        retrieve. Page numbering starts at 0, so the first page is `page=0`, the
+        second is `page=1`, and so on.
+
+
+        For example, to display 10 results per page starting from the third
+        page, set `hitsPerPage` to 10 and `page` to 2.
     parameters_hitsPerPage:
       type: integer
       default: 20
       minimum: 1
       maximum: 1000
-      description: Maximum number of hits per page.
+      description: >
+        Maximum number of hits per page.
+
+
+        Algolia uses `page` and `hitsPerPage` to control how search results are
+        displayed
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+
+
+        - `hitsPerPage`: sets the number of search results (_hits_) displayed
+        per page.
+
+        - `page`: specifies the page number of the search results you want to
+        retrieve. Page numbering starts at 0, so the first page is `page=0`, the
+        second is `page=1`, and so on.
+
+
+        For example, to display 10 results per page starting from the third
+        page, set `hitsPerPage` to 10 and `page` to 2.
     dictionaryType:
       type: string
       enum:

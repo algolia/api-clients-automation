@@ -20,7 +20,6 @@ export 'src/model/banner.dart';
 export 'src/model/banner_image.dart';
 export 'src/model/banner_image_url.dart';
 export 'src/model/banner_link.dart';
-export 'src/model/banners.dart';
 export 'src/model/base_get_api_key_response.dart';
 export 'src/model/base_index_settings.dart';
 export 'src/model/base_search_params.dart';

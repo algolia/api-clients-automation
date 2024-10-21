@@ -44,6 +44,12 @@ baseSearchResponse:
           type: boolean
           title: typo
           description: Whether the typo search was exhaustive (`true`) or approximate (`false`). An approximation is done when the typo search query part takes more than 10% of the query budget (ie. 5ms by default) to be processed (this can happen when a lot of typo alternatives exist for the query). This field will not be included when typo-tolerance is entirely disabled.
+    appliedRules:
+      description: Rules applied to the query.
+      title: appliedRules
+      type: array
+      items:
+        type: object
     exhaustiveFacetsCount:
       type: boolean
       description: See the `facetsCount` field of the `exhaustive` object in the response.

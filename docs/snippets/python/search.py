@@ -1545,7 +1545,7 @@ def snippet_for_partial_update_objects():
 
     call partialUpdateObjects with createIfNotExists=true
     """
-    # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1578,7 +1578,7 @@ def snippet_for_partial_update_objects1():
 
     call partialUpdateObjects with createIfNotExists=false
     """
-    # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2247,7 +2247,7 @@ def snippet_for_search_single_index():
     """
     Snippet for the searchSingleIndex method.
 
-    search with minimal parameters
+    search with searchParams
     """
     # >SEPARATOR searchSingleIndex default
     # Initialize the client
@@ -2257,6 +2257,12 @@ def snippet_for_search_single_index():
     # Call the API
     response = client.search_single_index(
         index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "myQuery",
+            "facetFilters": [
+                "tags:algolia",
+            ],
+        },
     )
 
     # >LOG

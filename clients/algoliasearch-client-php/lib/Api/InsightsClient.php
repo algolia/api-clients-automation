@@ -20,7 +20,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class InsightsClient
 {
-    public const VERSION = '4.6.0';
+    public const VERSION = '4.6.2';
 
     /**
      * @var ApiWrapperInterface
@@ -111,7 +111,7 @@ class InsightsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -150,7 +150,7 @@ class InsightsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -189,7 +189,7 @@ class InsightsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -229,7 +229,7 @@ class InsightsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -279,15 +279,6 @@ class InsightsClient
             throw new \InvalidArgumentException(
                 'Parameter `userToken` is required when calling `deleteUserToken`.'
             );
-        }
-        if (strlen($userToken) > 129) {
-            throw new \InvalidArgumentException('invalid length for "$userToken" when calling InsightsClient.deleteUserToken, must be smaller than or equal to 129.');
-        }
-        if (strlen($userToken) < 1) {
-            throw new \InvalidArgumentException('invalid length for "$userToken" when calling InsightsClient.deleteUserToken, must be bigger than or equal to 1.');
-        }
-        if (!preg_match('/[a-zA-Z0-9_=\\/+-]{1,129}/', $userToken)) {
-            throw new \InvalidArgumentException('invalid value for "userToken" when calling InsightsClient.deleteUserToken, must conform to the pattern /[a-zA-Z0-9_=\\/+-]{1,129}/.');
         }
 
         $resourcePath = '/1/usertokens/{userToken}';

@@ -20,7 +20,7 @@ info:
     ## Availability and authentication
 
 
-    Acess to the Crawler API is available with the [Crawler
+    Access to the Crawler API is available with the [Crawler
     add-on](https://www.algolia.com/pricing/).
 
 
@@ -110,8 +110,8 @@ tags:
       It's easiest to make configuration changes in the [Crawler
       dashboard](https://crawler.algolia.com/admin/).
 
-      The editor has autocomplete and builtin validation so you can try your
-      configuration changes before comitting them.
+      The editor has autocomplete and built-in validation so you can try your
+      configuration changes before committing them.
   - name: crawlers
     x-displayName: Crawler
     description: |
@@ -687,8 +687,8 @@ paths:
       description: |
         Cancels a blocking task.
 
-        Tasks that ran into an error block the futher schedule of your Crawler.
-        To unblock the crawler, you can cancel the blocking task.
+        Tasks that ran into an error will block your crawler's schedule.
+        To unblock the crawler, cancel the blocking task.
       tags:
         - crawler
       parameters:
@@ -1253,8 +1253,8 @@ components:
             - wheel
             - 1X2BCD
           description: >
-            Words for which you want to turn off [typo
-            tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+            Creates a list of [words which require exact
+            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
 
             This also turns off [word splitting and
             concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
@@ -1422,18 +1422,25 @@ components:
           type: string
           example: +#
           description: >
-            Controls which separators are indexed.
+            Control which non-alphanumeric characters are indexed.
+
+
+            By default, Algolia ignores [non-alphanumeric
+            characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
+            like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`).
+
+            To include such characters, define them with `separatorsToIndex`.
 
 
             Separators are all non-letter characters except spaces and currency
             characters, such as $€£¥.
 
-            By default, separator characters aren't indexed.
 
             With `separatorsToIndex`, Algolia treats separator characters as
             separate words.
 
-            For example, a search for `C#` would report two matches.
+            For example, in a search for "Disney+", Algolia considers "Disney"
+            and "+" as two separate words.
           default: ''
           x-categories:
             - Typos
@@ -1884,7 +1891,7 @@ components:
           type: string
     bannerImageUrl:
       description: url for a search banner image.
-      type: array
+      type: object
       additionalProperties: false
       properties:
         url:
@@ -1895,7 +1902,9 @@ components:
       additionalProperties: false
       properties:
         urls:
-          $ref: '#/components/schemas/bannerImageUrl'
+          type: array
+          items:
+            $ref: '#/components/schemas/bannerImageUrl'
         title:
           type: string
     bannerLink:
@@ -1917,10 +1926,8 @@ components:
     banners:
       description: banners defined in the merchandising studio for the given search.
       type: array
-      additionalProperties: false
-      properties:
-        banners:
-          $ref: '#/components/schemas/banner'
+      items:
+        $ref: '#/components/schemas/banner'
     widgets:
       description: widgets returned from any rules that are applied to the current search.
       type: object
@@ -2438,18 +2445,32 @@ components:
           items:
             $ref: '#/components/schemas/alternativesAsExact'
           description: >
-            Alternatives of query words that should be considered as exact
-            matches by the Exact ranking criterion.
+            Determine which plurals and synonyms should be considered an exact
+            matches.
+
+
+            By default, Algolia treats singular and plural forms of a word, and
+            single-word synonyms, as
+            [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
+            matches when searching.
+
+            For example:
+
+
+            - "swimsuit" and "swimsuits" are treated the same
+
+            - "swimsuit" and "swimwear" are treated the same (if they are
+            [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
 
             - `ignorePlurals`.
               Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
 
             - `singleWordSynonym`.
-              Single-word synonyms, such as "NY/NYC" are considered exact matches.
+              Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
 
             - `multiWordsSynonym`.
-              Multi-word synonyms, such as "NY/New York" are considered exact matches.
+              Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
           default:
             - ignorePlurals
             - singleWordSynonym
@@ -2910,7 +2931,7 @@ components:
         actions:
           type: array
           description: >
-            Instructions how to process crawled URLs.
+            Instructions about how to process crawled URLs.
 
 
             Each action defines:
@@ -2945,8 +2966,8 @@ components:
 
             The API key must not be the admin API key of the application.
 
-            The API key must have access to the indices which the crawler is
-            supposed to create.
+            The API key must have access to create the indices that the crawler
+            will use.
 
             For example, if `indexPrefix` is `crawler_`, the API key must have
             access to all `crawler_*` indices.
@@ -2975,7 +2996,7 @@ components:
             records.
 
 
-            For more information, see [Enrich extrated records with external
+            For more information, see [Enrich extracted records with external
             data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data/).
           maxItems: 10
           items:

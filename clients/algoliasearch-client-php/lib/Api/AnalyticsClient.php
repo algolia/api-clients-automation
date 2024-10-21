@@ -19,7 +19,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class AnalyticsClient
 {
-    public const VERSION = '4.6.0';
+    public const VERSION = '4.6.2';
 
     /**
      * @var ApiWrapperInterface
@@ -110,7 +110,7 @@ class AnalyticsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -149,7 +149,7 @@ class AnalyticsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -188,7 +188,7 @@ class AnalyticsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -228,7 +228,7 @@ class AnalyticsClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -272,9 +272,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetAddToCartRateResponse|array<string, mixed>
@@ -319,9 +319,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetAverageClickPositionResponse|array<string, mixed>
@@ -366,9 +366,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetClickPositionsResponse|array<string, mixed>
@@ -413,9 +413,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetClickThroughRateResponse|array<string, mixed>
@@ -460,9 +460,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetConversionRateResponse|array<string, mixed>
@@ -507,9 +507,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetNoClickRateResponse|array<string, mixed>
@@ -554,9 +554,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetNoResultsRateResponse|array<string, mixed>
@@ -601,9 +601,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetPurchaseRateResponse|array<string, mixed>
@@ -648,9 +648,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetRevenue|array<string, mixed>
@@ -695,9 +695,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesCountResponse|array<string, mixed>
@@ -742,11 +742,11 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param int    $limit          Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset         Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param int    $limit          Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset         Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesNoClicksResponse|array<string, mixed>
@@ -758,16 +758,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getSearchesNoClicks`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getSearchesNoClicks, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getSearchesNoClicks, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getSearchesNoClicks, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/searches/noClicks';
@@ -809,11 +799,11 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param int    $limit          Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset         Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param int    $limit          Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset         Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetSearchesNoResultsResponse|array<string, mixed>
@@ -825,16 +815,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getSearchesNoResults`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getSearchesNoResults, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getSearchesNoResults, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getSearchesNoResults, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/searches/noResults';
@@ -908,11 +888,11 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param int    $limit          Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset         Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param int    $limit          Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset         Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopCountriesResponse|array<string, mixed>
@@ -924,16 +904,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopCountries`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getTopCountries, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopCountries, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopCountries, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/countries';
@@ -976,11 +946,11 @@ class AnalyticsClient
      *
      * @param string $index          Index name. (required)
      * @param string $search         Search query. (optional)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param int    $limit          Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset         Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param int    $limit          Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset         Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFilterAttributesResponse|array<string, mixed>
@@ -992,16 +962,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopFilterAttributes`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getTopFilterAttributes, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopFilterAttributes, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopFilterAttributes, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/filters';
@@ -1049,11 +1009,11 @@ class AnalyticsClient
      * @param string $attribute      Attribute name. (required)
      * @param string $index          Index name. (required)
      * @param string $search         Search query. (optional)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param int    $limit          Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset         Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param int    $limit          Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset         Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFilterForAttributeResponse|array<string, mixed>
@@ -1071,16 +1031,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopFilterForAttribute`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getTopFilterForAttribute, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopFilterForAttribute, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopFilterForAttribute, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/filters/{attribute}';
@@ -1136,11 +1086,11 @@ class AnalyticsClient
      *
      * @param string $index          Index name. (required)
      * @param string $search         Search query. (optional)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param int    $limit          Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset         Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param int    $limit          Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset         Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopFiltersNoResultsResponse|array<string, mixed>
@@ -1152,16 +1102,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopFiltersNoResults`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getTopFiltersNoResults, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopFiltersNoResults, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopFiltersNoResults, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/filters/noResults';
@@ -1210,11 +1150,11 @@ class AnalyticsClient
      * @param string $search           Search query. (optional)
      * @param bool   $clickAnalytics   Whether to include metrics related to click and conversion events in the response. (optional, default to false)
      * @param bool   $revenueAnalytics Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response. (optional, default to false)
-     * @param string $startDate        Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate          End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param int    $limit            Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset           Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags             Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate        Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate          End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param int    $limit            Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset           Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags             Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopHitsResponse|array<string, mixed>
@@ -1226,16 +1166,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopHits`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getTopHits, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopHits, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopHits, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/hits';
@@ -1291,13 +1221,13 @@ class AnalyticsClient
      * @param string $index            Index name. (required)
      * @param bool   $clickAnalytics   Whether to include metrics related to click and conversion events in the response. (optional, default to false)
      * @param bool   $revenueAnalytics Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response. (optional, default to false)
-     * @param string $startDate        Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate          End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param array  $orderBy          Attribute by which to order the response items.  If the &#x60;clickAnalytics&#x60; parameter is false, only &#x60;searchCount&#x60; is available. (optional)
+     * @param string $startDate        Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate          End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param array  $orderBy          Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. (optional)
      * @param array  $direction        Sorting direction of the results: ascending or descending. (optional)
-     * @param int    $limit            Number of items to return.  Combined with the &#x60;offset&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 10)
-     * @param int    $offset           Position of the first item to return.  Combined with the &#x60;limit&#x60; parameter, only the first 1000 items can be retrieved. (optional, default to 0)
-     * @param string $tags             Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param int    $limit            Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved. (optional, default to 10)
+     * @param int    $offset           Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved. (optional, default to 0)
+     * @param string $tags             Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetTopSearchesResponse|array<string, mixed>
@@ -1309,16 +1239,6 @@ class AnalyticsClient
             throw new \InvalidArgumentException(
                 'Parameter `index` is required when calling `getTopSearches`.'
             );
-        }
-        if (null !== $limit && $limit > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$limit" when calling AnalyticsClient.getTopSearches, must be smaller than or equal to 1000.');
-        }
-
-        if (null !== $offset && $offset > 1000) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopSearches, must be smaller than or equal to 1000.');
-        }
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AnalyticsClient.getTopSearches, must be bigger than or equal to 0.');
         }
 
         $resourcePath = '/2/searches';
@@ -1376,9 +1296,9 @@ class AnalyticsClient
      *  - analytics
      *
      * @param string $index          Index name. (required)
-     * @param string $startDate      Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $endDate        End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (optional)
-     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+     * @param string $startDate      Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $endDate        End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+     * @param string $tags           Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Analytics\GetUsersCountResponse|array<string, mixed>

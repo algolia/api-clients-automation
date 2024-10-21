@@ -23,6 +23,8 @@ BrowseResponse _$BrowseResponseFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : Exhaustive.fromJson(v as Map<String, dynamic>)),
+          appliedRules: $checkedConvert('appliedRules',
+              (v) => (v as List<dynamic>?)?.map((e) => e as Object).toList()),
           exhaustiveFacetsCount:
               $checkedConvert('exhaustiveFacetsCount', (v) => v as bool?),
           exhaustiveNbHits:
@@ -103,6 +105,7 @@ Map<String, dynamic> _$BrowseResponseToJson(BrowseResponse instance) {
   writeNotNull('aroundLatLng', instance.aroundLatLng);
   writeNotNull('automaticRadius', instance.automaticRadius);
   writeNotNull('exhaustive', instance.exhaustive?.toJson());
+  writeNotNull('appliedRules', instance.appliedRules);
   writeNotNull('exhaustiveFacetsCount', instance.exhaustiveFacetsCount);
   writeNotNull('exhaustiveNbHits', instance.exhaustiveNbHits);
   writeNotNull('exhaustiveTypo', instance.exhaustiveTypo);

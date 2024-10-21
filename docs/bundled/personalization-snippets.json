@@ -107,7 +107,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { personalizationClient } from '@algolia/client-personalization';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "customDelete": {
       "default": "const response = await client.customDelete({ path: 'test/minimal' });"
@@ -137,7 +137,7 @@
       "default": "const response = await client.setPersonalizationStrategy({\n  eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],\n  facetScoring: [{ score: 42, facetName: 'Event' }],\n  personalizationImpact: 42,\n});"
     },
     "init": {
-      "default": "// Replace 'us' with your Algolia Application Region\nconst client = personalizationClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });"
     }
   },
   "kotlin": {

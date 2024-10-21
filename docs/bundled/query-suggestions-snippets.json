@@ -134,7 +134,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { querySuggestionsClient } from '@algolia/client-query-suggestions';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "createConfig": {
       "default": "const response = await client.createConfig({\n  indexName: 'theIndexName',\n  sourceIndices: [\n    { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },\n  ],\n  languages: ['french'],\n  exclude: ['test'],\n});"
@@ -173,7 +173,7 @@
       "default": "const response = await client.updateConfig({\n  indexName: 'theIndexName',\n  configuration: {\n    sourceIndices: [\n      { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },\n    ],\n    languages: ['french'],\n    exclude: ['test'],\n  },\n});"
     },
     "init": {
-      "default": "// Replace 'us' with your Algolia Application Region\nconst client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });"
     }
   },
   "kotlin": {

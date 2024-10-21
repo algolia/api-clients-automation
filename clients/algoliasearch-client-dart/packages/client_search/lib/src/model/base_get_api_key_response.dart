@@ -9,13 +9,13 @@ part 'base_get_api_key_response.g.dart';
 final class BaseGetApiKeyResponse {
   /// Returns a new [BaseGetApiKeyResponse] instance.
   const BaseGetApiKeyResponse({
-    this.value,
+    required this.value,
     required this.createdAt,
   });
 
   /// API key.
   @JsonKey(name: r'value')
-  final String? value;
+  final String value;
 
   /// Timestamp when the object was created, in milliseconds since the Unix epoch.
   @JsonKey(name: r'createdAt')

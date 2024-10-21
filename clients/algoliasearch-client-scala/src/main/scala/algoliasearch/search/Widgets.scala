@@ -34,7 +34,10 @@
 package algoliasearch.search
 
 /** widgets returned from any rules that are applied to the current search.
+  *
+  * @param banners
+  *   banners defined in the merchandising studio for the given search.
   */
 case class Widgets(
-    banners: Option[Banners] = scala.None
+    banners: Option[Seq[Banner]] = scala.None
 )

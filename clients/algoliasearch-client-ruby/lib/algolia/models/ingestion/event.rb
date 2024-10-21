@@ -13,9 +13,6 @@ module Algolia
       # Universally unique identifier (UUID) of a task run.
       attr_accessor :run_id
 
-      # The parent event, the cause of this event.
-      attr_accessor :parent_id
-
       attr_accessor :status
 
       attr_accessor :type
@@ -33,7 +30,6 @@ module Algolia
         {
           :event_id => :eventID,
           :run_id => :runID,
-          :parent_id => :parentID,
           :status => :status,
           :type => :type,
           :batch_size => :batchSize,
@@ -52,7 +48,6 @@ module Algolia
         {
           :event_id => :"String",
           :run_id => :"String",
-          :parent_id => :"String",
           :status => :"EventStatus",
           :type => :"EventType",
           :batch_size => :"Integer",
@@ -100,10 +95,6 @@ module Algolia
           self.run_id = nil
         end
 
-        if attributes.key?(:parent_id)
-          self.parent_id = attributes[:parent_id]
-        end
-
         if attributes.key?(:status)
           self.status = attributes[:status]
         else
@@ -135,20 +126,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] batch_size Value to be assigned
-      def batch_size=(batch_size)
-        if batch_size.nil?
-          raise ArgumentError, "batch_size cannot be nil"
-        end
-
-        if batch_size < 0
-          raise ArgumentError, "invalid value for \"batch_size\", must be greater than or equal to 0."
-        end
-
-        @batch_size = batch_size
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -156,7 +133,6 @@ module Algolia
         self.class == other.class &&
           event_id == other.event_id &&
           run_id == other.run_id &&
-          parent_id == other.parent_id &&
           status == other.status &&
           type == other.type &&
           batch_size == other.batch_size &&
@@ -173,7 +149,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [event_id, run_id, parent_id, status, type, batch_size, data, published_at].hash
+        [event_id, run_id, status, type, batch_size, data, published_at].hash
       end
 
       # Builds the object from hash

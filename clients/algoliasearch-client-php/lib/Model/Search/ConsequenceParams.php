@@ -753,57 +753,7 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function listInvalidProperties()
     {
-        $invalidProperties = [];
-
-        if (isset($this->container['page']) && ($this->container['page'] < 0)) {
-            $invalidProperties[] = "invalid value for 'page', must be bigger than or equal to 0.";
-        }
-
-        if (isset($this->container['length']) && ($this->container['length'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'length', must be smaller than or equal to 1000.";
-        }
-
-        if (isset($this->container['length']) && ($this->container['length'] < 0)) {
-            $invalidProperties[] = "invalid value for 'length', must be bigger than or equal to 0.";
-        }
-
-        if (isset($this->container['minimumAroundRadius']) && ($this->container['minimumAroundRadius'] < 1)) {
-            $invalidProperties[] = "invalid value for 'minimumAroundRadius', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['personalizationImpact']) && ($this->container['personalizationImpact'] > 100)) {
-            $invalidProperties[] = "invalid value for 'personalizationImpact', must be smaller than or equal to 100.";
-        }
-
-        if (isset($this->container['personalizationImpact']) && ($this->container['personalizationImpact'] < 0)) {
-            $invalidProperties[] = "invalid value for 'personalizationImpact', must be bigger than or equal to 0.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be smaller than or equal to 1000.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] < 1)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['minProximity']) && ($this->container['minProximity'] > 7)) {
-            $invalidProperties[] = "invalid value for 'minProximity', must be smaller than or equal to 7.";
-        }
-
-        if (isset($this->container['minProximity']) && ($this->container['minProximity'] < 1)) {
-            $invalidProperties[] = "invalid value for 'minProximity', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['maxFacetHits']) && ($this->container['maxFacetHits'] > 100)) {
-            $invalidProperties[] = "invalid value for 'maxFacetHits', must be smaller than or equal to 100.";
-        }
-
-        if (isset($this->container['maxValuesPerFacet']) && ($this->container['maxValuesPerFacet'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'maxValuesPerFacet', must be smaller than or equal to 1000.";
-        }
-
-        return $invalidProperties;
+        return [];
     }
 
     /**
@@ -1076,10 +1026,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setPage($page)
     {
-        if (!is_null($page) && ($page < 0)) {
-            throw new \InvalidArgumentException('invalid value for $page when calling ConsequenceParams., must be bigger than or equal to 0.');
-        }
-
         $this->container['page'] = $page;
 
         return $this;
@@ -1128,13 +1074,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setLength($length)
     {
-        if (!is_null($length) && ($length > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $length when calling ConsequenceParams., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($length) && ($length < 0)) {
-            throw new \InvalidArgumentException('invalid value for $length when calling ConsequenceParams., must be bigger than or equal to 0.');
-        }
-
         $this->container['length'] = $length;
 
         return $this;
@@ -1255,10 +1194,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setMinimumAroundRadius($minimumAroundRadius)
     {
-        if (!is_null($minimumAroundRadius) && ($minimumAroundRadius < 1)) {
-            throw new \InvalidArgumentException('invalid value for $minimumAroundRadius when calling ConsequenceParams., must be bigger than or equal to 1.');
-        }
-
         $this->container['minimumAroundRadius'] = $minimumAroundRadius;
 
         return $this;
@@ -1379,13 +1314,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setPersonalizationImpact($personalizationImpact)
     {
-        if (!is_null($personalizationImpact) && ($personalizationImpact > 100)) {
-            throw new \InvalidArgumentException('invalid value for $personalizationImpact when calling ConsequenceParams., must be smaller than or equal to 100.');
-        }
-        if (!is_null($personalizationImpact) && ($personalizationImpact < 0)) {
-            throw new \InvalidArgumentException('invalid value for $personalizationImpact when calling ConsequenceParams., must be bigger than or equal to 0.');
-        }
-
         $this->container['personalizationImpact'] = $personalizationImpact;
 
         return $this;
@@ -1842,13 +1770,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setHitsPerPage($hitsPerPage)
     {
-        if (!is_null($hitsPerPage) && ($hitsPerPage > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling ConsequenceParams., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($hitsPerPage) && ($hitsPerPage < 1)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling ConsequenceParams., must be bigger than or equal to 1.');
-        }
-
         $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;
@@ -2347,7 +2268,7 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets alternativesAsExact.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Search\AlternativesAsExact[] $alternativesAsExact Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY/NYC\" are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
+     * @param null|\Algolia\AlgoliaSearch\Model\Search\AlternativesAsExact[] $alternativesAsExact Determine which plurals and synonyms should be considered an exact matches.  By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example:  - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
      *
      * @return self
      */
@@ -2449,13 +2370,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setMinProximity($minProximity)
     {
-        if (!is_null($minProximity) && ($minProximity > 7)) {
-            throw new \InvalidArgumentException('invalid value for $minProximity when calling ConsequenceParams., must be smaller than or equal to 7.');
-        }
-        if (!is_null($minProximity) && ($minProximity < 1)) {
-            throw new \InvalidArgumentException('invalid value for $minProximity when calling ConsequenceParams., must be bigger than or equal to 1.');
-        }
-
         $this->container['minProximity'] = $minProximity;
 
         return $this;
@@ -2504,10 +2418,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setMaxFacetHits($maxFacetHits)
     {
-        if (!is_null($maxFacetHits) && ($maxFacetHits > 100)) {
-            throw new \InvalidArgumentException('invalid value for $maxFacetHits when calling ConsequenceParams., must be smaller than or equal to 100.');
-        }
-
         $this->container['maxFacetHits'] = $maxFacetHits;
 
         return $this;
@@ -2532,10 +2442,6 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      */
     public function setMaxValuesPerFacet($maxValuesPerFacet)
     {
-        if (!is_null($maxValuesPerFacet) && ($maxValuesPerFacet > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $maxValuesPerFacet when calling ConsequenceParams., must be smaller than or equal to 1000.');
-        }
-
         $this->container['maxValuesPerFacet'] = $maxValuesPerFacet;
 
         return $this;

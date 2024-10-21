@@ -34,7 +34,7 @@ import type {
   SearchRecommendRulesProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.8.0';
+export const apiClientVersion = '5.9.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -71,7 +71,6 @@ function getDefaultHosts(appId: string): Host[] {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createRecommendClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
@@ -451,7 +450,6 @@ export function createRecommendClient({
           requests: getRecommendationsParams,
         };
 
-        // eslint-disable-next-line no-param-reassign
         getRecommendationsParams = newSignatureRequest;
       }
 

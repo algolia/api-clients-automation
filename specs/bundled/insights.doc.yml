@@ -20,7 +20,7 @@ info:
     from your UI and send them to the Insights API.
 
     See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/).
 
 
     ## Base URLs
@@ -80,7 +80,7 @@ info:
     The Insights API doesn't validate if the event parameters such as
     `indexName`, `objectIDs`, or `userToken`,
 
-    correspond to anything in the Search API. It justs checks if they're
+    correspond to anything in the Search API. It just checks if they're
     formatted correctly.
 
     Check the [Events](https://dashboard.algolia.com/events/health) health
@@ -113,7 +113,7 @@ tags:
     x-displayName: Events
     description: >-
       Events represent user interactions with your website or app. They include
-      details like the event's name, type, a timestamp or a user token.
+      details like the event's name, type, a timestamp, or a user token.
   - name: usertokens
     x-displayName: User tokens
     description: |
@@ -224,8 +224,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
 
 
             // Call the API
@@ -468,8 +468,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
 
 
             // Call the API
@@ -712,8 +712,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
 
 
             // Call the API
@@ -951,8 +951,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
 
 
             // Call the API
@@ -1672,8 +1672,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
 
 
             // Call the API
@@ -2050,8 +2050,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = insightsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
 
 
             // Call the API

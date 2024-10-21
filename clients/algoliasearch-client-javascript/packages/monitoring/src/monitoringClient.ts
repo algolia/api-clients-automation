@@ -31,13 +31,12 @@ import type {
   GetReachabilityProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.8.0';
+export const apiClientVersion = '1.9.1';
 
 function getDefaultHosts(): Host[] {
   return [{ url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' }];
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createMonitoringClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
@@ -231,7 +230,7 @@ export function createMonitoringClient({
     /**
      * Retrieves known incidents for the selected clusters.
      * @param getClusterIncidents - The getClusterIncidents object.
-     * @param getClusterIncidents.clusters - Subset of clusters, separated by comma.
+     * @param getClusterIncidents.clusters - Subset of clusters, separated by commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClusterIncidents(
@@ -259,7 +258,7 @@ export function createMonitoringClient({
     /**
      * Retrieves the status of selected clusters.
      * @param getClusterStatus - The getClusterStatus object.
-     * @param getClusterStatus.clusters - Subset of clusters, separated by comma.
+     * @param getClusterStatus.clusters - Subset of clusters, separated by commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClusterStatus({ clusters }: GetClusterStatusProps, requestOptions?: RequestOptions): Promise<StatusResponse> {
@@ -303,7 +302,7 @@ export function createMonitoringClient({
     /**
      * Retrieves average times for indexing operations for selected clusters.
      * @param getIndexingTime - The getIndexingTime object.
-     * @param getIndexingTime.clusters - Subset of clusters, separated by comma.
+     * @param getIndexingTime.clusters - Subset of clusters, separated by commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getIndexingTime(
@@ -331,7 +330,7 @@ export function createMonitoringClient({
     /**
      * Retrieves the average latency for search requests for selected clusters.
      * @param getLatency - The getLatency object.
-     * @param getLatency.clusters - Subset of clusters, separated by comma.
+     * @param getLatency.clusters - Subset of clusters, separated by commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLatency({ clusters }: GetLatencyProps, requestOptions?: RequestOptions): Promise<LatencyResponse> {
@@ -388,7 +387,7 @@ export function createMonitoringClient({
     /**
      * Test whether clusters are reachable or not.
      * @param getReachability - The getReachability object.
-     * @param getReachability.clusters - Subset of clusters, separated by comma.
+     * @param getReachability.clusters - Subset of clusters, separated by commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getReachability(

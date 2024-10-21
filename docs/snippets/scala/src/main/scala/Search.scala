@@ -1712,7 +1712,7 @@ class SnippetSearchClient {
 
   /** Snippet for the searchSingleIndex method.
     *
-    * search with minimal parameters
+    * search with searchParams
     */
   def snippetForSearchClientSearchSingleIndex(): Unit = {
     // >SEPARATOR searchSingleIndex default
@@ -1721,7 +1721,13 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>"
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = Some(
+        SearchParamsObject(
+          query = Some("myQuery"),
+          facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+        )
+      )
     )
 
     // >LOG

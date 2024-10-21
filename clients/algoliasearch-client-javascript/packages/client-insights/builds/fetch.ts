@@ -18,9 +18,8 @@ import { createInsightsClient } from '../src/insightsClient';
 import { Region, REGIONS } from '../src/insightsClient';
 
 export * from '../model';
-export { apiClientVersion, Region } from '../src/insightsClient';
+export { apiClientVersion, Region, RegionOptions } from '../src/insightsClient';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function insightsClient(
   appId: string,
   apiKey: string,

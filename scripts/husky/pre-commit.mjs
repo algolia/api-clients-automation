@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import chalk from 'chalk';
 import { execaCommand } from 'execa';
 import micromatch from 'micromatch';

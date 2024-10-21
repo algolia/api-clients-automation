@@ -6,7 +6,7 @@ import { createNullLogger, createMemoryCache, createFallbackableCache, createBro
 import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{clientName}}';
 
 {{#hasRegionalHost}}
-import { Region, REGIONS } from '../src/{{clientName}}';
+import { Region, REGIONS, RegionOptions } from '../src/{{clientName}}';
 {{/hasRegionalHost}}
 
 {{! We don't use `export *` to prevent exposing the factory, to avoid confusion for the user }}
@@ -14,6 +14,7 @@ export {
   apiClientVersion,
   {{#hasRegionalHost}}
   Region,
+  RegionOptions,
   {{/hasRegionalHost}}
   {{#isIngestionClient}}
   isOnDemandTrigger,
@@ -31,7 +32,6 @@ import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions,
 import {createHmac} from 'node:crypto';
 {{/nodeSearchHelpers}}
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function {{clientName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
