@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.13.13",
-    "@redocly/cli": "1.25.5",
+    "@redocly/cli": "1.25.7",
     "eslint": "8.57.1",
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-yml": "1.14.0",
     "husky": "9.1.6",
     "lint-staged": "15.2.10",
-    "oxlint": "0.9.10",
+    "oxlint": "0.10.0",
     "pinst": "3.0.0",
     "prettier": "3.3.3",
     "prettier-plugin-java": "2.6.4",
@@ -46,7 +46,7 @@
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.6.3"
   },
-  "packageManager": "yarn@4.5.0",
+  "packageManager": "yarn@4.5.1",
   "engines": {
     "node": "^20.0.0",
     "yarn": "^4.0.0"
