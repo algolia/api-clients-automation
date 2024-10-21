@@ -203,8 +203,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -434,8 +434,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -665,8 +665,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -891,8 +891,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -1175,8 +1175,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -1540,8 +1540,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -1779,8 +1779,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -2050,8 +2050,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API
@@ -2340,8 +2340,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
 
 
             // Call the API

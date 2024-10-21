@@ -125,7 +125,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { abtestingClient } from '@algolia/client-abtesting';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "addABTests": {
       "default": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
@@ -161,7 +161,7 @@
       "default": "const response = await client.stopABTest({ id: 42 });"
     },
     "init": {
-      "default": "// Replace 'us' with your Algolia Application Region\nconst client = abtestingClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });"
     }
   },
   "kotlin": {
