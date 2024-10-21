@@ -3,15 +3,15 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import { describe, expect, test } from 'vitest';
 
-import { monitoringClient, MonitoringClient } from '@algolia/monitoring';
 import type { EchoResponse } from '@algolia/requester-testing';
 import { nodeEchoRequester } from '@algolia/requester-testing';
+import { algoliasearch } from 'algoliasearch';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
-function createClient(): MonitoringClient {
-  return monitoringClient(appId, apiKey, { requester: nodeEchoRequester() });
+function createClient() {
+  return algoliasearch(appId, apiKey).initMonitoring({ options: { requester: nodeEchoRequester() } });
 }
 
 describe('commonApi', () => {
@@ -52,7 +52,9 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('use the correct host', async () => {
-    const client = monitoringClient('my-app-id', 'my-api-key', { requester: nodeEchoRequester() });
+    const client = algoliasearch('my-app-id', 'my-api-key').initMonitoring({
+      options: { requester: nodeEchoRequester() },
+    });
 
     const result = (await client.customDelete({ path: 'test' })) as unknown as EchoResponse;
 
@@ -62,8 +64,8 @@ describe('parameters', () => {
 
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
-    const client = monitoringClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6683, accept: 'readWrite', protocol: 'http' }],
+    const client = algoliasearch('test-app-id', 'test-api-key').initMonitoring({
+      options: { hosts: [{ url: 'localhost', port: 6683, accept: 'readWrite', protocol: 'http' }] },
     });
 
     {
@@ -84,13 +86,11 @@ describe('setClientApiKey', () => {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient = monitoringClient('foo', 'bar', {
-      authMode: 'WithinQueryParameters',
-      requester: nodeEchoRequester(),
+    const qpClient = algoliasearch('foo', 'bar').initMonitoring({
+      options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' },
     });
-    const headerClient = monitoringClient('foo', 'bar', {
-      authMode: 'WithinHeaders',
-      requester: nodeEchoRequester(),
+    const headerClient = algoliasearch('foo', 'bar').initMonitoring({
+      options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' },
     });
 
     const qpResult = (await qpClient.customGet({

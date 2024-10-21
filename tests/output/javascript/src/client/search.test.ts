@@ -3,20 +3,20 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import { describe, expect, test } from 'vitest';
 
-import { searchClient, SearchClient } from '@algolia/client-search';
 import type { EchoResponse } from '@algolia/requester-testing';
 import { nodeEchoRequester } from '@algolia/requester-testing';
+import { algoliasearch } from 'algoliasearch';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
-function createClient(): SearchClient {
-  return searchClient(appId, apiKey, { requester: nodeEchoRequester() });
+function createClient() {
+  return algoliasearch(appId, apiKey, { requester: nodeEchoRequester() });
 }
 
 describe('api', () => {
   test('calls api with correct read host', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
+    const client = algoliasearch('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
@@ -24,7 +24,7 @@ describe('api', () => {
   }, 15000);
 
   test('read transporter with POST method', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
+    const client = algoliasearch('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.searchSingleIndex({ indexName: 'indexName' })) as unknown as EchoResponse;
 
@@ -32,7 +32,7 @@ describe('api', () => {
   }, 15000);
 
   test('calls api with correct write host', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
+    const client = algoliasearch('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
@@ -40,7 +40,7 @@ describe('api', () => {
   }, 15000);
 
   test('tests the retry strategy', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [
         { url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' },
         { url: 'localhost', port: 6677, accept: 'readWrite', protocol: 'http' },
@@ -54,7 +54,7 @@ describe('api', () => {
   }, 15000);
 
   test('tests the retry strategy error', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -107,7 +107,7 @@ describe('commonApi', () => {
 
 describe('deleteObjects', () => {
   test('call deleteObjects without error', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -170,7 +170,7 @@ describe('generateSecuredApiKey', () => {
 
 describe('indexExists', () => {
   test('indexExists', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -182,7 +182,7 @@ describe('indexExists', () => {
   }, 15000);
 
   test('indexNotExists', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -194,7 +194,7 @@ describe('indexExists', () => {
   }, 15000);
 
   test('indexExistsWithError', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -210,19 +210,19 @@ describe('indexExists', () => {
 describe('parameters', () => {
   test('client throws with invalid parameters', async () => {
     try {
-      const client = searchClient('', '', { requester: nodeEchoRequester() });
+      const client = algoliasearch('', '', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const client = searchClient('', 'my-api-key', { requester: nodeEchoRequester() });
+      const client = algoliasearch('', 'my-api-key', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const client = searchClient('my-app-id', '', { requester: nodeEchoRequester() });
+      const client = algoliasearch('my-app-id', '', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`apiKey` is missing.');
@@ -275,7 +275,7 @@ describe('parameters', () => {
 
 describe('partialUpdateObjects', () => {
   test('call partialUpdateObjects with createIfNotExists=true', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -294,7 +294,7 @@ describe('partialUpdateObjects', () => {
   }, 15000);
 
   test('call partialUpdateObjects with createIfNotExists=false', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -315,7 +315,7 @@ describe('partialUpdateObjects', () => {
 
 describe('replaceAllObjects', () => {
   test('call replaceAllObjects without error', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6679, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -353,7 +353,7 @@ describe('replaceAllObjects', () => {
 
 describe('saveObjects', () => {
   test('call saveObjects without error', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -371,7 +371,7 @@ describe('saveObjects', () => {
   }, 15000);
 
   test('saveObjects should report errors', async () => {
-    const client = searchClient('test-app-id', 'wrong-api-key', {
+    const client = algoliasearch('test-app-id', 'wrong-api-key', {
       hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -392,7 +392,7 @@ describe('saveObjects', () => {
 
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6683, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -414,7 +414,7 @@ describe('setClientApiKey', () => {
 
 describe('waitForApiKey', () => {
   test('wait for api key helper - add', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -434,7 +434,7 @@ describe('waitForApiKey', () => {
   }, 15000);
 
   test('wait for api key - update', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -468,7 +468,7 @@ describe('waitForApiKey', () => {
   }, 15000);
 
   test('wait for api key - delete', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -485,7 +485,7 @@ describe('waitForApiKey', () => {
 
 describe('waitForAppTask', () => {
   test('wait for an application-level task', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -499,7 +499,7 @@ describe('waitForAppTask', () => {
 
 describe('waitForTask', () => {
   test('wait for task', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
@@ -513,14 +513,8 @@ describe('waitForTask', () => {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient = searchClient('foo', 'bar', {
-      authMode: 'WithinQueryParameters',
-      requester: nodeEchoRequester(),
-    });
-    const headerClient = searchClient('foo', 'bar', {
-      authMode: 'WithinHeaders',
-      requester: nodeEchoRequester(),
-    });
+    const qpClient = algoliasearch('foo', 'bar', { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' });
+    const headerClient = algoliasearch('foo', 'bar', { requester: nodeEchoRequester(), authMode: 'WithinHeaders' });
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',

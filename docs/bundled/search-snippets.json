@@ -985,7 +985,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { searchClient } from '@algolia/client-search';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "addApiKey": {
       "default": "const response = await client.addApiKey({\n  acl: ['search', 'addObject'],\n  description: 'my new api key',\n  validity: 300,\n  maxQueriesPerIPPerHour: 100,\n  maxHitsPerQuery: 20,\n});"
@@ -1226,7 +1226,7 @@
       "default": "const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });"
     },
     "init": {
-      "default": "//\nconst client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+      "default": "//\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "kotlin": {

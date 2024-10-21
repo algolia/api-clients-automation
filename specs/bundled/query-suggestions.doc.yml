@@ -193,8 +193,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -424,8 +424,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -655,8 +655,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -881,8 +881,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -1105,8 +1105,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -1391,8 +1391,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -1741,8 +1741,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -2071,8 +2071,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API
@@ -2324,8 +2324,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
 
 
             // Call the API

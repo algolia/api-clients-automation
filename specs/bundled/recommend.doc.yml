@@ -246,8 +246,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -489,8 +489,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -732,8 +732,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -970,8 +970,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -1282,8 +1282,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -1600,8 +1600,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -1913,8 +1913,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -2251,8 +2251,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -2535,8 +2535,8 @@ paths:
 
             //
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API

@@ -251,7 +251,7 @@
   },
   "javascript": {
     "import": {
-      "default": "import { analyticsClient } from '@algolia/client-analytics';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "customDelete": {
       "default": "const response = await client.customDelete({ path: 'test/minimal' });"
@@ -329,7 +329,7 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "init": {
-      "default": "// Replace 'us' with your Algolia Application Region\nconst client = analyticsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });"
     }
   },
   "kotlin": {
