@@ -40,7 +40,8 @@
       {{/hasCustomHosts}}
   },
  {{#hasRegionalHost}}
- region: '{{{parametersWithDataTypeMap.region.value}}}' // @ts-ignore
+ // @ts-ignore
+ region: '{{{parametersWithDataTypeMap.region.value}}}'
  {{/hasRegionalHost}}
 })
 {{/isSearchClient}};
