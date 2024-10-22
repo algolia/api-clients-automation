@@ -8,6 +8,7 @@ import { liteClient } from 'algoliasearch/lite';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
+// this makes sure the types are correctly exported
 const client = liteClient(appId, apiKey, { requester: nodeEchoRequester() });
 
 describe('customPost', () => {

@@ -6,7 +6,14 @@ import { algoliasearch } from 'algoliasearch';
 describe('benchmark', () => {
   test('benchmark the search method', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6682, accept: 'readWrite', protocol: 'http' }],
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6682,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
     });
 
     for (let i = 0; i < 2000; i++) {
