@@ -1,8 +1,7 @@
 {
   "extends": "../../../config/base.tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
+    "skipLibCheck": false,
     "lib": ["dom", "esnext"],
     "outDir": "dist"
   },
