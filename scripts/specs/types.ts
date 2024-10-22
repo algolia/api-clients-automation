@@ -1,4 +1,4 @@
-import type { Language } from '../types';
+import type { Language } from '../types.js';
 
 export type BaseBuildSpecsOptions = {
   outputFormat: 'json' | 'yml';

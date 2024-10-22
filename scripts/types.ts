@@ -1,6 +1,6 @@
 import type config from '../config/clients.config.json';
 
-import type { CodeSamples } from './specs/types';
+import type { CodeSamples } from './specs/types.js';
 
 /**
  * Config.

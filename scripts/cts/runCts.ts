@@ -5,9 +5,9 @@ import { getTestOutputFolder } from '../config.js';
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
-import { startTestServer } from './testServer';
 import { printBenchmarkReport } from './testServer/benchmark.js';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
+import { startTestServer } from './testServer/index.js';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
 import { assertValidWaitForApiKey } from './testServer/waitFor.js';
