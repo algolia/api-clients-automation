@@ -1,3 +1,7 @@
+## [4.5.3](https://github.com/algolia/algoliasearch-client-java/compare/4.5.2...4.5.3)
+
+- [fe2c8440e](https://github.com/algolia/api-clients-automation/commit/fe2c8440e) docs(analytics): constrain pagination only to limit query parameter ([#4012](https://github.com/algolia/api-clients-automation/pull/4012)) by [@febeck](https://github.com/febeck/)
+
 ## [4.5.2](https://github.com/algolia/algoliasearch-client-java/compare/4.5.1...4.5.2)
 
 - [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
