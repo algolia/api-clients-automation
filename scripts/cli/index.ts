@@ -6,14 +6,14 @@ import { CI, CLIENTS, LANGUAGES, run, setVerbose, toAbsolutePath } from '../comm
 import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
-import { startTestServer } from '../cts/testServer';
+import { startTestServer } from '../cts/testServer/index.js';
 import { docsGenerateMany } from '../docs/generate.js';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
 import { generateVersionsHistory } from '../release/versionsHistory.js';
-import { buildSpecs } from '../specs';
+import { buildSpecs } from '../specs/index.js';
 import type { Language } from '../types.js';
 
 import { existsSync } from 'node:fs';

@@ -1,11 +1,11 @@
 import type { components } from '@octokit/openapi-types';
 
-import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common';
-import { getClientsConfigField, getLanguageFolder } from '../../config';
-import { getTargetBranch } from '../../release/common';
-import type { Language } from '../../types';
+import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common.js';
+import { getClientsConfigField, getLanguageFolder } from '../../config.js';
+import { getTargetBranch } from '../../release/common.js';
+import type { Language } from '../../types.js';
 
-import { commitStartRelease } from './text';
+import { commitStartRelease } from './text.js';
 
 type Run = {
   language: Language;
