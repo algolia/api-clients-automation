@@ -40,7 +40,7 @@ describe('{{testType}}', () => {
               expect(result).toEqual("{{{match.value}}}");
             {{/match.isString}}
             {{^match.isString}}
-              expect(result).toEqual({{^match.isNull}}{{{match.value}}}{{/match.isNull}}{{#match.isNull}}null{{/match.isNull}});
+              expect(result).toEqual({{^match.isNull}}{{{match.value}}}{{/match.isNull}}{{#match.isNull}}undefined{{/match.isNull}});
             {{/match.isString}}
           {{/match.isPrimitive}}
           {{^match.isPrimitive}}
