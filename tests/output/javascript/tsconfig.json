@@ -1,7 +1,7 @@
 {
   "extends": "../../../config/base.tsconfig.json",
   "compilerOptions": {
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "types": ["node"],
     "lib": ["dom", "esnext"]
   },
