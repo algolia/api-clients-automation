@@ -1,1 +1,46 @@
-{{^autoCreateClient}}const client = {{/autoCreateClient}}{{{clientName}}}('{{parametersWithDataTypeMap.appId.value}}', '{{parametersWithDataTypeMap.apiKey.value}}'{{#isSearchClient}}, { {{#useEchoRequester}}requester: nodeEchoRequester(),{{/useEchoRequester}}{{#hasCustomHosts}}hosts:[{{#customHosts}}{ url: 'localhost', port: {{port}}, accept: 'readWrite', protocol: 'http' },{{/customHosts}}]{{/hasCustomHosts}} }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { {{#useEchoRequester}}requester: nodeEchoRequester(),{{/useEchoRequester}} {{#hasCustomHosts}}hosts:[{{#customHosts}}{ url: 'localhost', port: {{port}}, accept: 'readWrite', protocol: 'http' },{{/customHosts}}]{{/hasCustomHosts}} }, {{#hasRegionalHost}} region:'{{{parametersWithDataTypeMap.region.value}}}' {{/hasRegionalHost}} }){{/isSearchClient}};
+{{^autoCreateClient}}const client = {{/autoCreateClient}}{{{clientName}}}(
+  '{{parametersWithDataTypeMap.appId.value}}',
+  '{{parametersWithDataTypeMap.apiKey.value}}'
+  {{#isSearchClient}},
+  {
+    {{#useEchoRequester}}
+    requester: nodeEchoRequester(),
+    {{/useEchoRequester}}
+    {{#hasCustomHosts}}
+    hosts:[
+    {{#customHosts}}
+    {
+      url: 'localhost',
+      port: {{port}},
+      accept: 'readWrite',
+      protocol: 'http'
+    },
+    {{/customHosts}}
+    ]
+    {{/hasCustomHosts}} 
+  }
+  {{/isSearchClient}}
+){{^isSearchClient}}.{{{initMethod}}}(
+  {
+    options: {
+    {{#useEchoRequester}}
+      requester: nodeEchoRequester(),
+    {{/useEchoRequester}}
+    {{#hasCustomHosts}}
+      hosts:[
+      {{#customHosts}}
+      {
+        url: 'localhost',
+        port: {{port}},
+        accept: 'readWrite',
+        protocol: 'http'
+      },
+      {{/customHosts}}
+      ]
+      {{/hasCustomHosts}}
+  },
+ {{#hasRegionalHost}}
+ region: '{{{parametersWithDataTypeMap.region.value}}}' // @ts-ignore
+ {{/hasRegionalHost}}
+})
+{{/isSearchClient}};

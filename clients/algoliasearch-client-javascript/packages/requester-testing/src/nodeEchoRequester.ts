@@ -8,4 +8,4 @@ export function nodeEchoRequester(status: number = 200): Requester {
   return createEchoRequester({ getURL: (url: string) => new URL(url), status });
 }
 
-export type { EchoResponse } from "./createEchoRequester.ts"
+export type { EchoResponse } from './createEchoRequester.ts';
