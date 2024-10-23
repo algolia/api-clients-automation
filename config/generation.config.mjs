@@ -63,6 +63,7 @@ export const patterns = [
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
   '!clients/algoliasearch-client-javascript/.yarn/**',
+  '!clients/algoliasearch-client-javascript/.github/workflows/release.yml',
   '!clients/algoliasearch-client-javascript/scripts/**',
   '!clients/algoliasearch-client-javascript/tests/**',
   // the release process is allowed to push changes to this file, but in general we don't because those files are generated
