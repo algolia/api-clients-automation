@@ -1217,6 +1217,8 @@ paths:
                       type: object
                       description: Retrieved record.
                       x-is-generic: true
+                required:
+                  - results
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
