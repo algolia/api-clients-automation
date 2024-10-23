@@ -1,3 +1,7 @@
+## [1.26.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.2...1.26.3)
+
+- [1f36e8f93](https://github.com/algolia/api-clients-automation/commit/1f36e8f93) fix(specs): results in getObjects is required ([#4024](https://github.com/algolia/api-clients-automation/pull/4024)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.26.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.1...1.26.2)
 
 - [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
