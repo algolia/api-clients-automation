@@ -48,10 +48,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'javascript':
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd, language });
       if (buildType === 'client') {
-        const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
-          packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
-        );
-        await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd, language });
+        await run(`yarn build`, { cwd, language });
         break;
       }
 
