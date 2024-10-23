@@ -62,7 +62,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.6.3\).*/',
+                '/^Algolia for PHP \(4.6.4\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
