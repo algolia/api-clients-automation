@@ -49,6 +49,21 @@ class SearchTestE2E extends AnyFunSuite {
     )
   }
 
+  test("search with a real object1") {
+    val client = testClient()
+    val future = client.getObject(
+      indexName = "cts_e2e_browse",
+      objectID = "Batman and Robin"
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """{"objectID":"Batman and Robin","title":"Batman and Robin","year":1949,"cast":["Robert Lowery","Johnny Duncan","Jane Adams"]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
   test("getRule") {
     val client = testClient()
     val future = client.getRule(

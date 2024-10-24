@@ -8,19 +8,21 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictInt, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.serializer import bodySerializer
+from algoliasearch.http.serializer import body_serializer
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
@@ -37,6 +39,9 @@ from algoliasearch.recommend.models.get_recommendations_response import (
 )
 from algoliasearch.recommend.models.recommend_models import RecommendModels
 from algoliasearch.recommend.models.recommend_rule import RecommendRule
+from algoliasearch.recommend.models.recommend_updated_at_response import (
+    RecommendUpdatedAtResponse,
+)
 from algoliasearch.recommend.models.search_recommend_rules_params import (
     SearchRecommendRulesParams,
 )
@@ -64,7 +69,7 @@ class RecommendClient:
     """
 
     _transporter: Transporter
-    _config: RecommendConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -75,7 +80,9 @@ class RecommendClient:
         config: Optional[RecommendConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = RecommendConfig(
+                transporter.config.app_id, transporter.config.api_key
+            )
 
         if config is None:
             config = RecommendConfig(app_id, api_key)
@@ -86,9 +93,10 @@ class RecommendClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: RecommendConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: RecommendConfig, transporter: Optional[Transporter] = None
+    ) -> RecommendClient:
         """Allows creating a client with a customized `RecommendConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -112,7 +120,7 @@ class RecommendClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -125,7 +133,109 @@ class RecommendClient:
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
+
+    async def batch_recommend_rules_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
+        ],
+        recommend_rule: Union[
+            Optional[List[RecommendRule]], list[dict[str, Any]]
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param model: [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+        :type model: RecommendModels
+        :param recommend_rule:
+        :type recommend_rule: List[RecommendRule]
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `batch_recommend_rules`."
+            )
+
+        if model is None:
+            raise ValueError(
+                "Parameter `model` is required when calling `batch_recommend_rules`."
+            )
+
+        _data = {}
+        if recommend_rule is not None:
+            _data = recommend_rule
+
+        return await self._transporter.request(
+            verb=Verb.POST,
+            path="/1/indexes/{indexName}/{model}/recommend/rules/batch".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ).replace("{model}", quote(str(model), safe="")),
+            request_options=self._request_options.merge(
+                data=dumps(body_serializer(_data)),
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def batch_recommend_rules(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
+        ],
+        recommend_rule: Union[
+            Optional[List[RecommendRule]], list[dict[str, Any]]
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> RecommendUpdatedAtResponse:
+        """
+        Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param model: [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+        :type model: RecommendModels
+        :param recommend_rule:
+        :type recommend_rule: List[RecommendRule]
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'RecommendUpdatedAtResponse' result object.
+        """
+        resp = await self.batch_recommend_rules_with_http_info(
+            index_name, model, recommend_rule, request_options
+        )
+        return resp.deserialize(RecommendUpdatedAtResponse, resp.raw_data)
 
     async def custom_delete_with_http_info(
         self,
@@ -158,11 +268,11 @@ class RecommendClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -199,9 +309,10 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -232,11 +343,11 @@ class RecommendClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -273,9 +384,8 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -312,11 +422,11 @@ class RecommendClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -327,7 +437,7 @@ class RecommendClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -364,11 +474,10 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -405,11 +514,11 @@ class RecommendClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -420,7 +529,7 @@ class RecommendClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -457,11 +566,10 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_recommend_rule_with_http_info(
         self,
@@ -469,11 +577,14 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -528,11 +639,14 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -552,11 +666,10 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_recommend_rule_with_http_info(
-                index_name, model, object_id, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_recommend_rule_with_http_info(
+            index_name, model, object_id, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def get_recommend_rule_with_http_info(
         self,
@@ -564,11 +677,14 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -623,11 +739,14 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -647,11 +766,10 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RecommendRule' result object.
         """
-        return (
-            await self.get_recommend_rule_with_http_info(
-                index_name, model, object_id, request_options
-            )
-        ).deserialize(RecommendRule)
+        resp = await self.get_recommend_rule_with_http_info(
+            index_name, model, object_id, request_options
+        )
+        return resp.deserialize(RecommendRule, resp.raw_data)
 
     async def get_recommend_status_with_http_info(
         self,
@@ -659,11 +777,14 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         task_id: Annotated[StrictInt, Field(description="Unique task identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -718,11 +839,14 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         task_id: Annotated[StrictInt, Field(description="Unique task identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -742,15 +866,14 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetRecommendTaskResponse' result object.
         """
-        return (
-            await self.get_recommend_status_with_http_info(
-                index_name, model, task_id, request_options
-            )
-        ).deserialize(GetRecommendTaskResponse)
+        resp = await self.get_recommend_status_with_http_info(
+            index_name, model, task_id, request_options
+        )
+        return resp.deserialize(GetRecommendTaskResponse, resp.raw_data)
 
     async def get_recommendations_with_http_info(
         self,
-        get_recommendations_params: GetRecommendationsParams,
+        get_recommendations_params: Union[GetRecommendationsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -778,7 +901,7 @@ class RecommendClient:
             verb=Verb.POST,
             path="/1/indexes/*/recommendations",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -786,7 +909,7 @@ class RecommendClient:
 
     async def get_recommendations(
         self,
-        get_recommendations_params: GetRecommendationsParams,
+        get_recommendations_params: Union[GetRecommendationsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetRecommendationsResponse:
         """
@@ -800,11 +923,10 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetRecommendationsResponse' result object.
         """
-        return (
-            await self.get_recommendations_with_http_info(
-                get_recommendations_params, request_options
-            )
-        ).deserialize(GetRecommendationsResponse)
+        resp = await self.get_recommendations_with_http_info(
+            get_recommendations_params, request_options
+        )
+        return resp.deserialize(GetRecommendationsResponse, resp.raw_data)
 
     async def search_recommend_rules_with_http_info(
         self,
@@ -812,13 +934,18 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
-        search_recommend_rules_params: Optional[SearchRecommendRulesParams] = None,
+        search_recommend_rules_params: Union[
+            Optional[SearchRecommendRulesParams], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -857,7 +984,7 @@ class RecommendClient:
                 "{indexName}", quote(str(index_name), safe="")
             ).replace("{model}", quote(str(model), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -869,13 +996,18 @@ class RecommendClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
-        search_recommend_rules_params: Optional[SearchRecommendRulesParams] = None,
+        search_recommend_rules_params: Union[
+            Optional[SearchRecommendRulesParams], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRecommendRulesResponse:
         """
@@ -893,11 +1025,10 @@ class RecommendClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchRecommendRulesResponse' result object.
         """
-        return (
-            await self.search_recommend_rules_with_http_info(
-                index_name, model, search_recommend_rules_params, request_options
-            )
-        ).deserialize(SearchRecommendRulesResponse)
+        resp = await self.search_recommend_rules_with_http_info(
+            index_name, model, search_recommend_rules_params, request_options
+        )
+        return resp.deserialize(SearchRecommendRulesResponse, resp.raw_data)
 
 
 class RecommendClientSync:
@@ -919,7 +1050,7 @@ class RecommendClientSync:
     """
 
     _transporter: TransporterSync
-    _config: RecommendConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -930,7 +1061,9 @@ class RecommendClientSync:
         config: Optional[RecommendConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = RecommendConfig(
+                transporter.config.app_id, transporter.config.api_key
+            )
 
         if config is None:
             config = RecommendConfig(app_id, api_key)
@@ -941,9 +1074,10 @@ class RecommendClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: RecommendConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls, config: RecommendConfig, transporter: Optional[TransporterSync] = None
+    ) -> RecommendClientSync:
         """Allows creating a client with a customized `RecommendConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -979,7 +1113,109 @@ class RecommendClientSync:
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
+
+    def batch_recommend_rules_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
+        ],
+        recommend_rule: Union[
+            Optional[List[RecommendRule]], list[dict[str, Any]]
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param model: [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+        :type model: RecommendModels
+        :param recommend_rule:
+        :type recommend_rule: List[RecommendRule]
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError(
+                "Parameter `index_name` is required when calling `batch_recommend_rules`."
+            )
+
+        if model is None:
+            raise ValueError(
+                "Parameter `model` is required when calling `batch_recommend_rules`."
+            )
+
+        _data = {}
+        if recommend_rule is not None:
+            _data = recommend_rule
+
+        return self._transporter.request(
+            verb=Verb.POST,
+            path="/1/indexes/{indexName}/{model}/recommend/rules/batch".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ).replace("{model}", quote(str(model), safe="")),
+            request_options=self._request_options.merge(
+                data=dumps(body_serializer(_data)),
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    def batch_recommend_rules(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
+        ],
+        recommend_rule: Union[
+            Optional[List[RecommendRule]], list[dict[str, Any]]
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> RecommendUpdatedAtResponse:
+        """
+        Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
+
+        Required API Key ACLs:
+          - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param model: [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+        :type model: RecommendModels
+        :param recommend_rule:
+        :type recommend_rule: List[RecommendRule]
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'RecommendUpdatedAtResponse' result object.
+        """
+        resp = self.batch_recommend_rules_with_http_info(
+            index_name, model, recommend_rule, request_options
+        )
+        return resp.deserialize(RecommendUpdatedAtResponse, resp.raw_data)
 
     def custom_delete_with_http_info(
         self,
@@ -1012,11 +1248,11 @@ class RecommendClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -1053,9 +1289,8 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -1086,11 +1321,11 @@ class RecommendClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -1127,9 +1362,8 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -1166,11 +1400,11 @@ class RecommendClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1181,7 +1415,7 @@ class RecommendClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1218,9 +1452,8 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -1257,11 +1490,11 @@ class RecommendClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1272,7 +1505,7 @@ class RecommendClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1309,9 +1542,8 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_recommend_rule_with_http_info(
         self,
@@ -1319,11 +1551,14 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -1378,11 +1613,14 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -1402,11 +1640,10 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_recommend_rule_with_http_info(
-                index_name, model, object_id, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_recommend_rule_with_http_info(
+            index_name, model, object_id, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def get_recommend_rule_with_http_info(
         self,
@@ -1414,11 +1651,14 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -1473,11 +1713,14 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -1497,11 +1740,10 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RecommendRule' result object.
         """
-        return (
-            self.get_recommend_rule_with_http_info(
-                index_name, model, object_id, request_options
-            )
-        ).deserialize(RecommendRule)
+        resp = self.get_recommend_rule_with_http_info(
+            index_name, model, object_id, request_options
+        )
+        return resp.deserialize(RecommendRule, resp.raw_data)
 
     def get_recommend_status_with_http_info(
         self,
@@ -1509,11 +1751,14 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         task_id: Annotated[StrictInt, Field(description="Unique task identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -1568,11 +1813,14 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
         task_id: Annotated[StrictInt, Field(description="Unique task identifier.")],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -1592,15 +1840,14 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetRecommendTaskResponse' result object.
         """
-        return (
-            self.get_recommend_status_with_http_info(
-                index_name, model, task_id, request_options
-            )
-        ).deserialize(GetRecommendTaskResponse)
+        resp = self.get_recommend_status_with_http_info(
+            index_name, model, task_id, request_options
+        )
+        return resp.deserialize(GetRecommendTaskResponse, resp.raw_data)
 
     def get_recommendations_with_http_info(
         self,
-        get_recommendations_params: GetRecommendationsParams,
+        get_recommendations_params: Union[GetRecommendationsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -1628,7 +1875,7 @@ class RecommendClientSync:
             verb=Verb.POST,
             path="/1/indexes/*/recommendations",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -1636,7 +1883,7 @@ class RecommendClientSync:
 
     def get_recommendations(
         self,
-        get_recommendations_params: GetRecommendationsParams,
+        get_recommendations_params: Union[GetRecommendationsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetRecommendationsResponse:
         """
@@ -1650,11 +1897,10 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetRecommendationsResponse' result object.
         """
-        return (
-            self.get_recommendations_with_http_info(
-                get_recommendations_params, request_options
-            )
-        ).deserialize(GetRecommendationsResponse)
+        resp = self.get_recommendations_with_http_info(
+            get_recommendations_params, request_options
+        )
+        return resp.deserialize(GetRecommendationsResponse, resp.raw_data)
 
     def search_recommend_rules_with_http_info(
         self,
@@ -1662,13 +1908,18 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
-        search_recommend_rules_params: Optional[SearchRecommendRulesParams] = None,
+        search_recommend_rules_params: Union[
+            Optional[SearchRecommendRulesParams], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -1707,7 +1958,7 @@ class RecommendClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ).replace("{model}", quote(str(model), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -1719,13 +1970,18 @@ class RecommendClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        model: Annotated[
-            RecommendModels,
-            Field(
-                description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
-            ),
+        model: Union[
+            Annotated[
+                RecommendModels,
+                Field(
+                    description="[Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). "
+                ),
+            ],
+            str,
         ],
-        search_recommend_rules_params: Optional[SearchRecommendRulesParams] = None,
+        search_recommend_rules_params: Union[
+            Optional[SearchRecommendRulesParams], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRecommendRulesResponse:
         """
@@ -1743,8 +1999,7 @@ class RecommendClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchRecommendRulesResponse' result object.
         """
-        return (
-            self.search_recommend_rules_with_http_info(
-                index_name, model, search_recommend_rules_params, request_options
-            )
-        ).deserialize(SearchRecommendRulesResponse)
+        resp = self.search_recommend_rules_with_http_info(
+            index_name, model, search_recommend_rules_params, request_options
+        )
+        return resp.deserialize(SearchRecommendRulesResponse, resp.raw_data)

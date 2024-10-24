@@ -63,7 +63,7 @@ class AbtestingTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.3.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.5.4\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -135,7 +135,16 @@ class AbtestingTest extends AnyFunSuite {
       region = Option("us"),
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6683)
+            )
+          )
+        )
         .build()
     )
 

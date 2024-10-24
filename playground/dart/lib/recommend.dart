@@ -9,23 +9,19 @@ void main() async {
     appId: dotenv['ALGOLIA_APPLICATION_ID']!,
     apiKey: dotenv['ALGOLIA_SEARCH_KEY']!,
   );
-  final indexName = dotenv['SEARCH_INDEX']!;
 
   // Creating recommendation requests for different products.
   var requests = [
-    RecommendationRequest(
-      model: RecommendationModels.relatedProducts,
+    RelatedProducts(
+      model: RelatedModel.relatedProducts,
       objectID: '6445156',
-      indexName: indexName,
-      threshold: 70,
-      maxRecommendations: 3,
+      fallbackParameters: FallbackParams(
+        query: 'iphone',
+      ),
     ),
-    RecommendationRequest(
-      model: RecommendationModels.relatedProducts,
+    RelatedProducts(
+      model: RelatedModel.relatedProducts,
       objectID: '6443034',
-      indexName: indexName,
-      threshold: 70,
-      maxRecommendations: 3,
     )
   ];
 
@@ -44,10 +40,6 @@ void main() async {
 /// Prints the search hits.
 void printRecommendations(GetRecommendationsResponse response) {
   final results = response.results;
-  if (results == null) {
-    print("No recommendations found");
-    return;
-  }
 
   // Loop over each result and map over the search hits,
   // converting each hit to a product.

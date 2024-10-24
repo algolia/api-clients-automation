@@ -1,4 +1,4 @@
-/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. ## Client
+/** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
   * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
   * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
@@ -6,7 +6,7 @@
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
-  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * Retry strategy To guarantee high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
   * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
@@ -43,6 +43,8 @@ package algoliasearch.search
   *   Computed geographical location.
   * @param automaticRadius
   *   Distance from a central coordinate provided by `aroundLatLng`.
+  * @param appliedRules
+  *   Rules applied to the query.
   * @param exhaustiveFacetsCount
   *   See the `facetsCount` field of the `exhaustive` object in the response.
   * @param exhaustiveNbHits
@@ -80,6 +82,8 @@ package algoliasearch.search
   * @param queryID
   *   Unique identifier for the query. This is used for [click
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  * @param automaticInsights
+  *   Whether automatic events collection is enabled for the application.
   * @param page
   *   Page of search results to retrieve.
   * @param nbHits
@@ -105,6 +109,7 @@ case class BrowseResponse(
     aroundLatLng: Option[String] = scala.None,
     automaticRadius: Option[String] = scala.None,
     exhaustive: Option[Exhaustive] = scala.None,
+    appliedRules: Option[Seq[Any]] = scala.None,
     exhaustiveFacetsCount: Option[Boolean] = scala.None,
     exhaustiveNbHits: Option[Boolean] = scala.None,
     exhaustiveTypo: Option[Boolean] = scala.None,
@@ -124,6 +129,7 @@ case class BrowseResponse(
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
+    automaticInsights: Option[Boolean] = scala.None,
     page: Option[Int] = scala.None,
     nbHits: Option[Int] = scala.None,
     nbPages: Option[Int] = scala.None,

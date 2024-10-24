@@ -20,7 +20,7 @@ LookingSimilarQuery _$LookingSimilarQueryFromJson(Map<String, dynamic> json) =>
               'queryParameters',
               (v) => v == null
                   ? null
-                  : SearchParams.fromJson(v as Map<String, dynamic>)),
+                  : RecommendSearchParams.fromJson(v as Map<String, dynamic>)),
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$LookingSimilarModelEnumMap, v)),
           objectID: $checkedConvert('objectID', (v) => v as String),

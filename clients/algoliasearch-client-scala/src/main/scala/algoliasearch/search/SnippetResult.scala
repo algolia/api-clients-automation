@@ -1,4 +1,4 @@
-/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. ## Client
+/** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
   * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
   * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
@@ -6,7 +6,7 @@
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
-  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * Retry strategy To guarantee high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
   * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
@@ -43,31 +43,16 @@ sealed trait SnippetResult
 
 trait SnippetResultTrait extends SnippetResult
 
-trait SnippetResultEvidence
-
-object SnippetResultEvidence {
-  implicit object MapOfStringSnippetResultEvidence extends SnippetResultEvidence
-  implicit object MapOfStringSnippetResultOptionEvidence extends SnippetResultEvidence
-}
-
 object SnippetResult {
 
   case class MapOfStringSnippetResult(value: Map[String, SnippetResult]) extends SnippetResult
-  case class MapOfStringSnippetResultOption(value: Map[String, SnippetResultOption]) extends SnippetResult
-  case class SeqOfSnippetResultOption(value: Seq[SnippetResultOption]) extends SnippetResult
+  case class SeqOfSnippetResult(value: Seq[SnippetResult]) extends SnippetResult
 
-  def apply(
-      value: Map[String, SnippetResult]
-  )(implicit ev: SnippetResultEvidence.MapOfStringSnippetResultEvidence.type): SnippetResult = {
+  def apply(value: Map[String, SnippetResult]): SnippetResult = {
     SnippetResult.MapOfStringSnippetResult(value)
   }
-  def apply(
-      value: Map[String, SnippetResultOption]
-  )(implicit ev: SnippetResultEvidence.MapOfStringSnippetResultOptionEvidence.type): SnippetResult = {
-    SnippetResult.MapOfStringSnippetResultOption(value)
-  }
-  def apply(value: Seq[SnippetResultOption]): SnippetResult = {
-    SnippetResult.SeqOfSnippetResultOption(value)
+  def apply(value: Seq[SnippetResult]): SnippetResult = {
+    SnippetResult.SeqOfSnippetResult(value)
   }
 
 }
@@ -79,17 +64,16 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
       json match {
         case value: JObject if value.obj.exists(_._1 == "matchLevel") => Extraction.extract[SnippetResultOption](value)
         case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResult]](value))
-        case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResultOption]](value))
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          SnippetResult.SeqOfSnippetResultOption(value.map(_.extract))
+          SnippetResult.SeqOfSnippetResult(value.map(_.extract))
         case _ => throw new MappingException("Can't convert " + json + " to SnippetResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SnippetResult =>
     value match {
-      case value: SnippetResultOption                    => Extraction.decompose(value)(format - this)
-      case SnippetResult.SeqOfSnippetResultOption(value) => JArray(value.map(Extraction.decompose).toList)
+      case value: SnippetResultOption              => Extraction.decompose(value)(format - this)
+      case SnippetResult.SeqOfSnippetResult(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }
 }

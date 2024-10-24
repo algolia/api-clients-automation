@@ -1,17 +1,16 @@
-/* eslint-disable no-console */
 import fsp from 'fs/promises';
 import { resolve } from 'path';
 
 import {
-  gitCommit,
-  run,
-  toAbsolutePath,
-  ensureGitHubToken,
-  OWNER,
   configureGitHubAuthor,
+  ensureGitHubToken,
   getOctokit,
-  setVerbose,
   gitBranchExists,
+  gitCommit,
+  OWNER,
+  run,
+  setVerbose,
+  toAbsolutePath,
 } from '../../common.js';
 import { getNbGitDiff } from '../utils.js';
 
@@ -28,7 +27,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
     .map((coAuthor) => coAuthor.trim())
     .filter(Boolean);
 
-  if (!process.env.DRY_RUN && !lastCommitMessage.startsWith(commitStartRelease)) {
+  if (!process.env.FORCE && !lastCommitMessage.startsWith(commitStartRelease)) {
     return;
   }
 
@@ -51,7 +50,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
   await run(`cp ${toAbsolutePath('specs/major-breaking-changes-rename.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/clients.config.json')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('snippets/guides/*.json')} ${pathToSpecs}`);
+  await run(`cp ${toAbsolutePath('docs/bundled/*.json')} ${pathToSpecs}`);
   // add block extension ban words like `analytics` so we use a different file name just so the doc dans render it
   await run(`mv ${pathToSpecs}/analytics.doc.yml ${pathToSpecs}/searchstats.doc.yml`);
 
@@ -84,15 +83,6 @@ async function pushToAlgoliaDoc(): Promise<void> {
     ].join('\n\n'),
     base: 'master',
     head: targetBranch,
-  });
-
-  await octokit.issues.createComment({
-    owner: OWNER,
-    repo: repository,
-    issue_number: data.number,
-    body: [
-      `[**Preview SLA changes&rarr;**](https://deploy-preview-${data.number}--algolia-docs.netlify.app/doc/libraries/supported-versions/)`,
-    ].join('\n\n'),
   });
 
   console.log(`Pull request created on ${OWNER}/${repository}`);

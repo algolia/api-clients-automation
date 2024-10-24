@@ -38,6 +38,11 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "aroundradiusall",
     "automaticfacetfilter",
     "automaticfacetfilters",
+    "banner",
+    "bannerimage",
+    "bannerimageurl",
+    "bannerlink",
+    "baseindexsettings",
     "basesearchparams",
     "basesearchparamswithoutquery",
     "basesearchresponse",
@@ -84,8 +89,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "range",
     "rankinginfo",
     "redirect",
-    "redirectruleindexmetadata",
     "redirectruleindexdata",
+    "redirectruleindexmetadata",
     "redirecturl",
     "region",
     "removestopwords",
@@ -105,9 +110,11 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "supportedlanguage",
     "tagfilters",
     "taskstatus",
+    "timerange",
     "typotolerance",
     "typotoleranceenum",
-    "value"
+    "value",
+    "widgets"
   );
 
   // This is used for the CTS generation
@@ -134,7 +141,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     var camelizedName = camelize(name);
     if (isReservedModelName(camelizedName)) {
-      return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
+      return getClientName(client) + Helpers.capitalize(camelizedName);
     }
 
     return name;
@@ -147,7 +154,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return "algolia-swift";
   }
 
-  public String getClientName(String client) {
+  public static String getClientName(String client) {
     return Helpers.createClientName(client, "swift");
   }
 
@@ -175,7 +182,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
     additionalProperties.put(OBJC_COMPATIBLE, false);
     additionalProperties.put(USE_BACKTICK_ESCAPES, true);
-    additionalProperties.put(VALIDATABLE, false);
     additionalProperties.put("hashableModels", true);
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
@@ -196,9 +202,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     supportingFiles.add(
       new SupportingFile("client_configuration.mustache", sourceFolder, getClientName(CLIENT) + "ClientConfiguration.swift")
     );
-    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
-    supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
-    supportingFiles.add(new SupportingFile("Bug_report.yml", ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
+    Helpers.addCommonSupportingFiles(supportingFiles, "");
 
     supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
     supportingFiles.add(new SupportingFile("podspec.mustache", projectName + ".podspec"));
@@ -408,10 +412,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       return "empty";
     }
 
-    if (enumUnknownDefaultCase) {
-      if (value.equals(enumUnknownDefaultCaseName)) {
-        return camelize(value, LOWERCASE_FIRST_LETTER);
-      }
+    if (enumUnknownDefaultCase && value.equals(enumUnknownDefaultCaseName)) {
+      return camelize(value, LOWERCASE_FIRST_LETTER);
     }
 
     // Reserved Name

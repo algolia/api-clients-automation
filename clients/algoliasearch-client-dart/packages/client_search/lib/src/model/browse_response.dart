@@ -19,6 +19,7 @@ final class BrowseResponse {
     this.aroundLatLng,
     this.automaticRadius,
     this.exhaustive,
+    this.appliedRules,
     this.exhaustiveFacetsCount,
     this.exhaustiveNbHits,
     this.exhaustiveTypo,
@@ -38,6 +39,7 @@ final class BrowseResponse {
     this.serverUsed,
     this.userData,
     this.queryID,
+    this.automaticInsights,
     this.page,
     this.nbHits,
     this.nbPages,
@@ -67,6 +69,10 @@ final class BrowseResponse {
 
   @JsonKey(name: r'exhaustive')
   final Exhaustive? exhaustive;
+
+  /// Rules applied to the query.
+  @JsonKey(name: r'appliedRules')
+  final List<Object>? appliedRules;
 
   /// See the `facetsCount` field of the `exhaustive` object in the response.
   @Deprecated('exhaustiveFacetsCount has been deprecated')
@@ -145,6 +151,10 @@ final class BrowseResponse {
   @JsonKey(name: r'queryID')
   final String? queryID;
 
+  /// Whether automatic events collection is enabled for the application.
+  @JsonKey(name: r'_automaticInsights')
+  final bool? automaticInsights;
+
   /// Page of search results to retrieve.
   // minimum: 0
   @JsonKey(name: r'page')
@@ -189,6 +199,7 @@ final class BrowseResponse {
           other.aroundLatLng == aroundLatLng &&
           other.automaticRadius == automaticRadius &&
           other.exhaustive == exhaustive &&
+          other.appliedRules == appliedRules &&
           other.facets == facets &&
           other.facetsStats == facetsStats &&
           other.index == index &&
@@ -205,6 +216,7 @@ final class BrowseResponse {
           other.serverUsed == serverUsed &&
           other.userData == userData &&
           other.queryID == queryID &&
+          other.automaticInsights == automaticInsights &&
           other.page == page &&
           other.nbHits == nbHits &&
           other.nbPages == nbPages &&
@@ -221,6 +233,7 @@ final class BrowseResponse {
       aroundLatLng.hashCode +
       automaticRadius.hashCode +
       exhaustive.hashCode +
+      appliedRules.hashCode +
       facets.hashCode +
       facetsStats.hashCode +
       index.hashCode +
@@ -237,6 +250,7 @@ final class BrowseResponse {
       serverUsed.hashCode +
       userData.hashCode +
       queryID.hashCode +
+      automaticInsights.hashCode +
       page.hashCode +
       nbHits.hashCode +
       nbPages.hashCode +

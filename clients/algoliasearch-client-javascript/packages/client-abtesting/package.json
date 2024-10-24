@@ -1,5 +1,5 @@
 {
-  "version": "5.3.2",
+  "version": "5.10.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -26,6 +26,10 @@
         "module": "./dist/builds/node.js",
         "require": "./dist/builds/node.cjs"
       },
+      "worker": {
+        "types": "./dist/fetch.d.ts",
+        "default": "./dist/builds/fetch.js"
+      },
       "default": {
         "types": "./dist/browser.d.ts",
         "module": "./dist/builds/browser.js",
@@ -37,24 +41,25 @@
   },
   "jsdelivr": "./dist/builds/browser.umd.js",
   "unpkg": "./dist/builds/browser.umd.js",
+  "react-native": "./dist/builds/browser.js",
   "files": [
     "dist",
-    "model",
     "index.js",
     "index.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-common": "5.3.2",
-    "@algolia/requester-browser-xhr": "5.3.2",
-    "@algolia/requester-node-http": "5.3.2"
+    "@algolia/client-common": "5.10.2",
+    "@algolia/requester-browser-xhr": "5.10.2",
+    "@algolia/requester-fetch": "5.10.2",
+    "@algolia/requester-node-http": "5.10.2"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.15.4",
-    "@types/node": "22.5.1",
-    "publint": "0.2.10",
-    "rollup": "4.21.2",
-    "tsup": "8.2.4",
-    "typescript": "5.5.4"
+    "@arethetypeswrong/cli": "0.16.4",
+    "@types/node": "22.7.7",
+    "publint": "0.2.11",
+    "rollup": "4.24.0",
+    "tsup": "8.3.0",
+    "typescript": "5.6.3"
   },
   "engines": {
     "node": ">= 14.0.0"

@@ -10,12 +10,28 @@ from json import loads
 from sys import version_info
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
+
+
+_ALIASES = {
+    "query": "query",
+    "context": "context",
+    "page": "page",
+    "hits_per_page": "hitsPerPage",
+    "enabled": "enabled",
+    "filters": "filters",
+    "facets": "facets",
+    "max_values_per_facet": "maxValuesPerFacet",
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
 
 
 class SearchRecommendRulesParams(BaseModel):
@@ -23,67 +39,49 @@ class SearchRecommendRulesParams(BaseModel):
     Recommend rules parameters.
     """
 
-    query: Optional[StrictStr] = Field(default="", description="Search query.")
-    context: Optional[StrictStr] = Field(
-        default=None, description="Only search for rules with matching context."
-    )
-    page: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(
-        default=None, description="Requested page of the API response."
-    )
-    hits_per_page: Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]] = Field(
-        default=20, description="Maximum number of hits per page.", alias="hitsPerPage"
-    )
-    enabled: Optional[StrictBool] = Field(
-        default=None,
-        description="Whether to only show rules where the value of their `enabled` property matches this parameter. If absent, show all rules, regardless of their `enabled` property. ",
-    )
-    filters: Optional[StrictStr] = Field(
-        default=None,
-        description="Filter expression. This only searches for rules matching the filter expression.",
-    )
-    facets: Optional[List[StrictStr]] = Field(
-        default=None,
-        description="Include facets and facet values in the response. Use `['*']` to include all facets.",
-    )
-    max_values_per_facet: Optional[
-        Annotated[int, Field(le=1000, strict=True, ge=1)]
-    ] = Field(
-        default=None,
-        description="Maximum number of values to return for each facet.",
-        alias="maxValuesPerFacet",
-    )
+    query: Optional[str] = None
+    """ Search query. """
+    context: Optional[str] = None
+    """ Only search for rules with matching context. """
+    page: Optional[int] = None
+    """ Requested page of the API response.  Algolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).  - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.  For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.  """
+    hits_per_page: Optional[int] = None
+    """ Maximum number of hits per page.  Algolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).  - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.  For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.  """
+    enabled: Optional[bool] = None
+    """ Whether to only show rules where the value of their `enabled` property matches this parameter. If absent, show all rules, regardless of their `enabled` property.  """
+    filters: Optional[str] = None
+    """ Filter expression. This only searches for rules matching the filter expression. """
+    facets: Optional[List[str]] = None
+    """ Include facets and facet values in the response. Use `['*']` to include all facets. """
+    max_values_per_facet: Optional[int] = None
+    """ Maximum number of values to return for each facet. """
 
     model_config = ConfigDict(
-        use_enum_values=True, populate_by_name=True, validate_assignment=True
+        use_enum_values=True,
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+        alias_generator=_alias_generator,
     )
 
     def to_json(self) -> str:
         return self.model_dump_json(by_alias=True, exclude_unset=True)
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of SearchRecommendRulesParams from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        _dict = self.model_dump(
+        """Return the dictionary representation of the model using alias."""
+        return self.model_dump(
             by_alias=True,
-            exclude={},
             exclude_none=True,
+            exclude_unset=True,
         )
-        return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of SearchRecommendRulesParams from a dict"""
         if obj is None:
             return None
@@ -91,16 +89,4 @@ class SearchRecommendRulesParams(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "query": obj.get("query"),
-                "context": obj.get("context"),
-                "page": obj.get("page"),
-                "hitsPerPage": obj.get("hitsPerPage"),
-                "enabled": obj.get("enabled"),
-                "filters": obj.get("filters"),
-                "facets": obj.get("facets"),
-                "maxValuesPerFacet": obj.get("maxValuesPerFacet"),
-            }
-        )
-        return _obj
+        return cls.model_validate(obj)

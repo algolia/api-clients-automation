@@ -16,6 +16,8 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
     /// Distance from a central coordinate provided by `aroundLatLng`.
     public var automaticRadius: String?
     public var exhaustive: SearchExhaustive?
+    /// Rules applied to the query.
+    public var appliedRules: [AnyCodable]?
     /// See the `facetsCount` field of the `exhaustive` object in the response.
     @available(*, deprecated, message: "This property is deprecated.")
     public var exhaustiveFacetsCount: Bool?
@@ -58,6 +60,8 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
     /// Unique identifier for the query. This is used for [click
     /// analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
     public var queryID: String?
+    /// Whether automatic events collection is enabled for the application.
+    public var automaticInsights: Bool?
     /// Page of search results to retrieve.
     public var page: Int?
     /// Number of results (hits).
@@ -83,6 +87,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         aroundLatLng: String? = nil,
         automaticRadius: String? = nil,
         exhaustive: SearchExhaustive? = nil,
+        appliedRules: [AnyCodable]? = nil,
         exhaustiveFacetsCount: Bool? = nil,
         exhaustiveNbHits: Bool? = nil,
         exhaustiveTypo: Bool? = nil,
@@ -102,6 +107,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         serverUsed: String? = nil,
         userData: AnyCodable? = nil,
         queryID: String? = nil,
+        automaticInsights: Bool? = nil,
         page: Int? = nil,
         nbHits: Int? = nil,
         nbPages: Int? = nil,
@@ -116,6 +122,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         self.aroundLatLng = aroundLatLng
         self.automaticRadius = automaticRadius
         self.exhaustive = exhaustive
+        self.appliedRules = appliedRules
         self.exhaustiveFacetsCount = exhaustiveFacetsCount
         self.exhaustiveNbHits = exhaustiveNbHits
         self.exhaustiveTypo = exhaustiveTypo
@@ -135,6 +142,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         self.serverUsed = serverUsed
         self.userData = userData
         self.queryID = queryID
+        self.automaticInsights = automaticInsights
         self.page = page
         self.nbHits = nbHits
         self.nbPages = nbPages
@@ -151,6 +159,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         case aroundLatLng
         case automaticRadius
         case exhaustive
+        case appliedRules
         case exhaustiveFacetsCount
         case exhaustiveNbHits
         case exhaustiveTypo
@@ -170,6 +179,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         case serverUsed
         case userData
         case queryID
+        case automaticInsights = "_automaticInsights"
         case page
         case nbHits
         case nbPages
@@ -189,6 +199,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         try container.encodeIfPresent(self.aroundLatLng, forKey: .aroundLatLng)
         try container.encodeIfPresent(self.automaticRadius, forKey: .automaticRadius)
         try container.encodeIfPresent(self.exhaustive, forKey: .exhaustive)
+        try container.encodeIfPresent(self.appliedRules, forKey: .appliedRules)
         try container.encodeIfPresent(self.exhaustiveFacetsCount, forKey: .exhaustiveFacetsCount)
         try container.encodeIfPresent(self.exhaustiveNbHits, forKey: .exhaustiveNbHits)
         try container.encodeIfPresent(self.exhaustiveTypo, forKey: .exhaustiveTypo)
@@ -208,6 +219,7 @@ public struct BrowseResponse<T: Codable>: Codable, JSONEncodable {
         try container.encodeIfPresent(self.serverUsed, forKey: .serverUsed)
         try container.encodeIfPresent(self.userData, forKey: .userData)
         try container.encodeIfPresent(self.queryID, forKey: .queryID)
+        try container.encodeIfPresent(self.automaticInsights, forKey: .automaticInsights)
         try container.encodeIfPresent(self.page, forKey: .page)
         try container.encodeIfPresent(self.nbHits, forKey: .nbHits)
         try container.encodeIfPresent(self.nbPages, forKey: .nbPages)
@@ -226,6 +238,7 @@ extension BrowseResponse: Equatable where T: Equatable {
             lhs.aroundLatLng == rhs.aroundLatLng &&
             lhs.automaticRadius == rhs.automaticRadius &&
             lhs.exhaustive == rhs.exhaustive &&
+            lhs.appliedRules == rhs.appliedRules &&
             lhs.exhaustiveFacetsCount == rhs.exhaustiveFacetsCount &&
             lhs.exhaustiveNbHits == rhs.exhaustiveNbHits &&
             lhs.exhaustiveTypo == rhs.exhaustiveTypo &&
@@ -245,6 +258,7 @@ extension BrowseResponse: Equatable where T: Equatable {
             lhs.serverUsed == rhs.serverUsed &&
             lhs.userData == rhs.userData &&
             lhs.queryID == rhs.queryID &&
+            lhs.automaticInsights == rhs.automaticInsights &&
             lhs.page == rhs.page &&
             lhs.nbHits == rhs.nbHits &&
             lhs.nbPages == rhs.nbPages &&
@@ -263,6 +277,7 @@ extension BrowseResponse: Hashable where T: Hashable {
         hasher.combine(self.aroundLatLng?.hashValue)
         hasher.combine(self.automaticRadius?.hashValue)
         hasher.combine(self.exhaustive?.hashValue)
+        hasher.combine(self.appliedRules?.hashValue)
         hasher.combine(self.exhaustiveFacetsCount?.hashValue)
         hasher.combine(self.exhaustiveNbHits?.hashValue)
         hasher.combine(self.exhaustiveTypo?.hashValue)
@@ -282,6 +297,7 @@ extension BrowseResponse: Hashable where T: Hashable {
         hasher.combine(self.serverUsed?.hashValue)
         hasher.combine(self.userData?.hashValue)
         hasher.combine(self.queryID?.hashValue)
+        hasher.combine(self.automaticInsights?.hashValue)
         hasher.combine(self.page?.hashValue)
         hasher.combine(self.nbHits?.hashValue)
         hasher.combine(self.nbPages?.hashValue)

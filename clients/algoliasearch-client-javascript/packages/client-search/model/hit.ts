@@ -7,7 +7,7 @@ import type { SnippetResult } from './snippetResult';
 /**
  * Search result.  A hit is a record from your index, augmented with special attributes for highlighting, snippeting, and ranking.
  */
-export type Hit<T = Record<string, any>> = T & {
+export type Hit<T = Record<string, unknown>> = T & {
   /**
    * Unique record identifier.
    */
@@ -16,12 +16,12 @@ export type Hit<T = Record<string, any>> = T & {
   /**
    * Surround words that match the query with HTML tags for highlighting.
    */
-  _highlightResult?: Record<string, HighlightResult>;
+  _highlightResult?: { [key: string]: HighlightResult };
 
   /**
    * Snippets that show the context around a matching search query.
    */
-  _snippetResult?: Record<string, SnippetResult>;
+  _snippetResult?: { [key: string]: SnippetResult };
 
   _rankingInfo?: RankingInfo;
 

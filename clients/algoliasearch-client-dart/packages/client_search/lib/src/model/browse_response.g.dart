@@ -23,6 +23,8 @@ BrowseResponse _$BrowseResponseFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : Exhaustive.fromJson(v as Map<String, dynamic>)),
+          appliedRules: $checkedConvert('appliedRules',
+              (v) => (v as List<dynamic>?)?.map((e) => e as Object).toList()),
           exhaustiveFacetsCount:
               $checkedConvert('exhaustiveFacetsCount', (v) => v as bool?),
           exhaustiveNbHits:
@@ -65,6 +67,8 @@ BrowseResponse _$BrowseResponseFromJson(Map<String, dynamic> json) =>
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
           queryID: $checkedConvert('queryID', (v) => v as String?),
+          automaticInsights:
+              $checkedConvert('_automaticInsights', (v) => v as bool?),
           page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
           nbHits: $checkedConvert('nbHits', (v) => (v as num?)?.toInt()),
           nbPages: $checkedConvert('nbPages', (v) => (v as num?)?.toInt()),
@@ -81,7 +85,10 @@ BrowseResponse _$BrowseResponseFromJson(Map<String, dynamic> json) =>
         );
         return val;
       },
-      fieldKeyMap: const {'facetsStats': 'facets_stats'},
+      fieldKeyMap: const {
+        'facetsStats': 'facets_stats',
+        'automaticInsights': '_automaticInsights'
+      },
     );
 
 Map<String, dynamic> _$BrowseResponseToJson(BrowseResponse instance) {
@@ -98,6 +105,7 @@ Map<String, dynamic> _$BrowseResponseToJson(BrowseResponse instance) {
   writeNotNull('aroundLatLng', instance.aroundLatLng);
   writeNotNull('automaticRadius', instance.automaticRadius);
   writeNotNull('exhaustive', instance.exhaustive?.toJson());
+  writeNotNull('appliedRules', instance.appliedRules);
   writeNotNull('exhaustiveFacetsCount', instance.exhaustiveFacetsCount);
   writeNotNull('exhaustiveNbHits', instance.exhaustiveNbHits);
   writeNotNull('exhaustiveTypo', instance.exhaustiveTypo);
@@ -118,6 +126,7 @@ Map<String, dynamic> _$BrowseResponseToJson(BrowseResponse instance) {
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
   writeNotNull('queryID', instance.queryID);
+  writeNotNull('_automaticInsights', instance.automaticInsights);
   writeNotNull('page', instance.page);
   writeNotNull('nbHits', instance.nbHits);
   writeNotNull('nbPages', instance.nbPages);

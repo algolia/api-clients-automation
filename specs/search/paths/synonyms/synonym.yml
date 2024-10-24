@@ -6,7 +6,7 @@ get:
     - settings
   summary: Retrieve a synonym
   description: |
-    Retrieves a syonym by its ID.
+    Retrieves a synonym by its ID.
     To find the object IDs for your synonyms,
     use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
   parameters:

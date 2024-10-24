@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestQuerySuggestionsClient < Test::Unit::TestCase
-  include Algolia::QuerySuggestions
   def setup
     @client = Algolia::QuerySuggestionsClient.create(
       "APP_ID",
@@ -16,12 +15,12 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   # createConfig
   def test_create_config
     req = @client.create_config_with_http_info(
-      ConfigurationWithIndex.new(
+      Algolia::QuerySuggestions::ConfigurationWithIndex.new(
         index_name: "theIndexName",
         source_indices: [
-          SourceIndex.new(
+          Algolia::QuerySuggestions::SourceIndex.new(
             index_name: "testIndex",
-            facets: [Facet.new(attribute: "test")],
+            facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
             generate: [["facetA", "facetB"], ["facetC"]]
           )
         ],
@@ -178,14 +177,14 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -197,14 +196,14 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -376,11 +375,11 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   def test_update_config
     req = @client.update_config_with_http_info(
       "theIndexName",
-      Configuration.new(
+      Algolia::QuerySuggestions::Configuration.new(
         source_indices: [
-          SourceIndex.new(
+          Algolia::QuerySuggestions::SourceIndex.new(
             index_name: "testIndex",
-            facets: [Facet.new(attribute: "test")],
+            facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
             generate: [["facetA", "facetB"], ["facetC"]]
           )
         ],

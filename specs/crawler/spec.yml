@@ -14,7 +14,7 @@ info:
 
     ## Availability and authentication
 
-    Acess to the Crawler API is available with the [Crawler add-on](https://www.algolia.com/pricing/).
+    Access to the Crawler API is available with the [Crawler add-on](https://www.algolia.com/pricing/).
 
     To authenticate your API requests, use the **basic authentication** header:
 
@@ -59,9 +59,7 @@ components:
       scheme: basic
 servers:
   - url: https://crawler.algolia.com/api
-    description: The main URL of the Crawler API.
-  - url: https://crawler-dev.algolia.com/api
-    description: The URL of the development version of the Crawler API (Algolia employees only).
+    description: The URL of the Crawler API.
 security:
   - BasicAuth: []
 tags:
@@ -75,7 +73,7 @@ tags:
       In the Crawler configuration, you specify which URLs to crawl, when to crawl, how to extract records from the crawl, and where to index the extracted records.
       The configuration is versioned, so you can always restore a previous version.
       It's easiest to make configuration changes in the [Crawler dashboard](https://crawler.algolia.com/admin/).
-      The editor has autocomplete and builtin validation so you can try your configuration changes before comitting them.
+      The editor has autocomplete and built-in validation so you can try your configuration changes before committing them.
   - name: crawlers
     x-displayName: Crawler
     description: |

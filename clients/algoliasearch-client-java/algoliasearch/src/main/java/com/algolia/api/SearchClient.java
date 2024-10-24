@@ -49,9 +49,9 @@ public class SearchClient extends ApiClient {
     hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
 
     List<Host> commonHosts = new ArrayList<>();
-    hosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-1.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-2.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-3.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
 
     Collections.shuffle(commonHosts, new Random());
 
@@ -115,7 +115,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -138,7 +138,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -156,7 +156,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -191,7 +191,7 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -559,8 +559,8 @@ public class SearchClient extends ApiClient {
    * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
    * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
    * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
-   * browse requests, they'll be ignored.
+   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
+   * requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -588,8 +588,8 @@ public class SearchClient extends ApiClient {
    * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
    * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
    * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
-   * browse requests, they'll be ignored.
+   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
+   * requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -611,8 +611,8 @@ public class SearchClient extends ApiClient {
    * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
    * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
    * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
-   * browse requests, they'll be ignored.
+   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
+   * requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -635,8 +635,8 @@ public class SearchClient extends ApiClient {
    * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
    * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
    * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
-   * browse requests, they'll be ignored.
+   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
+   * requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -656,8 +656,8 @@ public class SearchClient extends ApiClient {
    * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
    * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
    * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
-   * these parameters with your browse requests, they'll be ignored.
+   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -678,6 +678,7 @@ public class SearchClient extends ApiClient {
       .setPath("/1/indexes/{indexName}/browse", indexName)
       .setMethod("POST")
       .setBody(browseParams)
+      .setRead(true)
       .build();
     return executeAsync(request, requestOptions, BrowseResponse.class, innerType);
   }
@@ -692,8 +693,8 @@ public class SearchClient extends ApiClient {
    * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
    * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
    * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
-   * these parameters with your browse requests, they'll be ignored.
+   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -715,8 +716,8 @@ public class SearchClient extends ApiClient {
    * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
    * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
    * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
-   * these parameters with your browse requests, they'll be ignored.
+   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -739,8 +740,8 @@ public class SearchClient extends ApiClient {
    * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
    * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
    * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
-   * these parameters with your browse requests, they'll be ignored.
+   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -2014,7 +2015,8 @@ public class SearchClient extends ApiClient {
   /**
    * Gets the permissions and restrictions of an API key. When authenticating with the admin API
    * key, you can request information for any of your application's keys. When authenticating with
-   * other API keys, you can only retrieve information for that key.
+   * other API keys, you can only retrieve information for that key, with the description replaced
+   * by `<redacted>`.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2028,7 +2030,8 @@ public class SearchClient extends ApiClient {
   /**
    * Gets the permissions and restrictions of an API key. When authenticating with the admin API
    * key, you can request information for any of your application's keys. When authenticating with
-   * other API keys, you can only retrieve information for that key.
+   * other API keys, you can only retrieve information for that key, with the description replaced
+   * by `<redacted>`.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2040,7 +2043,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Gets the permissions and restrictions of an API key. When authenticating with
    * the admin API key, you can request information for any of your application's keys. When
-   * authenticating with other API keys, you can only retrieve information for that key.
+   * authenticating with other API keys, you can only retrieve information for that key, with the
+   * description replaced by `<redacted>`.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2059,7 +2063,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Gets the permissions and restrictions of an API key. When authenticating with
    * the admin API key, you can request information for any of your application's keys. When
-   * authenticating with other API keys, you can only retrieve information for that key.
+   * authenticating with other API keys, you can only retrieve information for that key, with the
+   * description replaced by `<redacted>`.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2734,7 +2739,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search`
+   * Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -2749,7 +2754,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search`
+   * Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -2761,7 +2766,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a syonym by its ID. To find the object IDs for your synonyms, use
+   * (asynchronously) Retrieves a synonym by its ID. To find the object IDs for your synonyms, use
    * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -2784,7 +2789,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a syonym by its ID. To find the object IDs for your synonyms, use
+   * (asynchronously) Retrieves a synonym by its ID. To find the object IDs for your synonyms, use
    * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -3443,7 +3448,7 @@ public class SearchClient extends ApiClient {
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
-   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
@@ -3475,7 +3480,7 @@ public class SearchClient extends ApiClient {
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
-   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
@@ -3502,7 +3507,7 @@ public class SearchClient extends ApiClient {
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
-   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
@@ -3543,7 +3548,7 @@ public class SearchClient extends ApiClient {
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
-   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
@@ -3561,7 +3566,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
@@ -3580,11 +3585,10 @@ public class SearchClient extends ApiClient {
    * the current value, and otherwise ignore the whole object update. For example, if you pass an
    * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
    * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
-   * an object with the attribute to update as the key and its value being an object with the
-   * following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
+   * object with the attribute to update as the key and its value being an object with the following
+   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
+   * argument to the operation, for example, increment or decrement step, value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3606,7 +3610,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
@@ -3625,11 +3629,10 @@ public class SearchClient extends ApiClient {
    * the current value, and otherwise ignore the whole object update. For example, if you pass an
    * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
    * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
-   * an object with the attribute to update as the key and its value being an object with the
-   * following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
+   * object with the attribute to update as the key and its value being an object with the following
+   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
+   * argument to the operation, for example, increment or decrement step, value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3648,7 +3651,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
@@ -3667,11 +3670,10 @@ public class SearchClient extends ApiClient {
    * the current value, and otherwise ignore the whole object update. For example, if you pass an
    * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
    * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
-   * an object with the attribute to update as the key and its value being an object with the
-   * following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
+   * object with the attribute to update as the key and its value being an object with the following
+   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
+   * argument to the operation, for example, increment or decrement step, value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3690,7 +3692,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
@@ -3709,11 +3711,10 @@ public class SearchClient extends ApiClient {
    * the current value, and otherwise ignore the whole object update. For example, if you pass an
    * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
    * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
-   * an object with the attribute to update as the key and its value being an object with the
-   * following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
+   * object with the attribute to update as the key and its value being an object with the following
+   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
+   * argument to the operation, for example, increment or decrement step, value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3729,7 +3730,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
@@ -3748,11 +3749,11 @@ public class SearchClient extends ApiClient {
    * greater than the current value, and otherwise ignore the whole object update. For example, if
    * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
    * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
-   * operation by providing an object with the attribute to update as the key and its value being an
-   * object with the following properties: - _operation: the operation to apply on the attribute -
-   * value: the right-hand side argument to the operation, for example, increment or decrement step,
-   * value to add or remove.
+   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
+   * providing an object with the attribute to update as the key and its value being an object with
+   * the following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3786,7 +3787,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
@@ -3805,11 +3806,11 @@ public class SearchClient extends ApiClient {
    * greater than the current value, and otherwise ignore the whole object update. For example, if
    * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
    * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
-   * operation by providing an object with the attribute to update as the key and its value being an
-   * object with the following properties: - _operation: the operation to apply on the attribute -
-   * value: the right-hand side argument to the operation, for example, increment or decrement step,
-   * value to add or remove.
+   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
+   * providing an object with the attribute to update as the key and its value being an object with
+   * the following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3828,7 +3829,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
@@ -3847,11 +3848,11 @@ public class SearchClient extends ApiClient {
    * greater than the current value, and otherwise ignore the whole object update. For example, if
    * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
    * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
-   * operation by providing an object with the attribute to update as the key and its value being an
-   * object with the following properties: - _operation: the operation to apply on the attribute -
-   * value: the right-hand side argument to the operation, for example, increment or decrement step,
-   * value to add or remove.
+   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
+   * providing an object with the attribute to update as the key and its value being an object with
+   * the following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3870,7 +3871,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
@@ -3889,11 +3890,11 @@ public class SearchClient extends ApiClient {
    * greater than the current value, and otherwise ignore the whole object update. For example, if
    * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
    * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
-   * operation by providing an object with the attribute to update as the key and its value being an
-   * object with the following properties: - _operation: the operation to apply on the attribute -
-   * value: the right-hand side argument to the operation, for example, increment or decrement step,
-   * value to add or remove.
+   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
+   * providing an object with the attribute to update as the key and its value being an object with
+   * the following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4071,7 +4072,7 @@ public class SearchClient extends ApiClient {
    * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4092,7 +4093,7 @@ public class SearchClient extends ApiClient {
    * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4110,7 +4111,7 @@ public class SearchClient extends ApiClient {
    * update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4139,7 +4140,7 @@ public class SearchClient extends ApiClient {
    * update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param body The record, a schemaless object with attributes that are useful in the context of
+   * @param body The record. A schemaless object with attributes that are useful in the context of
    *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4798,7 +4799,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Sends multiple search request to one or more indices. This can be useful in these cases: -
+   * Sends multiple search requests to one or more indices. This can be useful in these cases: -
    * Different indices for different purposes, such as, one index for products, another one for
    * marketing content. - Multiple searches to the same index—for example, with different filters.
    *
@@ -4815,7 +4816,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Sends multiple search request to one or more indices. This can be useful in these cases: -
+   * Sends multiple search requests to one or more indices. This can be useful in these cases: -
    * Different indices for different purposes, such as, one index for products, another one for
    * marketing content. - Multiple searches to the same index—for example, with different filters.
    *
@@ -4829,7 +4830,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Sends multiple search request to one or more indices. This can be useful in
+   * (asynchronously) Sends multiple search requests to one or more indices. This can be useful in
    * these cases: - Different indices for different purposes, such as, one index for products,
    * another one for marketing content. - Multiple searches to the same index—for example, with
    * different filters.
@@ -4858,7 +4859,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Sends multiple search request to one or more indices. This can be useful in
+   * (asynchronously) Sends multiple search requests to one or more indices. This can be useful in
    * these cases: - Different indices for different purposes, such as, one index for products,
    * another one for marketing content. - Multiple searches to the same index—for example, with
    * different filters.
@@ -5226,7 +5227,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and return matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results (_hits_). This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
@@ -5247,7 +5248,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and return matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results (_hits_). This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
@@ -5262,7 +5263,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and return matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results (_hits_). This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
@@ -5278,7 +5279,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and return matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results (_hits_). This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
@@ -5291,7 +5292,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
@@ -5320,7 +5321,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
@@ -5338,7 +5339,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
@@ -5357,7 +5358,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
    * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *

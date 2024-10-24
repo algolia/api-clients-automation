@@ -32,31 +32,51 @@
 
 ## 💡 Getting Started
 
-To get started, you first need to install {{npmPackageName}} (or any other available API client package).
+{{^isAlgoliasearchClient}}
+> [!TIP]
+> This API client is already a dependency of [the algoliasearch client](https://www.npmjs.com/package/algoliasearch), you don't need to manually install `{{{npmPackageName}}}` if you already have `algoliasearch` installed.
+{{/isAlgoliasearchClient}}
 
+To get started, you first need to install {{npmPackageName}} (or any other available API client package).
 All of our clients comes with type definition, and are available for both browser and node environments.
 
+### With a package manager
+
+
 ```bash
-yarn add {{npmPackageName}}
+yarn add {{npmPackageName}}@{{{packageVersion}}}
 # or
-npm install {{npmPackageName}}
+npm install {{npmPackageName}}@{{{packageVersion}}}
+# or
+pnpm add {{npmPackageName}}@{{{packageVersion}}}
 ```
 
-Without a package manager
+### Without a package manager
 
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/{{packageName}}.umd.min.js"></script>
+{{#isAlgoliasearchClient}}
+// for the full client
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@{{{packageVersion}}}/dist/algoliasearch.umd.js"></script>
+
+// for the lite client
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@{{{packageVersion}}}/dist/lite/builds/browser.umd.js"></script>
+{{/isAlgoliasearchClient}}
+{{^isAlgoliasearchClient}}
+<script src="https://cdn.jsdelivr.net/npm/{{{npmPackageName}}}@{{{packageVersion}}}/dist/builds/browser.umd.js"></script>
+{{/isAlgoliasearchClient}}
 ```
+
+### Usage
 
 You can now import the Algolia API client in your project and play with it.
 
 ```js
 {{^isAlgoliasearchClient}}
-import { {{apiName}} } from '{{npmPackageName}}';
+import { {{clientName}} } from '{{npmPackageName}}';
 
-const client = {{apiName}}('YOUR_APP_ID', 'YOUR_API_KEY');
+const client = {{clientName}}('YOUR_APP_ID', 'YOUR_API_KEY');
 {{/isAlgoliasearchClient}}
 {{#isAlgoliasearchClient}}
 import { algoliasearch } from '{{npmPackageName}}';
@@ -64,13 +84,13 @@ import { algoliasearch } from '{{npmPackageName}}';
 const client = algoliasearch('YOUR_APP_ID', 'YOUR_API_KEY');
 
 // or with the lite client
-import { {{apiName}} } from '{{npmPackageName}}/lite';
+import { {{clientName}} } from '{{npmPackageName}}/lite';
 
-const client = {{apiName}}('YOUR_APP_ID', 'YOUR_API_KEY');
+const client = {{clientName}}('YOUR_APP_ID', 'YOUR_API_KEY');
 {{/isAlgoliasearchClient}}
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/{{#lambda.kebabcase}}{{apiName}}{{/lambda.kebabcase}}/)**.
 
 ## ❓ Troubleshooting
 

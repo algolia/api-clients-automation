@@ -1,12 +1,8 @@
 import { analyticsClient } from '@algolia/client-analytics';
 import { ApiError } from '@algolia/client-common';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
-const apiKey =
-  process.env.ALGOLIA_ANALYTICS_KEY || '**** ANALYTICS_API_KEY *****';
+const apiKey = process.env.ALGOLIA_ANALYTICS_KEY || '**** ANALYTICS_API_KEY *****';
 
 const analyticsIndex = process.env.ANALYTICS_INDEX || 'test_index';
 

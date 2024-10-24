@@ -14,17 +14,19 @@ from random import randint
 from re import search
 from sys import version_info
 from time import time
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictBool, StrictInt, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.exceptions import RequestException, ValidUntilNotFoundException
 from algoliasearch.http.helpers import (
     RetryTimeout,
@@ -32,7 +34,7 @@ from algoliasearch.http.helpers import (
     create_iterable_sync,
 )
 from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.serializer import QueryParametersSerializer, bodySerializer
+from algoliasearch.http.serializer import QueryParametersSerializer, body_serializer
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
@@ -84,6 +86,7 @@ from algoliasearch.search.models.list_user_ids_response import ListUserIdsRespon
 from algoliasearch.search.models.log_type import LogType
 from algoliasearch.search.models.multiple_batch_response import MultipleBatchResponse
 from algoliasearch.search.models.operation_index_params import OperationIndexParams
+from algoliasearch.search.models.operation_type import OperationType
 from algoliasearch.search.models.remove_user_id_response import RemoveUserIdResponse
 from algoliasearch.search.models.replace_all_objects_response import (
     ReplaceAllObjectsResponse,
@@ -149,7 +152,7 @@ class SearchClient:
     """
 
     _transporter: Transporter
-    _config: SearchConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -160,7 +163,7 @@ class SearchClient:
         config: Optional[SearchConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = SearchConfig(transporter.config.app_id, transporter.config.api_key)
 
         if config is None:
             config = SearchConfig(app_id, api_key)
@@ -171,9 +174,10 @@ class SearchClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: SearchConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: SearchConfig, transporter: Optional[Transporter] = None
+    ) -> SearchClient:
         """Allows creating a client with a customized `SearchConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -197,7 +201,7 @@ class SearchClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -210,7 +214,7 @@ class SearchClient:
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     async def wait_for_task(
         self,
@@ -223,21 +227,22 @@ class SearchClient:
         """
         Helper: Wait for a task to be published (completed) for a given `indexName` and `taskID`.
         """
-        self._retry_count = 0
+        _retry_count = 0
 
-        async def _func(_: GetTaskResponse) -> GetTaskResponse:
+        async def _func(_: Optional[GetTaskResponse]) -> GetTaskResponse:
             return await self.get_task(index_name, task_id, request_options)
 
         def _aggregator(_: GetTaskResponse) -> None:
-            self._retry_count += 1
+            nonlocal _retry_count
+            _retry_count += 1
 
         return await create_iterable(
             func=_func,
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
-            timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
-            error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
+            timeout=lambda: timeout(_retry_count),
+            error_validate=lambda _: _retry_count >= max_retries,
+            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
         )
 
     async def wait_for_app_task(
@@ -250,28 +255,29 @@ class SearchClient:
         """
         Helper: Wait for an application-level task to complete for a given `taskID`.
         """
-        self._retry_count = 0
+        _retry_count = 0
 
-        async def _func(_: GetTaskResponse) -> GetTaskResponse:
+        async def _func(_: Optional[GetTaskResponse]) -> GetTaskResponse:
             return await self.get_app_task(task_id, request_options)
 
         def _aggregator(_: GetTaskResponse) -> None:
-            self._retry_count += 1
+            nonlocal _retry_count
+            _retry_count += 1
 
         return await create_iterable(
             func=_func,
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
-            timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
-            error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
+            timeout=lambda: timeout(_retry_count),
+            error_validate=lambda _: _retry_count >= max_retries,
+            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
         )
 
     async def wait_for_api_key(
         self,
         key: str,
         operation: str,
-        api_key: Optional[ApiKey] = None,
+        api_key: Optional[Union[ApiKey, dict[str, Any]]] = None,
         max_retries: int = 50,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -279,32 +285,37 @@ class SearchClient:
         """
         Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
         """
-        self._retry_count = 0
+        _retry_count = 0
 
         if operation == "update" and api_key is None:
             raise ValueError(
                 "`apiKey` is required when waiting for an `update` operation."
             )
 
-        async def _func(_prev: GetApiKeyResponse | None) -> GetApiKeyResponse | None:
+        async def _func(_prev: Optional[GetApiKeyResponse]) -> GetApiKeyResponse:
             try:
                 return await self.get_api_key(key=key, request_options=request_options)
             except RequestException as e:
                 if e.status_code == 404 and (
                     operation == "delete" or operation == "add"
                 ):
-                    return None
+                    return None  # pyright: ignore
                 raise e
 
         def _aggregator(_: GetApiKeyResponse | None) -> None:
-            self._retry_count += 1
+            nonlocal _retry_count
+            _retry_count += 1
 
         def _validate(_resp: GetApiKeyResponse | None) -> bool:
             if operation == "update":
+                if _resp is None:
+                    return False
                 resp_dict = _resp.to_dict()
                 api_key_dict = (
                     api_key.to_dict() if isinstance(api_key, ApiKey) else api_key
                 )
+                if api_key_dict is None:
+                    return False
                 for field in api_key_dict:
                     if isinstance(api_key_dict[field], list) and isinstance(
                         resp_dict[field], list
@@ -325,28 +336,28 @@ class SearchClient:
             func=_func,
             validate=_validate,
             aggregator=_aggregator,
-            timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda _: self._retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
+            timeout=lambda: timeout(_retry_count),
+            error_validate=lambda _: _retry_count >= max_retries,
+            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
         )
 
     async def browse_objects(
         self,
         index_name: str,
-        aggregator: Optional[Callable[[BrowseResponse], None]],
-        browse_params: Optional[BrowseParamsObject] = BrowseParamsObject(),
+        aggregator: Callable[[BrowseResponse], None],
+        browse_params: BrowseParamsObject = BrowseParamsObject(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
 
-        async def _func(_prev: BrowseResponse) -> BrowseResponse:
+        async def _func(_prev: Optional[BrowseResponse]) -> BrowseResponse:
             if _prev is not None and _prev.cursor is not None:
                 browse_params.cursor = _prev.cursor
             return await self.browse(
                 index_name=index_name,
-                browse_params=browse_params,
+                browse_params=BrowseParams(browse_params),
                 request_options=request_options,
             )
 
@@ -359,19 +370,18 @@ class SearchClient:
     async def browse_rules(
         self,
         index_name: str,
-        aggregator: Optional[Callable[[SearchRulesResponse], None]],
-        search_rules_params: Optional[SearchRulesParams] = SearchRulesParams(
-            hits_per_page=1000
-        ),
+        aggregator: Callable[[SearchRulesResponse], None],
+        search_rules_params: SearchRulesParams = SearchRulesParams(hits_per_page=1000),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRulesResponse:
         """
         Helper: Iterate on the `search_rules` method of the client to allow aggregating rules of an index.
         """
-        if search_rules_params is not None:
+        if search_rules_params.hits_per_page is None:
             search_rules_params.hits_per_page = 1000
+        hits_per_page = search_rules_params.hits_per_page
 
-        async def _func(_prev: SearchRulesResponse) -> SearchRulesResponse:
+        async def _func(_prev: Optional[SearchRulesResponse]) -> SearchRulesResponse:
             if _prev is not None:
                 search_rules_params.page = _prev.page + 1
             return await self.search_rules(
@@ -382,7 +392,7 @@ class SearchClient:
 
         return await create_iterable(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < search_rules_params.hits_per_page,
+            validate=lambda _resp: _resp.nb_hits < hits_per_page,
             aggregator=aggregator,
         )
 
@@ -390,49 +400,62 @@ class SearchClient:
         self,
         index_name: str,
         aggregator: Callable[[SearchSynonymsResponse], None],
-        search_synonyms_params: Optional[SearchSynonymsParams] = SearchSynonymsParams(),
+        search_synonyms_params: SearchSynonymsParams = SearchSynonymsParams(
+            hits_per_page=1000
+        ),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchSynonymsResponse:
         """
         Helper: Iterate on the `search_synonyms` method of the client to allow aggregating synonyms of an index.
         """
-        if search_synonyms_params.page is None:
-            search_synonyms_params.page = 0
-        search_synonyms_params.hits_per_page = 1000
+        hits_per_page = 1000
+        page = search_synonyms_params.page or 0
+        search_synonyms_params.hits_per_page = hits_per_page
 
-        async def _func(_prev: SearchRulesResponse) -> SearchRulesResponse:
+        async def _func(
+            _prev: Optional[SearchSynonymsResponse],
+        ) -> SearchSynonymsResponse:
+            nonlocal page
             resp = await self.search_synonyms(
                 index_name=index_name,
                 search_synonyms_params=search_synonyms_params,
                 request_options=request_options,
             )
-            search_synonyms_params.page += 1
+            page += 1
+            search_synonyms_params.page = page
             return resp
 
         return await create_iterable(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < search_synonyms_params.hits_per_page,
+            validate=lambda _resp: _resp.nb_hits < hits_per_page,
             aggregator=aggregator,
         )
 
     async def generate_secured_api_key(
         self,
         parent_api_key: str,
-        restrictions: Optional[SecuredApiKeyRestrictions] = SecuredApiKeyRestrictions(),
+        restrictions: Optional[
+            Union[dict, SecuredApiKeyRestrictions]
+        ] = SecuredApiKeyRestrictions(),
     ) -> str:
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
         """
-        if not isinstance(restrictions, SecuredApiKeyRestrictions):
-            restrictions = SecuredApiKeyRestrictions.from_dict(restrictions)
+        restrictions_dict = {}
+        if isinstance(restrictions, SecuredApiKeyRestrictions):
+            restrictions_dict = restrictions.to_dict()
+        elif isinstance(restrictions, dict):
+            restrictions_dict = restrictions
 
-        restrictions = restrictions.to_dict()
-        if "searchParams" in restrictions:
-            restrictions = {**restrictions, **restrictions["searchParams"]}
-            del restrictions["searchParams"]
+        if "searchParams" in restrictions_dict:
+            restrictions_dict = {
+                **restrictions_dict,
+                **restrictions_dict["searchParams"],
+            }
+            del restrictions_dict["searchParams"]
 
         query_parameters = QueryParametersSerializer(
-            dict(sorted(restrictions.items()))
+            dict(sorted(restrictions_dict.items()))
         ).encoded()
 
         secured_key = hmac.new(
@@ -468,18 +491,23 @@ class SearchClient:
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return await self.chunked_batch(
-            index_name=index_name, objects=objects, action=Action.ADDOBJECT
+            index_name=index_name,
+            objects=objects,
+            action=Action.ADDOBJECT,
+            request_options=request_options,
         )
 
     async def delete_objects(
         self,
         index_name: str,
         object_ids: List[str],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -488,13 +516,15 @@ class SearchClient:
             index_name=index_name,
             objects=[{"objectID": id} for id in object_ids],
             action=Action.DELETEOBJECT,
+            request_options=request_options,
         )
 
     async def partial_update_objects(
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
-        create_if_not_exists: Optional[bool] = False,
+        create_if_not_exists: bool = False,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -505,6 +535,7 @@ class SearchClient:
             action=Action.PARTIALUPDATEOBJECT
             if create_if_not_exists
             else Action.PARTIALUPDATEOBJECTNOCREATE,
+            request_options=request_options,
         )
 
     async def chunked_batch(
@@ -545,7 +576,7 @@ class SearchClient:
         objects: List[Dict[str, Any]],
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> List[ApiResponse[str]]:
+    ) -> ReplaceAllObjectsResponse:
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
 
@@ -557,7 +588,7 @@ class SearchClient:
             return await self.operation_index(
                 index_name=index_name,
                 operation_index_params=OperationIndexParams(
-                    operation="copy",
+                    operation=OperationType.COPY,
                     destination=tmp_index_name,
                     scope=[
                         ScopeType("settings"),
@@ -590,7 +621,7 @@ class SearchClient:
         move_operation_response = await self.operation_index(
             index_name=tmp_index_name,
             operation_index_params=OperationIndexParams(
-                operation="move",
+                operation=OperationType.MOVE,
                 destination=index_name,
             ),
             request_options=request_options,
@@ -620,7 +651,7 @@ class SearchClient:
 
     async def add_api_key_with_http_info(
         self,
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -648,7 +679,7 @@ class SearchClient:
             verb=Verb.POST,
             path="/1/keys",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -656,7 +687,7 @@ class SearchClient:
 
     async def add_api_key(
         self,
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> AddApiKeyResponse:
         """
@@ -670,9 +701,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (
-            await self.add_api_key_with_http_info(api_key, request_options)
-        ).deserialize(AddApiKeyResponse)
+        resp = await self.add_api_key_with_http_info(api_key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     async def add_or_update_object_with_http_info(
         self,
@@ -684,7 +714,7 @@ class SearchClient:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -699,7 +729,7 @@ class SearchClient:
         :type index_name: str
         :param object_id: Unique record identifier. (required)
         :type object_id: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -730,7 +760,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -746,7 +776,7 @@ class SearchClient:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -761,20 +791,21 @@ class SearchClient:
         :type index_name: str
         :param object_id: Unique record identifier. (required)
         :type object_id: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            await self.add_or_update_object_with_http_info(
-                index_name, object_id, body, request_options
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = await self.add_or_update_object_with_http_info(
+            index_name, object_id, body, request_options
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     async def append_source_with_http_info(
         self,
-        source: Annotated[Source, Field(description="Source to add.")],
+        source: Union[
+            Annotated[Source, Field(description="Source to add.")], dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -802,7 +833,7 @@ class SearchClient:
             verb=Verb.POST,
             path="/1/security/sources/append",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -810,7 +841,9 @@ class SearchClient:
 
     async def append_source(
         self,
-        source: Annotated[Source, Field(description="Source to add.")],
+        source: Union[
+            Annotated[Source, Field(description="Source to add.")], dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> CreatedAtResponse:
         """
@@ -824,9 +857,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            await self.append_source_with_http_info(source, request_options)
-        ).deserialize(CreatedAtResponse)
+        resp = await self.append_source_with_http_info(source, request_options)
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     async def assign_user_id_with_http_info(
         self,
@@ -837,7 +869,7 @@ class SearchClient:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        assign_user_id_params: AssignUserIdParams,
+        assign_user_id_params: Union[AssignUserIdParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -864,7 +896,7 @@ class SearchClient:
                 "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
             )
 
-        _headers: Dict[str, Optional[str]] = {}
+        _headers: Dict[str, str] = {}
 
         if x_algolia_user_id is not None:
             _headers["x-algolia-user-id"] = x_algolia_user_id
@@ -878,7 +910,7 @@ class SearchClient:
             path="/1/clusters/mapping",
             request_options=self._request_options.merge(
                 headers=_headers,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -893,7 +925,7 @@ class SearchClient:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        assign_user_id_params: AssignUserIdParams,
+        assign_user_id_params: Union[AssignUserIdParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> CreatedAtResponse:
         """
@@ -909,11 +941,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            await self.assign_user_id_with_http_info(
-                x_algolia_user_id, assign_user_id_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = await self.assign_user_id_with_http_info(
+            x_algolia_user_id, assign_user_id_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     async def batch_with_http_info(
         self,
@@ -921,7 +952,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        batch_write_params: BatchWriteParams,
+        batch_write_params: Union[BatchWriteParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -954,7 +985,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -966,7 +997,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        batch_write_params: BatchWriteParams,
+        batch_write_params: Union[BatchWriteParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BatchResponse:
         """
@@ -980,11 +1011,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BatchResponse' result object.
         """
-        return (
-            await self.batch_with_http_info(
-                index_name, batch_write_params, request_options
-            )
-        ).deserialize(BatchResponse)
+        resp = await self.batch_with_http_info(
+            index_name, batch_write_params, request_options
+        )
+        return resp.deserialize(BatchResponse, resp.raw_data)
 
     async def batch_assign_user_ids_with_http_info(
         self,
@@ -995,7 +1025,7 @@ class SearchClient:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        batch_assign_user_ids_params: BatchAssignUserIdsParams,
+        batch_assign_user_ids_params: Union[BatchAssignUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -1022,7 +1052,7 @@ class SearchClient:
                 "Parameter `batch_assign_user_ids_params` is required when calling `batch_assign_user_ids`."
             )
 
-        _headers: Dict[str, Optional[str]] = {}
+        _headers: Dict[str, str] = {}
 
         if x_algolia_user_id is not None:
             _headers["x-algolia-user-id"] = x_algolia_user_id
@@ -1036,7 +1066,7 @@ class SearchClient:
             path="/1/clusters/mapping/batch",
             request_options=self._request_options.merge(
                 headers=_headers,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1051,7 +1081,7 @@ class SearchClient:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        batch_assign_user_ids_params: BatchAssignUserIdsParams,
+        batch_assign_user_ids_params: Union[BatchAssignUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> CreatedAtResponse:
         """
@@ -1067,18 +1097,22 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            await self.batch_assign_user_ids_with_http_info(
-                x_algolia_user_id, batch_assign_user_ids_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = await self.batch_assign_user_ids_with_http_info(
+            x_algolia_user_id, batch_assign_user_ids_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     async def batch_dictionary_entries_with_http_info(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        batch_dictionary_entries_params: BatchDictionaryEntriesParams,
+        batch_dictionary_entries_params: Union[
+            BatchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -1115,7 +1149,7 @@ class SearchClient:
                 "{dictionaryName}", quote(str(dictionary_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1123,10 +1157,15 @@ class SearchClient:
 
     async def batch_dictionary_entries(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        batch_dictionary_entries_params: BatchDictionaryEntriesParams,
+        batch_dictionary_entries_params: Union[
+            BatchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
@@ -1142,11 +1181,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.batch_dictionary_entries_with_http_info(
-                dictionary_name, batch_dictionary_entries_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.batch_dictionary_entries_with_http_info(
+            dictionary_name, batch_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def browse_with_http_info(
         self,
@@ -1154,11 +1192,11 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        browse_params: Optional[BrowseParams] = None,
+        browse_params: Union[Optional[BrowseParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
 
         Required API Key ACLs:
           - browse
@@ -1186,10 +1224,10 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
-            use_read_transporter=False,
+            use_read_transporter=True,
         )
 
     async def browse(
@@ -1198,11 +1236,11 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        browse_params: Optional[BrowseParams] = None,
+        browse_params: Union[Optional[BrowseParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
 
         Required API Key ACLs:
           - browse
@@ -1214,9 +1252,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BrowseResponse' result object.
         """
-        return (
-            await self.browse_with_http_info(index_name, browse_params, request_options)
-        ).deserialize(BrowseResponse)
+        resp = await self.browse_with_http_info(
+            index_name, browse_params, request_options
+        )
+        return resp.deserialize(BrowseResponse, resp.raw_data)
 
     async def clear_objects_with_http_info(
         self,
@@ -1273,9 +1312,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.clear_objects_with_http_info(index_name, request_options)
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.clear_objects_with_http_info(index_name, request_options)
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def clear_rules_with_http_info(
         self,
@@ -1308,10 +1346,10 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `clear_rules`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return await self._transporter.request(
             verb=Verb.POST,
@@ -1350,11 +1388,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.clear_rules_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.clear_rules_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def clear_synonyms_with_http_info(
         self,
@@ -1387,10 +1424,10 @@ class SearchClient:
                 "Parameter `index_name` is required when calling `clear_synonyms`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return await self._transporter.request(
             verb=Verb.POST,
@@ -1429,11 +1466,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.clear_synonyms_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.clear_synonyms_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def custom_delete_with_http_info(
         self,
@@ -1466,11 +1502,11 @@ class SearchClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -1507,9 +1543,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -1540,11 +1577,11 @@ class SearchClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1581,9 +1618,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -1620,11 +1656,11 @@ class SearchClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1635,7 +1671,7 @@ class SearchClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1672,11 +1708,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -1713,11 +1748,11 @@ class SearchClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1728,7 +1763,7 @@ class SearchClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1765,11 +1800,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_api_key_with_http_info(
         self,
@@ -1818,9 +1852,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteApiKeyResponse' result object.
         """
-        return (
-            await self.delete_api_key_with_http_info(key, request_options)
-        ).deserialize(DeleteApiKeyResponse)
+        resp = await self.delete_api_key_with_http_info(key, request_options)
+        return resp.deserialize(DeleteApiKeyResponse, resp.raw_data)
 
     async def delete_by_with_http_info(
         self,
@@ -1828,7 +1861,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        delete_by_params: DeleteByParams,
+        delete_by_params: Union[DeleteByParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -1865,7 +1898,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1877,7 +1910,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        delete_by_params: DeleteByParams,
+        delete_by_params: Union[DeleteByParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> DeletedAtResponse:
         """
@@ -1893,11 +1926,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_by_with_http_info(
-                index_name, delete_by_params, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_by_with_http_info(
+            index_name, delete_by_params, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def delete_index_with_http_info(
         self,
@@ -1954,9 +1986,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_index_with_http_info(index_name, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_index_with_http_info(index_name, request_options)
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def delete_object_with_http_info(
         self,
@@ -2024,11 +2055,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_object_with_http_info(
-                index_name, object_id, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_object_with_http_info(
+            index_name, object_id, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def delete_rule_with_http_info(
         self,
@@ -2071,10 +2101,10 @@ class SearchClient:
                 "Parameter `object_id` is required when calling `delete_rule`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -2118,11 +2148,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.delete_rule_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.delete_rule_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def delete_source_with_http_info(
         self,
@@ -2177,9 +2206,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteSourceResponse' result object.
         """
-        return (
-            await self.delete_source_with_http_info(source, request_options)
-        ).deserialize(DeleteSourceResponse)
+        resp = await self.delete_source_with_http_info(source, request_options)
+        return resp.deserialize(DeleteSourceResponse, resp.raw_data)
 
     async def delete_synonym_with_http_info(
         self,
@@ -2222,10 +2250,10 @@ class SearchClient:
                 "Parameter `object_id` is required when calling `delete_synonym`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -2269,11 +2297,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            await self.delete_synonym_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = await self.delete_synonym_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     async def get_api_key_with_http_info(
         self,
@@ -2281,7 +2308,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -2308,7 +2335,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetApiKeyResponse:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -2316,9 +2343,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetApiKeyResponse' result object.
         """
-        return (
-            await self.get_api_key_with_http_info(key, request_options)
-        ).deserialize(GetApiKeyResponse)
+        resp = await self.get_api_key_with_http_info(key, request_options)
+        return resp.deserialize(GetApiKeyResponse, resp.raw_data)
 
     async def get_app_task_with_http_info(
         self,
@@ -2367,9 +2393,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (
-            await self.get_app_task_with_http_info(task_id, request_options)
-        ).deserialize(GetTaskResponse)
+        resp = await self.get_app_task_with_http_info(task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     async def get_dictionary_languages_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -2405,9 +2430,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Dict[str, Languages]' result object.
         """
-        return (
-            await self.get_dictionary_languages_with_http_info(request_options)
-        ).deserialize(Dict[str, Languages])
+        resp = await self.get_dictionary_languages_with_http_info(request_options)
+        return resp.deserialize(Dict[str, Languages], resp.raw_data)
 
     async def get_dictionary_settings_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -2443,9 +2467,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetDictionarySettingsResponse' result object.
         """
-        return (
-            await self.get_dictionary_settings_with_http_info(request_options)
-        ).deserialize(GetDictionarySettingsResponse)
+        resp = await self.get_dictionary_settings_with_http_info(request_options)
+        return resp.deserialize(GetDictionarySettingsResponse, resp.raw_data)
 
     async def get_logs_with_http_info(
         self,
@@ -2465,11 +2488,14 @@ class SearchClient:
                 description="Index for which to retrieve log entries. By default, log entries are retrieved for all indices. "
             ),
         ] = None,
-        type: Annotated[
-            Optional[LogType],
-            Field(
-                description="Type of log entries to retrieve. By default, all log entries are retrieved. "
-            ),
+        type: Union[
+            Annotated[
+                Optional[LogType],
+                Field(
+                    description="Type of log entries to retrieve. By default, all log entries are retrieved. "
+                ),
+            ],
+            str,
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
@@ -2491,16 +2517,16 @@ class SearchClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if length is not None:
-            _query_parameters.append(("length", length))
+            _query_parameters["length"] = length
         if index_name is not None:
-            _query_parameters.append(("indexName", index_name))
+            _query_parameters["indexName"] = index_name
         if type is not None:
-            _query_parameters.append(("type", type))
+            _query_parameters["type"] = type
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2530,11 +2556,14 @@ class SearchClient:
                 description="Index for which to retrieve log entries. By default, log entries are retrieved for all indices. "
             ),
         ] = None,
-        type: Annotated[
-            Optional[LogType],
-            Field(
-                description="Type of log entries to retrieve. By default, all log entries are retrieved. "
-            ),
+        type: Union[
+            Annotated[
+                Optional[LogType],
+                Field(
+                    description="Type of log entries to retrieve. By default, all log entries are retrieved. "
+                ),
+            ],
+            str,
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetLogsResponse:
@@ -2555,11 +2584,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetLogsResponse' result object.
         """
-        return (
-            await self.get_logs_with_http_info(
-                offset, length, index_name, type, request_options
-            )
-        ).deserialize(GetLogsResponse)
+        resp = await self.get_logs_with_http_info(
+            offset, length, index_name, type, request_options
+        )
+        return resp.deserialize(GetLogsResponse, resp.raw_data)
 
     async def get_object_with_http_info(
         self,
@@ -2602,10 +2630,10 @@ class SearchClient:
                 "Parameter `object_id` is required when calling `get_object`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if attributes_to_retrieve is not None:
-            _query_parameters.append(("attributesToRetrieve", attributes_to_retrieve))
+            _query_parameters["attributesToRetrieve"] = attributes_to_retrieve
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2649,16 +2677,16 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.get_object_with_http_info(
-                index_name, object_id, attributes_to_retrieve, request_options
-            )
-        ).deserialize(object)
+        resp = await self.get_object_with_http_info(
+            index_name, object_id, attributes_to_retrieve, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def get_objects_with_http_info(
         self,
-        get_objects_params: Annotated[
-            GetObjectsParams, Field(description="Request object.")
+        get_objects_params: Union[
+            Annotated[GetObjectsParams, Field(description="Request object.")],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
@@ -2687,7 +2715,7 @@ class SearchClient:
             verb=Verb.POST,
             path="/1/indexes/*/objects",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -2695,8 +2723,9 @@ class SearchClient:
 
     async def get_objects(
         self,
-        get_objects_params: Annotated[
-            GetObjectsParams, Field(description="Request object.")
+        get_objects_params: Union[
+            Annotated[GetObjectsParams, Field(description="Request object.")],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetObjectsResponse:
@@ -2711,9 +2740,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetObjectsResponse' result object.
         """
-        return (
-            await self.get_objects_with_http_info(get_objects_params, request_options)
-        ).deserialize(GetObjectsResponse)
+        resp = await self.get_objects_with_http_info(
+            get_objects_params, request_options
+        )
+        return resp.deserialize(GetObjectsResponse, resp.raw_data)
 
     async def get_rule_with_http_info(
         self,
@@ -2785,9 +2815,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Rule' result object.
         """
-        return (
-            await self.get_rule_with_http_info(index_name, object_id, request_options)
-        ).deserialize(Rule)
+        resp = await self.get_rule_with_http_info(
+            index_name, object_id, request_options
+        )
+        return resp.deserialize(Rule, resp.raw_data)
 
     async def get_settings_with_http_info(
         self,
@@ -2844,9 +2875,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SettingsResponse' result object.
         """
-        return (
-            await self.get_settings_with_http_info(index_name, request_options)
-        ).deserialize(SettingsResponse)
+        resp = await self.get_settings_with_http_info(index_name, request_options)
+        return resp.deserialize(SettingsResponse, resp.raw_data)
 
     async def get_sources_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -2882,9 +2912,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Source]' result object.
         """
-        return (await self.get_sources_with_http_info(request_options)).deserialize(
-            List[Source]
-        )
+        resp = await self.get_sources_with_http_info(request_options)
+        return resp.deserialize(List[Source], resp.raw_data)
 
     async def get_synonym_with_http_info(
         self,
@@ -2898,7 +2927,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+        Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
 
         Required API Key ACLs:
           - settings
@@ -2944,7 +2973,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SynonymHit:
         """
-        Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+        Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
 
         Required API Key ACLs:
           - settings
@@ -2956,11 +2985,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SynonymHit' result object.
         """
-        return (
-            await self.get_synonym_with_http_info(
-                index_name, object_id, request_options
-            )
-        ).deserialize(SynonymHit)
+        resp = await self.get_synonym_with_http_info(
+            index_name, object_id, request_options
+        )
+        return resp.deserialize(SynonymHit, resp.raw_data)
 
     async def get_task_with_http_info(
         self,
@@ -3026,9 +3054,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (
-            await self.get_task_with_http_info(index_name, task_id, request_options)
-        ).deserialize(GetTaskResponse)
+        resp = await self.get_task_with_http_info(index_name, task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     async def get_top_user_ids_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -3064,9 +3091,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopUserIdsResponse' result object.
         """
-        return (
-            await self.get_top_user_ids_with_http_info(request_options)
-        ).deserialize(GetTopUserIdsResponse)
+        resp = await self.get_top_user_ids_with_http_info(request_options)
+        return resp.deserialize(GetTopUserIdsResponse, resp.raw_data)
 
     async def get_user_id_with_http_info(
         self,
@@ -3129,9 +3155,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UserId' result object.
         """
-        return (
-            await self.get_user_id_with_http_info(user_id, request_options)
-        ).deserialize(UserId)
+        resp = await self.get_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(UserId, resp.raw_data)
 
     async def has_pending_mappings_with_http_info(
         self,
@@ -3155,10 +3180,10 @@ class SearchClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if get_clusters is not None:
-            _query_parameters.append(("getClusters", get_clusters))
+            _query_parameters["getClusters"] = get_clusters
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -3191,11 +3216,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'HasPendingMappingsResponse' result object.
         """
-        return (
-            await self.has_pending_mappings_with_http_info(
-                get_clusters, request_options
-            )
-        ).deserialize(HasPendingMappingsResponse)
+        resp = await self.has_pending_mappings_with_http_info(
+            get_clusters, request_options
+        )
+        return resp.deserialize(HasPendingMappingsResponse, resp.raw_data)
 
     async def list_api_keys_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -3231,9 +3255,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListApiKeysResponse' result object.
         """
-        return (await self.list_api_keys_with_http_info(request_options)).deserialize(
-            ListApiKeysResponse
-        )
+        resp = await self.list_api_keys_with_http_info(request_options)
+        return resp.deserialize(ListApiKeysResponse, resp.raw_data)
 
     async def list_clusters_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -3269,9 +3292,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListClustersResponse' result object.
         """
-        return (await self.list_clusters_with_http_info(request_options)).deserialize(
-            ListClustersResponse
-        )
+        resp = await self.list_clusters_with_http_info(request_options)
+        return resp.deserialize(ListClustersResponse, resp.raw_data)
 
     async def list_indices_with_http_info(
         self,
@@ -3300,12 +3322,12 @@ class SearchClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if page is not None:
-            _query_parameters.append(("page", page))
+            _query_parameters["page"] = page
         if hits_per_page is not None:
-            _query_parameters.append(("hitsPerPage", hits_per_page))
+            _query_parameters["hitsPerPage"] = hits_per_page
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -3343,9 +3365,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListIndicesResponse' result object.
         """
-        return (
-            await self.list_indices_with_http_info(page, hits_per_page, request_options)
-        ).deserialize(ListIndicesResponse)
+        resp = await self.list_indices_with_http_info(
+            page, hits_per_page, request_options
+        )
+        return resp.deserialize(ListIndicesResponse, resp.raw_data)
 
     async def list_user_ids_with_http_info(
         self,
@@ -3374,12 +3397,12 @@ class SearchClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if page is not None:
-            _query_parameters.append(("page", page))
+            _query_parameters["page"] = page
         if hits_per_page is not None:
-            _query_parameters.append(("hitsPerPage", hits_per_page))
+            _query_parameters["hitsPerPage"] = hits_per_page
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -3417,15 +3440,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListUserIdsResponse' result object.
         """
-        return (
-            await self.list_user_ids_with_http_info(
-                page, hits_per_page, request_options
-            )
-        ).deserialize(ListUserIdsResponse)
+        resp = await self.list_user_ids_with_http_info(
+            page, hits_per_page, request_options
+        )
+        return resp.deserialize(ListUserIdsResponse, resp.raw_data)
 
     async def multiple_batch_with_http_info(
         self,
-        batch_params: BatchParams,
+        batch_params: Union[BatchParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -3451,7 +3473,7 @@ class SearchClient:
             verb=Verb.POST,
             path="/1/indexes/*/batch",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3459,7 +3481,7 @@ class SearchClient:
 
     async def multiple_batch(
         self,
-        batch_params: BatchParams,
+        batch_params: Union[BatchParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> MultipleBatchResponse:
         """
@@ -3471,9 +3493,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'MultipleBatchResponse' result object.
         """
-        return (
-            await self.multiple_batch_with_http_info(batch_params, request_options)
-        ).deserialize(MultipleBatchResponse)
+        resp = await self.multiple_batch_with_http_info(batch_params, request_options)
+        return resp.deserialize(MultipleBatchResponse, resp.raw_data)
 
     async def operation_index_with_http_info(
         self,
@@ -3481,11 +3502,11 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        operation_index_params: OperationIndexParams,
+        operation_index_params: Union[OperationIndexParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
 
         Required API Key ACLs:
           - addObject
@@ -3518,7 +3539,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3530,11 +3551,11 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        operation_index_params: OperationIndexParams,
+        operation_index_params: Union[OperationIndexParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
 
         Required API Key ACLs:
           - addObject
@@ -3546,11 +3567,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.operation_index_with_http_info(
-                index_name, operation_index_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.operation_index_with_http_info(
+            index_name, operation_index_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def partial_update_object_with_http_info(
         self,
@@ -3569,7 +3589,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
 
         Required API Key ACLs:
           - addObject
@@ -3601,10 +3621,10 @@ class SearchClient:
                 "Parameter `attributes_to_update` is required when calling `partial_update_object`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if create_if_not_exists is not None:
-            _query_parameters.append(("createIfNotExists", create_if_not_exists))
+            _query_parameters["createIfNotExists"] = create_if_not_exists
 
         _data = {}
         if attributes_to_update is not None:
@@ -3617,7 +3637,7 @@ class SearchClient:
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3640,7 +3660,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtWithObjectIdResponse:
         """
-        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
 
         Required API Key ACLs:
           - addObject
@@ -3656,15 +3676,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            await self.partial_update_object_with_http_info(
-                index_name,
-                object_id,
-                attributes_to_update,
-                create_if_not_exists,
-                request_options,
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = await self.partial_update_object_with_http_info(
+            index_name,
+            object_id,
+            attributes_to_update,
+            create_if_not_exists,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     async def remove_user_id_with_http_info(
         self,
@@ -3727,13 +3746,15 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RemoveUserIdResponse' result object.
         """
-        return (
-            await self.remove_user_id_with_http_info(user_id, request_options)
-        ).deserialize(RemoveUserIdResponse)
+        resp = await self.remove_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(RemoveUserIdResponse, resp.raw_data)
 
     async def replace_sources_with_http_info(
         self,
-        source: Annotated[List[Source], Field(description="Allowed sources.")],
+        source: Union[
+            Annotated[List[Source], Field(description="Allowed sources.")],
+            list[dict[str, Any]],
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -3761,7 +3782,7 @@ class SearchClient:
             verb=Verb.PUT,
             path="/1/security/sources",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3769,7 +3790,10 @@ class SearchClient:
 
     async def replace_sources(
         self,
-        source: Annotated[List[Source], Field(description="Allowed sources.")],
+        source: Union[
+            Annotated[List[Source], Field(description="Allowed sources.")],
+            list[dict[str, Any]],
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ReplaceSourceResponse:
         """
@@ -3783,9 +3807,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ReplaceSourceResponse' result object.
         """
-        return (
-            await self.replace_sources_with_http_info(source, request_options)
-        ).deserialize(ReplaceSourceResponse)
+        resp = await self.replace_sources_with_http_info(source, request_options)
+        return resp.deserialize(ReplaceSourceResponse, resp.raw_data)
 
     async def restore_api_key_with_http_info(
         self,
@@ -3834,9 +3857,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (
-            await self.restore_api_key_with_http_info(key, request_options)
-        ).deserialize(AddApiKeyResponse)
+        resp = await self.restore_api_key_with_http_info(key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     async def save_object_with_http_info(
         self,
@@ -3847,7 +3869,7 @@ class SearchClient:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -3860,7 +3882,7 @@ class SearchClient:
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -3884,7 +3906,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3899,7 +3921,7 @@ class SearchClient:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -3912,14 +3934,13 @@ class SearchClient:
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveObjectResponse' result object.
         """
-        return (
-            await self.save_object_with_http_info(index_name, body, request_options)
-        ).deserialize(SaveObjectResponse)
+        resp = await self.save_object_with_http_info(index_name, body, request_options)
+        return resp.deserialize(SaveObjectResponse, resp.raw_data)
 
     async def save_rule_with_http_info(
         self,
@@ -3930,7 +3951,7 @@ class SearchClient:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a rule object.")
         ],
-        rule: Rule,
+        rule: Union[Rule, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -3968,10 +3989,10 @@ class SearchClient:
         if rule is None:
             raise ValueError("Parameter `rule` is required when calling `save_rule`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         _data = {}
         if rule is not None:
@@ -3984,7 +4005,7 @@ class SearchClient:
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3999,7 +4020,7 @@ class SearchClient:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a rule object.")
         ],
-        rule: Rule,
+        rule: Union[Rule, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4023,11 +4044,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedRuleResponse' result object.
         """
-        return (
-            await self.save_rule_with_http_info(
-                index_name, object_id, rule, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedRuleResponse)
+        resp = await self.save_rule_with_http_info(
+            index_name, object_id, rule, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedRuleResponse, resp.raw_data)
 
     async def save_rules_with_http_info(
         self,
@@ -4035,7 +4055,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        rules: List[Rule],
+        rules: Union[List[Rule], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4074,12 +4094,12 @@ class SearchClient:
         if rules is None:
             raise ValueError("Parameter `rules` is required when calling `save_rules`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
         if clear_existing_rules is not None:
-            _query_parameters.append(("clearExistingRules", clear_existing_rules))
+            _query_parameters["clearExistingRules"] = clear_existing_rules
 
         _data = {}
         if rules is not None:
@@ -4092,7 +4112,7 @@ class SearchClient:
             ),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -4104,7 +4124,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        rules: List[Rule],
+        rules: Union[List[Rule], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4134,15 +4154,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.save_rules_with_http_info(
-                index_name,
-                rules,
-                forward_to_replicas,
-                clear_existing_rules,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.save_rules_with_http_info(
+            index_name,
+            rules,
+            forward_to_replicas,
+            clear_existing_rules,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def save_synonym_with_http_info(
         self,
@@ -4153,7 +4172,7 @@ class SearchClient:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a synonym object.")
         ],
-        synonym_hit: SynonymHit,
+        synonym_hit: Union[SynonymHit, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4193,10 +4212,10 @@ class SearchClient:
                 "Parameter `synonym_hit` is required when calling `save_synonym`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         _data = {}
         if synonym_hit is not None:
@@ -4209,7 +4228,7 @@ class SearchClient:
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -4224,7 +4243,7 @@ class SearchClient:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a synonym object.")
         ],
-        synonym_hit: SynonymHit,
+        synonym_hit: Union[SynonymHit, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4248,11 +4267,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveSynonymResponse' result object.
         """
-        return (
-            await self.save_synonym_with_http_info(
-                index_name, object_id, synonym_hit, forward_to_replicas, request_options
-            )
-        ).deserialize(SaveSynonymResponse)
+        resp = await self.save_synonym_with_http_info(
+            index_name, object_id, synonym_hit, forward_to_replicas, request_options
+        )
+        return resp.deserialize(SaveSynonymResponse, resp.raw_data)
 
     async def save_synonyms_with_http_info(
         self,
@@ -4260,7 +4278,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        synonym_hit: List[SynonymHit],
+        synonym_hit: Union[List[SynonymHit], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4301,14 +4319,12 @@ class SearchClient:
                 "Parameter `synonym_hit` is required when calling `save_synonyms`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
         if replace_existing_synonyms is not None:
-            _query_parameters.append(
-                ("replaceExistingSynonyms", replace_existing_synonyms)
-            )
+            _query_parameters["replaceExistingSynonyms"] = replace_existing_synonyms
 
         _data = {}
         if synonym_hit is not None:
@@ -4321,7 +4337,7 @@ class SearchClient:
             ),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -4333,7 +4349,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        synonym_hit: List[SynonymHit],
+        synonym_hit: Union[List[SynonymHit], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4363,28 +4379,30 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.save_synonyms_with_http_info(
-                index_name,
-                synonym_hit,
-                forward_to_replicas,
-                replace_existing_synonyms,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.save_synonyms_with_http_info(
+            index_name,
+            synonym_hit,
+            forward_to_replicas,
+            replace_existing_synonyms,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def search_with_http_info(
         self,
-        search_method_params: Annotated[
-            SearchMethodParams,
-            Field(
-                description="Muli-search request body. Results are returned in the same order as the requests."
-            ),
+        search_method_params: Union[
+            Annotated[
+                SearchMethodParams,
+                Field(
+                    description="Muli-search request body. Results are returned in the same order as the requests."
+                ),
+            ],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Sends multiple search request to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
 
         Required API Key ACLs:
           - search
@@ -4408,7 +4426,7 @@ class SearchClient:
             verb=Verb.POST,
             path="/1/indexes/*/queries",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -4416,16 +4434,19 @@ class SearchClient:
 
     async def search(
         self,
-        search_method_params: Annotated[
-            SearchMethodParams,
-            Field(
-                description="Muli-search request body. Results are returned in the same order as the requests."
-            ),
+        search_method_params: Union[
+            Annotated[
+                SearchMethodParams,
+                Field(
+                    description="Muli-search request body. Results are returned in the same order as the requests."
+                ),
+            ],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchResponses:
         """
-        Sends multiple search request to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
 
         Required API Key ACLs:
           - search
@@ -4435,16 +4456,20 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponses' result object.
         """
-        return (
-            await self.search_with_http_info(search_method_params, request_options)
-        ).deserialize(SearchResponses)
+        resp = await self.search_with_http_info(search_method_params, request_options)
+        return resp.deserialize(SearchResponses, resp.raw_data)
 
     async def search_dictionary_entries_with_http_info(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        search_dictionary_entries_params: SearchDictionaryEntriesParams,
+        search_dictionary_entries_params: Union[
+            SearchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -4481,7 +4506,7 @@ class SearchClient:
                 "{dictionaryName}", quote(str(dictionary_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -4489,10 +4514,15 @@ class SearchClient:
 
     async def search_dictionary_entries(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        search_dictionary_entries_params: SearchDictionaryEntriesParams,
+        search_dictionary_entries_params: Union[
+            SearchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchDictionaryEntriesResponse:
         """
@@ -4508,11 +4538,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchDictionaryEntriesResponse' result object.
         """
-        return (
-            await self.search_dictionary_entries_with_http_info(
-                dictionary_name, search_dictionary_entries_params, request_options
-            )
-        ).deserialize(SearchDictionaryEntriesResponse)
+        resp = await self.search_dictionary_entries_with_http_info(
+            dictionary_name, search_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(SearchDictionaryEntriesResponse, resp.raw_data)
 
     async def search_for_facet_values_with_http_info(
         self,
@@ -4526,7 +4555,9 @@ class SearchClient:
                 description="Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier. "
             ),
         ],
-        search_for_facet_values_request: Optional[SearchForFacetValuesRequest] = None,
+        search_for_facet_values_request: Union[
+            Optional[SearchForFacetValuesRequest], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -4565,7 +4596,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ).replace("{facetName}", quote(str(facet_name), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -4583,7 +4614,9 @@ class SearchClient:
                 description="Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier. "
             ),
         ],
-        search_for_facet_values_request: Optional[SearchForFacetValuesRequest] = None,
+        search_for_facet_values_request: Union[
+            Optional[SearchForFacetValuesRequest], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchForFacetValuesResponse:
         """
@@ -4601,11 +4634,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchForFacetValuesResponse' result object.
         """
-        return (
-            await self.search_for_facet_values_with_http_info(
-                index_name, facet_name, search_for_facet_values_request, request_options
-            )
-        ).deserialize(SearchForFacetValuesResponse)
+        resp = await self.search_for_facet_values_with_http_info(
+            index_name, facet_name, search_for_facet_values_request, request_options
+        )
+        return resp.deserialize(SearchForFacetValuesResponse, resp.raw_data)
 
     async def search_rules_with_http_info(
         self,
@@ -4613,7 +4645,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_rules_params: Optional[SearchRulesParams] = None,
+        search_rules_params: Union[Optional[SearchRulesParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -4645,7 +4677,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -4657,7 +4689,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_rules_params: Optional[SearchRulesParams] = None,
+        search_rules_params: Union[Optional[SearchRulesParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRulesResponse:
         """
@@ -4673,11 +4705,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchRulesResponse' result object.
         """
-        return (
-            await self.search_rules_with_http_info(
-                index_name, search_rules_params, request_options
-            )
-        ).deserialize(SearchRulesResponse)
+        resp = await self.search_rules_with_http_info(
+            index_name, search_rules_params, request_options
+        )
+        return resp.deserialize(SearchRulesResponse, resp.raw_data)
 
     async def search_single_index_with_http_info(
         self,
@@ -4685,11 +4716,11 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_params: Optional[SearchParams] = None,
+        search_params: Union[Optional[SearchParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Searches a single index and return matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+        Searches a single index and returns matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
 
         Required API Key ACLs:
           - search
@@ -4717,7 +4748,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -4729,11 +4760,11 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_params: Optional[SearchParams] = None,
+        search_params: Union[Optional[SearchParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchResponse:
         """
-        Searches a single index and return matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+        Searches a single index and returns matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
 
         Required API Key ACLs:
           - search
@@ -4745,11 +4776,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponse' result object.
         """
-        return (
-            await self.search_single_index_with_http_info(
-                index_name, search_params, request_options
-            )
-        ).deserialize(SearchResponse)
+        resp = await self.search_single_index_with_http_info(
+            index_name, search_params, request_options
+        )
+        return resp.deserialize(SearchResponse, resp.raw_data)
 
     async def search_synonyms_with_http_info(
         self,
@@ -4757,9 +4787,12 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_synonyms_params: Annotated[
-            Optional[SearchSynonymsParams],
-            Field(description="Body of the `searchSynonyms` operation."),
+        search_synonyms_params: Union[
+            Annotated[
+                Optional[SearchSynonymsParams],
+                Field(description="Body of the `searchSynonyms` operation."),
+            ],
+            dict[str, Any],
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
@@ -4792,7 +4825,7 @@ class SearchClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -4804,9 +4837,12 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_synonyms_params: Annotated[
-            Optional[SearchSynonymsParams],
-            Field(description="Body of the `searchSynonyms` operation."),
+        search_synonyms_params: Union[
+            Annotated[
+                Optional[SearchSynonymsParams],
+                Field(description="Body of the `searchSynonyms` operation."),
+            ],
+            dict[str, Any],
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchSynonymsResponse:
@@ -4823,15 +4859,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchSynonymsResponse' result object.
         """
-        return (
-            await self.search_synonyms_with_http_info(
-                index_name, search_synonyms_params, request_options
-            )
-        ).deserialize(SearchSynonymsResponse)
+        resp = await self.search_synonyms_with_http_info(
+            index_name, search_synonyms_params, request_options
+        )
+        return resp.deserialize(SearchSynonymsResponse, resp.raw_data)
 
     async def search_user_ids_with_http_info(
         self,
-        search_user_ids_params: SearchUserIdsParams,
+        search_user_ids_params: Union[SearchUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -4859,7 +4894,7 @@ class SearchClient:
             verb=Verb.POST,
             path="/1/clusters/mapping/search",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -4867,7 +4902,7 @@ class SearchClient:
 
     async def search_user_ids(
         self,
-        search_user_ids_params: SearchUserIdsParams,
+        search_user_ids_params: Union[SearchUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchUserIdsResponse:
         """
@@ -4881,15 +4916,14 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchUserIdsResponse' result object.
         """
-        return (
-            await self.search_user_ids_with_http_info(
-                search_user_ids_params, request_options
-            )
-        ).deserialize(SearchUserIdsResponse)
+        resp = await self.search_user_ids_with_http_info(
+            search_user_ids_params, request_options
+        )
+        return resp.deserialize(SearchUserIdsResponse, resp.raw_data)
 
     async def set_dictionary_settings_with_http_info(
         self,
-        dictionary_settings_params: DictionarySettingsParams,
+        dictionary_settings_params: Union[DictionarySettingsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -4917,7 +4951,7 @@ class SearchClient:
             verb=Verb.PUT,
             path="/1/dictionaries/*/settings",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -4925,7 +4959,7 @@ class SearchClient:
 
     async def set_dictionary_settings(
         self,
-        dictionary_settings_params: DictionarySettingsParams,
+        dictionary_settings_params: Union[DictionarySettingsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
@@ -4939,11 +4973,10 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.set_dictionary_settings_with_http_info(
-                dictionary_settings_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.set_dictionary_settings_with_http_info(
+            dictionary_settings_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def set_settings_with_http_info(
         self,
@@ -4951,7 +4984,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        index_settings: IndexSettings,
+        index_settings: Union[IndexSettings, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -4984,10 +5017,10 @@ class SearchClient:
                 "Parameter `index_settings` is required when calling `set_settings`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         _data = {}
         if index_settings is not None:
@@ -5000,7 +5033,7 @@ class SearchClient:
             ),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -5012,7 +5045,7 @@ class SearchClient:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        index_settings: IndexSettings,
+        index_settings: Union[IndexSettings, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -5034,16 +5067,15 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            await self.set_settings_with_http_info(
-                index_name, index_settings, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = await self.set_settings_with_http_info(
+            index_name, index_settings, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def update_api_key_with_http_info(
         self,
         key: Annotated[StrictStr, Field(description="API key.")],
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -5078,7 +5110,7 @@ class SearchClient:
             verb=Verb.PUT,
             path="/1/keys/{key}".replace("{key}", quote(str(key), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -5087,7 +5119,7 @@ class SearchClient:
     async def update_api_key(
         self,
         key: Annotated[StrictStr, Field(description="API key.")],
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdateApiKeyResponse:
         """
@@ -5103,9 +5135,8 @@ class SearchClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdateApiKeyResponse' result object.
         """
-        return (
-            await self.update_api_key_with_http_info(key, api_key, request_options)
-        ).deserialize(UpdateApiKeyResponse)
+        resp = await self.update_api_key_with_http_info(key, api_key, request_options)
+        return resp.deserialize(UpdateApiKeyResponse, resp.raw_data)
 
 
 class SearchClientSync:
@@ -5127,7 +5158,7 @@ class SearchClientSync:
     """
 
     _transporter: TransporterSync
-    _config: SearchConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -5138,7 +5169,7 @@ class SearchClientSync:
         config: Optional[SearchConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = SearchConfig(transporter.config.app_id, transporter.config.api_key)
 
         if config is None:
             config = SearchConfig(app_id, api_key)
@@ -5149,9 +5180,10 @@ class SearchClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: SearchConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls, config: SearchConfig, transporter: Optional[TransporterSync] = None
+    ) -> SearchClientSync:
         """Allows creating a client with a customized `SearchConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -5187,7 +5219,7 @@ class SearchClientSync:
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     def wait_for_task(
         self,
@@ -5200,21 +5232,22 @@ class SearchClientSync:
         """
         Helper: Wait for a task to be published (completed) for a given `indexName` and `taskID`.
         """
-        self._retry_count = 0
+        _retry_count = 0
 
-        def _func(_: GetTaskResponse) -> GetTaskResponse:
+        def _func(_: Optional[GetTaskResponse]) -> GetTaskResponse:
             return self.get_task(index_name, task_id, request_options)
 
         def _aggregator(_: GetTaskResponse) -> None:
-            self._retry_count += 1
+            nonlocal _retry_count
+            _retry_count += 1
 
         return create_iterable_sync(
             func=_func,
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
-            timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
-            error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
+            timeout=lambda: timeout(_retry_count),
+            error_validate=lambda _: _retry_count >= max_retries,
+            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
         )
 
     def wait_for_app_task(
@@ -5227,28 +5260,29 @@ class SearchClientSync:
         """
         Helper: Wait for an application-level task to complete for a given `taskID`.
         """
-        self._retry_count = 0
+        _retry_count = 0
 
-        def _func(_: GetTaskResponse) -> GetTaskResponse:
+        def _func(_: Optional[GetTaskResponse]) -> GetTaskResponse:
             return self.get_app_task(task_id, request_options)
 
         def _aggregator(_: GetTaskResponse) -> None:
-            self._retry_count += 1
+            nonlocal _retry_count
+            _retry_count += 1
 
         return create_iterable_sync(
             func=_func,
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
-            timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
-            error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
+            timeout=lambda: timeout(_retry_count),
+            error_validate=lambda _: _retry_count >= max_retries,
+            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
         )
 
     def wait_for_api_key(
         self,
         key: str,
         operation: str,
-        api_key: Optional[ApiKey] = None,
+        api_key: Optional[Union[ApiKey, dict[str, Any]]] = None,
         max_retries: int = 50,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -5256,32 +5290,37 @@ class SearchClientSync:
         """
         Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
         """
-        self._retry_count = 0
+        _retry_count = 0
 
         if operation == "update" and api_key is None:
             raise ValueError(
                 "`apiKey` is required when waiting for an `update` operation."
             )
 
-        def _func(_prev: GetApiKeyResponse | None) -> GetApiKeyResponse | None:
+        def _func(_prev: Optional[GetApiKeyResponse]) -> GetApiKeyResponse:
             try:
                 return self.get_api_key(key=key, request_options=request_options)
             except RequestException as e:
                 if e.status_code == 404 and (
                     operation == "delete" or operation == "add"
                 ):
-                    return None
+                    return None  # pyright: ignore
                 raise e
 
         def _aggregator(_: GetApiKeyResponse | None) -> None:
-            self._retry_count += 1
+            nonlocal _retry_count
+            _retry_count += 1
 
         def _validate(_resp: GetApiKeyResponse | None) -> bool:
             if operation == "update":
+                if _resp is None:
+                    return False
                 resp_dict = _resp.to_dict()
                 api_key_dict = (
                     api_key.to_dict() if isinstance(api_key, ApiKey) else api_key
                 )
+                if api_key_dict is None:
+                    return False
                 for field in api_key_dict:
                     if isinstance(api_key_dict[field], list) and isinstance(
                         resp_dict[field], list
@@ -5302,28 +5341,28 @@ class SearchClientSync:
             func=_func,
             validate=_validate,
             aggregator=_aggregator,
-            timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda _: self._retry_count >= max_retries,
-            error_message=lambda _: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
+            timeout=lambda: timeout(_retry_count),
+            error_validate=lambda _: _retry_count >= max_retries,
+            error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${max_retries})",
         )
 
     def browse_objects(
         self,
         index_name: str,
-        aggregator: Optional[Callable[[BrowseResponse], None]],
-        browse_params: Optional[BrowseParamsObject] = BrowseParamsObject(),
+        aggregator: Callable[[BrowseResponse], None],
+        browse_params: BrowseParamsObject = BrowseParamsObject(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
 
-        def _func(_prev: BrowseResponse) -> BrowseResponse:
+        def _func(_prev: Optional[BrowseResponse]) -> BrowseResponse:
             if _prev is not None and _prev.cursor is not None:
                 browse_params.cursor = _prev.cursor
             return self.browse(
                 index_name=index_name,
-                browse_params=browse_params,
+                browse_params=BrowseParams(browse_params),
                 request_options=request_options,
             )
 
@@ -5336,19 +5375,18 @@ class SearchClientSync:
     def browse_rules(
         self,
         index_name: str,
-        aggregator: Optional[Callable[[SearchRulesResponse], None]],
-        search_rules_params: Optional[SearchRulesParams] = SearchRulesParams(
-            hits_per_page=1000
-        ),
+        aggregator: Callable[[SearchRulesResponse], None],
+        search_rules_params: SearchRulesParams = SearchRulesParams(hits_per_page=1000),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRulesResponse:
         """
         Helper: Iterate on the `search_rules` method of the client to allow aggregating rules of an index.
         """
-        if search_rules_params is not None:
+        if search_rules_params.hits_per_page is None:
             search_rules_params.hits_per_page = 1000
+        hits_per_page = search_rules_params.hits_per_page
 
-        def _func(_prev: SearchRulesResponse) -> SearchRulesResponse:
+        def _func(_prev: Optional[SearchRulesResponse]) -> SearchRulesResponse:
             if _prev is not None:
                 search_rules_params.page = _prev.page + 1
             return self.search_rules(
@@ -5359,7 +5397,7 @@ class SearchClientSync:
 
         return create_iterable_sync(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < search_rules_params.hits_per_page,
+            validate=lambda _resp: _resp.nb_hits < hits_per_page,
             aggregator=aggregator,
         )
 
@@ -5367,49 +5405,60 @@ class SearchClientSync:
         self,
         index_name: str,
         aggregator: Callable[[SearchSynonymsResponse], None],
-        search_synonyms_params: Optional[SearchSynonymsParams] = SearchSynonymsParams(),
+        search_synonyms_params: SearchSynonymsParams = SearchSynonymsParams(
+            hits_per_page=1000
+        ),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchSynonymsResponse:
         """
         Helper: Iterate on the `search_synonyms` method of the client to allow aggregating synonyms of an index.
         """
-        if search_synonyms_params.page is None:
-            search_synonyms_params.page = 0
-        search_synonyms_params.hits_per_page = 1000
+        hits_per_page = 1000
+        page = search_synonyms_params.page or 0
+        search_synonyms_params.hits_per_page = hits_per_page
 
-        def _func(_prev: SearchRulesResponse) -> SearchRulesResponse:
+        def _func(_prev: Optional[SearchSynonymsResponse]) -> SearchSynonymsResponse:
+            nonlocal page
             resp = self.search_synonyms(
                 index_name=index_name,
                 search_synonyms_params=search_synonyms_params,
                 request_options=request_options,
             )
-            search_synonyms_params.page += 1
+            page += 1
+            search_synonyms_params.page = page
             return resp
 
         return create_iterable_sync(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < search_synonyms_params.hits_per_page,
+            validate=lambda _resp: _resp.nb_hits < hits_per_page,
             aggregator=aggregator,
         )
 
     def generate_secured_api_key(
         self,
         parent_api_key: str,
-        restrictions: Optional[SecuredApiKeyRestrictions] = SecuredApiKeyRestrictions(),
+        restrictions: Optional[
+            Union[dict, SecuredApiKeyRestrictions]
+        ] = SecuredApiKeyRestrictions(),
     ) -> str:
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
         """
-        if not isinstance(restrictions, SecuredApiKeyRestrictions):
-            restrictions = SecuredApiKeyRestrictions.from_dict(restrictions)
+        restrictions_dict = {}
+        if isinstance(restrictions, SecuredApiKeyRestrictions):
+            restrictions_dict = restrictions.to_dict()
+        elif isinstance(restrictions, dict):
+            restrictions_dict = restrictions
 
-        restrictions = restrictions.to_dict()
-        if "searchParams" in restrictions:
-            restrictions = {**restrictions, **restrictions["searchParams"]}
-            del restrictions["searchParams"]
+        if "searchParams" in restrictions_dict:
+            restrictions_dict = {
+                **restrictions_dict,
+                **restrictions_dict["searchParams"],
+            }
+            del restrictions_dict["searchParams"]
 
         query_parameters = QueryParametersSerializer(
-            dict(sorted(restrictions.items()))
+            dict(sorted(restrictions_dict.items()))
         ).encoded()
 
         secured_key = hmac.new(
@@ -5445,18 +5494,23 @@ class SearchClientSync:
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return self.chunked_batch(
-            index_name=index_name, objects=objects, action=Action.ADDOBJECT
+            index_name=index_name,
+            objects=objects,
+            action=Action.ADDOBJECT,
+            request_options=request_options,
         )
 
     def delete_objects(
         self,
         index_name: str,
         object_ids: List[str],
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -5465,13 +5519,15 @@ class SearchClientSync:
             index_name=index_name,
             objects=[{"objectID": id} for id in object_ids],
             action=Action.DELETEOBJECT,
+            request_options=request_options,
         )
 
     def partial_update_objects(
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
-        create_if_not_exists: Optional[bool] = False,
+        create_if_not_exists: bool = False,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -5482,6 +5538,7 @@ class SearchClientSync:
             action=Action.PARTIALUPDATEOBJECT
             if create_if_not_exists
             else Action.PARTIALUPDATEOBJECTNOCREATE,
+            request_options=request_options,
         )
 
     def chunked_batch(
@@ -5520,7 +5577,7 @@ class SearchClientSync:
         objects: List[Dict[str, Any]],
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> List[ApiResponse[str]]:
+    ) -> ReplaceAllObjectsResponse:
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
 
@@ -5532,7 +5589,7 @@ class SearchClientSync:
             return self.operation_index(
                 index_name=index_name,
                 operation_index_params=OperationIndexParams(
-                    operation="copy",
+                    operation=OperationType.COPY,
                     destination=tmp_index_name,
                     scope=[
                         ScopeType("settings"),
@@ -5565,7 +5622,7 @@ class SearchClientSync:
         move_operation_response = self.operation_index(
             index_name=tmp_index_name,
             operation_index_params=OperationIndexParams(
-                operation="move",
+                operation=OperationType.MOVE,
                 destination=index_name,
             ),
             request_options=request_options,
@@ -5595,7 +5652,7 @@ class SearchClientSync:
 
     def add_api_key_with_http_info(
         self,
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -5623,7 +5680,7 @@ class SearchClientSync:
             verb=Verb.POST,
             path="/1/keys",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -5631,7 +5688,7 @@ class SearchClientSync:
 
     def add_api_key(
         self,
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> AddApiKeyResponse:
         """
@@ -5645,9 +5702,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (self.add_api_key_with_http_info(api_key, request_options)).deserialize(
-            AddApiKeyResponse
-        )
+        resp = self.add_api_key_with_http_info(api_key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     def add_or_update_object_with_http_info(
         self,
@@ -5659,7 +5715,7 @@ class SearchClientSync:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -5674,7 +5730,7 @@ class SearchClientSync:
         :type index_name: str
         :param object_id: Unique record identifier. (required)
         :type object_id: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -5705,7 +5761,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -5721,7 +5777,7 @@ class SearchClientSync:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -5736,20 +5792,21 @@ class SearchClientSync:
         :type index_name: str
         :param object_id: Unique record identifier. (required)
         :type object_id: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            self.add_or_update_object_with_http_info(
-                index_name, object_id, body, request_options
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = self.add_or_update_object_with_http_info(
+            index_name, object_id, body, request_options
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     def append_source_with_http_info(
         self,
-        source: Annotated[Source, Field(description="Source to add.")],
+        source: Union[
+            Annotated[Source, Field(description="Source to add.")], dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -5777,7 +5834,7 @@ class SearchClientSync:
             verb=Verb.POST,
             path="/1/security/sources/append",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -5785,7 +5842,9 @@ class SearchClientSync:
 
     def append_source(
         self,
-        source: Annotated[Source, Field(description="Source to add.")],
+        source: Union[
+            Annotated[Source, Field(description="Source to add.")], dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> CreatedAtResponse:
         """
@@ -5799,9 +5858,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (self.append_source_with_http_info(source, request_options)).deserialize(
-            CreatedAtResponse
-        )
+        resp = self.append_source_with_http_info(source, request_options)
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     def assign_user_id_with_http_info(
         self,
@@ -5812,7 +5870,7 @@ class SearchClientSync:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        assign_user_id_params: AssignUserIdParams,
+        assign_user_id_params: Union[AssignUserIdParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -5839,7 +5897,7 @@ class SearchClientSync:
                 "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
             )
 
-        _headers: Dict[str, Optional[str]] = {}
+        _headers: Dict[str, str] = {}
 
         if x_algolia_user_id is not None:
             _headers["x-algolia-user-id"] = x_algolia_user_id
@@ -5853,7 +5911,7 @@ class SearchClientSync:
             path="/1/clusters/mapping",
             request_options=self._request_options.merge(
                 headers=_headers,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -5868,7 +5926,7 @@ class SearchClientSync:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        assign_user_id_params: AssignUserIdParams,
+        assign_user_id_params: Union[AssignUserIdParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> CreatedAtResponse:
         """
@@ -5884,11 +5942,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            self.assign_user_id_with_http_info(
-                x_algolia_user_id, assign_user_id_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = self.assign_user_id_with_http_info(
+            x_algolia_user_id, assign_user_id_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     def batch_with_http_info(
         self,
@@ -5896,7 +5953,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        batch_write_params: BatchWriteParams,
+        batch_write_params: Union[BatchWriteParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -5929,7 +5986,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -5941,7 +5998,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        batch_write_params: BatchWriteParams,
+        batch_write_params: Union[BatchWriteParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BatchResponse:
         """
@@ -5955,9 +6012,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BatchResponse' result object.
         """
-        return (
-            self.batch_with_http_info(index_name, batch_write_params, request_options)
-        ).deserialize(BatchResponse)
+        resp = self.batch_with_http_info(
+            index_name, batch_write_params, request_options
+        )
+        return resp.deserialize(BatchResponse, resp.raw_data)
 
     def batch_assign_user_ids_with_http_info(
         self,
@@ -5968,7 +6026,7 @@ class SearchClientSync:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        batch_assign_user_ids_params: BatchAssignUserIdsParams,
+        batch_assign_user_ids_params: Union[BatchAssignUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -5995,7 +6053,7 @@ class SearchClientSync:
                 "Parameter `batch_assign_user_ids_params` is required when calling `batch_assign_user_ids`."
             )
 
-        _headers: Dict[str, Optional[str]] = {}
+        _headers: Dict[str, str] = {}
 
         if x_algolia_user_id is not None:
             _headers["x-algolia-user-id"] = x_algolia_user_id
@@ -6009,7 +6067,7 @@ class SearchClientSync:
             path="/1/clusters/mapping/batch",
             request_options=self._request_options.merge(
                 headers=_headers,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -6024,7 +6082,7 @@ class SearchClientSync:
                 description="Unique identifier of the user who makes the search request.",
             ),
         ],
-        batch_assign_user_ids_params: BatchAssignUserIdsParams,
+        batch_assign_user_ids_params: Union[BatchAssignUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> CreatedAtResponse:
         """
@@ -6040,18 +6098,22 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'CreatedAtResponse' result object.
         """
-        return (
-            self.batch_assign_user_ids_with_http_info(
-                x_algolia_user_id, batch_assign_user_ids_params, request_options
-            )
-        ).deserialize(CreatedAtResponse)
+        resp = self.batch_assign_user_ids_with_http_info(
+            x_algolia_user_id, batch_assign_user_ids_params, request_options
+        )
+        return resp.deserialize(CreatedAtResponse, resp.raw_data)
 
     def batch_dictionary_entries_with_http_info(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        batch_dictionary_entries_params: BatchDictionaryEntriesParams,
+        batch_dictionary_entries_params: Union[
+            BatchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -6088,7 +6150,7 @@ class SearchClientSync:
                 "{dictionaryName}", quote(str(dictionary_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -6096,10 +6158,15 @@ class SearchClientSync:
 
     def batch_dictionary_entries(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        batch_dictionary_entries_params: BatchDictionaryEntriesParams,
+        batch_dictionary_entries_params: Union[
+            BatchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
@@ -6115,11 +6182,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.batch_dictionary_entries_with_http_info(
-                dictionary_name, batch_dictionary_entries_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.batch_dictionary_entries_with_http_info(
+            dictionary_name, batch_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def browse_with_http_info(
         self,
@@ -6127,11 +6193,11 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        browse_params: Optional[BrowseParams] = None,
+        browse_params: Union[Optional[BrowseParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
 
         Required API Key ACLs:
           - browse
@@ -6159,10 +6225,10 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
-            use_read_transporter=False,
+            use_read_transporter=True,
         )
 
     def browse(
@@ -6171,11 +6237,11 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        browse_params: Optional[BrowseParams] = None,
+        browse_params: Union[Optional[BrowseParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
 
         Required API Key ACLs:
           - browse
@@ -6187,9 +6253,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BrowseResponse' result object.
         """
-        return (
-            self.browse_with_http_info(index_name, browse_params, request_options)
-        ).deserialize(BrowseResponse)
+        resp = self.browse_with_http_info(index_name, browse_params, request_options)
+        return resp.deserialize(BrowseResponse, resp.raw_data)
 
     def clear_objects_with_http_info(
         self,
@@ -6246,9 +6311,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.clear_objects_with_http_info(index_name, request_options)
-        ).deserialize(UpdatedAtResponse)
+        resp = self.clear_objects_with_http_info(index_name, request_options)
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def clear_rules_with_http_info(
         self,
@@ -6281,10 +6345,10 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `clear_rules`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return self._transporter.request(
             verb=Verb.POST,
@@ -6323,11 +6387,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.clear_rules_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.clear_rules_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def clear_synonyms_with_http_info(
         self,
@@ -6360,10 +6423,10 @@ class SearchClientSync:
                 "Parameter `index_name` is required when calling `clear_synonyms`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return self._transporter.request(
             verb=Verb.POST,
@@ -6402,11 +6465,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.clear_synonyms_with_http_info(
-                index_name, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.clear_synonyms_with_http_info(
+            index_name, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def custom_delete_with_http_info(
         self,
@@ -6439,11 +6501,11 @@ class SearchClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -6480,9 +6542,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -6513,11 +6574,11 @@ class SearchClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -6554,9 +6615,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -6593,11 +6653,11 @@ class SearchClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -6608,7 +6668,7 @@ class SearchClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -6645,9 +6705,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -6684,11 +6743,11 @@ class SearchClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -6699,7 +6758,7 @@ class SearchClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -6736,9 +6795,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_api_key_with_http_info(
         self,
@@ -6787,9 +6845,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteApiKeyResponse' result object.
         """
-        return (self.delete_api_key_with_http_info(key, request_options)).deserialize(
-            DeleteApiKeyResponse
-        )
+        resp = self.delete_api_key_with_http_info(key, request_options)
+        return resp.deserialize(DeleteApiKeyResponse, resp.raw_data)
 
     def delete_by_with_http_info(
         self,
@@ -6797,7 +6854,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        delete_by_params: DeleteByParams,
+        delete_by_params: Union[DeleteByParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -6834,7 +6891,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -6846,7 +6903,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        delete_by_params: DeleteByParams,
+        delete_by_params: Union[DeleteByParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> DeletedAtResponse:
         """
@@ -6862,9 +6919,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_by_with_http_info(index_name, delete_by_params, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_by_with_http_info(
+            index_name, delete_by_params, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def delete_index_with_http_info(
         self,
@@ -6921,9 +6979,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_index_with_http_info(index_name, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_index_with_http_info(index_name, request_options)
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def delete_object_with_http_info(
         self,
@@ -6991,9 +7048,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_object_with_http_info(index_name, object_id, request_options)
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_object_with_http_info(index_name, object_id, request_options)
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def delete_rule_with_http_info(
         self,
@@ -7036,10 +7092,10 @@ class SearchClientSync:
                 "Parameter `object_id` is required when calling `delete_rule`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -7083,11 +7139,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.delete_rule_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.delete_rule_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def delete_source_with_http_info(
         self,
@@ -7142,9 +7197,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeleteSourceResponse' result object.
         """
-        return (self.delete_source_with_http_info(source, request_options)).deserialize(
-            DeleteSourceResponse
-        )
+        resp = self.delete_source_with_http_info(source, request_options)
+        return resp.deserialize(DeleteSourceResponse, resp.raw_data)
 
     def delete_synonym_with_http_info(
         self,
@@ -7187,10 +7241,10 @@ class SearchClientSync:
                 "Parameter `object_id` is required when calling `delete_synonym`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -7234,11 +7288,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'DeletedAtResponse' result object.
         """
-        return (
-            self.delete_synonym_with_http_info(
-                index_name, object_id, forward_to_replicas, request_options
-            )
-        ).deserialize(DeletedAtResponse)
+        resp = self.delete_synonym_with_http_info(
+            index_name, object_id, forward_to_replicas, request_options
+        )
+        return resp.deserialize(DeletedAtResponse, resp.raw_data)
 
     def get_api_key_with_http_info(
         self,
@@ -7246,7 +7299,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -7273,7 +7326,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetApiKeyResponse:
         """
-        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+        Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
 
         :param key: API key. (required)
@@ -7281,9 +7334,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetApiKeyResponse' result object.
         """
-        return (self.get_api_key_with_http_info(key, request_options)).deserialize(
-            GetApiKeyResponse
-        )
+        resp = self.get_api_key_with_http_info(key, request_options)
+        return resp.deserialize(GetApiKeyResponse, resp.raw_data)
 
     def get_app_task_with_http_info(
         self,
@@ -7332,9 +7384,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (self.get_app_task_with_http_info(task_id, request_options)).deserialize(
-            GetTaskResponse
-        )
+        resp = self.get_app_task_with_http_info(task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     def get_dictionary_languages_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -7370,9 +7421,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Dict[str, Languages]' result object.
         """
-        return (
-            self.get_dictionary_languages_with_http_info(request_options)
-        ).deserialize(Dict[str, Languages])
+        resp = self.get_dictionary_languages_with_http_info(request_options)
+        return resp.deserialize(Dict[str, Languages], resp.raw_data)
 
     def get_dictionary_settings_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -7408,9 +7458,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetDictionarySettingsResponse' result object.
         """
-        return (
-            self.get_dictionary_settings_with_http_info(request_options)
-        ).deserialize(GetDictionarySettingsResponse)
+        resp = self.get_dictionary_settings_with_http_info(request_options)
+        return resp.deserialize(GetDictionarySettingsResponse, resp.raw_data)
 
     def get_logs_with_http_info(
         self,
@@ -7430,11 +7479,14 @@ class SearchClientSync:
                 description="Index for which to retrieve log entries. By default, log entries are retrieved for all indices. "
             ),
         ] = None,
-        type: Annotated[
-            Optional[LogType],
-            Field(
-                description="Type of log entries to retrieve. By default, all log entries are retrieved. "
-            ),
+        type: Union[
+            Annotated[
+                Optional[LogType],
+                Field(
+                    description="Type of log entries to retrieve. By default, all log entries are retrieved. "
+                ),
+            ],
+            str,
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
@@ -7456,16 +7508,16 @@ class SearchClientSync:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if length is not None:
-            _query_parameters.append(("length", length))
+            _query_parameters["length"] = length
         if index_name is not None:
-            _query_parameters.append(("indexName", index_name))
+            _query_parameters["indexName"] = index_name
         if type is not None:
-            _query_parameters.append(("type", type))
+            _query_parameters["type"] = type
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -7495,11 +7547,14 @@ class SearchClientSync:
                 description="Index for which to retrieve log entries. By default, log entries are retrieved for all indices. "
             ),
         ] = None,
-        type: Annotated[
-            Optional[LogType],
-            Field(
-                description="Type of log entries to retrieve. By default, all log entries are retrieved. "
-            ),
+        type: Union[
+            Annotated[
+                Optional[LogType],
+                Field(
+                    description="Type of log entries to retrieve. By default, all log entries are retrieved. "
+                ),
+            ],
+            str,
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetLogsResponse:
@@ -7520,11 +7575,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetLogsResponse' result object.
         """
-        return (
-            self.get_logs_with_http_info(
-                offset, length, index_name, type, request_options
-            )
-        ).deserialize(GetLogsResponse)
+        resp = self.get_logs_with_http_info(
+            offset, length, index_name, type, request_options
+        )
+        return resp.deserialize(GetLogsResponse, resp.raw_data)
 
     def get_object_with_http_info(
         self,
@@ -7567,10 +7621,10 @@ class SearchClientSync:
                 "Parameter `object_id` is required when calling `get_object`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if attributes_to_retrieve is not None:
-            _query_parameters.append(("attributesToRetrieve", attributes_to_retrieve))
+            _query_parameters["attributesToRetrieve"] = attributes_to_retrieve
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -7614,16 +7668,16 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.get_object_with_http_info(
-                index_name, object_id, attributes_to_retrieve, request_options
-            )
-        ).deserialize(object)
+        resp = self.get_object_with_http_info(
+            index_name, object_id, attributes_to_retrieve, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     def get_objects_with_http_info(
         self,
-        get_objects_params: Annotated[
-            GetObjectsParams, Field(description="Request object.")
+        get_objects_params: Union[
+            Annotated[GetObjectsParams, Field(description="Request object.")],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
@@ -7652,7 +7706,7 @@ class SearchClientSync:
             verb=Verb.POST,
             path="/1/indexes/*/objects",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -7660,8 +7714,9 @@ class SearchClientSync:
 
     def get_objects(
         self,
-        get_objects_params: Annotated[
-            GetObjectsParams, Field(description="Request object.")
+        get_objects_params: Union[
+            Annotated[GetObjectsParams, Field(description="Request object.")],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> GetObjectsResponse:
@@ -7676,9 +7731,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetObjectsResponse' result object.
         """
-        return (
-            self.get_objects_with_http_info(get_objects_params, request_options)
-        ).deserialize(GetObjectsResponse)
+        resp = self.get_objects_with_http_info(get_objects_params, request_options)
+        return resp.deserialize(GetObjectsResponse, resp.raw_data)
 
     def get_rule_with_http_info(
         self,
@@ -7750,9 +7804,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'Rule' result object.
         """
-        return (
-            self.get_rule_with_http_info(index_name, object_id, request_options)
-        ).deserialize(Rule)
+        resp = self.get_rule_with_http_info(index_name, object_id, request_options)
+        return resp.deserialize(Rule, resp.raw_data)
 
     def get_settings_with_http_info(
         self,
@@ -7809,9 +7862,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SettingsResponse' result object.
         """
-        return (
-            self.get_settings_with_http_info(index_name, request_options)
-        ).deserialize(SettingsResponse)
+        resp = self.get_settings_with_http_info(index_name, request_options)
+        return resp.deserialize(SettingsResponse, resp.raw_data)
 
     def get_sources_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -7847,9 +7899,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[Source]' result object.
         """
-        return (self.get_sources_with_http_info(request_options)).deserialize(
-            List[Source]
-        )
+        resp = self.get_sources_with_http_info(request_options)
+        return resp.deserialize(List[Source], resp.raw_data)
 
     def get_synonym_with_http_info(
         self,
@@ -7863,7 +7914,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+        Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
 
         Required API Key ACLs:
           - settings
@@ -7909,7 +7960,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SynonymHit:
         """
-        Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+        Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
 
         Required API Key ACLs:
           - settings
@@ -7921,9 +7972,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SynonymHit' result object.
         """
-        return (
-            self.get_synonym_with_http_info(index_name, object_id, request_options)
-        ).deserialize(SynonymHit)
+        resp = self.get_synonym_with_http_info(index_name, object_id, request_options)
+        return resp.deserialize(SynonymHit, resp.raw_data)
 
     def get_task_with_http_info(
         self,
@@ -7989,9 +8039,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTaskResponse' result object.
         """
-        return (
-            self.get_task_with_http_info(index_name, task_id, request_options)
-        ).deserialize(GetTaskResponse)
+        resp = self.get_task_with_http_info(index_name, task_id, request_options)
+        return resp.deserialize(GetTaskResponse, resp.raw_data)
 
     def get_top_user_ids_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -8027,9 +8076,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopUserIdsResponse' result object.
         """
-        return (self.get_top_user_ids_with_http_info(request_options)).deserialize(
-            GetTopUserIdsResponse
-        )
+        resp = self.get_top_user_ids_with_http_info(request_options)
+        return resp.deserialize(GetTopUserIdsResponse, resp.raw_data)
 
     def get_user_id_with_http_info(
         self,
@@ -8092,9 +8140,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UserId' result object.
         """
-        return (self.get_user_id_with_http_info(user_id, request_options)).deserialize(
-            UserId
-        )
+        resp = self.get_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(UserId, resp.raw_data)
 
     def has_pending_mappings_with_http_info(
         self,
@@ -8118,10 +8165,10 @@ class SearchClientSync:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if get_clusters is not None:
-            _query_parameters.append(("getClusters", get_clusters))
+            _query_parameters["getClusters"] = get_clusters
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -8154,9 +8201,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'HasPendingMappingsResponse' result object.
         """
-        return (
-            self.has_pending_mappings_with_http_info(get_clusters, request_options)
-        ).deserialize(HasPendingMappingsResponse)
+        resp = self.has_pending_mappings_with_http_info(get_clusters, request_options)
+        return resp.deserialize(HasPendingMappingsResponse, resp.raw_data)
 
     def list_api_keys_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -8192,9 +8238,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListApiKeysResponse' result object.
         """
-        return (self.list_api_keys_with_http_info(request_options)).deserialize(
-            ListApiKeysResponse
-        )
+        resp = self.list_api_keys_with_http_info(request_options)
+        return resp.deserialize(ListApiKeysResponse, resp.raw_data)
 
     def list_clusters_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -8230,9 +8275,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListClustersResponse' result object.
         """
-        return (self.list_clusters_with_http_info(request_options)).deserialize(
-            ListClustersResponse
-        )
+        resp = self.list_clusters_with_http_info(request_options)
+        return resp.deserialize(ListClustersResponse, resp.raw_data)
 
     def list_indices_with_http_info(
         self,
@@ -8261,12 +8305,12 @@ class SearchClientSync:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if page is not None:
-            _query_parameters.append(("page", page))
+            _query_parameters["page"] = page
         if hits_per_page is not None:
-            _query_parameters.append(("hitsPerPage", hits_per_page))
+            _query_parameters["hitsPerPage"] = hits_per_page
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -8304,9 +8348,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListIndicesResponse' result object.
         """
-        return (
-            self.list_indices_with_http_info(page, hits_per_page, request_options)
-        ).deserialize(ListIndicesResponse)
+        resp = self.list_indices_with_http_info(page, hits_per_page, request_options)
+        return resp.deserialize(ListIndicesResponse, resp.raw_data)
 
     def list_user_ids_with_http_info(
         self,
@@ -8335,12 +8378,12 @@ class SearchClientSync:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if page is not None:
-            _query_parameters.append(("page", page))
+            _query_parameters["page"] = page
         if hits_per_page is not None:
-            _query_parameters.append(("hitsPerPage", hits_per_page))
+            _query_parameters["hitsPerPage"] = hits_per_page
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -8378,13 +8421,12 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListUserIdsResponse' result object.
         """
-        return (
-            self.list_user_ids_with_http_info(page, hits_per_page, request_options)
-        ).deserialize(ListUserIdsResponse)
+        resp = self.list_user_ids_with_http_info(page, hits_per_page, request_options)
+        return resp.deserialize(ListUserIdsResponse, resp.raw_data)
 
     def multiple_batch_with_http_info(
         self,
-        batch_params: BatchParams,
+        batch_params: Union[BatchParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -8410,7 +8452,7 @@ class SearchClientSync:
             verb=Verb.POST,
             path="/1/indexes/*/batch",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -8418,7 +8460,7 @@ class SearchClientSync:
 
     def multiple_batch(
         self,
-        batch_params: BatchParams,
+        batch_params: Union[BatchParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> MultipleBatchResponse:
         """
@@ -8430,9 +8472,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'MultipleBatchResponse' result object.
         """
-        return (
-            self.multiple_batch_with_http_info(batch_params, request_options)
-        ).deserialize(MultipleBatchResponse)
+        resp = self.multiple_batch_with_http_info(batch_params, request_options)
+        return resp.deserialize(MultipleBatchResponse, resp.raw_data)
 
     def operation_index_with_http_info(
         self,
@@ -8440,11 +8481,11 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        operation_index_params: OperationIndexParams,
+        operation_index_params: Union[OperationIndexParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
 
         Required API Key ACLs:
           - addObject
@@ -8477,7 +8518,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -8489,11 +8530,11 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        operation_index_params: OperationIndexParams,
+        operation_index_params: Union[OperationIndexParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
-        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+        Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
 
         Required API Key ACLs:
           - addObject
@@ -8505,11 +8546,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.operation_index_with_http_info(
-                index_name, operation_index_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.operation_index_with_http_info(
+            index_name, operation_index_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def partial_update_object_with_http_info(
         self,
@@ -8528,7 +8568,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
 
         Required API Key ACLs:
           - addObject
@@ -8560,10 +8600,10 @@ class SearchClientSync:
                 "Parameter `attributes_to_update` is required when calling `partial_update_object`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if create_if_not_exists is not None:
-            _query_parameters.append(("createIfNotExists", create_if_not_exists))
+            _query_parameters["createIfNotExists"] = create_if_not_exists
 
         _data = {}
         if attributes_to_update is not None:
@@ -8576,7 +8616,7 @@ class SearchClientSync:
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -8599,7 +8639,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtWithObjectIdResponse:
         """
-        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+        Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
 
         Required API Key ACLs:
           - addObject
@@ -8615,15 +8655,14 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtWithObjectIdResponse' result object.
         """
-        return (
-            self.partial_update_object_with_http_info(
-                index_name,
-                object_id,
-                attributes_to_update,
-                create_if_not_exists,
-                request_options,
-            )
-        ).deserialize(UpdatedAtWithObjectIdResponse)
+        resp = self.partial_update_object_with_http_info(
+            index_name,
+            object_id,
+            attributes_to_update,
+            create_if_not_exists,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtWithObjectIdResponse, resp.raw_data)
 
     def remove_user_id_with_http_info(
         self,
@@ -8686,13 +8725,15 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'RemoveUserIdResponse' result object.
         """
-        return (
-            self.remove_user_id_with_http_info(user_id, request_options)
-        ).deserialize(RemoveUserIdResponse)
+        resp = self.remove_user_id_with_http_info(user_id, request_options)
+        return resp.deserialize(RemoveUserIdResponse, resp.raw_data)
 
     def replace_sources_with_http_info(
         self,
-        source: Annotated[List[Source], Field(description="Allowed sources.")],
+        source: Union[
+            Annotated[List[Source], Field(description="Allowed sources.")],
+            list[dict[str, Any]],
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -8720,7 +8761,7 @@ class SearchClientSync:
             verb=Verb.PUT,
             path="/1/security/sources",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -8728,7 +8769,10 @@ class SearchClientSync:
 
     def replace_sources(
         self,
-        source: Annotated[List[Source], Field(description="Allowed sources.")],
+        source: Union[
+            Annotated[List[Source], Field(description="Allowed sources.")],
+            list[dict[str, Any]],
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ReplaceSourceResponse:
         """
@@ -8742,9 +8786,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ReplaceSourceResponse' result object.
         """
-        return (
-            self.replace_sources_with_http_info(source, request_options)
-        ).deserialize(ReplaceSourceResponse)
+        resp = self.replace_sources_with_http_info(source, request_options)
+        return resp.deserialize(ReplaceSourceResponse, resp.raw_data)
 
     def restore_api_key_with_http_info(
         self,
@@ -8793,9 +8836,8 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'AddApiKeyResponse' result object.
         """
-        return (self.restore_api_key_with_http_info(key, request_options)).deserialize(
-            AddApiKeyResponse
-        )
+        resp = self.restore_api_key_with_http_info(key, request_options)
+        return resp.deserialize(AddApiKeyResponse, resp.raw_data)
 
     def save_object_with_http_info(
         self,
@@ -8806,7 +8848,7 @@ class SearchClientSync:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -8819,7 +8861,7 @@ class SearchClientSync:
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the raw algoliasearch 'APIResponse' object.
@@ -8843,7 +8885,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -8858,7 +8900,7 @@ class SearchClientSync:
         body: Annotated[
             Dict[str, Any],
             Field(
-                description="The record, a schemaless object with attributes that are useful in the context of search and discovery."
+                description="The record. A schemaless object with attributes that are useful in the context of search and discovery."
             ),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -8871,14 +8913,13 @@ class SearchClientSync:
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
-        :param body: The record, a schemaless object with attributes that are useful in the context of search and discovery. (required)
+        :param body: The record. A schemaless object with attributes that are useful in the context of search and discovery. (required)
         :type body: object
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveObjectResponse' result object.
         """
-        return (
-            self.save_object_with_http_info(index_name, body, request_options)
-        ).deserialize(SaveObjectResponse)
+        resp = self.save_object_with_http_info(index_name, body, request_options)
+        return resp.deserialize(SaveObjectResponse, resp.raw_data)
 
     def save_rule_with_http_info(
         self,
@@ -8889,7 +8930,7 @@ class SearchClientSync:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a rule object.")
         ],
-        rule: Rule,
+        rule: Union[Rule, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -8927,10 +8968,10 @@ class SearchClientSync:
         if rule is None:
             raise ValueError("Parameter `rule` is required when calling `save_rule`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         _data = {}
         if rule is not None:
@@ -8943,7 +8984,7 @@ class SearchClientSync:
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -8958,7 +8999,7 @@ class SearchClientSync:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a rule object.")
         ],
-        rule: Rule,
+        rule: Union[Rule, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -8982,11 +9023,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedRuleResponse' result object.
         """
-        return (
-            self.save_rule_with_http_info(
-                index_name, object_id, rule, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedRuleResponse)
+        resp = self.save_rule_with_http_info(
+            index_name, object_id, rule, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedRuleResponse, resp.raw_data)
 
     def save_rules_with_http_info(
         self,
@@ -8994,7 +9034,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        rules: List[Rule],
+        rules: Union[List[Rule], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9033,12 +9073,12 @@ class SearchClientSync:
         if rules is None:
             raise ValueError("Parameter `rules` is required when calling `save_rules`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
         if clear_existing_rules is not None:
-            _query_parameters.append(("clearExistingRules", clear_existing_rules))
+            _query_parameters["clearExistingRules"] = clear_existing_rules
 
         _data = {}
         if rules is not None:
@@ -9051,7 +9091,7 @@ class SearchClientSync:
             ),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -9063,7 +9103,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        rules: List[Rule],
+        rules: Union[List[Rule], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9093,15 +9133,14 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.save_rules_with_http_info(
-                index_name,
-                rules,
-                forward_to_replicas,
-                clear_existing_rules,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.save_rules_with_http_info(
+            index_name,
+            rules,
+            forward_to_replicas,
+            clear_existing_rules,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def save_synonym_with_http_info(
         self,
@@ -9112,7 +9151,7 @@ class SearchClientSync:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a synonym object.")
         ],
-        synonym_hit: SynonymHit,
+        synonym_hit: Union[SynonymHit, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9152,10 +9191,10 @@ class SearchClientSync:
                 "Parameter `synonym_hit` is required when calling `save_synonym`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         _data = {}
         if synonym_hit is not None:
@@ -9168,7 +9207,7 @@ class SearchClientSync:
             ).replace("{objectID}", quote(str(object_id), safe="")),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -9183,7 +9222,7 @@ class SearchClientSync:
         object_id: Annotated[
             StrictStr, Field(description="Unique identifier of a synonym object.")
         ],
-        synonym_hit: SynonymHit,
+        synonym_hit: Union[SynonymHit, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9207,11 +9246,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SaveSynonymResponse' result object.
         """
-        return (
-            self.save_synonym_with_http_info(
-                index_name, object_id, synonym_hit, forward_to_replicas, request_options
-            )
-        ).deserialize(SaveSynonymResponse)
+        resp = self.save_synonym_with_http_info(
+            index_name, object_id, synonym_hit, forward_to_replicas, request_options
+        )
+        return resp.deserialize(SaveSynonymResponse, resp.raw_data)
 
     def save_synonyms_with_http_info(
         self,
@@ -9219,7 +9257,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        synonym_hit: List[SynonymHit],
+        synonym_hit: Union[List[SynonymHit], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9260,14 +9298,12 @@ class SearchClientSync:
                 "Parameter `synonym_hit` is required when calling `save_synonyms`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
         if replace_existing_synonyms is not None:
-            _query_parameters.append(
-                ("replaceExistingSynonyms", replace_existing_synonyms)
-            )
+            _query_parameters["replaceExistingSynonyms"] = replace_existing_synonyms
 
         _data = {}
         if synonym_hit is not None:
@@ -9280,7 +9316,7 @@ class SearchClientSync:
             ),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -9292,7 +9328,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        synonym_hit: List[SynonymHit],
+        synonym_hit: Union[List[SynonymHit], list[dict[str, Any]]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9322,28 +9358,30 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.save_synonyms_with_http_info(
-                index_name,
-                synonym_hit,
-                forward_to_replicas,
-                replace_existing_synonyms,
-                request_options,
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.save_synonyms_with_http_info(
+            index_name,
+            synonym_hit,
+            forward_to_replicas,
+            replace_existing_synonyms,
+            request_options,
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def search_with_http_info(
         self,
-        search_method_params: Annotated[
-            SearchMethodParams,
-            Field(
-                description="Muli-search request body. Results are returned in the same order as the requests."
-            ),
+        search_method_params: Union[
+            Annotated[
+                SearchMethodParams,
+                Field(
+                    description="Muli-search request body. Results are returned in the same order as the requests."
+                ),
+            ],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Sends multiple search request to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
 
         Required API Key ACLs:
           - search
@@ -9367,7 +9405,7 @@ class SearchClientSync:
             verb=Verb.POST,
             path="/1/indexes/*/queries",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -9375,16 +9413,19 @@ class SearchClientSync:
 
     def search(
         self,
-        search_method_params: Annotated[
-            SearchMethodParams,
-            Field(
-                description="Muli-search request body. Results are returned in the same order as the requests."
-            ),
+        search_method_params: Union[
+            Annotated[
+                SearchMethodParams,
+                Field(
+                    description="Muli-search request body. Results are returned in the same order as the requests."
+                ),
+            ],
+            dict[str, Any],
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchResponses:
         """
-        Sends multiple search request to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+        Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
 
         Required API Key ACLs:
           - search
@@ -9394,16 +9435,20 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponses' result object.
         """
-        return (
-            self.search_with_http_info(search_method_params, request_options)
-        ).deserialize(SearchResponses)
+        resp = self.search_with_http_info(search_method_params, request_options)
+        return resp.deserialize(SearchResponses, resp.raw_data)
 
     def search_dictionary_entries_with_http_info(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        search_dictionary_entries_params: SearchDictionaryEntriesParams,
+        search_dictionary_entries_params: Union[
+            SearchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -9440,7 +9485,7 @@ class SearchClientSync:
                 "{dictionaryName}", quote(str(dictionary_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -9448,10 +9493,15 @@ class SearchClientSync:
 
     def search_dictionary_entries(
         self,
-        dictionary_name: Annotated[
-            DictionaryType, Field(description="Dictionary type in which to search.")
+        dictionary_name: Union[
+            Annotated[
+                DictionaryType, Field(description="Dictionary type in which to search.")
+            ],
+            str,
         ],
-        search_dictionary_entries_params: SearchDictionaryEntriesParams,
+        search_dictionary_entries_params: Union[
+            SearchDictionaryEntriesParams, dict[str, Any]
+        ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchDictionaryEntriesResponse:
         """
@@ -9467,11 +9517,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchDictionaryEntriesResponse' result object.
         """
-        return (
-            self.search_dictionary_entries_with_http_info(
-                dictionary_name, search_dictionary_entries_params, request_options
-            )
-        ).deserialize(SearchDictionaryEntriesResponse)
+        resp = self.search_dictionary_entries_with_http_info(
+            dictionary_name, search_dictionary_entries_params, request_options
+        )
+        return resp.deserialize(SearchDictionaryEntriesResponse, resp.raw_data)
 
     def search_for_facet_values_with_http_info(
         self,
@@ -9485,7 +9534,9 @@ class SearchClientSync:
                 description="Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier. "
             ),
         ],
-        search_for_facet_values_request: Optional[SearchForFacetValuesRequest] = None,
+        search_for_facet_values_request: Union[
+            Optional[SearchForFacetValuesRequest], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -9524,7 +9575,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ).replace("{facetName}", quote(str(facet_name), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -9542,7 +9593,9 @@ class SearchClientSync:
                 description="Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier. "
             ),
         ],
-        search_for_facet_values_request: Optional[SearchForFacetValuesRequest] = None,
+        search_for_facet_values_request: Union[
+            Optional[SearchForFacetValuesRequest], dict[str, Any]
+        ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchForFacetValuesResponse:
         """
@@ -9560,11 +9613,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchForFacetValuesResponse' result object.
         """
-        return (
-            self.search_for_facet_values_with_http_info(
-                index_name, facet_name, search_for_facet_values_request, request_options
-            )
-        ).deserialize(SearchForFacetValuesResponse)
+        resp = self.search_for_facet_values_with_http_info(
+            index_name, facet_name, search_for_facet_values_request, request_options
+        )
+        return resp.deserialize(SearchForFacetValuesResponse, resp.raw_data)
 
     def search_rules_with_http_info(
         self,
@@ -9572,7 +9624,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_rules_params: Optional[SearchRulesParams] = None,
+        search_rules_params: Union[Optional[SearchRulesParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -9604,7 +9656,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -9616,7 +9668,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_rules_params: Optional[SearchRulesParams] = None,
+        search_rules_params: Union[Optional[SearchRulesParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRulesResponse:
         """
@@ -9632,11 +9684,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchRulesResponse' result object.
         """
-        return (
-            self.search_rules_with_http_info(
-                index_name, search_rules_params, request_options
-            )
-        ).deserialize(SearchRulesResponse)
+        resp = self.search_rules_with_http_info(
+            index_name, search_rules_params, request_options
+        )
+        return resp.deserialize(SearchRulesResponse, resp.raw_data)
 
     def search_single_index_with_http_info(
         self,
@@ -9644,11 +9695,11 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_params: Optional[SearchParams] = None,
+        search_params: Union[Optional[SearchParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Searches a single index and return matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+        Searches a single index and returns matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
 
         Required API Key ACLs:
           - search
@@ -9676,7 +9727,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -9688,11 +9739,11 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_params: Optional[SearchParams] = None,
+        search_params: Union[Optional[SearchParams], dict[str, Any]] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchResponse:
         """
-        Searches a single index and return matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+        Searches a single index and returns matching search results (_hits_).  This method lets you retrieve up to 1,000 hits. If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
 
         Required API Key ACLs:
           - search
@@ -9704,11 +9755,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchResponse' result object.
         """
-        return (
-            self.search_single_index_with_http_info(
-                index_name, search_params, request_options
-            )
-        ).deserialize(SearchResponse)
+        resp = self.search_single_index_with_http_info(
+            index_name, search_params, request_options
+        )
+        return resp.deserialize(SearchResponse, resp.raw_data)
 
     def search_synonyms_with_http_info(
         self,
@@ -9716,9 +9766,12 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_synonyms_params: Annotated[
-            Optional[SearchSynonymsParams],
-            Field(description="Body of the `searchSynonyms` operation."),
+        search_synonyms_params: Union[
+            Annotated[
+                Optional[SearchSynonymsParams],
+                Field(description="Body of the `searchSynonyms` operation."),
+            ],
+            dict[str, Any],
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
@@ -9751,7 +9804,7 @@ class SearchClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -9763,9 +9816,12 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        search_synonyms_params: Annotated[
-            Optional[SearchSynonymsParams],
-            Field(description="Body of the `searchSynonyms` operation."),
+        search_synonyms_params: Union[
+            Annotated[
+                Optional[SearchSynonymsParams],
+                Field(description="Body of the `searchSynonyms` operation."),
+            ],
+            dict[str, Any],
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchSynonymsResponse:
@@ -9782,15 +9838,14 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchSynonymsResponse' result object.
         """
-        return (
-            self.search_synonyms_with_http_info(
-                index_name, search_synonyms_params, request_options
-            )
-        ).deserialize(SearchSynonymsResponse)
+        resp = self.search_synonyms_with_http_info(
+            index_name, search_synonyms_params, request_options
+        )
+        return resp.deserialize(SearchSynonymsResponse, resp.raw_data)
 
     def search_user_ids_with_http_info(
         self,
-        search_user_ids_params: SearchUserIdsParams,
+        search_user_ids_params: Union[SearchUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -9818,7 +9873,7 @@ class SearchClientSync:
             verb=Verb.POST,
             path="/1/clusters/mapping/search",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=True,
@@ -9826,7 +9881,7 @@ class SearchClientSync:
 
     def search_user_ids(
         self,
-        search_user_ids_params: SearchUserIdsParams,
+        search_user_ids_params: Union[SearchUserIdsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchUserIdsResponse:
         """
@@ -9840,13 +9895,14 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'SearchUserIdsResponse' result object.
         """
-        return (
-            self.search_user_ids_with_http_info(search_user_ids_params, request_options)
-        ).deserialize(SearchUserIdsResponse)
+        resp = self.search_user_ids_with_http_info(
+            search_user_ids_params, request_options
+        )
+        return resp.deserialize(SearchUserIdsResponse, resp.raw_data)
 
     def set_dictionary_settings_with_http_info(
         self,
-        dictionary_settings_params: DictionarySettingsParams,
+        dictionary_settings_params: Union[DictionarySettingsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -9874,7 +9930,7 @@ class SearchClientSync:
             verb=Verb.PUT,
             path="/1/dictionaries/*/settings",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -9882,7 +9938,7 @@ class SearchClientSync:
 
     def set_dictionary_settings(
         self,
-        dictionary_settings_params: DictionarySettingsParams,
+        dictionary_settings_params: Union[DictionarySettingsParams, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtResponse:
         """
@@ -9896,11 +9952,10 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.set_dictionary_settings_with_http_info(
-                dictionary_settings_params, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.set_dictionary_settings_with_http_info(
+            dictionary_settings_params, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def set_settings_with_http_info(
         self,
@@ -9908,7 +9963,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        index_settings: IndexSettings,
+        index_settings: Union[IndexSettings, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9941,10 +9996,10 @@ class SearchClientSync:
                 "Parameter `index_settings` is required when calling `set_settings`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if forward_to_replicas is not None:
-            _query_parameters.append(("forwardToReplicas", forward_to_replicas))
+            _query_parameters["forwardToReplicas"] = forward_to_replicas
 
         _data = {}
         if index_settings is not None:
@@ -9957,7 +10012,7 @@ class SearchClientSync:
             ),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -9969,7 +10024,7 @@ class SearchClientSync:
             StrictStr,
             Field(description="Name of the index on which to perform the operation."),
         ],
-        index_settings: IndexSettings,
+        index_settings: Union[IndexSettings, dict[str, Any]],
         forward_to_replicas: Annotated[
             Optional[StrictBool],
             Field(description="Whether changes are applied to replica indices."),
@@ -9991,16 +10046,15 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
-        return (
-            self.set_settings_with_http_info(
-                index_name, index_settings, forward_to_replicas, request_options
-            )
-        ).deserialize(UpdatedAtResponse)
+        resp = self.set_settings_with_http_info(
+            index_name, index_settings, forward_to_replicas, request_options
+        )
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def update_api_key_with_http_info(
         self,
         key: Annotated[StrictStr, Field(description="API key.")],
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -10035,7 +10089,7 @@ class SearchClientSync:
             verb=Verb.PUT,
             path="/1/keys/{key}".replace("{key}", quote(str(key), safe="")),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -10044,7 +10098,7 @@ class SearchClientSync:
     def update_api_key(
         self,
         key: Annotated[StrictStr, Field(description="API key.")],
-        api_key: ApiKey,
+        api_key: Union[ApiKey, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdateApiKeyResponse:
         """
@@ -10060,6 +10114,5 @@ class SearchClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'UpdateApiKeyResponse' result object.
         """
-        return (
-            self.update_api_key_with_http_info(key, api_key, request_options)
-        ).deserialize(UpdateApiKeyResponse)
+        resp = self.update_api_key_with_http_info(key, api_key, request_options)
+        return resp.deserialize(UpdateApiKeyResponse, resp.raw_data)

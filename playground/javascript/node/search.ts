@@ -1,9 +1,6 @@
-import { searchClient, apiClientVersion } from '@algolia/client-search';
-import { SearchQuery } from '@algolia/client-search/model';
 import { ApiError } from '@algolia/client-common';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '../../.env' });
+import { apiClientVersion, searchClient } from '@algolia/client-search';
+import { SearchQuery } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** SEARCH_API_KEY *****';
@@ -16,14 +13,17 @@ const client = searchClient(appId, apiKey);
 
 client.addAlgoliaAgent('Node playground', '0.0.1');
 
-const requests: SearchQuery[] = [
-  { indexName: searchIndex, query: searchQuery },
-];
+const requests: SearchQuery[] = [{ indexName: searchIndex, query: searchQuery }];
 console.log('version', apiClientVersion, 'requests', requests);
 
 async function testSearch() {
   try {
-    const res = await client.browseRules({ indexName: "cts_e2e_search_facet", aggregator: (resp: any) => {console.log(resp)} });
+    const res = await client.browseRules({
+      indexName: 'cts_e2e_search_facet',
+      aggregator: (resp: any) => {
+        console.log(resp);
+      },
+    });
 
     console.log(`[OK]`, res);
   } catch (e: any) {

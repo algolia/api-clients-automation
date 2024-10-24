@@ -8,9 +8,9 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Set, Union
 
-from pydantic import BaseModel, ValidationError, model_serializer
+from pydantic import BaseModel, Field, ValidationError, model_serializer
 
 if version_info >= (3, 11):
     from typing import Self
@@ -32,16 +32,27 @@ class GetTopHitsResponse(BaseModel):
     GetTopHitsResponse
     """
 
-    oneof_schema_1_validator: Optional[TopHitsResponse] = None
-    oneof_schema_2_validator: Optional[TopHitsResponseWithAnalytics] = None
-    oneof_schema_3_validator: Optional[TopHitsResponseWithRevenueAnalytics] = None
-    actual_instance: Optional[
-        Union[
-            TopHitsResponse,
-            TopHitsResponseWithAnalytics,
-            TopHitsResponseWithRevenueAnalytics,
-        ]
+    oneof_schema_1_validator: Optional[TopHitsResponse] = Field(default=None)
+
+    oneof_schema_2_validator: Optional[TopHitsResponseWithAnalytics] = Field(
+        default=None
+    )
+
+    oneof_schema_3_validator: Optional[TopHitsResponseWithRevenueAnalytics] = Field(
+        default=None
+    )
+
+    actual_instance: Union[
+        TopHitsResponse,
+        TopHitsResponseWithAnalytics,
+        TopHitsResponseWithRevenueAnalytics,
+        None,
     ] = None
+    one_of_schemas: Set[str] = {
+        "TopHitsResponse",
+        "TopHitsResponseWithAnalytics",
+        "TopHitsResponseWithRevenueAnalytics",
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -53,19 +64,19 @@ class GetTopHitsResponse(BaseModel):
                 raise ValueError(
                     "If a position argument is used, keyword arguments cannot be used."
                 )
-            super().__init__(actual_instance=args[0])
+            super().__init__(actual_instance=args[0])  # pyright: ignore
         else:
             super().__init__(**kwargs)
 
     @model_serializer
     def unwrap_actual_instance(
         self,
-    ) -> Optional[
-        Union[
-            TopHitsResponse,
-            TopHitsResponseWithAnalytics,
-            TopHitsResponseWithRevenueAnalytics,
-        ]
+    ) -> Union[
+        TopHitsResponse,
+        TopHitsResponseWithAnalytics,
+        TopHitsResponseWithRevenueAnalytics,
+        Self,
+        None,
     ]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
@@ -73,7 +84,8 @@ class GetTopHitsResponse(BaseModel):
         return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Self:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+        """Create an instance of GetTopHitsResponse from a JSON string"""
         return cls.from_json(dumps(obj))
 
     @classmethod
@@ -113,17 +125,30 @@ class GetTopHitsResponse(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json"):
-            return self.actual_instance.to_json()
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json  # pyright: ignore
+        ):
+            return self.actual_instance.to_json()  # pyright: ignore
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Dict:
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[
+            Dict[str, Any],
+            TopHitsResponse,
+            TopHitsResponseWithAnalytics,
+            TopHitsResponseWithRevenueAnalytics,
+        ]
+    ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict"):
-            return self.actual_instance.to_dict()
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict  # pyright: ignore
+        ):
+            return self.actual_instance.to_dict()  # pyright: ignore
         else:
-            return self.actual_instance
+            return self.actual_instance  # pyright: ignore

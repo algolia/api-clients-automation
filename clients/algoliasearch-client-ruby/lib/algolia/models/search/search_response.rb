@@ -20,6 +20,9 @@ module Algolia
 
       attr_accessor :exhaustive
 
+      # Rules applied to the query.
+      attr_accessor :applied_rules
+
       # See the `facetsCount` field of the `exhaustive` object in the response.
       attr_accessor :exhaustive_facets_count
 
@@ -75,6 +78,9 @@ module Algolia
       # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
       attr_accessor :query_id
 
+      # Whether automatic events collection is enabled for the application.
+      attr_accessor :_automatic_insights
+
       # Page of search results to retrieve.
       attr_accessor :page
 
@@ -106,6 +112,7 @@ module Algolia
           :around_lat_lng => :aroundLatLng,
           :automatic_radius => :automaticRadius,
           :exhaustive => :exhaustive,
+          :applied_rules => :appliedRules,
           :exhaustive_facets_count => :exhaustiveFacetsCount,
           :exhaustive_nb_hits => :exhaustiveNbHits,
           :exhaustive_typo => :exhaustiveTypo,
@@ -125,6 +132,7 @@ module Algolia
           :server_used => :serverUsed,
           :user_data => :userData,
           :query_id => :queryID,
+          :_automatic_insights => :_automaticInsights,
           :page => :page,
           :nb_hits => :nbHits,
           :nb_pages => :nbPages,
@@ -148,6 +156,7 @@ module Algolia
           :around_lat_lng => :"String",
           :automatic_radius => :"String",
           :exhaustive => :"Exhaustive",
+          :applied_rules => :"Array<Object>",
           :exhaustive_facets_count => :"Boolean",
           :exhaustive_nb_hits => :"Boolean",
           :exhaustive_typo => :"Boolean",
@@ -167,6 +176,7 @@ module Algolia
           :server_used => :"String",
           :user_data => :"Object",
           :query_id => :"String",
+          :_automatic_insights => :"Boolean",
           :page => :"Integer",
           :nb_hits => :"Integer",
           :nb_pages => :"Integer",
@@ -221,6 +231,12 @@ module Algolia
 
         if attributes.key?(:exhaustive)
           self.exhaustive = attributes[:exhaustive]
+        end
+
+        if attributes.key?(:applied_rules)
+          if (value = attributes[:applied_rules]).is_a?(Array)
+            self.applied_rules = value
+          end
         end
 
         if attributes.key?(:exhaustive_facets_count)
@@ -305,28 +321,24 @@ module Algolia
           self.query_id = attributes[:query_id]
         end
 
+        if attributes.key?(:_automatic_insights)
+          self._automatic_insights = attributes[:_automatic_insights]
+        end
+
         if attributes.key?(:page)
           self.page = attributes[:page]
-        else
-          self.page = nil
         end
 
         if attributes.key?(:nb_hits)
           self.nb_hits = attributes[:nb_hits]
-        else
-          self.nb_hits = nil
         end
 
         if attributes.key?(:nb_pages)
           self.nb_pages = attributes[:nb_pages]
-        else
-          self.nb_pages = nil
         end
 
         if attributes.key?(:hits_per_page)
           self.hits_per_page = attributes[:hits_per_page]
-        else
-          self.hits_per_page = nil
         end
 
         if attributes.key?(:hits)
@@ -354,67 +366,6 @@ module Algolia
         self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] ab_test_variant_id Value to be assigned
-      def ab_test_variant_id=(ab_test_variant_id)
-        if ab_test_variant_id.nil?
-          raise ArgumentError, "ab_test_variant_id cannot be nil"
-        end
-
-        if ab_test_variant_id < 1
-          raise ArgumentError, "invalid value for \"ab_test_variant_id\", must be greater than or equal to 1."
-        end
-
-        @ab_test_variant_id = ab_test_variant_id
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] around_lat_lng Value to be assigned
-      def around_lat_lng=(around_lat_lng)
-        if around_lat_lng.nil?
-          raise ArgumentError, "around_lat_lng cannot be nil"
-        end
-
-        pattern = /^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/
-        if around_lat_lng !~ pattern
-          raise ArgumentError, "invalid value for \"around_lat_lng\", must conform to the pattern #{pattern}."
-        end
-
-        @around_lat_lng = around_lat_lng
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 0
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 0."
-        end
-
-        @page = page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] hits_per_page Value to be assigned
-      def hits_per_page=(hits_per_page)
-        if hits_per_page.nil?
-          raise ArgumentError, "hits_per_page cannot be nil"
-        end
-
-        if hits_per_page > 1000
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be smaller than or equal to 1000."
-        end
-
-        if hits_per_page < 1
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be greater than or equal to 1."
-        end
-
-        @hits_per_page = hits_per_page
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -425,6 +376,7 @@ module Algolia
           around_lat_lng == other.around_lat_lng &&
           automatic_radius == other.automatic_radius &&
           exhaustive == other.exhaustive &&
+          applied_rules == other.applied_rules &&
           exhaustive_facets_count == other.exhaustive_facets_count &&
           exhaustive_nb_hits == other.exhaustive_nb_hits &&
           exhaustive_typo == other.exhaustive_typo &&
@@ -444,6 +396,7 @@ module Algolia
           server_used == other.server_used &&
           user_data == other.user_data &&
           query_id == other.query_id &&
+          _automatic_insights == other._automatic_insights &&
           page == other.page &&
           nb_hits == other.nb_hits &&
           nb_pages == other.nb_pages &&
@@ -468,6 +421,7 @@ module Algolia
           around_lat_lng,
           automatic_radius,
           exhaustive,
+          applied_rules,
           exhaustive_facets_count,
           exhaustive_nb_hits,
           exhaustive_typo,
@@ -487,6 +441,7 @@ module Algolia
           server_used,
           user_data,
           query_id,
+          _automatic_insights,
           page,
           nb_hits,
           nb_pages,

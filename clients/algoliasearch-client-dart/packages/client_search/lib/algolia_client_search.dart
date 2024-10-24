@@ -1,5 +1,5 @@
 // A sub-package of the AlgoliaSearch library, offering search-specific functionalities for enhanced search and discovery in Dart/Flutter apps.
-library algolia_client_search;
+library;
 
 export 'package:algolia_client_core/algolia_client_core.dart';
 
@@ -16,6 +16,10 @@ export 'src/model/api_key_operation.dart';
 export 'src/model/around_radius_all.dart';
 export 'src/model/assign_user_id_params.dart';
 export 'src/model/automatic_facet_filter.dart';
+export 'src/model/banner.dart';
+export 'src/model/banner_image.dart';
+export 'src/model/banner_image_url.dart';
+export 'src/model/banner_link.dart';
 export 'src/model/base_get_api_key_response.dart';
 export 'src/model/base_index_settings.dart';
 export 'src/model/base_search_params.dart';
@@ -156,6 +160,7 @@ export 'src/model/user_highlight_result.dart';
 export 'src/model/user_hit.dart';
 export 'src/model/user_id.dart';
 export 'src/model/value.dart';
+export 'src/model/widgets.dart';
 export 'src/model/with_primary.dart';
 
 export 'src/extension.dart';

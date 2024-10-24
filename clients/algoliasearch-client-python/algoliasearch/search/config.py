@@ -1,4 +1,5 @@
 from os import environ
+from typing import Optional
 
 from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.hosts import CallType, Host, HostsCollection
@@ -6,10 +7,16 @@ from algoliasearch.http.user_agent import UserAgent
 
 
 class SearchConfig(BaseConfig):
-    def __init__(self, app_id: str, api_key: str) -> None:
+    def __init__(self, app_id: Optional[str], api_key: Optional[str]) -> None:
         super().__init__(app_id, api_key)
 
         user_agent = UserAgent().add("Search")
+
+        if app_id is None or not app_id:
+            raise ValueError("`app_id` is missing.")
+
+        if api_key is None or not api_key:
+            raise ValueError("`api_key` is missing.")
 
         self.headers = {
             "x-algolia-application-id": app_id,

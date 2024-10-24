@@ -76,7 +76,7 @@ class AnalyticsClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.3.0\\).*";
+      String regexp = "^Algolia for Java \\(4.5.4\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -156,7 +156,17 @@ class AnalyticsClientClientTests {
       "test-app-id",
       "test-api-key",
       "us",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6683)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6683
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");

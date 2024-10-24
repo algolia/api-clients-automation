@@ -14,35 +14,34 @@ import kotlin.jvm.JvmInline
  * SnippetResult
  *
  * Implementations:
- * - [List<SnippetResultOption>] - *[SnippetResult.of]*
+ * - [List<SnippetResult>] - *[SnippetResult.of]*
  * - [Map<kotlin.String, SnippetResult>] - *[SnippetResult.of]*
- * - [Map<kotlin.String, SnippetResultOption>] - *[SnippetResult.of]*
  * - [SnippetResultOption]
  */
 @Serializable(SnippetResultSerializer::class)
 public sealed interface SnippetResult {
   @Serializable
   @JvmInline
+  public value class SnippetResultOptionValue(public val value: SnippetResultOption) : SnippetResult
+
+  @Serializable
+  @JvmInline
   public value class MapOfkotlinStringSnippetResultValue(public val value: Map<kotlin.String, SnippetResult>) : SnippetResult
 
   @Serializable
   @JvmInline
-  public value class MapOfkotlinStringSnippetResultOptionValue(public val value: Map<kotlin.String, SnippetResultOption>) : SnippetResult
-
-  @Serializable
-  @JvmInline
-  public value class ListOfSnippetResultOptionValue(public val value: List<SnippetResultOption>) : SnippetResult
+  public value class ListOfSnippetResultValue(public val value: List<SnippetResult>) : SnippetResult
 
   public companion object {
 
-    public fun ofMapOfkotlinStringSnippetResult(value: Map<kotlin.String, SnippetResult>): SnippetResult {
+    public fun of(value: SnippetResultOption): SnippetResult {
+      return SnippetResultOptionValue(value)
+    }
+    public fun of(value: Map<kotlin.String, SnippetResult>): SnippetResult {
       return MapOfkotlinStringSnippetResultValue(value)
     }
-    public fun ofMapOfkotlinStringSnippetResultOption(value: Map<kotlin.String, SnippetResultOption>): SnippetResult {
-      return MapOfkotlinStringSnippetResultOptionValue(value)
-    }
-    public fun of(value: List<SnippetResultOption>): SnippetResult {
-      return ListOfSnippetResultOptionValue(value)
+    public fun of(value: List<SnippetResult>): SnippetResult {
+      return ListOfSnippetResultValue(value)
     }
   }
 }
@@ -52,8 +51,7 @@ internal class SnippetResultSerializer : JsonContentPolymorphicSerializer<Snippe
     return when {
       element is JsonObject && element.containsKey("matchLevel") -> SnippetResultOption.serializer()
       element is JsonObject -> SnippetResult.MapOfkotlinStringSnippetResultValue.serializer()
-      element is JsonObject -> SnippetResult.MapOfkotlinStringSnippetResultOptionValue.serializer()
-      element.isJsonArrayOfObjects -> SnippetResult.ListOfSnippetResultOptionValue.serializer()
+      element is JsonArray -> SnippetResult.ListOfSnippetResultValue.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

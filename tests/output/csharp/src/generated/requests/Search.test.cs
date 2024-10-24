@@ -69,7 +69,7 @@ public class SearchClientRequestTests
   public async Task AppendSourceTest()
   {
     await client.AppendSourceAsync(
-      new Source { VarSource = "theSource", Description = "theDescription", }
+      new Source { VarSource = "theSource", Description = "theDescription" }
     );
 
     var req = _echo.LastResponse;
@@ -85,7 +85,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "assignUserId")]
   public async Task AssignUserIdTest()
   {
-    await client.AssignUserIdAsync("userID", new AssignUserIdParams { Cluster = "theCluster", });
+    await client.AssignUserIdAsync("userID", new AssignUserIdParams { Cluster = "theCluster" });
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping", req.Path);
@@ -112,7 +112,7 @@ public class SearchClientRequestTests
   {
     await client.AssignUserIdAsync(
       "user id with spaces",
-      new AssignUserIdParams { Cluster = "cluster with spaces", }
+      new AssignUserIdParams { Cluster = "cluster with spaces" }
     );
 
     var req = _echo.LastResponse;
@@ -153,7 +153,7 @@ public class SearchClientRequestTests
           {
             Action = Enum.Parse<Action>("AddObject"),
             Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
-          }
+          },
         },
       }
     );
@@ -181,7 +181,7 @@ public class SearchClientRequestTests
           {
             Action = Enum.Parse<Action>("Clear"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -209,7 +209,7 @@ public class SearchClientRequestTests
           {
             Action = Enum.Parse<Action>("Delete"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -237,7 +237,7 @@ public class SearchClientRequestTests
           {
             Action = Enum.Parse<Action>("DeleteObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -265,7 +265,7 @@ public class SearchClientRequestTests
           {
             Action = Enum.Parse<Action>("PartialUpdateObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -293,7 +293,7 @@ public class SearchClientRequestTests
           {
             Action = Enum.Parse<Action>("PartialUpdateObjectNoCreate"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -321,7 +321,7 @@ public class SearchClientRequestTests
           {
             Action = Enum.Parse<Action>("UpdateObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -390,7 +390,7 @@ public class SearchClientRequestTests
               Decomposition = new List<string> { "trust", "algolia" },
               State = Enum.Parse<DictionaryEntryState>("Enabled"),
             },
-          }
+          },
         },
       }
     );
@@ -418,8 +418,8 @@ public class SearchClientRequestTests
           new BatchDictionaryEntriesRequest
           {
             Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
-            Body = new DictionaryEntry { ObjectID = "1", },
-          }
+            Body = new DictionaryEntry { ObjectID = "1" },
+          },
         },
       }
     );
@@ -450,9 +450,9 @@ public class SearchClientRequestTests
             {
               ObjectID = "1",
               Language = Enum.Parse<SupportedLanguage>("En"),
-              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" }, }
+              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" } },
             },
-          }
+          },
         },
       }
     );
@@ -509,7 +509,7 @@ public class SearchClientRequestTests
   {
     await client.BrowseAsync<Hit>(
       "indexName",
-      new BrowseParams(new BrowseParamsObject { Cursor = "test", })
+      new BrowseParams(new BrowseParamsObject { Cursor = "test" })
     );
 
     var req = _echo.LastResponse;
@@ -777,7 +777,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -798,7 +798,7 @@ public class SearchClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -816,7 +816,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -837,7 +837,7 @@ public class SearchClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -1056,7 +1056,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteBy")]
   public async Task DeleteByTest()
   {
-    await client.DeleteByAsync("theIndexName", new DeleteByParams { Filters = "brand:brandName", });
+    await client.DeleteByAsync("theIndexName", new DeleteByParams { Filters = "brand:brandName" });
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/deleteByQuery", req.Path);
@@ -1237,6 +1237,17 @@ public class SearchClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "search with a real object")]
+  public async Task GetObjectTest1()
+  {
+    await client.GetObjectAsync("cts_e2e_browse", "Batman and Robin");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/cts_e2e_browse/Batman%20and%20Robin", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "getObjects")]
   public async Task GetObjectsTest()
   {
@@ -1250,7 +1261,7 @@ public class SearchClientRequestTests
             AttributesToRetrieve = new List<string> { "attr1", "attr2" },
             ObjectID = "uniqueID",
             IndexName = "theIndexName",
-          }
+          },
         },
       }
     );
@@ -1482,7 +1493,7 @@ public class SearchClientRequestTests
             Action = Enum.Parse<Action>("AddObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
             IndexName = "theIndexName",
-          }
+          },
         },
       }
     );
@@ -1509,7 +1520,7 @@ public class SearchClientRequestTests
         Scope = new List<ScopeType>
         {
           Enum.Parse<ScopeType>("Rules"),
-          Enum.Parse<ScopeType>("Settings")
+          Enum.Parse<ScopeType>("Settings"),
         },
       }
     );
@@ -1628,7 +1639,7 @@ public class SearchClientRequestTests
         {
           "attributeId",
           new List<string> { "one", "two", "three" }
-        }
+        },
       }
     );
 
@@ -1653,7 +1664,7 @@ public class SearchClientRequestTests
         {
           "attributeId",
           new Dictionary<string, string> { { "nested", "value" } }
-        }
+        },
       }
     );
 
@@ -1684,7 +1695,7 @@ public class SearchClientRequestTests
     await client.ReplaceSourcesAsync(
       new List<Source>
       {
-        new Source { VarSource = "theSource", Description = "theDescription", }
+        new Source { VarSource = "theSource", Description = "theDescription" },
       }
     );
 
@@ -1701,10 +1712,10 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "restoreApiKey")]
   public async Task RestoreApiKeyTest()
   {
-    await client.RestoreApiKeyAsync("myApiKey");
+    await client.RestoreApiKeyAsync("ALGOLIA_API_KEY");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/keys/myApiKey/restore", req.Path);
+    Assert.Equal("/1/keys/ALGOLIA_API_KEY/restore", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     Assert.Equal("{}", req.Body);
   }
@@ -1738,7 +1749,7 @@ public class SearchClientRequestTests
         ObjectID = "id1",
         Conditions = new List<Condition>
         {
-          new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+          new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
         },
       }
     );
@@ -1770,7 +1781,7 @@ public class SearchClientRequestTests
             Anchoring = Enum.Parse<Anchoring>("Contains"),
             Alternatives = false,
             Context = "search",
-          }
+          },
         },
         Consequence = new Consequence
         {
@@ -1794,31 +1805,31 @@ public class SearchClientRequestTests
                     Type = Enum.Parse<EditType>("Replace"),
                     Delete = "abc",
                     Insert = "cde",
-                  }
+                  },
                 },
               }
             ),
           },
-          Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321", } },
+          Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321" } },
           FilterPromotes = false,
           UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
           Promote = new List<Promote>
           {
-            new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3, }),
+            new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3 }),
             new Promote(
               new PromoteObjectIDs
               {
                 ObjectIDs = new List<string> { "abc", "def" },
                 Position = 1,
               }
-            )
+            ),
           },
         },
         Description = "test",
         Enabled = true,
         Validity = new List<TimeRange>
         {
-          new TimeRange { From = 1656670273, Until = 1656670277, }
+          new TimeRange { From = 1656670273L, Until = 1656670277L },
         },
       },
       true
@@ -1859,7 +1870,7 @@ public class SearchClientRequestTests
           ObjectID = "a-rule-id",
           Conditions = new List<Condition>
           {
-            new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+            new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains") },
           },
         },
         new Rule
@@ -1867,9 +1878,9 @@ public class SearchClientRequestTests
           ObjectID = "a-second-rule-id",
           Conditions = new List<Condition>
           {
-            new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+            new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
           },
-        }
+        },
       },
       false,
       true
@@ -1916,7 +1927,7 @@ public class SearchClientRequestTests
               Anchoring = Enum.Parse<Anchoring>("Contains"),
               Alternatives = false,
               Context = "search",
-            }
+            },
           },
           Consequence = new Consequence
           {
@@ -1940,33 +1951,33 @@ public class SearchClientRequestTests
                       Type = Enum.Parse<EditType>("Replace"),
                       Delete = "abc",
                       Insert = "cde",
-                    }
+                    },
                   },
                 }
               ),
             },
-            Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321", } },
+            Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321" } },
             FilterPromotes = false,
             UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
             Promote = new List<Promote>
             {
-              new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3, }),
+              new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3 }),
               new Promote(
                 new PromoteObjectIDs
                 {
                   ObjectIDs = new List<string> { "abc", "def" },
                   Position = 1,
                 }
-              )
+              ),
             },
           },
           Description = "test",
           Enabled = true,
           Validity = new List<TimeRange>
           {
-            new TimeRange { From = 1656670273, Until = 1656670277, }
+            new TimeRange { From = 1656670273L, Until = 1656670277L },
           },
-        }
+        },
       },
       true,
       true
@@ -2052,7 +2063,7 @@ public class SearchClientRequestTests
           Type = Enum.Parse<SynonymType>("Onewaysynonym"),
           Input = "iphone",
           Synonyms = new List<string> { "ephone", "aphone", "yphone" },
-        }
+        },
       },
       true,
       true
@@ -2096,7 +2107,7 @@ public class SearchClientRequestTests
               Query = "<YOUR_QUERY>",
               HitsPerPage = 50,
             }
-          )
+          ),
         },
       }
     );
@@ -2126,7 +2137,7 @@ public class SearchClientRequestTests
               Query = "<YOUR_QUERY>",
               Filters = "actor:Scarlett Johansson",
             }
-          )
+          ),
         },
       }
     );
@@ -2156,7 +2167,7 @@ public class SearchClientRequestTests
               Query = "<YOUR_QUERY>",
               Filters = "actor:Tom Cruise OR actor:Scarlett Johansson",
             }
-          )
+          ),
         },
       }
     );
@@ -2186,7 +2197,7 @@ public class SearchClientRequestTests
               Query = "<YOUR_QUERY>",
               Filters = "NOT actor:Nicolas Cage",
             }
-          )
+          ),
         },
       }
     );
@@ -2209,7 +2220,7 @@ public class SearchClientRequestTests
       {
         Requests = new List<SearchQuery>
         {
-          new SearchQuery(new SearchForHits { IndexName = "cts_e2e_search_empty_index", })
+          new SearchQuery(new SearchForHits { IndexName = "cts_e2e_search_empty_index" }),
         },
       }
     );
@@ -2241,7 +2252,7 @@ public class SearchClientRequestTests
               AttributesToHighlight = new List<string> { "*" },
               AttributesToRetrieve = new List<string> { "*" },
             }
-          )
+          ),
         },
       }
     );
@@ -2271,7 +2282,7 @@ public class SearchClientRequestTests
               Query = "<YOUR_QUERY>",
               Facets = new List<string> { "author", "genre" },
             }
-          )
+          ),
         },
       }
     );
@@ -2301,7 +2312,7 @@ public class SearchClientRequestTests
               Query = "<YOUR_QUERY>",
               Facets = new List<string> { "*" },
             }
-          )
+          ),
         },
       }
     );
@@ -2331,7 +2342,7 @@ public class SearchClientRequestTests
               Type = Enum.Parse<SearchTypeFacet>("Facet"),
               Facet = "editor",
             }
-          )
+          ),
         },
         Strategy = Enum.Parse<SearchStrategy>("StopIfEnoughMatches"),
       }
@@ -2363,7 +2374,7 @@ public class SearchClientRequestTests
               HitsPerPage = 50,
               Type = Enum.Parse<SearchTypeDefault>("Default"),
             }
-          )
+          ),
         },
       }
     );
@@ -2396,7 +2407,7 @@ public class SearchClientRequestTests
               Query = "theQuery",
               MaxFacetHits = 50,
             }
-          )
+          ),
         },
         Strategy = Enum.Parse<SearchStrategy>("StopIfEnoughMatches"),
       }
@@ -2422,7 +2433,7 @@ public class SearchClientRequestTests
       {
         Requests = new List<SearchQuery>
         {
-          new SearchQuery(new SearchForHits { IndexName = "theIndexName", }),
+          new SearchQuery(new SearchForHits { IndexName = "theIndexName" }),
           new SearchQuery(
             new SearchForFacets
             {
@@ -2437,7 +2448,7 @@ public class SearchClientRequestTests
               IndexName = "theIndexName",
               Type = Enum.Parse<SearchTypeDefault>("Default"),
             }
-          )
+          ),
         },
         Strategy = Enum.Parse<SearchStrategy>("StopIfEnoughMatches"),
       }
@@ -2480,7 +2491,7 @@ public class SearchClientRequestTests
               HitsPerPage = 50,
               Type = Enum.Parse<SearchTypeDefault>("Default"),
             }
-          )
+          ),
         },
         Strategy = Enum.Parse<SearchStrategy>("StopIfEnoughMatches"),
       }
@@ -2529,9 +2540,9 @@ public class SearchClientRequestTests
                       new FacetFilters("mySearch:filters"),
                       new FacetFilters(
                         new List<FacetFilters> { new FacetFilters("mySearch:filters") }
-                      )
+                      ),
                     }
-                  )
+                  ),
                 }
               ),
               ReRankingApplyFilter = new ReRankingApplyFilter(
@@ -2540,14 +2551,14 @@ public class SearchClientRequestTests
                   new ReRankingApplyFilter("mySearch:filters"),
                   new ReRankingApplyFilter(
                     new List<ReRankingApplyFilter> { new ReRankingApplyFilter("mySearch:filters") }
-                  )
+                  ),
                 }
               ),
               TagFilters = new TagFilters(
                 new List<TagFilters>
                 {
                   new TagFilters("mySearch:filters"),
-                  new TagFilters(new List<TagFilters> { new TagFilters("mySearch:filters") })
+                  new TagFilters(new List<TagFilters> { new TagFilters("mySearch:filters") }),
                 }
               ),
               NumericFilters = new NumericFilters(
@@ -2556,7 +2567,7 @@ public class SearchClientRequestTests
                   new NumericFilters("mySearch:filters"),
                   new NumericFilters(
                     new List<NumericFilters> { new NumericFilters("mySearch:filters") }
-                  )
+                  ),
                 }
               ),
               OptionalFilters = new OptionalFilters(
@@ -2565,11 +2576,11 @@ public class SearchClientRequestTests
                   new OptionalFilters("mySearch:filters"),
                   new OptionalFilters(
                     new List<OptionalFilters> { new OptionalFilters("mySearch:filters") }
-                  )
+                  ),
                 }
               ),
             }
-          )
+          ),
         },
       }
     );
@@ -2607,7 +2618,7 @@ public class SearchClientRequestTests
                 new List<FacetFilters>
                 {
                   new FacetFilters("editor:'visual studio'"),
-                  new FacetFilters("editor:neovim")
+                  new FacetFilters("editor:neovim"),
                 }
               ),
             }
@@ -2620,7 +2631,7 @@ public class SearchClientRequestTests
                 new List<FacetFilters>
                 {
                   new FacetFilters("editor:'visual studio'"),
-                  new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:neovim") })
+                  new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:neovim") }),
                 }
               ),
             }
@@ -2637,13 +2648,15 @@ public class SearchClientRequestTests
                     new List<FacetFilters>
                     {
                       new FacetFilters("editor:neovim"),
-                      new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:goland") })
+                      new FacetFilters(
+                        new List<FacetFilters> { new FacetFilters("editor:goland") }
+                      ),
                     }
-                  )
+                  ),
                 }
               ),
             }
-          )
+          ),
         },
       }
     );
@@ -2672,12 +2685,12 @@ public class SearchClientRequestTests
               AdvancedSyntax = true,
               AdvancedSyntaxFeatures = new List<AdvancedSyntaxFeatures>
               {
-                Enum.Parse<AdvancedSyntaxFeatures>("ExactPhrase")
+                Enum.Parse<AdvancedSyntaxFeatures>("ExactPhrase"),
               },
               AllowTyposOnNumericTokens = true,
               AlternativesAsExact = new List<AlternativesAsExact>
               {
-                Enum.Parse<AlternativesAsExact>("MultiWordsSynonym")
+                Enum.Parse<AlternativesAsExact>("MultiWordsSynonym"),
               },
               Analytics = true,
               AnalyticsTags = new List<string> { "" },
@@ -2713,12 +2726,12 @@ public class SearchClientRequestTests
               InsideBoundingBox = new List<List<Double>>
               {
                 new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201 },
-                new List<Double> { 40.9234, 2.1185, 38.643, 1.9916 }
+                new List<Double> { 40.9234, 2.1185, 38.643, 1.9916 },
               },
               InsidePolygon = new List<List<Double>>
               {
                 new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9 },
-                new List<Double> { 40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104 }
+                new List<Double> { 40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104 },
               },
               KeepDiacriticsOnCharacters = "",
               Length = 1,
@@ -2729,7 +2742,7 @@ public class SearchClientRequestTests
               MinimumAroundRadius = 1,
               NaturalLanguages = new List<SupportedLanguage>
               {
-                Enum.Parse<SupportedLanguage>("Fr")
+                Enum.Parse<SupportedLanguage>("Fr"),
               },
               NumericFilters = new NumericFilters(
                 new List<NumericFilters> { new NumericFilters("") }
@@ -2769,7 +2782,7 @@ public class SearchClientRequestTests
                         Order = new List<string> { "b" },
                         SortRemainingBy = Enum.Parse<SortRemainingBy>("Count"),
                       }
-                    }
+                    },
                   },
                 },
               },
@@ -2788,7 +2801,7 @@ public class SearchClientRequestTests
               TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Min")),
               UserToken = "",
             }
-          )
+          ),
         },
       }
     );
@@ -2808,7 +2821,7 @@ public class SearchClientRequestTests
   {
     await client.SearchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Stopwords"),
-      new SearchDictionaryEntriesParams { Query = "about", }
+      new SearchDictionaryEntriesParams { Query = "about" }
     );
 
     var req = _echo.LastResponse;
@@ -2879,7 +2892,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "searchRules")]
   public async Task SearchRulesTest()
   {
-    await client.SearchRulesAsync("cts_e2e_browse", new SearchRulesParams { Query = "zorro", });
+    await client.SearchRulesAsync("cts_e2e_browse", new SearchRulesParams { Query = "zorro" });
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_browse/rules/search", req.Path);
@@ -3030,7 +3043,7 @@ public class SearchClientRequestTests
           {
             { "fr", false },
             { "en", false },
-            { "ru", true }
+            { "ru", true },
           },
         },
       }
@@ -3058,7 +3071,7 @@ public class SearchClientRequestTests
           {
             { "fr", false },
             { "en", false },
-            { "ru", true }
+            { "ru", true },
           },
           Stopwords = new Dictionary<string, Boolean> { { "fr", false } },
           Compounds = new Dictionary<string, Boolean> { { "ru", true } },
@@ -3087,7 +3100,7 @@ public class SearchClientRequestTests
         {
           "actor",
           "filterOnly(category)",
-          "searchable(publisher)"
+          "searchable(publisher)",
         },
       }
     );
@@ -3107,7 +3120,7 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "cts_e2e_settings",
-      new IndexSettings { PaginationLimitedTo = 10, },
+      new IndexSettings { PaginationLimitedTo = 10 },
       true
     );
 
@@ -3139,7 +3152,7 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "theIndexName",
-      new IndexSettings { TypoTolerance = new TypoTolerance(true), },
+      new IndexSettings { TypoTolerance = new TypoTolerance(true) },
       true
     );
 
@@ -3171,10 +3184,7 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "theIndexName",
-      new IndexSettings
-      {
-        TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Min")),
-      },
+      new IndexSettings { TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Min")) },
       true
     );
 
@@ -3206,7 +3216,7 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "theIndexName",
-      new IndexSettings { IgnorePlurals = new IgnorePlurals(true), },
+      new IndexSettings { IgnorePlurals = new IgnorePlurals(true) },
       true
     );
 
@@ -3275,7 +3285,7 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "theIndexName",
-      new IndexSettings { RemoveStopWords = new RemoveStopWords(true), },
+      new IndexSettings { RemoveStopWords = new RemoveStopWords(true) },
       true
     );
 
@@ -3344,7 +3354,7 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "theIndexName",
-      new IndexSettings { Distinct = new Distinct(true), },
+      new IndexSettings { Distinct = new Distinct(true) },
       true
     );
 
@@ -3372,7 +3382,7 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "theIndexName",
-      new IndexSettings { Distinct = new Distinct(1), },
+      new IndexSettings { Distinct = new Distinct(1) },
       true
     );
 
@@ -3405,13 +3415,13 @@ public class SearchClientRequestTests
         AdvancedSyntax = true,
         AdvancedSyntaxFeatures = new List<AdvancedSyntaxFeatures>
         {
-          Enum.Parse<AdvancedSyntaxFeatures>("ExactPhrase")
+          Enum.Parse<AdvancedSyntaxFeatures>("ExactPhrase"),
         },
         AllowCompressionOfIntegerArray = true,
         AllowTyposOnNumericTokens = true,
         AlternativesAsExact = new List<AlternativesAsExact>
         {
-          Enum.Parse<AlternativesAsExact>("SingleWordSynonym")
+          Enum.Parse<AlternativesAsExact>("SingleWordSynonym"),
         },
         AttributeCriteriaComputedByMinProximity = true,
         AttributeForDistinct = "test",
@@ -3426,7 +3436,7 @@ public class SearchClientRequestTests
           {
             "algolia",
             new Dictionary<string, string> { { "aloglia", "aglolia" } }
-          }
+          },
         },
         CustomRanking = new List<string> { "algolia" },
         DecompoundQuery = false,
@@ -3479,7 +3489,7 @@ public class SearchClientRequestTests
                   Order = new List<string> { "b" },
                   SortRemainingBy = Enum.Parse<SortRemainingBy>("Count"),
                 }
-              }
+              },
             },
           },
         },
@@ -3488,7 +3498,7 @@ public class SearchClientRequestTests
         ResponseFields = new List<string> { "algolia" },
         RestrictHighlightAndSnippetArrays = true,
         SearchableAttributes = new List<string> { "foo" },
-        SemanticSearch = new SemanticSearch { EventSources = new List<string> { "foo" }, },
+        SemanticSearch = new SemanticSearch { EventSources = new List<string> { "foo" } },
         SeparatorsToIndex = "bar",
         SnippetEllipsisText = "---",
         SortFacetValuesBy = "date",
@@ -3512,7 +3522,7 @@ public class SearchClientRequestTests
   public async Task UpdateApiKeyTest()
   {
     await client.UpdateApiKeyAsync(
-      "myApiKey",
+      "ALGOLIA_API_KEY",
       new ApiKey
       {
         Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
@@ -3523,7 +3533,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/keys/myApiKey", req.Path);
+    Assert.Equal("/1/keys/ALGOLIA_API_KEY", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}",

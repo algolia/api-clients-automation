@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import chalk from 'chalk';
 import { execaCommand } from 'execa';
 import micromatch from 'micromatch';
@@ -42,6 +41,12 @@ async function preCommit(log) {
   const stagedFiles = (await run('git diff --name-only --cached')).split('\n');
 
   const toUnstage = micromatch.match(stagedFiles, getPatterns());
+
+  // the snippets and guides are yarn workspaces, so the yarn.lock file can change when they are updated, but the CI will take care of it
+  if ((await run('git diff --name-only --cached -- {guides,snippet}/javascript | wc -l')).trim() !== '0') {
+    toUnstage.push('yarn.lock');
+  }
+
   if (toUnstage.length === 0) {
     return;
   }

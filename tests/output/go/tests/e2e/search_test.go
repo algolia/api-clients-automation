@@ -60,6 +60,35 @@ func TestSearchE2E_Browse(t *testing.T) {
 	})
 }
 
+func TestSearchE2E_GetObject(t *testing.T) {
+	t.Run("search with a real object", func(t *testing.T) {
+		client := createE2ESearchClient(t)
+		res, err := client.GetObject(client.NewApiGetObjectRequest(
+			"cts_e2e_browse", "Batman and Robin",
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"objectID":"Batman and Robin","title":"Batman and Robin","year":1949,"cast":["Robert Lowery","Johnny Duncan","Jane Adams"]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+	})
+}
+
 func TestSearchE2E_GetRule(t *testing.T) {
 	t.Run("getRule", func(t *testing.T) {
 		client := createE2ESearchClient(t)

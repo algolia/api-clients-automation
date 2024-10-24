@@ -1,20 +1,19 @@
 import type {
   EndRequest,
   Host,
+  QueryParameters,
   Request,
   RequestOptions,
   Response,
   StackFrame,
-  TransporterOptions,
   Transporter,
-  QueryParameters,
+  TransporterOptions,
 } from '../types';
-
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
 import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
 import { isRetryable, isSuccess } from './responses';
-import { stackTraceWithoutCredentials, stackFrameWithoutCredentials } from './stackTrace';
+import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';
 
 type RetryableOptions = {
   hosts: Host[];
@@ -25,6 +24,7 @@ export function createTransporter({
   hosts,
   hostsCache,
   baseHeaders,
+  logger,
   baseQueryParameters,
   algoliaAgent,
   timeouts,
@@ -174,8 +174,7 @@ export function createTransporter({
          * the end user to debug / store stack frames even
          * when a retry error does not happen.
          */
-        // eslint-disable-next-line no-console -- this will be fixed by exposing a `logger` to the transporter
-        console.log('Retryable failure', stackFrameWithoutCredentials(stackFrame));
+        logger.info('Retryable failure', stackFrameWithoutCredentials(stackFrame));
 
         /**
          * We also store the state of the host in failure cases. If the host, is
@@ -304,6 +303,7 @@ export function createTransporter({
     hostsCache,
     requester,
     timeouts,
+    logger,
     algoliaAgent,
     baseHeaders,
     baseQueryParameters,

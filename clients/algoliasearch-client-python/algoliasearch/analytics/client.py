@@ -8,15 +8,16 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, Optional, Union
 from urllib.parse import quote
 
-from pydantic import Field, StrictBool, StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.analytics.config import AnalyticsConfig
 from algoliasearch.analytics.models.direction import Direction
@@ -76,8 +77,9 @@ from algoliasearch.analytics.models.get_users_count_response import (
 )
 from algoliasearch.analytics.models.order_by import OrderBy
 from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.serializer import bodySerializer
+from algoliasearch.http.serializer import body_serializer
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
@@ -102,7 +104,7 @@ class AnalyticsClient:
     """
 
     _transporter: Transporter
-    _config: AnalyticsConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -114,7 +116,9 @@ class AnalyticsClient:
         config: Optional[AnalyticsConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = AnalyticsConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = AnalyticsConfig(app_id, api_key, region)
@@ -125,9 +129,10 @@ class AnalyticsClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: AnalyticsConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: AnalyticsConfig, transporter: Optional[Transporter] = None
+    ) -> AnalyticsClient:
         """Allows creating a client with a customized `AnalyticsConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -152,7 +157,7 @@ class AnalyticsClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -165,7 +170,7 @@ class AnalyticsClient:
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     async def custom_delete_with_http_info(
         self,
@@ -198,11 +203,11 @@ class AnalyticsClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -239,9 +244,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -272,11 +278,11 @@ class AnalyticsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -313,9 +319,8 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -352,11 +357,11 @@ class AnalyticsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -367,7 +372,7 @@ class AnalyticsClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -404,11 +409,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -445,11 +449,11 @@ class AnalyticsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -460,7 +464,7 @@ class AnalyticsClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -497,11 +501,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def get_add_to_cart_rate_with_http_info(
         self,
@@ -549,16 +552,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_add_to_cart_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -610,11 +613,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetAddToCartRateResponse' result object.
         """
-        return (
-            await self.get_add_to_cart_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetAddToCartRateResponse)
+        resp = await self.get_add_to_cart_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetAddToCartRateResponse, resp.raw_data)
 
     async def get_average_click_position_with_http_info(
         self,
@@ -662,16 +664,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_average_click_position`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -723,11 +725,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetAverageClickPositionResponse' result object.
         """
-        return (
-            await self.get_average_click_position_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetAverageClickPositionResponse)
+        resp = await self.get_average_click_position_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetAverageClickPositionResponse, resp.raw_data)
 
     async def get_click_positions_with_http_info(
         self,
@@ -775,16 +776,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_click_positions`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -836,11 +837,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetClickPositionsResponse' result object.
         """
-        return (
-            await self.get_click_positions_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetClickPositionsResponse)
+        resp = await self.get_click_positions_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetClickPositionsResponse, resp.raw_data)
 
     async def get_click_through_rate_with_http_info(
         self,
@@ -888,16 +888,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_click_through_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -949,11 +949,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetClickThroughRateResponse' result object.
         """
-        return (
-            await self.get_click_through_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetClickThroughRateResponse)
+        resp = await self.get_click_through_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetClickThroughRateResponse, resp.raw_data)
 
     async def get_conversion_rate_with_http_info(
         self,
@@ -1001,16 +1000,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_conversion_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1062,11 +1061,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetConversionRateResponse' result object.
         """
-        return (
-            await self.get_conversion_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetConversionRateResponse)
+        resp = await self.get_conversion_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetConversionRateResponse, resp.raw_data)
 
     async def get_no_click_rate_with_http_info(
         self,
@@ -1114,16 +1112,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_no_click_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1175,11 +1173,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetNoClickRateResponse' result object.
         """
-        return (
-            await self.get_no_click_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetNoClickRateResponse)
+        resp = await self.get_no_click_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetNoClickRateResponse, resp.raw_data)
 
     async def get_no_results_rate_with_http_info(
         self,
@@ -1227,16 +1224,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_no_results_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1288,11 +1285,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetNoResultsRateResponse' result object.
         """
-        return (
-            await self.get_no_results_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetNoResultsRateResponse)
+        resp = await self.get_no_results_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetNoResultsRateResponse, resp.raw_data)
 
     async def get_purchase_rate_with_http_info(
         self,
@@ -1340,16 +1336,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_purchase_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1401,11 +1397,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetPurchaseRateResponse' result object.
         """
-        return (
-            await self.get_purchase_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetPurchaseRateResponse)
+        resp = await self.get_purchase_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetPurchaseRateResponse, resp.raw_data)
 
     async def get_revenue_with_http_info(
         self,
@@ -1453,16 +1448,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_revenue`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1514,11 +1509,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetRevenue' result object.
         """
-        return (
-            await self.get_revenue_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetRevenue)
+        resp = await self.get_revenue_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetRevenue, resp.raw_data)
 
     async def get_searches_count_with_http_info(
         self,
@@ -1566,16 +1560,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_searches_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1627,11 +1621,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetSearchesCountResponse' result object.
         """
-        return (
-            await self.get_searches_count_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetSearchesCountResponse)
+        resp = await self.get_searches_count_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetSearchesCountResponse, resp.raw_data)
 
     async def get_searches_no_clicks_with_http_info(
         self,
@@ -1649,11 +1642,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1690,20 +1684,20 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_searches_no_clicks`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1731,11 +1725,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1766,11 +1761,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetSearchesNoClicksResponse' result object.
         """
-        return (
-            await self.get_searches_no_clicks_with_http_info(
-                index, start_date, end_date, limit, offset, tags, request_options
-            )
-        ).deserialize(GetSearchesNoClicksResponse)
+        resp = await self.get_searches_no_clicks_with_http_info(
+            index, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetSearchesNoClicksResponse, resp.raw_data)
 
     async def get_searches_no_results_with_http_info(
         self,
@@ -1788,11 +1782,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1829,20 +1824,20 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_searches_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1870,11 +1865,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -1905,11 +1901,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetSearchesNoResultsResponse' result object.
         """
-        return (
-            await self.get_searches_no_results_with_http_info(
-                index, start_date, end_date, limit, offset, tags, request_options
-            )
-        ).deserialize(GetSearchesNoResultsResponse)
+        resp = await self.get_searches_no_results_with_http_info(
+            index, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetSearchesNoResultsResponse, resp.raw_data)
 
     async def get_status_with_http_info(
         self,
@@ -1931,10 +1926,10 @@ class AnalyticsClient:
         if index is None:
             raise ValueError("Parameter `index` is required when calling `get_status`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -1962,9 +1957,8 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetStatusResponse' result object.
         """
-        return (
-            await self.get_status_with_http_info(index, request_options)
-        ).deserialize(GetStatusResponse)
+        resp = await self.get_status_with_http_info(index, request_options)
+        return resp.deserialize(GetStatusResponse, resp.raw_data)
 
     async def get_top_countries_with_http_info(
         self,
@@ -1982,11 +1976,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2023,20 +2018,20 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_countries`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2064,11 +2059,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2099,11 +2095,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopCountriesResponse' result object.
         """
-        return (
-            await self.get_top_countries_with_http_info(
-                index, start_date, end_date, limit, offset, tags, request_options
-            )
-        ).deserialize(GetTopCountriesResponse)
+        resp = await self.get_top_countries_with_http_info(
+            index, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetTopCountriesResponse, resp.raw_data)
 
     async def get_top_filter_attributes_with_http_info(
         self,
@@ -2124,11 +2119,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2167,22 +2163,22 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_filter_attributes`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2213,11 +2209,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2250,18 +2247,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopFilterAttributesResponse' result object.
         """
-        return (
-            await self.get_top_filter_attributes_with_http_info(
-                index,
-                search,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopFilterAttributesResponse)
+        resp = await self.get_top_filter_attributes_with_http_info(
+            index, search, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetTopFilterAttributesResponse, resp.raw_data)
 
     async def get_top_filter_for_attribute_with_http_info(
         self,
@@ -2283,11 +2272,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2333,22 +2323,22 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_filter_for_attribute`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2382,11 +2372,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2421,19 +2412,18 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopFilterForAttributeResponse' result object.
         """
-        return (
-            await self.get_top_filter_for_attribute_with_http_info(
-                attribute,
-                index,
-                search,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopFilterForAttributeResponse)
+        resp = await self.get_top_filter_for_attribute_with_http_info(
+            attribute,
+            index,
+            search,
+            start_date,
+            end_date,
+            limit,
+            offset,
+            tags,
+            request_options,
+        )
+        return resp.deserialize(GetTopFilterForAttributeResponse, resp.raw_data)
 
     async def get_top_filters_no_results_with_http_info(
         self,
@@ -2454,11 +2444,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2497,22 +2488,22 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_filters_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2543,11 +2534,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2580,18 +2572,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopFiltersNoResultsResponse' result object.
         """
-        return (
-            await self.get_top_filters_no_results_with_http_info(
-                index,
-                search,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopFiltersNoResultsResponse)
+        resp = await self.get_top_filters_no_results_with_http_info(
+            index, search, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetTopFiltersNoResultsResponse, resp.raw_data)
 
     async def get_top_hits_with_http_info(
         self,
@@ -2624,11 +2608,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2671,26 +2656,26 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_hits`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2733,11 +2718,12 @@ class AnalyticsClient:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2774,20 +2760,19 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopHitsResponse' result object.
         """
-        return (
-            await self.get_top_hits_with_http_info(
-                index,
-                search,
-                click_analytics,
-                revenue_analytics,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopHitsResponse)
+        resp = await self.get_top_hits_with_http_info(
+            index,
+            search,
+            click_analytics,
+            revenue_analytics,
+            start_date,
+            end_date,
+            limit,
+            offset,
+            tags,
+            request_options,
+        )
+        return resp.deserialize(GetTopHitsResponse, resp.raw_data)
 
     async def get_top_searches_with_http_info(
         self,
@@ -2816,24 +2801,31 @@ class AnalyticsClient:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2878,28 +2870,28 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_top_searches`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if order_by is not None:
-            _query_parameters.append(("orderBy", order_by))
+            _query_parameters["orderBy"] = order_by
         if direction is not None:
-            _query_parameters.append(("direction", direction))
+            _query_parameters["direction"] = direction
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -2938,24 +2930,31 @@ class AnalyticsClient:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -2994,21 +2993,20 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopSearchesResponse' result object.
         """
-        return (
-            await self.get_top_searches_with_http_info(
-                index,
-                click_analytics,
-                revenue_analytics,
-                start_date,
-                end_date,
-                order_by,
-                direction,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopSearchesResponse)
+        resp = await self.get_top_searches_with_http_info(
+            index,
+            click_analytics,
+            revenue_analytics,
+            start_date,
+            end_date,
+            order_by,
+            direction,
+            limit,
+            offset,
+            tags,
+            request_options,
+        )
+        return resp.deserialize(GetTopSearchesResponse, resp.raw_data)
 
     async def get_users_count_with_http_info(
         self,
@@ -3056,16 +3054,16 @@ class AnalyticsClient:
                 "Parameter `index` is required when calling `get_users_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -3117,11 +3115,10 @@ class AnalyticsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetUsersCountResponse' result object.
         """
-        return (
-            await self.get_users_count_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetUsersCountResponse)
+        resp = await self.get_users_count_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetUsersCountResponse, resp.raw_data)
 
 
 class AnalyticsClientSync:
@@ -3143,7 +3140,7 @@ class AnalyticsClientSync:
     """
 
     _transporter: TransporterSync
-    _config: AnalyticsConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -3155,7 +3152,9 @@ class AnalyticsClientSync:
         config: Optional[AnalyticsConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = AnalyticsConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = AnalyticsConfig(app_id, api_key, region)
@@ -3166,9 +3165,10 @@ class AnalyticsClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: AnalyticsConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls, config: AnalyticsConfig, transporter: Optional[TransporterSync] = None
+    ) -> AnalyticsClientSync:
         """Allows creating a client with a customized `AnalyticsConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -3205,7 +3205,7 @@ class AnalyticsClientSync:
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     def custom_delete_with_http_info(
         self,
@@ -3238,11 +3238,11 @@ class AnalyticsClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -3279,9 +3279,8 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -3312,11 +3311,11 @@ class AnalyticsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3353,9 +3352,8 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -3392,11 +3390,11 @@ class AnalyticsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -3407,7 +3405,7 @@ class AnalyticsClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3444,9 +3442,8 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -3483,11 +3480,11 @@ class AnalyticsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -3498,7 +3495,7 @@ class AnalyticsClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -3535,9 +3532,8 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def get_add_to_cart_rate_with_http_info(
         self,
@@ -3585,16 +3581,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_add_to_cart_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3646,11 +3642,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetAddToCartRateResponse' result object.
         """
-        return (
-            self.get_add_to_cart_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetAddToCartRateResponse)
+        resp = self.get_add_to_cart_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetAddToCartRateResponse, resp.raw_data)
 
     def get_average_click_position_with_http_info(
         self,
@@ -3698,16 +3693,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_average_click_position`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3759,11 +3754,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetAverageClickPositionResponse' result object.
         """
-        return (
-            self.get_average_click_position_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetAverageClickPositionResponse)
+        resp = self.get_average_click_position_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetAverageClickPositionResponse, resp.raw_data)
 
     def get_click_positions_with_http_info(
         self,
@@ -3811,16 +3805,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_click_positions`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3872,11 +3866,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetClickPositionsResponse' result object.
         """
-        return (
-            self.get_click_positions_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetClickPositionsResponse)
+        resp = self.get_click_positions_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetClickPositionsResponse, resp.raw_data)
 
     def get_click_through_rate_with_http_info(
         self,
@@ -3924,16 +3917,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_click_through_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -3985,11 +3978,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetClickThroughRateResponse' result object.
         """
-        return (
-            self.get_click_through_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetClickThroughRateResponse)
+        resp = self.get_click_through_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetClickThroughRateResponse, resp.raw_data)
 
     def get_conversion_rate_with_http_info(
         self,
@@ -4037,16 +4029,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_conversion_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4098,11 +4090,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetConversionRateResponse' result object.
         """
-        return (
-            self.get_conversion_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetConversionRateResponse)
+        resp = self.get_conversion_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetConversionRateResponse, resp.raw_data)
 
     def get_no_click_rate_with_http_info(
         self,
@@ -4150,16 +4141,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_no_click_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4211,11 +4202,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetNoClickRateResponse' result object.
         """
-        return (
-            self.get_no_click_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetNoClickRateResponse)
+        resp = self.get_no_click_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetNoClickRateResponse, resp.raw_data)
 
     def get_no_results_rate_with_http_info(
         self,
@@ -4263,16 +4253,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_no_results_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4324,11 +4314,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetNoResultsRateResponse' result object.
         """
-        return (
-            self.get_no_results_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetNoResultsRateResponse)
+        resp = self.get_no_results_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetNoResultsRateResponse, resp.raw_data)
 
     def get_purchase_rate_with_http_info(
         self,
@@ -4376,16 +4365,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_purchase_rate`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4437,11 +4426,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetPurchaseRateResponse' result object.
         """
-        return (
-            self.get_purchase_rate_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetPurchaseRateResponse)
+        resp = self.get_purchase_rate_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetPurchaseRateResponse, resp.raw_data)
 
     def get_revenue_with_http_info(
         self,
@@ -4489,16 +4477,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_revenue`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4550,11 +4538,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetRevenue' result object.
         """
-        return (
-            self.get_revenue_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetRevenue)
+        resp = self.get_revenue_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetRevenue, resp.raw_data)
 
     def get_searches_count_with_http_info(
         self,
@@ -4602,16 +4589,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_searches_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4663,11 +4650,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetSearchesCountResponse' result object.
         """
-        return (
-            self.get_searches_count_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetSearchesCountResponse)
+        resp = self.get_searches_count_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetSearchesCountResponse, resp.raw_data)
 
     def get_searches_no_clicks_with_http_info(
         self,
@@ -4685,11 +4671,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4726,20 +4713,20 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_searches_no_clicks`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4767,11 +4754,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4802,11 +4790,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetSearchesNoClicksResponse' result object.
         """
-        return (
-            self.get_searches_no_clicks_with_http_info(
-                index, start_date, end_date, limit, offset, tags, request_options
-            )
-        ).deserialize(GetSearchesNoClicksResponse)
+        resp = self.get_searches_no_clicks_with_http_info(
+            index, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetSearchesNoClicksResponse, resp.raw_data)
 
     def get_searches_no_results_with_http_info(
         self,
@@ -4824,11 +4811,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4865,20 +4853,20 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_searches_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4906,11 +4894,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -4941,11 +4930,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetSearchesNoResultsResponse' result object.
         """
-        return (
-            self.get_searches_no_results_with_http_info(
-                index, start_date, end_date, limit, offset, tags, request_options
-            )
-        ).deserialize(GetSearchesNoResultsResponse)
+        resp = self.get_searches_no_results_with_http_info(
+            index, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetSearchesNoResultsResponse, resp.raw_data)
 
     def get_status_with_http_info(
         self,
@@ -4967,10 +4955,10 @@ class AnalyticsClientSync:
         if index is None:
             raise ValueError("Parameter `index` is required when calling `get_status`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -4998,9 +4986,8 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetStatusResponse' result object.
         """
-        return (self.get_status_with_http_info(index, request_options)).deserialize(
-            GetStatusResponse
-        )
+        resp = self.get_status_with_http_info(index, request_options)
+        return resp.deserialize(GetStatusResponse, resp.raw_data)
 
     def get_top_countries_with_http_info(
         self,
@@ -5018,11 +5005,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5059,20 +5047,20 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_countries`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5100,11 +5088,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5135,11 +5124,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopCountriesResponse' result object.
         """
-        return (
-            self.get_top_countries_with_http_info(
-                index, start_date, end_date, limit, offset, tags, request_options
-            )
-        ).deserialize(GetTopCountriesResponse)
+        resp = self.get_top_countries_with_http_info(
+            index, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetTopCountriesResponse, resp.raw_data)
 
     def get_top_filter_attributes_with_http_info(
         self,
@@ -5160,11 +5148,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5203,22 +5192,22 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_filter_attributes`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5249,11 +5238,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5286,18 +5276,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopFilterAttributesResponse' result object.
         """
-        return (
-            self.get_top_filter_attributes_with_http_info(
-                index,
-                search,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopFilterAttributesResponse)
+        resp = self.get_top_filter_attributes_with_http_info(
+            index, search, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetTopFilterAttributesResponse, resp.raw_data)
 
     def get_top_filter_for_attribute_with_http_info(
         self,
@@ -5319,11 +5301,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5369,22 +5352,22 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_filter_for_attribute`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5418,11 +5401,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5457,19 +5441,18 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopFilterForAttributeResponse' result object.
         """
-        return (
-            self.get_top_filter_for_attribute_with_http_info(
-                attribute,
-                index,
-                search,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopFilterForAttributeResponse)
+        resp = self.get_top_filter_for_attribute_with_http_info(
+            attribute,
+            index,
+            search,
+            start_date,
+            end_date,
+            limit,
+            offset,
+            tags,
+            request_options,
+        )
+        return resp.deserialize(GetTopFilterForAttributeResponse, resp.raw_data)
 
     def get_top_filters_no_results_with_http_info(
         self,
@@ -5490,11 +5473,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5533,22 +5517,22 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_filters_no_results`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5579,11 +5563,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5616,18 +5601,10 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopFiltersNoResultsResponse' result object.
         """
-        return (
-            self.get_top_filters_no_results_with_http_info(
-                index,
-                search,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopFiltersNoResultsResponse)
+        resp = self.get_top_filters_no_results_with_http_info(
+            index, search, start_date, end_date, limit, offset, tags, request_options
+        )
+        return resp.deserialize(GetTopFiltersNoResultsResponse, resp.raw_data)
 
     def get_top_hits_with_http_info(
         self,
@@ -5660,11 +5637,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5707,26 +5685,26 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_hits`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if search is not None:
-            _query_parameters.append(("search", search))
+            _query_parameters["search"] = search
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5769,11 +5747,12 @@ class AnalyticsClientSync:
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5810,20 +5789,19 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopHitsResponse' result object.
         """
-        return (
-            self.get_top_hits_with_http_info(
-                index,
-                search,
-                click_analytics,
-                revenue_analytics,
-                start_date,
-                end_date,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopHitsResponse)
+        resp = self.get_top_hits_with_http_info(
+            index,
+            search,
+            click_analytics,
+            revenue_analytics,
+            start_date,
+            end_date,
+            limit,
+            offset,
+            tags,
+            request_options,
+        )
+        return resp.deserialize(GetTopHitsResponse, resp.raw_data)
 
     def get_top_searches_with_http_info(
         self,
@@ -5852,24 +5830,31 @@ class AnalyticsClientSync:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -5914,28 +5899,28 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_top_searches`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if click_analytics is not None:
-            _query_parameters.append(("clickAnalytics", click_analytics))
+            _query_parameters["clickAnalytics"] = click_analytics
         if revenue_analytics is not None:
-            _query_parameters.append(("revenueAnalytics", revenue_analytics))
+            _query_parameters["revenueAnalytics"] = revenue_analytics
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if order_by is not None:
-            _query_parameters.append(("orderBy", order_by))
+            _query_parameters["orderBy"] = order_by
         if direction is not None:
-            _query_parameters.append(("direction", direction))
+            _query_parameters["direction"] = direction
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -5974,24 +5959,31 @@ class AnalyticsClientSync:
                 description="End date of the period to analyze, in `YYYY-MM-DD` format."
             ),
         ] = None,
-        order_by: Annotated[
-            Optional[OrderBy],
-            Field(
-                description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
-            ),
+        order_by: Union[
+            Annotated[
+                Optional[OrderBy],
+                Field(
+                    description="Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available. "
+                ),
+            ],
+            str,
         ] = None,
-        direction: Annotated[
-            Optional[Direction],
-            Field(
-                description="Sorting direction of the results: ascending or descending. "
-            ),
+        direction: Union[
+            Annotated[
+                Optional[Direction],
+                Field(
+                    description="Sorting direction of the results: ascending or descending. "
+                ),
+            ],
+            str,
         ] = None,
         limit: Annotated[
-            Optional[StrictInt], Field(description="Number of items to return.")
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
+            Field(description="Number of items to return. "),
         ] = None,
         offset: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
-            Field(description="Position of the first item to return."),
+            Field(description="Position of the first item to return. "),
         ] = None,
         tags: Annotated[
             Optional[StrictStr],
@@ -6030,21 +6022,20 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetTopSearchesResponse' result object.
         """
-        return (
-            self.get_top_searches_with_http_info(
-                index,
-                click_analytics,
-                revenue_analytics,
-                start_date,
-                end_date,
-                order_by,
-                direction,
-                limit,
-                offset,
-                tags,
-                request_options,
-            )
-        ).deserialize(GetTopSearchesResponse)
+        resp = self.get_top_searches_with_http_info(
+            index,
+            click_analytics,
+            revenue_analytics,
+            start_date,
+            end_date,
+            order_by,
+            direction,
+            limit,
+            offset,
+            tags,
+            request_options,
+        )
+        return resp.deserialize(GetTopSearchesResponse, resp.raw_data)
 
     def get_users_count_with_http_info(
         self,
@@ -6092,16 +6083,16 @@ class AnalyticsClientSync:
                 "Parameter `index` is required when calling `get_users_count`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if index is not None:
-            _query_parameters.append(("index", index))
+            _query_parameters["index"] = index
         if start_date is not None:
-            _query_parameters.append(("startDate", start_date))
+            _query_parameters["startDate"] = start_date
         if end_date is not None:
-            _query_parameters.append(("endDate", end_date))
+            _query_parameters["endDate"] = end_date
         if tags is not None:
-            _query_parameters.append(("tags", tags))
+            _query_parameters["tags"] = tags
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -6153,8 +6144,7 @@ class AnalyticsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'GetUsersCountResponse' result object.
         """
-        return (
-            self.get_users_count_with_http_info(
-                index, start_date, end_date, tags, request_options
-            )
-        ).deserialize(GetUsersCountResponse)
+        resp = self.get_users_count_with_http_info(
+            index, start_date, end_date, tags, request_options
+        )
+        return resp.deserialize(GetUsersCountResponse, resp.raw_data)

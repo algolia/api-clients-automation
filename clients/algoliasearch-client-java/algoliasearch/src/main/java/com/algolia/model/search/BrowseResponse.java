@@ -29,6 +29,9 @@ public class BrowseResponse<T> {
   @JsonProperty("exhaustive")
   private Exhaustive exhaustive;
 
+  @JsonProperty("appliedRules")
+  private List<Object> appliedRules;
+
   @JsonProperty("exhaustiveFacetsCount")
   private Boolean exhaustiveFacetsCount;
 
@@ -85,6 +88,9 @@ public class BrowseResponse<T> {
 
   @JsonProperty("queryID")
   private String queryID;
+
+  @JsonProperty("_automaticInsights")
+  private Boolean automaticInsights;
 
   @JsonProperty("page")
   private Integer page;
@@ -168,6 +174,25 @@ public class BrowseResponse<T> {
   @javax.annotation.Nullable
   public Exhaustive getExhaustive() {
     return exhaustive;
+  }
+
+  public BrowseResponse<T> setAppliedRules(List<Object> appliedRules) {
+    this.appliedRules = appliedRules;
+    return this;
+  }
+
+  public BrowseResponse<T> addAppliedRules(Object appliedRulesItem) {
+    if (this.appliedRules == null) {
+      this.appliedRules = new ArrayList<>();
+    }
+    this.appliedRules.add(appliedRulesItem);
+    return this;
+  }
+
+  /** Rules applied to the query. */
+  @javax.annotation.Nullable
+  public List<Object> getAppliedRules() {
+    return appliedRules;
   }
 
   public BrowseResponse<T> setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
@@ -425,6 +450,17 @@ public class BrowseResponse<T> {
     return queryID;
   }
 
+  public BrowseResponse<T> setAutomaticInsights(Boolean automaticInsights) {
+    this.automaticInsights = automaticInsights;
+    return this;
+  }
+
+  /** Whether automatic events collection is enabled for the application. */
+  @javax.annotation.Nullable
+  public Boolean getAutomaticInsights() {
+    return automaticInsights;
+  }
+
   public BrowseResponse<T> setPage(Integer page) {
     this.page = page;
     return this;
@@ -540,6 +576,7 @@ public class BrowseResponse<T> {
       Objects.equals(this.aroundLatLng, browseResponse.aroundLatLng) &&
       Objects.equals(this.automaticRadius, browseResponse.automaticRadius) &&
       Objects.equals(this.exhaustive, browseResponse.exhaustive) &&
+      Objects.equals(this.appliedRules, browseResponse.appliedRules) &&
       Objects.equals(this.exhaustiveFacetsCount, browseResponse.exhaustiveFacetsCount) &&
       Objects.equals(this.exhaustiveNbHits, browseResponse.exhaustiveNbHits) &&
       Objects.equals(this.exhaustiveTypo, browseResponse.exhaustiveTypo) &&
@@ -559,6 +596,7 @@ public class BrowseResponse<T> {
       Objects.equals(this.serverUsed, browseResponse.serverUsed) &&
       Objects.equals(this.userData, browseResponse.userData) &&
       Objects.equals(this.queryID, browseResponse.queryID) &&
+      Objects.equals(this.automaticInsights, browseResponse.automaticInsights) &&
       Objects.equals(this.page, browseResponse.page) &&
       Objects.equals(this.nbHits, browseResponse.nbHits) &&
       Objects.equals(this.nbPages, browseResponse.nbPages) &&
@@ -578,6 +616,7 @@ public class BrowseResponse<T> {
       aroundLatLng,
       automaticRadius,
       exhaustive,
+      appliedRules,
       exhaustiveFacetsCount,
       exhaustiveNbHits,
       exhaustiveTypo,
@@ -597,6 +636,7 @@ public class BrowseResponse<T> {
       serverUsed,
       userData,
       queryID,
+      automaticInsights,
       page,
       nbHits,
       nbPages,
@@ -617,6 +657,7 @@ public class BrowseResponse<T> {
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
     sb.append("    automaticRadius: ").append(toIndentedString(automaticRadius)).append("\n");
     sb.append("    exhaustive: ").append(toIndentedString(exhaustive)).append("\n");
+    sb.append("    appliedRules: ").append(toIndentedString(appliedRules)).append("\n");
     sb.append("    exhaustiveFacetsCount: ").append(toIndentedString(exhaustiveFacetsCount)).append("\n");
     sb.append("    exhaustiveNbHits: ").append(toIndentedString(exhaustiveNbHits)).append("\n");
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");
@@ -636,6 +677,7 @@ public class BrowseResponse<T> {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    automaticInsights: ").append(toIndentedString(automaticInsights)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
     sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");

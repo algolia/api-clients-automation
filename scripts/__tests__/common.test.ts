@@ -1,5 +1,7 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { execa } from 'execa';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { capitalize, createClientName, gitCommit } from '../common.js';
 import { getClientsConfigField } from '../config.js';
 
 vi.mock('execa', () => {
@@ -9,11 +11,6 @@ vi.mock('execa', () => {
   };
 });
 
-const { capitalize, createClientName, gitCommit } = await import(
-  '../common.js'
-);
-const { execa } = await import('execa');
-
 describe('gitCommit', () => {
   afterEach(() => {
     vi.clearAllMocks();
@@ -22,10 +19,7 @@ describe('gitCommit', () => {
   it('commits with message', () => {
     gitCommit({ message: 'chore: does something' });
     expect(execa).toHaveBeenCalledTimes(1);
-    expect(execa).toHaveBeenCalledWith(
-      'git', ["commit", "-m", "chore: does something"],
-      { cwd: expect.any(String) }
-    );
+    expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'chore: does something'], { cwd: expect.any(String) });
   });
 
   it('commits with co-author', () => {
@@ -50,8 +44,13 @@ describe('gitCommit', () => {
     });
     expect(execa).toHaveBeenCalledTimes(1);
     expect(execa).toHaveBeenCalledWith(
-      'git', ["commit", "-m", "chore: does something\n\n\nCo-authored-by: them <them@algolia.com>\nCo-authored-by: me <me@algolia.com>\nCo-authored-by: you <you@algolia.com>"],
-      { cwd: expect.any(String) }
+      'git',
+      [
+        'commit',
+        '-m',
+        'chore: does something\n\n\nCo-authored-by: them <them@algolia.com>\nCo-authored-by: me <me@algolia.com>\nCo-authored-by: you <you@algolia.com>',
+      ],
+      { cwd: expect.any(String) },
     );
   });
 });
@@ -61,15 +60,11 @@ describe('config', () => {
     it('throws if the field is not found', () => {
       expect(() => {
         getClientsConfigField('javascript', 'foofoo');
-      }).toThrowErrorMatchingInlineSnapshot(
-        `[Error: Unable to find 'foofoo' for 'javascript']`
-      );
+      }).toThrowErrorMatchingInlineSnapshot("[Error: Unable to find 'foofoo' for 'javascript']");
     });
 
     it('find the field if it exists', () => {
-      expect(getClientsConfigField('java', ['tests', 'extension'])).toEqual(
-        '.test.java'
-      );
+      expect(getClientsConfigField('java', ['tests', 'extension'])).toEqual('.test.java');
     });
   });
 });
@@ -95,20 +90,14 @@ describe('utils', () => {
   describe('createClientName', () => {
     it('does not capitalize every part for JavaScript', () => {
       expect(createClientName('search', 'javascript')).toEqual('search');
-      expect(createClientName('search-client', 'javascript')).toEqual(
-        'searchClient'
-      );
-      expect(createClientName('search-cli!nt-complex', 'javascript')).toEqual(
-        'searchCli!ntComplex'
-      );
+      expect(createClientName('search-client', 'javascript')).toEqual('searchClient');
+      expect(createClientName('search-cli!nt-complex', 'javascript')).toEqual('searchCli!ntComplex');
     });
 
     it('capitalize every part for other languages', () => {
       expect(createClientName('search', 'java')).toEqual('Search');
       expect(createClientName('search-client', 'java')).toEqual('SearchClient');
-      expect(createClientName('search-cli!nt-complex', 'java')).toEqual(
-        'SearchCli!ntComplex'
-      );
+      expect(createClientName('search-cli!nt-complex', 'java')).toEqual('SearchCli!ntComplex');
     });
   });
 });

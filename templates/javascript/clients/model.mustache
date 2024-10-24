@@ -1,12 +1,17 @@
 // {{{generationBanner}}}
 
-{{#models}}{{#model}}
+{{#models}}
+{{#model}}
 {{#tsImports}}
-import { {{classname}} } from '{{filename}}';
+import type { {{classname}} } from '{{filename}}';
 {{/tsImports}}
-{{#interfaces.size}}{{#composedSchemas.allOf}}
+{{#interfaces.size}}
+{{#composedSchemas.allOf}}
+{{^isPrimitiveType}}
 import type { {{{dataType}}} } from './{{#lambda.camelcase}}{{{dataType}}}{{/lambda.camelcase}}';
-{{/composedSchemas.allOf}}{{/interfaces.size}}
+{{/isPrimitiveType}}
+{{/composedSchemas.allOf}}
+{{/interfaces.size}}
 
 {{! We handle types that depend on other interfaces }}
 {{#interfaces.size}}
@@ -15,7 +20,8 @@ import type { {{{dataType}}} } from './{{#lambda.camelcase}}{{{dataType}}}{{/lam
 * {{{description}}}
 */{{/description}}
 export type {{classname}}{{> client/model/types/isGeneric}} = {{#composedSchemas.oneOf}}{{{dataType}}}{{> client/model/types/propagateGeneric}} {{^-last}}|{{/-last}} {{/composedSchemas.oneOf}}{{#composedSchemas.allOf}}{{{dataType}}}{{> client/model/types/propagateGeneric}} {{^-last}}&{{/-last}} {{/composedSchemas.allOf}};
-{{/interfaces.size}}{{^interfaces.size}}
+{{/interfaces.size}}
+{{^interfaces.size}}
 {{#description}}
 /**
 * {{{description}}}
@@ -34,4 +40,6 @@ export type {{classname}}{{> client/model/types/isGeneric}} = {{^vendorExtension
 {{#hasEnums}}{{#vars}}{{#isEnum}}export type {{classname}}{{nameInCamelCase}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}{{/vars}}{{/hasEnums}}
 {{#isEnum}}export type {{classname}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}
 
-{{/interfaces.size}}{{/model}}{{/models}}
+{{/interfaces.size}}
+{{/model}}
+{{/models}}

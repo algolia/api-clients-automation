@@ -2,10 +2,7 @@
 package com.algolia.snippets
 
 // >IMPORT
-import com.algolia.client.api.{{client}}
-{{#isSearchClient}}
-import com.algolia.client.extensions.*
-{{/isSearchClient}}
+{{> snippets/import}}
 // IMPORT<
 import com.algolia.client.model.{{import}}.*
 import kotlinx.serialization.json.*
@@ -15,9 +12,9 @@ class Snippet{{client}} {
   {{#blocksRequests}}
   {{#snippets}}
   suspend fun snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() {
-      // >SEPARATOR {{method}} {{testName}}
+      // >SEPARATOR {{method}} {{{testName}}}
       // Initialize the client
-      val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
+      {{> snippets/init}}
 
       // Call the API
       {{#hasResponse}}var response = {{/hasResponse}}client.{{> tests/method}}

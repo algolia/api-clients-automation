@@ -17,7 +17,7 @@ apic release <language... | all>
 ### Available options
 
 | Option         | Command               | Description                                                                                      |
-|----------------|:----------------------|:------------------------------------------------------------------------------------------------ |
+| -------------- | :-------------------- | :----------------------------------------------------------------------------------------------- |
 | verbose        | -v, --verbose         | Make the process verbose, display logs from third party tools                                    |
 | dry run        | -d, --dry-run         | Locally generate a new release but do not push to GitHub                                         |
 | generate graph | -gg, --generate-graph | Generates the SLA graph for the given parameters                                                 |

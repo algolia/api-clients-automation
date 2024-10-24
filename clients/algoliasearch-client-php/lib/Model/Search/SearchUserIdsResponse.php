@@ -182,21 +182,9 @@ class SearchUserIdsResponse extends AbstractModel implements ModelInterface, \Ar
         if (!isset($this->container['page']) || null === $this->container['page']) {
             $invalidProperties[] = "'page' can't be null";
         }
-        if ($this->container['page'] < 0) {
-            $invalidProperties[] = "invalid value for 'page', must be bigger than or equal to 0.";
-        }
-
         if (!isset($this->container['hitsPerPage']) || null === $this->container['hitsPerPage']) {
             $invalidProperties[] = "'hitsPerPage' can't be null";
         }
-        if ($this->container['hitsPerPage'] > 1000) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be smaller than or equal to 1000.";
-        }
-
-        if ($this->container['hitsPerPage'] < 1) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be bigger than or equal to 1.";
-        }
-
         if (!isset($this->container['updatedAt']) || null === $this->container['updatedAt']) {
             $invalidProperties[] = "'updatedAt' can't be null";
         }
@@ -282,10 +270,6 @@ class SearchUserIdsResponse extends AbstractModel implements ModelInterface, \Ar
      */
     public function setPage($page)
     {
-        if ($page < 0) {
-            throw new \InvalidArgumentException('invalid value for $page when calling SearchUserIdsResponse., must be bigger than or equal to 0.');
-        }
-
         $this->container['page'] = $page;
 
         return $this;
@@ -304,19 +288,12 @@ class SearchUserIdsResponse extends AbstractModel implements ModelInterface, \Ar
     /**
      * Sets hitsPerPage.
      *
-     * @param int $hitsPerPage maximum number of hits per page
+     * @param int $hitsPerPage Maximum number of hits per page.  Algolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).  - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.  For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.
      *
      * @return self
      */
     public function setHitsPerPage($hitsPerPage)
     {
-        if ($hitsPerPage > 1000) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchUserIdsResponse., must be smaller than or equal to 1000.');
-        }
-        if ($hitsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchUserIdsResponse., must be bigger than or equal to 1.');
-        }
-
         $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;

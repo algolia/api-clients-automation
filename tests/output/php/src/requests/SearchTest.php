@@ -744,7 +744,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -755,7 +755,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }
@@ -772,7 +772,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -783,7 +783,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }
@@ -1227,6 +1227,24 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"attributesToRetrieve":"attr1%2Cattr2"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('search with a real object')]
+    public function testGetObject1(): void
+    {
+        $client = $this->getClient();
+        $client->getObject(
+            'cts_e2e_browse',
+            'Batman and Robin',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/cts_e2e_browse/Batman%20and%20Robin',
+                'method' => 'GET',
+                'body' => null,
             ],
         ]);
     }
@@ -1746,12 +1764,12 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->restoreApiKey(
-            'myApiKey',
+            'ALGOLIA_API_KEY',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/keys/myApiKey/restore',
+                'path' => '/1/keys/ALGOLIA_API_KEY/restore',
                 'method' => 'POST',
                 'body' => json_decode(''),
             ],
@@ -3374,7 +3392,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->updateApiKey(
-            'myApiKey',
+            'ALGOLIA_API_KEY',
             ['acl' => [
                 'search',
 
@@ -3388,7 +3406,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/keys/myApiKey',
+                'path' => '/1/keys/ALGOLIA_API_KEY',
                 'method' => 'PUT',
                 'body' => json_decode('{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}'),
             ],

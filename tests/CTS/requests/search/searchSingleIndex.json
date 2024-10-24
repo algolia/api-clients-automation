@@ -24,6 +24,7 @@
   },
   {
     "testName": "search with searchParams",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {

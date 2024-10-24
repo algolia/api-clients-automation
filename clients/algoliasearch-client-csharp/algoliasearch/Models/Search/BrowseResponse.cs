@@ -26,7 +26,7 @@ public partial class BrowseResponse<T>
   /// </summary>
   /// <param name="processingTimeMS">Time the server took to process the request, in milliseconds. (required).</param>
   /// <param name="hits">Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.  (required).</param>
-  /// <param name="query">Search query. (required) (default to &quot;&quot;).</param>
+  /// <param name="query">Search query. (required) (default to "").</param>
   /// <param name="varParams">URL-encoded string of all search parameters. (required).</param>
   public BrowseResponse(int processingTimeMS, List<T> hits, string query, string varParams)
   {
@@ -69,6 +69,13 @@ public partial class BrowseResponse<T>
   /// </summary>
   [JsonPropertyName("exhaustive")]
   public Exhaustive Exhaustive { get; set; }
+
+  /// <summary>
+  /// Rules applied to the query.
+  /// </summary>
+  /// <value>Rules applied to the query.</value>
+  [JsonPropertyName("appliedRules")]
+  public List<object> AppliedRules { get; set; }
 
   /// <summary>
   /// See the `facetsCount` field of the `exhaustive` object in the response.
@@ -205,6 +212,13 @@ public partial class BrowseResponse<T>
   public string QueryID { get; set; }
 
   /// <summary>
+  /// Whether automatic events collection is enabled for the application.
+  /// </summary>
+  /// <value>Whether automatic events collection is enabled for the application.</value>
+  [JsonPropertyName("_automaticInsights")]
+  public bool? AutomaticInsights { get; set; }
+
+  /// <summary>
   /// Page of search results to retrieve.
   /// </summary>
   /// <value>Page of search results to retrieve.</value>
@@ -273,6 +287,7 @@ public partial class BrowseResponse<T>
     sb.Append("  AroundLatLng: ").Append(AroundLatLng).Append("\n");
     sb.Append("  AutomaticRadius: ").Append(AutomaticRadius).Append("\n");
     sb.Append("  Exhaustive: ").Append(Exhaustive).Append("\n");
+    sb.Append("  AppliedRules: ").Append(AppliedRules).Append("\n");
     sb.Append("  ExhaustiveFacetsCount: ").Append(ExhaustiveFacetsCount).Append("\n");
     sb.Append("  ExhaustiveNbHits: ").Append(ExhaustiveNbHits).Append("\n");
     sb.Append("  ExhaustiveTypo: ").Append(ExhaustiveTypo).Append("\n");
@@ -292,6 +307,7 @@ public partial class BrowseResponse<T>
     sb.Append("  ServerUsed: ").Append(ServerUsed).Append("\n");
     sb.Append("  UserData: ").Append(UserData).Append("\n");
     sb.Append("  QueryID: ").Append(QueryID).Append("\n");
+    sb.Append("  AutomaticInsights: ").Append(AutomaticInsights).Append("\n");
     sb.Append("  Page: ").Append(Page).Append("\n");
     sb.Append("  NbHits: ").Append(NbHits).Append("\n");
     sb.Append("  NbPages: ").Append(NbPages).Append("\n");
@@ -331,6 +347,7 @@ public partial class BrowseResponse<T>
         (AroundLatLng == input.AroundLatLng || (AroundLatLng != null && AroundLatLng.Equals(input.AroundLatLng))) &&
         (AutomaticRadius == input.AutomaticRadius || (AutomaticRadius != null && AutomaticRadius.Equals(input.AutomaticRadius))) &&
         (Exhaustive == input.Exhaustive || (Exhaustive != null && Exhaustive.Equals(input.Exhaustive))) &&
+        (AppliedRules == input.AppliedRules || AppliedRules != null && input.AppliedRules != null && AppliedRules.SequenceEqual(input.AppliedRules)) &&
         (ExhaustiveFacetsCount == input.ExhaustiveFacetsCount || ExhaustiveFacetsCount.Equals(input.ExhaustiveFacetsCount)) &&
         (ExhaustiveNbHits == input.ExhaustiveNbHits || ExhaustiveNbHits.Equals(input.ExhaustiveNbHits)) &&
         (ExhaustiveTypo == input.ExhaustiveTypo || ExhaustiveTypo.Equals(input.ExhaustiveTypo)) &&
@@ -350,6 +367,7 @@ public partial class BrowseResponse<T>
         (ServerUsed == input.ServerUsed || (ServerUsed != null && ServerUsed.Equals(input.ServerUsed))) &&
         (UserData == input.UserData || (UserData != null && UserData.Equals(input.UserData))) &&
         (QueryID == input.QueryID || (QueryID != null && QueryID.Equals(input.QueryID))) &&
+        (AutomaticInsights == input.AutomaticInsights || AutomaticInsights.Equals(input.AutomaticInsights)) &&
         (Page == input.Page || Page.Equals(input.Page)) &&
         (NbHits == input.NbHits || NbHits.Equals(input.NbHits)) &&
         (NbPages == input.NbPages || NbPages.Equals(input.NbPages)) &&
@@ -382,6 +400,10 @@ public partial class BrowseResponse<T>
       if (Exhaustive != null)
       {
         hashCode = (hashCode * 59) + Exhaustive.GetHashCode();
+      }
+      if (AppliedRules != null)
+      {
+        hashCode = (hashCode * 59) + AppliedRules.GetHashCode();
       }
       hashCode = (hashCode * 59) + ExhaustiveFacetsCount.GetHashCode();
       hashCode = (hashCode * 59) + ExhaustiveNbHits.GetHashCode();
@@ -441,6 +463,7 @@ public partial class BrowseResponse<T>
       {
         hashCode = (hashCode * 59) + QueryID.GetHashCode();
       }
+      hashCode = (hashCode * 59) + AutomaticInsights.GetHashCode();
       hashCode = (hashCode * 59) + Page.GetHashCode();
       hashCode = (hashCode * 59) + NbHits.GetHashCode();
       hashCode = (hashCode * 59) + NbPages.GetHashCode();

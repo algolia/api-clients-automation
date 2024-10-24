@@ -11,7 +11,7 @@
     {{^vendorExtensions.x-has-child-generic}}
     [JsonConverter(typeof({{classname}}JsonConverter))]
     {{/vendorExtensions.x-has-child-generic}}
-    {{> visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{#validatable}}IValidatableObject  {{/validatable}}{{/lambda.joinWithComma}}
+    {{> visibility}} partial class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} : {{#lambda.joinWithComma}}AbstractSchema  {{#parent}}{{{.}}}  {{/parent}}{{#equatable}}IEquatable<{{classname}}>  {{/equatable}}{{/lambda.joinWithComma}}
     {
         {{#isNullable}}
         /// <summary>

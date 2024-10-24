@@ -1,9 +1,7 @@
 // {{{generationBanner}}}
 
-export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>;
-
 {{> client/builds/definition}}
-  return create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
+  return create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
     timeouts: {
@@ -11,6 +9,7 @@ export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<t
       read: DEFAULT_READ_TIMEOUT_BROWSER,
       write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
+    logger: createNullLogger(),
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
@@ -25,3 +24,5 @@ export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<t
     ...options,
   });
 }
+
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>;

@@ -2,7 +2,7 @@
 client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create_with_config(Algolia::Configuration.new(
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}',
-  [{{#customHosts}}Algolia::Transport::StatefulHost.new('{{host}}', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE),{{/customHosts}}],
+  [{{#customHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE),{{/customHosts}}],
   '{{client}}'{{#gzipEncoding}},
   compression_type: 'gzip'{{/gzipEncoding}}
 )){{/hasCustomHosts}}{{^hasCustomHosts}}

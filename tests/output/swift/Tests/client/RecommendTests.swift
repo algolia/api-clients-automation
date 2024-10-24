@@ -45,17 +45,16 @@ final class RecommendClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern =
-            "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Recommend (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
-        let rule = StringRule(pattern: pattern)
         let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
         guard let userAgent else {
             XCTFail("Expected user-agent header")
             return
         }
 
+        let pattern =
+            "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Recommend (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         XCTAssertNoThrow(
-            try Validator.validate(userAgent, against: rule),
+            try regexMatch(userAgent, against: pattern),
             "Expected " + userAgent + " to match the following regex: " + pattern
         )
     }
@@ -70,16 +69,15 @@ final class RecommendClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.3.0\\).*"
-        let rule = StringRule(pattern: pattern)
         let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
         guard let userAgent else {
             XCTFail("Expected user-agent header")
             return
         }
 
+        let pattern = "^Algolia for Swift \\(9.7.4\\).*"
         XCTAssertNoThrow(
-            try Validator.validate(userAgent, against: rule),
+            try regexMatch(userAgent, against: pattern),
             "Expected " + userAgent + " to match the following regex: " + pattern
         )
     }
@@ -115,7 +113,11 @@ final class RecommendClientClientTests: XCTestCase {
         let configuration = try RecommendClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6683")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = RecommendClient(configuration: configuration, transporter: transporter)

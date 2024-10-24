@@ -1,6 +1,7 @@
 {{#hasRegionalHost}}
 export const REGIONS = [{{#allowedRegions}}'{{.}}'{{^-last}},{{/-last}}{{/allowedRegions}}] as const;
 export type Region = (typeof REGIONS)[number];
+export type RegionOptions = {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region };
 {{/hasRegionalHost}}
 
 {{^hasRegionalHost}}

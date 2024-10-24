@@ -356,7 +356,7 @@ class QuerySuggestionsClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -378,7 +378,7 @@ class QuerySuggestionsClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -407,7 +407,7 @@ class QuerySuggestionsClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -429,7 +429,7 @@ class QuerySuggestionsClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;

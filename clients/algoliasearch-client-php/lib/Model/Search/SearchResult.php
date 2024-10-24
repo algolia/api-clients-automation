@@ -25,6 +25,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'aroundLatLng' => 'string',
         'automaticRadius' => 'string',
         'exhaustive' => '\Algolia\AlgoliaSearch\Model\Search\Exhaustive',
+        'appliedRules' => 'object[]',
         'exhaustiveFacetsCount' => 'bool',
         'exhaustiveNbHits' => 'bool',
         'exhaustiveTypo' => 'bool',
@@ -44,6 +45,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'string',
         'userData' => 'object',
         'queryID' => 'string',
+        'automaticInsights' => 'bool',
         'page' => 'int',
         'nbHits' => 'int',
         'nbPages' => 'int',
@@ -65,6 +67,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'aroundLatLng' => null,
         'automaticRadius' => null,
         'exhaustive' => null,
+        'appliedRules' => null,
         'exhaustiveFacetsCount' => null,
         'exhaustiveNbHits' => null,
         'exhaustiveTypo' => null,
@@ -84,6 +87,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => null,
         'userData' => null,
         'queryID' => null,
+        'automaticInsights' => null,
         'page' => null,
         'nbHits' => null,
         'nbPages' => null,
@@ -106,6 +110,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'aroundLatLng' => 'aroundLatLng',
         'automaticRadius' => 'automaticRadius',
         'exhaustive' => 'exhaustive',
+        'appliedRules' => 'appliedRules',
         'exhaustiveFacetsCount' => 'exhaustiveFacetsCount',
         'exhaustiveNbHits' => 'exhaustiveNbHits',
         'exhaustiveTypo' => 'exhaustiveTypo',
@@ -125,6 +130,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'serverUsed',
         'userData' => 'userData',
         'queryID' => 'queryID',
+        'automaticInsights' => '_automaticInsights',
         'page' => 'page',
         'nbHits' => 'nbHits',
         'nbPages' => 'nbPages',
@@ -146,6 +152,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'aroundLatLng' => 'setAroundLatLng',
         'automaticRadius' => 'setAutomaticRadius',
         'exhaustive' => 'setExhaustive',
+        'appliedRules' => 'setAppliedRules',
         'exhaustiveFacetsCount' => 'setExhaustiveFacetsCount',
         'exhaustiveNbHits' => 'setExhaustiveNbHits',
         'exhaustiveTypo' => 'setExhaustiveTypo',
@@ -165,6 +172,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'setServerUsed',
         'userData' => 'setUserData',
         'queryID' => 'setQueryID',
+        'automaticInsights' => 'setAutomaticInsights',
         'page' => 'setPage',
         'nbHits' => 'setNbHits',
         'nbPages' => 'setNbPages',
@@ -186,6 +194,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'aroundLatLng' => 'getAroundLatLng',
         'automaticRadius' => 'getAutomaticRadius',
         'exhaustive' => 'getExhaustive',
+        'appliedRules' => 'getAppliedRules',
         'exhaustiveFacetsCount' => 'getExhaustiveFacetsCount',
         'exhaustiveNbHits' => 'getExhaustiveNbHits',
         'exhaustiveTypo' => 'getExhaustiveTypo',
@@ -205,6 +214,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         'serverUsed' => 'getServerUsed',
         'userData' => 'getUserData',
         'queryID' => 'getQueryID',
+        'automaticInsights' => 'getAutomaticInsights',
         'page' => 'getPage',
         'nbHits' => 'getNbHits',
         'nbPages' => 'getNbPages',
@@ -243,6 +253,9 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         }
         if (isset($data['exhaustive'])) {
             $this->container['exhaustive'] = $data['exhaustive'];
+        }
+        if (isset($data['appliedRules'])) {
+            $this->container['appliedRules'] = $data['appliedRules'];
         }
         if (isset($data['exhaustiveFacetsCount'])) {
             $this->container['exhaustiveFacetsCount'] = $data['exhaustiveFacetsCount'];
@@ -300,6 +313,9 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
         }
         if (isset($data['queryID'])) {
             $this->container['queryID'] = $data['queryID'];
+        }
+        if (isset($data['automaticInsights'])) {
+            $this->container['automaticInsights'] = $data['automaticInsights'];
         }
         if (isset($data['page'])) {
             $this->container['page'] = $data['page'];
@@ -387,44 +403,12 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     {
         $invalidProperties = [];
 
-        if (isset($this->container['abTestVariantID']) && ($this->container['abTestVariantID'] < 1)) {
-            $invalidProperties[] = "invalid value for 'abTestVariantID', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['aroundLatLng']) && !preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $this->container['aroundLatLng'])) {
-            $invalidProperties[] = "invalid value for 'aroundLatLng', must be conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.";
-        }
-
         if (!isset($this->container['exhaustiveFacetsCount']) || null === $this->container['exhaustiveFacetsCount']) {
             $invalidProperties[] = "'exhaustiveFacetsCount' can't be null";
         }
         if (!isset($this->container['processingTimeMS']) || null === $this->container['processingTimeMS']) {
             $invalidProperties[] = "'processingTimeMS' can't be null";
         }
-        if (!isset($this->container['page']) || null === $this->container['page']) {
-            $invalidProperties[] = "'page' can't be null";
-        }
-        if ($this->container['page'] < 0) {
-            $invalidProperties[] = "invalid value for 'page', must be bigger than or equal to 0.";
-        }
-
-        if (!isset($this->container['nbHits']) || null === $this->container['nbHits']) {
-            $invalidProperties[] = "'nbHits' can't be null";
-        }
-        if (!isset($this->container['nbPages']) || null === $this->container['nbPages']) {
-            $invalidProperties[] = "'nbPages' can't be null";
-        }
-        if (!isset($this->container['hitsPerPage']) || null === $this->container['hitsPerPage']) {
-            $invalidProperties[] = "'hitsPerPage' can't be null";
-        }
-        if ($this->container['hitsPerPage'] > 1000) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be smaller than or equal to 1000.";
-        }
-
-        if ($this->container['hitsPerPage'] < 1) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be bigger than or equal to 1.";
-        }
-
         if (!isset($this->container['hits']) || null === $this->container['hits']) {
             $invalidProperties[] = "'hits' can't be null";
         }
@@ -495,10 +479,6 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
      */
     public function setAbTestVariantID($abTestVariantID)
     {
-        if (!is_null($abTestVariantID) && ($abTestVariantID < 1)) {
-            throw new \InvalidArgumentException('invalid value for $abTestVariantID when calling SearchResult., must be bigger than or equal to 1.');
-        }
-
         $this->container['abTestVariantID'] = $abTestVariantID;
 
         return $this;
@@ -523,10 +503,6 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
      */
     public function setAroundLatLng($aroundLatLng)
     {
-        if (!is_null($aroundLatLng) && (!preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $aroundLatLng))) {
-            throw new \InvalidArgumentException("invalid value for {$aroundLatLng} when calling SearchResult., must conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.");
-        }
-
         $this->container['aroundLatLng'] = $aroundLatLng;
 
         return $this;
@@ -576,6 +552,30 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     public function setExhaustive($exhaustive)
     {
         $this->container['exhaustive'] = $exhaustive;
+
+        return $this;
+    }
+
+    /**
+     * Gets appliedRules.
+     *
+     * @return null|object[]
+     */
+    public function getAppliedRules()
+    {
+        return $this->container['appliedRules'] ?? null;
+    }
+
+    /**
+     * Sets appliedRules.
+     *
+     * @param null|object[] $appliedRules rules applied to the query
+     *
+     * @return self
+     */
+    public function setAppliedRules($appliedRules)
+    {
+        $this->container['appliedRules'] = $appliedRules;
 
         return $this;
     }
@@ -1045,9 +1045,33 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     }
 
     /**
+     * Gets automaticInsights.
+     *
+     * @return null|bool
+     */
+    public function getAutomaticInsights()
+    {
+        return $this->container['automaticInsights'] ?? null;
+    }
+
+    /**
+     * Sets automaticInsights.
+     *
+     * @param null|bool $automaticInsights whether automatic events collection is enabled for the application
+     *
+     * @return self
+     */
+    public function setAutomaticInsights($automaticInsights)
+    {
+        $this->container['automaticInsights'] = $automaticInsights;
+
+        return $this;
+    }
+
+    /**
      * Gets page.
      *
-     * @return int
+     * @return null|int
      */
     public function getPage()
     {
@@ -1057,16 +1081,12 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets page.
      *
-     * @param int $page page of search results to retrieve
+     * @param null|int $page page of search results to retrieve
      *
      * @return self
      */
     public function setPage($page)
     {
-        if ($page < 0) {
-            throw new \InvalidArgumentException('invalid value for $page when calling SearchResult., must be bigger than or equal to 0.');
-        }
-
         $this->container['page'] = $page;
 
         return $this;
@@ -1075,7 +1095,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets nbHits.
      *
-     * @return int
+     * @return null|int
      */
     public function getNbHits()
     {
@@ -1085,7 +1105,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets nbHits.
      *
-     * @param int $nbHits number of results (hits)
+     * @param null|int $nbHits number of results (hits)
      *
      * @return self
      */
@@ -1099,7 +1119,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets nbPages.
      *
-     * @return int
+     * @return null|int
      */
     public function getNbPages()
     {
@@ -1109,7 +1129,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets nbPages.
      *
-     * @param int $nbPages number of pages of results
+     * @param null|int $nbPages number of pages of results
      *
      * @return self
      */
@@ -1123,7 +1143,7 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets hitsPerPage.
      *
-     * @return int
+     * @return null|int
      */
     public function getHitsPerPage()
     {
@@ -1133,19 +1153,12 @@ class SearchResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets hitsPerPage.
      *
-     * @param int $hitsPerPage number of hits per page
+     * @param null|int $hitsPerPage number of hits per page
      *
      * @return self
      */
     public function setHitsPerPage($hitsPerPage)
     {
-        if ($hitsPerPage > 1000) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchResult., must be smaller than or equal to 1000.');
-        }
-        if ($hitsPerPage < 1) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchResult., must be bigger than or equal to 1.');
-        }
-
         $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;

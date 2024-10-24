@@ -1,9 +1,7 @@
 import type { Cache } from './cache';
 import type { Host } from './host';
-import type { Request, Requester, EndRequest, Response } from './requester';
-
-export type Headers = Record<string, string>;
-export type QueryParameters = Record<string, any>;
+import type { Logger } from './logger';
+import type { EndRequest, Headers, QueryParameters, Request, Requester, Response } from './requester';
 
 export type RequestOptions = Pick<Request, 'cacheable'> & {
   /**
@@ -86,6 +84,11 @@ export type TransporterOptions = {
    * the state of the host when its down.
    */
   hostsCache: Cache;
+
+  /**
+   * The logger instance to send events of the transporter.
+   */
+  logger: Logger;
 
   /**
    * The underlying requester used. Should differ

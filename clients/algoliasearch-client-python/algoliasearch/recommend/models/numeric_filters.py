@@ -8,9 +8,9 @@ from __future__ import annotations
 
 from json import dumps, loads
 from sys import version_info
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Set, Union
 
-from pydantic import BaseModel, StrictStr, ValidationError, model_serializer
+from pydantic import BaseModel, Field, ValidationError, model_serializer
 
 if version_info >= (3, 11):
     from typing import Self
@@ -20,12 +20,15 @@ else:
 
 class NumericFilters(BaseModel):
     """
-    Filter by numeric facets.  **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**  You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`, `>=`. Comparsions are precise up to 3 decimals. You can also provide ranges: `facet:<lower> TO <upper>`. The range includes the lower and upper boundaries. The same combination rules apply as for `facetFilters`.
+    Filter by numeric facets.  **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**  You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`, `>=`. Comparisons are precise up to 3 decimals. You can also provide ranges: `facet:<lower> TO <upper>`. The range includes the lower and upper boundaries. The same combination rules apply as for `facetFilters`.
     """
 
-    oneof_schema_1_validator: Optional[List[NumericFilters]] = None
-    oneof_schema_2_validator: Optional[StrictStr] = None
-    actual_instance: Optional[Union[List[NumericFilters], str]] = None
+    oneof_schema_1_validator: Optional[List[NumericFilters]] = Field(default=None)
+
+    oneof_schema_2_validator: Optional[str] = Field(default=None)
+
+    actual_instance: Union[List[NumericFilters], str, None] = None
+    one_of_schemas: Set[str] = {"List[NumericFilters]", "str"}
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -37,19 +40,20 @@ class NumericFilters(BaseModel):
                 raise ValueError(
                     "If a position argument is used, keyword arguments cannot be used."
                 )
-            super().__init__(actual_instance=args[0])
+            super().__init__(actual_instance=args[0])  # pyright: ignore
         else:
             super().__init__(**kwargs)
 
     @model_serializer
-    def unwrap_actual_instance(self) -> Optional[Union[List[NumericFilters], str]]:
+    def unwrap_actual_instance(self) -> Union[List[NumericFilters], str, Self, None]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
         """
         return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Self:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+        """Create an instance of NumericFilters from a JSON string"""
         return cls.from_json(dumps(obj))
 
     @classmethod
@@ -83,17 +87,21 @@ class NumericFilters(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json"):
-            return self.actual_instance.to_json()
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json  # pyright: ignore
+        ):
+            return self.actual_instance.to_json()  # pyright: ignore
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], List[NumericFilters], str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict"):
-            return self.actual_instance.to_dict()
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict  # pyright: ignore
+        ):
+            return self.actual_instance.to_dict()  # pyright: ignore
         else:
-            return self.actual_instance
+            return self.actual_instance  # pyright: ignore

@@ -3,16 +3,30 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "parcel index.html"
+    "build": "yarn clean && BABEL_ENV=parcel parcel build index.html products.html",
+    "clean": "rm -rf .parcel-cache node_modules dist || true && yarn",
+    "start": "yarn clean && BABEL_ENV=parcel parcel index.html products.html --port 3001"
   },
   "dependencies": {
-    "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common",
-    "@algolia/client-search": "link:../../../clients/algoliasearch-client-javascript/packages/client-search",
-    "@algolia/requester-browser-xhr": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http",
-    "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
+    "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
+    "instantsearch.css": "8.5.1",
+    "instantsearch.js": "4.75.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-instantsearch": "7.13.4"
   },
   "devDependencies": {
+    "@parcel/core": "2.12.0",
+    "@parcel/packager-raw-url": "2.12.0",
+    "@parcel/transformer-webmanifest": "2.12.0",
+    "@types/react": "^18.0.9",
+    "https-browserify": "^1.0.0",
     "parcel": "2.12.0",
-    "typescript": "5.5.4"
+    "stream-http": "^3.1.0",
+    "typescript": "5.6.3",
+    "url": "^0.11.0"
+  },
+  "@parcel/resolver-default": {
+    "packageExports": true
   }
 }

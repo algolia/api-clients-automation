@@ -12,14 +12,13 @@ export const apiClientVersion = '{{packageVersion}}';
   {{> client/api/guards}}
 {{/isIngestionClient}}
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
+export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     appId: appIdOption,
     apiKey: apiKeyOption,
     authMode,
     algoliaAgents,{{#hasRegionalHost}} region: regionOption,{{/hasRegionalHost}}
     ...options
-  }: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
+  }: CreateClientOptions{{#hasRegionalHost}} & RegionOptions{{/hasRegionalHost}}) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts({{#hostWithAppID}}appIdOption{{/hostWithAppID}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),

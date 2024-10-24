@@ -18,6 +18,7 @@ final class RecommendationsResults {
     this.aroundLatLng,
     this.automaticRadius,
     this.exhaustive,
+    this.appliedRules,
     this.exhaustiveFacetsCount,
     this.exhaustiveNbHits,
     this.exhaustiveTypo,
@@ -37,10 +38,11 @@ final class RecommendationsResults {
     this.serverUsed,
     this.userData,
     this.queryID,
-    required this.page,
-    required this.nbHits,
-    required this.nbPages,
-    required this.hitsPerPage,
+    this.automaticInsights,
+    this.page,
+    this.nbHits,
+    this.nbPages,
+    this.hitsPerPage,
     required this.hits,
   });
 
@@ -63,6 +65,10 @@ final class RecommendationsResults {
 
   @JsonKey(name: r'exhaustive')
   final Exhaustive? exhaustive;
+
+  /// Rules applied to the query.
+  @JsonKey(name: r'appliedRules')
+  final List<Object>? appliedRules;
 
   /// See the `facetsCount` field of the `exhaustive` object in the response.
   @Deprecated('exhaustiveFacetsCount has been deprecated')
@@ -141,24 +147,28 @@ final class RecommendationsResults {
   @JsonKey(name: r'queryID')
   final String? queryID;
 
+  /// Whether automatic events collection is enabled for the application.
+  @JsonKey(name: r'_automaticInsights')
+  final bool? automaticInsights;
+
   /// Page of search results to retrieve.
   // minimum: 0
   @JsonKey(name: r'page')
-  final int page;
+  final int? page;
 
   /// Number of results (hits).
   @JsonKey(name: r'nbHits')
-  final int nbHits;
+  final int? nbHits;
 
   /// Number of pages of results.
   @JsonKey(name: r'nbPages')
-  final int nbPages;
+  final int? nbPages;
 
   /// Number of hits per page.
   // minimum: 1
   // maximum: 1000
   @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
+  final int? hitsPerPage;
 
   /// One of types:
   /// - [RecommendHit]
@@ -175,6 +185,7 @@ final class RecommendationsResults {
           other.aroundLatLng == aroundLatLng &&
           other.automaticRadius == automaticRadius &&
           other.exhaustive == exhaustive &&
+          other.appliedRules == appliedRules &&
           other.facets == facets &&
           other.facetsStats == facetsStats &&
           other.index == index &&
@@ -191,6 +202,7 @@ final class RecommendationsResults {
           other.serverUsed == serverUsed &&
           other.userData == userData &&
           other.queryID == queryID &&
+          other.automaticInsights == automaticInsights &&
           other.page == page &&
           other.nbHits == nbHits &&
           other.nbPages == nbPages &&
@@ -204,6 +216,7 @@ final class RecommendationsResults {
       aroundLatLng.hashCode +
       automaticRadius.hashCode +
       exhaustive.hashCode +
+      appliedRules.hashCode +
       facets.hashCode +
       facetsStats.hashCode +
       index.hashCode +
@@ -220,6 +233,7 @@ final class RecommendationsResults {
       serverUsed.hashCode +
       userData.hashCode +
       queryID.hashCode +
+      automaticInsights.hashCode +
       page.hashCode +
       nbHits.hashCode +
       nbPages.hashCode +

@@ -15,5 +15,29 @@
         "attributesToRetrieve": "attr1%2Cattr2"
       }
     }
+  },
+  {
+    "testName": "search with a real object",
+    "parameters": {
+      "indexName": "cts_e2e_browse",
+      "objectID": "Batman and Robin"
+    },
+    "request": {
+      "path": "/1/indexes/cts_e2e_browse/Batman%20and%20Robin",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "objectID": "Batman and Robin",
+        "title": "Batman and Robin",
+        "year": 1949,
+        "cast": [
+          "Robert Lowery",
+          "Johnny Duncan",
+          "Jane Adams"
+        ]
+      }
+    }
   }
 ]

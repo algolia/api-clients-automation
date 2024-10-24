@@ -6,6 +6,7 @@ import com.algolia.exceptions.AlgoliaClientException;
 import com.algolia.internal.interceptors.GzipRequestInterceptor;
 import com.algolia.internal.interceptors.HeaderInterceptor;
 import com.algolia.internal.interceptors.LogInterceptor;
+import com.algolia.utils.UseReadTransporter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import java.io.IOException;
@@ -72,7 +73,12 @@ public final class HttpRequester implements Requester {
     RequestBody requestBody = createRequestBody(httpRequest);
 
     // Build the HTTP request.
-    Request request = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody).build();
+    Request.Builder requestBuilder = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody);
+    if (httpRequest.isRead()) {
+      requestBuilder.tag(new UseReadTransporter());
+    }
+
+    Request request = requestBuilder.build();
 
     // Get or adjust the HTTP client according to request options.
     OkHttpClient client = getOkHttpClient(requestOptions);

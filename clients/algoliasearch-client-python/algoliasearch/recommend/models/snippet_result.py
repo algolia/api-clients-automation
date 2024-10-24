@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from json import dumps, loads
 from sys import version_info
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Set, Union
 
 from pydantic import BaseModel, Field, ValidationError, model_serializer
 
@@ -26,27 +26,20 @@ class SnippetResult(BaseModel):
     SnippetResult
     """
 
-    oneof_schema_1_validator: Optional[Dict[str, SnippetResult]] = Field(
-        default=None,
-        description="Snippets that show the context around a matching search query.",
-    )
-    oneof_schema_2_validator: Optional[SnippetResultOption] = None
-    oneof_schema_3_validator: Optional[Dict[str, SnippetResultOption]] = Field(
-        default=None,
-        description="Snippets that show the context around a matching search query.",
-    )
-    oneof_schema_4_validator: Optional[List[SnippetResultOption]] = Field(
-        default=None,
-        description="Snippets that show the context around a matching search query.",
-    )
-    actual_instance: Optional[
-        Union[
-            Dict[str, SnippetResultOption],
-            Dict[str, SnippetResult],
-            List[SnippetResultOption],
-            SnippetResultOption,
-        ]
+    oneof_schema_1_validator: Optional[SnippetResultOption] = Field(default=None)
+
+    oneof_schema_2_validator: Optional[Dict[str, SnippetResult]] = Field(default=None)
+    """ Snippets that show the context around a matching search query. """
+    oneof_schema_3_validator: Optional[List[SnippetResult]] = Field(default=None)
+    """ Snippets that show the context around a matching search query. """
+    actual_instance: Union[
+        Dict[str, SnippetResult], List[SnippetResult], SnippetResultOption, None
     ] = None
+    one_of_schemas: Set[str] = {
+        "Dict[str, SnippetResult]",
+        "List[SnippetResult]",
+        "SnippetResultOption",
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -58,20 +51,15 @@ class SnippetResult(BaseModel):
                 raise ValueError(
                     "If a position argument is used, keyword arguments cannot be used."
                 )
-            super().__init__(actual_instance=args[0])
+            super().__init__(actual_instance=args[0])  # pyright: ignore
         else:
             super().__init__(**kwargs)
 
     @model_serializer
     def unwrap_actual_instance(
         self,
-    ) -> Optional[
-        Union[
-            Dict[str, SnippetResultOption],
-            Dict[str, SnippetResult],
-            List[SnippetResultOption],
-            SnippetResultOption,
-        ]
+    ) -> Union[
+        Dict[str, SnippetResult], List[SnippetResult], SnippetResultOption, Self, None
     ]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
@@ -79,7 +67,8 @@ class SnippetResult(BaseModel):
         return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Self:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+        """Create an instance of SnippetResult from a JSON string"""
         return cls.from_json(dumps(obj))
 
     @classmethod
@@ -89,14 +78,14 @@ class SnippetResult(BaseModel):
         error_messages = []
 
         try:
-            instance.oneof_schema_1_validator = loads(json_str)
-            instance.actual_instance = instance.oneof_schema_1_validator
+            instance.actual_instance = SnippetResultOption.from_json(json_str)
 
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
         try:
-            instance.actual_instance = SnippetResultOption.from_json(json_str)
+            instance.oneof_schema_2_validator = loads(json_str)
+            instance.actual_instance = instance.oneof_schema_2_validator
 
             return instance
         except (ValidationError, ValueError) as e:
@@ -108,16 +97,9 @@ class SnippetResult(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        try:
-            instance.oneof_schema_4_validator = loads(json_str)
-            instance.actual_instance = instance.oneof_schema_4_validator
-
-            return instance
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
 
         raise ValueError(
-            "No match found when deserializing the JSON string into SnippetResult with oneOf schemas: Dict[str, SnippetResultOption], Dict[str, SnippetResult], List[SnippetResultOption], SnippetResultOption. Details: "
+            "No match found when deserializing the JSON string into SnippetResult with oneOf schemas: Dict[str, SnippetResult], List[SnippetResult], SnippetResultOption. Details: "
             + ", ".join(error_messages)
         )
 
@@ -126,17 +108,30 @@ class SnippetResult(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json"):
-            return self.actual_instance.to_json()
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json  # pyright: ignore
+        ):
+            return self.actual_instance.to_json()  # pyright: ignore
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Dict:
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[
+            Dict[str, Any],
+            Dict[str, SnippetResult],
+            List[SnippetResult],
+            SnippetResultOption,
+        ]
+    ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict"):
-            return self.actual_instance.to_dict()
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict  # pyright: ignore
+        ):
+            return self.actual_instance.to_dict()  # pyright: ignore
         else:
-            return self.actual_instance
+            return self.actual_instance  # pyright: ignore

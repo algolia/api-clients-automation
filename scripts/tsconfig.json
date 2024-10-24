@@ -1,13 +1,12 @@
 {
   "extends": "../config/base.tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
+    "module": "nodenext",
     "target": "esnext",
     "typeRoots": ["../node_modules/@types"],
     "types": ["node"],
-    "lib": ["esnext", "dom"],
-    "outDir": "dist"
+    "lib": ["esnext", "dom"]
   },
   "include": ["**/*.ts", "./**.cjs", "**/*.mjs"],
-  "exclude": ["dist", "*.json", "node_modules", "**/*.test.ts"]
+  "exclude": ["dist", "*.json", "node_modules"]
 }

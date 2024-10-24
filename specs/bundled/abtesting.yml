@@ -287,8 +287,21 @@ paths:
       summary: List all A/B tests
       description: Lists all A/B tests you configured for this application.
       parameters:
-        - $ref: '#/components/parameters/Offset'
-        - $ref: '#/components/parameters/Limit'
+        - name: offset
+          in: query
+          description: Position of the first item to return.
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: limit
+          in: query
+          description: Number of items to return.
+          required: false
+          schema:
+            type: integer
+            default: 10
         - name: indexPrefix
           in: query
           description: >-
@@ -559,23 +572,6 @@ components:
       schema:
         type: object
         additionalProperties: true
-    Offset:
-      in: query
-      name: offset
-      description: Position of the first item to return.
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    Limit:
-      in: query
-      name: limit
-      description: Number of items to return.
-      required: false
-      schema:
-        type: integer
-        default: 10
     ID:
       in: path
       name: id
@@ -860,7 +856,6 @@ components:
         - searchCount
         - noResultCount
         - index
-        - description
         - conversionCount
         - clickCount
         - addToCartCount
@@ -930,8 +925,6 @@ components:
           $ref: '#/components/schemas/EmptySearch'
         minimumDetectableEffect:
           $ref: '#/components/schemas/MinimumDetectableEffect'
-      required:
-        - outliers
     ABTest:
       type: object
       additionalProperties: false

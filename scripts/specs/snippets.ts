@@ -1,6 +1,6 @@
 import fsp from 'fs/promises';
 
-import { GENERATORS, capitalize, createClientName, toAbsolutePath } from '../common.js';
+import { GENERATORS, capitalize, createClientName, exists, toAbsolutePath } from '../common.js';
 import type { Language } from '../types.js';
 
 import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.js';
@@ -28,14 +28,14 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
 
       for (const [sampleName, sample] of Object.entries(samples)) {
         const sampleMatch = sample.match(
-          /.*Initialize the client.*\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)(#|\/\/) >LOG/,
+          /.*Initialize the client.*([\s\S]*?)(#|\/\/) Call the API([\s\S]*?)(#|\/\/) >LOG/,
         );
         if (!sampleMatch) {
           continue;
         }
 
         const initLine = sampleMatch[1];
-        const callLine = sampleMatch[5];
+        const callLine = sampleMatch[3];
 
         if (!('init' in snippetSamples[language])) {
           snippetSamples[language].init = {
@@ -63,13 +63,16 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
       continue;
     }
 
-    // find snippets for each operationId in the current gen.language + clientName combo
-    const snippetFileContent = await fsp.readFile(
-      toAbsolutePath(
-        `snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(clientName, gen.language)}${gen.snippets.extension}`,
-      ),
-      'utf8',
+    const ppath = toAbsolutePath(
+      `docs/snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(clientName, gen.language)}${gen.snippets.extension}`,
     );
+
+    if (!(await exists(ppath))) {
+      continue;
+    }
+
+    // find snippets for each operationId in the current gen.language + clientName combo
+    const snippetFileContent = await fsp.readFile(ppath, 'utf8');
 
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {

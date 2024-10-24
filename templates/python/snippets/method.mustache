@@ -1,30 +1,28 @@
 # {{generationBanner}}
 # >IMPORT
-from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+{{> snippets/import}}
 # IMPORT<
 
 {{#blocksRequests}}
 {{#snippets}}
-async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}():
+def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}():
     """
     Snippet for the {{method}} method.
 
     {{{description}}}
     """
-    # >SEPARATOR {{method}} {{testName}}
+    # >SEPARATOR {{method}} {{{testName}}}
     # Initialize the client
-    _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
+    # In an asynchronous context, you can use {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} instead, which exposes the exact same methods.
+    {{> snippets/init}}
 
-    # Call the API
-    {{#hasResponse}}response = {{/hasResponse}}{{#isAsyncMethod}}await {{/isAsyncMethod}}_client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
-    
+    # Call the API 
+    {{#hasResponse}}response = {{/hasResponse}}client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+
     # >LOG
     {{#hasResponse}}
     # use the class directly
     print(response)
-
-    # print the JSON response
-    print(response.to_json())
     {{/hasResponse}}
     # SEPARATOR<
 

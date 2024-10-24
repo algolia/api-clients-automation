@@ -45,7 +45,7 @@ module Algolia
       # Number of hits to retrieve (used in combination with `offset`).
       attr_accessor :length
 
-      # Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
+      # Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within a circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
       attr_accessor :around_lat_lng
 
       # Whether to obtain the coordinates from the request's IP address.
@@ -174,15 +174,15 @@ module Algolia
       # Whether to support phrase matching and excluding words from search queries.  Use the `advancedSyntaxFeatures` parameter to control which feature is supported.
       attr_accessor :advanced_syntax
 
-      # Words that should be considered optional when found in the query.  By default, records must match all words in the search query to be included in the search results. Adding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words. For example, if the search query is \"action video\" and \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and one for \"action\". Records that match all words are ranked higher.  For a search query with 4 or more words **and** all its words are optional, the number of matched words required for a record to be included in the search results increases for every 1,000 records:  - If `optionalWords` has less than 10 words, the required number of matched words increases by 1:   results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words dividied by 5 (rounded down).   For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.  For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      # Words that should be considered optional when found in the query.  By default, records must match all words in the search query to be included in the search results. Adding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words. For example, if the search query is \"action video\" and \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and one for \"action\". Records that match all words are ranked higher.  For a search query with 4 or more words **and** all its words are optional, the number of matched words required for a record to be included in the search results increases for every 1,000 records:  - If `optionalWords` has less than 10 words, the required number of matched words increases by 1:   results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).   For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.  For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
       attr_accessor :optional_words
 
-      # Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive.  This can be useful for attributes with long values, where the likelyhood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
+      # Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive.  This can be useful for attributes with long values, where the likelihood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
       attr_accessor :disable_exact_on_attributes
 
       attr_accessor :exact_on_single_word_query
 
-      # Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY/NYC\" are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
+      # Determine which plurals and synonyms should be considered an exact matches.  By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example:  - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).  - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches.  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
       attr_accessor :alternatives_as_exact
 
       # Advanced search syntax features you want to support.  - `exactPhrase`.   Phrases in quotes must match exactly.   For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\".  - `excludeWords`.   Query words prefixed with a `-` must not occur in a record.   For example, `search -engine` matches records that contain \"search\" but not \"engine\".  This setting only has an effect if `advancedSyntax` is true.
@@ -190,7 +190,7 @@ module Algolia
 
       attr_accessor :distinct
 
-      # Whether to replace a highlighted word with the matched synonym.  By default, the original words are highlighted even if a synonym matches. For example, with `home` as a synonym for `house` and a search for `home`, records matching either \"home\" or \"house\" are included in the search results, and either \"home\" or \"house\" are highlighted.  With `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records, but all occurences of \"house\" are replaced by \"home\" in the highlighted response.
+      # Whether to replace a highlighted word with the matched synonym.  By default, the original words are highlighted even if a synonym matches. For example, with `home` as a synonym for `house` and a search for `home`, records matching either \"home\" or \"house\" are included in the search results, and either \"home\" or \"house\" are highlighted.  With `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records, but all occurrences of \"house\" are replaced by \"home\" in the highlighted response.
       attr_accessor :replace_synonyms_in_highlight
 
       # Minimum proximity score for two matching words.  This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart.  For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
@@ -766,134 +766,6 @@ module Algolia
         if attributes.key?(:re_ranking_apply_filter)
           self.re_ranking_apply_filter = attributes[:re_ranking_apply_filter]
         end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 0
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 0."
-        end
-
-        @page = page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] length Value to be assigned
-      def length=(length)
-        if length.nil?
-          raise ArgumentError, "length cannot be nil"
-        end
-
-        if length > 1000
-          raise ArgumentError, "invalid value for \"length\", must be smaller than or equal to 1000."
-        end
-
-        if length < 0
-          raise ArgumentError, "invalid value for \"length\", must be greater than or equal to 0."
-        end
-
-        @length = length
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] minimum_around_radius Value to be assigned
-      def minimum_around_radius=(minimum_around_radius)
-        if minimum_around_radius.nil?
-          raise ArgumentError, "minimum_around_radius cannot be nil"
-        end
-
-        if minimum_around_radius < 1
-          raise ArgumentError, "invalid value for \"minimum_around_radius\", must be greater than or equal to 1."
-        end
-
-        @minimum_around_radius = minimum_around_radius
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] personalization_impact Value to be assigned
-      def personalization_impact=(personalization_impact)
-        if personalization_impact.nil?
-          raise ArgumentError, "personalization_impact cannot be nil"
-        end
-
-        if personalization_impact > 100
-          raise ArgumentError, "invalid value for \"personalization_impact\", must be smaller than or equal to 100."
-        end
-
-        if personalization_impact < 0
-          raise ArgumentError, "invalid value for \"personalization_impact\", must be greater than or equal to 0."
-        end
-
-        @personalization_impact = personalization_impact
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] hits_per_page Value to be assigned
-      def hits_per_page=(hits_per_page)
-        if hits_per_page.nil?
-          raise ArgumentError, "hits_per_page cannot be nil"
-        end
-
-        if hits_per_page > 1000
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be smaller than or equal to 1000."
-        end
-
-        if hits_per_page < 1
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be greater than or equal to 1."
-        end
-
-        @hits_per_page = hits_per_page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] min_proximity Value to be assigned
-      def min_proximity=(min_proximity)
-        if min_proximity.nil?
-          raise ArgumentError, "min_proximity cannot be nil"
-        end
-
-        if min_proximity > 7
-          raise ArgumentError, "invalid value for \"min_proximity\", must be smaller than or equal to 7."
-        end
-
-        if min_proximity < 1
-          raise ArgumentError, "invalid value for \"min_proximity\", must be greater than or equal to 1."
-        end
-
-        @min_proximity = min_proximity
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] max_facet_hits Value to be assigned
-      def max_facet_hits=(max_facet_hits)
-        if max_facet_hits.nil?
-          raise ArgumentError, "max_facet_hits cannot be nil"
-        end
-
-        if max_facet_hits > 100
-          raise ArgumentError, "invalid value for \"max_facet_hits\", must be smaller than or equal to 100."
-        end
-
-        @max_facet_hits = max_facet_hits
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] max_values_per_facet Value to be assigned
-      def max_values_per_facet=(max_values_per_facet)
-        if max_values_per_facet.nil?
-          raise ArgumentError, "max_values_per_facet cannot be nil"
-        end
-
-        if max_values_per_facet > 1000
-          raise ArgumentError, "invalid value for \"max_values_per_facet\", must be smaller than or equal to 1000."
-        end
-
-        @max_values_per_facet = max_values_per_facet
       end
 
       # Checks equality by comparing each attribute.

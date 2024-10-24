@@ -274,14 +274,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -308,14 +309,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -633,7 +635,7 @@ void main() {
               index: "products",
               userToken: "user-123456",
               authenticatedUserToken: "user-123456",
-              timestamp: 1725753600000,
+              timestamp: 1729641600000,
               objectIDs: [
                 "9780545139700",
                 "9780439784542",
@@ -646,7 +648,7 @@ void main() {
               index: "products",
               userToken: "user-123456",
               authenticatedUserToken: "user-123456",
-              timestamp: 1725753600000,
+              timestamp: 1729641600000,
               objectIDs: [
                 "9780545139700",
                 "9780439784542",
@@ -659,7 +661,7 @@ void main() {
         expectPath(request.path, '/1/events');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1725753600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1725753600000,"objectIDs":["9780545139700","9780439784542"]}]}""");
+            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1729641600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1729641600000,"objectIDs":["9780545139700","9780439784542"]}]}""");
       },
     ),
   );

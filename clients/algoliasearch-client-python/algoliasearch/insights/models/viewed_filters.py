@@ -11,15 +11,29 @@ from re import match
 from sys import version_info
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 
 from algoliasearch.insights.models.view_event import ViewEvent
+
+_ALIASES = {
+    "event_name": "eventName",
+    "event_type": "eventType",
+    "index": "index",
+    "filters": "filters",
+    "user_token": "userToken",
+    "authenticated_user_token": "authenticatedUserToken",
+    "timestamp": "timestamp",
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
 
 
 class ViewedFilters(BaseModel):
@@ -27,34 +41,19 @@ class ViewedFilters(BaseModel):
     Use this method to capture active filters. For example, when browsing a category page, users see content filtered on that specific category.
     """
 
-    event_name: Annotated[str, Field(min_length=1, strict=True, max_length=64)] = Field(
-        description="Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework. ",
-        alias="eventName",
-    )
-    event_type: ViewEvent = Field(alias="eventType")
-    index: StrictStr = Field(
-        description="Index name (case-sensitive) to which the event's items belong."
-    )
-    filters: Annotated[List[StrictStr], Field(min_length=1, max_length=20)] = Field(
-        description="Applied facet filters.  Facet filters are `facet:value` pairs. Facet values must be URL-encoded, such as, `discount:10%25`. "
-    )
-    user_token: Annotated[str, Field(min_length=1, strict=True, max_length=129)] = (
-        Field(
-            description="Anonymous or pseudonymous user identifier.  Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/). ",
-            alias="userToken",
-        )
-    )
-    authenticated_user_token: Optional[
-        Annotated[str, Field(min_length=1, strict=True, max_length=129)]
-    ] = Field(
-        default=None,
-        description="Identifier for authenticated users.  When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions. Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/). ",
-        alias="authenticatedUserToken",
-    )
-    timestamp: Optional[StrictInt] = Field(
-        default=None,
-        description="Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the time it receives an event as its timestamp. ",
-    )
+    event_name: str
+    """ Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.  """
+    event_type: ViewEvent
+    index: str
+    """ Index name (case-sensitive) to which the event's items belong. """
+    filters: List[str]
+    """ Applied facet filters.  Facet filters are `facet:value` pairs. Facet values must be URL-encoded, such as, `discount:10%25`.  """
+    user_token: str
+    """ Anonymous or pseudonymous user identifier.  Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).  """
+    authenticated_user_token: Optional[str] = None
+    """ Identifier for authenticated users.  When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions. Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).  """
+    timestamp: Optional[int] = None
+    """ Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the time it receives an event as its timestamp.  """
 
     @field_validator("event_name")
     def event_name_validate_regular_expression(cls, value):
@@ -87,36 +86,31 @@ class ViewedFilters(BaseModel):
         return value
 
     model_config = ConfigDict(
-        use_enum_values=True, populate_by_name=True, validate_assignment=True
+        use_enum_values=True,
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+        alias_generator=_alias_generator,
     )
 
     def to_json(self) -> str:
         return self.model_dump_json(by_alias=True, exclude_unset=True)
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ViewedFilters from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        _dict = self.model_dump(
+        """Return the dictionary representation of the model using alias."""
+        return self.model_dump(
             by_alias=True,
-            exclude={},
             exclude_none=True,
+            exclude_unset=True,
         )
-        return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ViewedFilters from a dict"""
         if obj is None:
             return None
@@ -124,15 +118,6 @@ class ViewedFilters(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "eventName": obj.get("eventName"),
-                "eventType": obj.get("eventType"),
-                "index": obj.get("index"),
-                "filters": obj.get("filters"),
-                "userToken": obj.get("userToken"),
-                "authenticatedUserToken": obj.get("authenticatedUserToken"),
-                "timestamp": obj.get("timestamp"),
-            }
-        )
-        return _obj
+        obj["eventType"] = obj.get("eventType")
+
+        return cls.model_validate(obj)

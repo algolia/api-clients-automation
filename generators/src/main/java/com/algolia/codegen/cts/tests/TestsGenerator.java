@@ -7,11 +7,7 @@ import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
@@ -95,20 +91,11 @@ public abstract class TestsGenerator {
 
   private String injectVariables(String json) {
     long threeDays = 3 * 24 * 60 * 60 * 1000;
-    json = json
+    return json
       .replace("${{language}}", language)
       .replace("${{languageCased}}", ctsManager.getLanguageCased())
       .replace("${{languageVersion}}", ctsManager.getVersion())
       .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
       .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
-
-    if (!language.equals("javascript") && !"true".equals(System.getenv("CI"))) {
-      // hack for docker on mac, the `network=host` does not work so we need to use
-      // another local IP
-      json = json.replace("${{localhost}}", "host.docker.internal");
-    } else {
-      json = json.replace("${{localhost}}", "localhost");
-    }
-    return json;
   }
 }

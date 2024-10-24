@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenServer;
 import org.openapitools.codegen.CodegenServerVariable;
+import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.model.OperationsMap;
 
 public class Helpers {
@@ -197,6 +198,22 @@ public class Helpers {
     return value.asText();
   }
 
+  /** Get the `field` value in the `config/clients.config.json` file for the given language */
+  public static List<Map<String, Object>> getClientConfigList(String language, String... fields) throws ConfigException {
+    if (fields.length == 0) {
+      throw new ConfigException("getClientConfigList requires at least one field");
+    }
+    JsonNode value = getClientConfig(language);
+    for (String field : fields) {
+      value = value.get(field);
+    }
+    try {
+      return new ObjectMapper().readerForListOf(Map.class).readValue(value);
+    } catch (IOException e) {
+      throw new ConfigException("Cannot convert value", e);
+    }
+  }
+
   public static List<String> getClientListForLanguage(String language) throws ConfigException {
     JsonNode value = getClientConfig(language);
     value = value.get("clients");
@@ -256,6 +273,15 @@ public class Helpers {
 
   public static void prettyPrint(Object o) {
     Json.prettyPrint(o);
+  }
+
+  public static void addCommonSupportingFiles(List<SupportingFile> supportingFiles, String root) {
+    supportingFiles.add(new SupportingFile("LICENSE", "", root + "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", root + ".github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", root + ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
+    supportingFiles.add(
+      new SupportingFile("do-not-edit-this-repository.yml", root + ".github/workflows", "do-not-edit-this-repository.yml")
+    );
   }
 
   public static String getLanguageVersion(String language) throws IOException {

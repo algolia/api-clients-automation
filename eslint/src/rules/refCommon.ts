@@ -1,6 +1,6 @@
-import type { Rule } from 'eslint';
+import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isPairWithKey, isScalar } from '../utils';
+import { isPairWithKey, isScalar } from '../utils.js';
 
 const allSpecs = [
   'abtesting',
@@ -13,21 +13,25 @@ const allSpecs = [
   'query-suggestions',
   'recommend',
   'search',
-  'usage',
 ];
 
-export const refCommon: Rule.RuleModule = {
+export const refCommon = createRule('refCommon', {
   meta: {
     docs: {
       description:
         'the $ref must target the current spec, or the common spec. If you intended to use a model from an other spec, move it to the common folder',
+      categories: null,
+      extensionRule: false,
+      layout: false,
     },
     messages: {
       refCommon: '$ref to another spec',
     },
+    type: 'layout',
+    schema: [],
   },
   create(context) {
-    if (!context.sourceCode.parserServices.isYAML) {
+    if (!context.getSourceCode().parserServices.isYAML) {
       return {};
     }
 
@@ -46,7 +50,7 @@ export const refCommon: Rule.RuleModule = {
           return;
         }
 
-        const spec = context.filename.match(/specs\/([a-z-]+?)\//)?.[1];
+        const spec = context.getFilename().match(/specs\/([a-z-]+?)\//)?.[1];
         if (!spec) {
           return;
         }
@@ -64,4 +68,4 @@ export const refCommon: Rule.RuleModule = {
       },
     };
   },
-};
+});

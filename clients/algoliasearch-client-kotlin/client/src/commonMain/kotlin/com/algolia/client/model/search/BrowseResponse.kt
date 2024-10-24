@@ -16,6 +16,7 @@ import kotlinx.serialization.json.*
  * @param aroundLatLng Computed geographical location.
  * @param automaticRadius Distance from a central coordinate provided by `aroundLatLng`.
  * @param exhaustive
+ * @param appliedRules Rules applied to the query.
  * @param exhaustiveFacetsCount See the `facetsCount` field of the `exhaustive` object in the response.
  * @param exhaustiveNbHits See the `nbHits` field of the `exhaustive` object in the response.
  * @param exhaustiveTypo See the `typo` field of the `exhaustive` object in the response.
@@ -34,6 +35,7 @@ import kotlinx.serialization.json.*
  * @param serverUsed Host name of the server that processed the request.
  * @param userData An object with custom data.  You can store up to 32kB as custom data.
  * @param queryID Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+ * @param automaticInsights Whether automatic events collection is enabled for the application.
  * @param page Page of search results to retrieve.
  * @param nbHits Number of results (hits).
  * @param nbPages Number of pages of results.
@@ -68,6 +70,9 @@ public data class BrowseResponse(
   @SerialName(value = "automaticRadius") val automaticRadius: String? = null,
 
   @SerialName(value = "exhaustive") val exhaustive: Exhaustive? = null,
+
+  /** Rules applied to the query. */
+  @SerialName(value = "appliedRules") val appliedRules: List<JsonObject>? = null,
 
   /** See the `facetsCount` field of the `exhaustive` object in the response. */
   @Deprecated(message = "This property is deprecated.")
@@ -123,6 +128,9 @@ public data class BrowseResponse(
 
   /** Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/). */
   @SerialName(value = "queryID") val queryID: String? = null,
+
+  /** Whether automatic events collection is enabled for the application. */
+  @SerialName(value = "_automaticInsights") val automaticInsights: Boolean? = null,
 
   /** Page of search results to retrieve. */
   @SerialName(value = "page") val page: Int? = null,

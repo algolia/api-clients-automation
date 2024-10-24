@@ -13,19 +13,19 @@ import java.util.Objects;
 public class FacetOrdering {
 
   @JsonProperty("facets")
-  private Facets facets;
+  private IndexSettingsFacets facets;
 
   @JsonProperty("values")
   private Map<String, Value> values;
 
-  public FacetOrdering setFacets(Facets facets) {
+  public FacetOrdering setFacets(IndexSettingsFacets facets) {
     this.facets = facets;
     return this;
   }
 
   /** Get facets */
   @javax.annotation.Nullable
-  public Facets getFacets() {
+  public IndexSettingsFacets getFacets() {
     return facets;
   }
 

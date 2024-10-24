@@ -1,11 +1,11 @@
-import { endWithDot } from './rules/endWithDot';
-import { noFinalDot } from './rules/noFinalDot';
-import { noNewLine } from './rules/noNewLine';
-import { createOutOfLineRule } from './rules/outOfLineRule';
-import { refCommon } from './rules/refCommon';
-import { singleQuoteRef } from './rules/singleQuoteRef';
-import { validACL } from './rules/validACL';
-import { validInlineTitle } from './rules/validInlineTitle';
+import { endWithDot } from './rules/endWithDot.js';
+import { noFinalDot } from './rules/noFinalDot.js';
+import { noNewLine } from './rules/noNewLine.js';
+import { createOutOfLineRule } from './rules/outOfLineRule.js';
+import { refCommon } from './rules/refCommon.js';
+import { singleQuoteRef } from './rules/singleQuoteRef.js';
+import { validACL } from './rules/validACL.js';
+import { validInlineTitle } from './rules/validInlineTitle.js';
 
 const rules = {
   'end-with-dot': endWithDot,
@@ -43,4 +43,4 @@ function parseForESLint(): any {
   };
 }
 
-export { rules, parseForESLint };
+export { parseForESLint, rules };

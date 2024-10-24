@@ -11,10 +11,6 @@ import kotlinx.serialization.json.*
  * SearchResponse
  *
  * @param processingTimeMS Time the server took to process the request, in milliseconds.
- * @param page Page of search results to retrieve.
- * @param nbHits Number of results (hits).
- * @param nbPages Number of pages of results.
- * @param hitsPerPage Number of hits per page.
  * @param hits Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
  * @param query Search query.
  * @param params URL-encoded string of all search parameters.
@@ -23,6 +19,7 @@ import kotlinx.serialization.json.*
  * @param aroundLatLng Computed geographical location.
  * @param automaticRadius Distance from a central coordinate provided by `aroundLatLng`.
  * @param exhaustive
+ * @param appliedRules Rules applied to the query.
  * @param exhaustiveFacetsCount See the `facetsCount` field of the `exhaustive` object in the response.
  * @param exhaustiveNbHits See the `nbHits` field of the `exhaustive` object in the response.
  * @param exhaustiveTypo See the `typo` field of the `exhaustive` object in the response.
@@ -41,24 +38,17 @@ import kotlinx.serialization.json.*
  * @param serverUsed Host name of the server that processed the request.
  * @param userData An object with custom data.  You can store up to 32kB as custom data.
  * @param queryID Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+ * @param automaticInsights Whether automatic events collection is enabled for the application.
+ * @param page Page of search results to retrieve.
+ * @param nbHits Number of results (hits).
+ * @param nbPages Number of pages of results.
+ * @param hitsPerPage Number of hits per page.
  */
 @Serializable(SearchResponseSerializer::class)
 public data class SearchResponse(
 
   /** Time the server took to process the request, in milliseconds. */
   val processingTimeMS: Int,
-
-  /** Page of search results to retrieve. */
-  val page: Int,
-
-  /** Number of results (hits). */
-  val nbHits: Int,
-
-  /** Number of pages of results. */
-  val nbPages: Int,
-
-  /** Number of hits per page. */
-  val hitsPerPage: Int,
 
   /** Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.  */
   val hits: List<Hit>,
@@ -82,6 +72,9 @@ public data class SearchResponse(
   val automaticRadius: String? = null,
 
   val exhaustive: Exhaustive? = null,
+
+  /** Rules applied to the query. */
+  val appliedRules: List<JsonObject>? = null,
 
   /** See the `facetsCount` field of the `exhaustive` object in the response. */
   @Deprecated(message = "This property is deprecated.")
@@ -138,6 +131,21 @@ public data class SearchResponse(
   /** Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/). */
   val queryID: String? = null,
 
+  /** Whether automatic events collection is enabled for the application. */
+  val automaticInsights: Boolean? = null,
+
+  /** Page of search results to retrieve. */
+  val page: Int? = null,
+
+  /** Number of results (hits). */
+  val nbHits: Int? = null,
+
+  /** Number of pages of results. */
+  val nbPages: Int? = null,
+
+  /** Number of hits per page. */
+  val hitsPerPage: Int? = null,
+
   val additionalProperties: Map<String, JsonElement>? = null,
 ) : SearchResult
 
@@ -145,10 +153,6 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
 
   override val descriptor: SerialDescriptor = buildClassSerialDescriptor("SearchResponse") {
     element<Int>("processingTimeMS")
-    element<Int>("page")
-    element<Int>("nbHits")
-    element<Int>("nbPages")
-    element<Int>("hitsPerPage")
     element<List<Hit>>("hits")
     element<String>("query")
     element<String>("params")
@@ -157,6 +161,7 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
     element<String>("aroundLatLng", isOptional = true)
     element<String>("automaticRadius", isOptional = true)
     element<Exhaustive>("exhaustive", isOptional = true)
+    element<List<JsonObject>>("appliedRules", isOptional = true)
     element<Boolean>("exhaustiveFacetsCount", isOptional = true)
     element<Boolean>("exhaustiveNbHits", isOptional = true)
     element<Boolean>("exhaustiveTypo", isOptional = true)
@@ -175,6 +180,11 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
     element<String>("serverUsed", isOptional = true)
     element<JsonObject>("userData", isOptional = true)
     element<String>("queryID", isOptional = true)
+    element<Boolean>("_automaticInsights", isOptional = true)
+    element<Int>("page", isOptional = true)
+    element<Int>("nbHits", isOptional = true)
+    element<Int>("nbPages", isOptional = true)
+    element<Int>("hitsPerPage", isOptional = true)
   }
 
   override fun deserialize(decoder: Decoder): SearchResponse {
@@ -182,10 +192,6 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
     val tree = input.decodeJsonObject()
     return SearchResponse(
       processingTimeMS = tree.getValue("processingTimeMS").let { input.json.decodeFromJsonElement(it) },
-      page = tree.getValue("page").let { input.json.decodeFromJsonElement(it) },
-      nbHits = tree.getValue("nbHits").let { input.json.decodeFromJsonElement(it) },
-      nbPages = tree.getValue("nbPages").let { input.json.decodeFromJsonElement(it) },
-      hitsPerPage = tree.getValue("hitsPerPage").let { input.json.decodeFromJsonElement(it) },
       hits = tree.getValue("hits").let { input.json.decodeFromJsonElement(it) },
       query = tree.getValue("query").let { input.json.decodeFromJsonElement(it) },
       params = tree.getValue("params").let { input.json.decodeFromJsonElement(it) },
@@ -194,6 +200,7 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
       aroundLatLng = tree["aroundLatLng"]?.let { input.json.decodeFromJsonElement(it) },
       automaticRadius = tree["automaticRadius"]?.let { input.json.decodeFromJsonElement(it) },
       exhaustive = tree["exhaustive"]?.let { input.json.decodeFromJsonElement(it) },
+      appliedRules = tree["appliedRules"]?.let { input.json.decodeFromJsonElement(it) },
       exhaustiveFacetsCount = tree["exhaustiveFacetsCount"]?.let { input.json.decodeFromJsonElement(it) },
       exhaustiveNbHits = tree["exhaustiveNbHits"]?.let { input.json.decodeFromJsonElement(it) },
       exhaustiveTypo = tree["exhaustiveTypo"]?.let { input.json.decodeFromJsonElement(it) },
@@ -212,6 +219,11 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
       serverUsed = tree["serverUsed"]?.let { input.json.decodeFromJsonElement(it) },
       userData = tree["userData"]?.let { input.json.decodeFromJsonElement(it) },
       queryID = tree["queryID"]?.let { input.json.decodeFromJsonElement(it) },
+      automaticInsights = tree["_automaticInsights"]?.let { input.json.decodeFromJsonElement(it) },
+      page = tree["page"]?.let { input.json.decodeFromJsonElement(it) },
+      nbHits = tree["nbHits"]?.let { input.json.decodeFromJsonElement(it) },
+      nbPages = tree["nbPages"]?.let { input.json.decodeFromJsonElement(it) },
+      hitsPerPage = tree["hitsPerPage"]?.let { input.json.decodeFromJsonElement(it) },
       additionalProperties = tree.filterKeys { it !in descriptor.elementNames },
     )
   }
@@ -220,10 +232,6 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
     val output = encoder.asJsonEncoder()
     val json = buildJsonObject {
       put("processingTimeMS", output.json.encodeToJsonElement(value.processingTimeMS))
-      put("page", output.json.encodeToJsonElement(value.page))
-      put("nbHits", output.json.encodeToJsonElement(value.nbHits))
-      put("nbPages", output.json.encodeToJsonElement(value.nbPages))
-      put("hitsPerPage", output.json.encodeToJsonElement(value.hitsPerPage))
       put("hits", output.json.encodeToJsonElement(value.hits))
       put("query", output.json.encodeToJsonElement(value.query))
       put("params", output.json.encodeToJsonElement(value.params))
@@ -232,6 +240,7 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
       value.aroundLatLng?.let { put("aroundLatLng", output.json.encodeToJsonElement(it)) }
       value.automaticRadius?.let { put("automaticRadius", output.json.encodeToJsonElement(it)) }
       value.exhaustive?.let { put("exhaustive", output.json.encodeToJsonElement(it)) }
+      value.appliedRules?.let { put("appliedRules", output.json.encodeToJsonElement(it)) }
       value.exhaustiveFacetsCount?.let { put("exhaustiveFacetsCount", output.json.encodeToJsonElement(it)) }
       value.exhaustiveNbHits?.let { put("exhaustiveNbHits", output.json.encodeToJsonElement(it)) }
       value.exhaustiveTypo?.let { put("exhaustiveTypo", output.json.encodeToJsonElement(it)) }
@@ -250,6 +259,11 @@ internal object SearchResponseSerializer : KSerializer<SearchResponse> {
       value.serverUsed?.let { put("serverUsed", output.json.encodeToJsonElement(it)) }
       value.userData?.let { put("userData", output.json.encodeToJsonElement(it)) }
       value.queryID?.let { put("queryID", output.json.encodeToJsonElement(it)) }
+      value.automaticInsights?.let { put("_automaticInsights", output.json.encodeToJsonElement(it)) }
+      value.page?.let { put("page", output.json.encodeToJsonElement(it)) }
+      value.nbHits?.let { put("nbHits", output.json.encodeToJsonElement(it)) }
+      value.nbPages?.let { put("nbPages", output.json.encodeToJsonElement(it)) }
+      value.hitsPerPage?.let { put("hitsPerPage", output.json.encodeToJsonElement(it)) }
       value.additionalProperties?.onEach { (key, element) -> put(key, element) }
     }
     (encoder as JsonEncoder).encodeJsonElement(json)

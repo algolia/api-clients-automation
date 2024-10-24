@@ -11,7 +11,7 @@ import kotlinx.serialization.json.*
 import kotlin.jvm.JvmInline
 
 /**
- * Filter by numeric facets.  **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**  You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`, `>=`. Comparsions are precise up to 3 decimals. You can also provide ranges: `facet:<lower> TO <upper>`. The range includes the lower and upper boundaries. The same combination rules apply as for `facetFilters`.
+ * Filter by numeric facets.  **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**  You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`, `>=`. Comparisons are precise up to 3 decimals. You can also provide ranges: `facet:<lower> TO <upper>`. The range includes the lower and upper boundaries. The same combination rules apply as for `facetFilters`.
  *
  * Implementations:
  * - [List<NumericFilters>] - *[NumericFilters.of]*
@@ -41,7 +41,7 @@ public sealed interface NumericFilters {
 internal class NumericFiltersSerializer : JsonContentPolymorphicSerializer<NumericFilters>(NumericFilters::class) {
   override fun selectDeserializer(element: JsonElement): DeserializationStrategy<NumericFilters> {
     return when {
-      element.isJsonArrayOfObjects -> NumericFilters.ListOfNumericFiltersValue.serializer()
+      element is JsonArray -> NumericFilters.ListOfNumericFiltersValue.serializer()
       element.isString -> NumericFilters.StringValue.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }

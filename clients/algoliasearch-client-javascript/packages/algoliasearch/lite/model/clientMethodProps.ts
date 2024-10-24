@@ -16,7 +16,7 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: Record<string, any>;
+  parameters?: { [key: string]: any };
   /**
    * Parameters to send with the custom request.
    */

@@ -55,7 +55,7 @@ func TestMonitoringcommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.3.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.5.4\).*`), echo.Header.Get("User-Agent"))
 }
 
 // calls api with default read timeouts
@@ -128,7 +128,7 @@ func TestMonitoringsetClientApiKey0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6683", call.IsReadWrite)},
 		},
 	}
 	client, err = monitoring.NewClientWithConfig(cfg)

@@ -1,19 +1,20 @@
 import http from 'http';
 import https from 'https';
+import nock from 'nock';
 import { Readable } from 'stream';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
-import nock from 'nock';
 
 import { createHttpRequester } from '../..';
 import {
-  headers,
-  timeoutRequest,
-  requestStub,
-  testQueryHeader,
-  testQueryBaseUrl,
-  getStringifiedBody,
   createTestServer,
+  getStringifiedBody,
+  headers,
+  requestStub,
+  testQueryBaseUrl,
+  testQueryHeader,
+  timeoutRequest,
 } from '../../../../tests/utils';
 
 const requester = createHttpRequester();
@@ -23,33 +24,33 @@ const httpBaseRequest = http.request;
 
 describe('api', () => {
   const mockedRequestResponse = {
-    destroy: jest.fn(),
-    on: jest.fn(),
-    once: jest.fn(),
-    write: jest.fn(),
-    end: jest.fn(),
+    destroy: vi.fn(),
+    on: vi.fn(),
+    once: vi.fn(),
+    write: vi.fn(),
+    end: vi.fn(),
   };
 
   beforeAll(() => {
     // @ts-expect-error we don't care about the response for those tests
-    https.request = jest.fn(() => mockedRequestResponse);
+    https.request = vi.fn(() => mockedRequestResponse);
   });
 
   afterAll(() => {
     https.request = httpsBaseRequest;
     http.request = httpBaseRequest;
-    jest.resetAllMocks();
-    jest.clearAllMocks();
+    vi.resetAllMocks();
+    vi.clearAllMocks();
   });
 
-  it('allow init without parameters', () => {
+  test('allow init without parameters', () => {
     expect(() => createHttpRequester()).not.toThrow();
   });
 
-  it('allow providing custom agent', async () => {
+  test('allow providing custom agent', async () => {
     const agent = new http.Agent();
     // @ts-expect-error we don't care about the response for those tests
-    http.request = jest.fn(() => mockedRequestResponse);
+    http.request = vi.fn(() => mockedRequestResponse);
     const tmpRequester = createHttpRequester({
       agent,
     });
@@ -62,7 +63,7 @@ describe('api', () => {
     expect(http.request).toHaveBeenCalled();
   });
 
-  it('allow overriding default options', async () => {
+  test('allow overriding default options', async () => {
     const tmpRequester = createHttpRequester({
       requesterOptions: {
         headers: {
@@ -85,7 +86,7 @@ describe('api', () => {
 });
 
 describe('status code handling', () => {
-  it('sends requests', async () => {
+  test('sends requests', async () => {
     const body = getStringifiedBody();
 
     nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(200, body);
@@ -95,7 +96,7 @@ describe('status code handling', () => {
     expect(response.content).toEqual(body);
   });
 
-  it('resolves status 200', async () => {
+  test('resolves status 200', async () => {
     const body = getStringifiedBody();
 
     nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(200, body);
@@ -107,7 +108,7 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves status 300', async () => {
+  test('resolves status 300', async () => {
     const reason = 'Multiple Choices';
 
     nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(300, reason);
@@ -119,7 +120,7 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves status 400', async () => {
+  test('resolves status 400', async () => {
     const body = getStringifiedBody({
       message: 'Invalid Application-Id or API-Key',
     });
@@ -133,11 +134,10 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('handles chunked responses inside unicode character boundaries', async () => {
+  test('handles chunked responses inside unicode character boundaries', async () => {
     const data = Buffer.from('äöü');
 
     // create a test response stream that is chunked inside a unicode character
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     function* generate() {
       yield data.subarray(0, 3);
       yield data.subarray(3);
@@ -162,11 +162,14 @@ describe('timeout handling', () => {
     server.listen('1112');
   });
 
-  afterAll((done) => {
-    server.close(() => done());
-  });
+  afterAll(
+    () =>
+      new Promise((done) => {
+        done();
+      }),
+  );
 
-  it('timeouts with the given 1 seconds connection timeout', async () => {
+  test('timeouts with the given 1 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -181,7 +184,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(1200);
   });
 
-  it('connection timeouts with the given 2 seconds connection timeout', async () => {
+  test('connection timeouts with the given 2 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -196,7 +199,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(2200);
   });
 
-  it("socket timeouts if response don't appears before the timeout with 2 seconds timeout", async () => {
+  test("socket timeouts if response don't appears before the timeout with 2 seconds timeout", async () => {
     const before = Date.now();
 
     const response = await requester.send({
@@ -212,7 +215,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(2200);
   });
 
-  it("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
+  test("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -227,7 +230,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(3200);
   });
 
-  it('do not timeouts if response appears before the timeout', async () => {
+  test('do not timeouts if response appears before the timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...requestStub,
@@ -246,7 +249,7 @@ describe('timeout handling', () => {
 });
 
 describe('error handling', (): void => {
-  it('resolves dns not found', async () => {
+  test('resolves dns not found', async () => {
     const request: EndRequest = {
       url: 'https://this-dont-exist.algolia.com',
       method: 'POST',
@@ -263,7 +266,7 @@ describe('error handling', (): void => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves general network errors', async () => {
+  test('resolves general network errors', async () => {
     nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
       .query(testQueryHeader)

@@ -1,15 +1,14 @@
-/* eslint-disable no-console */
 import fs from 'fs';
 import type { Server } from 'http';
 
 import { expect } from 'chai';
 import chalk from 'chalk';
-import express from 'express';
 import type { Express } from 'express';
+import express from 'express';
 
-import { CI, toAbsolutePath } from '../../common';
+import { CI, toAbsolutePath } from '../../common.js';
 
-import { setupServer } from '.';
+import { setupServer } from './index.js';
 
 const benchmarkStatus: Record<
   string,
@@ -22,17 +21,16 @@ export function printBenchmarkReport(): void {
   const times: Array<{ lang: string; rate: number }> = [];
   for (const lang of Object.keys(benchmarkStatus)) {
     const status = benchmarkStatus[lang];
-    expect(status.requestTimes).to.have.length(1000);
-    const rate = 1000000 / (status.requestTimes.at(-1)! - status.requestTimes[0]);
+    expect(status.requestTimes).to.have.length(2000);
+    status.requestTimes.sort((a, b) => a - b);
+    const rate = (status.requestTimes.length * 1000) / (status.requestTimes.at(-1)! - status.requestTimes[0]);
     times.push({ lang, rate });
   }
 
   times.sort((a, b) => b.rate - a.rate);
   console.log(chalk.black.bgCyan('Benchmark report:'));
   for (const { lang, rate } of times) {
-    const color =
-      // eslint-disable-next-line no-nested-ternary
-      rate > 2000 ? 'bgGreenBright' : rate > 1000 ? 'bgGreen' : rate > 500 ? 'bgYellow' : 'bgRed';
+    const color = rate > 2000 ? 'bgGreenBright' : rate > 1000 ? 'bgGreen' : rate > 500 ? 'bgYellow' : 'bgRed';
     console.log(chalk.black[color](`${lang}: ${Math.floor(rate)} req/s`));
 
     if (CI) {

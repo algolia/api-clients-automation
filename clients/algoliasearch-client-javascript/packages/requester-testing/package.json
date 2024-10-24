@@ -1,0 +1,60 @@
+{
+  "name": "@algolia/requester-testing",
+  "version": "5.10.2",
+  "private": true,
+  "description": "A package that contains the echo requester of the algoliasearch JavaScript requesters, for testing purposes",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
+  "license": "MIT",
+  "author": "Algolia",
+  "type": "module",
+  "files": [
+    "dist",
+    "index.d.ts",
+    "index.js"
+  ],
+  "exports": {
+    ".": {
+      "node": {
+        "types": {
+          "import": "./dist/node.d.ts",
+          "module": "./dist/node.d.ts",
+          "require": "./dist/node.d.cts"
+        },
+        "import": "./dist/node.js",
+        "module": "./dist/node.js",
+        "require": "./dist/node.cjs"
+      },
+      "default": {
+        "types": "./dist/browser.d.ts",
+        "module": "./dist/browser.js",
+        "import": "./dist/browser.js",
+        "default": "./dist/browser.js"
+      }
+    },
+    "./src/*": "./src/*.ts"
+  },
+  "scripts": {
+    "build": "yarn clean && yarn tsup",
+    "clean": "rm -rf ./dist || true",
+    "test:bundle": "publint . && attw --pack ."
+  },
+  "dependencies": {
+    "@algolia/client-common": "5.10.2",
+    "@algolia/requester-browser-xhr": "5.10.2",
+    "@algolia/requester-fetch": "5.10.2",
+    "@algolia/requester-node-http": "5.10.2"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.16.4",
+    "@types/node": "22.7.7",
+    "publint": "0.2.11",
+    "tsup": "8.3.0",
+    "typescript": "5.6.3"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
+  }
+}

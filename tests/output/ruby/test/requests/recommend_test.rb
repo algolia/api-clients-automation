@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestRecommendClient < Test::Unit::TestCase
-  include Algolia::Recommend
   def setup
     @client = Algolia::RecommendClient.create(
       "APP_ID",
@@ -11,6 +10,17 @@ class TestRecommendClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
+  end
+
+  # batch recommend rules
+  def test_batch_recommend_rules
+    req = @client.batch_recommend_rules_with_http_info("indexName", "related-products")
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/related-products/recommend/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
   end
 
   # allow del method for a custom path with minimal parameters
@@ -149,14 +159,14 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -168,14 +178,14 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -322,9 +332,14 @@ class TestRecommendClient < Test::Unit::TestCase
   # get recommendations for recommend model with minimal parameters
   def test_get_recommendations
     req = @client.get_recommendations_with_http_info(
-      GetRecommendationsParams.new(
+      Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
-          RelatedQuery.new(index_name: "indexName", object_id: "objectID", model: "related-products", threshold: 42.1)
+          Algolia::Recommend::RelatedQuery.new(
+            index_name: "indexName",
+            object_id: "objectID",
+            model: "related-products",
+            threshold: 42.1
+          )
         ]
       )
     )
@@ -344,16 +359,16 @@ class TestRecommendClient < Test::Unit::TestCase
   # get recommendations for recommend model with all parameters
   def test_get_recommendations1
     req = @client.get_recommendations_with_http_info(
-      GetRecommendationsParams.new(
+      Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
-          RelatedQuery.new(
+          Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName",
             object_id: "objectID",
             model: "related-products",
             threshold: 42.1,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query"]),
-            fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
           )
         ]
       )
@@ -374,9 +389,9 @@ class TestRecommendClient < Test::Unit::TestCase
   # get recommendations for trending model with minimal parameters
   def test_get_recommendations2
     req = @client.get_recommendations_with_http_info(
-      GetRecommendationsParams.new(
+      Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
-          TrendingItemsQuery.new(
+          Algolia::Recommend::TrendingItemsQuery.new(
             index_name: "indexName",
             model: "trending-items",
             threshold: 42.1,
@@ -402,17 +417,17 @@ class TestRecommendClient < Test::Unit::TestCase
   # get recommendations for trending model with all parameters
   def test_get_recommendations3
     req = @client.get_recommendations_with_http_info(
-      GetRecommendationsParams.new(
+      Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
-          TrendingItemsQuery.new(
+          Algolia::Recommend::TrendingItemsQuery.new(
             index_name: "indexName",
             model: "trending-items",
             threshold: 42.1,
             max_recommendations: 10,
             facet_name: "myFacetName",
             facet_value: "myFacetValue",
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query"]),
-            fallback_parameters: SearchParamsObject.new(query: "myQuery", facet_filters: ["fallback"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
           )
         ]
       )
@@ -433,10 +448,20 @@ class TestRecommendClient < Test::Unit::TestCase
   # get multiple recommendations with minimal parameters
   def test_get_recommendations4
     req = @client.get_recommendations_with_http_info(
-      GetRecommendationsParams.new(
+      Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
-          RelatedQuery.new(index_name: "indexName1", object_id: "objectID1", model: "related-products", threshold: 21.7),
-          RelatedQuery.new(index_name: "indexName2", object_id: "objectID2", model: "related-products", threshold: 21.7)
+          Algolia::Recommend::RelatedQuery.new(
+            index_name: "indexName1",
+            object_id: "objectID1",
+            model: "related-products",
+            threshold: 21.7
+          ),
+          Algolia::Recommend::RelatedQuery.new(
+            index_name: "indexName2",
+            object_id: "objectID2",
+            model: "related-products",
+            threshold: 21.7
+          )
         ]
       )
     )
@@ -456,25 +481,25 @@ class TestRecommendClient < Test::Unit::TestCase
   # get multiple recommendations with all parameters
   def test_get_recommendations5
     req = @client.get_recommendations_with_http_info(
-      GetRecommendationsParams.new(
+      Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
-          RelatedQuery.new(
+          Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName1",
             object_id: "objectID1",
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query1"]),
-            fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback1"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query1"]),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback1"])
           ),
-          RelatedQuery.new(
+          Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName2",
             object_id: "objectID2",
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query2"]),
-            fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback2"])
+            query_parameters: Algolia::Recommend::RecommendSearchParams.new(query: "myQuery", facet_filters: ["query2"]),
+            fallback_parameters: Algolia::Recommend::FallbackParams.new(query: "myQuery", facet_filters: ["fallback2"])
           )
         ]
       )
@@ -495,9 +520,9 @@ class TestRecommendClient < Test::Unit::TestCase
   # get frequently bought together recommendations
   def test_get_recommendations6
     req = @client.get_recommendations_with_http_info(
-      GetRecommendationsParams.new(
+      Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
-          BoughtTogetherQuery.new(
+          Algolia::Recommend::BoughtTogetherQuery.new(
             index_name: "indexName1",
             object_id: "objectID1",
             model: "bought-together",

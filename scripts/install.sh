@@ -78,7 +78,7 @@ _apic_build_specs_complete() {
 
 _apic_build_complete() {
   if [[ COMP_CWORD -eq 2 ]]; then
-    COMPREPLY=($(compgen -W "clients playground snippets specs" -- "$cur"))
+    COMPREPLY=($(compgen -W "clients playground snippets guides specs" -- "$cur"))
   else
     second="${COMP_WORDS[2]}"
     if [[ $second == "clients" ]]; then
@@ -103,10 +103,10 @@ _apic_complete() {
   cur="${COMP_WORDS[COMP_CWORD]}"
   lang="${COMP_WORDS[COMP_CWORD-1]}" # initial guess, but it might be before in some commands
   if [[ COMP_CWORD -eq 1 ]]; then
-    COMPREPLY=($(compgen -W "build cts exec format generate playground release snippets" -- "$cur"))
+    COMPREPLY=($(compgen -W "build cts exec format generate playground release snippets guides" -- "$cur"))
   else
     first="${COMP_WORDS[1]}"
-    if [[ $first == "generate" || $first == "snippets" ]]; then
+    if [[ $first == "generate" || $first == "snippets" || $first == "guides" ]]; then
       _apic_lang_client_complete 2
     elif [[ $first == "playground" ]]; then
       _apic_playground_complete

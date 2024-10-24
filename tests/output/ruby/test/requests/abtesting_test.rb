@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestAbtestingClient < Test::Unit::TestCase
-  include Algolia::Abtesting
   def setup
     @client = Algolia::AbtestingClient.create(
       "APP_ID",
@@ -16,12 +15,12 @@ class TestAbtestingClient < Test::Unit::TestCase
   # addABTests with minimal parameters
   def test_add_ab_tests
     req = @client.add_ab_tests_with_http_info(
-      AddABTestsRequest.new(
+      Algolia::Abtesting::AddABTestsRequest.new(
         end_at: "2022-12-31T00:00:00.000Z",
         name: "myABTest",
         variants: [
-          AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
-          AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
         ]
       )
     )
@@ -174,14 +173,14 @@ class TestAbtestingClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -193,14 +192,14 @@ class TestAbtestingClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -362,13 +361,13 @@ class TestAbtestingClient < Test::Unit::TestCase
   # scheduleABTest with minimal parameters
   def test_schedule_ab_test
     req = @client.schedule_ab_test_with_http_info(
-      ScheduleABTestsRequest.new(
+      Algolia::Abtesting::ScheduleABTestsRequest.new(
         end_at: "2022-12-31T00:00:00.000Z",
         scheduled_at: "2022-11-31T00:00:00.000Z",
         name: "myABTest",
         variants: [
-          AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
-          AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
         ]
       )
     )

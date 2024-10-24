@@ -1,11 +1,14 @@
-import type { Rule } from 'eslint';
+import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isNullable, isPairWithKey } from '../utils';
+import { isNullable, isPairWithKey } from '../utils.js';
 
-export const validInlineTitle: Rule.RuleModule = {
+export const validInlineTitle = createRule('validInlineTitle', {
   meta: {
     docs: {
       description: 'title must be set in inline models, should be the first property and start with a lowercase',
+      categories: null,
+      extensionRule: false,
+      layout: false,
     },
     messages: {
       inlineTitleExists: 'title must be set in inline models',
@@ -13,9 +16,11 @@ export const validInlineTitle: Rule.RuleModule = {
       firstProperty: 'title must be the first property',
       noSpaceInTitle: 'title must not contain spaces',
     },
+    type: 'layout',
+    schema: [],
   },
   create(context) {
-    if (!context.sourceCode.parserServices.isYAML) {
+    if (!context.getSourceCode().parserServices.isYAML) {
       return {};
     }
 
@@ -44,7 +49,7 @@ export const validInlineTitle: Rule.RuleModule = {
         // make sure title doesn't contain spaces
         if (titleValue?.includes(' ')) {
           context.report({
-            node: title,
+            node: title!,
             messageId: 'noSpaceInTitle',
           });
         }
@@ -85,4 +90,4 @@ export const validInlineTitle: Rule.RuleModule = {
       },
     };
   },
-};
+});

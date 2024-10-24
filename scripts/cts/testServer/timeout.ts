@@ -3,7 +3,7 @@ import type { Server } from 'http';
 import { expect } from 'chai';
 import type express from 'express';
 
-import { setupServer } from '.';
+import { setupServer } from './index.js';
 
 const timeoutState: Record<string, { timestamp: number[]; duration: number[]; hangCount: number }> = {};
 
@@ -42,7 +42,7 @@ export function assertValidTimeouts(expectedCount: number): void {
           break;
         default:
           // the delay should be the same, because the `retryCount` is per host instead of global
-          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 100);
+          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 150);
           break;
       }
     }

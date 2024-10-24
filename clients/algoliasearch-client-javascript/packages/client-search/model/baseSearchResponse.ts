@@ -29,6 +29,11 @@ export type BaseSearchResponse = Record<string, any> & {
   exhaustive?: Exhaustive;
 
   /**
+   * Rules applied to the query.
+   */
+  appliedRules?: Array<Record<string, unknown>>;
+
+  /**
    * See the `facetsCount` field of the `exhaustive` object in the response.
    */
   exhaustiveFacetsCount?: boolean;
@@ -46,12 +51,12 @@ export type BaseSearchResponse = Record<string, any> & {
   /**
    * Facet counts.
    */
-  facets?: Record<string, Record<string, number>>;
+  facets?: { [key: string]: { [key: string]: number } };
 
   /**
    * Statistics for numerical facets.
    */
-  facets_stats?: Record<string, FacetStats>;
+  facets_stats?: { [key: string]: FacetStats };
 
   /**
    * Index name used for the query.
@@ -116,4 +121,9 @@ export type BaseSearchResponse = Record<string, any> & {
    * Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
    */
   queryID?: string;
+
+  /**
+   * Whether automatic events collection is enabled for the application.
+   */
+  _automaticInsights?: boolean;
 };

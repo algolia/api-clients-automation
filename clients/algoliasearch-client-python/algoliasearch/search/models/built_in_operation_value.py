@@ -8,16 +8,9 @@ from __future__ import annotations
 
 from json import dumps, loads
 from sys import version_info
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Set, Union
 
-from pydantic import (
-    BaseModel,
-    Field,
-    StrictInt,
-    StrictStr,
-    ValidationError,
-    model_serializer,
-)
+from pydantic import BaseModel, Field, ValidationError, model_serializer
 
 if version_info >= (3, 11):
     from typing import Self
@@ -30,15 +23,12 @@ class BuiltInOperationValue(BaseModel):
     BuiltInOperationValue
     """
 
-    oneof_schema_1_validator: Optional[StrictStr] = Field(
-        default=None,
-        description="A string to append or remove for the `Add`, `Remove`, and `AddUnique` operations.",
-    )
-    oneof_schema_2_validator: Optional[StrictInt] = Field(
-        default=None,
-        description="A number to add, remove, or append, depending on the operation.",
-    )
-    actual_instance: Optional[Union[int, str]] = None
+    oneof_schema_1_validator: Optional[str] = Field(default=None)
+    """ A string to append or remove for the `Add`, `Remove`, and `AddUnique` operations. """
+    oneof_schema_2_validator: Optional[int] = Field(default=None)
+    """ A number to add, remove, or append, depending on the operation. """
+    actual_instance: Union[int, str, None] = None
+    one_of_schemas: Set[str] = {"int", "str"}
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -50,19 +40,20 @@ class BuiltInOperationValue(BaseModel):
                 raise ValueError(
                     "If a position argument is used, keyword arguments cannot be used."
                 )
-            super().__init__(actual_instance=args[0])
+            super().__init__(actual_instance=args[0])  # pyright: ignore
         else:
             super().__init__(**kwargs)
 
     @model_serializer
-    def unwrap_actual_instance(self) -> Optional[Union[int, str]]:
+    def unwrap_actual_instance(self) -> Union[int, str, Self, None]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
         """
         return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Self:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+        """Create an instance of BuiltInOperationValue from a JSON string"""
         return cls.from_json(dumps(obj))
 
     @classmethod
@@ -96,17 +87,21 @@ class BuiltInOperationValue(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json"):
-            return self.actual_instance.to_json()
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json  # pyright: ignore
+        ):
+            return self.actual_instance.to_json()  # pyright: ignore
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], int, str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict"):
-            return self.actual_instance.to_dict()
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict  # pyright: ignore
+        ):
+            return self.actual_instance.to_dict()  # pyright: ignore
         else:
-            return self.actual_instance
+            return self.actual_instance  # pyright: ignore

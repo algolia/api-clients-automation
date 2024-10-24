@@ -16,6 +16,8 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
     /// Distance from a central coordinate provided by `aroundLatLng`.
     public var automaticRadius: String?
     public var exhaustive: SearchExhaustive?
+    /// Rules applied to the query.
+    public var appliedRules: [AnyCodable]?
     /// See the `facetsCount` field of the `exhaustive` object in the response.
     @available(*, deprecated, message: "This property is deprecated.")
     public var exhaustiveFacetsCount: Bool?
@@ -58,6 +60,8 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
     /// Unique identifier for the query. This is used for [click
     /// analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
     public var queryID: String?
+    /// Whether automatic events collection is enabled for the application.
+    public var automaticInsights: Bool?
 
     public init(
         abTestID: Int? = nil,
@@ -65,6 +69,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         aroundLatLng: String? = nil,
         automaticRadius: String? = nil,
         exhaustive: SearchExhaustive? = nil,
+        appliedRules: [AnyCodable]? = nil,
         exhaustiveFacetsCount: Bool? = nil,
         exhaustiveNbHits: Bool? = nil,
         exhaustiveTypo: Bool? = nil,
@@ -83,13 +88,15 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         serverTimeMS: Int? = nil,
         serverUsed: String? = nil,
         userData: AnyCodable? = nil,
-        queryID: String? = nil
+        queryID: String? = nil,
+        automaticInsights: Bool? = nil
     ) {
         self.abTestID = abTestID
         self.abTestVariantID = abTestVariantID
         self.aroundLatLng = aroundLatLng
         self.automaticRadius = automaticRadius
         self.exhaustive = exhaustive
+        self.appliedRules = appliedRules
         self.exhaustiveFacetsCount = exhaustiveFacetsCount
         self.exhaustiveNbHits = exhaustiveNbHits
         self.exhaustiveTypo = exhaustiveTypo
@@ -109,6 +116,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         self.serverUsed = serverUsed
         self.userData = userData
         self.queryID = queryID
+        self.automaticInsights = automaticInsights
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -117,6 +125,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         case aroundLatLng
         case automaticRadius
         case exhaustive
+        case appliedRules
         case exhaustiveFacetsCount
         case exhaustiveNbHits
         case exhaustiveTypo
@@ -136,6 +145,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         case serverUsed
         case userData
         case queryID
+        case automaticInsights = "_automaticInsights"
     }
 
     public var additionalProperties: [String: AnyCodable] = [:]
@@ -163,6 +173,8 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         self.automaticRadius = dictionary["automaticRadius"]?.value as? String
 
         self.exhaustive = dictionary["exhaustive"]?.value as? SearchExhaustive
+
+        self.appliedRules = dictionary["appliedRules"]?.value as? [AnyCodable]
 
         self.exhaustiveFacetsCount = dictionary["exhaustiveFacetsCount"]?.value as? Bool
 
@@ -204,13 +216,15 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
 
         self.queryID = dictionary["queryID"]?.value as? String
 
+        self.automaticInsights = dictionary["automaticInsights"]?.value as? Bool
+
         for (key, value) in dictionary {
             switch key {
-            case "abTestID", "abTestVariantID", "aroundLatLng", "automaticRadius", "exhaustive",
+            case "abTestID", "abTestVariantID", "aroundLatLng", "automaticRadius", "exhaustive", "appliedRules",
                  "exhaustiveFacetsCount", "exhaustiveNbHits", "exhaustiveTypo", "facets", "facetsStats", "index",
                  "indexUsed", "message", "nbSortedHits", "parsedQuery", "processingTimeMS", "processingTimingsMS",
                  "queryAfterRemoval", "redirect", "renderingContent", "serverTimeMS", "serverUsed", "userData",
-                 "queryID":
+                 "queryID", "automaticInsights":
                 continue
             default:
                 self.additionalProperties[key] = value
@@ -227,6 +241,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         try container.encodeIfPresent(self.aroundLatLng, forKey: .aroundLatLng)
         try container.encodeIfPresent(self.automaticRadius, forKey: .automaticRadius)
         try container.encodeIfPresent(self.exhaustive, forKey: .exhaustive)
+        try container.encodeIfPresent(self.appliedRules, forKey: .appliedRules)
         try container.encodeIfPresent(self.exhaustiveFacetsCount, forKey: .exhaustiveFacetsCount)
         try container.encodeIfPresent(self.exhaustiveNbHits, forKey: .exhaustiveNbHits)
         try container.encodeIfPresent(self.exhaustiveTypo, forKey: .exhaustiveTypo)
@@ -246,6 +261,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         try container.encodeIfPresent(self.serverUsed, forKey: .serverUsed)
         try container.encodeIfPresent(self.userData, forKey: .userData)
         try container.encodeIfPresent(self.queryID, forKey: .queryID)
+        try container.encodeIfPresent(self.automaticInsights, forKey: .automaticInsights)
         var additionalPropertiesContainer = encoder.container(keyedBy: String.self)
         try additionalPropertiesContainer.encodeMap(self.additionalProperties)
     }
@@ -260,6 +276,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         self.aroundLatLng = try container.decodeIfPresent(String.self, forKey: .aroundLatLng)
         self.automaticRadius = try container.decodeIfPresent(String.self, forKey: .automaticRadius)
         self.exhaustive = try container.decodeIfPresent(SearchExhaustive.self, forKey: .exhaustive)
+        self.appliedRules = try container.decodeIfPresent([AnyCodable].self, forKey: .appliedRules)
         self.exhaustiveFacetsCount = try container.decodeIfPresent(Bool.self, forKey: .exhaustiveFacetsCount)
         self.exhaustiveNbHits = try container.decodeIfPresent(Bool.self, forKey: .exhaustiveNbHits)
         self.exhaustiveTypo = try container.decodeIfPresent(Bool.self, forKey: .exhaustiveTypo)
@@ -279,12 +296,14 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         self.serverUsed = try container.decodeIfPresent(String.self, forKey: .serverUsed)
         self.userData = try container.decodeIfPresent(AnyCodable.self, forKey: .userData)
         self.queryID = try container.decodeIfPresent(String.self, forKey: .queryID)
+        self.automaticInsights = try container.decodeIfPresent(Bool.self, forKey: .automaticInsights)
         var nonAdditionalPropertyKeys = Set<String>()
         nonAdditionalPropertyKeys.insert("abTestID")
         nonAdditionalPropertyKeys.insert("abTestVariantID")
         nonAdditionalPropertyKeys.insert("aroundLatLng")
         nonAdditionalPropertyKeys.insert("automaticRadius")
         nonAdditionalPropertyKeys.insert("exhaustive")
+        nonAdditionalPropertyKeys.insert("appliedRules")
         nonAdditionalPropertyKeys.insert("exhaustiveFacetsCount")
         nonAdditionalPropertyKeys.insert("exhaustiveNbHits")
         nonAdditionalPropertyKeys.insert("exhaustiveTypo")
@@ -304,6 +323,7 @@ public struct SearchBaseSearchResponse: Codable, JSONEncodable {
         nonAdditionalPropertyKeys.insert("serverUsed")
         nonAdditionalPropertyKeys.insert("userData")
         nonAdditionalPropertyKeys.insert("queryID")
+        nonAdditionalPropertyKeys.insert("_automaticInsights")
         let additionalPropertiesContainer = try decoder.container(keyedBy: String.self)
         self.additionalProperties = try additionalPropertiesContainer.decodeMap(
             AnyCodable.self,
@@ -319,6 +339,7 @@ extension SearchBaseSearchResponse: Equatable {
             lhs.aroundLatLng == rhs.aroundLatLng &&
             lhs.automaticRadius == rhs.automaticRadius &&
             lhs.exhaustive == rhs.exhaustive &&
+            lhs.appliedRules == rhs.appliedRules &&
             lhs.exhaustiveFacetsCount == rhs.exhaustiveFacetsCount &&
             lhs.exhaustiveNbHits == rhs.exhaustiveNbHits &&
             lhs.exhaustiveTypo == rhs.exhaustiveTypo &&
@@ -337,7 +358,8 @@ extension SearchBaseSearchResponse: Equatable {
             lhs.serverTimeMS == rhs.serverTimeMS &&
             lhs.serverUsed == rhs.serverUsed &&
             lhs.userData == rhs.userData &&
-            lhs.queryID == rhs.queryID
+            lhs.queryID == rhs.queryID &&
+            lhs.automaticInsights == rhs.automaticInsights
             && lhs.additionalProperties == rhs.additionalProperties
     }
 }
@@ -349,6 +371,7 @@ extension SearchBaseSearchResponse: Hashable {
         hasher.combine(self.aroundLatLng?.hashValue)
         hasher.combine(self.automaticRadius?.hashValue)
         hasher.combine(self.exhaustive?.hashValue)
+        hasher.combine(self.appliedRules?.hashValue)
         hasher.combine(self.exhaustiveFacetsCount?.hashValue)
         hasher.combine(self.exhaustiveNbHits?.hashValue)
         hasher.combine(self.exhaustiveTypo?.hashValue)
@@ -368,6 +391,7 @@ extension SearchBaseSearchResponse: Hashable {
         hasher.combine(self.serverUsed?.hashValue)
         hasher.combine(self.userData?.hashValue)
         hasher.combine(self.queryID?.hashValue)
+        hasher.combine(self.automaticInsights?.hashValue)
         hasher.combine(self.additionalProperties.hashValue)
     }
 }

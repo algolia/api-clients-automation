@@ -36,7 +36,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -49,7 +49,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -71,7 +71,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -84,7 +84,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -94,7 +94,10 @@ class TestInsightsClientE2E:
             },
         )
         _expected_body = loads("""{"message":"OK","status":200}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
 
 class TestInsightsClientSyncE2E:
@@ -124,7 +127,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -137,7 +140,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -159,7 +162,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -172,7 +175,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1725753600000,
+                        "timestamp": 1729641600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -182,4 +185,7 @@ class TestInsightsClientSyncE2E:
             },
         )
         _expected_body = loads("""{"message":"OK","status":200}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )

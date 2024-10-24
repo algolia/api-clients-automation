@@ -4,7 +4,10 @@ export const patterns = [
   'specs/bundled/*.json',
 
   'clients/**',
-  'snippets/**',
+  'docs/**',
+  'docs/**/.*',
+  'docs/**/.*/**',
+  '!docs/README.md',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
   'clients/**/.github/**',
@@ -22,13 +25,8 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
 
   'tests/output/csharp/global.json',
-  '!snippets/csharp/**',
-  'snippets/csharp/src/**.cs',
-  '!snippets/csharp/src/Program.cs',
 
   // Dart
-  '!snippets/dart/**',
-  'snippets/dart/lib/**',
   '!clients/algoliasearch-client-dart/**',
   'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
   'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
@@ -52,7 +50,6 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/utils/*',
 
   '!tests/output/go/go.*',
-  '!snippets/go/go.*',
 
   // Java
   '!clients/algoliasearch-client-java/**',
@@ -62,12 +59,11 @@ export const patterns = [
   'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/BuildConfig.java',
 
   'tests/output/java/build.gradle',
-  '!snippets/java/settings.gradle',
 
   // JavaScript
-  '!snippets/javascript/*.json',
   '!clients/algoliasearch-client-javascript/*',
   '!clients/algoliasearch-client-javascript/.yarn/**',
+  '!clients/algoliasearch-client-javascript/.github/workflows/release.yml',
   '!clients/algoliasearch-client-javascript/scripts/**',
   '!clients/algoliasearch-client-javascript/tests/**',
   // the release process is allowed to push changes to this file, but in general we don't because those files are generated
@@ -76,18 +72,13 @@ export const patterns = [
     : 'clients/algoliasearch-client-javascript/packages/**/package.json',
   '!clients/algoliasearch-client-javascript/packages/requester-*/**',
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
+  '!clients/algoliasearch-client-javascript/packages/logger-console/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
-  '!clients/algoliasearch-client-javascript/packages/algoliasearch/jest.config.cjs',
-  '!clients/algoliasearch-client-javascript/packages/algoliasearch/babel.config.cjs',
-  'clients/algoliasearch-client-javascript/packages/*/tsup.config.ts',
-  '!clients/algoliasearch-client-javascript/packages/client-common/tsup.config.ts',
-  '!clients/algoliasearch-client-javascript/packages/requester-*/tsup.config.ts',
+  '!clients/algoliasearch-client-javascript/packages/algoliasearch/vitest.workspace.ts',
 
   'tests/output/javascript/package.json',
 
   // Kotlin
-  '!snippets/kotlin/**',
-  'snippets/kotlin/src/**',
   '!clients/algoliasearch-client-kotlin/**',
   'clients/algoliasearch-client-kotlin/gradle.properties',
   'clients/algoliasearch-client-kotlin/client/README.md',
@@ -108,7 +99,6 @@ export const patterns = [
   'clients/algoliasearch-client-php/composer.json',
 
   // Python
-  '!snippets/python/pyproject.toml',
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
   '!clients/algoliasearch-client-python/algoliasearch/py.typed',
@@ -119,17 +109,17 @@ export const patterns = [
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
 
-  'tests/output/python/requirements.txt',
   'tests/output/python/poetry.lock',
   '!tests/output/python/**/__init__.py',
+  'tests/output/python/requirements.txt',
 
   // Ruby
-  '!snippets/ruby/Gemfile',
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
   '!clients/algoliasearch-client-ruby/lib/algolia/api_client.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/api_error.rb',
+  '!clients/algoliasearch-client-ruby/lib/algolia/defaults.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/error.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/configuration.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/logger_helper.rb',
@@ -139,8 +129,6 @@ export const patterns = [
   'tests/output/ruby/Gemfile.lock',
 
   // Scala
-  '!snippets/scala/**',
-  'snippets/scala/src/**',
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
@@ -151,9 +139,6 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/extension/**',
 
   // Swift
-  '!snippets/swift/**',
-  'snippets/swift/Package.swift',
-  'snippets/swift/Sources/**',
   'clients/algoliasearch-client-swift/**',
   '!clients/algoliasearch-client-swift/*',
   'clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec',
@@ -166,8 +151,10 @@ export const patterns = [
   '!clients/algoliasearch-client-swift/Sources/zlib/**',
 
   'tests/output/swift/Package.swift',
-  '!tests/output/swift/handwritten/**',
+  '!tests/output/swift/manual/**',
   '!tests/output/swift/Utils/**',
 
   'clients/**/LICENSE',
+
+  'yarn.lock',
 ];

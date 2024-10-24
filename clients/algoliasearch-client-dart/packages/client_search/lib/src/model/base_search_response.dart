@@ -19,6 +19,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
     this.aroundLatLng,
     this.automaticRadius,
     this.exhaustive,
+    this.appliedRules,
     this.exhaustiveFacetsCount,
     this.exhaustiveNbHits,
     this.exhaustiveTypo,
@@ -38,6 +39,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
     this.serverUsed,
     this.userData,
     this.queryID,
+    this.automaticInsights,
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
@@ -60,6 +62,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
 
   @JsonKey(name: r'exhaustive')
   final Exhaustive? exhaustive;
+
+  /// Rules applied to the query.
+  @JsonKey(name: r'appliedRules')
+  final List<Object>? appliedRules;
 
   /// See the `facetsCount` field of the `exhaustive` object in the response.
   @Deprecated('exhaustiveFacetsCount has been deprecated')
@@ -138,6 +144,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
   @JsonKey(name: r'queryID')
   final String? queryID;
 
+  /// Whether automatic events collection is enabled for the application.
+  @JsonKey(name: r'_automaticInsights')
+  final bool? automaticInsights;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -147,6 +157,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
           other.aroundLatLng == aroundLatLng &&
           other.automaticRadius == automaticRadius &&
           other.exhaustive == exhaustive &&
+          other.appliedRules == appliedRules &&
           other.exhaustiveFacetsCount == exhaustiveFacetsCount &&
           other.exhaustiveNbHits == exhaustiveNbHits &&
           other.exhaustiveTypo == exhaustiveTypo &&
@@ -166,6 +177,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
           other.serverUsed == serverUsed &&
           other.userData == userData &&
           other.queryID == queryID &&
+          other.automaticInsights == automaticInsights &&
           const MapEquality<String, dynamic>().equals(this, this);
 
   @override
@@ -175,6 +187,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       aroundLatLng.hashCode +
       automaticRadius.hashCode +
       exhaustive.hashCode +
+      appliedRules.hashCode +
       exhaustiveFacetsCount.hashCode +
       exhaustiveNbHits.hashCode +
       exhaustiveTypo.hashCode +
@@ -194,6 +207,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       serverUsed.hashCode +
       userData.hashCode +
       queryID.hashCode +
+      automaticInsights.hashCode +
       const MapEquality<String, dynamic>().hash(this);
 
   factory BaseSearchResponse.fromJson(Map<String, dynamic> json) {
@@ -207,6 +221,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       aroundLatLng: instance.aroundLatLng,
       automaticRadius: instance.automaticRadius,
       exhaustive: instance.exhaustive,
+      appliedRules: instance.appliedRules,
       exhaustiveFacetsCount: instance.exhaustiveFacetsCount,
       exhaustiveNbHits: instance.exhaustiveNbHits,
       exhaustiveTypo: instance.exhaustiveTypo,
@@ -226,6 +241,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       serverUsed: instance.serverUsed,
       userData: instance.userData,
       queryID: instance.queryID,
+      automaticInsights: instance.automaticInsights,
       additionalProperties: additionalProperties,
     );
   }

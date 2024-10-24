@@ -85,9 +85,9 @@ public class {{classname}} extends ApiClient {
       hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
 
       List<Host> commonHosts = new ArrayList<>();
-      hosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-      hosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-      hosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+      commonHosts.add(new Host(appId + "-1.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+      commonHosts.add(new Host(appId + "-2.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+      commonHosts.add(new Host(appId + "-3.algolianet.com", EnumSet.of(CallType.READ, CallType.WRITE)));
 
       Collections.shuffle(commonHosts, new Random());
 
@@ -133,7 +133,7 @@ public class {{classname}} extends ApiClient {
     {{#operation}}
     /**
      * {{{notes}}}{{#allParams}}
-     * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
+     * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
      {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
      * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
     {{> api_javadoc}}
@@ -145,7 +145,7 @@ public class {{classname}} extends ApiClient {
   {{! This case only sets `requestOptions` as optional }}
   /**
     * {{{notes}}}{{#allParams}}
-    * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
+    * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
     {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
     {{> api_javadoc}}
   public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
@@ -180,7 +180,7 @@ public class {{classname}} extends ApiClient {
   /**
   * (asynchronously)
   * {{{notes}}}{{#allParams}}
-  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
+  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
   * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
   * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
   {{> api_javadoc}}
@@ -204,7 +204,7 @@ public class {{classname}} extends ApiClient {
   /**
   * (asynchronously)
   * {{{notes}}}{{#allParams}}
-  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
+  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
   * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
   {{> api_javadoc}}
   public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {

@@ -300,9 +300,6 @@ class Variant extends AbstractModel implements ModelInterface, \ArrayAccess, \Js
         if (!isset($this->container['conversionCount']) || null === $this->container['conversionCount']) {
             $invalidProperties[] = "'conversionCount' can't be null";
         }
-        if (!isset($this->container['description']) || null === $this->container['description']) {
-            $invalidProperties[] = "'description' can't be null";
-        }
         if (!isset($this->container['index']) || null === $this->container['index']) {
             $invalidProperties[] = "'index' can't be null";
         }
@@ -318,14 +315,6 @@ class Variant extends AbstractModel implements ModelInterface, \ArrayAccess, \Js
         if (!isset($this->container['trafficPercentage']) || null === $this->container['trafficPercentage']) {
             $invalidProperties[] = "'trafficPercentage' can't be null";
         }
-        if ($this->container['trafficPercentage'] > 100) {
-            $invalidProperties[] = "invalid value for 'trafficPercentage', must be smaller than or equal to 100.";
-        }
-
-        if ($this->container['trafficPercentage'] < 0) {
-            $invalidProperties[] = "invalid value for 'trafficPercentage', must be bigger than or equal to 0.";
-        }
-
         if (!isset($this->container['userCount']) || null === $this->container['userCount']) {
             $invalidProperties[] = "'userCount' can't be null";
         }
@@ -542,7 +531,7 @@ class Variant extends AbstractModel implements ModelInterface, \ArrayAccess, \Js
     /**
      * Gets description.
      *
-     * @return string
+     * @return null|string
      */
     public function getDescription()
     {
@@ -552,7 +541,7 @@ class Variant extends AbstractModel implements ModelInterface, \ArrayAccess, \Js
     /**
      * Sets description.
      *
-     * @param string $description description for this variant
+     * @param null|string $description description for this variant
      *
      * @return self
      */
@@ -774,13 +763,6 @@ class Variant extends AbstractModel implements ModelInterface, \ArrayAccess, \Js
      */
     public function setTrafficPercentage($trafficPercentage)
     {
-        if ($trafficPercentage > 100) {
-            throw new \InvalidArgumentException('invalid value for $trafficPercentage when calling Variant., must be smaller than or equal to 100.');
-        }
-        if ($trafficPercentage < 0) {
-            throw new \InvalidArgumentException('invalid value for $trafficPercentage when calling Variant., must be bigger than or equal to 0.');
-        }
-
         $this->container['trafficPercentage'] = $trafficPercentage;
 
         return $this;

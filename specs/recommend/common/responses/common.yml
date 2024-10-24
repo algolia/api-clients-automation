@@ -1,0 +1,12 @@
+recommendUpdatedAtResponse:
+  type: object
+  description: Response, taskID, and update timestamp.
+  additionalProperties: false
+  required:
+    - taskID
+    - updatedAt
+  properties:
+    taskID:
+      $ref: '../../../common/responses/common.yml#/taskID'
+    updatedAt:
+      $ref: '../../../common/responses/common.yml#/updatedAt'

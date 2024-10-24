@@ -1,27 +1,31 @@
-import { RuleTester } from 'eslint';
+import { runClassic } from 'eslint-vitest-rule-tester';
+import yamlParser from 'yaml-eslint-parser';
 
-import { noFinalDot } from '../src/rules/noFinalDot';
+import { noFinalDot } from '../src/rules/noFinalDot.js';
 
-const ruleTester = new RuleTester({
-  parser: require.resolve('yaml-eslint-parser'),
-});
-
-ruleTester.run('no-final-dot', noFinalDot, {
-  valid: ['summary: Valid summary'],
-  invalid: [
-    {
-      code: 'summary: Has final dot.',
-      errors: [{ messageId: 'noFinalDot' }],
-      output: 'summary: Has final dot',
-    },
-    {
-      code: `summary: With dot and newline.
-
-      `,
-      errors: [{ messageId: 'noFinalDot' }],
-      output: `summary: With dot and newline
+runClassic(
+  'no-final-dot',
+  noFinalDot,
+  {
+    valid: ['summary: Valid summary'],
+    invalid: [
+      {
+        code: 'summary: Has final dot.',
+        errors: [{ messageId: 'noFinalDot' }],
+        output: 'summary: Has final dot',
+      },
+      {
+        code: `summary: With dot and newline.
 
       `,
-    },
-  ],
-});
+        errors: [{ messageId: 'noFinalDot' }],
+        output: `summary: With dot and newline
+
+      `,
+      },
+    ],
+  },
+  {
+    parser: yamlParser,
+  },
+);

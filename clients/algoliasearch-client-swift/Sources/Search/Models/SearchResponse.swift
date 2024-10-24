@@ -16,6 +16,8 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
     /// Distance from a central coordinate provided by `aroundLatLng`.
     public var automaticRadius: String?
     public var exhaustive: SearchExhaustive?
+    /// Rules applied to the query.
+    public var appliedRules: [AnyCodable]?
     /// See the `facetsCount` field of the `exhaustive` object in the response.
     @available(*, deprecated, message: "This property is deprecated.")
     public var exhaustiveFacetsCount: Bool?
@@ -58,14 +60,16 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
     /// Unique identifier for the query. This is used for [click
     /// analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
     public var queryID: String?
+    /// Whether automatic events collection is enabled for the application.
+    public var automaticInsights: Bool?
     /// Page of search results to retrieve.
-    public var page: Int
+    public var page: Int?
     /// Number of results (hits).
-    public var nbHits: Int
+    public var nbHits: Int?
     /// Number of pages of results.
-    public var nbPages: Int
+    public var nbPages: Int?
     /// Number of hits per page.
-    public var hitsPerPage: Int
+    public var hitsPerPage: Int?
     /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with
     /// additional attributes, such as, for highlighting.
     public var hits: [T]
@@ -80,6 +84,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         aroundLatLng: String? = nil,
         automaticRadius: String? = nil,
         exhaustive: SearchExhaustive? = nil,
+        appliedRules: [AnyCodable]? = nil,
         exhaustiveFacetsCount: Bool? = nil,
         exhaustiveNbHits: Bool? = nil,
         exhaustiveTypo: Bool? = nil,
@@ -99,10 +104,11 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         serverUsed: String? = nil,
         userData: AnyCodable? = nil,
         queryID: String? = nil,
-        page: Int,
-        nbHits: Int,
-        nbPages: Int,
-        hitsPerPage: Int,
+        automaticInsights: Bool? = nil,
+        page: Int? = nil,
+        nbHits: Int? = nil,
+        nbPages: Int? = nil,
+        hitsPerPage: Int? = nil,
         hits: [T],
         query: String,
         params: String
@@ -112,6 +118,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         self.aroundLatLng = aroundLatLng
         self.automaticRadius = automaticRadius
         self.exhaustive = exhaustive
+        self.appliedRules = appliedRules
         self.exhaustiveFacetsCount = exhaustiveFacetsCount
         self.exhaustiveNbHits = exhaustiveNbHits
         self.exhaustiveTypo = exhaustiveTypo
@@ -131,6 +138,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         self.serverUsed = serverUsed
         self.userData = userData
         self.queryID = queryID
+        self.automaticInsights = automaticInsights
         self.page = page
         self.nbHits = nbHits
         self.nbPages = nbPages
@@ -146,6 +154,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         case aroundLatLng
         case automaticRadius
         case exhaustive
+        case appliedRules
         case exhaustiveFacetsCount
         case exhaustiveNbHits
         case exhaustiveTypo
@@ -165,6 +174,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         case serverUsed
         case userData
         case queryID
+        case automaticInsights = "_automaticInsights"
         case page
         case nbHits
         case nbPages
@@ -199,6 +209,8 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         self.automaticRadius = dictionary["automaticRadius"]?.value as? String
 
         self.exhaustive = dictionary["exhaustive"]?.value as? SearchExhaustive
+
+        self.appliedRules = dictionary["appliedRules"]?.value as? [AnyCodable]
 
         self.exhaustiveFacetsCount = dictionary["exhaustiveFacetsCount"]?.value as? Bool
 
@@ -240,22 +252,16 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
 
         self.queryID = dictionary["queryID"]?.value as? String
 
-        guard let page = dictionary["page"]?.value as? Int else {
-            throw GenericError(description: "Failed to cast")
-        }
-        self.page = page
-        guard let nbHits = dictionary["nbHits"]?.value as? Int else {
-            throw GenericError(description: "Failed to cast")
-        }
-        self.nbHits = nbHits
-        guard let nbPages = dictionary["nbPages"]?.value as? Int else {
-            throw GenericError(description: "Failed to cast")
-        }
-        self.nbPages = nbPages
-        guard let hitsPerPage = dictionary["hitsPerPage"]?.value as? Int else {
-            throw GenericError(description: "Failed to cast")
-        }
-        self.hitsPerPage = hitsPerPage
+        self.automaticInsights = dictionary["automaticInsights"]?.value as? Bool
+
+        self.page = dictionary["page"]?.value as? Int
+
+        self.nbHits = dictionary["nbHits"]?.value as? Int
+
+        self.nbPages = dictionary["nbPages"]?.value as? Int
+
+        self.hitsPerPage = dictionary["hitsPerPage"]?.value as? Int
+
         guard let hits = dictionary["hits"]?.value as? [T] else {
             throw GenericError(description: "Failed to cast")
         }
@@ -270,11 +276,11 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         self.params = params
         for (key, value) in dictionary {
             switch key {
-            case "abTestID", "abTestVariantID", "aroundLatLng", "automaticRadius", "exhaustive",
+            case "abTestID", "abTestVariantID", "aroundLatLng", "automaticRadius", "exhaustive", "appliedRules",
                  "exhaustiveFacetsCount", "exhaustiveNbHits", "exhaustiveTypo", "facets", "facetsStats", "index",
                  "indexUsed", "message", "nbSortedHits", "parsedQuery", "processingTimeMS", "processingTimingsMS",
                  "queryAfterRemoval", "redirect", "renderingContent", "serverTimeMS", "serverUsed", "userData",
-                 "queryID", "page", "nbHits", "nbPages", "hitsPerPage", "hits", "query", "params":
+                 "queryID", "automaticInsights", "page", "nbHits", "nbPages", "hitsPerPage", "hits", "query", "params":
                 continue
             default:
                 self.additionalProperties[key] = value
@@ -291,6 +297,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         try container.encodeIfPresent(self.aroundLatLng, forKey: .aroundLatLng)
         try container.encodeIfPresent(self.automaticRadius, forKey: .automaticRadius)
         try container.encodeIfPresent(self.exhaustive, forKey: .exhaustive)
+        try container.encodeIfPresent(self.appliedRules, forKey: .appliedRules)
         try container.encodeIfPresent(self.exhaustiveFacetsCount, forKey: .exhaustiveFacetsCount)
         try container.encodeIfPresent(self.exhaustiveNbHits, forKey: .exhaustiveNbHits)
         try container.encodeIfPresent(self.exhaustiveTypo, forKey: .exhaustiveTypo)
@@ -310,10 +317,11 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         try container.encodeIfPresent(self.serverUsed, forKey: .serverUsed)
         try container.encodeIfPresent(self.userData, forKey: .userData)
         try container.encodeIfPresent(self.queryID, forKey: .queryID)
-        try container.encode(self.page, forKey: .page)
-        try container.encode(self.nbHits, forKey: .nbHits)
-        try container.encode(self.nbPages, forKey: .nbPages)
-        try container.encode(self.hitsPerPage, forKey: .hitsPerPage)
+        try container.encodeIfPresent(self.automaticInsights, forKey: .automaticInsights)
+        try container.encodeIfPresent(self.page, forKey: .page)
+        try container.encodeIfPresent(self.nbHits, forKey: .nbHits)
+        try container.encodeIfPresent(self.nbPages, forKey: .nbPages)
+        try container.encodeIfPresent(self.hitsPerPage, forKey: .hitsPerPage)
         try container.encode(self.hits, forKey: .hits)
         try container.encode(self.query, forKey: .query)
         try container.encode(self.params, forKey: .params)
@@ -331,6 +339,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         self.aroundLatLng = try container.decodeIfPresent(String.self, forKey: .aroundLatLng)
         self.automaticRadius = try container.decodeIfPresent(String.self, forKey: .automaticRadius)
         self.exhaustive = try container.decodeIfPresent(SearchExhaustive.self, forKey: .exhaustive)
+        self.appliedRules = try container.decodeIfPresent([AnyCodable].self, forKey: .appliedRules)
         self.exhaustiveFacetsCount = try container.decodeIfPresent(Bool.self, forKey: .exhaustiveFacetsCount)
         self.exhaustiveNbHits = try container.decodeIfPresent(Bool.self, forKey: .exhaustiveNbHits)
         self.exhaustiveTypo = try container.decodeIfPresent(Bool.self, forKey: .exhaustiveTypo)
@@ -350,10 +359,11 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         self.serverUsed = try container.decodeIfPresent(String.self, forKey: .serverUsed)
         self.userData = try container.decodeIfPresent(AnyCodable.self, forKey: .userData)
         self.queryID = try container.decodeIfPresent(String.self, forKey: .queryID)
-        self.page = try container.decode(Int.self, forKey: .page)
-        self.nbHits = try container.decode(Int.self, forKey: .nbHits)
-        self.nbPages = try container.decode(Int.self, forKey: .nbPages)
-        self.hitsPerPage = try container.decode(Int.self, forKey: .hitsPerPage)
+        self.automaticInsights = try container.decodeIfPresent(Bool.self, forKey: .automaticInsights)
+        self.page = try container.decodeIfPresent(Int.self, forKey: .page)
+        self.nbHits = try container.decodeIfPresent(Int.self, forKey: .nbHits)
+        self.nbPages = try container.decodeIfPresent(Int.self, forKey: .nbPages)
+        self.hitsPerPage = try container.decodeIfPresent(Int.self, forKey: .hitsPerPage)
         self.hits = try container.decode([T].self, forKey: .hits)
         self.query = try container.decode(String.self, forKey: .query)
         self.params = try container.decode(String.self, forKey: .params)
@@ -363,6 +373,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         nonAdditionalPropertyKeys.insert("aroundLatLng")
         nonAdditionalPropertyKeys.insert("automaticRadius")
         nonAdditionalPropertyKeys.insert("exhaustive")
+        nonAdditionalPropertyKeys.insert("appliedRules")
         nonAdditionalPropertyKeys.insert("exhaustiveFacetsCount")
         nonAdditionalPropertyKeys.insert("exhaustiveNbHits")
         nonAdditionalPropertyKeys.insert("exhaustiveTypo")
@@ -382,6 +393,7 @@ public struct SearchResponse<T: Codable>: Codable, JSONEncodable {
         nonAdditionalPropertyKeys.insert("serverUsed")
         nonAdditionalPropertyKeys.insert("userData")
         nonAdditionalPropertyKeys.insert("queryID")
+        nonAdditionalPropertyKeys.insert("_automaticInsights")
         nonAdditionalPropertyKeys.insert("page")
         nonAdditionalPropertyKeys.insert("nbHits")
         nonAdditionalPropertyKeys.insert("nbPages")
@@ -404,6 +416,7 @@ extension SearchResponse: Equatable where T: Equatable {
             lhs.aroundLatLng == rhs.aroundLatLng &&
             lhs.automaticRadius == rhs.automaticRadius &&
             lhs.exhaustive == rhs.exhaustive &&
+            lhs.appliedRules == rhs.appliedRules &&
             lhs.exhaustiveFacetsCount == rhs.exhaustiveFacetsCount &&
             lhs.exhaustiveNbHits == rhs.exhaustiveNbHits &&
             lhs.exhaustiveTypo == rhs.exhaustiveTypo &&
@@ -423,6 +436,7 @@ extension SearchResponse: Equatable where T: Equatable {
             lhs.serverUsed == rhs.serverUsed &&
             lhs.userData == rhs.userData &&
             lhs.queryID == rhs.queryID &&
+            lhs.automaticInsights == rhs.automaticInsights &&
             lhs.page == rhs.page &&
             lhs.nbHits == rhs.nbHits &&
             lhs.nbPages == rhs.nbPages &&
@@ -441,6 +455,7 @@ extension SearchResponse: Hashable where T: Hashable {
         hasher.combine(self.aroundLatLng?.hashValue)
         hasher.combine(self.automaticRadius?.hashValue)
         hasher.combine(self.exhaustive?.hashValue)
+        hasher.combine(self.appliedRules?.hashValue)
         hasher.combine(self.exhaustiveFacetsCount?.hashValue)
         hasher.combine(self.exhaustiveNbHits?.hashValue)
         hasher.combine(self.exhaustiveTypo?.hashValue)
@@ -460,10 +475,11 @@ extension SearchResponse: Hashable where T: Hashable {
         hasher.combine(self.serverUsed?.hashValue)
         hasher.combine(self.userData?.hashValue)
         hasher.combine(self.queryID?.hashValue)
-        hasher.combine(self.page.hashValue)
-        hasher.combine(self.nbHits.hashValue)
-        hasher.combine(self.nbPages.hashValue)
-        hasher.combine(self.hitsPerPage.hashValue)
+        hasher.combine(self.automaticInsights?.hashValue)
+        hasher.combine(self.page?.hashValue)
+        hasher.combine(self.nbHits?.hashValue)
+        hasher.combine(self.nbPages?.hashValue)
+        hasher.combine(self.hitsPerPage?.hashValue)
         hasher.combine(self.hits.hashValue)
         hasher.combine(self.query.hashValue)
         hasher.combine(self.params.hashValue)

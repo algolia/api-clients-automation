@@ -10,7 +10,7 @@ from json import loads
 from sys import version_info
 from typing import Any, Dict, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict
 
 if version_info >= (3, 11):
     from typing import Self
@@ -18,52 +18,58 @@ else:
     from typing_extensions import Self
 
 
+_ALIASES = {
+    "url": "url",
+    "client_id": "client_id",
+    "client_secret": "client_secret",
+    "scope": "scope",
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
+
+
 class AuthOAuthPartial(BaseModel):
     """
     Credentials for authenticating with OAuth 2.0.
     """
 
-    url: Optional[StrictStr] = Field(
-        default=None, description="URL for the OAuth endpoint."
-    )
-    client_id: Optional[StrictStr] = Field(default=None, description="Client ID.")
-    client_secret: Optional[StrictStr] = Field(
-        default=None,
-        description="Client secret. This field is `null` in the API response.",
-    )
-    scope: Optional[StrictStr] = Field(default="", description="OAuth scope.")
+    url: Optional[str] = None
+    """ URL for the OAuth endpoint. """
+    client_id: Optional[str] = None
+    """ Client ID. """
+    client_secret: Optional[str] = None
+    """ Client secret. This field is `null` in the API response. """
+    scope: Optional[str] = None
+    """ OAuth scope. """
 
     model_config = ConfigDict(
-        use_enum_values=True, populate_by_name=True, validate_assignment=True
+        use_enum_values=True,
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+        alias_generator=_alias_generator,
     )
 
     def to_json(self) -> str:
         return self.model_dump_json(by_alias=True, exclude_unset=True)
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of AuthOAuthPartial from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        _dict = self.model_dump(
+        """Return the dictionary representation of the model using alias."""
+        return self.model_dump(
             by_alias=True,
-            exclude={},
             exclude_none=True,
+            exclude_unset=True,
         )
-        return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of AuthOAuthPartial from a dict"""
         if obj is None:
             return None
@@ -71,12 +77,4 @@ class AuthOAuthPartial(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "url": obj.get("url"),
-                "client_id": obj.get("client_id"),
-                "client_secret": obj.get("client_secret"),
-                "scope": obj.get("scope"),
-            }
-        )
-        return _obj
+        return cls.model_validate(obj)

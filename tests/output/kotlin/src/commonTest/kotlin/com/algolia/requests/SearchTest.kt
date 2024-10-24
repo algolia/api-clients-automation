@@ -792,7 +792,7 @@ class SearchTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -800,7 +800,7 @@ class SearchTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -822,7 +822,7 @@ class SearchTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -830,7 +830,7 @@ class SearchTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -1293,6 +1293,23 @@ class SearchTest {
         assertEquals("/1/indexes/theIndexName/uniqueID".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams("""{"attributesToRetrieve":"attr1%2Cattr2"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search with a real object1`() = runTest {
+    client.runTest(
+      call = {
+        getObject(
+          indexName = "cts_e2e_browse",
+          objectID = "Batman and Robin",
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/cts_e2e_browse/Batman%20and%20Robin".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
     )
@@ -1852,11 +1869,11 @@ class SearchTest {
     client.runTest(
       call = {
         restoreApiKey(
-          key = "myApiKey",
+          key = "ALGOLIA_API_KEY",
         )
       },
       intercept = {
-        assertEquals("/1/keys/myApiKey/restore".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/keys/ALGOLIA_API_KEY/restore".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertEmptyBody(it.body)
       },
@@ -1979,8 +1996,8 @@ class SearchTest {
             enabled = true,
             validity = listOf(
               TimeRange(
-                from = 1656670273,
-                until = 1656670277,
+                from = 1656670273L,
+                until = 1656670277L,
               ),
             ),
           ),
@@ -2097,8 +2114,8 @@ class SearchTest {
               enabled = true,
               validity = listOf(
                 TimeRange(
-                  from = 1656670273,
-                  until = 1656670277,
+                  from = 1656670273L,
+                  until = 1656670277L,
                 ),
               ),
             ),
@@ -3299,7 +3316,7 @@ class SearchTest {
     client.runTest(
       call = {
         updateApiKey(
-          key = "myApiKey",
+          key = "ALGOLIA_API_KEY",
           apiKey = ApiKey(
             acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
             validity = 300,
@@ -3309,7 +3326,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/keys/myApiKey".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/keys/ALGOLIA_API_KEY".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody("""{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}""", it.body)
       },

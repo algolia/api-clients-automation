@@ -17,6 +17,8 @@ type BrowseResponse struct {
 	// Distance from a central coordinate provided by `aroundLatLng`.
 	AutomaticRadius *string     `json:"automaticRadius,omitempty"`
 	Exhaustive      *Exhaustive `json:"exhaustive,omitempty"`
+	// Rules applied to the query.
+	AppliedRules []map[string]any `json:"appliedRules,omitempty"`
 	// See the `facetsCount` field of the `exhaustive` object in the response.
 	// Deprecated
 	ExhaustiveFacetsCount *bool `json:"exhaustiveFacetsCount,omitempty"`
@@ -56,6 +58,8 @@ type BrowseResponse struct {
 	UserData map[string]any `json:"userData,omitempty"`
 	// Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
 	QueryID *string `json:"queryID,omitempty"`
+	// Whether automatic events collection is enabled for the application.
+	AutomaticInsights *bool `json:"_automaticInsights,omitempty"`
 	// Page of search results to retrieve.
 	Page *int32 `json:"page,omitempty"`
 	// Number of results (hits).
@@ -103,6 +107,12 @@ func WithBrowseResponseAutomaticRadius(val string) BrowseResponseOption {
 func WithBrowseResponseExhaustive(val Exhaustive) BrowseResponseOption {
 	return func(f *BrowseResponse) {
 		f.Exhaustive = &val
+	}
+}
+
+func WithBrowseResponseAppliedRules(val []map[string]any) BrowseResponseOption {
+	return func(f *BrowseResponse) {
+		f.AppliedRules = val
 	}
 }
 
@@ -211,6 +221,12 @@ func WithBrowseResponseUserData(val map[string]any) BrowseResponseOption {
 func WithBrowseResponseQueryID(val string) BrowseResponseOption {
 	return func(f *BrowseResponse) {
 		f.QueryID = &val
+	}
+}
+
+func WithBrowseResponseAutomaticInsights(val bool) BrowseResponseOption {
+	return func(f *BrowseResponse) {
+		f.AutomaticInsights = &val
 	}
 }
 
@@ -427,6 +443,39 @@ func (o *BrowseResponse) HasExhaustive() bool {
 // SetExhaustive gets a reference to the given Exhaustive and assigns it to the Exhaustive field.
 func (o *BrowseResponse) SetExhaustive(v *Exhaustive) *BrowseResponse {
 	o.Exhaustive = v
+	return o
+}
+
+// GetAppliedRules returns the AppliedRules field value if set, zero value otherwise.
+func (o *BrowseResponse) GetAppliedRules() []map[string]any {
+	if o == nil || o.AppliedRules == nil {
+		var ret []map[string]any
+		return ret
+	}
+	return o.AppliedRules
+}
+
+// GetAppliedRulesOk returns a tuple with the AppliedRules field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrowseResponse) GetAppliedRulesOk() ([]map[string]any, bool) {
+	if o == nil || o.AppliedRules == nil {
+		return nil, false
+	}
+	return o.AppliedRules, true
+}
+
+// HasAppliedRules returns a boolean if a field has been set.
+func (o *BrowseResponse) HasAppliedRules() bool {
+	if o != nil && o.AppliedRules != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAppliedRules gets a reference to the given []map[string]any and assigns it to the AppliedRules field.
+func (o *BrowseResponse) SetAppliedRules(v []map[string]any) *BrowseResponse {
+	o.AppliedRules = v
 	return o
 }
 
@@ -1058,6 +1107,39 @@ func (o *BrowseResponse) SetQueryID(v string) *BrowseResponse {
 	return o
 }
 
+// GetAutomaticInsights returns the AutomaticInsights field value if set, zero value otherwise.
+func (o *BrowseResponse) GetAutomaticInsights() bool {
+	if o == nil || o.AutomaticInsights == nil {
+		var ret bool
+		return ret
+	}
+	return *o.AutomaticInsights
+}
+
+// GetAutomaticInsightsOk returns a tuple with the AutomaticInsights field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrowseResponse) GetAutomaticInsightsOk() (*bool, bool) {
+	if o == nil || o.AutomaticInsights == nil {
+		return nil, false
+	}
+	return o.AutomaticInsights, true
+}
+
+// HasAutomaticInsights returns a boolean if a field has been set.
+func (o *BrowseResponse) HasAutomaticInsights() bool {
+	if o != nil && o.AutomaticInsights != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAutomaticInsights gets a reference to the given bool and assigns it to the AutomaticInsights field.
+func (o *BrowseResponse) SetAutomaticInsights(v bool) *BrowseResponse {
+	o.AutomaticInsights = &v
+	return o
+}
+
 // GetPage returns the Page field value if set, zero value otherwise.
 func (o *BrowseResponse) GetPage() int32 {
 	if o == nil || o.Page == nil {
@@ -1315,6 +1397,9 @@ func (o BrowseResponse) MarshalJSON() ([]byte, error) {
 	if o.Exhaustive != nil {
 		toSerialize["exhaustive"] = o.Exhaustive
 	}
+	if o.AppliedRules != nil {
+		toSerialize["appliedRules"] = o.AppliedRules
+	}
 	if o.ExhaustiveFacetsCount != nil {
 		toSerialize["exhaustiveFacetsCount"] = o.ExhaustiveFacetsCount
 	}
@@ -1372,6 +1457,9 @@ func (o BrowseResponse) MarshalJSON() ([]byte, error) {
 	if o.QueryID != nil {
 		toSerialize["queryID"] = o.QueryID
 	}
+	if o.AutomaticInsights != nil {
+		toSerialize["_automaticInsights"] = o.AutomaticInsights
+	}
 	if o.Page != nil {
 		toSerialize["page"] = o.Page
 	}
@@ -1411,6 +1499,7 @@ func (o BrowseResponse) String() string {
 	out += fmt.Sprintf("  aroundLatLng=%v\n", o.AroundLatLng)
 	out += fmt.Sprintf("  automaticRadius=%v\n", o.AutomaticRadius)
 	out += fmt.Sprintf("  exhaustive=%v\n", o.Exhaustive)
+	out += fmt.Sprintf("  appliedRules=%v\n", o.AppliedRules)
 	out += fmt.Sprintf("  exhaustiveFacetsCount=%v\n", o.ExhaustiveFacetsCount)
 	out += fmt.Sprintf("  exhaustiveNbHits=%v\n", o.ExhaustiveNbHits)
 	out += fmt.Sprintf("  exhaustiveTypo=%v\n", o.ExhaustiveTypo)
@@ -1430,6 +1519,7 @@ func (o BrowseResponse) String() string {
 	out += fmt.Sprintf("  serverUsed=%v\n", o.ServerUsed)
 	out += fmt.Sprintf("  userData=%v\n", o.UserData)
 	out += fmt.Sprintf("  queryID=%v\n", o.QueryID)
+	out += fmt.Sprintf("  _automaticInsights=%v\n", o.AutomaticInsights)
 	out += fmt.Sprintf("  page=%v\n", o.Page)
 	out += fmt.Sprintf("  nbHits=%v\n", o.NbHits)
 	out += fmt.Sprintf("  nbPages=%v\n", o.NbPages)

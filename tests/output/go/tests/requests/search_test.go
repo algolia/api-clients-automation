@@ -580,7 +580,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
 		)
 		require.NoError(t, err)
 
@@ -590,7 +590,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
@@ -605,7 +605,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
 		)
 		require.NoError(t, err)
 
@@ -615,7 +615,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
@@ -1014,6 +1014,17 @@ func TestSearch_GetObject(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
+	})
+	t.Run("search with a real object", func(t *testing.T) {
+		_, err := client.GetObject(client.NewApiGetObjectRequest(
+			"cts_e2e_browse", "Batman and Robin",
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/cts_e2e_browse/Batman%20and%20Robin", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -1447,11 +1458,11 @@ func TestSearch_RestoreApiKey(t *testing.T) {
 
 	t.Run("restoreApiKey", func(t *testing.T) {
 		_, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-			"myApiKey",
+			"ALGOLIA_API_KEY",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/keys/myApiKey/restore", echo.Path)
+		require.Equal(t, "/1/keys/ALGOLIA_API_KEY/restore", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		require.Empty(t, echo.Body)
@@ -2412,13 +2423,13 @@ func TestSearch_UpdateApiKey(t *testing.T) {
 
 	t.Run("updateApiKey", func(t *testing.T) {
 		_, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
-			"myApiKey",
+			"ALGOLIA_API_KEY",
 			search.NewEmptyApiKey().SetAcl(
 				[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/keys/myApiKey", echo.Path)
+		require.Equal(t, "/1/keys/ALGOLIA_API_KEY", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)

@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
+import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common.js';
+import { isPreRelease } from '../../release/versionsHistory.js';
+import type { Language } from '../../types.js';
+import { cloneRepository } from '../utils.js';
 
-import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common';
-import { isPreRelease } from '../../release/sla';
-import type { Language } from '../../types';
-import { cloneRepository } from '../utils';
-
-import { commitStartRelease } from './text';
+import { commitStartRelease } from './text.js';
 
 async function createGitHubRelease(lang: Language): Promise<void> {
   // **Full Changelog**:

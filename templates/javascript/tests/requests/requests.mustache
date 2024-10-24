@@ -1,13 +1,16 @@
 // {{generationBanner}}
-import { {{client}} } from '{{{import}}}';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/client-common';
-import type { RequestOptions } from '@algolia/client-common';
+import { describe, test, expect } from 'vitest';
+
+import { {{{clientName}}} } from '{{{importPackage}}}';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
+import type { ClientOptions } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
+const clientOptions: ClientOptions = { requester: nodeEchoRequester() }; // this makes sure the types are correctly exported
+const client = {{{clientName}}}(appId, apiKey{{#isSearchClient}}, { requester: nodeEchoRequester() }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: clientOptions, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
 
 {{#blocksRequests}}
 describe('{{operationId}}', () => {
@@ -30,7 +33,3 @@ describe('{{operationId}}', () => {
 })
 
 {{/blocksRequests}}
-
-{{#isSearchClient}}
-{{> tests/requests/helpers}}
-{{/isSearchClient}}

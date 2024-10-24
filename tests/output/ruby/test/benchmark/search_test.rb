@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class BenchmarkClientSearchClient < Test::Unit::TestCase
-  include Algolia::Search
   # benchmark the search method
   def test_benchmark0
     client = Algolia::SearchClient.create_with_config(
@@ -12,7 +11,7 @@ class BenchmarkClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6682,
             accept: CallType::READ | CallType::WRITE
@@ -21,11 +20,11 @@ class BenchmarkClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    for i in 1..1000
+    for i in 1..2000
       req = client.search(
-        SearchMethodParams.new(
+        Algolia::Search::SearchMethodParams.new(
           requests: [
-            SearchForHits.new(
+            Algolia::Search::SearchForHits.new(
               index_name: "cts_e2e_benchmark_search_ruby",
               query: "iphone 15 pro max 512gb",
               hits_per_page: 50

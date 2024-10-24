@@ -55,8 +55,25 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('calls api with correct write host')]
+    #[TestDox('read transporter with POST method')]
     public function test1api(): void
+    {
+        $client = $this->createClient(
+            'test-app-id',
+            'test-api-key'
+        );
+        $this->assertIsObject($client);
+        $client->searchSingleIndex(
+            'indexName',
+        );
+        $this->assertEquals(
+            'test-app-id-dsn.algolia.net',
+            $this->recordedRequest['request']->getUri()->getHost()
+        );
+    }
+
+    #[TestDox('calls api with correct write host')]
+    public function test2api(): void
     {
         $client = $this->createClient(
             'test-app-id',
@@ -73,9 +90,9 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('tests the retry strategy')]
-    public function test2api(): void
+    public function test3api(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676', 'http://localhost:6677', 'http://localhost:6678']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6677', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6678']));
 
         $res = $client->customGet(
             '1/test/retry/php',
@@ -87,9 +104,9 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('tests the retry strategy error')]
-    public function test3api(): void
+    public function test4api(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676']));
 
         try {
             $res = $client->customGet(
@@ -125,7 +142,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.4.0\).*/',
+                '/^Algolia for PHP \(4.6.4\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -170,7 +187,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call deleteObjects without error')]
     public function test0deleteObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
 
         $res = $client->deleteObjects(
             'cts_e2e_deleteObjects_php',
@@ -243,7 +260,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('indexExists')]
     public function test0indexExists(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         $res = $client->indexExists(
             'indexExistsYES',
@@ -257,7 +274,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('indexNotExists')]
     public function test1indexExists(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         $res = $client->indexExists(
             'indexExistsNO',
@@ -271,7 +288,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('indexExistsWithError')]
     public function test2indexExists(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         try {
             $res = $client->indexExists(
@@ -377,7 +394,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
     public function test0partialUpdateObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
 
         $res = $client->partialUpdateObjects(
             'cts_e2e_partialUpdateObjects_php',
@@ -401,7 +418,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call partialUpdateObjects with createIfNotExists=false')]
     public function test1partialUpdateObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
 
         $res = $client->partialUpdateObjects(
             'cts_e2e_partialUpdateObjects_php',
@@ -425,7 +442,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call replaceAllObjects without error')]
     public function test0replaceAllObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6679']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6679']));
 
         $res = $client->replaceAllObjects(
             'cts_e2e_replace_all_objects_php',
@@ -481,7 +498,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call saveObjects without error')]
     public function test0saveObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
 
         $res = $client->saveObjects(
             'cts_e2e_saveObjects_php',
@@ -504,7 +521,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('saveObjects should report errors')]
     public function test1saveObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'wrong-api-key')->setFullHosts(['http://localhost:6680']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'wrong-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
 
         try {
             $res = $client->saveObjects(
@@ -528,7 +545,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6683']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
 
         $res = $client->customGet(
             'check-api-key/1',
@@ -554,7 +571,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('wait for api key helper - add')]
     public function test0waitForApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         $res = $client->waitForApiKey(
             'api-key-add-operation-test-php',
@@ -569,7 +586,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('wait for api key - update')]
     public function test1waitForApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         $res = $client->waitForApiKey(
             'api-key-update-operation-test-php',
@@ -606,7 +623,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('wait for api key - delete')]
     public function test2waitForApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         $res = $client->waitForApiKey(
             'api-key-delete-operation-test-php',
@@ -621,7 +638,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('wait for an application-level task')]
     public function test0waitForAppTask(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         $res = $client->waitForAppTask(
             123,
@@ -635,7 +652,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('wait for task')]
     public function test0waitForTask(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
 
         $res = $client->waitForTask(
             'wait-task-php',

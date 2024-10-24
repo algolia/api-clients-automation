@@ -39,6 +39,8 @@ package algoliasearch.recommend
   *   Computed geographical location.
   * @param automaticRadius
   *   Distance from a central coordinate provided by `aroundLatLng`.
+  * @param appliedRules
+  *   Rules applied to the query.
   * @param exhaustiveFacetsCount
   *   See the `facetsCount` field of the `exhaustive` object in the response.
   * @param exhaustiveNbHits
@@ -76,6 +78,8 @@ package algoliasearch.recommend
   * @param queryID
   *   Unique identifier for the query. This is used for [click
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  * @param automaticInsights
+  *   Whether automatic events collection is enabled for the application.
   * @param page
   *   Page of search results to retrieve.
   * @param nbHits
@@ -91,6 +95,7 @@ case class RecommendationsResults(
     aroundLatLng: Option[String] = scala.None,
     automaticRadius: Option[String] = scala.None,
     exhaustive: Option[Exhaustive] = scala.None,
+    appliedRules: Option[Seq[Any]] = scala.None,
     exhaustiveFacetsCount: Option[Boolean] = scala.None,
     exhaustiveNbHits: Option[Boolean] = scala.None,
     exhaustiveTypo: Option[Boolean] = scala.None,
@@ -110,9 +115,10 @@ case class RecommendationsResults(
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
-    page: Int,
-    nbHits: Int,
-    nbPages: Int,
-    hitsPerPage: Int,
+    automaticInsights: Option[Boolean] = scala.None,
+    page: Option[Int] = scala.None,
+    nbHits: Option[Int] = scala.None,
+    nbPages: Option[Int] = scala.None,
+    hitsPerPage: Option[Int] = scala.None,
     hits: Seq[RecommendationsHit]
 )

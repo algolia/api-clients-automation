@@ -1,10 +1,10 @@
 [
   {
     "parameters": {
-      "key": "myApiKey"
+      "key": "ALGOLIA_API_KEY"
     },
     "request": {
-      "path": "/1/keys/myApiKey/restore",
+      "path": "/1/keys/ALGOLIA_API_KEY/restore",
       "method": "POST"
     }
   }

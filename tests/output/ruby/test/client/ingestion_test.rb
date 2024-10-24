@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientIngestionClient < Test::Unit::TestCase
-  include Algolia::Ingestion
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::IngestionClient.create(
@@ -29,7 +28,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.3.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.5.4\).*/))
   end
 
   # calls api with default read timeouts
@@ -83,7 +82,13 @@ class TestClientIngestionClient < Test::Unit::TestCase
       )
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("`region` is required and must be one of the following: eu, us", e.message)
+      assert_equal(
+        "`region` is required and must be one of the following: eu, us".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -95,7 +100,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6683,
             accept: CallType::READ | CallType::WRITE

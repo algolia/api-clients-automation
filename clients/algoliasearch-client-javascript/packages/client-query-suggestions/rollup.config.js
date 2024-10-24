@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'querySuggestionsClient',
+      name: '@algolia/client-query-suggestions',
       format: 'umd',
       sourcemap: false,
       globals: {
@@ -13,4 +13,4 @@ export default [
       },
     },
   },
-]
+];

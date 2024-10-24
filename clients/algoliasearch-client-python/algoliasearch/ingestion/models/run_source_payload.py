@@ -10,7 +10,7 @@ from json import loads
 from sys import version_info
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict
 
 if version_info >= (3, 11):
     from typing import Self
@@ -20,58 +20,57 @@ else:
 
 from algoliasearch.ingestion.models.entity_type import EntityType
 
+_ALIASES = {
+    "index_to_include": "indexToInclude",
+    "index_to_exclude": "indexToExclude",
+    "entity_ids": "entityIDs",
+    "entity_type": "entityType",
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
+
 
 class RunSourcePayload(BaseModel):
     """
     RunSourcePayload
     """
 
-    index_to_include: Optional[List[StrictStr]] = Field(
-        default=None,
-        description="List of index names to include in reidexing/update.",
-        alias="indexToInclude",
-    )
-    index_to_exclude: Optional[List[StrictStr]] = Field(
-        default=None,
-        description="List of index names to exclude in reidexing/update.",
-        alias="indexToExclude",
-    )
-    entity_ids: Optional[List[StrictStr]] = Field(
-        default=None, description="List of entityID to update.", alias="entityIDs"
-    )
-    entity_type: Optional[EntityType] = Field(default=None, alias="entityType")
+    index_to_include: Optional[List[str]] = None
+    """ List of index names to include in reidexing/update. """
+    index_to_exclude: Optional[List[str]] = None
+    """ List of index names to exclude in reidexing/update. """
+    entity_ids: Optional[List[str]] = None
+    """ List of entityID to update. """
+    entity_type: Optional[EntityType] = None
 
     model_config = ConfigDict(
-        use_enum_values=True, populate_by_name=True, validate_assignment=True
+        use_enum_values=True,
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+        alias_generator=_alias_generator,
     )
 
     def to_json(self) -> str:
         return self.model_dump_json(by_alias=True, exclude_unset=True)
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of RunSourcePayload from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        _dict = self.model_dump(
+        """Return the dictionary representation of the model using alias."""
+        return self.model_dump(
             by_alias=True,
-            exclude={},
             exclude_none=True,
+            exclude_unset=True,
         )
-        return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of RunSourcePayload from a dict"""
         if obj is None:
             return None
@@ -79,12 +78,6 @@ class RunSourcePayload(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "indexToInclude": obj.get("indexToInclude"),
-                "indexToExclude": obj.get("indexToExclude"),
-                "entityIDs": obj.get("entityIDs"),
-                "entityType": obj.get("entityType"),
-            }
-        )
-        return _obj
+        obj["entityType"] = obj.get("entityType")
+
+        return cls.model_validate(obj)

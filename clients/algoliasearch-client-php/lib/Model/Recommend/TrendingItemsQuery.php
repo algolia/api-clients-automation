@@ -23,11 +23,11 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
         'indexName' => 'string',
         'threshold' => 'float',
         'maxRecommendations' => 'int',
-        'queryParameters' => '\Algolia\AlgoliaSearch\Model\Recommend\SearchParams',
+        'queryParameters' => '\Algolia\AlgoliaSearch\Model\Recommend\RecommendSearchParams',
         'facetName' => 'string',
         'facetValue' => 'string',
         'model' => '\Algolia\AlgoliaSearch\Model\Recommend\TrendingItemsModel',
-        'fallbackParameters' => '\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject',
+        'fallbackParameters' => '\Algolia\AlgoliaSearch\Model\Recommend\FallbackParams',
     ];
 
     /**
@@ -201,22 +201,6 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
         if (!isset($this->container['threshold']) || null === $this->container['threshold']) {
             $invalidProperties[] = "'threshold' can't be null";
         }
-        if ($this->container['threshold'] > 100) {
-            $invalidProperties[] = "invalid value for 'threshold', must be smaller than or equal to 100.";
-        }
-
-        if ($this->container['threshold'] < 0) {
-            $invalidProperties[] = "invalid value for 'threshold', must be bigger than or equal to 0.";
-        }
-
-        if (isset($this->container['maxRecommendations']) && ($this->container['maxRecommendations'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'maxRecommendations', must be smaller than or equal to 1000.";
-        }
-
-        if (isset($this->container['maxRecommendations']) && ($this->container['maxRecommendations'] < 1)) {
-            $invalidProperties[] = "invalid value for 'maxRecommendations', must be bigger than or equal to 1.";
-        }
-
         if (!isset($this->container['model']) || null === $this->container['model']) {
             $invalidProperties[] = "'model' can't be null";
         }
@@ -278,13 +262,6 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
      */
     public function setThreshold($threshold)
     {
-        if ($threshold > 100) {
-            throw new \InvalidArgumentException('invalid value for $threshold when calling TrendingItemsQuery., must be smaller than or equal to 100.');
-        }
-        if ($threshold < 0) {
-            throw new \InvalidArgumentException('invalid value for $threshold when calling TrendingItemsQuery., must be bigger than or equal to 0.');
-        }
-
         $this->container['threshold'] = $threshold;
 
         return $this;
@@ -309,13 +286,6 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
      */
     public function setMaxRecommendations($maxRecommendations)
     {
-        if (!is_null($maxRecommendations) && ($maxRecommendations > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $maxRecommendations when calling TrendingItemsQuery., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($maxRecommendations) && ($maxRecommendations < 1)) {
-            throw new \InvalidArgumentException('invalid value for $maxRecommendations when calling TrendingItemsQuery., must be bigger than or equal to 1.');
-        }
-
         $this->container['maxRecommendations'] = $maxRecommendations;
 
         return $this;
@@ -324,7 +294,7 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
     /**
      * Gets queryParameters.
      *
-     * @return null|SearchParams
+     * @return null|RecommendSearchParams
      */
     public function getQueryParameters()
     {
@@ -334,7 +304,7 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
     /**
      * Sets queryParameters.
      *
-     * @param null|SearchParams $queryParameters queryParameters
+     * @param null|RecommendSearchParams $queryParameters queryParameters
      *
      * @return self
      */
@@ -420,7 +390,7 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
     /**
      * Gets fallbackParameters.
      *
-     * @return null|SearchParamsObject
+     * @return null|FallbackParams
      */
     public function getFallbackParameters()
     {
@@ -430,7 +400,7 @@ class TrendingItemsQuery extends AbstractModel implements ModelInterface, \Array
     /**
      * Sets fallbackParameters.
      *
-     * @param null|SearchParamsObject $fallbackParameters fallbackParameters
+     * @param null|FallbackParams $fallbackParameters fallbackParameters
      *
      * @return self
      */

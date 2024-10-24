@@ -1,6 +1,6 @@
 # {{generationBanner}}
 # >IMPORT
-require 'algolia'
+{{> snippets/import}}
 # IMPORT<
 
 {{#blocksRequests}}
@@ -9,13 +9,13 @@ require 'algolia'
 #
 # {{{description}}}
 def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}
-  # >SEPARATOR {{method}} {{testName}}
+  # >SEPARATOR {{method}} {{{testName}}}
   # Initialize the client
-  client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create('YOUR_APP_ID','YOUR_API_KEY'{{#hasRegionalHost}},'YOUR_APP_ID_REGION'{{/hasRegionalHost}})
+  {{> snippets/init}}
 
   # Call the API
-  {{#hasResponse}}response = {{/hasResponse}}client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
-  
+  {{#hasResponse}}response = {{/hasResponse}}{{> tests/method}}
+
   # >LOG
   {{#hasResponse}}
   # use the class directly

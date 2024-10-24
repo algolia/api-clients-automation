@@ -1,19 +1,20 @@
+import crossFetch from 'cross-fetch';
 import type http from 'http';
+import nock from 'nock';
 import { Readable } from 'stream';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
-import crossFetch from 'cross-fetch';
-import nock from 'nock';
 
 import { createFetchRequester } from '../..';
 import {
-  headers,
-  timeoutRequest,
-  requestStub,
-  testQueryHeader,
-  testQueryBaseUrl,
-  getStringifiedBody,
   createTestServer,
+  getStringifiedBody,
+  headers,
+  requestStub,
+  testQueryBaseUrl,
+  testQueryHeader,
+  timeoutRequest,
 } from '../../../../tests/utils';
 
 const originalFetch = window.fetch;
@@ -29,7 +30,7 @@ afterEach(() => {
 const requester = createFetchRequester();
 
 describe('status code handling', () => {
-  it('sends requests', async () => {
+  test('sends requests', async () => {
     const body = getStringifiedBody();
 
     nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(200, body);
@@ -39,7 +40,7 @@ describe('status code handling', () => {
     expect(response.content).toEqual(body);
   });
 
-  it('resolves status 200', async () => {
+  test('resolves status 200', async () => {
     const body = getStringifiedBody();
 
     nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(200, body);
@@ -51,7 +52,7 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves status 300', async () => {
+  test('resolves status 300', async () => {
     const reason = 'Multiple Choices';
 
     nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(300, reason);
@@ -63,7 +64,7 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves status 400', async () => {
+  test('resolves status 400', async () => {
     const body = getStringifiedBody({
       message: 'Invalid Application-Id or API-Key',
     });
@@ -77,11 +78,10 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('handles chunked responses inside unicode character boundaries', async () => {
+  test('handles chunked responses inside unicode character boundaries', async () => {
     const data = Buffer.from('äöü');
 
     // create a test response stream that is chunked inside a unicode character
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     function* generate() {
       yield data.subarray(0, 3);
       yield data.subarray(3);
@@ -106,11 +106,14 @@ describe('timeout handling', () => {
     server.listen('1113');
   });
 
-  afterAll((done) => {
-    server.close(() => done());
-  });
+  afterAll(
+    () =>
+      new Promise((done) => {
+        done();
+      }),
+  );
 
-  it('timeouts with the given 1 seconds connection timeout', async () => {
+  test('timeouts with the given 1 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -125,7 +128,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(1200);
   });
 
-  it('connection timeouts with the given 2 seconds connection timeout', async () => {
+  test('connection timeouts with the given 2 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -140,7 +143,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(2200);
   });
 
-  it("socket timeouts if response don't appears before the timeout with 2 seconds timeout", async () => {
+  test("socket timeouts if response don't appears before the timeout with 2 seconds timeout", async () => {
     const before = Date.now();
 
     const response = await requester.send({
@@ -156,7 +159,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(2200);
   });
 
-  it("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
+  test("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -171,7 +174,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(3200);
   });
 
-  it('do not timeouts if response appears before the timeout', async () => {
+  test('do not timeouts if response appears before the timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...requestStub,
@@ -190,7 +193,7 @@ describe('timeout handling', () => {
 });
 
 describe('error handling', (): void => {
-  it('resolves dns not found', async () => {
+  test('resolves dns not found', async () => {
     const request: EndRequest = {
       url: 'https://this-dont-exist.algolia.com',
       method: 'POST',
@@ -207,7 +210,7 @@ describe('error handling', (): void => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves general network errors', async () => {
+  test('resolves general network errors', async () => {
     nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
       .query(testQueryHeader)
@@ -224,7 +227,7 @@ describe('error handling', (): void => {
 });
 
 describe('requesterOptions', () => {
-  it('allows to pass requesterOptions', async () => {
+  test('allows to pass requesterOptions', async () => {
     const body = getStringifiedBody();
     const requesterTmp = createFetchRequester({
       requesterOptions: {
@@ -248,7 +251,7 @@ describe('requesterOptions', () => {
     expect(response.content).toBe(body);
   });
 
-  it('allows overriding default requesterOptions', async () => {
+  test('allows overriding default requesterOptions', async () => {
     const body = getStringifiedBody();
     const requesterTmp = createFetchRequester({
       requesterOptions: {

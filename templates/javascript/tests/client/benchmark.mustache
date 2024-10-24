@@ -1,14 +1,7 @@
 // {{generationBanner}}
-/* eslint-disable @typescript-eslint/no-unused-vars, require-await, no-lone-blocks */
-// @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { {{client}}, {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} } from '{{{import}}}';
+import { describe, test, expect } from 'vitest';
 
-const appId = 'test-app-id';
-const apiKey = 'test-api-key';
-
-function createClient(): {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} {
-  return {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
-}
+import { {{{clientName}}} } from '{{{importPackage}}}';
 
 {{#blocksBenchmark}}
 {{> tests/client/tests}}

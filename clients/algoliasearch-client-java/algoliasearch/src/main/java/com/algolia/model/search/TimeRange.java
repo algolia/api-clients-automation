@@ -11,30 +11,30 @@ import java.util.Objects;
 public class TimeRange {
 
   @JsonProperty("from")
-  private Integer from;
+  private Long from;
 
   @JsonProperty("until")
-  private Integer until;
+  private Long until;
 
-  public TimeRange setFrom(Integer from) {
+  public TimeRange setFrom(Long from) {
     this.from = from;
     return this;
   }
 
   /** When the rule should start to be active, in Unix epoch time. */
   @javax.annotation.Nonnull
-  public Integer getFrom() {
+  public Long getFrom() {
     return from;
   }
 
-  public TimeRange setUntil(Integer until) {
+  public TimeRange setUntil(Long until) {
     this.until = until;
     return this;
   }
 
   /** When the rule should stop to be active, in Unix epoch time. */
   @javax.annotation.Nonnull
-  public Integer getUntil() {
+  public Long getUntil() {
     return until;
   }
 

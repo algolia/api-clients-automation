@@ -42,12 +42,12 @@ export type Variant = {
   /**
    * A/B test currencies.
    */
-  currencies?: Record<string, Currency>;
+  currencies?: { [key: string]: Currency };
 
   /**
    * Description for this variant.
    */
-  description: string;
+  description?: string;
 
   /**
    * Estimated number of searches required to achieve the desired statistical significance.  The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.

@@ -1,12 +1,11 @@
 {
   "extends": "../../../config/base.tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
+    "skipLibCheck": false,
+    "module": "nodenext",
     "target": "esnext",
     "lib": ["dom", "esnext"],
     "outDir": "dist"
   },
-  "include": [
-    "*.ts"
-  ]
+  "include": ["*.ts"]
 }

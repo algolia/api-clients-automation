@@ -1,4 +1,6 @@
-import type { Headers, QueryParameters } from './transporter';
+export type Headers = Record<string, string>;
+
+export type QueryParameters = Record<string, any>;
 
 /**
  * The method of the request.
@@ -63,10 +65,3 @@ export type Requester = {
    */
   send: (request: EndRequest) => Promise<Response>;
 };
-
-export type EchoResponse = Omit<EndRequest, 'data'> &
-  Pick<Request, 'data' | 'path'> & {
-    host: string;
-    algoliaAgent: string;
-    searchParams?: Record<string, string>;
-  };

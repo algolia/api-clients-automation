@@ -8,15 +8,16 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, Optional, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictInt, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.abtesting.config import AbtestingConfig
 from algoliasearch.abtesting.models.ab_test import ABTest
@@ -30,8 +31,9 @@ from algoliasearch.abtesting.models.schedule_ab_tests_request import (
     ScheduleABTestsRequest,
 )
 from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.serializer import bodySerializer
+from algoliasearch.http.serializer import body_serializer
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
@@ -56,7 +58,7 @@ class AbtestingClient:
     """
 
     _transporter: Transporter
-    _config: AbtestingConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -68,7 +70,9 @@ class AbtestingClient:
         config: Optional[AbtestingConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = AbtestingConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = AbtestingConfig(app_id, api_key, region)
@@ -79,9 +83,10 @@ class AbtestingClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: AbtestingConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: AbtestingConfig, transporter: Optional[Transporter] = None
+    ) -> AbtestingClient:
         """Allows creating a client with a customized `AbtestingConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -106,7 +111,7 @@ class AbtestingClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -119,11 +124,11 @@ class AbtestingClient:
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     async def add_ab_tests_with_http_info(
         self,
-        add_ab_tests_request: AddABTestsRequest,
+        add_ab_tests_request: Union[AddABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -151,7 +156,7 @@ class AbtestingClient:
             verb=Verb.POST,
             path="/2/abtests",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -159,7 +164,7 @@ class AbtestingClient:
 
     async def add_ab_tests(
         self,
-        add_ab_tests_request: AddABTestsRequest,
+        add_ab_tests_request: Union[AddABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ABTestResponse:
         """
@@ -173,11 +178,10 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTestResponse' result object.
         """
-        return (
-            await self.add_ab_tests_with_http_info(
-                add_ab_tests_request, request_options
-            )
-        ).deserialize(ABTestResponse)
+        resp = await self.add_ab_tests_with_http_info(
+            add_ab_tests_request, request_options
+        )
+        return resp.deserialize(ABTestResponse, resp.raw_data)
 
     async def custom_delete_with_http_info(
         self,
@@ -210,11 +214,11 @@ class AbtestingClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -251,9 +255,10 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -284,11 +289,11 @@ class AbtestingClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -325,9 +330,8 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -364,11 +368,11 @@ class AbtestingClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -379,7 +383,7 @@ class AbtestingClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -416,11 +420,10 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -457,11 +460,11 @@ class AbtestingClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -472,7 +475,7 @@ class AbtestingClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -509,11 +512,10 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_ab_test_with_http_info(
         self,
@@ -562,9 +564,8 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTestResponse' result object.
         """
-        return (
-            await self.delete_ab_test_with_http_info(id, request_options)
-        ).deserialize(ABTestResponse)
+        resp = await self.delete_ab_test_with_http_info(id, request_options)
+        return resp.deserialize(ABTestResponse, resp.raw_data)
 
     async def get_ab_test_with_http_info(
         self,
@@ -611,9 +612,8 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTest' result object.
         """
-        return (await self.get_ab_test_with_http_info(id, request_options)).deserialize(
-            ABTest
-        )
+        resp = await self.get_ab_test_with_http_info(id, request_options)
+        return resp.deserialize(ABTest, resp.raw_data)
 
     async def list_ab_tests_with_http_info(
         self,
@@ -656,16 +656,16 @@ class AbtestingClient:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if index_prefix is not None:
-            _query_parameters.append(("indexPrefix", index_prefix))
+            _query_parameters["indexPrefix"] = index_prefix
         if index_suffix is not None:
-            _query_parameters.append(("indexSuffix", index_suffix))
+            _query_parameters["indexSuffix"] = index_suffix
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -717,15 +717,14 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListABTestsResponse' result object.
         """
-        return (
-            await self.list_ab_tests_with_http_info(
-                offset, limit, index_prefix, index_suffix, request_options
-            )
-        ).deserialize(ListABTestsResponse)
+        resp = await self.list_ab_tests_with_http_info(
+            offset, limit, index_prefix, index_suffix, request_options
+        )
+        return resp.deserialize(ListABTestsResponse, resp.raw_data)
 
     async def schedule_ab_test_with_http_info(
         self,
-        schedule_ab_tests_request: ScheduleABTestsRequest,
+        schedule_ab_tests_request: Union[ScheduleABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -753,7 +752,7 @@ class AbtestingClient:
             verb=Verb.POST,
             path="/2/abtests/schedule",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -761,7 +760,7 @@ class AbtestingClient:
 
     async def schedule_ab_test(
         self,
-        schedule_ab_tests_request: ScheduleABTestsRequest,
+        schedule_ab_tests_request: Union[ScheduleABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ScheduleABTestResponse:
         """
@@ -775,11 +774,10 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ScheduleABTestResponse' result object.
         """
-        return (
-            await self.schedule_ab_test_with_http_info(
-                schedule_ab_tests_request, request_options
-            )
-        ).deserialize(ScheduleABTestResponse)
+        resp = await self.schedule_ab_test_with_http_info(
+            schedule_ab_tests_request, request_options
+        )
+        return resp.deserialize(ScheduleABTestResponse, resp.raw_data)
 
     async def stop_ab_test_with_http_info(
         self,
@@ -826,9 +824,8 @@ class AbtestingClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTestResponse' result object.
         """
-        return (
-            await self.stop_ab_test_with_http_info(id, request_options)
-        ).deserialize(ABTestResponse)
+        resp = await self.stop_ab_test_with_http_info(id, request_options)
+        return resp.deserialize(ABTestResponse, resp.raw_data)
 
 
 class AbtestingClientSync:
@@ -850,7 +847,7 @@ class AbtestingClientSync:
     """
 
     _transporter: TransporterSync
-    _config: AbtestingConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
@@ -862,7 +859,9 @@ class AbtestingClientSync:
         config: Optional[AbtestingConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = AbtestingConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = AbtestingConfig(app_id, api_key, region)
@@ -873,9 +872,10 @@ class AbtestingClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: AbtestingConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls, config: AbtestingConfig, transporter: Optional[TransporterSync] = None
+    ) -> AbtestingClientSync:
         """Allows creating a client with a customized `AbtestingConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -912,11 +912,11 @@ class AbtestingClientSync:
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     def add_ab_tests_with_http_info(
         self,
-        add_ab_tests_request: AddABTestsRequest,
+        add_ab_tests_request: Union[AddABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -944,7 +944,7 @@ class AbtestingClientSync:
             verb=Verb.POST,
             path="/2/abtests",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -952,7 +952,7 @@ class AbtestingClientSync:
 
     def add_ab_tests(
         self,
-        add_ab_tests_request: AddABTestsRequest,
+        add_ab_tests_request: Union[AddABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ABTestResponse:
         """
@@ -966,9 +966,8 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTestResponse' result object.
         """
-        return (
-            self.add_ab_tests_with_http_info(add_ab_tests_request, request_options)
-        ).deserialize(ABTestResponse)
+        resp = self.add_ab_tests_with_http_info(add_ab_tests_request, request_options)
+        return resp.deserialize(ABTestResponse, resp.raw_data)
 
     def custom_delete_with_http_info(
         self,
@@ -1001,11 +1000,11 @@ class AbtestingClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -1042,9 +1041,8 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -1075,11 +1073,11 @@ class AbtestingClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -1116,9 +1114,8 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -1155,11 +1152,11 @@ class AbtestingClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1170,7 +1167,7 @@ class AbtestingClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1207,9 +1204,8 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -1246,11 +1242,11 @@ class AbtestingClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1261,7 +1257,7 @@ class AbtestingClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1298,9 +1294,8 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_ab_test_with_http_info(
         self,
@@ -1349,9 +1344,8 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTestResponse' result object.
         """
-        return (self.delete_ab_test_with_http_info(id, request_options)).deserialize(
-            ABTestResponse
-        )
+        resp = self.delete_ab_test_with_http_info(id, request_options)
+        return resp.deserialize(ABTestResponse, resp.raw_data)
 
     def get_ab_test_with_http_info(
         self,
@@ -1398,9 +1392,8 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTest' result object.
         """
-        return (self.get_ab_test_with_http_info(id, request_options)).deserialize(
-            ABTest
-        )
+        resp = self.get_ab_test_with_http_info(id, request_options)
+        return resp.deserialize(ABTest, resp.raw_data)
 
     def list_ab_tests_with_http_info(
         self,
@@ -1443,16 +1436,16 @@ class AbtestingClientSync:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if offset is not None:
-            _query_parameters.append(("offset", offset))
+            _query_parameters["offset"] = offset
         if limit is not None:
-            _query_parameters.append(("limit", limit))
+            _query_parameters["limit"] = limit
         if index_prefix is not None:
-            _query_parameters.append(("indexPrefix", index_prefix))
+            _query_parameters["indexPrefix"] = index_prefix
         if index_suffix is not None:
-            _query_parameters.append(("indexSuffix", index_suffix))
+            _query_parameters["indexSuffix"] = index_suffix
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -1504,15 +1497,14 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ListABTestsResponse' result object.
         """
-        return (
-            self.list_ab_tests_with_http_info(
-                offset, limit, index_prefix, index_suffix, request_options
-            )
-        ).deserialize(ListABTestsResponse)
+        resp = self.list_ab_tests_with_http_info(
+            offset, limit, index_prefix, index_suffix, request_options
+        )
+        return resp.deserialize(ListABTestsResponse, resp.raw_data)
 
     def schedule_ab_test_with_http_info(
         self,
-        schedule_ab_tests_request: ScheduleABTestsRequest,
+        schedule_ab_tests_request: Union[ScheduleABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -1540,7 +1532,7 @@ class AbtestingClientSync:
             verb=Verb.POST,
             path="/2/abtests/schedule",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1548,7 +1540,7 @@ class AbtestingClientSync:
 
     def schedule_ab_test(
         self,
-        schedule_ab_tests_request: ScheduleABTestsRequest,
+        schedule_ab_tests_request: Union[ScheduleABTestsRequest, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ScheduleABTestResponse:
         """
@@ -1562,11 +1554,10 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ScheduleABTestResponse' result object.
         """
-        return (
-            self.schedule_ab_test_with_http_info(
-                schedule_ab_tests_request, request_options
-            )
-        ).deserialize(ScheduleABTestResponse)
+        resp = self.schedule_ab_test_with_http_info(
+            schedule_ab_tests_request, request_options
+        )
+        return resp.deserialize(ScheduleABTestResponse, resp.raw_data)
 
     def stop_ab_test_with_http_info(
         self,
@@ -1613,6 +1604,5 @@ class AbtestingClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ABTestResponse' result object.
         """
-        return (self.stop_ab_test_with_http_info(id, request_options)).deserialize(
-            ABTestResponse
-        )
+        resp = self.stop_ab_test_with_http_info(id, request_options)
+        return resp.deserialize(ABTestResponse, resp.raw_data)

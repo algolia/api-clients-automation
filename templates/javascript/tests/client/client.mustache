@@ -1,15 +1,16 @@
 // {{generationBanner}}
-/* eslint-disable @typescript-eslint/no-unused-vars, require-await, no-lone-blocks */
-// @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { {{client}}, {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} } from '{{{import}}}';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+/* eslint-disable eslint/no-unused-vars */
+import { describe, test, expect } from 'vitest';
+
+import { {{{clientName}}} } from '{{{importPackage}}}';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
-function createClient(): {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} {
-  return {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
+function createClient() {
+  return {{{clientName}}}(appId, apiKey{{#isSearchClient}}, { requester: nodeEchoRequester() }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
 }
 
 {{#blocksClient}}
@@ -18,14 +19,8 @@ function createClient(): {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient = {{client}}('foo', 'bar', {{#hasRegionalHost}}'us',{{/hasRegionalHost}}{
-      authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
-    });
-    const headerClient = {{client}}('foo', 'bar', {{#hasRegionalHost}}'us',{{/hasRegionalHost}}{
-      authMode: 'WithinHeaders',
-      requester: echoRequester(),
-    });
+    const qpClient =  {{{clientName}}}('foo', 'bar'{{#isSearchClient}}, { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
+    const headerClient =  {{{clientName}}}('foo', 'bar'{{#isSearchClient}}, { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',

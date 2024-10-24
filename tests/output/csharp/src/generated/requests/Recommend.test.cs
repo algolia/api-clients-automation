@@ -26,6 +26,20 @@ public class RecommendClientRequestTests
   [Fact]
   public void Dispose() { }
 
+  [Fact(DisplayName = "batch recommend rules")]
+  public async Task BatchRecommendRulesTest()
+  {
+    await client.BatchRecommendRulesAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("RelatedProducts")
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/related-products/recommend/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
+  }
+
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
@@ -252,7 +266,7 @@ public class RecommendClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -273,7 +287,7 @@ public class RecommendClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -291,7 +305,7 @@ public class RecommendClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -312,7 +326,7 @@ public class RecommendClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -578,7 +592,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 42.1,
             }
-          )
+          ),
         },
       }
     );
@@ -609,7 +623,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 42.1,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -624,7 +638,7 @@ public class RecommendClientRequestTests
                 ),
               },
             }
-          )
+          ),
         },
       }
     );
@@ -656,7 +670,7 @@ public class RecommendClientRequestTests
               FacetName = "facet",
               FacetValue = "value",
             }
-          )
+          ),
         },
       }
     );
@@ -688,14 +702,14 @@ public class RecommendClientRequestTests
               MaxRecommendations = 10,
               FacetName = "myFacetName",
               FacetValue = "myFacetValue",
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
                   new List<FacetFilters> { new FacetFilters("query") }
                 ),
               },
-              FallbackParameters = new SearchParamsObject
+              FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -703,7 +717,7 @@ public class RecommendClientRequestTests
                 ),
               },
             }
-          )
+          ),
         },
       }
     );
@@ -743,7 +757,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 21.7,
             }
-          )
+          ),
         },
       }
     );
@@ -774,7 +788,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 21.7,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -798,7 +812,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 21.7,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -813,7 +827,7 @@ public class RecommendClientRequestTests
                 ),
               },
             }
-          )
+          ),
         },
       }
     );
@@ -844,7 +858,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<FbtModel>("BoughtTogether"),
               Threshold = 42.7,
             }
-          )
+          ),
         },
       }
     );

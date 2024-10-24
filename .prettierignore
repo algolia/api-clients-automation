@@ -5,3 +5,7 @@ build
 .gradle
 target
 bin
+.nx
+.parcel-cache
+.yarn
+builddir

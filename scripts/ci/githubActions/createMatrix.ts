@@ -1,10 +1,9 @@
-/* eslint-disable no-case-declarations */
 import fsp from 'fs/promises';
 
 import { setOutput } from '@actions/core';
 
 import { CLIENTS, createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.js';
-import { getLanguageFolder, getTestExtension, getTestOutputFolder, getClientsConfigField } from '../../config.js';
+import { getClientsConfigField, getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
 
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
 import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';
@@ -96,7 +95,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
           return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension} ${testsRootFolder}/benchmarkResult.json`;
         })
         .join(' '),
-      snippetsToStore: `snippets/${language}`,
+      guidesToStore: `docs/guides/${language} docs/snippets/${language}`,
       version,
       isMainVersion: true,
     };
@@ -113,14 +112,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'javascript':
-        const packageNames = matrix[language].toRun.map((client) => {
-          const packageName = GENERATORS[`${language}-${client}`].additionalProperties.packageName;
-
-          // `algoliasearch` is not preceded by `@algolia`
-          return client === 'algoliasearch' ? packageName : `@algolia/${packageName}`;
-        });
-
-        languageMatrix.buildCommand = `cd ${matrix[language].path} && yarn build:many '{${packageNames.join(',')},}'`;
+        languageMatrix.buildCommand = `cd ${matrix[language].path} && yarn build`;
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/package.json`;
 
         setOutput('JAVASCRIPT_DATA', JSON.stringify(languageMatrix));

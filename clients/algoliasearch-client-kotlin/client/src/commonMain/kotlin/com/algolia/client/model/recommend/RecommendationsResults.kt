@@ -8,16 +8,13 @@ import kotlinx.serialization.json.*
  * RecommendationsResults
  *
  * @param processingTimeMS Time the server took to process the request, in milliseconds.
- * @param page Page of search results to retrieve.
- * @param nbHits Number of results (hits).
- * @param nbPages Number of pages of results.
- * @param hitsPerPage Number of hits per page.
  * @param hits
  * @param abTestID A/B test ID. This is only included in the response for indices that are part of an A/B test.
  * @param abTestVariantID Variant ID. This is only included in the response for indices that are part of an A/B test.
  * @param aroundLatLng Computed geographical location.
  * @param automaticRadius Distance from a central coordinate provided by `aroundLatLng`.
  * @param exhaustive
+ * @param appliedRules Rules applied to the query.
  * @param exhaustiveFacetsCount See the `facetsCount` field of the `exhaustive` object in the response.
  * @param exhaustiveNbHits See the `nbHits` field of the `exhaustive` object in the response.
  * @param exhaustiveTypo See the `typo` field of the `exhaustive` object in the response.
@@ -36,24 +33,17 @@ import kotlinx.serialization.json.*
  * @param serverUsed Host name of the server that processed the request.
  * @param userData An object with custom data.  You can store up to 32kB as custom data.
  * @param queryID Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+ * @param automaticInsights Whether automatic events collection is enabled for the application.
+ * @param page Page of search results to retrieve.
+ * @param nbHits Number of results (hits).
+ * @param nbPages Number of pages of results.
+ * @param hitsPerPage Number of hits per page.
  */
 @Serializable
 public data class RecommendationsResults(
 
   /** Time the server took to process the request, in milliseconds. */
   @SerialName(value = "processingTimeMS") val processingTimeMS: Int,
-
-  /** Page of search results to retrieve. */
-  @SerialName(value = "page") val page: Int,
-
-  /** Number of results (hits). */
-  @SerialName(value = "nbHits") val nbHits: Int,
-
-  /** Number of pages of results. */
-  @SerialName(value = "nbPages") val nbPages: Int,
-
-  /** Number of hits per page. */
-  @SerialName(value = "hitsPerPage") val hitsPerPage: Int,
 
   @SerialName(value = "hits") val hits: List<RecommendationsHit>,
 
@@ -70,6 +60,9 @@ public data class RecommendationsResults(
   @SerialName(value = "automaticRadius") val automaticRadius: String? = null,
 
   @SerialName(value = "exhaustive") val exhaustive: Exhaustive? = null,
+
+  /** Rules applied to the query. */
+  @SerialName(value = "appliedRules") val appliedRules: List<JsonObject>? = null,
 
   /** See the `facetsCount` field of the `exhaustive` object in the response. */
   @Deprecated(message = "This property is deprecated.")
@@ -125,4 +118,19 @@ public data class RecommendationsResults(
 
   /** Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/). */
   @SerialName(value = "queryID") val queryID: String? = null,
+
+  /** Whether automatic events collection is enabled for the application. */
+  @SerialName(value = "_automaticInsights") val automaticInsights: Boolean? = null,
+
+  /** Page of search results to retrieve. */
+  @SerialName(value = "page") val page: Int? = null,
+
+  /** Number of results (hits). */
+  @SerialName(value = "nbHits") val nbHits: Int? = null,
+
+  /** Number of pages of results. */
+  @SerialName(value = "nbPages") val nbPages: Int? = null,
+
+  /** Number of hits per page. */
+  @SerialName(value = "hitsPerPage") val hitsPerPage: Int? = null,
 )

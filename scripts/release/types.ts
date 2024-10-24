@@ -4,44 +4,31 @@ import type { Language } from '../types.js';
 
 export type Version = {
   current: string;
-  releaseType: ReleaseType | null;
-  next: string | null;
-  skipRelease?: boolean;
-  noCommit?: boolean;
+  releaseType: ReleaseType;
+  next: string;
 };
 
-export type Versions = Record<string, Version>;
+export type Versions = {
+  [lang in Language]?: Version;
+};
 
-export type VersionsBeforeBump = Record<string, Omit<Version, 'next' | 'releaseType'>>;
-
+export type CommitType = 'chore' | 'feat' | 'fix';
 export type Scope = Language | 'clients' | 'specs';
 
-export type PassedCommit = {
+export type ParsedCommit = {
   hash: string;
-  type: string;
+  type: CommitType;
   /**
    * A commit can be scoped to a language. When scoped to `clients` or `specs`, it impacts all clients.
    */
-  scope: Scope;
+  scope?: Scope;
+  languages: Language[];
   author: string;
   message: string;
-  raw: string;
   prNumber: number;
 };
 
-export type Commit =
-  | PassedCommit
-  | { error: 'generation-commit' }
-  | { error: 'missing-language-scope'; message: string }
-  | { error: 'unknown-language-scope'; message: string };
-
-export type VersionsToRelease = {
-  [lang in Language]?: {
-    current: string;
-    next: string;
-    releaseType: ReleaseType;
-  };
-};
+export type Commit = ParsedCommit | { generated: true; languages: Language[]; message: string };
 
 export type Changelog = {
   [lang in Language]?: string;

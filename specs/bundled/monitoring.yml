@@ -396,7 +396,7 @@ components:
       name: clusters
       in: path
       required: true
-      description: Subset of clusters, separated by comma.
+      description: Subset of clusters, separated by commas.
       schema:
         type: string
         example: c1-de,c2-de,c3-de

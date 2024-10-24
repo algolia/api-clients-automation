@@ -2,9 +2,14 @@ import 'package:algolia_client_recommend/src/model/advanced_syntax_features.dart
 import 'package:algolia_client_recommend/src/model/alternatives_as_exact.dart';
 import 'package:algolia_client_recommend/src/model/around_radius_all.dart';
 import 'package:algolia_client_recommend/src/model/auto_facet_filter.dart';
+import 'package:algolia_client_recommend/src/model/banner.dart';
+import 'package:algolia_client_recommend/src/model/banner_image.dart';
+import 'package:algolia_client_recommend/src/model/banner_image_url.dart';
+import 'package:algolia_client_recommend/src/model/banner_link.dart';
+import 'package:algolia_client_recommend/src/model/base_index_settings.dart';
+import 'package:algolia_client_recommend/src/model/base_recommend_index_settings.dart';
 import 'package:algolia_client_recommend/src/model/base_recommend_request.dart';
-import 'package:algolia_client_recommend/src/model/base_search_params.dart';
-import 'package:algolia_client_recommend/src/model/base_search_params_without_query.dart';
+import 'package:algolia_client_recommend/src/model/base_recommend_search_params.dart';
 import 'package:algolia_client_recommend/src/model/base_search_response.dart';
 import 'package:algolia_client_recommend/src/model/boolean_string.dart';
 import 'package:algolia_client_recommend/src/model/bought_together_query.dart';
@@ -16,7 +21,6 @@ import 'package:algolia_client_recommend/src/model/exact_on_single_word_query.da
 import 'package:algolia_client_recommend/src/model/exhaustive.dart';
 import 'package:algolia_client_recommend/src/model/facet_ordering.dart';
 import 'package:algolia_client_recommend/src/model/facet_stats.dart';
-import 'package:algolia_client_recommend/src/model/facets.dart';
 import 'package:algolia_client_recommend/src/model/fallback_params.dart';
 import 'package:algolia_client_recommend/src/model/fbt_model.dart';
 import 'package:algolia_client_recommend/src/model/frequently_bought_together.dart';
@@ -25,13 +29,12 @@ import 'package:algolia_client_recommend/src/model/get_recommendations_params.da
 import 'package:algolia_client_recommend/src/model/get_recommendations_response.dart';
 import 'package:algolia_client_recommend/src/model/hide_consequence_object.dart';
 import 'package:algolia_client_recommend/src/model/highlight_result_option.dart';
-import 'package:algolia_client_recommend/src/model/index_settings_as_search_params.dart';
+import 'package:algolia_client_recommend/src/model/index_settings_facets.dart';
 import 'package:algolia_client_recommend/src/model/looking_similar.dart';
 import 'package:algolia_client_recommend/src/model/looking_similar_model.dart';
 import 'package:algolia_client_recommend/src/model/looking_similar_query.dart';
 import 'package:algolia_client_recommend/src/model/match_level.dart';
 import 'package:algolia_client_recommend/src/model/matched_geo_location.dart';
-import 'package:algolia_client_recommend/src/model/mode.dart';
 import 'package:algolia_client_recommend/src/model/params_consequence.dart';
 import 'package:algolia_client_recommend/src/model/personalization.dart';
 import 'package:algolia_client_recommend/src/model/promote_consequence_object.dart';
@@ -39,8 +42,11 @@ import 'package:algolia_client_recommend/src/model/query_type.dart';
 import 'package:algolia_client_recommend/src/model/range.dart';
 import 'package:algolia_client_recommend/src/model/ranking_info.dart';
 import 'package:algolia_client_recommend/src/model/recommend_hit.dart';
+import 'package:algolia_client_recommend/src/model/recommend_index_settings.dart';
 import 'package:algolia_client_recommend/src/model/recommend_models.dart';
 import 'package:algolia_client_recommend/src/model/recommend_rule.dart';
+import 'package:algolia_client_recommend/src/model/recommend_search_params.dart';
+import 'package:algolia_client_recommend/src/model/recommend_updated_at_response.dart';
 import 'package:algolia_client_recommend/src/model/recommendations_hits.dart';
 import 'package:algolia_client_recommend/src/model/recommendations_results.dart';
 import 'package:algolia_client_recommend/src/model/recommended_for_you.dart';
@@ -57,16 +63,14 @@ import 'package:algolia_client_recommend/src/model/remove_words_if_no_results.da
 import 'package:algolia_client_recommend/src/model/rendering_content.dart';
 import 'package:algolia_client_recommend/src/model/rule_metadata.dart';
 import 'package:algolia_client_recommend/src/model/search_pagination.dart';
-import 'package:algolia_client_recommend/src/model/search_params.dart';
-import 'package:algolia_client_recommend/src/model/search_params_object.dart';
 import 'package:algolia_client_recommend/src/model/search_params_query.dart';
 import 'package:algolia_client_recommend/src/model/search_recommend_rules_params.dart';
 import 'package:algolia_client_recommend/src/model/search_recommend_rules_response.dart';
-import 'package:algolia_client_recommend/src/model/semantic_search.dart';
 import 'package:algolia_client_recommend/src/model/snippet_result_option.dart';
 import 'package:algolia_client_recommend/src/model/sort_remaining_by.dart';
 import 'package:algolia_client_recommend/src/model/supported_language.dart';
 import 'package:algolia_client_recommend/src/model/task_status.dart';
+import 'package:algolia_client_recommend/src/model/time_range.dart';
 import 'package:algolia_client_recommend/src/model/trending_facet_hit.dart';
 import 'package:algolia_client_recommend/src/model/trending_facets.dart';
 import 'package:algolia_client_recommend/src/model/trending_facets_model.dart';
@@ -76,6 +80,7 @@ import 'package:algolia_client_recommend/src/model/trending_items_model.dart';
 import 'package:algolia_client_recommend/src/model/trending_items_query.dart';
 import 'package:algolia_client_recommend/src/model/typo_tolerance_enum.dart';
 import 'package:algolia_client_recommend/src/model/value.dart';
+import 'package:algolia_client_recommend/src/model/widgets.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -105,15 +110,27 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AutoFacetFilter':
       return AutoFacetFilter.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Banner':
+      return Banner.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImage':
+      return BannerImage.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BannerImageUrl':
+      return BannerImageUrl.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BannerLink':
+      return BannerLink.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BaseIndexSettings':
+      return BaseIndexSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BaseRecommendIndexSettings':
+      return BaseRecommendIndexSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'BaseRecommendRequest':
       return BaseRecommendRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'BaseSearchParams':
-      return BaseSearchParams.fromJson(value as Map<String, dynamic>)
+    case 'BaseRecommendSearchParams':
+      return BaseRecommendSearchParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'BaseSearchParamsWithoutQuery':
-      return BaseSearchParamsWithoutQuery.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'BaseSearchResponse':
       return BaseSearchResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -140,8 +157,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'FacetStats':
       return FacetStats.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'Facets':
-      return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FallbackParams':
       return FallbackParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -165,8 +180,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'HighlightResultOption':
       return HighlightResultOption.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'IndexSettingsAsSearchParams':
-      return IndexSettingsAsSearchParams.fromJson(value as Map<String, dynamic>)
+    case 'IndexSettingsFacets':
+      return IndexSettingsFacets.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'LookingSimilar':
       return LookingSimilar.fromJson(value as Map<String, dynamic>)
@@ -181,8 +196,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'MatchedGeoLocation':
       return MatchedGeoLocation.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'Mode':
-      return Mode.fromJson(value) as ReturnType;
     case 'ParamsConsequence':
       return ParamsConsequence.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -200,10 +213,19 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RecommendHit':
       return RecommendHit.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'RecommendIndexSettings':
+      return RecommendIndexSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RecommendModels':
       return RecommendModels.fromJson(value) as ReturnType;
     case 'RecommendRule':
       return RecommendRule.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'RecommendSearchParams':
+      return RecommendSearchParams.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'RecommendUpdatedAtResponse':
+      return RecommendUpdatedAtResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'RecommendationsHits':
       return RecommendationsHits.fromJson(value as Map<String, dynamic>)
@@ -246,11 +268,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchPagination':
       return SearchPagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SearchParams':
-      return SearchParams.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'SearchParamsObject':
-      return SearchParamsObject.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'SearchParamsQuery':
       return SearchParamsQuery.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -260,9 +277,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchRecommendRulesResponse':
       return SearchRecommendRulesResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'SemanticSearch':
-      return SemanticSearch.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'SnippetResultOption':
       return SnippetResultOption.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -272,6 +286,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return SupportedLanguage.fromJson(value) as ReturnType;
     case 'TaskStatus':
       return TaskStatus.fromJson(value) as ReturnType;
+    case 'TimeRange':
+      return TimeRange.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'TrendingFacetHit':
       return TrendingFacetHit.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -295,6 +311,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return TypoToleranceEnum.fromJson(value) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Widgets':
+      return Widgets.fromJson(value as Map<String, dynamic>) as ReturnType;
     default:
       RegExpMatch? match;
 

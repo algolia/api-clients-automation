@@ -41,8 +41,8 @@ package algoliasearch.recommend
   *   Number of hits per page.
   */
 case class SearchPagination(
-    page: Int,
-    nbHits: Int,
-    nbPages: Int,
-    hitsPerPage: Int
+    page: Option[Int] = scala.None,
+    nbHits: Option[Int] = scala.None,
+    nbPages: Option[Int] = scala.None,
+    hitsPerPage: Option[Int] = scala.None
 )

@@ -2,12 +2,13 @@
 {{> imports}}
 
 {{#isSearchClient}}
-from algoliasearch.search.models.batch_request import BatchRequest
-from algoliasearch.search.models.scope_type import ScopeType
 from algoliasearch.search.models.action import Action
-from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
-from algoliasearch.search.models.replace_all_objects_response import ReplaceAllObjectsResponse
+from algoliasearch.search.models.batch_request import BatchRequest
 from algoliasearch.search.models.browse_params_object import BrowseParamsObject
+from algoliasearch.search.models.operation_type import OperationType
+from algoliasearch.search.models.replace_all_objects_response import ReplaceAllObjectsResponse
+from algoliasearch.search.models.scope_type import ScopeType
+from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
 {{/isSearchClient}}
 
 {{#operations}}{{#operation}}{{#imports}}
@@ -36,12 +37,12 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     """
 
     _transporter: Transporter{{#isSyncClient}}Sync{{/isSyncClient}}
-    _config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}
+    _config: BaseConfig
     _request_options: RequestOptions
 
-    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
+    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(transporter.config.app_id, transporter.config.api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
 
         if config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
@@ -52,7 +53,8 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
         self._transporter = transporter
 
-    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None) -> Self:
+    @classmethod
+    def create_with_config(cls, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None) -> {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         """Allows creating a client with a customized `{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}` and `Transporter{{#isSyncClient}}Sync{{/isSyncClient}}`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -72,7 +74,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         return {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
     {{^isSyncClient}}
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -98,7 +100,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     
     {{^isSyncClient}}async {{/isSyncClient}}def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     {{#isSearchClient}}
 {{> search_helpers}}
@@ -137,21 +139,21 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         {{/allParams}}
 
         {{#queryParams.0}}
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
         {{/queryParams.0}}
         {{#headerParams.0}}
-        _headers: Dict[str, Optional[str]] = {}
+        _headers: Dict[str, str] = {}
         {{/headerParams.0}}
         
         {{#vendorExtensions}}
         {{#queryParams}}
         if {{paramName}} is not None:
         {{^x-is-custom-request}}
-            _query_parameters.append(('{{baseName}}', {{paramName}}))
+            _query_parameters["{{baseName}}"] = {{paramName}}
         {{/x-is-custom-request}}
         {{#x-is-custom-request}}
             for _qpkey, _qpvalue in {{paramName}}.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
         {{/x-is-custom-request}}
         {{/queryParams}}
         {{/vendorExtensions}}
@@ -173,7 +175,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             request_options=self._request_options.merge(
                 {{#queryParams.0}}query_parameters=_query_parameters,{{/queryParams.0}}
                 {{#headerParams.0}}headers=_headers,{{/headerParams.0}}
-                {{#bodyParam}}data=dumps(bodySerializer(_data)),{{/bodyParam}}
+                {{#bodyParam}}data=dumps(body_serializer(_data)),{{/bodyParam}}
                 user_request_options=request_options,
             ),
             {{#vendorExtensions}}
@@ -202,7 +204,8 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         :return: Returns the deserialized response in a '{{{returnType}}}' result object.
         {{/returnType}}
         """
-        return ({{^isSyncClient}}await {{/isSyncClient}}self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
+        resp = {{^isSyncClient}}await {{/isSyncClient}}self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
+        return resp.deserialize({{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}None{{/returnType}}, resp.raw_data)
 
 {{/operation}}
 {{/operations}}

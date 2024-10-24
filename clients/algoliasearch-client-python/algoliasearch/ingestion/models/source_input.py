@@ -8,9 +8,9 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Set, Union
 
-from pydantic import BaseModel, ValidationError, model_serializer
+from pydantic import BaseModel, Field, ValidationError, model_serializer
 
 if version_info >= (3, 11):
     from typing import Self
@@ -35,26 +35,43 @@ class SourceInput(BaseModel):
     SourceInput
     """
 
-    oneof_schema_1_validator: Optional[SourceCommercetools] = None
-    oneof_schema_2_validator: Optional[SourceBigCommerce] = None
-    oneof_schema_3_validator: Optional[SourceJSON] = None
-    oneof_schema_4_validator: Optional[SourceCSV] = None
-    oneof_schema_5_validator: Optional[SourceBigQuery] = None
-    oneof_schema_6_validator: Optional[SourceGA4BigQueryExport] = None
-    oneof_schema_7_validator: Optional[SourceDocker] = None
-    oneof_schema_8_validator: Optional[SourceShopify] = None
-    actual_instance: Optional[
-        Union[
-            SourceBigCommerce,
-            SourceBigQuery,
-            SourceCSV,
-            SourceCommercetools,
-            SourceDocker,
-            SourceGA4BigQueryExport,
-            SourceJSON,
-            SourceShopify,
-        ]
+    oneof_schema_1_validator: Optional[SourceCommercetools] = Field(default=None)
+
+    oneof_schema_2_validator: Optional[SourceBigCommerce] = Field(default=None)
+
+    oneof_schema_3_validator: Optional[SourceJSON] = Field(default=None)
+
+    oneof_schema_4_validator: Optional[SourceCSV] = Field(default=None)
+
+    oneof_schema_5_validator: Optional[SourceBigQuery] = Field(default=None)
+
+    oneof_schema_6_validator: Optional[SourceGA4BigQueryExport] = Field(default=None)
+
+    oneof_schema_7_validator: Optional[SourceDocker] = Field(default=None)
+
+    oneof_schema_8_validator: Optional[SourceShopify] = Field(default=None)
+
+    actual_instance: Union[
+        SourceBigCommerce,
+        SourceBigQuery,
+        SourceCSV,
+        SourceCommercetools,
+        SourceDocker,
+        SourceGA4BigQueryExport,
+        SourceJSON,
+        SourceShopify,
+        None,
     ] = None
+    one_of_schemas: Set[str] = {
+        "SourceBigCommerce",
+        "SourceBigQuery",
+        "SourceCSV",
+        "SourceCommercetools",
+        "SourceDocker",
+        "SourceGA4BigQueryExport",
+        "SourceJSON",
+        "SourceShopify",
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -66,24 +83,24 @@ class SourceInput(BaseModel):
                 raise ValueError(
                     "If a position argument is used, keyword arguments cannot be used."
                 )
-            super().__init__(actual_instance=args[0])
+            super().__init__(actual_instance=args[0])  # pyright: ignore
         else:
             super().__init__(**kwargs)
 
     @model_serializer
     def unwrap_actual_instance(
         self,
-    ) -> Optional[
-        Union[
-            SourceBigCommerce,
-            SourceBigQuery,
-            SourceCSV,
-            SourceCommercetools,
-            SourceDocker,
-            SourceGA4BigQueryExport,
-            SourceJSON,
-            SourceShopify,
-        ]
+    ) -> Union[
+        SourceBigCommerce,
+        SourceBigQuery,
+        SourceCSV,
+        SourceCommercetools,
+        SourceDocker,
+        SourceGA4BigQueryExport,
+        SourceJSON,
+        SourceShopify,
+        Self,
+        None,
     ]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
@@ -91,7 +108,8 @@ class SourceInput(BaseModel):
         return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Self:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+        """Create an instance of SourceInput from a JSON string"""
         return cls.from_json(dumps(obj))
 
     @classmethod
@@ -159,17 +177,35 @@ class SourceInput(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json"):
-            return self.actual_instance.to_json()
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json  # pyright: ignore
+        ):
+            return self.actual_instance.to_json()  # pyright: ignore
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Dict:
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[
+            Dict[str, Any],
+            SourceBigCommerce,
+            SourceBigQuery,
+            SourceCSV,
+            SourceCommercetools,
+            SourceDocker,
+            SourceGA4BigQueryExport,
+            SourceJSON,
+            SourceShopify,
+        ]
+    ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict"):
-            return self.actual_instance.to_dict()
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict  # pyright: ignore
+        ):
+            return self.actual_instance.to_dict()  # pyright: ignore
         else:
-            return self.actual_instance
+            return self.actual_instance  # pyright: ignore

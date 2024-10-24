@@ -8,19 +8,21 @@ from __future__ import annotations
 
 from json import dumps
 from sys import version_info
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
+from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.serializer import bodySerializer
+from algoliasearch.http.serializer import body_serializer
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
@@ -56,19 +58,21 @@ class QuerySuggestionsClient:
     """
 
     _transporter: Transporter
-    _config: QuerySuggestionsConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
         self,
         app_id: Optional[str] = None,
         api_key: Optional[str] = None,
-        region: str = None,
+        region: str = "",
         transporter: Optional[Transporter] = None,
         config: Optional[QuerySuggestionsConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = QuerySuggestionsConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = QuerySuggestionsConfig(app_id, api_key, region)
@@ -79,9 +83,10 @@ class QuerySuggestionsClient:
             transporter = Transporter(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: QuerySuggestionsConfig, transporter: Optional[Transporter] = None
-    ) -> Self:
+        cls, config: QuerySuggestionsConfig, transporter: Optional[Transporter] = None
+    ) -> QuerySuggestionsClient:
         """Allows creating a client with a customized `QuerySuggestionsConfig` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -106,7 +111,7 @@ class QuerySuggestionsClient:
             config=config,
         )
 
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -119,11 +124,11 @@ class QuerySuggestionsClient:
 
     async def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     async def create_config_with_http_info(
         self,
-        configuration_with_index: ConfigurationWithIndex,
+        configuration_with_index: Union[ConfigurationWithIndex, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -151,7 +156,7 @@ class QuerySuggestionsClient:
             verb=Verb.POST,
             path="/1/configs",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -159,7 +164,7 @@ class QuerySuggestionsClient:
 
     async def create_config(
         self,
-        configuration_with_index: ConfigurationWithIndex,
+        configuration_with_index: Union[ConfigurationWithIndex, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BaseResponse:
         """
@@ -173,11 +178,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            await self.create_config_with_http_info(
-                configuration_with_index, request_options
-            )
-        ).deserialize(BaseResponse)
+        resp = await self.create_config_with_http_info(
+            configuration_with_index, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     async def custom_delete_with_http_info(
         self,
@@ -210,11 +214,11 @@ class QuerySuggestionsClient:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.DELETE,
@@ -251,9 +255,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_delete_with_http_info(
+            path, parameters, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_get_with_http_info(
         self,
@@ -284,11 +289,11 @@ class QuerySuggestionsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return await self._transporter.request(
             verb=Verb.GET,
@@ -325,9 +330,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = await self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_post_with_http_info(
         self,
@@ -364,11 +368,11 @@ class QuerySuggestionsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -379,7 +383,7 @@ class QuerySuggestionsClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -416,11 +420,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_post_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_post_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def custom_put_with_http_info(
         self,
@@ -457,11 +460,11 @@ class QuerySuggestionsClient:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -472,7 +475,7 @@ class QuerySuggestionsClient:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -509,11 +512,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            await self.custom_put_with_http_info(
-                path, parameters, body, request_options
-            )
-        ).deserialize(object)
+        resp = await self.custom_put_with_http_info(
+            path, parameters, body, request_options
+        )
+        return resp.deserialize(object, resp.raw_data)
 
     async def delete_config_with_http_info(
         self,
@@ -568,9 +570,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            await self.delete_config_with_http_info(index_name, request_options)
-        ).deserialize(BaseResponse)
+        resp = await self.delete_config_with_http_info(index_name, request_options)
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     async def get_all_configs_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -606,9 +607,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[ConfigurationResponse]' result object.
         """
-        return (await self.get_all_configs_with_http_info(request_options)).deserialize(
-            List[ConfigurationResponse]
-        )
+        resp = await self.get_all_configs_with_http_info(request_options)
+        return resp.deserialize(List[ConfigurationResponse], resp.raw_data)
 
     async def get_config_with_http_info(
         self,
@@ -663,9 +663,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigurationResponse' result object.
         """
-        return (
-            await self.get_config_with_http_info(index_name, request_options)
-        ).deserialize(ConfigurationResponse)
+        resp = await self.get_config_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigurationResponse, resp.raw_data)
 
     async def get_config_status_with_http_info(
         self,
@@ -720,9 +719,8 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigStatus' result object.
         """
-        return (
-            await self.get_config_status_with_http_info(index_name, request_options)
-        ).deserialize(ConfigStatus)
+        resp = await self.get_config_status_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigStatus, resp.raw_data)
 
     async def get_log_file_with_http_info(
         self,
@@ -777,16 +775,15 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'LogFile' result object.
         """
-        return (
-            await self.get_log_file_with_http_info(index_name, request_options)
-        ).deserialize(LogFile)
+        resp = await self.get_log_file_with_http_info(index_name, request_options)
+        return resp.deserialize(LogFile, resp.raw_data)
 
     async def update_config_with_http_info(
         self,
         index_name: Annotated[
             StrictStr, Field(description="Query Suggestions index name.")
         ],
-        configuration: Configuration,
+        configuration: Union[Configuration, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -823,7 +820,7 @@ class QuerySuggestionsClient:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -834,7 +831,7 @@ class QuerySuggestionsClient:
         index_name: Annotated[
             StrictStr, Field(description="Query Suggestions index name.")
         ],
-        configuration: Configuration,
+        configuration: Union[Configuration, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BaseResponse:
         """
@@ -850,11 +847,10 @@ class QuerySuggestionsClient:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            await self.update_config_with_http_info(
-                index_name, configuration, request_options
-            )
-        ).deserialize(BaseResponse)
+        resp = await self.update_config_with_http_info(
+            index_name, configuration, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
 
 class QuerySuggestionsClientSync:
@@ -876,19 +872,21 @@ class QuerySuggestionsClientSync:
     """
 
     _transporter: TransporterSync
-    _config: QuerySuggestionsConfig
+    _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(
         self,
         app_id: Optional[str] = None,
         api_key: Optional[str] = None,
-        region: str = None,
+        region: str = "",
         transporter: Optional[TransporterSync] = None,
         config: Optional[QuerySuggestionsConfig] = None,
     ) -> None:
         if transporter is not None and config is None:
-            config = transporter._config
+            config = QuerySuggestionsConfig(
+                transporter.config.app_id, transporter.config.api_key, region
+            )
 
         if config is None:
             config = QuerySuggestionsConfig(app_id, api_key, region)
@@ -899,9 +897,12 @@ class QuerySuggestionsClientSync:
             transporter = TransporterSync(config)
         self._transporter = transporter
 
+    @classmethod
     def create_with_config(
-        config: QuerySuggestionsConfig, transporter: Optional[TransporterSync] = None
-    ) -> Self:
+        cls,
+        config: QuerySuggestionsConfig,
+        transporter: Optional[TransporterSync] = None,
+    ) -> QuerySuggestionsClientSync:
         """Allows creating a client with a customized `QuerySuggestionsConfig` and `TransporterSync`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -938,11 +939,11 @@ class QuerySuggestionsClientSync:
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
-        self._transporter._config.set_client_api_key(api_key)
+        self._transporter.config.set_client_api_key(api_key)
 
     def create_config_with_http_info(
         self,
-        configuration_with_index: ConfigurationWithIndex,
+        configuration_with_index: Union[ConfigurationWithIndex, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -970,7 +971,7 @@ class QuerySuggestionsClientSync:
             verb=Verb.POST,
             path="/1/configs",
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -978,7 +979,7 @@ class QuerySuggestionsClientSync:
 
     def create_config(
         self,
-        configuration_with_index: ConfigurationWithIndex,
+        configuration_with_index: Union[ConfigurationWithIndex, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BaseResponse:
         """
@@ -992,9 +993,10 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            self.create_config_with_http_info(configuration_with_index, request_options)
-        ).deserialize(BaseResponse)
+        resp = self.create_config_with_http_info(
+            configuration_with_index, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     def custom_delete_with_http_info(
         self,
@@ -1027,11 +1029,11 @@ class QuerySuggestionsClientSync:
                 "Parameter `path` is required when calling `custom_delete`."
             )
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.DELETE,
@@ -1068,9 +1070,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_delete_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_delete_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_get_with_http_info(
         self,
@@ -1101,11 +1102,11 @@ class QuerySuggestionsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_get`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         return self._transporter.request(
             verb=Verb.GET,
@@ -1142,9 +1143,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_get_with_http_info(path, parameters, request_options)
-        ).deserialize(object)
+        resp = self.custom_get_with_http_info(path, parameters, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_post_with_http_info(
         self,
@@ -1181,11 +1181,11 @@ class QuerySuggestionsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_post`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1196,7 +1196,7 @@ class QuerySuggestionsClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1233,9 +1233,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_post_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_post_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def custom_put_with_http_info(
         self,
@@ -1272,11 +1271,11 @@ class QuerySuggestionsClientSync:
         if path is None:
             raise ValueError("Parameter `path` is required when calling `custom_put`.")
 
-        _query_parameters: List[Tuple[str, str]] = []
+        _query_parameters: Dict[str, Any] = {}
 
         if parameters is not None:
             for _qpkey, _qpvalue in parameters.items():
-                _query_parameters.append((_qpkey, _qpvalue))
+                _query_parameters[_qpkey] = _qpvalue
 
         _data = {}
         if body is not None:
@@ -1287,7 +1286,7 @@ class QuerySuggestionsClientSync:
             path="/{path}".replace("{path}", path),
             request_options=self._request_options.merge(
                 query_parameters=_query_parameters,
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1324,9 +1323,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'object' result object.
         """
-        return (
-            self.custom_put_with_http_info(path, parameters, body, request_options)
-        ).deserialize(object)
+        resp = self.custom_put_with_http_info(path, parameters, body, request_options)
+        return resp.deserialize(object, resp.raw_data)
 
     def delete_config_with_http_info(
         self,
@@ -1381,9 +1379,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            self.delete_config_with_http_info(index_name, request_options)
-        ).deserialize(BaseResponse)
+        resp = self.delete_config_with_http_info(index_name, request_options)
+        return resp.deserialize(BaseResponse, resp.raw_data)
 
     def get_all_configs_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None
@@ -1419,9 +1416,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'List[ConfigurationResponse]' result object.
         """
-        return (self.get_all_configs_with_http_info(request_options)).deserialize(
-            List[ConfigurationResponse]
-        )
+        resp = self.get_all_configs_with_http_info(request_options)
+        return resp.deserialize(List[ConfigurationResponse], resp.raw_data)
 
     def get_config_with_http_info(
         self,
@@ -1476,9 +1472,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigurationResponse' result object.
         """
-        return (
-            self.get_config_with_http_info(index_name, request_options)
-        ).deserialize(ConfigurationResponse)
+        resp = self.get_config_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigurationResponse, resp.raw_data)
 
     def get_config_status_with_http_info(
         self,
@@ -1533,9 +1528,8 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'ConfigStatus' result object.
         """
-        return (
-            self.get_config_status_with_http_info(index_name, request_options)
-        ).deserialize(ConfigStatus)
+        resp = self.get_config_status_with_http_info(index_name, request_options)
+        return resp.deserialize(ConfigStatus, resp.raw_data)
 
     def get_log_file_with_http_info(
         self,
@@ -1590,16 +1584,15 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'LogFile' result object.
         """
-        return (
-            self.get_log_file_with_http_info(index_name, request_options)
-        ).deserialize(LogFile)
+        resp = self.get_log_file_with_http_info(index_name, request_options)
+        return resp.deserialize(LogFile, resp.raw_data)
 
     def update_config_with_http_info(
         self,
         index_name: Annotated[
             StrictStr, Field(description="Query Suggestions index name.")
         ],
-        configuration: Configuration,
+        configuration: Union[Configuration, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
@@ -1636,7 +1629,7 @@ class QuerySuggestionsClientSync:
                 "{indexName}", quote(str(index_name), safe="")
             ),
             request_options=self._request_options.merge(
-                data=dumps(bodySerializer(_data)),
+                data=dumps(body_serializer(_data)),
                 user_request_options=request_options,
             ),
             use_read_transporter=False,
@@ -1647,7 +1640,7 @@ class QuerySuggestionsClientSync:
         index_name: Annotated[
             StrictStr, Field(description="Query Suggestions index name.")
         ],
-        configuration: Configuration,
+        configuration: Union[Configuration, dict[str, Any]],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BaseResponse:
         """
@@ -1663,8 +1656,7 @@ class QuerySuggestionsClientSync:
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
         :return: Returns the deserialized response in a 'BaseResponse' result object.
         """
-        return (
-            self.update_config_with_http_info(
-                index_name, configuration, request_options
-            )
-        ).deserialize(BaseResponse)
+        resp = self.update_config_with_http_info(
+            index_name, configuration, request_options
+        )
+        return resp.deserialize(BaseResponse, resp.raw_data)

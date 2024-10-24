@@ -44,5 +44,5 @@ case class TrendingItems(
     facetName: Option[String] = scala.None,
     facetValue: Option[String] = scala.None,
     model: TrendingItemsModel,
-    fallbackParameters: Option[SearchParamsObject] = scala.None
+    fallbackParameters: Option[FallbackParams] = scala.None
 )

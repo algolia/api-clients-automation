@@ -10,7 +10,7 @@ from json import loads
 from sys import version_info
 from typing import Any, Dict, Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 
 if version_info >= (3, 11):
     from typing import Self
@@ -24,55 +24,52 @@ from algoliasearch.abtesting.models.minimum_detectable_effect import (
 )
 from algoliasearch.abtesting.models.outliers import Outliers
 
+_ALIASES = {
+    "outliers": "outliers",
+    "empty_search": "emptySearch",
+    "minimum_detectable_effect": "minimumDetectableEffect",
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
+
 
 class ABTestConfiguration(BaseModel):
     """
     A/B test configuration.
     """
 
-    outliers: Outliers
-    empty_search: Optional[EmptySearch] = Field(default=None, alias="emptySearch")
-    minimum_detectable_effect: Optional[MinimumDetectableEffect] = Field(
-        default=None, alias="minimumDetectableEffect"
-    )
+    outliers: Optional[Outliers] = None
+    empty_search: Optional[EmptySearch] = None
+    minimum_detectable_effect: Optional[MinimumDetectableEffect] = None
 
     model_config = ConfigDict(
-        use_enum_values=True, populate_by_name=True, validate_assignment=True
+        use_enum_values=True,
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+        alias_generator=_alias_generator,
     )
 
     def to_json(self) -> str:
         return self.model_dump_json(by_alias=True, exclude_unset=True)
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ABTestConfiguration from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        _dict = self.model_dump(
+        """Return the dictionary representation of the model using alias."""
+        return self.model_dump(
             by_alias=True,
-            exclude={},
             exclude_none=True,
+            exclude_unset=True,
         )
-        if self.outliers:
-            _dict["outliers"] = self.outliers.to_dict()
-        if self.empty_search:
-            _dict["emptySearch"] = self.empty_search.to_dict()
-        if self.minimum_detectable_effect:
-            _dict["minimumDetectableEffect"] = self.minimum_detectable_effect.to_dict()
-        return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ABTestConfiguration from a dict"""
         if obj is None:
             return None
@@ -80,25 +77,20 @@ class ABTestConfiguration(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "outliers": (
-                    Outliers.from_dict(obj.get("outliers"))
-                    if obj.get("outliers") is not None
-                    else None
-                ),
-                "emptySearch": (
-                    EmptySearch.from_dict(obj.get("emptySearch"))
-                    if obj.get("emptySearch") is not None
-                    else None
-                ),
-                "minimumDetectableEffect": (
-                    MinimumDetectableEffect.from_dict(
-                        obj.get("minimumDetectableEffect")
-                    )
-                    if obj.get("minimumDetectableEffect") is not None
-                    else None
-                ),
-            }
+        obj["outliers"] = (
+            Outliers.from_dict(obj["outliers"])
+            if obj.get("outliers") is not None
+            else None
         )
-        return _obj
+        obj["emptySearch"] = (
+            EmptySearch.from_dict(obj["emptySearch"])
+            if obj.get("emptySearch") is not None
+            else None
+        )
+        obj["minimumDetectableEffect"] = (
+            MinimumDetectableEffect.from_dict(obj["minimumDetectableEffect"])
+            if obj.get("minimumDetectableEffect") is not None
+            else None
+        )
+
+        return cls.model_validate(obj)

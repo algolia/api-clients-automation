@@ -1,4 +1,4 @@
-/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. ## Client
+/** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
   * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
   * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
@@ -6,7 +6,7 @@
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
-  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * Retry strategy To guarantee high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
   * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
@@ -43,31 +43,16 @@ sealed trait HighlightResult
 
 trait HighlightResultTrait extends HighlightResult
 
-trait HighlightResultEvidence
-
-object HighlightResultEvidence {
-  implicit object MapOfStringHighlightResultEvidence extends HighlightResultEvidence
-  implicit object MapOfStringHighlightResultOptionEvidence extends HighlightResultEvidence
-}
-
 object HighlightResult {
 
   case class MapOfStringHighlightResult(value: Map[String, HighlightResult]) extends HighlightResult
-  case class MapOfStringHighlightResultOption(value: Map[String, HighlightResultOption]) extends HighlightResult
-  case class SeqOfHighlightResultOption(value: Seq[HighlightResultOption]) extends HighlightResult
+  case class SeqOfHighlightResult(value: Seq[HighlightResult]) extends HighlightResult
 
-  def apply(
-      value: Map[String, HighlightResult]
-  )(implicit ev: HighlightResultEvidence.MapOfStringHighlightResultEvidence.type): HighlightResult = {
+  def apply(value: Map[String, HighlightResult]): HighlightResult = {
     HighlightResult.MapOfStringHighlightResult(value)
   }
-  def apply(
-      value: Map[String, HighlightResultOption]
-  )(implicit ev: HighlightResultEvidence.MapOfStringHighlightResultOptionEvidence.type): HighlightResult = {
-    HighlightResult.MapOfStringHighlightResultOption(value)
-  }
-  def apply(value: Seq[HighlightResultOption]): HighlightResult = {
-    HighlightResult.SeqOfHighlightResultOption(value)
+  def apply(value: Seq[HighlightResult]): HighlightResult = {
+    HighlightResult.SeqOfHighlightResult(value)
   }
 
 }
@@ -80,17 +65,16 @@ object HighlightResultSerializer extends Serializer[HighlightResult] {
         case value: JObject if value.obj.exists(_._1 == "matchLevel") && value.obj.exists(_._1 == "matchedWords") =>
           Extraction.extract[HighlightResultOption](value)
         case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResult]](value))
-        case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResultOption]](value))
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          HighlightResult.SeqOfHighlightResultOption(value.map(_.extract))
+          HighlightResult.SeqOfHighlightResult(value.map(_.extract))
         case _ => throw new MappingException("Can't convert " + json + " to HighlightResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: HighlightResult =>
     value match {
-      case value: HighlightResultOption                      => Extraction.decompose(value)(format - this)
-      case HighlightResult.SeqOfHighlightResultOption(value) => JArray(value.map(Extraction.decompose).toList)
+      case value: HighlightResultOption                => Extraction.decompose(value)(format - this)
+      case HighlightResult.SeqOfHighlightResult(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }
 }

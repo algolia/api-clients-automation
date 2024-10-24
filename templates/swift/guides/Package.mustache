@@ -1,0 +1,28 @@
+// swift-tools-version: 5.9
+// {{generationBanner}}
+
+import PackageDescription
+
+let package = Package(
+  name: "AlgoliaSearchClientGuides",
+  platforms: [
+    .iOS(.v13),
+    .macOS(.v11),
+    .tvOS(.v13),
+    .watchOS(.v6),
+  ],
+  dependencies: [
+      .package(path: "../../../clients/algoliasearch-client-swift")
+  ],
+  targets: [
+    .executableTarget(
+      name: "AlgoliaSearchClientGuides",
+      dependencies: [{{#packageList}}
+        .product(
+          name: "{{{.}}}",
+          package: "algoliasearch-client-swift"
+        ),{{/packageList}}
+      ]
+    )
+  ]
+)

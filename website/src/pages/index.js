@@ -1,19 +1,11 @@
-import {
-  Hero as AlgoliaHero,
-  Button,
-  Heading1,
-  InlineLink,
-  Heading3,
-} from '@algolia/ui-library';
+import { Hero as AlgoliaHero, Button, Heading1 } from '@algolia/ui-library';
 import Layout from '@theme/Layout';
-import React from 'react';
 
 function Hero() {
   function Title() {
     return (
       <Heading1 className="hero-title">
-        Generated API clients, by{' '}
-        <span className="uil-color-nebula-500">Algolia</span>.
+        Generated API clients, by <span className="uil-color-nebula-500">Algolia</span>.
       </Heading1>
     );
   }
@@ -22,12 +14,7 @@ function Hero() {
     <AlgoliaHero
       id="hero"
       cta={[
-        <Button
-          key="contribute"
-          href="/docs/introduction"
-          background="blue"
-          color="white"
-        >
+        <Button key="contribute" href="/docs/introduction" background="blue" color="white">
           Contribute
         </Button>,
         <iframe

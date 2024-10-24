@@ -29,6 +29,9 @@ public class RecommendationsResults {
   @JsonProperty("exhaustive")
   private Exhaustive exhaustive;
 
+  @JsonProperty("appliedRules")
+  private List<Object> appliedRules;
+
   @JsonProperty("exhaustiveFacetsCount")
   private Boolean exhaustiveFacetsCount;
 
@@ -85,6 +88,9 @@ public class RecommendationsResults {
 
   @JsonProperty("queryID")
   private String queryID;
+
+  @JsonProperty("_automaticInsights")
+  private Boolean automaticInsights;
 
   @JsonProperty("page")
   private Integer page;
@@ -159,6 +165,25 @@ public class RecommendationsResults {
   @javax.annotation.Nullable
   public Exhaustive getExhaustive() {
     return exhaustive;
+  }
+
+  public RecommendationsResults setAppliedRules(List<Object> appliedRules) {
+    this.appliedRules = appliedRules;
+    return this;
+  }
+
+  public RecommendationsResults addAppliedRules(Object appliedRulesItem) {
+    if (this.appliedRules == null) {
+      this.appliedRules = new ArrayList<>();
+    }
+    this.appliedRules.add(appliedRulesItem);
+    return this;
+  }
+
+  /** Rules applied to the query. */
+  @javax.annotation.Nullable
+  public List<Object> getAppliedRules() {
+    return appliedRules;
   }
 
   public RecommendationsResults setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
@@ -416,13 +441,24 @@ public class RecommendationsResults {
     return queryID;
   }
 
+  public RecommendationsResults setAutomaticInsights(Boolean automaticInsights) {
+    this.automaticInsights = automaticInsights;
+    return this;
+  }
+
+  /** Whether automatic events collection is enabled for the application. */
+  @javax.annotation.Nullable
+  public Boolean getAutomaticInsights() {
+    return automaticInsights;
+  }
+
   public RecommendationsResults setPage(Integer page) {
     this.page = page;
     return this;
   }
 
   /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getPage() {
     return page;
   }
@@ -433,7 +469,7 @@ public class RecommendationsResults {
   }
 
   /** Number of results (hits). */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbHits() {
     return nbHits;
   }
@@ -444,7 +480,7 @@ public class RecommendationsResults {
   }
 
   /** Number of pages of results. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbPages() {
     return nbPages;
   }
@@ -455,7 +491,7 @@ public class RecommendationsResults {
   }
 
   /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -491,6 +527,7 @@ public class RecommendationsResults {
       Objects.equals(this.aroundLatLng, recommendationsResults.aroundLatLng) &&
       Objects.equals(this.automaticRadius, recommendationsResults.automaticRadius) &&
       Objects.equals(this.exhaustive, recommendationsResults.exhaustive) &&
+      Objects.equals(this.appliedRules, recommendationsResults.appliedRules) &&
       Objects.equals(this.exhaustiveFacetsCount, recommendationsResults.exhaustiveFacetsCount) &&
       Objects.equals(this.exhaustiveNbHits, recommendationsResults.exhaustiveNbHits) &&
       Objects.equals(this.exhaustiveTypo, recommendationsResults.exhaustiveTypo) &&
@@ -510,6 +547,7 @@ public class RecommendationsResults {
       Objects.equals(this.serverUsed, recommendationsResults.serverUsed) &&
       Objects.equals(this.userData, recommendationsResults.userData) &&
       Objects.equals(this.queryID, recommendationsResults.queryID) &&
+      Objects.equals(this.automaticInsights, recommendationsResults.automaticInsights) &&
       Objects.equals(this.page, recommendationsResults.page) &&
       Objects.equals(this.nbHits, recommendationsResults.nbHits) &&
       Objects.equals(this.nbPages, recommendationsResults.nbPages) &&
@@ -526,6 +564,7 @@ public class RecommendationsResults {
       aroundLatLng,
       automaticRadius,
       exhaustive,
+      appliedRules,
       exhaustiveFacetsCount,
       exhaustiveNbHits,
       exhaustiveTypo,
@@ -545,6 +584,7 @@ public class RecommendationsResults {
       serverUsed,
       userData,
       queryID,
+      automaticInsights,
       page,
       nbHits,
       nbPages,
@@ -562,6 +602,7 @@ public class RecommendationsResults {
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
     sb.append("    automaticRadius: ").append(toIndentedString(automaticRadius)).append("\n");
     sb.append("    exhaustive: ").append(toIndentedString(exhaustive)).append("\n");
+    sb.append("    appliedRules: ").append(toIndentedString(appliedRules)).append("\n");
     sb.append("    exhaustiveFacetsCount: ").append(toIndentedString(exhaustiveFacetsCount)).append("\n");
     sb.append("    exhaustiveNbHits: ").append(toIndentedString(exhaustiveNbHits)).append("\n");
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");
@@ -581,6 +622,7 @@ public class RecommendationsResults {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    automaticInsights: ").append(toIndentedString(automaticInsights)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
     sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");

@@ -190,7 +190,7 @@ public class Variant {
   }
 
   /** Description for this variant. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getDescription() {
     return description;
   }

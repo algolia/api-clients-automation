@@ -1,0 +1,28 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func saveObjectsMovies() async throws {
+    let url = URL(string: "https://dashboard.algolia.com/sample_datasets/movie.json")!
+    var data: Data? = nil
+    #if os(Linux) // For linux interop
+        (data, _) = try await URLSession.shared.asyncData(for: URLRequest(url: url))
+    #else
+        (data, _) = try await URLSession.shared.data(from: url)
+    #endif
+    let movies = try JSONDecoder().decode([AnyCodable].self, from: data!)
+    
+    // Connect and authenticate with your Algolia app
+    {{> snippets/init}}
+
+    do {
+        // Save records in Algolia index
+        {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+    } catch {
+        print(error.localizedDescription)
+    }
+}

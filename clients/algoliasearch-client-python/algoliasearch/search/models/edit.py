@@ -10,7 +10,7 @@ from json import loads
 from sys import version_info
 from typing import Any, Dict, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict
 
 if version_info >= (3, 11):
     from typing import Self
@@ -20,6 +20,16 @@ else:
 
 from algoliasearch.search.models.edit_type import EditType
 
+_ALIASES = {
+    "type": "type",
+    "delete": "delete",
+    "insert": "insert",
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
+
 
 class Edit(BaseModel):
     """
@@ -27,45 +37,37 @@ class Edit(BaseModel):
     """
 
     type: Optional[EditType] = None
-    delete: Optional[StrictStr] = Field(
-        default=None, description="Text or patterns to remove from the query string."
-    )
-    insert: Optional[StrictStr] = Field(
-        default=None,
-        description="Text to be added in place of the deleted text inside the query string.",
-    )
+    delete: Optional[str] = None
+    """ Text or patterns to remove from the query string. """
+    insert: Optional[str] = None
+    """ Text to be added in place of the deleted text inside the query string. """
 
     model_config = ConfigDict(
-        use_enum_values=True, populate_by_name=True, validate_assignment=True
+        use_enum_values=True,
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+        alias_generator=_alias_generator,
     )
 
     def to_json(self) -> str:
         return self.model_dump_json(by_alias=True, exclude_unset=True)
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of Edit from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        _dict = self.model_dump(
+        """Return the dictionary representation of the model using alias."""
+        return self.model_dump(
             by_alias=True,
-            exclude={},
             exclude_none=True,
+            exclude_unset=True,
         )
-        return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of Edit from a dict"""
         if obj is None:
             return None
@@ -73,11 +75,6 @@ class Edit(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "type": obj.get("type"),
-                "delete": obj.get("delete"),
-                "insert": obj.get("insert"),
-            }
-        )
-        return _obj
+        obj["type"] = obj.get("type")
+
+        return cls.model_validate(obj)

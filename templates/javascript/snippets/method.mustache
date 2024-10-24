@@ -1,8 +1,7 @@
 // {{generationBanner}}
-/* eslint no-console: ["error", { allow: ["log"] }] */
 
 // >IMPORT
-import { {{client}} } from '{{{import}}}';
+{{> snippets/import}}
 // IMPORT<
 import type { RequestOptions } from '@algolia/client-common';
 
@@ -12,9 +11,10 @@ import type { RequestOptions } from '@algolia/client-common';
 //
 // {{{description}}}
 export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): {{#isAsyncMethod}}Promise<void>{{/isAsyncMethod}}{{^isAsyncMethod}}void{{/isAsyncMethod}} {
-  // >SEPARATOR {{method}} {{testName}}
+  // >SEPARATOR {{method}} {{{testName}}}
   // Initialize the client
-  const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
+  // {{#hasRegionalHost}}Replace '{{defaultRegion}}' with your Algolia Application Region{{/hasRegionalHost}}
+  {{> snippets/init}}
 
   // Call the API
   {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};
