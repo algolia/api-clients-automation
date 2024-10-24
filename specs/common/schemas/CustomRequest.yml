@@ -13,6 +13,7 @@ Responses:
     content:
       application/json:
         schema:
+          x-is-generic: true
           type: object
   '400':
     $ref: '../responses/BadRequest.yml'
