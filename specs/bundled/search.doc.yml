@@ -5322,6 +5322,10 @@ paths:
                 type: object
                 additionalProperties: false
                 properties:
+                  message:
+                    type: string
+                    description: An optional status message.
+                    example: Index INDEX_NAME does not exist.
                   results:
                     type: array
                     description: Retrieved records.
