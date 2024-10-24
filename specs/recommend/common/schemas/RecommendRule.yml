@@ -9,7 +9,7 @@ RecommendRule:
       description: Rule metadata.
       properties:
         lastUpdate:
-          $ref: '../responses/common.yml#/updatedAt'
+          $ref: '../../../common/responses/common.yml#/updatedAt'
     objectID:
       $ref: '../../../common/parameters.yml#/ruleID'
     condition:

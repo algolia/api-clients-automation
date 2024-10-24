@@ -478,7 +478,8 @@ public class ParametersWithDataType {
   }
 
   private void handlePrimitive(Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec) throws CTSException {
-    if (spec != null && spec.getIsPrimitiveType()) {
+    // some int64 are not considered primitive, thanks a lot openapi
+    if (spec != null && (spec.getIsPrimitiveType() || spec.getIsLong())) {
       transferPrimitiveData(spec, testOutput);
     } else {
       inferDataType(param, null, testOutput);
