@@ -1874,8 +1874,8 @@ class SearchTest extends AnyFunSuite {
         validity = Some(
           Seq(
             TimeRange(
-              from = 1656670273,
-              until = 1656670277
+              from = 1656670273L,
+              until = 1656670277L
             )
           )
         )
@@ -2031,8 +2031,8 @@ class SearchTest extends AnyFunSuite {
           validity = Some(
             Seq(
               TimeRange(
-                from = 1656670273,
-                until = 1656670277
+                from = 1656670273L,
+                until = 1656670277L
               )
             )
           )

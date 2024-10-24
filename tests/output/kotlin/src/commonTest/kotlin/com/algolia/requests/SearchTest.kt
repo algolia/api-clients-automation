@@ -1996,8 +1996,8 @@ class SearchTest {
             enabled = true,
             validity = listOf(
               TimeRange(
-                from = 1656670273,
-                until = 1656670277,
+                from = 1656670273L,
+                until = 1656670277L,
               ),
             ),
           ),
@@ -2114,8 +2114,8 @@ class SearchTest {
               enabled = true,
               validity = listOf(
                 TimeRange(
-                  from = 1656670273,
-                  until = 1656670277,
+                  from = 1656670273L,
+                  until = 1656670277L,
                 ),
               ),
             ),

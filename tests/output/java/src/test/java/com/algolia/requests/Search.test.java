@@ -2013,7 +2013,7 @@ class SearchClientRequestsTests {
           )
           .setDescription("test")
           .setEnabled(true)
-          .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273).setUntil(1656670277))),
+          .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273L).setUntil(1656670277L))),
         true
       );
     });
@@ -2137,7 +2137,7 @@ class SearchClientRequestsTests {
             )
             .setDescription("test")
             .setEnabled(true)
-            .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273).setUntil(1656670277)))
+            .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273L).setUntil(1656670277L)))
         ),
         true,
         true

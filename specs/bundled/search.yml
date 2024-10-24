@@ -7331,9 +7331,11 @@ components:
       properties:
         from:
           type: integer
+          format: int64
           description: When the rule should start to be active, in Unix epoch time.
         until:
           type: integer
+          format: int64
           description: When the rule should stop to be active, in Unix epoch time.
       required:
         - from

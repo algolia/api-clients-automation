@@ -2631,7 +2631,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 ),
                 description: "test",
                 enabled: true,
-                validity: [SearchTimeRange(from: 1_656_670_273, until: 1_656_670_277)]
+                validity: [SearchTimeRange(from: Int64(1_656_670_273), until: Int64(1_656_670_277))]
             ),
             forwardToReplicas: true
         )
@@ -2754,7 +2754,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 ),
                 description: "test",
                 enabled: true,
-                validity: [SearchTimeRange(from: 1_656_670_273, until: 1_656_670_277)]
+                validity: [SearchTimeRange(from: Int64(1_656_670_273), until: Int64(1_656_670_277))]
             )],
             forwardToReplicas: true,
             clearExistingRules: true

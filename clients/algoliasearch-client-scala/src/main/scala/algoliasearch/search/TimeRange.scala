@@ -41,6 +41,6 @@ package algoliasearch.search
   *   When the rule should stop to be active, in Unix epoch time.
   */
 case class TimeRange(
-    from: Int,
-    until: Int
+    from: Long,
+    until: Long
 )

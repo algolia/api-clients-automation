@@ -1829,7 +1829,7 @@ public class SearchClientRequestTests
         Enabled = true,
         Validity = new List<TimeRange>
         {
-          new TimeRange { From = 1656670273, Until = 1656670277 },
+          new TimeRange { From = 1656670273L, Until = 1656670277L },
         },
       },
       true
@@ -1975,7 +1975,7 @@ public class SearchClientRequestTests
           Enabled = true,
           Validity = new List<TimeRange>
           {
-            new TimeRange { From = 1656670273, Until = 1656670277 },
+            new TimeRange { From = 1656670273L, Until = 1656670277L },
           },
         },
       },
