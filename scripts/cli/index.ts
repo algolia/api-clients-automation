@@ -1,23 +1,24 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
-import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
+import { buildLanguages } from '../buildLanguages.js';
+import { CI, CLIENTS, LANGUAGES, run, setVerbose, toAbsolutePath } from '../common.js';
 import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
-import { startTestServer } from '../cts/testServer';
+import { startTestServer } from '../cts/testServer/index.js';
+import { docsGenerateMany } from '../docs/generate.js';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
 import { generateVersionsHistory } from '../release/versionsHistory.js';
-import { snippetsGenerateMany } from '../snippets/generate.js';
-import { buildSpecs } from '../specs';
+import { buildSpecs } from '../specs/index.js';
 import type { Language } from '../types.js';
 
+import { existsSync } from 'node:fs';
 import type { LangArg } from './utils.js';
-import { ALL, getClientChoices, generatorList, transformSelection, PROMPT_CLIENTS, PROMPT_LANGUAGES } from './utils.js';
+import { ALL, generatorList, getClientChoices, PROMPT_CLIENTS, PROMPT_LANGUAGES, transformSelection } from './utils.js';
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
@@ -81,29 +82,58 @@ buildCommand
 
     setVerbose(Boolean(verbose));
 
-    await buildClients(generatorList({ language, client, clientList }));
+    await buildLanguages(generatorList({ language, client, clientList }), 'client');
   });
 
 buildCommand
   .command('playground')
   .description('Build a specified playground')
   .addArgument(args.language)
+  .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, { verbose }) => {
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
     setVerbose(Boolean(verbose));
 
-    await buildPlaygrounds(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+    await buildLanguages(generatorList({ language, client, clientList }), 'playground');
   });
 
 buildCommand
   .command('snippets')
   .description('Build a specified snippets')
   .addArgument(args.language)
+  .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, { verbose }) => {
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
     setVerbose(Boolean(verbose));
 
-    await buildSnippets(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+    await buildLanguages(generatorList({ language, client, clientList }), 'snippets');
+  });
+
+buildCommand
+  .command('guides')
+  .description('Build a specified guides')
+  .addArgument(args.language)
+  .addArgument(args.clients)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
+    setVerbose(Boolean(verbose));
+
+    await buildLanguages(generatorList({ language, client, clientList }), 'guides');
   });
 
 buildCommand
@@ -236,7 +266,29 @@ program
 
     setVerbose(Boolean(verbose));
 
-    await snippetsGenerateMany(generatorList({ language, client, clientList }));
+    await docsGenerateMany(generatorList({ language, client, clientList }), 'snippets');
+  });
+
+program
+  .command('guides')
+  .description('Generate the guides')
+  .addArgument(args.language)
+  .addArgument(args.clients)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
+    setVerbose(Boolean(verbose));
+
+    await docsGenerateMany(
+      generatorList({ language, client, clientList }).filter((gen) =>
+        existsSync(toAbsolutePath(`templates/${gen.language}/guides/${gen.client}`)),
+      ),
+      'guides',
+    );
   });
 
 program

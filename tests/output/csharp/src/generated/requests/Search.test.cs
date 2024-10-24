@@ -1237,6 +1237,17 @@ public class SearchClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "search with a real object")]
+  public async Task GetObjectTest1()
+  {
+    await client.GetObjectAsync("cts_e2e_browse", "Batman and Robin");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/cts_e2e_browse/Batman%20and%20Robin", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "getObjects")]
   public async Task GetObjectsTest()
   {
@@ -1818,7 +1829,7 @@ public class SearchClientRequestTests
         Enabled = true,
         Validity = new List<TimeRange>
         {
-          new TimeRange { From = 1656670273, Until = 1656670277 },
+          new TimeRange { From = 1656670273L, Until = 1656670277L },
         },
       },
       true
@@ -1964,7 +1975,7 @@ public class SearchClientRequestTests
           Enabled = true,
           Validity = new List<TimeRange>
           {
-            new TimeRange { From = 1656670273, Until = 1656670277 },
+            new TimeRange { From = 1656670273L, Until = 1656670277L },
           },
         },
       },

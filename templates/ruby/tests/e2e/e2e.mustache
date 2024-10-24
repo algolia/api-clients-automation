@@ -7,7 +7,6 @@ require_relative '../helpers'
 Dotenv.load('../../.env')
 
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E < Test::Unit::TestCase
-  include Algolia::{{{modelModule}}}
   def setup
     @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
       ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
@@ -20,7 +19,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E < Test::Un
   {{#tests}}
   # {{{testName}}}
   def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}
-    res = @client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+    res = @{{> tests/method}}
 
     {{#response}}
     {{#statusCode}}

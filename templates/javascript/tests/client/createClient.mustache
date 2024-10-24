@@ -1,1 +1,47 @@
-{{^autoCreateClient}}const client = {{/autoCreateClient}}{{client}}('{{parametersWithDataTypeMap.appId.value}}','{{parametersWithDataTypeMap.apiKey.value}}',{{#hasRegionalHost}}'{{parametersWithDataTypeMap.region.value}}',{{/hasRegionalHost}}{ {{#useEchoRequester}}requester: nodeEchoRequester(),{{/useEchoRequester}}{{#hasCustomHosts}}hosts:[{{#customHosts}}{ url: 'localhost', port: {{port}}, accept: 'readWrite', protocol: 'http' },{{/customHosts}}]{{/hasCustomHosts}} });
+{{^autoCreateClient}}const client = {{/autoCreateClient}}{{{clientName}}}(
+  '{{parametersWithDataTypeMap.appId.value}}',
+  '{{parametersWithDataTypeMap.apiKey.value}}'
+  {{#isSearchClient}},
+  {
+    {{#useEchoRequester}}
+    requester: nodeEchoRequester(),
+    {{/useEchoRequester}}
+    {{#hasCustomHosts}}
+    hosts:[
+    {{#customHosts}}
+    {
+      url: 'localhost',
+      port: {{port}},
+      accept: 'readWrite',
+      protocol: 'http'
+    },
+    {{/customHosts}}
+    ]
+    {{/hasCustomHosts}} 
+  }
+  {{/isSearchClient}}
+){{^isSearchClient}}.{{{initMethod}}}(
+  {
+    options: {
+    {{#useEchoRequester}}
+      requester: nodeEchoRequester(),
+    {{/useEchoRequester}}
+    {{#hasCustomHosts}}
+      hosts:[
+      {{#customHosts}}
+      {
+        url: 'localhost',
+        port: {{port}},
+        accept: 'readWrite',
+        protocol: 'http'
+      },
+      {{/customHosts}}
+      ]
+      {{/hasCustomHosts}}
+  },
+ {{#hasRegionalHost}}
+ // @ts-ignore
+ region: '{{{parametersWithDataTypeMap.region.value}}}'
+ {{/hasRegionalHost}}
+})
+{{/isSearchClient}};

@@ -1,3 +1,26 @@
+## [1.26.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.2...1.26.3)
+
+- [1f36e8f93](https://github.com/algolia/api-clients-automation/commit/1f36e8f93) fix(specs): results in getObjects is required ([#4024](https://github.com/algolia/api-clients-automation/pull/4024)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [1.26.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.1...1.26.2)
+
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+- [8b879dead](https://github.com/algolia/api-clients-automation/commit/8b879dead) fix(specs): alternativesAsExact is plurals and synonyms ([#3974](https://github.com/algolia/api-clients-automation/pull/3974)) by [@gazconroy](https://github.com/gazconroy/)
+- [1a9b95e85](https://github.com/algolia/api-clients-automation/commit/1a9b95e85) fix(specs): Separators are non-alphanumeric characters ([#3978](https://github.com/algolia/api-clients-automation/pull/3978)) by [@gazconroy](https://github.com/gazconroy/)
+- [519fd9840](https://github.com/algolia/api-clients-automation/commit/519fd9840) fix(specs): multiple clients fixes ([#3971](https://github.com/algolia/api-clients-automation/pull/3971)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [1.26.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.0...1.26.1)
+
+- [434c99f80](https://github.com/algolia/api-clients-automation/commit/434c99f80) fix(specs): use the read transporter for browse ([#3938](https://github.com/algolia/api-clients-automation/pull/3938)) by [@millotp](https://github.com/millotp/)
+- [45d433d0a](https://github.com/algolia/api-clients-automation/commit/45d433d0a) fix(specs): correct type for banners [skip-bc] ([#3939](https://github.com/algolia/api-clients-automation/pull/3939)) by [@millotp](https://github.com/millotp/)
+
+## [1.26.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.25.0...1.26.0)
+
+- [bed119166](https://github.com/algolia/api-clients-automation/commit/bed119166) feat(specs): add support for widgets / banners in search for the csharp client ([#3870](https://github.com/algolia/api-clients-automation/pull/3870)) by [@Kalmar99](https://github.com/Kalmar99/)
+- [844e57f35](https://github.com/algolia/api-clients-automation/commit/844e57f35) fix(specs): correct typos is Search API ([#3898](https://github.com/algolia/api-clients-automation/pull/3898)) by [@gazconroy](https://github.com/gazconroy/)
+- [f554e09c3](https://github.com/algolia/api-clients-automation/commit/f554e09c3) chore: revert and fix release ([#3922](https://github.com/algolia/api-clients-automation/pull/3922)) by [@millotp](https://github.com/millotp/)
+
 ## [1.25.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.2...1.25.0)
 
 - [788483537](https://github.com/algolia/api-clients-automation/commit/788483537) chore(clients): add workflow to auto-close PR ([#3834](https://github.com/algolia/api-clients-automation/pull/3834)) by [@shortcuts](https://github.com/shortcuts/)

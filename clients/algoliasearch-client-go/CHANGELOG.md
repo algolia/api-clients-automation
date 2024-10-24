@@ -1,3 +1,35 @@
+## [4.5.4](https://github.com/algolia/algoliasearch-client-go/compare/4.5.3...4.5.4)
+
+- [1f36e8f93](https://github.com/algolia/api-clients-automation/commit/1f36e8f93) fix(specs): results in getObjects is required ([#4024](https://github.com/algolia/api-clients-automation/pull/4024)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.5.3](https://github.com/algolia/algoliasearch-client-go/compare/4.5.2...4.5.3)
+
+- [fe2c8440e](https://github.com/algolia/api-clients-automation/commit/fe2c8440e) docs(analytics): constrain pagination only to limit query parameter ([#4012](https://github.com/algolia/api-clients-automation/pull/4012)) by [@febeck](https://github.com/febeck/)
+
+## [4.5.2](https://github.com/algolia/algoliasearch-client-go/compare/4.5.1...4.5.2)
+
+- [ed203c6a7](https://github.com/algolia/api-clients-automation/commit/ed203c6a7) fix(go): better network error ([#3943](https://github.com/algolia/api-clients-automation/pull/3943)) by [@millotp](https://github.com/millotp/)
+- [cd98290fa](https://github.com/algolia/api-clients-automation/commit/cd98290fa) fix(specs): Typo tolernace on words ([#3968](https://github.com/algolia/api-clients-automation/pull/3968)) by [@gazconroy](https://github.com/gazconroy/)
+- [5866c2954](https://github.com/algolia/api-clients-automation/commit/5866c2954) fix(specs): Add context to hitsPerPage ([#3969](https://github.com/algolia/api-clients-automation/pull/3969)) by [@gazconroy](https://github.com/gazconroy/)
+- [8b879dead](https://github.com/algolia/api-clients-automation/commit/8b879dead) fix(specs): alternativesAsExact is plurals and synonyms ([#3974](https://github.com/algolia/api-clients-automation/pull/3974)) by [@gazconroy](https://github.com/gazconroy/)
+- [1a9b95e85](https://github.com/algolia/api-clients-automation/commit/1a9b95e85) fix(specs): Separators are non-alphanumeric characters ([#3978](https://github.com/algolia/api-clients-automation/pull/3978)) by [@gazconroy](https://github.com/gazconroy/)
+- [519fd9840](https://github.com/algolia/api-clients-automation/commit/519fd9840) fix(specs): multiple clients fixes ([#3971](https://github.com/algolia/api-clients-automation/pull/3971)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.5.1](https://github.com/algolia/algoliasearch-client-go/compare/4.5.0...4.5.1)
+
+- [f516d0243](https://github.com/algolia/api-clients-automation/commit/f516d0243) fix(specs): Typos in API descriptions ([#3932](https://github.com/algolia/api-clients-automation/pull/3932)) by [@gazconroy](https://github.com/gazconroy/)
+- [ee6c043ef](https://github.com/algolia/api-clients-automation/commit/ee6c043ef) fix(clients): remove all client side validation expect null check ([#3936](https://github.com/algolia/api-clients-automation/pull/3936)) by [@millotp](https://github.com/millotp/)
+- [434c99f80](https://github.com/algolia/api-clients-automation/commit/434c99f80) fix(specs): use the read transporter for browse ([#3938](https://github.com/algolia/api-clients-automation/pull/3938)) by [@millotp](https://github.com/millotp/)
+- [6b07138e7](https://github.com/algolia/api-clients-automation/commit/6b07138e7) chore: apply codacy fixes ([#3935](https://github.com/algolia/api-clients-automation/pull/3935)) by [@millotp](https://github.com/millotp/)
+- [45d433d0a](https://github.com/algolia/api-clients-automation/commit/45d433d0a) fix(specs): correct type for banners [skip-bc] ([#3939](https://github.com/algolia/api-clients-automation/pull/3939)) by [@millotp](https://github.com/millotp/)
+
+## [4.5.0](https://github.com/algolia/algoliasearch-client-go/compare/4.4.0...4.5.0)
+
+- [ad8e3d224](https://github.com/algolia/api-clients-automation/commit/ad8e3d224) fix(specs): update analytics and abtesting max pagination query limit ([#3696](https://github.com/algolia/api-clients-automation/pull/3696)) by [@febeck](https://github.com/febeck/)
+- [bed119166](https://github.com/algolia/api-clients-automation/commit/bed119166) feat(specs): add support for widgets / banners in search for the csharp client ([#3870](https://github.com/algolia/api-clients-automation/pull/3870)) by [@Kalmar99](https://github.com/Kalmar99/)
+- [844e57f35](https://github.com/algolia/api-clients-automation/commit/844e57f35) fix(specs): correct typos is Search API ([#3898](https://github.com/algolia/api-clients-automation/pull/3898)) by [@gazconroy](https://github.com/gazconroy/)
+- [f554e09c3](https://github.com/algolia/api-clients-automation/commit/f554e09c3) chore: revert and fix release ([#3922](https://github.com/algolia/api-clients-automation/pull/3922)) by [@millotp](https://github.com/millotp/)
+
 ## [4.4.0](https://github.com/algolia/algoliasearch-client-go/compare/4.3.5...4.4.0)
 
 - [788483537](https://github.com/algolia/api-clients-automation/commit/788483537) chore(clients): add workflow to auto-close PR ([#3834](https://github.com/algolia/api-clients-automation/pull/3834)) by [@shortcuts](https://github.com/shortcuts/)

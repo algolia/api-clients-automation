@@ -167,8 +167,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -242,29 +244,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -414,8 +398,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -489,29 +475,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -661,8 +629,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -736,29 +706,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -903,8 +855,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -979,29 +933,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1134,8 +1070,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1203,27 +1141,11 @@ paths:
             response = client.get_status()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_status_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1283,6 +1205,12 @@ paths:
             let response = try await client.getStatus()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/status \
+              --header 'accept: application/json'
   /1/status/{clusters}:
     get:
       summary: Retrieve cluster status
@@ -1363,8 +1291,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1439,29 +1369,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_cluster_status_with_http_info(
-                clusters="c1-de",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1594,8 +1506,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1663,27 +1577,11 @@ paths:
             response = client.get_incidents()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_incidents_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1743,6 +1641,12 @@ paths:
             let response = try await client.getIncidents()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/incidents \
+              --header 'accept: application/json'
   /1/incidents/{clusters}:
     get:
       summary: Retrieve cluster incidents
@@ -1823,8 +1727,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -1899,29 +1805,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_cluster_incidents_with_http_info(
-                clusters="c1-de",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2066,8 +1954,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2135,27 +2025,11 @@ paths:
             response = client.get_servers()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_servers_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2215,6 +2089,13 @@ paths:
             let response = try await client.getServers()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/inventory/servers \
+              --header 'accept: application/json' \
+              --header 'x-algolia-application-id: ZHVtbXkgYmluYXJ5IHNhbXBsZQA='
   /1/latency/{clusters}:
     get:
       summary: Retrieve search latency times
@@ -2292,8 +2173,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2367,29 +2250,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_latency_with_http_info(
-                clusters="c1-de",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2527,8 +2392,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2603,29 +2470,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_indexing_time_with_http_info(
-                clusters="c1-de",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2763,8 +2612,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -2839,29 +2690,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_reachability_with_http_info(
-                clusters="c1-de",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3010,8 +2843,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = monitoringClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initMonitoring();
 
 
             // Call the API
@@ -3089,30 +2924,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_metrics_with_http_info(
-                metric="avg_build_time",
-                period="minute",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3206,7 +3022,7 @@ components:
       name: clusters
       in: path
       required: true
-      description: Subset of clusters, separated by comma.
+      description: Subset of clusters, separated by commas.
       schema:
         type: string
         example: c1-de,c2-de,c3-de

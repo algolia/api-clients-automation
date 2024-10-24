@@ -17,11 +17,6 @@ export type Event = {
    */
   runID: string;
 
-  /**
-   * The parent event, the cause of this event.
-   */
-  parentID?: string;
-
   status: EventStatus;
 
   type: EventType;
@@ -31,7 +26,7 @@ export type Event = {
    */
   batchSize: number;
 
-  data?: Record<string, any>;
+  data?: { [key: string]: any };
 
   /**
    * Date of publish RFC 3339 format.

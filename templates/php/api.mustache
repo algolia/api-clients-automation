@@ -181,7 +181,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 {{/x-acl}}
 {{/vendorExtensions}}
 {{#allParams}}
-     * @param {{#isString}}string{{/isString}}{{#isLong}}int{{/isLong}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isLong}}{{^isInteger}}{{^isBoolean}}array{{/isBoolean}}{{/isInteger}}{{/isLong}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+     * @param {{#isString}}string{{/isString}}{{#isLong}}int{{/isLong}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isLong}}{{^isInteger}}{{^isBoolean}}array{{/isBoolean}}{{/isInteger}}{{/isLong}}{{/isString}} ${{paramName}}{{#description}} {{{.}}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
 {{#isModel}}
     {{#vars}}
      * - ${{paramName}}{{> arrayParam}}
@@ -214,44 +214,6 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             );
         }
         {{/required}}
-        {{#hasValidation}}
-        {{#maxLength}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}strlen(${{paramName}}) > {{maxLength}}) {
-            throw new \InvalidArgumentException('invalid length for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be smaller than or equal to {{maxLength}}.');
-        }
-        {{/maxLength}}
-        {{#minLength}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}strlen(${{paramName}}) < {{minLength}}) {
-            throw new \InvalidArgumentException('invalid length for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be bigger than or equal to {{minLength}}.');
-        }
-        {{/minLength}}
-        {{#maximum}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}${{paramName}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}) {
-            throw new \InvalidArgumentException('invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{maximum}}.');
-        }
-        {{/maximum}}
-        {{#minimum}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}${{paramName}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}) {
-            throw new \InvalidArgumentException('invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be bigger than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{minimum}}.');
-        }
-        {{/minimum}}
-        {{#pattern}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}!preg_match("{{{pattern}}}", ${{paramName}})) {
-            throw new \InvalidArgumentException("invalid value for \"{{paramName}}\" when calling {{classname}}.{{operationId}}, must conform to the pattern {{{pattern}}}.");
-        }
-        {{/pattern}}
-        {{#maxItems}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}count(${{paramName}}) > {{maxItems}}) {
-            throw new \InvalidArgumentException('invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{maxItems}}.');
-        }
-        {{/maxItems}}
-        {{#minItems}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}count(${{paramName}}) < {{minItems}}) {
-            throw new \InvalidArgumentException('invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{minItems}}.');
-        }
-        {{/minItems}}
-
-        {{/hasValidation}}
         {{/allParams}}
 
         $resourcePath = '{{{path}}}';

@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestMonitoringClient < Test::Unit::TestCase
-  include Algolia::Monitoring
   def setup
     @client = Algolia::MonitoringClient.create(
       "APP_ID",

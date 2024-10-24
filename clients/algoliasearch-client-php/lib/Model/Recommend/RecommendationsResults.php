@@ -25,6 +25,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
         'aroundLatLng' => 'string',
         'automaticRadius' => 'string',
         'exhaustive' => '\Algolia\AlgoliaSearch\Model\Recommend\Exhaustive',
+        'appliedRules' => 'object[]',
         'exhaustiveFacetsCount' => 'bool',
         'exhaustiveNbHits' => 'bool',
         'exhaustiveTypo' => 'bool',
@@ -63,6 +64,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
         'aroundLatLng' => null,
         'automaticRadius' => null,
         'exhaustive' => null,
+        'appliedRules' => null,
         'exhaustiveFacetsCount' => null,
         'exhaustiveNbHits' => null,
         'exhaustiveTypo' => null,
@@ -102,6 +104,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
         'aroundLatLng' => 'aroundLatLng',
         'automaticRadius' => 'automaticRadius',
         'exhaustive' => 'exhaustive',
+        'appliedRules' => 'appliedRules',
         'exhaustiveFacetsCount' => 'exhaustiveFacetsCount',
         'exhaustiveNbHits' => 'exhaustiveNbHits',
         'exhaustiveTypo' => 'exhaustiveTypo',
@@ -140,6 +143,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
         'aroundLatLng' => 'setAroundLatLng',
         'automaticRadius' => 'setAutomaticRadius',
         'exhaustive' => 'setExhaustive',
+        'appliedRules' => 'setAppliedRules',
         'exhaustiveFacetsCount' => 'setExhaustiveFacetsCount',
         'exhaustiveNbHits' => 'setExhaustiveNbHits',
         'exhaustiveTypo' => 'setExhaustiveTypo',
@@ -178,6 +182,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
         'aroundLatLng' => 'getAroundLatLng',
         'automaticRadius' => 'getAutomaticRadius',
         'exhaustive' => 'getExhaustive',
+        'appliedRules' => 'getAppliedRules',
         'exhaustiveFacetsCount' => 'getExhaustiveFacetsCount',
         'exhaustiveNbHits' => 'getExhaustiveNbHits',
         'exhaustiveTypo' => 'getExhaustiveTypo',
@@ -233,6 +238,9 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
         }
         if (isset($data['exhaustive'])) {
             $this->container['exhaustive'] = $data['exhaustive'];
+        }
+        if (isset($data['appliedRules'])) {
+            $this->container['appliedRules'] = $data['appliedRules'];
         }
         if (isset($data['exhaustiveFacetsCount'])) {
             $this->container['exhaustiveFacetsCount'] = $data['exhaustiveFacetsCount'];
@@ -371,29 +379,9 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     {
         $invalidProperties = [];
 
-        if (isset($this->container['abTestVariantID']) && ($this->container['abTestVariantID'] < 1)) {
-            $invalidProperties[] = "invalid value for 'abTestVariantID', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['aroundLatLng']) && !preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $this->container['aroundLatLng'])) {
-            $invalidProperties[] = "invalid value for 'aroundLatLng', must be conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.";
-        }
-
         if (!isset($this->container['processingTimeMS']) || null === $this->container['processingTimeMS']) {
             $invalidProperties[] = "'processingTimeMS' can't be null";
         }
-        if (isset($this->container['page']) && ($this->container['page'] < 0)) {
-            $invalidProperties[] = "invalid value for 'page', must be bigger than or equal to 0.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be smaller than or equal to 1000.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] < 1)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be bigger than or equal to 1.";
-        }
-
         if (!isset($this->container['hits']) || null === $this->container['hits']) {
             $invalidProperties[] = "'hits' can't be null";
         }
@@ -455,10 +443,6 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
      */
     public function setAbTestVariantID($abTestVariantID)
     {
-        if (!is_null($abTestVariantID) && ($abTestVariantID < 1)) {
-            throw new \InvalidArgumentException('invalid value for $abTestVariantID when calling RecommendationsResults., must be bigger than or equal to 1.');
-        }
-
         $this->container['abTestVariantID'] = $abTestVariantID;
 
         return $this;
@@ -483,10 +467,6 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
      */
     public function setAroundLatLng($aroundLatLng)
     {
-        if (!is_null($aroundLatLng) && (!preg_match('/^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/', $aroundLatLng))) {
-            throw new \InvalidArgumentException("invalid value for {$aroundLatLng} when calling RecommendationsResults., must conform to the pattern /^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$/.");
-        }
-
         $this->container['aroundLatLng'] = $aroundLatLng;
 
         return $this;
@@ -536,6 +516,30 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     public function setExhaustive($exhaustive)
     {
         $this->container['exhaustive'] = $exhaustive;
+
+        return $this;
+    }
+
+    /**
+     * Gets appliedRules.
+     *
+     * @return null|object[]
+     */
+    public function getAppliedRules()
+    {
+        return $this->container['appliedRules'] ?? null;
+    }
+
+    /**
+     * Sets appliedRules.
+     *
+     * @param null|object[] $appliedRules rules applied to the query
+     *
+     * @return self
+     */
+    public function setAppliedRules($appliedRules)
+    {
+        $this->container['appliedRules'] = $appliedRules;
 
         return $this;
     }
@@ -1051,10 +1055,6 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
      */
     public function setPage($page)
     {
-        if (!is_null($page) && ($page < 0)) {
-            throw new \InvalidArgumentException('invalid value for $page when calling RecommendationsResults., must be bigger than or equal to 0.');
-        }
-
         $this->container['page'] = $page;
 
         return $this;
@@ -1127,13 +1127,6 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
      */
     public function setHitsPerPage($hitsPerPage)
     {
-        if (!is_null($hitsPerPage) && ($hitsPerPage > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling RecommendationsResults., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($hitsPerPage) && ($hitsPerPage < 1)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling RecommendationsResults., must be bigger than or equal to 1.');
-        }
-
         $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;

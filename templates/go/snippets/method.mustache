@@ -2,7 +2,7 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+{{> snippets/import}}
 // IMPORT<
 
 
@@ -15,13 +15,9 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     {{{description}}}
     */
     
-    // >SEPARATOR {{method}} {{testName}}
+    // >SEPARATOR {{method}} {{{testName}}}
     // Initialize the client{{#hasRegionalHost}} with your application region, eg. {{clientPrefix}}.ALGOLIA_APPLICATION_REGION{{/hasRegionalHost}}
-    client, err := {{clientPrefix}}.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"{{#hasRegionalHost}}, {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}}{{/hasRegionalHost}})
-    if err != nil {
-      // The client can fail to initialize if you pass an invalid parameter.
-      panic(err)
-    }
+    {{> snippets/init}}
 
     // Call the API
     {{#hasResponse}}response, err :={{/hasResponse}}{{^hasResponse}}err ={{/hasResponse}} {{> tests/method}}

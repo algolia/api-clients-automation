@@ -30,7 +30,7 @@ rule:
       type: array
       description: Time periods when the rule is active.
       items:
-        $ref: '#/timeRange'
+        $ref: '../../../../common/schemas/Rule.yml#/timeRange'
   required:
     - objectID
 
@@ -69,12 +69,12 @@ anchoring:
   description: |
     Which part of the search query the pattern should match:
 
-    - `startsWith`. The pattern must match the begginning of the query.
+    - `startsWith`. The pattern must match the beginning of the query.
     - `endsWith`. The pattern must match the end of the query.
     - `is`. The pattern must match the query exactly.
     - `contains`. The pattern must match anywhere in the query.
 
-    Empty queries are only allowed as pattern with `anchoring: is`.
+    Empty queries are only allowed as patterns with `anchoring: is`.
   enum: [is, startsWith, endsWith, contains]
 
 consequence:
@@ -288,20 +288,6 @@ automaticFacetFilter:
         If false, multiple occurences are combined with the logical `AND` operation.
   required:
     - facet
-
-timeRange:
-  type: object
-  additionalProperties: false
-  properties:
-    from:
-      type: integer
-      description: When the rule should start to be active, in Unix epoch time.
-    until:
-      type: integer
-      description: When the rule should stop to be active, in Unix epoch time.
-  required:
-    - from
-    - until
 
 updatedRuleResponse:
   type: object

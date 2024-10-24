@@ -2,9 +2,9 @@ import type { Server } from 'http';
 
 import type express from 'express';
 
-import { retryHandler } from './timeout';
+import { retryHandler } from './timeout.js';
 
-import { setupServer } from '.';
+import { setupServer } from './index.js';
 
 function addRoutes(app: express.Express): void {
   // this endpoint is also defined in the gzip server but without the timeout

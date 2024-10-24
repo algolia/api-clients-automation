@@ -15,12 +15,7 @@ const sidebars = {
           type: 'category',
           label: 'CLI',
           collapsed: false,
-          items: [
-            'CLI/specs-commands',
-            'CLI/clients-commands',
-            'CLI/release-commands',
-            'CLI/cts-commands',
-          ],
+          items: ['CLI/specs-commands', 'CLI/clients-commands', 'CLI/release-commands', 'CLI/cts-commands'],
         },
       ],
     },
@@ -36,10 +31,7 @@ const sidebars = {
           type: 'category',
           label: 'Testing',
           collapsed: false,
-          items: [
-            'testing/common-test-suite',
-            'testing/playground',
-          ],
+          items: ['testing/common-test-suite', 'testing/playground'],
         },
         'commit-and-pull-request',
         'release-process',
@@ -54,5 +46,4 @@ const sidebars = {
   ],
 };
 
-// eslint-disable-next-line import/no-commonjs
 module.exports = sidebars;

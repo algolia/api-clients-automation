@@ -32,7 +32,7 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" \
     && sdk install sbt
 
 # Java formatter
-ADD https://github.com/google/google-java-format/releases/download/v1.23.0/google-java-format-1.23.0-all-deps.jar /tmp/java-formatter.jar
+ADD https://github.com/google/google-java-format/releases/download/v1.24.0/google-java-format-1.24.0-all-deps.jar /tmp/java-formatter.jar
 
 
 # Python
@@ -42,13 +42,15 @@ RUN echo "export PATH=$PATH:/usr/local/bin/python" >> ~/.profile \
     && echo "export PATH=$PATH:/usr/local/bin/pip" >> ~/.profile \
     && pip install --upgrade pip pipx && pipx ensurepath \
     && pipx install poetry
-
+ENV VIRTUAL_ENV=/opt/env
+RUN python -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
     && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3 \
-    && go install golang.org/x/tools/cmd/goimports@latest
+    && go install golang.org/x/tools/cmd/goimports@v0.22.0
 
 
 # Dart

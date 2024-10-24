@@ -8,7 +8,6 @@ require_relative "../helpers"
 Dotenv.load("../../.env")
 
 class TestInsightsClientE2E < Test::Unit::TestCase
-  include Algolia::Insights
   def setup
     @client = Algolia::InsightsClient.create(
       ENV.fetch("ALGOLIA_APPLICATION_ID", nil),
@@ -20,25 +19,25 @@ class TestInsightsClientE2E < Test::Unit::TestCase
   # Many events type
   def test_push_events1
     res = @client.push_events_with_http_info(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          ConvertedObjectIDsAfterSearch.new(
+          Algolia::Insights::ConvertedObjectIDsAfterSearch.new(
             event_type: "conversion",
             event_name: "Product Purchased",
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1727827200000,
+            timestamp: 1729641600000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
-          ViewedObjectIDs.new(
+          Algolia::Insights::ViewedObjectIDs.new(
             event_type: "view",
             event_name: "Product Detail Page Viewed",
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1727827200000,
+            timestamp: 1729641600000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
@@ -47,25 +46,25 @@ class TestInsightsClientE2E < Test::Unit::TestCase
 
     assert_equal(res.status, 200)
     res = @client.push_events(
-      InsightsEvents.new(
+      Algolia::Insights::InsightsEvents.new(
         events: [
-          ConvertedObjectIDsAfterSearch.new(
+          Algolia::Insights::ConvertedObjectIDsAfterSearch.new(
             event_type: "conversion",
             event_name: "Product Purchased",
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1727827200000,
+            timestamp: 1729641600000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
-          ViewedObjectIDs.new(
+          Algolia::Insights::ViewedObjectIDs.new(
             event_type: "view",
             event_name: "Product Detail Page Viewed",
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1727827200000,
+            timestamp: 1729641600000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]

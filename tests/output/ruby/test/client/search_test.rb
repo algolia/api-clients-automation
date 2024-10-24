@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientSearchClient < Test::Unit::TestCase
-  include Algolia::Search
   # calls api with correct read host
   def test_api0
 
@@ -157,7 +156,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.4.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.5.4\).*/))
   end
 
   # calls api with default read timeouts
@@ -217,7 +216,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     req = client.generate_secured_api_key(
       "2640659426d5107b6e47d75db9cbaef8",
-      SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: ["Movies"])
+      Algolia::Search::SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: ["Movies"])
     )
     assert_equal(
       "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
@@ -235,13 +234,13 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     req = client.generate_secured_api_key(
       "2640659426d5107b6e47d75db9cbaef8",
-      SecuredApiKeyRestrictions.new(
+      Algolia::Search::SecuredApiKeyRestrictions.new(
         valid_until: 2524604400,
         restrict_indices: ["Movies", "cts_e2e_settings"],
         restrict_sources: "192.168.1.0/24",
         filters: "category:Book OR category:Ebook AND _tags:published",
         user_token: "user123",
-        search_params: SearchParamsObject.new(
+        search_params: Algolia::Search::SearchParamsObject.new(
           query: "batman",
           typo_tolerance: "strict",
           around_radius: "all",
@@ -683,7 +682,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     req = client.wait_for_api_key(
       "api-key-update-operation-test-ruby",
       "update",
-      ApiKey.new(
+      Algolia::Search::ApiKey.new(
         description: "my updated api key",
         acl: ["search", "addObject", "deleteObject"],
         indexes: ["Movies", "Books"],

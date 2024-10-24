@@ -5,10 +5,7 @@ import com.algolia.codegen.utils.*;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
-import java.util.List;
-import java.util.Map;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.stream.StreamSupport;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
@@ -46,7 +43,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     Helpers.setGenerationBanner(additionalProperties);
 
     languageSpecificPrimitives.add("Record");
+    languageSpecificPrimitives.add("Record<string, unknown>");
     instantiationTypes.put("map", "Record");
+    instantiationTypes.put("object", "Record<string, unknown>");
+    typeMapping.put("object", "Record<string, unknown>");
     // clear all supported files to avoid unwanted ones
     supportingFiles.clear();
 
@@ -155,26 +155,33 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
-    additionalProperties.put(
-      "isAvailableInAlgoliasearch",
-      CLIENT.equals("search") ||
-      CLIENT.equals("recommend") ||
-      CLIENT.equals("personalization") ||
-      CLIENT.equals("analytics") ||
-      CLIENT.equals("abtesting")
-    );
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
     additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);
     additionalProperties.put("nodeSearchHelpers", CLIENT.equals("search") || isAlgoliasearchClient);
 
     if (isAlgoliasearchClient) {
-      // Files used to create the package.json of the algoliasearch package
-      additionalProperties.put("analyticsVersion", Helpers.getPackageJsonVersion("client-analytics"));
-      additionalProperties.put("abtestingVersion", Helpers.getPackageJsonVersion("client-abtesting"));
-      additionalProperties.put("personalizationVersion", Helpers.getPackageJsonVersion("client-personalization"));
-      additionalProperties.put("searchVersion", Helpers.getPackageJsonVersion("client-search"));
-      additionalProperties.put("recommendVersion", Helpers.getPackageJsonVersion("recommend"));
+      var dependencies = new ArrayList<Map<String, Object>>();
+      List<Map<String, Object>> packages = Helpers.getClientConfigList("javascript", "clients");
+      for (Map<String, Object> pkg : packages) {
+        String name = ((String) pkg.get("output")).replace("clients/algoliasearch-client-javascript/packages/", "");
+        if (name.contains("algoliasearch")) {
+          continue;
+        }
+
+        var dependency = new HashMap<String, Object>();
+        dependency.put("dependencyName", Helpers.createClientName((String) pkg.get("name"), "javascript"));
+        dependency.put("dependencyPackage", "@algolia/" + name);
+        dependency.put("dependencyVersion", Helpers.getPackageJsonVersion(name));
+        dependency.put("withInitMethod", !name.contains("search"));
+        dependency.put(
+          "dependencyHasRegionalHosts",
+          !name.contains("search") && !name.contains("recommend") && !name.contains("monitoring")
+        );
+
+        dependencies.add(dependency);
+      }
+      additionalProperties.put("dependencies", dependencies);
 
       // Files used to generate the `lite` client
       clientName = "lite" + Helpers.API_SUFFIX;
@@ -227,13 +234,18 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       boolean hasPathParams = !ope.pathParams.isEmpty();
 
       // If there is nothing but body params, we just check if it's a single param
-      if (hasBodyParams && !hasHeaderParams && !hasQueryParams && !hasPathParams) {
-        // At this point the single parameter is already an object, to avoid double wrapping
-        // we skip it
-        if (ope.bodyParams.size() == 1 && !ope.bodyParams.get(0).isArray) {
-          ope.vendorExtensions.put("x-is-single-body-param", true);
-          continue;
-        }
+      if (
+        hasBodyParams &&
+        !hasHeaderParams &&
+        !hasQueryParams &&
+        !hasPathParams &&
+        ope.bodyParams.size() == 1 &&
+        !ope.bodyParams.get(0).isArray
+      ) {
+        // At this point the single parameter is already an object, to avoid double wrapping we skip
+        // it
+        ope.vendorExtensions.put("x-is-single-body-param", true);
+        continue;
       }
 
       // Any other cases here are wrapped

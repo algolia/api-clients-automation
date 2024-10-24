@@ -29,16 +29,14 @@
         {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#testUserAgent}}
-
-          let pattern = "{{#lambda.escapeSlash}}{{{match.value}}}{{/lambda.escapeSlash}}"
-          let rule = StringRule(pattern: pattern)
           let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
           guard let userAgent = userAgent else {
             XCTFail("Expected user-agent header")
             return
           }
 
-          XCTAssertNoThrow(try Validator.validate(userAgent, against: rule), "Expected " + userAgent + " to match the following regex: " + pattern);
+          let pattern = "{{#lambda.escapeSlash}}{{{match.value}}}{{/lambda.escapeSlash}}"
+          XCTAssertNoThrow(try regexMatch(userAgent, against: pattern), "Expected " + userAgent + " to match the following regex: " + pattern);
         {{/testUserAgent}}
         {{#testTimeouts}}
           XCTAssertEqual(TimeInterval({{{matchResponseTimeout}}} / 1000), echoResponse.timeout);

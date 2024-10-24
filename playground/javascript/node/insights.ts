@@ -1,9 +1,8 @@
-import { insightsClient } from '@algolia/client-insights';
 import { ApiError } from '@algolia/client-common';
+import { insightsClient } from '@algolia/client-insights';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
-const apiKey =
-  process.env.ALGOLIA_INSIGHTS_API_KEY || '**** INSIGHTS_API_KEY *****';
+const apiKey = process.env.ALGOLIA_INSIGHTS_API_KEY || '**** INSIGHTS_API_KEY *****';
 
 // Init client with appId and apiKey
 const client = insightsClient(appId, apiKey);

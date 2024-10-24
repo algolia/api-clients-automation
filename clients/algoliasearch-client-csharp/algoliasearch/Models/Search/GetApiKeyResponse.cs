@@ -24,10 +24,12 @@ public partial class GetApiKeyResponse
   /// <summary>
   /// Initializes a new instance of the GetApiKeyResponse class.
   /// </summary>
+  /// <param name="value">API key. (required).</param>
   /// <param name="createdAt">Timestamp when the object was created, in milliseconds since the Unix epoch. (required).</param>
-  /// <param name="acl">Permissions that determine the type of API requests this key can make. The required ACL is listed in each endpoint&#39;s reference. For more information, see [access control list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).  (required).</param>
-  public GetApiKeyResponse(long createdAt, List<Acl> acl)
+  /// <param name="acl">Permissions that determine the type of API requests this key can make. The required ACL is listed in each endpoint's reference. For more information, see [access control list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).  (required).</param>
+  public GetApiKeyResponse(string value, long createdAt, List<Acl> acl)
   {
+    Value = value ?? throw new ArgumentNullException(nameof(value));
     CreatedAt = createdAt;
     Acl = acl ?? throw new ArgumentNullException(nameof(acl));
   }
@@ -82,9 +84,9 @@ public partial class GetApiKeyResponse
   public int? MaxQueriesPerIPPerHour { get; set; }
 
   /// <summary>
-  /// Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of IP addresses.  Creating an API key fails if the request is made from an IP address that's outside the restricted range. 
+  /// Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of IP addresses.  Creating an API key fails if the request is made from an IP address outside the restricted range. 
   /// </summary>
-  /// <value>Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of IP addresses.  Creating an API key fails if the request is made from an IP address that's outside the restricted range. </value>
+  /// <value>Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of IP addresses.  Creating an API key fails if the request is made from an IP address outside the restricted range. </value>
   [JsonPropertyName("queryParameters")]
   public string QueryParameters { get; set; }
 

@@ -10,7 +10,7 @@ from json import loads
 from sys import version_info
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 
 if version_info >= (3, 11):
     from typing import Self
@@ -20,21 +20,33 @@ else:
 
 from algoliasearch.search.models.user_hit import UserHit
 
+_ALIASES = {
+    "hits": "hits",
+    "nb_hits": "nbHits",
+    "page": "page",
+    "hits_per_page": "hitsPerPage",
+    "updated_at": "updatedAt",
+}
+
+
+def _alias_generator(name: str) -> str:
+    return _ALIASES.get(name, name)
+
 
 class SearchUserIdsResponse(BaseModel):
     """
     userIDs data.
     """
 
-    hits: List[UserHit] = Field(alias="hits")
+    hits: List[UserHit]
     """ User objects that match the query. """
-    nb_hits: int = Field(alias="nbHits")
+    nb_hits: int
     """ Number of results (hits). """
-    page: int = Field(alias="page")
+    page: int
     """ Page of search results to retrieve. """
-    hits_per_page: int = Field(alias="hitsPerPage")
-    """ Maximum number of hits per page. """
-    updated_at: str = Field(alias="updatedAt")
+    hits_per_page: int
+    """ Maximum number of hits per page.  Algolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).  - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.  For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.  """
+    updated_at: str
     """ Date and time when the object was updated, in RFC 3339 format. """
 
     model_config = ConfigDict(
@@ -42,6 +54,7 @@ class SearchUserIdsResponse(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        alias_generator=_alias_generator,
     )
 
     def to_json(self) -> str:

@@ -20,6 +20,7 @@ There are differents type of tests in the CTS:
 ### Requests tests
 
 There are two types of `requests` tests:
+
 - Unit tests with interceptors (named `EchoRequesters`/`EchoTransporters` in this codebase)
 - ^ and an e2e step that asserts the response of the API
 
@@ -34,84 +35,78 @@ The list of `queryParameters` must match exactly the actual value, the CTS has t
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-        "testName": {
-            "type": "string",
-            "description": "The name of the test, defaults to the name of the `operation` (file name). The testName is also used for the documentation snippets as a key to access it inside the snippet JSON object: with a testName equal to `foo` on the `operationIndex` of the `search` client, you can access it from the `search.operationIndex.foo` key."
-        },
-        "isSnippet": {
-            "type": "boolean",
-            "description": "Whether this test case should also be a documentation code snippet."
-        },
-        "parameters": {
-            "type": "object",
-            "description": "A free form object that must correspond to the parameters that the method expects."
-        },
-        "requestOptions": {
-            "type": "object",
-            "description": "The requests options of an Algolia client to send with the current test case.",
-            "properties": {
-                "queryParameters": {
-                    "type": "object",
-                    "description": "The extra query parameters to send with your initial request."
-                },
-                "headers": {
-                    "type": "object",
-                    "description": "The extra headers to send with your initial request."
-                }
-            }
-        },
-        "request": {
-            "type": "object",
-            "description": "The expected request to be sent by the client.",
-            "properties": {
-                "path": {
-                    "type": "string",
-                    "description": "The path of the API client request, e.g. /1/foo/bar."
-                },
-                "method": {
-                    "type": "string",
-                    "description": "The HTTP method used to contact the path, e.g. GET."
-                },
-                "body": {
-                    "type": "object",
-                    "description": "A free form object that contains the expected payload to be sent for the current test case."
-                },
-                "queryParameters": {
-                    "type": "object",
-                    "description": "A free form object that contains the expected query parameters to be sent for the current test case."
-                },
-                "headers": {
-                    "type": "object",
-                    "description": "A free form object that contains the expected headers to be sent for the current test case."
-                }
-            },
-            "required": [
-                "path",
-                "method"
-            ]
-        },
-        "response": {
-            "type": "object",
-            "description": "The expected response to be returned by the client. Specificying this field indicates an e2e test will be performed, nothing is mocked.",
-            "properties": {
-                "statusCode": {
-                    "type": "integer",
-                    "description": "The status code of the response."
-                },
-                "body": {
-                    "type": "object",
-                    "description": "A free form object that contains the expected response to be received for the current test case."
-                }
-            }
-        }
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "testName": {
+      "type": "string",
+      "description": "The name of the test, defaults to the name of the `operation` (file name). The testName is also used for the documentation snippets as a key to access it inside the snippet JSON object: with a testName equal to `foo` on the `operationIndex` of the `search` client, you can access it from the `search.operationIndex.foo` key."
     },
-    "required": [
-        "parameters",
-        "request"
-    ]
+    "isSnippet": {
+      "type": "boolean",
+      "description": "Whether this test case should also be a documentation code snippet."
+    },
+    "parameters": {
+      "type": "object",
+      "description": "A free form object that must correspond to the parameters that the method expects."
+    },
+    "requestOptions": {
+      "type": "object",
+      "description": "The requests options of an Algolia client to send with the current test case.",
+      "properties": {
+        "queryParameters": {
+          "type": "object",
+          "description": "The extra query parameters to send with your initial request."
+        },
+        "headers": {
+          "type": "object",
+          "description": "The extra headers to send with your initial request."
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "description": "The expected request to be sent by the client.",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "The path of the API client request, e.g. /1/foo/bar."
+        },
+        "method": {
+          "type": "string",
+          "description": "The HTTP method used to contact the path, e.g. GET."
+        },
+        "body": {
+          "type": "object",
+          "description": "A free form object that contains the expected payload to be sent for the current test case."
+        },
+        "queryParameters": {
+          "type": "object",
+          "description": "A free form object that contains the expected query parameters to be sent for the current test case."
+        },
+        "headers": {
+          "type": "object",
+          "description": "A free form object that contains the expected headers to be sent for the current test case."
+        }
+      },
+      "required": ["path", "method"]
+    },
+    "response": {
+      "type": "object",
+      "description": "The expected response to be returned by the client. Specificying this field indicates an e2e test will be performed, nothing is mocked.",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "description": "The status code of the response."
+        },
+        "body": {
+          "type": "object",
+          "description": "A free form object that contains the expected response to be received for the current test case."
+        }
+      }
+    }
+  },
+  "required": ["parameters", "request"]
 }
 ```
 
@@ -219,7 +214,7 @@ When writing your template, here is a list of variables accessible from `mustach
               // key: string map
               "headerName": "stringify version of the value"
             }
-          },
+          }
         }
       ]
     }
@@ -249,17 +244,18 @@ If specific values are needed for a specific languages, or custom generated file
   - `packageVersion`: the version of the Java client
   - `import`: the name of the client package to import from
 
-
 ### E2E tests
 
 Only cases that contains a `response` field in [their definition](#input-test-file) will really execute the query in order to assert the API response. We only partially assert `response` since some fields might vary, (see [PR for motivations](https://github.com/algolia/api-clients-automation/pull/2441)).
 
 In order to support the partial assertion, your client must provide an helper named `union` to do so, you can take a look at existing implementations:
+
 - [python](https://github.com/algolia/api-clients-automation/blob/main/tests/output/python/tests/helpers.py)
 - [javascript](https://github.com/algolia/api-clients-automation/blob/main/tests/output/javascript/src/helpers.ts)
 - [ruby](https://github.com/algolia/api-clients-automation/blob/main/tests/output/ruby/src/helpers.rb)
 
 The supporting file must be called `e2e.mustache` and will receive the same data as the `requests` tests with a additional `blocksE2E` field:
+
 ```json
 {
   "blocksE2E": [
@@ -284,6 +280,7 @@ The clients tests are located in the folder `tests/CTS/client/<apiName>`, they a
 
 Clients tests also uses mock servers to test the client behavior, you can find the mock server in the `scripts/cts/testServer` folder.
 There are currently 3 servers:
+
 - `gzip` that asserts that the client can send and receive gzip compressed data.
 - `timeout` that asserts that the client retries the request when the server takes too long to respond.
 - `replaceAllObjects` that mimics the behavior of the Algolia engine for `replaceAllObjects` and asserts the requests.

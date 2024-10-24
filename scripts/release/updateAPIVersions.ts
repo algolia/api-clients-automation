@@ -3,7 +3,7 @@ import fsp from 'fs/promises';
 import yaml from 'js-yaml';
 
 import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
-import { toAbsolutePath, run, exists, GENERATORS, CI, setVerbose } from '../common.js';
+import { CI, exists, GENERATORS, run, setVerbose, toAbsolutePath } from '../common.js';
 import { getGitHubUrl, getLanguageFolder } from '../config.js';
 import type { Language } from '../types.js';
 

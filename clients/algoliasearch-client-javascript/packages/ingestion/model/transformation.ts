@@ -7,9 +7,9 @@ export type Transformation = {
   transformationID: string;
 
   /**
-   * The authentications associated for the current transformation.
+   * The authentications associated with the current transformation.
    */
-  authenticationIDs?: string[];
+  authenticationIDs?: Array<string>;
 
   /**
    * The source code of the transformation.

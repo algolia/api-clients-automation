@@ -3,7 +3,6 @@ require "algolia"
 require "test/unit"
 
 class TestClientPersonalizationClient < Test::Unit::TestCase
-  include Algolia::Personalization
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::PersonalizationClient.create(
@@ -29,7 +28,7 @@ class TestClientPersonalizationClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.4.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.5.4\).*/))
   end
 
   # calls api with default read timeouts

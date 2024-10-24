@@ -1,4 +1,4 @@
-/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. ## Client
+/** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
   * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
   * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
@@ -6,7 +6,7 @@
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
   * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
-  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * Retry strategy To guarantee high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
   * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
@@ -37,9 +37,9 @@ import org.json4s._
 
 sealed trait Anchoring
 
-/** Which part of the search query the pattern should match: - `startsWith`. The pattern must match the begginning of
-  * the query. - `endsWith`. The pattern must match the end of the query. - `is`. The pattern must match the query
-  * exactly. - `contains`. The pattern must match anywhere in the query. Empty queries are only allowed as pattern with
+/** Which part of the search query the pattern should match: - `startsWith`. The pattern must match the beginning of the
+  * query. - `endsWith`. The pattern must match the end of the query. - `is`. The pattern must match the query exactly.
+  * \- `contains`. The pattern must match anywhere in the query. Empty queries are only allowed as patterns with
   * `anchoring: is`.
   */
 object Anchoring {

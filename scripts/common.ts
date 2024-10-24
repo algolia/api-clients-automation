@@ -2,18 +2,18 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import { Octokit } from '@octokit/rest';
-import { execaCommand, execa } from 'execa';
 import type { ExecaError } from 'execa';
+import { execa, execaCommand } from 'execa';
 import { remove } from 'fs-extra';
 
 import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
-import { Cache } from './cache';
-import { getDockerImage } from './config';
-import { generateOpenapitools } from './pre-gen';
+import { Cache } from './cache.js';
+import { getDockerImage } from './config.js';
+import { generateOpenapitools } from './pre-gen/index.js';
 import { getGitAuthor } from './release/common.js';
-import { buildSpecs } from './specs';
+import { buildSpecs } from './specs/index.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, GeneratorMode, Language, RunOptions } from './types.js';
 
@@ -108,7 +108,6 @@ export async function run(command: string, { errorMessage, cwd, language }: RunO
     } else {
       // it's already logged in the verbose case
       if (!isVerbose()) {
-        // eslint-disable-next-line no-console
         console.log((err as ExecaError).all);
       }
       throw new Error(`command failed: ${command}`);

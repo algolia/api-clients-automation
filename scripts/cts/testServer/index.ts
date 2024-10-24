@@ -1,19 +1,19 @@
 import type { Server } from 'http';
 
-import express from 'express';
 import type { Express } from 'express';
+import express from 'express';
 
-import { createSpinner } from '../../spinners';
-import type { CTSType } from '../runCts';
+import { createSpinner } from '../../spinners.js';
+import type { CTSType } from '../runCts.js';
 
-import { apiKeyServer } from './apiKey';
-import { benchmarkServer } from './benchmark';
-import { chunkWrapperServer } from './chunkWrapper';
-import { gzipServer } from './gzip';
-import { replaceAllObjectsServer } from './replaceAllObjects';
-import { timeoutServer } from './timeout';
-import { timeoutServerBis } from './timeoutBis';
-import { waitForApiKeyServer } from './waitFor';
+import { apiKeyServer } from './apiKey.js';
+import { benchmarkServer } from './benchmark.js';
+import { chunkWrapperServer } from './chunkWrapper.js';
+import { gzipServer } from './gzip.js';
+import { replaceAllObjectsServer } from './replaceAllObjects.js';
+import { timeoutServer } from './timeout.js';
+import { timeoutServerBis } from './timeoutBis.js';
+import { waitForApiKeyServer } from './waitFor.js';
 
 export async function startTestServer(suites: Record<CTSType, boolean>): Promise<() => Promise<void>> {
   const toStart: Array<Promise<Server>> = [];
@@ -57,14 +57,12 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
 
   // 404 handler
   app.use((req, res) => {
-    // eslint-disable-next-line no-console
     console.error('endpoint not implemented for', req.method, req.url);
     res.status(404).json({ message: 'not found' });
   });
 
   // catch all error handler
   app.use((err, _req, res, _) => {
-    // eslint-disable-next-line no-console
     console.error(err.message);
     res.status(500).send({ message: err.message });
   });

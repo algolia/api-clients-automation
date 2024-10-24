@@ -8,7 +8,7 @@ import Foundation
 
 public struct GetApiKeyResponse: Codable, JSONEncodable {
     /// API key.
-    public var value: String?
+    public var value: String
     /// Timestamp when the object was created, in milliseconds since the Unix epoch.
     public var createdAt: Int64
     /// Permissions that determine the type of API requests this key can make. The required ACL is listed in each
@@ -30,8 +30,7 @@ public struct GetApiKeyResponse: Codable, JSONEncodable {
     public var maxQueriesPerIPPerHour: Int?
     /// Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP
     /// addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of
-    /// IP addresses.  Creating an API key fails if the request is made from an IP address that's outside the restricted
-    /// range.
+    /// IP addresses.  Creating an API key fails if the request is made from an IP address outside the restricted range.
     public var queryParameters: String?
     /// Allowed HTTP referrers for this API key.  By default, all referrers are allowed. You can use leading and
     /// trailing wildcard characters (`*`):  - `https://algolia.com/_*` allows all referrers starting with
@@ -44,7 +43,7 @@ public struct GetApiKeyResponse: Codable, JSONEncodable {
     public var validity: Int?
 
     public init(
-        value: String? = nil,
+        value: String,
         createdAt: Int64,
         acl: [Acl],
         description: String? = nil,
@@ -84,7 +83,7 @@ public struct GetApiKeyResponse: Codable, JSONEncodable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.value, forKey: .value)
+        try container.encode(self.value, forKey: .value)
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encode(self.acl, forKey: .acl)
         try container.encodeIfPresent(self.description, forKey: .description)
@@ -114,7 +113,7 @@ extension GetApiKeyResponse: Equatable {
 
 extension GetApiKeyResponse: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.value?.hashValue)
+        hasher.combine(self.value.hashValue)
         hasher.combine(self.createdAt.hashValue)
         hasher.combine(self.acl.hashValue)
         hasher.combine(self.description?.hashValue)

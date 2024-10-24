@@ -1,37 +1,39 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import { createHttpRequester } from '@algolia/requester-node-http';
 import { createFetchRequester } from '@algolia/requester-fetch';
-import { createNullLogger, createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache,  ClientOptions, serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE, DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '@algolia/client-common';
+import { createNullLogger, createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache, serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE, DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '@algolia/client-common';
+
+import type { ClientOptions } from '@algolia/client-common';
 
 import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{clientName}}';
 
 {{#hasRegionalHost}}
-import { Region, REGIONS } from '../src/{{clientName}}';
+import { REGIONS } from '../src/{{clientName}}';
+import type { Region, RegionOptions } from '../src/{{clientName}}'; 
+
+export type { Region, RegionOptions } from '../src/{{clientName}}';
 {{/hasRegionalHost}}
 
 {{! We don't use `export *` to prevent exposing the factory, to avoid confusion for the user }}
 export {
   apiClientVersion,
-  {{#hasRegionalHost}}
-  Region,
-  {{/hasRegionalHost}}
   {{#isIngestionClient}}
   isOnDemandTrigger,
   isScheduleTrigger,
   isSubscriptionTrigger,
   {{/isIngestionClient}}
 } from '../src/{{clientName}}';
+
 export * from '../model';
 
 {{#isSearchClient}}
-import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions, SearchClientNodeHelpers } from '../model';
+import type { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions, SearchClientNodeHelpers } from '../model';
 {{/isSearchClient}}
 
 {{#nodeSearchHelpers}}
 import {createHmac} from 'node:crypto';
 {{/nodeSearchHelpers}}
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function {{clientName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}

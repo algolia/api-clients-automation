@@ -109,23 +109,23 @@ servers:
   - url: https://{appId}.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-1.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-2.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-3.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-dsn.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
 security:
   - appId: []
     apiKey: []
@@ -244,8 +244,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -319,29 +321,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -503,8 +487,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -578,29 +564,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -762,8 +730,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -837,29 +807,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1016,8 +968,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -1092,29 +1046,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1344,8 +1280,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -1446,38 +1384,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_recommendations_with_http_info(
-                get_recommendations_params={
-                    "requests": [
-                        {
-                            "indexName": "<YOUR_INDEX_NAME>",
-                            "objectID": "objectID",
-                            "model": "related-products",
-                            "threshold": 42.1,
-                        },
-                    ],
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1490,9 +1401,9 @@ paths:
             # Call the API
 
             response = client.get_recommendations(
-              GetRecommendationsParams.new(
+              Algolia::Recommend::GetRecommendationsParams.new(
                 requests: [
-                  RelatedQuery.new(
+                  Algolia::Recommend::RelatedQuery.new(
                     index_name: "<YOUR_INDEX_NAME>",
                     object_id: "objectID",
                     model: "related-products",
@@ -1565,6 +1476,16 @@ paths:
                         )),
                 ]))
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolianet.com/1/indexes/*/recommendations' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"requests":[{"indexName":"products","threshold":0,"maxRecommendations":30,"queryParameters":{"similarQuery":"comedy drama crime Macy Buscemi","filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"sumOrFiltersScores":false,"restrictSearchableAttributes":["title","author"],"facets":["*"],"facetingAfterDistinct":false,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"naturalLanguages":[],"ruleContexts":["mobile"],"personalizationImpact":100,"userToken":"test-user-123","getRankingInfo":false,"synonyms":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"percentileComputation":true,"enableABTest":true,"query":"","attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"],"replicas":["virtual(prod_products_price_asc)","dev_products_replica"],"paginationLimitedTo":100,"unretrievableAttributes":["total_sales"],"disableTypoToleranceOnWords":["wheel","1X2BCD"],"attributesToTransliterate":["name","description"],"camelCaseAttributes":["description"],"decompoundedAttributes":{"de":["name"]},"indexLanguages":["ja"],"disablePrefixOnAttributes":["sku"],"allowCompressionOfIntegerArray":false,"numericAttributesForFiltering":["equalOnly(quantity)","popularity"],"separatorsToIndex":"+#","searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"},"customNormalization":{"default":{"ä":"ae","ü":"ue"}},"attributeForDistinct":"url","attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"enableReRanking":true,"reRankingApplyFilter":[[]]},"model":"bought-together","objectID":"test-record-123"}]}'
   /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
     get:
       tags:
@@ -1677,8 +1598,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -1762,31 +1685,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_recommend_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                model="related-products",
-                object_id="objectID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1876,264 +1779,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: |
-            // Initialize the client
-            var client = new RecommendClient(
-              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-            );
-
-            // Call the API
-            var response = await client.DeleteRecommendRuleAsync(
-              "<YOUR_INDEX_NAME>",
-              Enum.Parse<RecommendModels>("RelatedProducts"),
-              "objectID"
-            );
-            // >LOG
-        - lang: dart
-          label: Dart
-          source: |
-            // Initialize the client
-            final client = RecommendClient(
-                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-            // Call the API
-            final response = await client.deleteRecommendRule(
-              indexName: "<YOUR_INDEX_NAME>",
-              model: RecommendModels.fromJson("related-products"),
-              objectID: "objectID",
-            );
-            // >LOG
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client
-
-            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // >LOG
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new
-            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
-
-
-            // Call the API
-
-            client.deleteRecommendRule("<YOUR_INDEX_NAME>",
-            RecommendModels.RELATED_PRODUCTS, "objectID");
-
-            // >LOG
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.deleteRecommendRule({
-              indexName: 'indexName',
-              model: 'related-products',
-              objectID: 'objectID',
-            });
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            var response = client.deleteRecommendRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-              objectID = "objectID",
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            $response = $client->deleteRecommendRule(
-                '<YOUR_INDEX_NAME>',
-                'related-products',
-                'objectID',
-            );
-
-
-            // >LOG
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            # In an asynchronous context, you can use RecommendClient instead,
-            which exposes the exact same methods.
-
-            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_recommend_rule(
-                index_name="<YOUR_INDEX_NAME>",
-                model="related-products",
-                object_id="objectID",
-            )
-
-
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_recommend_rule_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                model="related-products",
-                object_id="objectID",
-            )
-
-
-            print(raw_response.raw_data)
-
-
-            # >LOG
-
-            # use the class directly
-
-            print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
-            "ALGOLIA_API_KEY")
-
-
-            # Call the API
-
-            response = client.delete_recommend_rule("<YOUR_INDEX_NAME>",
-            "related-products", "objectID")
-
-
-            # >LOG
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            val response = client.deleteRecommendRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products"),
-              objectID = "objectID"
-            )
-
-
-            // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
-            apiKey: "ALGOLIA_API_KEY")
-
-
-            // Call the API
-
-            let response = try await client.deleteRecommendRule(
-                indexName: "<YOUR_INDEX_NAME>",
-                model: RecommendModels.relatedProducts,
-                objectID: "objectID"
-            )
-
-            // >LOG
   /1/indexes/{indexName}/{model}/task/{taskID}:
     get:
       tags:
@@ -2266,8 +1911,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -2351,31 +1998,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_recommend_status_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                model="related-products",
-                task_id=12345,
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2622,8 +2249,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -2701,30 +2330,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.search_recommend_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                model="related-products",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2923,8 +2533,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
 
 
             // Call the API
@@ -3002,30 +2614,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.batch_recommend_rules_with_http_info(
-                index_name="<YOUR_INDEX_NAME>",
-                model="related-products",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3132,7 +2725,7 @@ components:
       required: true
       schema:
         type: string
-        example: YourIndexName
+        example: ALGOLIA_INDEX_NAME
     Models:
       in: path
       name: model
@@ -3311,7 +2904,9 @@ components:
 
 
         You can use numeric comparison operators: `<`, `<=`, `=`, `!=`, `>`,
-        `>=`. Comparsions are precise up to 3 decimals.
+        `>=`.
+
+        Comparisons are precise up to 3 decimals.
 
         You can also provide ranges: `facet:<lower> TO <upper>`. The range
         includes the lower and upper boundaries.
@@ -3426,7 +3021,7 @@ components:
         string of latitude and longitude.
 
 
-        Only records included within circle around this central location are
+        Only records included within a circle around this central location are
         included in the results.
 
         The radius of the circle is determined by the `aroundRadius` and
@@ -3904,7 +3499,7 @@ components:
 
 
             - `filterOnly("ATTRIBUTE")`.
-              Allows using this attribute as a filter, but doesn't evalue the facet values.
+              Allows the attribute to be used as a filter but doesn't evaluate the facet values.
 
             - `searchable("ATTRIBUTE")`.
               Allows searching for facet values.
@@ -3941,7 +3536,7 @@ components:
             replicas to this parameter.
 
             If you omit a replica from this list, the replica turns into a
-            regular, standalone index that will no longer by synced with the
+            regular, standalone index that will no longer be synced with the
             primary index.
 
 
@@ -3996,8 +3591,8 @@ components:
             - wheel
             - 1X2BCD
           description: >
-            Words for which you want to turn off [typo
-            tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+            Creates a list of [words which require exact
+            matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
 
             This also turns off [word splitting and
             concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
@@ -4145,8 +3740,8 @@ components:
             For faster indexing, reduce the number of numeric attributes.
 
 
-            If you want to turn off filtering for all numeric attributes,
-            specifiy an attribute that doesn't exist in your index, such as
+            To turn off filtering for all numeric attributes, specify an
+            attribute that doesn't exist in your index, such as
             `NO_NUMERIC_FILTERING`.
 
 
@@ -4165,18 +3760,25 @@ components:
           type: string
           example: +#
           description: >
-            Controls which separators are indexed.
+            Control which non-alphanumeric characters are indexed.
+
+
+            By default, Algolia ignores [non-alphanumeric
+            characters](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/#handling-non-alphanumeric-characters)
+            like hyphen (`-`), plus (`+`), and parentheses (`(`,`)`).
+
+            To include such characters, define them with `separatorsToIndex`.
 
 
             Separators are all non-letter characters except spaces and currency
             characters, such as $€£¥.
 
-            By default, separator characters aren't indexed.
 
             With `separatorsToIndex`, Algolia treats separator characters as
             separate words.
 
-            For example, a search for `C#` would report two matches.
+            For example, in a search for "Disney+", Algolia considers "Disney"
+            and "+" as two separate words.
           default: ''
           x-categories:
             - Typos
@@ -4220,8 +3822,8 @@ components:
             - `unordered("ATTRIBUTE")`.
               Ignore the position of a match within the attribute.
 
-            Without modifier, matches at the beginning of an attribute rank
-            higer than matches at the end.
+            Without a modifier, matches at the beginning of an attribute rank
+            higher than matches at the end.
           default: []
           x-categories:
             - Attributes
@@ -4486,8 +4088,8 @@ components:
 
 
         If typo tolerance is true, `min`, or `strict`, [word splitting and
-        concetenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
-        is also active.
+        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+        are also active.
       oneOf:
         - type: boolean
           default: true
@@ -4678,7 +4280,7 @@ components:
         Determines if and how query words are interpreted as prefixes.
 
 
-        By default, only the last query word is treated as prefix
+        By default, only the last query word is treated as a prefix
         (`prefixLast`).
 
         To turn off prefix search, use `prefixNone`.
@@ -4778,7 +4380,7 @@ components:
         matched words increases by 1:
           results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
         - If `optionalWords` has 10 or more words, the number of required
-        matched words increases by the number of optional words dividied by 5
+        matched words increases by the number of optional words divided by 5
         (rounded down).
           For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
 
@@ -4800,7 +4402,7 @@ components:
         Attribute names are case-sensitive.
 
 
-        This can be useful for attributes with long values, where the likelyhood
+        This can be useful for attributes with long values, where the likelihood
         of an exact match is high,
 
         such as product descriptions.
@@ -4853,18 +4455,32 @@ components:
       items:
         $ref: '#/components/schemas/alternativesAsExact'
       description: >
-        Alternatives of query words that should be considered as exact matches
-        by the Exact ranking criterion.
+        Determine which plurals and synonyms should be considered an exact
+        matches.
+
+
+        By default, Algolia treats singular and plural forms of a word, and
+        single-word synonyms, as
+        [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
+        matches when searching.
+
+        For example:
+
+
+        - "swimsuit" and "swimsuits" are treated the same
+
+        - "swimsuit" and "swimwear" are treated the same (if they are
+        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
 
         - `ignorePlurals`.
           Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
 
         - `singleWordSynonym`.
-          Single-word synonyms, such as "NY/NYC" are considered exact matches.
+          Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
 
         - `multiWordsSynonym`.
-          Multi-word synonyms, such as "NY/New York" are considered exact matches.
+          Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
       default:
         - ignorePlurals
         - singleWordSynonym
@@ -4960,7 +4576,7 @@ components:
         With `replaceSynonymsInHighlight` set to `true`, a search for `home`
         still matches the same records,
 
-        but all occurences of "house" are replaced by "home" in the highlighted
+        but all occurrences of "house" are replaced by "home" in the highlighted
         response.
       default: false
       x-categories:
@@ -5141,13 +4757,59 @@ components:
       properties:
         url:
           type: string
+    bannerImageUrl:
+      description: url for a search banner image.
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+    bannerImage:
+      description: image of a search banner.
+      type: object
+      additionalProperties: false
+      properties:
+        urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/bannerImageUrl'
+        title:
+          type: string
+    bannerLink:
+      description: link for a banner defined in merchandising studio.
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+    banner:
+      description: a search banner with image and url.
+      type: object
+      additionalProperties: false
+      properties:
+        image:
+          $ref: '#/components/schemas/bannerImage'
+        link:
+          $ref: '#/components/schemas/bannerLink'
+    banners:
+      description: banners defined in the merchandising studio for the given search.
+      type: array
+      items:
+        $ref: '#/components/schemas/banner'
+    widgets:
+      description: widgets returned from any rules that are applied to the current search.
+      type: object
+      additionalProperties: false
+      properties:
+        banners:
+          $ref: '#/components/schemas/banners'
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
 
 
-        You can use this to control aspects of your search UI, such as, the
-        order of facet names and values
+        You can use this to control aspects of your search UI, such as the order
+        of facet names and values
 
         without changing your frontend code.
       type: object
@@ -5157,6 +4819,8 @@ components:
           $ref: '#/components/schemas/facetOrdering'
         redirect:
           $ref: '#/components/schemas/redirectURL'
+        widgets:
+          $ref: '#/components/schemas/widgets'
       x-categories:
         - Advanced
     enableReRanking:
@@ -5613,6 +5277,12 @@ components:
                 default) to be processed (this can happen when a lot of typo
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
+        appliedRules:
+          description: Rules applied to the query.
+          title: appliedRules
+          type: array
+          items:
+            type: object
         exhaustiveFacetsCount:
           type: boolean
           description: >-
@@ -5958,7 +5628,6 @@ components:
       additionalProperties: true
       required:
         - objectID
-        - _score
       properties:
         objectID:
           $ref: '#/components/schemas/objectID'
@@ -5978,7 +5647,6 @@ components:
       type: object
       description: Trending facet hit.
       required:
-        - _score
         - facetName
         - facetValue
       properties:
@@ -6146,9 +5814,11 @@ components:
       properties:
         from:
           type: integer
+          format: int64
           description: When the rule should start to be active, in Unix epoch time.
         until:
           type: integer
+          format: int64
           description: When the rule should stop to be active, in Unix epoch time.
       required:
         - from
@@ -6218,13 +5888,49 @@ components:
     parameters_page:
       type: integer
       minimum: 0
-      description: Requested page of the API response.
+      description: >
+        Requested page of the API response.
+
+
+        Algolia uses `page` and `hitsPerPage` to control how search results are
+        displayed
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+
+
+        - `hitsPerPage`: sets the number of search results (_hits_) displayed
+        per page.
+
+        - `page`: specifies the page number of the search results you want to
+        retrieve. Page numbering starts at 0, so the first page is `page=0`, the
+        second is `page=1`, and so on.
+
+
+        For example, to display 10 results per page starting from the third
+        page, set `hitsPerPage` to 10 and `page` to 2.
     parameters_hitsPerPage:
       type: integer
       default: 20
       minimum: 1
       maximum: 1000
-      description: Maximum number of hits per page.
+      description: >
+        Maximum number of hits per page.
+
+
+        Algolia uses `page` and `hitsPerPage` to control how search results are
+        displayed
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+
+
+        - `hitsPerPage`: sets the number of search results (_hits_) displayed
+        per page.
+
+        - `page`: specifies the page number of the search results you want to
+        retrieve. Page numbering starts at 0, so the first page is `page=0`, the
+        second is `page=1`, and so on.
+
+
+        For example, to display 10 results per page starting from the third
+        page, set `hitsPerPage` to 10 and `page` to 2.
     recommendUpdatedAtResponse:
       type: object
       description: Response, taskID, and update timestamp.

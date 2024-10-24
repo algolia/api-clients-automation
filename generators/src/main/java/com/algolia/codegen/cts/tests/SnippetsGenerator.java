@@ -1,16 +1,12 @@
 package com.algolia.codegen.cts.tests;
 
-import static org.openapitools.codegen.utils.StringUtils.camelize;
-
 import com.algolia.codegen.cts.manager.CTSManager;
-import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
 import java.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class SnippetsGenerator extends TestsGenerator {
@@ -43,13 +39,18 @@ public class SnippetsGenerator extends TestsGenerator {
     supportingFiles.add(
       new SupportingFile(
         "snippets/method.mustache",
-        "snippets/" + language + outputFolder + Helpers.createClientName(client, language) + extension
+        "docs/snippets/" + language + outputFolder + Helpers.createClientName(client, language) + extension
       )
     );
   }
 
   private Map<String, Snippet[]> loadSnippets(Map<String, CodegenOperation> operations) throws Exception {
     Map<String, Snippet[]> snippets = loadFullCTS(Snippet[].class);
+    for (Map.Entry<String, Snippet[]> blockEntry : snippets.entrySet()) {
+      for (Snippet test : blockEntry.getValue()) {
+        test.method = blockEntry.getKey();
+      }
+    }
 
     String clientName = client;
     if (client.equals("algoliasearch")) {
@@ -66,7 +67,7 @@ public class SnippetsGenerator extends TestsGenerator {
             if (ope == null || !(boolean) ope.vendorExtensions.getOrDefault("x-helper", false)) {
               continue;
             }
-            Snippet newSnippet = new Snippet(test.testName, step.parameters);
+            Snippet newSnippet = new Snippet(step.method, test.testName, step.parameters);
             Snippet[] existing = snippets.get(step.method);
             if (existing == null) {
               snippets.put(step.method, new Snippet[] { newSnippet });
@@ -95,7 +96,6 @@ public class SnippetsGenerator extends TestsGenerator {
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();
       CodegenOperation ope = entry.getValue();
-      boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
 
       if (!snippets.containsKey(operationId)) {
         continue;
@@ -112,55 +112,12 @@ public class SnippetsGenerator extends TestsGenerator {
       for (int i = 0; i < ops.size(); i++) {
         Map<String, Object> test = new HashMap<>();
         Snippet snippet = ops.get(i);
-        test.put("method", operationId);
-        String name = snippet.testName == null ? operationId : snippet.testName;
+        String name = snippet.testName == null ? snippet.method : snippet.testName;
         test.put("testName", ops.size() > 1 ? name : "default");
         test.put("description", name);
         test.put("testIndex", i == 0 ? "" : i);
-        if (ope.returnType != null && ope.returnType.length() > 0) {
-          test.put("returnType", camelize(ope.returnType));
-        }
-
-        try {
-          test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
-          test.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
-          test.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
-          test.put("hasParams", ope.hasParams);
-          test.put("isHelper", isHelper);
-
-          if (snippet.requestOptions != null) {
-            test.put("hasRequestOptions", true);
-            Map<String, Object> requestOptions = new HashMap<>();
-            if (snippet.requestOptions.queryParameters != null) {
-              Map<String, Object> queryParameters = new HashMap<>();
-              paramsType.enhanceParameters(snippet.requestOptions.queryParameters, queryParameters);
-              requestOptions.put("queryParameters", queryParameters);
-            }
-            if (snippet.requestOptions.headers != null) {
-              Map<String, Object> headers = new HashMap<>();
-              // convert the headers to an acceptable type
-              paramsType.enhanceParameters(new HashMap<String, Object>(snippet.requestOptions.headers), headers);
-              requestOptions.put("headers", headers);
-            }
-            test.put("requestOptions", requestOptions);
-          }
-
-          // Determines whether the endpoint is expected to return a response payload deserialized
-          // and therefore a variable to store it into.
-          test.put("hasResponse", true);
-
-          for (CodegenResponse response : ope.responses) {
-            if (response.code.equals("204")) {
-              test.put("hasResponse", false);
-            }
-          }
-
-          paramsType.enhanceParameters(snippet.parameters, test, ope);
-          tests.add(test);
-        } catch (CTSException e) {
-          e.setTestName((String) test.get("testName"));
-          throw e;
-        }
+        snippet.addMethodCall(test, paramsType, ope);
+        tests.add(test);
       }
       Map<String, Object> testObj = new HashMap<>();
       testObj.put("snippets", tests);

@@ -1,4 +1,4 @@
-import { run, runComposerInstall } from './common.js';
+import { run, runComposerInstall, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
 
 export async function formatter(language: string, cwd: string): Promise<void> {
@@ -37,7 +37,10 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       );
       break;
     case 'javascript':
-      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`, { language });
+      await run(
+        `yarn oxlint -c ${toAbsolutePath('oxlintrc.json')} --fix --fix-suggestions --fix-dangerously --disable-react-plugin --promise-plugin --node-plugin --security-plugin --import-plugin ${cwd} && yarn prettier --write ${cwd} --ignore-path=${toAbsolutePath('.prettierignore')} && yarn eslint --ext=json ${cwd} --fix --no-error-on-unmatched-pattern`,
+        { language },
+      );
       break;
     case 'kotlin':
       await run(`./gradle/gradlew -p ${cwd} spotlessApply`, { language });
@@ -54,6 +57,9 @@ export async function formatter(language: string, cwd: string): Promise<void> {
         'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix --unsafe-fixes && poetry run ruff format',
         { cwd, language },
       );
+      if (!cwd.includes('tests')) {
+        await run('poetry run pyright', { cwd, language });
+      }
       break;
     case 'ruby':
       await run('bundle install', { cwd, language });

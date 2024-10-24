@@ -1,5 +1,4 @@
 import type { Headers, Host, QueryParameters, Request, RequestOptions, Response, StackFrame } from '../types';
-
 import { ApiError, DeserializationError, DetailedApiError } from './errors';
 
 export function shuffle<TData>(array: TData[]): TData[] {
@@ -39,7 +38,7 @@ export function serializeQueryParameters(parameters: QueryParameters): string {
           Object.prototype.toString.call(parameters[key]) === '[object Array]'
             ? parameters[key].join(',')
             : parameters[key],
-        ).replaceAll('+', '%20')}`,
+        ).replace(/\+/g, '%20')}`,
     )
     .join('&');
 }

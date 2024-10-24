@@ -1,17 +1,16 @@
-/* eslint-disable no-console */
 import * as core from '@actions/core';
 import { copy } from 'fs-extra';
 
 import {
+  configureGitHubAuthor,
   emptyDirExceptForDotGit,
+  ensureGitHubToken,
   gitCommit,
   LANGUAGES,
-  run,
-  toAbsolutePath,
   REPO_URL,
-  ensureGitHubToken,
-  configureGitHubAuthor,
+  run,
   setVerbose,
+  toAbsolutePath,
 } from '../../common.js';
 import { getLanguageFolder, getPackageVersionDefault } from '../../config.js';
 import { getNewReleasedTag } from '../../release/common.js';

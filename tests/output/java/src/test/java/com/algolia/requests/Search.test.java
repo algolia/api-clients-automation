@@ -1426,6 +1426,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("search with a real object")
+  void getObjectTest1() {
+    assertDoesNotThrow(() -> {
+      client.getObject("cts_e2e_browse", "Batman and Robin");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/cts_e2e_browse/Batman%20and%20Robin", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getObjects")
   void getObjectsTest() {
     assertDoesNotThrow(() -> {
@@ -2001,7 +2013,7 @@ class SearchClientRequestsTests {
           )
           .setDescription("test")
           .setEnabled(true)
-          .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273).setUntil(1656670277))),
+          .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273L).setUntil(1656670277L))),
         true
       );
     });
@@ -2125,7 +2137,7 @@ class SearchClientRequestsTests {
             )
             .setDescription("test")
             .setEnabled(true)
-            .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273).setUntil(1656670277)))
+            .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273L).setUntil(1656670277L)))
         ),
         true,
         true

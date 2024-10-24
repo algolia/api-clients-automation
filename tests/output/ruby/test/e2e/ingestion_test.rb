@@ -8,7 +8,6 @@ require_relative "../helpers"
 Dotenv.load("../../.env")
 
 class TestIngestionClientE2E < Test::Unit::TestCase
-  include Algolia::Ingestion
   def setup
     @client = Algolia::IngestionClient.create(
       ENV.fetch("ALGOLIA_APPLICATION_ID", nil),
@@ -64,7 +63,7 @@ class TestIngestionClientE2E < Test::Unit::TestCase
   # searchTasks
   def test_search_tasks
     res = @client.search_tasks_with_http_info(
-      TaskSearch.new(
+      Algolia::Ingestion::TaskSearch.new(
         task_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -75,7 +74,7 @@ class TestIngestionClientE2E < Test::Unit::TestCase
 
     assert_equal(res.status, 200)
     res = @client.search_tasks(
-      TaskSearch.new(
+      Algolia::Ingestion::TaskSearch.new(
         task_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -92,7 +91,7 @@ class TestIngestionClientE2E < Test::Unit::TestCase
   # searchTasksV1
   def test_search_tasks_v1
     res = @client.search_tasks_v1_with_http_info(
-      TaskSearch.new(
+      Algolia::Ingestion::TaskSearch.new(
         task_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -103,7 +102,7 @@ class TestIngestionClientE2E < Test::Unit::TestCase
 
     assert_equal(res.status, 200)
     res = @client.search_tasks_v1(
-      TaskSearch.new(
+      Algolia::Ingestion::TaskSearch.new(
         task_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",

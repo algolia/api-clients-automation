@@ -1,20 +1,20 @@
 import http from 'http';
 import https from 'https';
+import nock from 'nock';
 import { Readable } from 'stream';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
-import nock from 'nock';
-import { vi, describe, test, beforeAll, afterAll, expect } from 'vitest';
 
 import { createHttpRequester } from '../..';
 import {
-  headers,
-  timeoutRequest,
-  requestStub,
-  testQueryHeader,
-  testQueryBaseUrl,
-  getStringifiedBody,
   createTestServer,
+  getStringifiedBody,
+  headers,
+  requestStub,
+  testQueryBaseUrl,
+  testQueryHeader,
+  timeoutRequest,
 } from '../../../../tests/utils';
 
 const requester = createHttpRequester();
@@ -138,7 +138,6 @@ describe('status code handling', () => {
     const data = Buffer.from('äöü');
 
     // create a test response stream that is chunked inside a unicode character
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     function* generate() {
       yield data.subarray(0, 3);
       yield data.subarray(3);

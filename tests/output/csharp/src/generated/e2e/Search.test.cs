@@ -66,6 +66,27 @@ public class SearchClientRequestTestsE2E
     }
   }
 
+  [Fact(DisplayName = "search with a real object")]
+  public async Task GetObjectTest1()
+  {
+    try
+    {
+      var resp = await client.GetObjectAsync("cts_e2e_browse", "Batman and Robin");
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"objectID\":\"Batman and Robin\",\"title\":\"Batman and Robin\",\"year\":1949,\"cast\":[\"Robert Lowery\",\"Johnny Duncan\",\"Jane Adams\"]}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "getRule")]
   public async Task GetRuleTest()
   {

@@ -3,14 +3,13 @@ import type { Server } from 'http';
 import { expect } from 'chai';
 import type { Express, Request, Response } from 'express';
 
-import { setupServer } from '.';
+import { setupServer } from './index.js';
 
 // Checks that the client sends a different API key after the first request.
 function addRoutes(app: Express): void {
   app.get('/check-api-key/1', (req: Request, res: Response) => {
     const headerName = 'x-algolia-api-key';
 
-    // eslint-disable-next-line no-unused-expressions
     expect(headerName in req.headers).to.be.true;
 
     const headerAPIKeyValue = req.headers[headerName];
@@ -21,7 +20,6 @@ function addRoutes(app: Express): void {
   app.get('/check-api-key/2', (req: Request, res: Response) => {
     const headerName = 'x-algolia-api-key';
 
-    // eslint-disable-next-line no-unused-expressions
     expect(headerName in req.headers).to.be.true;
 
     const headerAPIKeyValue = req.headers[headerName];

@@ -1,6 +1,6 @@
-import { algoliasearch, SearchClient } from 'algoliasearch';
-import { liteClient } from 'algoliasearch/lite';
 import { ApiError } from '@algolia/client-common';
+import { algoliasearch } from 'algoliasearch';
+import { liteClient } from 'algoliasearch/lite';
 
 import type { SearchResponses } from 'algoliasearch';
 
@@ -33,7 +33,7 @@ async function testAlgoliasearch() {
       parentApiKey: 'foo',
       restrictions: {
         validUntil: 200,
-      }
+      },
     });
 
     const resLite: SearchResponses = await clientLite.search({
@@ -59,17 +59,15 @@ async function testAlgoliasearch() {
       },
     ]);
 
-    const resWithLegacySignatureLite: SearchResponses = await clientLite.search(
-      [
-        {
-          indexName: searchIndex,
-          params: {
-            query: searchQuery,
-            hitsPerPage: 50,
-          },
+    const resWithLegacySignatureLite: SearchResponses = await clientLite.search([
+      {
+        indexName: searchIndex,
+        params: {
+          query: searchQuery,
+          hitsPerPage: 50,
         },
-      ]
-    );
+      },
+    ]);
 
     console.log(`[OK legacy search]`, resWithLegacySignature);
     console.log(`[OK legacy search LITE ]`, resWithLegacySignatureLite);
@@ -82,7 +80,7 @@ async function testAlgoliasearch() {
   }
 
   try {
-    const analyticsClient = client.initAnalytics();
+    const analyticsClient = client.initAnalytics({region: 'de'});
 
     const res = await analyticsClient.getTopFilterForAttribute({
       attribute: 'myAttribute1,myAttribute2',
@@ -99,7 +97,7 @@ async function testAlgoliasearch() {
   }
 
   try {
-    const abtestingClient = client.initAbtesting();
+    const abtestingClient = client.initAbtesting({region: 'us'});
 
     const res = await abtestingClient.getABTest({
       id: 42,

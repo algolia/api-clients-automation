@@ -195,29 +195,7 @@ class SearchRecommendRulesParams extends AbstractModel implements ModelInterface
      */
     public function listInvalidProperties()
     {
-        $invalidProperties = [];
-
-        if (isset($this->container['page']) && ($this->container['page'] < 0)) {
-            $invalidProperties[] = "invalid value for 'page', must be bigger than or equal to 0.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be smaller than or equal to 1000.";
-        }
-
-        if (isset($this->container['hitsPerPage']) && ($this->container['hitsPerPage'] < 1)) {
-            $invalidProperties[] = "invalid value for 'hitsPerPage', must be bigger than or equal to 1.";
-        }
-
-        if (isset($this->container['maxValuesPerFacet']) && ($this->container['maxValuesPerFacet'] > 1000)) {
-            $invalidProperties[] = "invalid value for 'maxValuesPerFacet', must be smaller than or equal to 1000.";
-        }
-
-        if (isset($this->container['maxValuesPerFacet']) && ($this->container['maxValuesPerFacet'] < 1)) {
-            $invalidProperties[] = "invalid value for 'maxValuesPerFacet', must be bigger than or equal to 1.";
-        }
-
-        return $invalidProperties;
+        return [];
     }
 
     /**
@@ -292,16 +270,12 @@ class SearchRecommendRulesParams extends AbstractModel implements ModelInterface
     /**
      * Sets page.
      *
-     * @param null|int $page requested page of the API response
+     * @param null|int $page Requested page of the API response.  Algolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).  - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.  For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.
      *
      * @return self
      */
     public function setPage($page)
     {
-        if (!is_null($page) && ($page < 0)) {
-            throw new \InvalidArgumentException('invalid value for $page when calling SearchRecommendRulesParams., must be bigger than or equal to 0.');
-        }
-
         $this->container['page'] = $page;
 
         return $this;
@@ -320,19 +294,12 @@ class SearchRecommendRulesParams extends AbstractModel implements ModelInterface
     /**
      * Sets hitsPerPage.
      *
-     * @param null|int $hitsPerPage maximum number of hits per page
+     * @param null|int $hitsPerPage Maximum number of hits per page.  Algolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).  - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.  For example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.
      *
      * @return self
      */
     public function setHitsPerPage($hitsPerPage)
     {
-        if (!is_null($hitsPerPage) && ($hitsPerPage > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchRecommendRulesParams., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($hitsPerPage) && ($hitsPerPage < 1)) {
-            throw new \InvalidArgumentException('invalid value for $hitsPerPage when calling SearchRecommendRulesParams., must be bigger than or equal to 1.');
-        }
-
         $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;
@@ -429,13 +396,6 @@ class SearchRecommendRulesParams extends AbstractModel implements ModelInterface
      */
     public function setMaxValuesPerFacet($maxValuesPerFacet)
     {
-        if (!is_null($maxValuesPerFacet) && ($maxValuesPerFacet > 1000)) {
-            throw new \InvalidArgumentException('invalid value for $maxValuesPerFacet when calling SearchRecommendRulesParams., must be smaller than or equal to 1000.');
-        }
-        if (!is_null($maxValuesPerFacet) && ($maxValuesPerFacet < 1)) {
-            throw new \InvalidArgumentException('invalid value for $maxValuesPerFacet when calling SearchRecommendRulesParams., must be bigger than or equal to 1.');
-        }
-
         $this->container['maxValuesPerFacet'] = $maxValuesPerFacet;
 
         return $this;

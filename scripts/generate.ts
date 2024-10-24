@@ -1,7 +1,7 @@
 import { callGenerator, setupAndGen } from './common.js';
 import { getLanguageFolder } from './config.js';
 import { formatter } from './formatter.js';
-import { removeExistingCodegen } from './pre-gen';
+import { removeExistingCodegen } from './pre-gen/index.js';
 import type { Generator } from './types.js';
 
 async function preGen(gen: Generator): Promise<void> {

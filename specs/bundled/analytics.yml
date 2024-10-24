@@ -1535,7 +1535,7 @@ components:
       required: true
       schema:
         type: string
-        example: YourIndexName
+        example: ALGOLIA_INDEX_NAME
     ClickAnalytics:
       in: query
       name: clickAnalytics
@@ -1592,15 +1592,18 @@ components:
     Limit:
       in: query
       name: limit
-      description: Number of items to return.
+      description: |
+        Number of items to return.
       required: false
       schema:
         type: integer
         default: 10
+        maximum: 1000
     Offset:
       in: query
       name: offset
-      description: Position of the first item to return.
+      description: |
+        Position of the first item to return.
       required: false
       schema:
         type: integer

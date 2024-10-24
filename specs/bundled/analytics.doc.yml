@@ -214,8 +214,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -290,29 +292,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -461,8 +445,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -537,29 +523,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -708,8 +676,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -784,29 +754,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -950,8 +902,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -1027,29 +981,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1213,8 +1149,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -1289,29 +1227,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_searches_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1368,6 +1288,14 @@ paths:
             let response = try await client.getTopSearches(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/searches?index=ALGOLIA_INDEX_NAME&clickAnalytics=false&revenueAnalytics=false&startDate=2022-09-19&endDate=2023-01-21&orderBy=searchCount&direction=asc&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/searches/count:
     get:
       tags:
@@ -1498,8 +1426,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -1574,29 +1504,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_searches_count_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1653,6 +1565,14 @@ paths:
             let response = try await client.getSearchesCount(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/searches/count?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/searches/noResults:
     get:
       tags:
@@ -1779,8 +1699,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -1856,29 +1778,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_searches_no_results_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1935,6 +1839,14 @@ paths:
             let response = try await client.getSearchesNoResults(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/searches/noResults?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/searches/noClicks:
     get:
       tags:
@@ -2066,8 +1978,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -2143,29 +2057,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_searches_no_clicks_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2222,6 +2118,14 @@ paths:
             let response = try await client.getSearchesNoClicks(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/searches/noClicks?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/searches/noResultRate:
     get:
       tags:
@@ -2364,8 +2268,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -2440,29 +2346,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_no_results_rate_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2519,6 +2407,14 @@ paths:
             let response = try await client.getNoResultsRate(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/searches/noResultRate?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/searches/noClickRate:
     get:
       tags:
@@ -2661,8 +2557,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -2737,29 +2635,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_no_click_rate_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2816,6 +2696,14 @@ paths:
             let response = try await client.getNoClickRate(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/searches/noClickRate?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/hits:
     get:
       tags:
@@ -2921,8 +2809,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -2997,29 +2887,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_hits_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3076,6 +2948,14 @@ paths:
             let response = try await client.getTopHits(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/hits?index=ALGOLIA_INDEX_NAME&search=enable%20ab%20test&clickAnalytics=false&revenueAnalytics=false&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/users/count:
     get:
       tags:
@@ -3221,8 +3101,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -3297,29 +3179,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_users_count_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3376,6 +3240,14 @@ paths:
             let response = try await client.getUsersCount(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/users/count?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/filters:
     get:
       tags:
@@ -3485,8 +3357,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -3562,29 +3436,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_filter_attributes_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3642,6 +3498,14 @@ paths:
             "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/filters?index=ALGOLIA_INDEX_NAME&search=enable%20ab%20test&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/filters/{attribute}:
     get:
       tags:
@@ -3758,8 +3622,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -3838,30 +3704,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_filter_for_attribute_with_http_info(
-                attribute="myAttribute",
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4032,8 +3879,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -4109,29 +3958,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_filters_no_results_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4189,6 +4020,14 @@ paths:
             "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/filters/noResults?index=ALGOLIA_INDEX_NAME&search=enable%20ab%20test&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/countries:
     get:
       tags:
@@ -4314,8 +4153,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -4390,29 +4231,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_top_countries_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4469,6 +4292,14 @@ paths:
             let response = try await client.getTopCountries(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/countries?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/clicks/averageClickPosition:
     get:
       tags:
@@ -4611,8 +4442,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -4688,29 +4521,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_average_click_position_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4768,6 +4583,14 @@ paths:
             "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/clicks/averageClickPosition?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/clicks/positions:
     get:
       tags:
@@ -4882,8 +4705,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -4958,29 +4783,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_click_positions_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5037,6 +4844,14 @@ paths:
             let response = try await client.getClickPositions(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/clicks/positions?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/clicks/clickThroughRate:
     get:
       tags:
@@ -5179,8 +4994,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -5256,29 +5073,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_click_through_rate_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5335,6 +5134,14 @@ paths:
             let response = try await client.getClickThroughRate(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/clicks/clickThroughRate?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/conversions/conversionRate:
     get:
       tags:
@@ -5477,8 +5284,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -5553,29 +5362,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_conversion_rate_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5632,6 +5423,14 @@ paths:
             let response = try await client.getConversionRate(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/conversions/conversionRate?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/conversions/addToCartRate:
     get:
       tags:
@@ -5774,8 +5573,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -5850,29 +5651,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_add_to_cart_rate_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5929,6 +5712,14 @@ paths:
             let response = try await client.getAddToCartRate(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/conversions/addToCartRate?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/conversions/purchaseRate:
     get:
       tags:
@@ -6071,8 +5862,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -6147,29 +5940,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_purchase_rate_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6226,6 +6001,14 @@ paths:
             let response = try await client.getPurchaseRate(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/conversions/purchaseRate?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/conversions/revenue:
     get:
       tags:
@@ -6350,8 +6133,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -6426,29 +6211,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_revenue_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6505,6 +6272,14 @@ paths:
             let response = try await client.getRevenue(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/conversions/revenue?index=ALGOLIA_INDEX_NAME&startDate=2022-09-19&endDate=2023-01-21&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/status:
     get:
       tags:
@@ -6607,8 +6382,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
 
 
             // Call the API
@@ -6683,29 +6460,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_status_with_http_info(
-                index="index",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -6762,6 +6521,14 @@ paths:
             let response = try await client.getStatus(index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/status?index=ALGOLIA_INDEX_NAME' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
@@ -6804,7 +6571,7 @@ components:
       required: true
       schema:
         type: string
-        example: YourIndexName
+        example: ALGOLIA_INDEX_NAME
     ClickAnalytics:
       in: query
       name: clickAnalytics
@@ -6861,15 +6628,18 @@ components:
     Limit:
       in: query
       name: limit
-      description: Number of items to return.
+      description: |
+        Number of items to return.
       required: false
       schema:
         type: integer
         default: 10
+        maximum: 1000
     Offset:
       in: query
       name: offset
-      description: Position of the first item to return.
+      description: |
+        Position of the first item to return.
       required: false
       schema:
         type: integer

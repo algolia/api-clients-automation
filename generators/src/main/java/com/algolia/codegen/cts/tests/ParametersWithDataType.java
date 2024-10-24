@@ -95,10 +95,14 @@ public class ParametersWithDataType {
     }
 
     // Give the stringified version to mustache, for js
-    bundle.put("parameters", Json.mapper().writeValueAsString(parameters));
+    bundle.put("parameters", toJSONWithVar(parameters));
     bundle.put("parametersWithDataType", parametersWithDataType);
     // Also provide a map version for those who know which keys to look for
     bundle.put("parametersWithDataTypeMap", parametersWithDataTypeMap);
+  }
+
+  private String toJSONWithVar(Map<String, Object> parameters) throws JsonProcessingException {
+    return Json.mapper().writeValueAsString(parameters).replaceAll("\"\\$var: (.*?)\"", "$1");
   }
 
   private Map<String, Object> traverseParams(
@@ -154,6 +158,10 @@ public class ParametersWithDataType {
 
     if (param == null) {
       handleNull(spec, testOutput);
+    } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
+      // bypass for verbatim variables used in the guides, we don't need to do any validation
+      testOutput.put("isVerbatim", true);
+      testOutput.put("value", ((String) param).substring(6));
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, depth);
     } else if (spec.getIsEnum()) {
@@ -196,6 +204,10 @@ public class ParametersWithDataType {
 
     if (param == null) {
       handleNull(null, testOutput);
+    } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
+      // bypass for verbatim variables used in the guides, we don't need to do any validation
+      testOutput.put("isVerbatim", true);
+      testOutput.put("value", ((String) param).substring(6));
     } else if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, depth);
     } else if (param instanceof Map) {
@@ -466,7 +478,8 @@ public class ParametersWithDataType {
   }
 
   private void handlePrimitive(Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec) throws CTSException {
-    if (spec != null && spec.getIsPrimitiveType()) {
+    // some int64 are not considered primitive, thanks a lot openapi
+    if (spec != null && (spec.getIsPrimitiveType() || spec.getIsLong())) {
       transferPrimitiveData(spec, testOutput);
     } else {
       inferDataType(param, null, testOutput);
@@ -691,7 +704,7 @@ public class ParametersWithDataType {
 
     for (CodegenModel oneOf : model.interfaceModels) {
       // Somehow the dataType can be in lower case?
-      if (oneOf.dataType.toLowerCase().equals(paramType.toLowerCase())) {
+      if (oneOf.dataType.equalsIgnoreCase(paramType)) {
         return oneOf;
       }
     }

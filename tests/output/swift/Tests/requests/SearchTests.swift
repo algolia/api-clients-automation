@@ -1765,6 +1765,27 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// search with a real object
+    func testGetObjectTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getObjectWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "Batman and Robin")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/Batman%20and%20Robin")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// getObjects
     func testGetObjectsTest() async throws {
         let configuration = try SearchClientConfiguration(
@@ -2610,7 +2631,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 ),
                 description: "test",
                 enabled: true,
-                validity: [SearchTimeRange(from: 1_656_670_273, until: 1_656_670_277)]
+                validity: [SearchTimeRange(from: Int64(1_656_670_273), until: Int64(1_656_670_277))]
             ),
             forwardToReplicas: true
         )
@@ -2733,7 +2754,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 ),
                 description: "test",
                 enabled: true,
-                validity: [SearchTimeRange(from: 1_656_670_273, until: 1_656_670_277)]
+                validity: [SearchTimeRange(from: Int64(1_656_670_273), until: Int64(1_656_670_277))]
             )],
             forwardToReplicas: true,
             clearExistingRules: true

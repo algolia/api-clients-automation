@@ -12,6 +12,7 @@ describe('{{testType}}', () => {
       {{/times}}
       {{#isError}}
         try {
+          // @ts-ignore
           {{#dynamicTemplate}}{{/dynamicTemplate}}
           throw new Error('test is expected to throw error');
         } catch(e) {
@@ -39,7 +40,7 @@ describe('{{testType}}', () => {
               expect(result).toEqual("{{{match.value}}}");
             {{/match.isString}}
             {{^match.isString}}
-              expect(result).toEqual({{{match.value}}});
+              expect(result).toEqual({{^match.isNull}}{{{match.value}}}{{/match.isNull}}{{#match.isNull}}undefined{{/match.isNull}});
             {{/match.isString}}
           {{/match.isPrimitive}}
           {{^match.isPrimitive}}

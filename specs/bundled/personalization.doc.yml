@@ -191,8 +191,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -267,29 +269,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_get_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -437,8 +421,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -513,29 +499,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_post_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -683,8 +651,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -759,29 +729,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_put_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -924,8 +876,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -1001,29 +955,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.custom_delete_with_http_info(
-                path="test/minimal",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1194,8 +1130,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -1271,29 +1209,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_user_token_profile_with_http_info(
-                user_token="UserToken",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1462,8 +1382,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -1539,29 +1461,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.delete_user_profile_with_http_info(
-                user_token="UserToken",
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1704,8 +1608,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -1774,27 +1680,11 @@ paths:
             response = client.get_personalization_strategy()
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.get_personalization_strategy_with_http_info()
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1845,6 +1735,14 @@ paths:
             let response = try await client.getPersonalizationStrategy()
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/strategies/personalization \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     post:
       tags:
         - strategies
@@ -1978,8 +1876,10 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });
 
 
             // Call the API
@@ -2100,44 +2000,11 @@ paths:
             )
 
 
-            print(response)
-
-
-            # Skip deserialization
-
-            raw_response = client.set_personalization_strategy_with_http_info(
-                personalization_strategy_params={
-                    "eventScoring": [
-                        {
-                            "score": 42,
-                            "eventName": "Algolia",
-                            "eventType": "click",
-                        },
-                    ],
-                    "facetScoring": [
-                        {
-                            "score": 42,
-                            "facetName": "Event",
-                        },
-                    ],
-                    "personalizationImpact": 42,
-                },
-            )
-
-
-            print(raw_response.raw_data)
-
-
             # >LOG
 
             # use the class directly
 
             print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -2150,9 +2017,9 @@ paths:
 
             # Call the API
             response = client.set_personalization_strategy(
-              PersonalizationStrategyParams.new(
-                event_scoring: [EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
-                facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
+              Algolia::Personalization::PersonalizationStrategyParams.new(
+                event_scoring: [Algolia::Personalization::EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
+                facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: "Event")],
                 personalization_impact: 42
               )
             )
@@ -2218,6 +2085,14 @@ paths:
                     personalizationImpact: 42
                 ))
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/strategies/personalization \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:

@@ -1,7 +1,6 @@
 // {{generationBanner}}
 // >IMPORT
-using Algolia.Search.Clients;
-using Algolia.Search.Models.{{clientPrefix}};
+{{> snippets/import}}
 // IMPORT<
 {{#isSearchClient}}
 using Action = Algolia.Search.Models.Search.Action;
@@ -22,9 +21,9 @@ public class Snippet{{client}}
   /// </summary>
   public async Task SnippetFor{{client}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}()
   {
-    // >SEPARATOR {{method}} {{testName}}
+    // >SEPARATOR {{method}} {{{testName}}}
     // Initialize the client
-    var client = new {{client}}(new {{clientPrefix}}Config("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"{{#hasRegionalHost}},"ALGOLIA_APPLICATION_REGION"{{/hasRegionalHost}}));
+    {{> snippets/init}}
 
     // Call the API
      {{#hasResponse}}var response =  {{/hasResponse}}{{> tests/method}};

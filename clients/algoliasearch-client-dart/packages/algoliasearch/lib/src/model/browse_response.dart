@@ -19,6 +19,7 @@ final class BrowseResponse {
     this.aroundLatLng,
     this.automaticRadius,
     this.exhaustive,
+    this.appliedRules,
     this.exhaustiveFacetsCount,
     this.exhaustiveNbHits,
     this.exhaustiveTypo,
@@ -68,6 +69,10 @@ final class BrowseResponse {
 
   @JsonKey(name: r'exhaustive')
   final Exhaustive? exhaustive;
+
+  /// Rules applied to the query.
+  @JsonKey(name: r'appliedRules')
+  final List<Object>? appliedRules;
 
   /// See the `facetsCount` field of the `exhaustive` object in the response.
   @Deprecated('exhaustiveFacetsCount has been deprecated')
@@ -194,6 +199,7 @@ final class BrowseResponse {
           other.aroundLatLng == aroundLatLng &&
           other.automaticRadius == automaticRadius &&
           other.exhaustive == exhaustive &&
+          other.appliedRules == appliedRules &&
           other.facets == facets &&
           other.facetsStats == facetsStats &&
           other.index == index &&
@@ -227,6 +233,7 @@ final class BrowseResponse {
       aroundLatLng.hashCode +
       automaticRadius.hashCode +
       exhaustive.hashCode +
+      appliedRules.hashCode +
       facets.hashCode +
       facetsStats.hashCode +
       index.hashCode +

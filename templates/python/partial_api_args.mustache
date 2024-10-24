@@ -1,7 +1,7 @@
 (
         self,
         {{#allParams}}
-        {{paramName}}: {{{vendorExtensions.x-py-typing}}}{{^required}} = None{{/required}},
+        {{paramName}}: {{#isModel}}Union[{{/isModel}}{{#isArray}}{{#items.isModel}}Union[{{/items.isModel}}{{/isArray}}{{#isEnumRef}}Union[{{/isEnumRef}}{{{vendorExtensions.x-py-typing}}}{{#isModel}}, dict[str, Any]]{{/isModel}}{{#isEnumRef}}, str]{{/isEnumRef}}{{#isArray}}{{#items.isModel}}, list[dict[str, Any]]]{{/items.isModel}}{{/isArray}}{{^required}} = None{{/required}},
         {{/allParams}}
         request_options: Optional[Union[dict, RequestOptions]] = None
     )

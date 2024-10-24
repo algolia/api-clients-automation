@@ -25,7 +25,7 @@ public class ABTestConfiguration {
   }
 
   /** Get outliers */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Outliers getOutliers() {
     return outliers;
   }

@@ -1,17 +1,3 @@
-taskID:
-  type: integer
-  format: int64
-  example: 1514562690001
-  description: |
-    Unique identifier of a task.
-
-    A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
-
-updatedAt:
-  type: string
-  example: 2023-07-04T12:49:15Z
-  description: Date and time when the object was updated, in RFC 3339 format.
-
 recommendUpdatedAtResponse:
   type: object
   description: Response, taskID, and update timestamp.
@@ -21,6 +7,6 @@ recommendUpdatedAtResponse:
     - updatedAt
   properties:
     taskID:
-      $ref: '#/taskID'
+      $ref: '../../../common/responses/common.yml#/taskID'
     updatedAt:
-      $ref: '#/updatedAt'
+      $ref: '../../../common/responses/common.yml#/updatedAt'

@@ -5,7 +5,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     {{vendorExtensions.x-py-name}}: {{^required}}Optional[{{/required}}{{{dataType}}}{{^required}}]{{/required}} = Field({{^required}}default=None{{/required}})
     {{#description}}""" {{{.}}} """{{/description}}
 {{/composedSchemas.oneOf}}
-    actual_instance: Optional[Union[{{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}]] = None
+    actual_instance: Union[{{#oneOf}}{{{.}}}, {{/oneOf}}None] = None
     one_of_schemas: Set[str] = { {{#oneOf}}"{{.}}"{{^-last}}, {{/-last}}{{/oneOf}} }
 
     def __init__(self, *args, **kwargs) -> None:
@@ -14,12 +14,12 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
                 raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`") 
             if kwargs:
                 raise ValueError("If a position argument is used, keyword arguments cannot be used.")  
-            super().__init__(actual_instance=args[0])
+            super().__init__(actual_instance=args[0]) # pyright: ignore
         else:
             super().__init__(**kwargs)
 
     @model_serializer
-    def unwrap_actual_instance(self) -> Optional[Union[{{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}]]:
+    def unwrap_actual_instance(self) -> Union[{{#oneOf}}{{{.}}}, {{/oneOf}}Self, None]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
         """
@@ -84,8 +84,10 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json") and callable(self.actual_instance.to_json):
-            return self.actual_instance.to_json()
+        if hasattr(self.actual_instance, "to_json") and callable(
+          self.actual_instance.to_json # pyright: ignore
+        ):
+            return self.actual_instance.to_json() # pyright: ignore
         else:
             return dumps(self.actual_instance)
 
@@ -94,7 +96,9 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict") and callable(self.actual_instance.to_dict):
-            return self.actual_instance.to_dict()
+        if hasattr(self.actual_instance, "to_dict") and callable(
+          self.actual_instance.to_dict # pyright: ignore
+        ):
+            return self.actual_instance.to_dict() # pyright: ignore
         else:
-            return self.actual_instance
+            return self.actual_instance # pyright: ignore

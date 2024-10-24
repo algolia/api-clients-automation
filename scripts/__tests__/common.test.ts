@@ -60,7 +60,7 @@ describe('config', () => {
     it('throws if the field is not found', () => {
       expect(() => {
         getClientsConfigField('javascript', 'foofoo');
-      }).toThrowErrorMatchingInlineSnapshot(`[Error: Unable to find 'foofoo' for 'javascript']`);
+      }).toThrowErrorMatchingInlineSnapshot("[Error: Unable to find 'foofoo' for 'javascript']");
     });
 
     it('find the field if it exists', () => {

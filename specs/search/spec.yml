@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Search API
   description: |
-    The Algolia Search API lets you search, configure, and mange your indices and records.
+    The Algolia Search API lets you search, configure, and manage your indices and records.
 
     ## Client libraries
 
@@ -26,7 +26,7 @@ info:
 
     ## Retry strategy
 
-    To guarantee a high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:
+    To guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:
 
     - `https://{APPLICATION_ID}-1.algolianet.com`
     - `https://{APPLICATION_ID}-2.algolianet.com`
@@ -89,23 +89,23 @@ servers:
   - url: https://{appId}.algolia.net
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-1.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-2.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-3.algolianet.com
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
   - url: https://{appId}-dsn.algolia.net
     variables:
       appId:
-        default: myAppId
+        default: ALGOLIA_APPLICATION_ID
 security:
   - appId: []
     apiKey: []
@@ -170,8 +170,8 @@ tags:
       Create, update, delete, and search for rules.
 
       Rules are _if-then_ statements that you can use to curate search results.
-      Rules have _conditions_ which can trigger _consequences_.
-      Consequences are changes to the search results, such as changing the order of search results, or boosting a facet.
+      Rules have _conditions_ that can trigger _consequences_.
+      Consequences are changes to the search results, such as changing the order of search results or boosting a facet.
       This can be useful for tuning specific queries or for merchandising.
     externalDocs:
       url: https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/

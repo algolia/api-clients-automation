@@ -41,7 +41,7 @@ package algoliasearch.recommend
   *   filter will be returned.
   */
 case class TrendingFacetHit(
-    score: Double,
+    score: Option[Double] = scala.None,
     facetName: String,
     facetValue: String
 ) extends RecommendationsHitTrait

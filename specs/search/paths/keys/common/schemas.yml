@@ -59,7 +59,7 @@ apiKey:
         To restrict this API key to specific IP addresses, add the `restrictSources` parameter.
         You can only add a single source, but you can provide a range of IP addresses.
 
-        Creating an API key fails if the request is made from an IP address that's outside the restricted range.
+        Creating an API key fails if the request is made from an IP address outside the restricted range.
       example: 'typoTolerance=strict&restrictSources=192.168.1.0/24'
       default: ''
     referers:
@@ -109,7 +109,7 @@ baseGetApiKeyResponse:
     createdAt:
       $ref: '../../../../common/responses/common.yml#/createdAtTimestamp'
   required:
-    - key
+    - value
     - createdAt
 
 addApiKeyResponse:

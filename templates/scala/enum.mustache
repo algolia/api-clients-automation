@@ -9,7 +9,7 @@ object {{classname}} {
     {{#allowableValues}}
     {{#values}}
     case object {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} extends {{classname}} {
-        override def toString = "{{.}}"
+        override def toString = "{{{.}}}"
     }
     {{/values}}
     {{/allowableValues}}

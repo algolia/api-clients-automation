@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { transformCodeSamplesToGuideMethods } from '../snippets';
-import { SnippetSamples } from '../types';
+import { transformCodeSamplesToGuideMethods } from '../snippets.js';
+import { SnippetSamples } from '../types.js';
 
 describe('init', () => {
   it('parses a multi line import', () => {

@@ -21,7 +21,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class AbtestingClient
 {
-    public const VERSION = '4.5.0';
+    public const VERSION = '4.6.4';
 
     /**
      * @var ApiWrapperInterface
@@ -146,7 +146,7 @@ class AbtestingClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -185,7 +185,7 @@ class AbtestingClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
@@ -224,7 +224,7 @@ class AbtestingClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -264,7 +264,7 @@ class AbtestingClient
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @param string $path           Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+     * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
      * @param array  $body           Parameters to send with the custom request. (optional)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
@@ -391,10 +391,6 @@ class AbtestingClient
      */
     public function listABTests($offset = null, $limit = null, $indexPrefix = null, $indexSuffix = null, $requestOptions = [])
     {
-        if (null !== $offset && $offset < 0) {
-            throw new \InvalidArgumentException('invalid value for "$offset" when calling AbtestingClient.listABTests, must be bigger than or equal to 0.');
-        }
-
         $resourcePath = '/2/abtests';
         $queryParameters = [];
         $headers = [];

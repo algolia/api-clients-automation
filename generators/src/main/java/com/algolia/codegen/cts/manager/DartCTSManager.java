@@ -2,9 +2,11 @@ package com.algolia.codegen.cts.manager;
 
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
+import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
+import org.openapitools.codegen.SupportingFile;
 
 public class DartCTSManager implements CTSManager {
 
@@ -33,5 +35,13 @@ public class DartCTSManager implements CTSManager {
       bundle.put("import", "package:" + packageName + "/" + packageName + ".dart");
       bundle.put("client", WordUtils.capitalizeFully(client, '-').replace("-", "") + "Client");
     }
+  }
+
+  @Override
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
+    supportingFiles.add(new SupportingFile("snippets/.gitignore.mustache", output + "/dart/.gitignore"));
+    supportingFiles.add(new SupportingFile("snippets/analysis_options.mustache", output + "/dart/analysis_options.yaml"));
+    supportingFiles.add(new SupportingFile("snippets/pubspec.mustache", output + "/dart/pubspec.yaml"));
+    supportingFiles.add(new SupportingFile("snippets/pubspec_overrides.mustache", output + "/dart/pubspec_overrides.yaml"));
   }
 }

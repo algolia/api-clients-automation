@@ -1,6 +1,6 @@
 import type config from '../config/clients.config.json';
 
-import type { CodeSamples } from './specs/types';
+import type { CodeSamples } from './specs/types.js';
 
 /**
  * Config.
@@ -30,7 +30,7 @@ export type Generator = Record<string, any> & {
   additionalProperties: AdditionalProperties;
 };
 
-export type GeneratorMode = 'client' | 'snippets' | 'tests';
+export type GeneratorMode = 'client' | 'guides' | 'snippets' | 'tests';
 
 export type RunOptions = {
   errorMessage?: string;
@@ -46,6 +46,7 @@ export type Spec = {
   paths: Path;
   components: {
     schemas: Record<string, any>;
+    securitySchemes: Partial<{ appId?: Record<string, any>; apiKey?: Record<string, any> }>;
   };
 };
 

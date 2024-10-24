@@ -34,7 +34,7 @@ runs:
     - name: Download Java formatter
       if: inputs.type != 'minimal'
       shell: bash
-      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.23.0/google-java-format-1.23.0-all-deps.jar" > /tmp/java-formatter.jar
+      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.24.0/google-java-format-1.24.0-all-deps.jar" > /tmp/java-formatter.jar
 
     # JavaScript for monorepo and tooling
     - name: Install Node
@@ -45,7 +45,7 @@ runs:
 
     - name: Install JavaScript dependencies
       shell: bash
-      run: YARN_ENABLE_HARDENED_MODE=0 yarn install
+      run: YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
     - name: Build scripts
       shell: bash
@@ -106,7 +106,7 @@ runs:
       run: |
         curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3
         echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-        go install golang.org/x/tools/cmd/goimports@latest
+        go install golang.org/x/tools/cmd/goimports@v0.22.0
 
     - name: Cache golangci-lint analysis
       if: ${{ inputs.language == 'go' }}

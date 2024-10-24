@@ -2,7 +2,7 @@
   import Core
 #endif
 // >IMPORT
-import {{import}}
+{{> snippets/import}}
 // IMPORT<
 
 final class {{client}}Snippet {
@@ -12,9 +12,9 @@ final class {{client}}Snippet {
   //
   // {{{description}}}
   func snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() async throws {
-    // >SEPARATOR {{method}} {{testName}}
+    // >SEPARATOR {{method}} {{{testName}}}
     // Initialize the client
-    let client = try {{client}}(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY"{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
+    {{> snippets/init}}
 
     // Call the API
     {{#hasResponse}}let response{{#isGeneric}}: {{{returnType}}}<Hit>{{/isGeneric}} = {{/hasResponse}}try {{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}, requestOptions: RequestOptions({{#requestOptions.headers}}

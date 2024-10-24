@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { setOutput } from '@actions/core';
 
 import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.js';
@@ -44,7 +43,7 @@ export async function pushGeneratedCode(): Promise<void> {
     await run(`git push -d origin generated/${baseBranch} || true`);
 
     console.log(`Creating branch for generated code: '${branchToPush}'`);
-    await run(`git checkout -b ${branchToPush}`);
+    await run(`git checkout -B ${branchToPush}`);
   }
 
   if (!(await isUpToDate(baseBranch))) {
@@ -59,6 +58,7 @@ export async function pushGeneratedCode(): Promise<void> {
   const authors = await run(
     `git show -s ${baseBranch} --format="
 
+
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)"`,
   );
@@ -72,7 +72,7 @@ Co-authored-by: %an <%ae>
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
   await run('git add .');
-  await run(`git commit -m "${message}"`);
+  await run(`git commit -m "${message.replaceAll('"', '\\"')}"`);
   await run(`git push origin ${branchToPush}`);
 
   setOutput('GENERATED_COMMIT', await run('git rev-parse HEAD'));

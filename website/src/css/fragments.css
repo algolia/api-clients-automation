@@ -1621,7 +1621,8 @@
   appearance: none;
 }
 .uil-bxs-default {
-  box-shadow: 0 5px 15px 0 rgba(37, 44, 97, 0.15),
+  box-shadow:
+    0 5px 15px 0 rgba(37, 44, 97, 0.15),
     0 2px 4px 0 rgba(93, 100, 148, 0.2);
 }
 .uil-bxs-large {
@@ -1632,7 +1633,8 @@
 }
 @media (min-width: 960px) {
   .md\:uil-bxs-default {
-    box-shadow: 0 5px 15px 0 rgba(37, 44, 97, 0.15),
+    box-shadow:
+      0 5px 15px 0 rgba(37, 44, 97, 0.15),
       0 2px 4px 0 rgba(93, 100, 148, 0.2);
   }
 }
@@ -2094,10 +2096,21 @@
   font-family: Poppins, Arial, sans-serif;
 }
 .uil-ff-mono {
-  font-family: SFMono-Regular, Consolas, Andale Mono WT, Andale Mono,
-    Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Monaco,
-    Courier New, Courier, monospace;
+  font-family:
+    SFMono-Regular,
+    Consolas,
+    Andale Mono WT,
+    Andale Mono,
+    Lucida Console,
+    Lucida Sans Typewriter,
+    DejaVu Sans Mono,
+    Bitstream Vera Sans Mono,
+    Liberation Mono,
+    Nimbus Mono L,
+    Monaco,
+    Courier New,
+    Courier,
+    monospace;
 }
 @media (min-width: 1200px) {
   .lg\:uil-ff-hind {

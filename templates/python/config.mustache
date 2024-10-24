@@ -11,17 +11,23 @@ from algoliasearch.http.base_config import BaseConfig
 
 
 class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
-    def __init__(self, app_id: str, api_key: str{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> None:
+    def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
         super().__init__(app_id, api_key)
 
         user_agent = UserAgent().add("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}")
 
+        if app_id is None or not app_id:
+             raise ValueError("`app_id` is missing.")
+
+        if api_key is None or not api_key:
+             raise ValueError("`api_key` is missing.")
+
         self.headers = {
-            "x-algolia-application-id": app_id,
-            "x-algolia-api-key": api_key,
-            "user-agent": user_agent.get(),
-            "content-type": "application/json",
-        }
+             "x-algolia-application-id": app_id,
+             "x-algolia-api-key": api_key,
+             "user-agent": user_agent.get(),
+             "content-type": "application/json",
+         }
 
         http_proxy = environ.get("HTTP_PROXY")
         https_proxy = environ.get("HTTPS_PROXY")
@@ -40,7 +46,7 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
         if {{^fallbackToAliasHost}}not region or {{/fallbackToAliasHost}}(region is not None and region not in _regions):
             raise ValueError(f"`region` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: {', '.join(_regions)}")
 
-        self.hosts = HostsCollection([Host({{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region))])
+        self.hosts = HostsCollection([Host({{#fallbackToAliasHost}}"{{{hostWithFallback}}}" if region is None else {{/fallbackToAliasHost}} "{{{regionalHost}}}".replace("{region}", region or ""))])
         {{/hasRegionalHost}}
 
         {{^hasRegionalHost}}
