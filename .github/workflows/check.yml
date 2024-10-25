@@ -351,7 +351,7 @@ jobs:
         run: yarn cli build playground ${{ matrix.client.language }}
 
       - name: Run Java 'algoliasearch' public API validation
-        if: ${{ matrix.client.language == 'java' && matrix.client.isMainVersion && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-bc]') }}
+        if: ${{ github.base_ref == 'main' && matrix.client.language == 'java' && matrix.client.isMainVersion && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-bc]') }}
         run: |
           cd ${{ matrix.client.path }}
           exit_code=0
