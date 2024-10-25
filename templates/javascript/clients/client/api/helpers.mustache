@@ -317,7 +317,7 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
  * @param saveObjects - The `saveObjects` object.
  * @param saveObjects.indexName - The `indexName` to save `objects` in.
  * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
- * @param chunkedBatch.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+ * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
  */
 async saveObjects(
@@ -337,7 +337,7 @@ async saveObjects(
  * @param deleteObjects - The `deleteObjects` object.
  * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
  * @param deleteObjects.objectIDs - The objectIDs to delete.
- * @param chunkedBatch.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+ * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
  */
 async deleteObjects(
