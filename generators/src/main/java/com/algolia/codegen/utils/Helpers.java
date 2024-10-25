@@ -41,6 +41,11 @@ public class Helpers {
     return camel;
   }
 
+  // convert camelCase77String to CAMEL_CASE_77_STRING
+  public static String toScreamingSnakeCase(String camelCase) {
+    return camelCase.replaceAll("-", "_").replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2").toUpperCase(Locale.ROOT);
+  }
+
   /**
    * Will add the boolean `vendorExtensions.x-is-custom-request` to operations if they should not
    * escape '/' in the path variable
