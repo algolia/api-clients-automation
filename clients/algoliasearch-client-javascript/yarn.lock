@@ -46,7 +46,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.16.4"
     "@types/node": "npm:22.7.7"
     jsdom: "npm:25.0.1"
-    publint: "npm:0.2.11"
+    publint: "npm:0.2.12"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.3.0"
     typescript: "npm:5.6.3"
@@ -147,7 +147,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.16.4"
     "@types/node": "npm:22.7.7"
     jsdom: "npm:25.0.1"
-    publint: "npm:0.2.11"
+    publint: "npm:0.2.12"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.3.0"
     typescript: "npm:5.6.3"
@@ -197,7 +197,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.16.4"
     "@types/node": "npm:22.7.7"
     jsdom: "npm:25.0.1"
-    publint: "npm:0.2.11"
+    publint: "npm:0.2.12"
     tsup: "npm:8.3.0"
     typescript: "npm:5.6.3"
     vitest: "npm:2.1.3"
@@ -214,7 +214,7 @@ __metadata:
     "@types/node": "npm:22.7.7"
     cross-fetch: "npm:4.0.0"
     nock: "npm:13.5.5"
-    publint: "npm:0.2.11"
+    publint: "npm:0.2.12"
     tsup: "npm:8.3.0"
     typescript: "npm:5.6.3"
     vitest: "npm:2.1.3"
@@ -229,7 +229,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.16.4"
     "@types/node": "npm:22.7.7"
     nock: "npm:13.5.5"
-    publint: "npm:0.2.11"
+    publint: "npm:0.2.12"
     tsup: "npm:8.3.0"
     typescript: "npm:5.6.3"
     vitest: "npm:2.1.3"
@@ -246,7 +246,7 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.10.2"
     "@arethetypeswrong/cli": "npm:0.16.4"
     "@types/node": "npm:22.7.7"
-    publint: "npm:0.2.11"
+    publint: "npm:0.2.12"
     tsup: "npm:8.3.0"
     typescript: "npm:5.6.3"
   languageName: unknown
@@ -6703,7 +6703,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.0.0, picocolors@npm:^1.0.1, picocolors@npm:^1.1.0":
+"picocolors@npm:^1.0.0, picocolors@npm:^1.0.1, picocolors@npm:^1.1.0, picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
   checksum: 10/e1cf46bf84886c79055fdfa9dcb3e4711ad259949e3565154b004b260cd356c5d54b31a1437ce9782624bf766272fe6b0154f5f0c744fb7af5d454d2b60db045
@@ -6965,6 +6965,19 @@ __metadata:
   bin:
     publint: lib/cli.js
   checksum: 10/8a01dc2568e76ed57b51d9fdd961a1fc10f7057679429dec185716fb6c320c922033522ce53e964c244d44387f691fde992a6d13db6c5498e42cd5f2243ad4d2
+  languageName: node
+  linkType: hard
+
+"publint@npm:0.2.12":
+  version: 0.2.12
+  resolution: "publint@npm:0.2.12"
+  dependencies:
+    npm-packlist: "npm:^5.1.3"
+    picocolors: "npm:^1.1.1"
+    sade: "npm:^1.8.1"
+  bin:
+    publint: lib/cli.js
+  checksum: 10/7432845a760aa0c5843de4fdc8e53458e4f35502dcc8f785a3e78c652c9bf4a49a358d9b72220ba06bac823481bbfaf3020d168918148b88f5cbab9621ecd6b5
   languageName: node
   linkType: hard
 

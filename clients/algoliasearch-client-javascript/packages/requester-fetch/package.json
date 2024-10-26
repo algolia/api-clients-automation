@@ -54,7 +54,7 @@
     "@types/node": "22.7.7",
     "cross-fetch": "4.0.0",
     "nock": "13.5.5",
-    "publint": "0.2.11",
+    "publint": "0.2.12",
     "tsup": "8.3.0",
     "typescript": "5.6.3",
     "vitest": "2.1.3"
