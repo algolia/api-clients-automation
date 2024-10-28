@@ -20,7 +20,7 @@ nvm use && yarn
 
 ## Mounting the docker images
 
-We use multiple docker images to simplify the build. There is [one base image](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.base) that contains everything except [swift](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.swift) and [ruby](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.swift), they have their own Dockerfile
+We use multiple docker images to simplify the build. There is [one base image](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.base) that contains everything except [swift](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.swift) and [ruby](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.ruby), they have their own Dockerfile
 
 ```bash
 yarn docker:setup
