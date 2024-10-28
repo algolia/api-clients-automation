@@ -192,11 +192,12 @@ public partial interface ISearchClient
   /// <param name="indexName">The index in which to perform the request.</param>
   /// <param name="objects">The list of `objects` to update in the given Algolia `indexName`.</param>
   /// <param name="createIfNotExists">To be provided if non-existing objects are passed, otherwise, the call will fail.</param>
+  /// <param name="waitForTasks">Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable..</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class;
+  Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, bool waitForTasks = false, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class;
   /// <inheritdoc cref="PartialUpdateObjectsAsync{T}(string, IEnumerable{T}, bool, RequestOptions, CancellationToken)"/>
-  List<BatchResponse> PartialUpdateObjects<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class;
+  List<BatchResponse> PartialUpdateObjects<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, bool waitForTasks = false, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class;
 
   /// <summary>
   /// Helper: Check if an index exists.
