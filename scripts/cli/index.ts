@@ -34,10 +34,6 @@ const flags = {
     flag: '-v, --verbose',
     description: 'make the generation verbose',
   },
-  skipCache: {
-    flag: '-s, --skip-cache',
-    description: 'skip cache checking to force building specs',
-  },
 };
 
 program.name('cli');
@@ -141,7 +137,7 @@ buildCommand
   .description('Build a specified spec')
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.skipCache.flag, flags.skipCache.description)
+  .option('-s, --skip-cache', 'skip cache checking to force building specs')
   .option('-json, --output-json', 'outputs the spec in JSON instead of yml')
   .option('-d, --docs', 'generates the doc specs with the code snippets')
   .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {

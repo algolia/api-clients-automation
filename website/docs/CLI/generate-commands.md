@@ -1,10 +1,16 @@
 ---
-title: Clients commands
+title: Generate commands
 ---
 
-# Clients commands
+# Generate commands
 
-The Clients commands are used to [`generate`](#generate) and [`build`](#build) API clients.
+:::info
+
+You can use `yarn cli` as a drop in replacement for `apic`.
+
+:::
+
+The Generate commands are used to [`generate`](#generate) API clients.
 
 ## Usage
 
