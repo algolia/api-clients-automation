@@ -238,7 +238,8 @@
     "clients/algoliasearch-client-php/composer.json",
     "tests/output/dart/**",
     "tests/output/java/**",
-    "tests/output/javascript/package.json"
+    "tests/output/javascript/package.json",
+    "docs/**"
   ],
   "prHourlyLimit": 20,
   "prConcurrentLimit": 50
