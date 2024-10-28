@@ -20,14 +20,7 @@ nvm use && yarn
 
 ## Mounting the docker images
 
-We use multiple docker images to simplify the build, and reuse them on the CI.
-There is one base image containing node, java, scala and kotlin, located in [scripts/docker/Dockerfile](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile)
-
-:::caution
-
-The swift images takes a really long time to build (~5 minutes) because of swift-format, but it's only needed when you want to format swift.
-
-:::
+We use multiple docker images to simplify the build. There is [one base image](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.base) that contains everything except [swift](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.swift) and [ruby](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.swift), they have their own Dockerfile
 
 ```bash
 yarn docker:setup

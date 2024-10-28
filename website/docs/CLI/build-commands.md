@@ -103,5 +103,5 @@ apic build playground javascript recommend
 ### Build many snippets for specific language
 
 ```bash
-apic build snippets php insights recommend search
+apic build snippets java insights recommend search
 ```
