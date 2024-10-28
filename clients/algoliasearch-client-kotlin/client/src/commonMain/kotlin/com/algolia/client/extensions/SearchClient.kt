@@ -377,7 +377,7 @@ public suspend fun SearchClient.chunkedBatch(
 public suspend fun SearchClient.saveObjects(
   indexName: String,
   objects: List<JsonObject>,
-  waitForTask: Boolean? = false,
+  waitForTask: Boolean = false,
   requestOptions: RequestOptions? = null,
 ): List<BatchResponse> {
   return this.chunkedBatch(
@@ -403,7 +403,7 @@ public suspend fun SearchClient.saveObjects(
 public suspend fun SearchClient.deleteObjects(
   indexName: String,
   objectIDs: List<String>,
-  waitForTask: Boolean? = false,
+  waitForTask: Boolean = false,
   requestOptions: RequestOptions? = null,
 ): List<BatchResponse> {
   return this.chunkedBatch(
@@ -431,7 +431,7 @@ public suspend fun SearchClient.partialUpdateObjects(
   indexName: String,
   objects: List<JsonObject>,
   createIfNotExists: Boolean,
-  waitForTask: Boolean? = false,
+  waitForTask: Boolean = false,
   requestOptions: RequestOptions? = null,
 ): List<BatchResponse> {
   return this.chunkedBatch(
