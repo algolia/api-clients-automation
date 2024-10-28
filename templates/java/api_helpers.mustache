@@ -735,15 +735,34 @@ return partialUpdateObjects(indexName, objects, createIfNotExists, null);
 * @param indexName The `indexName` to update `objects` in.
 * @param objects The array of `objects` to update in the given Algolia `indexName`.
 * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail.
+* @param waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+*/
+public <T> List<BatchResponse> partialUpdateObjects(
+String indexName,
+Iterable<T> objects,
+boolean createIfNotExists,
+boolean waitForTasks
+) {
+return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, null);
+}
+
+/**
+* Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+*
+* @param indexName The `indexName` to update `objects` in.
+* @param objects The array of `objects` to update in the given Algolia `indexName`.
+* @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail.
+* @param waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
 * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
 */
 public <T> List<BatchResponse> partialUpdateObjects(
 String indexName,
 Iterable<T> objects,
 boolean createIfNotExists,
+boolean waitForTasks,
 RequestOptions requestOptions
 ) {
-return chunkedBatch(indexName, objects, createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE, false, 1000, requestOptions);
+return chunkedBatch(indexName, objects, createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE, waitForTasks, 1000, requestOptions);
 }
 
 /**
