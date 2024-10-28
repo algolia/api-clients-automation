@@ -469,7 +469,7 @@ public extension SearchClient {
     func saveObjects(
         indexName: String,
         objects: [some Encodable],
-        waitForTasks: Bool? = false,
+        waitForTasks: Bool = false,
         requestOptions: RequestOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
@@ -492,7 +492,7 @@ public extension SearchClient {
     func deleteObjects(
         indexName: String,
         objectIDs: [String],
-        waitForTasks: Bool? = false,
+        waitForTasks: Bool = false,
         requestOptions: RequestOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
@@ -518,7 +518,7 @@ public extension SearchClient {
         indexName: String,
         objects: [some Encodable],
         createIfNotExists: Bool = false,
-        waitForTasks: Bool? = false,
+        waitForTasks: Bool = false,
         requestOptions: RequestOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
