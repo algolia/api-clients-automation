@@ -55,4 +55,7 @@ const _$SynonymTypeEnumMap = {
   SynonymType.altcorrection1: 'altcorrection1',
   SynonymType.altcorrection2: 'altcorrection2',
   SynonymType.placeholder: 'placeholder',
+  SynonymType.oneWaySynonym: 'oneWaySynonym',
+  SynonymType.altCorrection1: 'altCorrection1',
+  SynonymType.altCorrection2: 'altCorrection2',
 };
