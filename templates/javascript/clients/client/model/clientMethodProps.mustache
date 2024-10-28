@@ -141,7 +141,7 @@ export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'wait
 
 export type PartialUpdateObjectsOptions = Pick<
   ChunkedBatchOptions,
-  'indexName' | 'objects'
+  'indexName' | 'objects' | 'waitForTasks'
 > & {
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
