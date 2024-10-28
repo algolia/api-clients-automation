@@ -261,10 +261,10 @@ package object extension {
     def saveObjects(
         indexName: String,
         objects: Seq[Any],
-        waitForTask: Boolean = false,
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, objects, Action.AddObject, waitForTask, 1000, requestOptions)
+      chunkedBatch(indexName, objects, Action.AddObject, waitForTasks, 1000, requestOptions)
     }
 
     /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which
@@ -284,14 +284,14 @@ package object extension {
     def deleteObjects(
         indexName: String,
         objectIDs: Seq[String],
-        waitForTask: Boolean = false,
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
         objectIDs.map(id => new { val objectID: String = id }),
         Action.DeleteObject,
-        waitForTask,
+        waitForTasks,
         1000,
         requestOptions
       )
@@ -317,14 +317,14 @@ package object extension {
         indexName: String,
         objects: Seq[Any],
         createIfNotExists: Boolean = false,
-        waitForTask: Boolean = false,
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
         objects,
         if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
-        waitForTask,
+        waitForTasks,
         1000,
         requestOptions
       )
