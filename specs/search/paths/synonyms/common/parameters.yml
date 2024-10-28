@@ -30,6 +30,9 @@ SynonymType:
     - altcorrection1
     - altcorrection2
     - placeholder
+    - oneWaySynonym
+    - altCorrection1
+    - altCorrection2
 
 ObjectID:
   name: objectID
