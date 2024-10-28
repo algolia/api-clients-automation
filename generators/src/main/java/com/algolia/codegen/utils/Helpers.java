@@ -43,7 +43,12 @@ public class Helpers {
 
   // convert camelCase77String to CAMEL_CASE_77_STRING
   public static String toScreamingSnakeCase(String camelCase) {
-    return camelCase.replaceAll("-", "_").replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2").toUpperCase(Locale.ROOT);
+    return camelCase
+      .replaceAll("-", "_")
+      .replaceAll("/", "_")
+      .replaceAll("(?<=.)([A-Z]+|\\d+)", "_$1")
+      .replaceAll("__", "_")
+      .toUpperCase(Locale.ROOT);
   }
 
   /**
