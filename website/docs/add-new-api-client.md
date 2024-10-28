@@ -166,8 +166,8 @@ The following fields are required:
 
 Use the CLI to generate the clients:
 
-- [Commands for working with specs](./CLI/specs-commands.md)
-- [Commands for working with clients](./CLI/clients-commands.md)
+- [Commands for working with specs](./CLI/build-commands.md)
+- [Commands for working with clients](./CLI/generate-commands.md)
 
 ## 4. Add tests with the Common Test Suite
 

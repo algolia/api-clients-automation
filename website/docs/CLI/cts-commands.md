@@ -8,6 +8,8 @@ title: Common Test Suite commands
 
 Common Test Suite requires all clients to be built.
 
+You can use `yarn cli` as a drop in replacement for `apic`.
+
 :::
 
 The Common Test Suite commands are used to [`generate`](#generate) and [`run`](#run) tests.
