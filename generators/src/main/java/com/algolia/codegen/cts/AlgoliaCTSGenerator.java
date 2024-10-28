@@ -117,7 +117,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       Object lambda = objs.get("lambda");
       List<CodegenServer> servers = (List<CodegenServer>) objs.get("servers");
       CodegenServerVariable regionVariable = null;
-      outerLoop:for (CodegenServer server : servers) {
+      outerLoop: for (CodegenServer server : servers) {
         for (CodegenServerVariable variable : server.variables) {
           if (variable.name.equals("region")) {
             regionVariable = variable;
