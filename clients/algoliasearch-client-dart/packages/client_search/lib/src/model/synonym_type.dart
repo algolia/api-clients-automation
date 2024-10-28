@@ -9,7 +9,10 @@ enum SynonymType {
   onewaysynonym(r'onewaysynonym'),
   altcorrection1(r'altcorrection1'),
   altcorrection2(r'altcorrection2'),
-  placeholder(r'placeholder');
+  placeholder(r'placeholder'),
+  oneWaySynonym(r'oneWaySynonym'),
+  altCorrection1(r'altCorrection1'),
+  altCorrection2(r'altCorrection2');
 
   const SynonymType(this.raw);
   final dynamic raw;

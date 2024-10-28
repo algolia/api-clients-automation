@@ -16,7 +16,13 @@ public enum SynonymType {
 
   ALTCORRECTION_2("altcorrection2"),
 
-  PLACEHOLDER("placeholder");
+  PLACEHOLDER("placeholder"),
+
+  ONE_WAY_SYNONYM("oneWaySynonym"),
+
+  ALT_CORRECTION_1("altCorrection1"),
+
+  ALT_CORRECTION_2("altCorrection2");
 
   private final String value;
 
