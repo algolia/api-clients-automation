@@ -640,7 +640,7 @@ public class ParametersWithDataType {
       // for object, check which has the most of property in common
       int maxCount = 0;
       CodegenModel bestOneOf = model.interfaceModels.get(0);
-      oneOfLoop:for (CodegenModel oneOf : model.interfaceModels) {
+      oneOfLoop: for (CodegenModel oneOf : model.interfaceModels) {
         if (oneOf.vars.size() == 0) {
           continue;
         }
