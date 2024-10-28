@@ -1,116 +1,129 @@
 {{#isSearchClient}}
 /**
-  * Helper: Wait for a task to complete with `indexName` and `taskID`.
-  *
-  * @param indexName The `indexName` where the operation was performed.
-  * @param taskID The `taskID` returned in the method response.
-  * @param maxRetries The maximum number of retry. 50 by default. (optional)
-  * @param timeout  The function to decide how long to wait between retries. min(retries * 200, 5000) by default. (optional)
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
-public GetTaskResponse waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+ * Helper: Wait for a task to complete with `indexName` and `taskID`.
+ *
+ * @param indexName The `indexName` where the operation was performed.
+ * @param taskID The `taskID` returned in the method response.
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public GetTaskResponse waitForTask(
+  String indexName,
+  Long taskID,
+  int maxRetries,
+  IntUnaryOperator timeout,
+  RequestOptions requestOptions
+) {
   return TaskUtils.retryUntil(
     () -> this.getTask(indexName, taskID, requestOptions),
     (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
-    maxRetries, 
+    maxRetries,
     timeout
   );
 }
 
 /**
-  * Helper: Wait for a task to complete with `indexName` and `taskID`.
-  *
-  * @param indexName The `indexName` where the operation was performed.
-  * @param taskID The `taskID` returned in the method response.
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
+ * Helper: Wait for a task to complete with `indexName` and `taskID`.
+ *
+ * @param indexName The `indexName` where the operation was performed.
+ * @param taskID The `taskID` returned in the method response.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public GetTaskResponse waitForTask(String indexName, Long taskID, RequestOptions requestOptions) {
   return this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 }
 
 /**
-  * Helper: Wait for a task to complete with `indexName` and `taskID`.
-  *
-  * @param indexName The `indexName` where the operation was performed.
-  * @param taskID The `taskID` returned in the method response.
-  * @param maxRetries The maximum number of retry. 50 by default. (optional)
-  * @param timeout  The function to decide how long to wait between retries. min(retries * 200, 5000) by default. (optional)
-  */
+ * Helper: Wait for a task to complete with `indexName` and `taskID`.
+ *
+ * @param indexName The `indexName` where the operation was performed.
+ * @param taskID The `taskID` returned in the method response.
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ */
 public GetTaskResponse waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout) {
   return this.waitForTask(indexName, taskID, maxRetries, timeout, null);
 }
 
 /**
-  * Helper: Wait for a task to complete with `indexName` and `taskID`.
-  *
-  * @param indexName The `indexName` where the operation was performed.
-  * @param taskID The `taskID` returned in the method response.
-  */
+ * Helper: Wait for a task to complete with `indexName` and `taskID`.
+ *
+ * @param indexName The `indexName` where the operation was performed.
+ * @param taskID The `taskID` returned in the method response.
+ */
 public GetTaskResponse waitForTask(String indexName, Long taskID) {
   return this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
 }
 
 /**
-* Helper: Wait for a application-level task to complete with `taskID`.
-*
-* @param taskID The `taskID` returned in the method response.
-* @param maxRetries The maximum number of retry. 50 by default. (optional)
-* @param timeout The function to decide how long to wait between retries. min(retries * 200,
-*     5000) by default. (optional)
-* @param requestOptions The requestOptions to send along with the query, they will be merged with
-*     the transporter requestOptions. (optional)
-*/
+ * Helper: Wait for a application-level task to complete with `taskID`.
+ *
+ * @param taskID The `taskID` returned in the method response.
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public GetTaskResponse waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
-return TaskUtils.retryUntil(
-  () -> this.getAppTask(taskID, requestOptions),
-  (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
-  maxRetries,
-  timeout
-);
+  return TaskUtils.retryUntil(
+    () -> this.getAppTask(taskID, requestOptions),
+    (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
+    maxRetries,
+    timeout
+  );
 }
 
 /**
-* Helper: Wait for an application-level task to complete with `taskID`.
-*
-* @param taskID The `taskID` returned in the method response.
-* @param requestOptions The requestOptions to send along with the query, they will be merged with
-*     the transporter requestOptions. (optional)
-*/
+ * Helper: Wait for an application-level task to complete with `taskID`.
+ *
+ * @param taskID The `taskID` returned in the method response.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public GetTaskResponse waitForAppTask(Long taskID, RequestOptions requestOptions) {
   return this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 }
 
 /**
-* Helper: Wait for an application-level task to complete with `taskID`.
-*
-* @param taskID The `taskID` returned in the method response.
-* @param maxRetries The maximum number of retry. 50 by default. (optional)
-* @param timeout The function to decide how long to wait between retries. min(retries * 200,
-*     5000) by default. (optional)
-*/
+ * Helper: Wait for an application-level task to complete with `taskID`.
+ *
+ * @param taskID The `taskID` returned in the method response.
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ */
 public GetTaskResponse waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout) {
   return this.waitForAppTask(taskID, maxRetries, timeout, null);
 }
 
 /**
-* Helper: Wait for an application-level task to complete with `taskID`.
-*
-* @param taskID The `taskID` returned in the method response.
-*/
+ * Helper: Wait for an application-level task to complete with `taskID`.
+ *
+ * @param taskID The `taskID` returned in the method response.
+ */
 public GetTaskResponse waitForAppTask(Long taskID) {
   return this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
 }
 
 /**
-  * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
-  *
-  * @param operation The `operation` that was done on a `key`.
-  * @param key The `key` that has been added, deleted or updated.
-  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-  * @param maxRetries The maximum number of retry. 50 by default. (optional)
-  * @param timeout  The function to decide how long to wait between retries. min(retries * 200, 5000) by default. (optional)
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
+ * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+ *
+ * @param operation The `operation` that was done on a `key`.
+ * @param key The `key` that has been added, deleted or updated.
+ * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
+ *     the response with it.
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public GetApiKeyResponse waitForApiKey(
   String key,
   ApiKeyOperation operation,
@@ -177,89 +190,111 @@ public GetApiKeyResponse waitForApiKey(
 }
 
 /**
-  * Helper: Wait for an API key to be added or deleted based on a given `operation`.
-  *
-  * @param key The `key` that has been added or deleted.
-  * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-  * @param maxRetries The maximum number of retry. 50 by default. (optional)
-  * @param timeout  The function to decide how long to wait between retries. min(retries * 200, 5000) by default. (optional)
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
-public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+ * Helper: Wait for an API key to be added or deleted based on a given `operation`.
+ *
+ * @param key The `key` that has been added or deleted.
+ * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public GetApiKeyResponse waitForApiKey(
+  String key,
+  ApiKeyOperation operation,
+  int maxRetries,
+  IntUnaryOperator timeout,
+  RequestOptions requestOptions
+) {
   return this.waitForApiKey(key, operation, null, maxRetries, timeout, requestOptions);
 }
+
 /**
-  * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
-  *
-  * @param key The `key` that has been added, deleted or updated.
-  * @param operation The `operation` that was done on a `key`.
-  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
+ * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+ *
+ * @param key The `key` that has been added, deleted or updated.
+ * @param operation The `operation` that was done on a `key`.
+ * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
+ *     the response with it.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey, RequestOptions requestOptions) {
   return this.waitForApiKey(key, operation, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 }
+
 /**
-  * Helper: Wait for an API key to be added or deleted based on a given `operation`.
-  *
-  * @param key The `key` that has been added or deleted.
-  * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
+ * Helper: Wait for an API key to be added or deleted based on a given `operation`.
+ *
+ * @param key The `key` that has been added or deleted.
+ * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, RequestOptions requestOptions) {
   return this.waitForApiKey(key, operation, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
 }
+
 /**
-  * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
-  *
-  * @param key The `key` that has been added, deleted or updated.
-  * @param operation The `operation` that was done on a `key`.
-  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-  * @param maxRetries The maximum number of retry. 50 by default. (optional)
-  * @param timeout  The function to decide how long to wait between retries. min(retries * 200, 5000) by default. (optional)
-  */
+ * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+ *
+ * @param key The `key` that has been added, deleted or updated.
+ * @param operation The `operation` that was done on a `key`.
+ * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
+ *     the response with it.
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ */
 public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey, int maxRetries, IntUnaryOperator timeout) {
   return this.waitForApiKey(key, operation, apiKey, maxRetries, timeout, null);
 }
+
 /**
-  * Helper: Wait for an API key to be added or deleted based on a given `operation`.
-  *
-  * @param key The `key` that has been added or deleted.
-  * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-  * @param maxRetries The maximum number of retry. 50 by default. (optional)
-  * @param timeout  The function to decide how long to wait between retries. min(retries * 200, 5000) by default. (optional)
-  */
+ * Helper: Wait for an API key to be added or deleted based on a given `operation`.
+ *
+ * @param key The `key` that has been added or deleted.
+ * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
+ * @param maxRetries The maximum number of retry. 50 by default. (optional)
+ * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+ *     5000) by default. (optional)
+ */
 public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, int maxRetries, IntUnaryOperator timeout) {
   return this.waitForApiKey(key, operation, null, maxRetries, timeout, null);
 }
+
 /**
-  * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
-  *
-  * @param key The `key` that has been added, deleted or updated.
-  * @param operation The `operation` that was done on a `key`.
-  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-  */
+ * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+ *
+ * @param key The `key` that has been added, deleted or updated.
+ * @param operation The `operation` that was done on a `key`.
+ * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
+ *     the response with it.
+ */
 public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey) {
   return this.waitForApiKey(key, operation, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
 }
+
 /**
-  * Helper: Wait for an API key to be added or deleted based on a given `operation`.
-  *
-  * @param key The `key` that has been added or deleted.
-  * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-  */
+ * Helper: Wait for an API key to be added or deleted based on a given `operation`.
+ *
+ * @param key The `key` that has been added or deleted.
+ * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
+ */
 public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation) {
   return this.waitForApiKey(key, operation, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
 }
 
 /**
-  * Helper: Returns an iterator on top of the `browse` method.
-  *
-  * @param indexName The index in which to perform the request.
-  * @param params The `browse` parameters.
-  * @param innerType The class held by the index, could be your custom class or {@link Object}.
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
+ * Helper: Returns an iterator on top of the `browse` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param params The `browse` parameters.
+ * @param innerType The class held by the index, could be your custom class or {@link Object}.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params, Class<T> innerType, RequestOptions requestOptions) {
   final Holder<String> currentCursor = new Holder<>();
 
@@ -275,33 +310,34 @@ public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params
 }
 
 /**
-  * Helper: Returns an iterator on top of the `browse` method.
-  *
-  * @param indexName The index in which to perform the request.
-  * @param params The `browse` parameters.
-  * @param innerType The class held by the index, could be your custom class or {@link Object}.
-  */
+ * Helper: Returns an iterator on top of the `browse` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param params The `browse` parameters.
+ * @param innerType The class held by the index, could be your custom class or {@link Object}.
+ */
 public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params, Class<T> innerType) {
   return browseObjects(indexName, params, innerType, null);
 }
 
 /**
-  * Helper: Returns an iterator on top of the `browse` method.
-  *
-  * @param indexName The index in which to perform the request.
-  * @param innerType The class held by the index, could be your custom class or {@link Object}.
-  */
+ * Helper: Returns an iterator on top of the `browse` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param innerType The class held by the index, could be your custom class or {@link Object}.
+ */
 public <T> Iterable<T> browseObjects(String indexName, Class<T> innerType) {
   return browseObjects(indexName, new BrowseParamsObject(), innerType, null);
 }
 
 /**
-  * Helper: Returns an iterator on top of the `searchSynonyms` method.
-  *
-  * @param indexName The index in which to perform the request.
-  * @param params The `searchSynonyms` parameters. (optional)
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
+ * Helper: Returns an iterator on top of the `searchSynonyms` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param params The `searchSynonyms` parameters. (optional)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParams params, RequestOptions requestOptions) {
   final Holder<Integer> currentPage = new Holder<>(0);
 
@@ -319,32 +355,32 @@ public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParam
 }
 
 /**
-  * Helper: Returns an iterator on top of the `searchSynonyms` method.
-  *
-  * @param indexName The index in which to perform the request.
-  * @param params The `searchSynonyms` parameters .(optional)
-  */
+ * Helper: Returns an iterator on top of the `searchSynonyms` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param params The `searchSynonyms` parameters .(optional)
+ */
 public Iterable<SynonymHit> browseSynonyms(String indexName, SearchSynonymsParams params) {
   return browseSynonyms(indexName, params, null);
 }
 
-
 /**
-  * Helper: Returns an iterator on top of the `searchSynonyms` method.
-  *
-  * @param indexName The index in which to perform the request.
-  */
+ * Helper: Returns an iterator on top of the `searchSynonyms` method.
+ *
+ * @param indexName The index in which to perform the request.
+ */
 public Iterable<SynonymHit> browseSynonyms(String indexName) {
   return browseSynonyms(indexName, null, null);
 }
 
 /**
-  * Helper: Returns an iterator on top of the `searchRules` method.
-  *
-  * @param indexName The index in which to perform the request.
-  * @param params The `searchRules` parameters. (optional)
-  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-  */
+ * Helper: Returns an iterator on top of the `searchRules` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param params The `searchRules` parameters. (optional)
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public Iterable<Rule> browseRules(String indexName, SearchRulesParams params, RequestOptions requestOptions) {
   final Holder<Integer> currentPage = new Holder<>(0);
   final int hitsPerPage = 1000;
@@ -361,225 +397,238 @@ public Iterable<Rule> browseRules(String indexName, SearchRulesParams params, Re
 }
 
 /**
-  * Helper: Returns an iterator on top of the `searchRules` method.
-  *
-  * @param indexName The index in which to perform the request.
-  * @param params The `searchRules` parameters. (optional)
-  */
+ * Helper: Returns an iterator on top of the `searchRules` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param params The `searchRules` parameters. (optional)
+ */
 public Iterable<Rule> browseRules(String indexName, SearchRulesParams params) {
   return browseRules(indexName, params, null);
 }
 
 /**
-  * Helper: Returns an iterator on top of the `searchRules` method.
-  *
-  * @param indexName The index in which to perform the request.
-  */
+ * Helper: Returns an iterator on top of the `searchRules` method.
+ *
+ * @param indexName The index in which to perform the request.
+ */
 public Iterable<Rule> browseRules(String indexName) {
   return browseRules(indexName, new SearchRulesParams(), null);
 }
 
 /**
-  * Executes a synchronous search for the provided search requests, with certainty that we will only request
-  * Algolia records (hits). Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  */
+ * Executes a synchronous search for the provided search requests, with certainty that we will
+ * only request Algolia records (hits). Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ */
 public <T> List<SearchResponse<T>> searchForHits(@Nonnull List<SearchForHits> requests, Class<T> innerType) {
-    return LaunderThrowable.await(searchForHitsAsync(requests, null, innerType, null));
+  return LaunderThrowable.await(searchForHitsAsync(requests, null, innerType, null));
 }
 
 /**
-  * Executes a synchronous search for the provided search requests, with certainty that we will only request
-  * Algolia records (hits). Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  * @param strategy The search strategy to be employed during the search.
-  */
+ * Executes a synchronous search for the provided search requests, with certainty that we will
+ * only request Algolia records (hits). Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param strategy The search strategy to be employed during the search.
+ */
 public <T> List<SearchResponse<T>> searchForHits(@Nonnull List<SearchForHits> requests, SearchStrategy strategy, Class<T> innerType) {
-    return LaunderThrowable.await(searchForHitsAsync(requests, strategy, innerType, null));
+  return LaunderThrowable.await(searchForHitsAsync(requests, strategy, innerType, null));
 }
 
 /**
-  * Executes a synchronous search for the provided search requests, with certainty that we will only request
-  * Algolia records (hits). Results will be received in the same order as the queries.
-  *
-  * @param requests       A list of search requests to be executed.
-  * @param strategy       The search strategy to be employed during the search.
-  * @param requestOptions Additional options for the search request.
-  */
-public <T> List<SearchResponse<T>> searchForHits(@Nonnull List<SearchForHits> requests, SearchStrategy strategy, Class<T> innerType, RequestOptions requestOptions) {
-    return LaunderThrowable.await(searchForHitsAsync(requests, strategy, innerType, requestOptions));
-}
-
-/**
-  * Executes an asynchronous search for the provided search requests, with certainty that we will only request
-  * Algolia records (hits). Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  */
-public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(@Nonnull List<SearchForHits> requests, Class<T> innerType) {
-    return searchForHitsAsync(requests, null, innerType, null);
-}
-
-/**
-  * Executes an asynchronous search for the provided search requests, with certainty that we will only request
-  * Algolia records (hits). Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  * @param strategy The search strategy to be employed during the search.
-  */
-public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(@Nonnull List<SearchForHits> requests, SearchStrategy strategy, Class<T> innerType) {
-    return searchForHitsAsync(requests, strategy, innerType, null);
-}
-
-/**
-  * Executes an asynchronous search for the provided search requests, with certainty that we will only request
-  * Algolia records (hits). Results will be received in the same order as the queries.
-  *
-  * @param requests       A list of search requests to be executed.
-  * @param innerType      The class held by the index, could be your custom class or {@link Object}.
-  * @param strategy       The search strategy to be employed during the search.
-  * @param requestOptions Additional options for the search request.
-  */
-public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(@Nonnull List<SearchForHits> requests, SearchStrategy strategy, Class<T> innerType, RequestOptions requestOptions) {
-    final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
-    final SearchMethodParams params = new SearchMethodParams()
-            .setRequests(searchQueries)
-            .setStrategy(strategy);
-    return searchAsync(params, innerType)
-            .thenApply(searchResponses -> searchResponses
-                    .getResults()
-                    .stream()
-                    .map(res -> (SearchResponse<T>) res)
-                    .collect(Collectors.toList())
-            );
-}
-
-/**
-  * Executes a synchronous search for the provided search requests, with certainty that we will only request
-  * Algolia facets. Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  */
-public List<SearchForFacetValuesResponse> searchForFacets(@Nonnull List<SearchForFacets> requests) {
-    return LaunderThrowable.await(searchForFacetsAsync(requests, null, null));
-}
-
-/**
-  * Executes a synchronous search for the provided search requests, with certainty that we will only request
-  * Algolia facets. Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  * @param strategy The search strategy to be employed during the search.
-  */
-public List<SearchForFacetValuesResponse> searchForFacets(@Nonnull List<SearchForFacets> requests, SearchStrategy strategy) {
-    return LaunderThrowable.await(searchForFacetsAsync(requests, strategy, null));
-}
-
-/**
-  * Executes a synchronous search for the provided search requests, with certainty that we will only request
-  * Algolia facets. Results will be received in the same order as the queries.
-  *
-  * @param requests       A list of search requests to be executed.
-  * @param strategy       The search strategy to be employed during the search.
-  * @param requestOptions Additional options for the search request.
-  */
-public List<SearchForFacetValuesResponse> searchForFacets(@Nonnull List<SearchForFacets> requests, SearchStrategy strategy, RequestOptions requestOptions) {
-    return LaunderThrowable.await(searchForFacetsAsync(requests, strategy, requestOptions));
-}
-
-/**
-  * Executes an asynchronous search for the provided search requests, with certainty that we will only request
-  * Algolia facets. Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  */
-public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsync(@Nonnull List<SearchForFacets> requests) {
-    return searchForFacetsAsync(requests, null, null);
-}
-
-/**
-  * Executes an asynchronous search for the provided search requests, with certainty that we will only request
-  * Algolia facets. Results will be received in the same order as the queries.
-  *
-  * @param requests A list of search requests to be executed.
-  * @param strategy The search strategy to be employed during the search.
-  */
-public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsync(@Nonnull List<SearchForFacets> requests, SearchStrategy strategy) {
-    return searchForFacetsAsync(requests, strategy, null);
-}
-
-/**
-  * Executes an asynchronous search for the provided search requests, with certainty that we will only request
-  * Algolia facets. Results will be received in the same order as the queries.
-  *
-  * @param requests       A list of search requests to be executed.
-  * @param strategy       The search strategy to be employed during the search.
-  * @param requestOptions Additional options for the search request.
-  */
-public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsync(@Nonnull List<SearchForFacets> requests, SearchStrategy strategy, RequestOptions requestOptions) {
-    final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
-    final SearchMethodParams params = new SearchMethodParams()
-            .setRequests(searchQueries)
-            .setStrategy(strategy);
-    return searchAsync(params, Hit.class)
-            .thenApply(searchResponses -> searchResponses
-                    .getResults()
-                    .stream()
-                    .map(res -> (SearchForFacetValuesResponse) res)
-                    .collect(Collectors.toList())
-            );
-}
-
-/**
-* Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
-* in `batch` requests.
-*
-* @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
-*     make it fit in `batch` requests.
-* @param indexName - The `indexName` to replace `objects` in.
-* @param objects - The array of `objects` to store in the given Algolia `indexName`.
-* @param action - The `batch` `action` to perform on the given array of `objects`.
-* @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
-*     processed, this operation may slow the total execution time of this method but is more
-*     reliable.
-* @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
-*     equal to `length(objects) / batchSize`. Defaults to 1000.
-* @param requestOptions - The requestOptions to send along with the query, they will be forwarded
-*     to the `getTask` method and merged with the transporter requestOptions.
-*/
-public <T> List<BatchResponse> chunkedBatch(
-String indexName,
-Iterable<T> objects,
-Action action,
-boolean waitForTasks,
-int batchSize,
-RequestOptions requestOptions
+ * Executes a synchronous search for the provided search requests, with certainty that we will
+ * only request Algolia records (hits). Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param strategy The search strategy to be employed during the search.
+ * @param requestOptions Additional options for the search request.
+ */
+public <T> List<SearchResponse<T>> searchForHits(
+  @Nonnull List<SearchForHits> requests,
+  SearchStrategy strategy,
+  Class<T> innerType,
+  RequestOptions requestOptions
 ) {
-List<BatchResponse> responses = new ArrayList<>();
-List<BatchRequest> requests = new ArrayList<>();
+  return LaunderThrowable.await(searchForHitsAsync(requests, strategy, innerType, requestOptions));
+}
 
-for (T item : objects) {
-  if (requests.size() == batchSize) {
-    BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
-    responses.add(batch);
-    requests.clear();
+/**
+ * Executes an asynchronous search for the provided search requests, with certainty that we will
+ * only request Algolia records (hits). Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ */
+public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(@Nonnull List<SearchForHits> requests, Class<T> innerType) {
+  return searchForHitsAsync(requests, null, innerType, null);
+}
+
+/**
+ * Executes an asynchronous search for the provided search requests, with certainty that we will
+ * only request Algolia records (hits). Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param strategy The search strategy to be employed during the search.
+ */
+public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(
+  @Nonnull List<SearchForHits> requests,
+  SearchStrategy strategy,
+  Class<T> innerType
+) {
+  return searchForHitsAsync(requests, strategy, innerType, null);
+}
+
+/**
+ * Executes an asynchronous search for the provided search requests, with certainty that we will
+ * only request Algolia records (hits). Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param innerType The class held by the index, could be your custom class or {@link Object}.
+ * @param strategy The search strategy to be employed during the search.
+ * @param requestOptions Additional options for the search request.
+ */
+public <T> CompletableFuture<List<SearchResponse<T>>> searchForHitsAsync(
+  @Nonnull List<SearchForHits> requests,
+  SearchStrategy strategy,
+  Class<T> innerType,
+  RequestOptions requestOptions
+) {
+  final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
+  final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
+  return searchAsync(params, innerType).thenApply(searchResponses ->
+    searchResponses.getResults().stream().map(res -> (SearchResponse<T>) res).collect(Collectors.toList())
+  );
+}
+
+/**
+ * Executes a synchronous search for the provided search requests, with certainty that we will
+ * only request Algolia facets. Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ */
+public List<SearchForFacetValuesResponse> searchForFacets(@Nonnull List<SearchForFacets> requests) {
+  return LaunderThrowable.await(searchForFacetsAsync(requests, null, null));
+}
+
+/**
+ * Executes a synchronous search for the provided search requests, with certainty that we will
+ * only request Algolia facets. Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param strategy The search strategy to be employed during the search.
+ */
+public List<SearchForFacetValuesResponse> searchForFacets(@Nonnull List<SearchForFacets> requests, SearchStrategy strategy) {
+  return LaunderThrowable.await(searchForFacetsAsync(requests, strategy, null));
+}
+
+/**
+ * Executes a synchronous search for the provided search requests, with certainty that we will
+ * only request Algolia facets. Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param strategy The search strategy to be employed during the search.
+ * @param requestOptions Additional options for the search request.
+ */
+public List<SearchForFacetValuesResponse> searchForFacets(
+  @Nonnull List<SearchForFacets> requests,
+  SearchStrategy strategy,
+  RequestOptions requestOptions
+) {
+  return LaunderThrowable.await(searchForFacetsAsync(requests, strategy, requestOptions));
+}
+
+/**
+ * Executes an asynchronous search for the provided search requests, with certainty that we will
+ * only request Algolia facets. Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ */
+public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsync(@Nonnull List<SearchForFacets> requests) {
+  return searchForFacetsAsync(requests, null, null);
+}
+
+/**
+ * Executes an asynchronous search for the provided search requests, with certainty that we will
+ * only request Algolia facets. Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param strategy The search strategy to be employed during the search.
+ */
+public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsync(
+  @Nonnull List<SearchForFacets> requests,
+  SearchStrategy strategy
+) {
+  return searchForFacetsAsync(requests, strategy, null);
+}
+
+/**
+ * Executes an asynchronous search for the provided search requests, with certainty that we will
+ * only request Algolia facets. Results will be received in the same order as the queries.
+ *
+ * @param requests A list of search requests to be executed.
+ * @param strategy The search strategy to be employed during the search.
+ * @param requestOptions Additional options for the search request.
+ */
+public CompletableFuture<List<SearchForFacetValuesResponse>> searchForFacetsAsync(
+  @Nonnull List<SearchForFacets> requests,
+  SearchStrategy strategy,
+  RequestOptions requestOptions
+) {
+  final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
+  final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
+  return searchAsync(params, Hit.class).thenApply(searchResponses ->
+    searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
+  );
+}
+
+/**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+ * in `batch` requests.
+ *
+ * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+ *     make it fit in `batch` requests.
+ * @param indexName - The `indexName` to replace `objects` in.
+ * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param action - The `batch` `action` to perform on the given array of `objects`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+ *     equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+ *     to the `getTask` method and merged with the transporter requestOptions.
+ */
+public <T> List<BatchResponse> chunkedBatch(
+  String indexName,
+  Iterable<T> objects,
+  Action action,
+  boolean waitForTasks,
+  int batchSize,
+  RequestOptions requestOptions
+) {
+  List<BatchResponse> responses = new ArrayList<>();
+  List<BatchRequest> requests = new ArrayList<>();
+
+  for (T item : objects) {
+    if (requests.size() == batchSize) {
+      BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+      responses.add(batch);
+      requests.clear();
+    }
+
+    requests.add(new BatchRequest().setAction(action).setBody(item));
   }
 
-  requests.add(new BatchRequest().setAction(action).setBody(item));
-}
+  if (requests.size() > 0) {
+    BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+    responses.add(batch);
+  }
 
-if (requests.size() > 0) {
-  BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
-  responses.add(batch);
-}
+  if (waitForTasks) {
+    responses.forEach(response -> waitForTask(indexName, response.getTaskID(), requestOptions));
+  }
 
-if (waitForTasks) {
-  responses.forEach(response -> waitForTask(indexName, response.getTaskID(), requestOptions));
-}
-
-return responses;
+  return responses;
 }
 
 public <T> List<BatchResponse> chunkedBatch(String indexName, Iterable<T> objects, Action action, boolean waitForTasks) {
@@ -590,277 +639,340 @@ public <T> List<BatchResponse> chunkedBatch(String indexName, Iterable<T> object
   return chunkedBatch(indexName, objects, action, waitForTasks, batchSize, null);
 }
 
-public <T> List<BatchResponse> chunkedBatch(String indexName, Iterable<T> objects, Action action, boolean waitForTasks, RequestOptions requestOptions) {
+public <T> List<BatchResponse> chunkedBatch(
+  String indexName,
+  Iterable<T> objects,
+  Action action,
+  boolean waitForTasks,
+  RequestOptions requestOptions
+) {
   return chunkedBatch(indexName, objects, action, waitForTasks, 1000, requestOptions);
 }
 
 /**
-* Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
-* untouched. Replace all records in an index without any downtime. See
-* https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for
-* implementation details.
-*
-* @param indexName The `indexName` to replace `objects` in.
-* @param objects The array of `objects` to store in the given Algolia `indexName`.
-* @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
-*     to `length(objects) / batchSize`.
-* @throws AlgoliaRetryException When the retry has failed on all hosts
-* @throws AlgoliaApiException When the API sends an http error code
-* @throws AlgoliaRuntimeException When an error occurred during the serialization
-*/
-public <T> ReplaceAllObjectsResponse replaceAllObjects(
-String indexName,
-Iterable<T> objects,
-int batchSize
-) {
-return replaceAllObjects(indexName, objects, batchSize, null);
+ * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+ * untouched. Replace all records in an index without any downtime. See
+ * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
+ * details.
+ *
+ * @param indexName The `indexName` to replace `objects` in.
+ * @param objects The array of `objects` to store in the given Algolia `indexName`.
+ * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+ *     to `length(objects) / batchSize`.
+ * @throws AlgoliaRetryException When the retry has failed on all hosts
+ * @throws AlgoliaApiException When the API sends an http error code
+ * @throws AlgoliaRuntimeException When an error occurred during the serialization
+ */
+public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize) {
+  return replaceAllObjects(indexName, objects, batchSize, null);
 }
 
 /**
-* Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-*
-* @param indexName The `indexName` to replace `objects` in.
-* @param objects The array of `objects` to store in the given Algolia `indexName`.
-*/
-public <T> List<BatchResponse> saveObjects(
-String indexName,
-Iterable<T> objects
-) {
-return saveObjects(indexName, objects, null);
+ * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+ * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+ *
+ * @param indexName The `indexName` to replace `objects` in.
+ * @param objects The array of `objects` to store in the given Algolia `indexName`.
+ */
+public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects) {
+  return saveObjects(indexName, objects, null);
 }
 
 /**
-* Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-*
-* @param indexName The `indexName` to replace `objects` in.
-* @param objects The array of `objects` to store in the given Algolia `indexName`.
-* @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-*/
-public <T> List<BatchResponse> saveObjects(
-String indexName,
-Iterable<T> objects,
-RequestOptions requestOptions
-) {
-return chunkedBatch(indexName, objects, Action.ADD_OBJECT, false, 1000, requestOptions);
+ * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+ * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+ *
+ * @param indexName The `indexName` to replace `objects` in.
+ * @param objects The array of `objects` to store in the given Algolia `indexName`.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
+  return saveObjects(indexName, objects, false, requestOptions);
 }
 
 /**
-* Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
-*
-* @param indexName The `indexName` to delete `objectIDs` from.
-* @param objectIDs The array of `objectIDs` to delete from the `indexName`.
-*/
-public List<BatchResponse> deleteObjects(
-String indexName,
-List<String> objectIDs
-) {
-return deleteObjects(indexName, objectIDs, null);
+ * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+ * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+ *
+ * @param indexName The `indexName` to replace `objects` in.
+ * @param objects The array of `objects` to store in the given Algolia `indexName`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
+  return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, 1000, requestOptions);
 }
 
 /**
-* Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
-*
-* @param indexName The `indexName` to delete `objectIDs` from.
-* @param objectIDs The array of `objectIDs` to delete from the `indexName`.
-* @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-*/
-public List<BatchResponse> deleteObjects(
-String indexName,
-List<String> objectIDs,
-RequestOptions requestOptions
-) {
-List<Map<String, String>> objects = new ArrayList<>();
+ * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+ * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+ *
+ * @param indexName The `indexName` to delete `objectIDs` from.
+ * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+ */
+public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs) {
+  return deleteObjects(indexName, objectIDs, false, null);
+}
 
-for (String id : objectIDs) {
+/**
+ * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+ * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+ *
+ * @param indexName The `indexName` to delete `objectIDs` from.
+ * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, RequestOptions requestOptions) {
+  return deleteObjects(indexName, objectIDs, false, null);
+}
+
+/**
+ * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+ * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+ *
+ * @param indexName The `indexName` to delete `objectIDs` from.
+ * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, RequestOptions requestOptions) {
+  List<Map<String, String>> objects = new ArrayList<>();
+
+  for (String id : objectIDs) {
     Map<String, String> obj = new HashMap<>();
     obj.put("objectID", id);
     objects.add(obj);
-}
+  }
 
-return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, false, 1000, requestOptions);
+  return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, 1000, requestOptions);
 }
 
 /**
-* Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-*
-* @param indexName The `indexName` to update `objects` in.
-* @param objects The array of `objects` to update in the given Algolia `indexName`.
-* @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail.
-*/
+ * Helper: Replaces object content of all the given objects according to their respective
+ * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+ * requests with at most 1000 objects in it.
+ *
+ * @param indexName The `indexName` to update `objects` in.
+ * @param objects The array of `objects` to update in the given Algolia `indexName`.
+ * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+ *     will fail.
+ */
+public <T> List<BatchResponse> partialUpdateObjects(String indexName, Iterable<T> objects, boolean createIfNotExists) {
+  return partialUpdateObjects(indexName, objects, createIfNotExists, false, null);
+}
+
+/**
+ * Helper: Replaces object content of all the given objects according to their respective
+ * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+ * requests with at most 1000 objects in it.
+ *
+ * @param indexName The `indexName` to update `objects` in.
+ * @param objects The array of `objects` to update in the given Algolia `indexName`.
+ * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+ *     will fail.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ */
 public <T> List<BatchResponse> partialUpdateObjects(
-String indexName,
-Iterable<T> objects,
-boolean createIfNotExists
+  String indexName,
+  Iterable<T> objects,
+  boolean createIfNotExists,
+  boolean waitForTasks
 ) {
-return partialUpdateObjects(indexName, objects, createIfNotExists, null);
+  return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, null);
 }
 
 /**
-* Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-*
-* @param indexName The `indexName` to update `objects` in.
-* @param objects The array of `objects` to update in the given Algolia `indexName`.
-* @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail.
-* @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-*/
+ * Helper: Replaces object content of all the given objects according to their respective
+ * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+ * requests with at most 1000 objects in it.
+ *
+ * @param indexName The `indexName` to update `objects` in.
+ * @param objects The array of `objects` to update in the given Algolia `indexName`.
+ * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+ *     will fail.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
 public <T> List<BatchResponse> partialUpdateObjects(
-String indexName,
-Iterable<T> objects,
-boolean createIfNotExists,
-RequestOptions requestOptions
+  String indexName,
+  Iterable<T> objects,
+  boolean createIfNotExists,
+  boolean waitForTasks,
+  RequestOptions requestOptions
 ) {
-return chunkedBatch(indexName, objects, createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE, false, 1000, requestOptions);
+  return chunkedBatch(
+    indexName,
+    objects,
+    createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
+    waitForTasks,
+    1000,
+    requestOptions
+  );
 }
 
 /**
-* Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
-* untouched. Replace all records in an index without any downtime.
-* See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
-*
-* @param indexName The `indexName` to replace `objects` in.
-* @param objects The array of `objects` to store in the given Algolia `indexName`.
-* @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
-*     to `length(objects) / batchSize`.
-* @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)
-* @throws AlgoliaRetryException When the retry has failed on all hosts
-* @throws AlgoliaApiException When the API sends an http error code
-* @throws AlgoliaRuntimeException When an error occurred during the serialization
-*/
+ * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+ * untouched. Replace all records in an index without any downtime. See
+ * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
+ * details.
+ *
+ * @param indexName The `indexName` to replace `objects` in.
+ * @param objects The array of `objects` to store in the given Algolia `indexName`.
+ * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+ *     to `length(objects) / batchSize`.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ * @throws AlgoliaRetryException When the retry has failed on all hosts
+ * @throws AlgoliaApiException When the API sends an http error code
+ * @throws AlgoliaRuntimeException When an error occurred during the serialization
+ */
 public <T> ReplaceAllObjectsResponse replaceAllObjects(
-String indexName,
-Iterable<T> objects,
-int batchSize,
-RequestOptions requestOptions
+  String indexName,
+  Iterable<T> objects,
+  int batchSize,
+  RequestOptions requestOptions
 ) {
-Random rnd = new Random();
-String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
+  Random rnd = new Random();
+  String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
-// Copy settings, synonyms and rules
-UpdatedAtResponse copyOperationResponse = operationIndex(
-  indexName,
-  new OperationIndexParams()
-    .setOperation(OperationType.COPY)
-    .setDestination(tmpIndexName)
-    .addScope(ScopeType.SETTINGS)
-    .addScope(ScopeType.RULES)
-    .addScope(ScopeType.SYNONYMS),
-  requestOptions
-);
+  // Copy settings, synonyms and rules
+  UpdatedAtResponse copyOperationResponse = operationIndex(
+    indexName,
+    new OperationIndexParams()
+      .setOperation(OperationType.COPY)
+      .setDestination(tmpIndexName)
+      .addScope(ScopeType.SETTINGS)
+      .addScope(ScopeType.RULES)
+      .addScope(ScopeType.SYNONYMS),
+    requestOptions
+  );
 
-// Save new objects
-List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+  // Save new objects
+  List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
 
-waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+  waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-copyOperationResponse = operationIndex(
-  indexName,
-  new OperationIndexParams()
-    .setOperation(OperationType.COPY)
-    .setDestination(tmpIndexName)
-    .addScope(ScopeType.SETTINGS)
-    .addScope(ScopeType.RULES)
-    .addScope(ScopeType.SYNONYMS),
-  requestOptions
-);
-waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+  copyOperationResponse = operationIndex(
+    indexName,
+    new OperationIndexParams()
+      .setOperation(OperationType.COPY)
+      .setDestination(tmpIndexName)
+      .addScope(ScopeType.SETTINGS)
+      .addScope(ScopeType.RULES)
+      .addScope(ScopeType.SYNONYMS),
+    requestOptions
+  );
+  waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-// Move temporary index to source index
-UpdatedAtResponse moveOperationResponse = operationIndex(
-  tmpIndexName,
-  new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
-  requestOptions
-);
-waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+  // Move temporary index to source index
+  UpdatedAtResponse moveOperationResponse = operationIndex(
+    tmpIndexName,
+    new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
+    requestOptions
+  );
+  waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
 
-return new ReplaceAllObjectsResponse()
-  .setCopyOperationResponse(copyOperationResponse)
-  .setBatchResponses(batchResponses)
-  .setMoveOperationResponse(moveOperationResponse);
+  return new ReplaceAllObjectsResponse()
+    .setCopyOperationResponse(copyOperationResponse)
+    .setBatchResponses(batchResponses)
+    .setMoveOperationResponse(moveOperationResponse);
 }
 
 /**
-* Helper: Generates a secured API key based on the given `parent_api_key` and given
-* `restrictions`.
-*
-* @param parentApiKey API key to generate from.
-* @param restrictions Restrictions to add the key
-* @throws Exception if an error occurs during the encoding
-* @throws AlgoliaRetryException When the retry has failed on all hosts
-* @throws AlgoliaApiException When the API sends an http error code
-* @throws AlgoliaRuntimeException When an error occurred during the serialization
-*/
+ * Helper: Generates a secured API key based on the given `parent_api_key` and given
+ * `restrictions`.
+ *
+ * @param parentApiKey API key to generate from.
+ * @param restrictions Restrictions to add the key
+ * @throws Exception if an error occurs during the encoding
+ * @throws AlgoliaRetryException When the retry has failed on all hosts
+ * @throws AlgoliaApiException When the API sends an http error code
+ * @throws AlgoliaRuntimeException When an error occurred during the serialization
+ */
 public String generateSecuredApiKey(@Nonnull String parentApiKey, @Nonnull SecuredApiKeyRestrictions restrictions) throws Exception {
-Map<String, String> restrictionsMap = new HashMap<>();
-if (restrictions.getFilters() != null) restrictionsMap.put("filters", StringUtils.paramToString(restrictions.getFilters()));
-if (restrictions.getValidUntil() != 0) restrictionsMap.put("validUntil", StringUtils.paramToString(restrictions.getValidUntil()));
-if (restrictions.getRestrictIndices() != null) restrictionsMap.put(
-  "restrictIndices",
-  StringUtils.paramToString(restrictions.getRestrictIndices())
-);
-if (restrictions.getRestrictSources() != null) restrictionsMap.put(
-  "restrictSources",
-  StringUtils.paramToString(restrictions.getRestrictSources())
-);
-if (restrictions.getUserToken() != null) restrictionsMap.put("userToken", StringUtils.paramToString(restrictions.getUserToken()));
+  Map<String, String> restrictionsMap = new HashMap<>();
+  if (restrictions.getFilters() != null) restrictionsMap.put("filters", StringUtils.paramToString(restrictions.getFilters()));
+  if (restrictions.getValidUntil() != 0) restrictionsMap.put("validUntil", StringUtils.paramToString(restrictions.getValidUntil()));
+  if (restrictions.getRestrictIndices() != null) restrictionsMap.put(
+    "restrictIndices",
+    StringUtils.paramToString(restrictions.getRestrictIndices())
+  );
+  if (restrictions.getRestrictSources() != null) restrictionsMap.put(
+    "restrictSources",
+    StringUtils.paramToString(restrictions.getRestrictSources())
+  );
+  if (restrictions.getUserToken() != null) restrictionsMap.put("userToken", StringUtils.paramToString(restrictions.getUserToken()));
 
-if (restrictions.getSearchParams() != null) {
-  Map<String, Object> searchParamsMap = JsonSerializer
-    .getObjectMapper()
-    .convertValue(restrictions.getSearchParams(), new TypeReference<Map<String, Object>>() {});
-  searchParamsMap.forEach((key, value) -> restrictionsMap.put(key, StringUtils.paramToString(value)));
-}
+  if (restrictions.getSearchParams() != null) {
+    Map<String, Object> searchParamsMap = JsonSerializer.getObjectMapper()
+      .convertValue(restrictions.getSearchParams(), new TypeReference<Map<String, Object>>() {});
+    searchParamsMap.forEach((key, value) -> restrictionsMap.put(key, StringUtils.paramToString(value)));
+  }
 
-String queryStr = restrictionsMap
-  .entrySet()
-  .stream()
-  .sorted(Map.Entry.comparingByKey())
-  .map(entry -> String.format("%s=%s", entry.getKey(), entry.getValue()))
-  .collect(Collectors.joining("&"));
+  String queryStr = restrictionsMap
+    .entrySet()
+    .stream()
+    .sorted(Map.Entry.comparingByKey())
+    .map(entry -> String.format("%s=%s", entry.getKey(), entry.getValue()))
+    .collect(Collectors.joining("&"));
 
-String key = hmac(parentApiKey, queryStr);
+  String key = hmac(parentApiKey, queryStr);
 
-return new String(Base64.getEncoder().encode(String.format("%s%s", key, queryStr).getBytes(Charset.forName("UTF8"))));
+  return new String(Base64.getEncoder().encode(String.format("%s%s", key, queryStr).getBytes(Charset.forName("UTF8"))));
 }
 
 private String hmac(String key, String msg) throws NoSuchAlgorithmException, InvalidKeyException {
-Mac hmac = Mac.getInstance("HmacSHA256");
-hmac.init(new SecretKeySpec(key.getBytes(), "HmacSHA256"));
-byte[] rawHmac = hmac.doFinal(msg.getBytes());
-StringBuilder sb = new StringBuilder(rawHmac.length * 2);
-for (byte b : rawHmac) {
-  sb.append(String.format("%02x", b & 0xff));
-}
-return sb.toString();
+  Mac hmac = Mac.getInstance("HmacSHA256");
+  hmac.init(new SecretKeySpec(key.getBytes(), "HmacSHA256"));
+  byte[] rawHmac = hmac.doFinal(msg.getBytes());
+  StringBuilder sb = new StringBuilder(rawHmac.length * 2);
+  for (byte b : rawHmac) {
+    sb.append(String.format("%02x", b & 0xff));
+  }
+  return sb.toString();
 }
 
 /**
-* Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the
-* `validUntil` parameter must have been provided.
-*
-* @param securedApiKey The secured API Key to check
-* @throws AlgoliaRuntimeException if <code>securedApiKey</code> is null, empty or whitespaces.
-* @throws AlgoliaRuntimeException if <code>securedApiKey</code> doesn't have a <code>validUntil
-*     </code> parameter.
-*/
+ * Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the
+ * `validUntil` parameter must have been provided.
+ *
+ * @param securedApiKey The secured API Key to check
+ * @throws AlgoliaRuntimeException if <code>securedApiKey</code> is null, empty or whitespaces.
+ * @throws AlgoliaRuntimeException if <code>securedApiKey</code> doesn't have a <code>validUntil
+ *     </code> parameter.
+ */
 public Duration getSecuredApiKeyRemainingValidity(@Nonnull String securedApiKey) {
-if (securedApiKey == null || securedApiKey.trim().isEmpty()) {
-  throw new AlgoliaRuntimeException("securedAPIKey must not be empty, null or whitespaces");
-}
+  if (securedApiKey == null || securedApiKey.trim().isEmpty()) {
+    throw new AlgoliaRuntimeException("securedAPIKey must not be empty, null or whitespaces");
+  }
 
-byte[] decodedBytes = Base64.getDecoder().decode(securedApiKey);
-String decodedString = new String(decodedBytes);
+  byte[] decodedBytes = Base64.getDecoder().decode(securedApiKey);
+  String decodedString = new String(decodedBytes);
 
-Pattern pattern = Pattern.compile("validUntil=\\d+");
-Matcher matcher = pattern.matcher(decodedString);
+  Pattern pattern = Pattern.compile("validUntil=\\d+");
+  Matcher matcher = pattern.matcher(decodedString);
 
-if (!matcher.find()) {
-  throw new AlgoliaRuntimeException("The Secured API Key doesn't have a validUntil parameter.");
-}
+  if (!matcher.find()) {
+    throw new AlgoliaRuntimeException("The Secured API Key doesn't have a validUntil parameter.");
+  }
 
-String validUntilMatch = matcher.group(0);
-long timeStamp = Long.parseLong(validUntilMatch.replace("validUntil=", ""));
+  String validUntilMatch = matcher.group(0);
+  long timeStamp = Long.parseLong(validUntilMatch.replace("validUntil=", ""));
 
-return Duration.ofSeconds(timeStamp - Instant.now().getEpochSecond());
+  return Duration.ofSeconds(timeStamp - Instant.now().getEpochSecond());
 }
 
 public boolean indexExists(String indexName) {

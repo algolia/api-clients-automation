@@ -251,6 +251,8 @@ package object extension {
       *   The index in which to perform the request.
       * @param objects
       *   The list of objects to save.
+      * @param waitForTasks
+      *   Whether to wait for the tasks to complete.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -259,9 +261,10 @@ package object extension {
     def saveObjects(
         indexName: String,
         objects: Seq[Any],
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, objects, Action.AddObject, false, 1000, requestOptions)
+      chunkedBatch(indexName, objects, Action.AddObject, waitForTasks, 1000, requestOptions)
     }
 
     /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which
@@ -271,6 +274,8 @@ package object extension {
       *   The index in which to perform the request.
       * @param objectIDs
       *   The list of objectIDs to delete.
+      * @param waitForTasks
+      *   Whether to wait for the tasks to complete.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -279,13 +284,14 @@ package object extension {
     def deleteObjects(
         indexName: String,
         objectIDs: Seq[String],
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
         objectIDs.map(id => new { val objectID: String = id }),
         Action.DeleteObject,
-        false,
+        waitForTasks,
         1000,
         requestOptions
       )
@@ -300,6 +306,8 @@ package object extension {
       *   The list of objects to save.
       * @param createIfNotExists
       *   To be provided if non-existing objects are passed, otherwise, the call will fail.
+      * @param waitForTasks
+      *   Whether to wait for the tasks to complete.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -309,13 +317,14 @@ package object extension {
         indexName: String,
         objects: Seq[Any],
         createIfNotExists: Boolean = false,
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
         objects,
         if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
-        false,
+        waitForTasks,
         1000,
         requestOptions
       )
