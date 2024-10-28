@@ -19782,6 +19782,9 @@ components:
         - altcorrection1
         - altcorrection2
         - placeholder
+        - oneWaySynonym
+        - altCorrection1
+        - altCorrection2
     synonymHit:
       type: object
       description: Synonym object.

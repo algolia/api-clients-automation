@@ -131,8 +131,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     }
 
     if (!value.matches("[A-Z0-9_]+")) {
-      // convert camelCase77String to CAMEL_CASE_77_STRING
-      return value.replaceAll("-", "_").replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2").toUpperCase(Locale.ROOT);
+      return Helpers.toScreamingSnakeCase(value);
     }
 
     return value;

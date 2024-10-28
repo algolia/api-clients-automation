@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 public enum BigQueryDataType {
   GA_4("ga4"),
 
-  GA_36_0("ga360");
+  GA_360("ga360");
 
   private final String value;
 
