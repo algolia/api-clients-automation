@@ -6,7 +6,9 @@ title: Setup repository
 
 :::info
 
-Make sure to have Docker installed so you don't have to install the tooling for every API clients. [Installation guide](https://docs.docker.com/desktop/mac/install/)
+Make sure to have:
+- [Docker installed so you don't have to install the tooling for every API clients](https://docs.docker.com/desktop/mac/install/)
+- [jq because it's nice](https://jqlang.github.io/jq/download/)
 
 :::
 
@@ -18,28 +20,19 @@ nvm use && yarn
 
 ## Mounting the docker images
 
-```bash
-yarn docker:setup
-```
-
-### Docker
-
-#### Build
-
-We use 1 docker image per language to simplify the build, and reuse them on the CI.
-There is one base image containing node, java, scala and kotlin, located in [scripts/docker/Dockerfile](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile)
+We use multiple docker images to simplify the build. There is [one base image](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.base) that contains everything except [swift](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.swift) and [ruby](https://github.com/algolia/api-clients-automation/blob/main/scripts/docker/Dockerfile.ruby), they have their own Dockerfile
 
 ```bash
 yarn docker:setup
 ```
 
-:::caution
+## Tooling 
 
-The swift images takes a really long time to build (~5 minutes) because of swift-format, but it's only needed when you want to format swift.
+:::info
+
+This step is optional, using `yarn cli ...` should work perfectly as well.
 
 :::
-
-## Tooling
 
 Install the CLI tool by following the instructions at the top of [scripts/install.sh](https://github.com/algolia/api-clients-automation/blob/main/scripts/install.sh) to acces `apic` from your terminal, with bash autocompletion.
 You can run `apic help` to check if it's working properly.
@@ -58,10 +51,10 @@ Once you've successfully built and mounted the Docker image, you can now play wi
 
 - [How to add a new client](/docs/add-new-api-client)
 - [How to add a new language](/docs/add-new-language)
-- [Use CLI specs commands](/docs/CLI/specs-commands)
-- [Use CLI clients commands](/docs/CLI/clients-commands)
+- [Use CLI specs commands](/docs/CLI/build-commands)
+- [Use CLI clients commands](/docs/CLI/generate-commands)
 - [Use CLI release commands](/docs/CLI/release-commands)
-- [Use CLI Common Test Suite commands](/docs/CLI/specs-commands)
+- [Use CLI Common Test Suite commands](/docs/CLI/build-commands)
 
 ## Troubleshooting
 

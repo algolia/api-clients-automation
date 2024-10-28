@@ -15,7 +15,7 @@ const sidebars = {
           type: 'category',
           label: 'CLI',
           collapsed: false,
-          items: ['CLI/specs-commands', 'CLI/clients-commands', 'CLI/release-commands', 'CLI/cts-commands'],
+          items: ['CLI/generate-commands', 'CLI/build-commands', 'CLI/cts-commands', 'CLI/release-commands'],
         },
       ],
     },
