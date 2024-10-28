@@ -69,7 +69,7 @@ public class TestsClient extends TestsGenerator {
       Map<String, Object> testObj = new HashMap<>();
       List<Object> tests = new ArrayList<>();
       int testIndex = 0;
-      skipTest:for (ClientTestData test : blockEntry.getValue()) {
+      skipTest: for (ClientTestData test : blockEntry.getValue()) {
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Map<String, Object>> steps = new ArrayList<>();
