@@ -1,0 +1,73 @@
+compositionBehavior:
+  type: object
+  additionalProperties: false
+  properties:
+    injection:
+      title: injection
+      type: object
+      additionalProperties: false
+      properties:
+        main:
+          title: main
+          type: object
+          additionalProperties: false
+          properties:
+            source:
+              $ref: '#/compositionSource'
+          required:
+            - source
+        insets:
+          type: array
+          description: list of insets of the current Composition.
+          minItems: 0
+          maxItems: 2
+          items:
+            $ref: '#/compositionInset'
+      required:
+        - main
+        - insets
+  required:
+    - injection
+
+compositionSource:
+  type: object
+  additionalProperties: false
+  properties:
+    search:
+      title: search
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Composition Main Index name.
+          example: Products
+    params:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery'
+      required:
+        - index
+  required:
+    - search
+
+compositionInset:
+  type: object
+  additionalProperties: false
+  properties:
+    name:
+      type: string
+      description: Inset name.
+    source:
+      $ref: '#/compositionSource'
+    position:
+      type: integer
+      minimum: 0
+      maximum: 19
+    length:
+      type: integer
+      minimum: 0
+      maximum: 20
+  required:
+    - name
+    - source
+    - position
+    - length

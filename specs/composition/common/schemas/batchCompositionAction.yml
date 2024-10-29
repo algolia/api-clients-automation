@@ -1,0 +1,14 @@
+deleteCompositionAction:
+  type: object
+  description: Operation arguments when deleting.
+  additionalProperties: false
+  properties:
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+  required:
+    - objectID
+
+batchCompositionAction:
+  oneOf:
+    - $ref: './listCompositionsResponse.yml#/fetchedComposition'
+    - $ref: '#/deleteCompositionAction'
