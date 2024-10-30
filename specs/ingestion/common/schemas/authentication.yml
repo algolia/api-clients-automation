@@ -103,7 +103,7 @@ AuthenticationSearch:
 AuthenticationType:
   type: string
   description: Type of authentication. This determines the type of credentials required in the `input` object.
-  enum: [googleServiceAccount, basic, apiKey, oauth, algolia, algoliaInsights]
+  enum: [googleServiceAccount, basic, apiKey, oauth, algolia, algoliaInsights, secrets]
 
 Platform:
   default: null
@@ -297,6 +297,11 @@ AuthAlgolia:
   required:
     - appID
     - apiKey
+
+AuthSecrets:
+  type: object
+  additionalProperties: false
+  description: A key:value authentication for your transformations.
 
 AuthAlgoliaInsights:
   type: object
