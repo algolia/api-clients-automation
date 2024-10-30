@@ -51,7 +51,7 @@ final class MonitoringClientClientTests: XCTestCase {
             return
         }
 
-        let pattern = "^Algolia for Swift \\(9.7.4\\).*"
+        let pattern = "^Algolia for Swift \\(9.8.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(userAgent, against: pattern),
             "Expected " + userAgent + " to match the following regex: " + pattern

@@ -12573,6 +12573,7 @@ components:
         - oauth
         - algolia
         - algoliaInsights
+        - secrets
     Platform:
       default: null
       oneOf:
@@ -12883,6 +12884,11 @@ components:
       required:
         - appID
         - apiKey
+    AuthSecrets:
+      type: object
+      description: A key:value authentication for your transformations.
+      additionalProperties:
+        type: string
     AuthInput:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccount'
@@ -12891,6 +12897,7 @@ components:
         - $ref: '#/components/schemas/AuthOAuth'
         - $ref: '#/components/schemas/AuthAlgolia'
         - $ref: '#/components/schemas/AuthAlgoliaInsights'
+        - $ref: '#/components/schemas/AuthSecrets'
     AuthenticationCreate:
       type: object
       description: Request body for creating a new authentication resource.
