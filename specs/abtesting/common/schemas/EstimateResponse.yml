@@ -1,0 +1,2 @@
+EstimateResponse:
+  $ref: '../parameters.yml#/minimumDetectableEffect'
