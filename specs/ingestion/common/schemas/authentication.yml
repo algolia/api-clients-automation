@@ -300,8 +300,9 @@ AuthAlgolia:
 
 AuthSecrets:
   type: object
-  additionalProperties: false
   description: A key:value authentication for your transformations.
+  additionalProperties:
+    type: string
 
 AuthAlgoliaInsights:
   type: object
