@@ -148,6 +148,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       // We can put whatever we want in the bundle, and it will be accessible in the template
       bundle.put("mode", mode);
       bundle.put("is" + Helpers.capitalize(client) + "Client", true);
+      bundle.put("isStandaloneClient", client.equals("algoliasearch") || client.equals("composition"));
       bundle.put("isSearchClient", client.contains("search")); // just so algoliasearch is treated as a search client too
       bundle.put("client", Helpers.createClientName(importClientName, language) + "Client");
       bundle.put("clientPrefix", Helpers.createClientName(importClientName, language));
