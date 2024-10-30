@@ -328,6 +328,7 @@ AuthInput:
     - $ref: '#/AuthOAuth'
     - $ref: '#/AuthAlgolia'
     - $ref: '#/AuthAlgoliaInsights'
+    - $ref: '#/AuthSecrets'
 
 AuthInputPartial:
   oneOf:
