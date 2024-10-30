@@ -6,7 +6,12 @@ import { union } from '../helpers.js';
 import * as dotenv from 'dotenv';
 
 dotenv.config({path:'../../.env'});
+{{^isCompositionClient}}
 import { {{{clientName}}} } from '{{{importPackage}}}';
+{{/isCompositionClient}}
+{{#isCompositionClient}}
+import { compositionClient } from '@algolia/client-composition';
+{{/isCompositionClient}}
 import type { RequestOptions } from '@algolia/client-common';
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
@@ -17,7 +22,12 @@ if (!process.env.{{e2eApiKey}}) {
   throw new Error("please provide an `{{e2eApiKey}}` env var for e2e tests");
 }
 
+{{^isCompositionClient}}
 const client = {{{clientName}}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isSearchClient}};
+{{/isCompositionClient}}
+{{#isCompositionClient}}
+const client = compositionClient(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}});
+{{/isCompositionClient}}
 
 {{#blocksE2E}}
 describe('{{operationId}}', () => {

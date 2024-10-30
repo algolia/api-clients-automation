@@ -1,0 +1,12 @@
+[
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "taskID": "bar"
+    },
+    "request": {
+      "path": "/1/compositions/foo/task/bar",
+      "method": "GET"
+    }
+  }
+]

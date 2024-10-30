@@ -62,8 +62,14 @@ paths:
   /1/compositions/{compositionID}/task/{taskID}:
     $ref: 'paths/advanced/getTask.yml'
 
-  # ################################
+  # #####################################
   # ### Manage Compositions Endpoints ###
-  # ################################
+  # #####################################
   /1/compositions:
     $ref: 'paths/manage_compositions/listCompositions.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

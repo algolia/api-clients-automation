@@ -1,0 +1,20 @@
+[
+  {
+    "parameters": {},
+    "request": {
+      "path": "/1/compositions",
+      "method": "GET"
+    }
+  },
+  {
+    "parameters": {},
+    "request": {
+      "path": "/1/compositions",
+      "method": "GET"
+    },
+    "response": {
+      "items": [{"objectID":"foo","description":"bar","behavior":{"injection":{"main":{"source":{"search":{"index":"baz"}}}}}}],
+      "nbPages": 1
+    }
+  }
+]
