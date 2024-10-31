@@ -12,7 +12,6 @@ import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
-import { generateVersionsHistory } from '../release/versionsHistory.js';
 import { buildSpecs } from '../specs/index.js';
 import type { Language } from '../types.js';
 
@@ -308,16 +307,11 @@ program
   .action(async ({ verbose, releaseType, dryRun, versionsHistory, breaking }) => {
     setVerbose(Boolean(verbose));
 
-    if (versionsHistory) {
-      await generateVersionsHistory({});
-
-      return;
-    }
-
     await createReleasePR({
       releaseType,
       dryRun,
       breaking,
+      versionsHistory,
     });
   });
 
