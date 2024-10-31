@@ -169,10 +169,6 @@ browseObjects<T>(
   }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
   requestOptions?: RequestOptions
 ): Promise<BrowseResponse<T>> {
-  if (browseParams == null) {
-    browseParams = { hitsPerPage: 1000 };
-  }
-
   return createIterablePromise<BrowseResponse<T>>({
     func: (previousResponse) => {
       return this.browse(
@@ -180,6 +176,7 @@ browseObjects<T>(
           indexName,
           browseParams: {
             cursor: previousResponse ? previousResponse.cursor : undefined,
+            hitsPerPage: 1000,
             ...browseParams,
           },
         },
