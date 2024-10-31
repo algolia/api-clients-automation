@@ -848,47 +848,53 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(
   Random rnd = new Random();
   String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
-  // Copy settings, synonyms and rules
-  UpdatedAtResponse copyOperationResponse = operationIndex(
-    indexName,
-    new OperationIndexParams()
-      .setOperation(OperationType.COPY)
-      .setDestination(tmpIndexName)
-      .addScope(ScopeType.SETTINGS)
-      .addScope(ScopeType.RULES)
-      .addScope(ScopeType.SYNONYMS),
-    requestOptions
-  );
+  try {
+    // Copy settings, synonyms and rules
+    UpdatedAtResponse copyOperationResponse = operationIndex(
+      indexName,
+      new OperationIndexParams()
+        .setOperation(OperationType.COPY)
+        .setDestination(tmpIndexName)
+        .addScope(ScopeType.SETTINGS)
+        .addScope(ScopeType.RULES)
+        .addScope(ScopeType.SYNONYMS),
+      requestOptions
+    );
 
-  // Save new objects
-  List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+    // Save new objects
+    List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
 
-  waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-  copyOperationResponse = operationIndex(
-    indexName,
-    new OperationIndexParams()
-      .setOperation(OperationType.COPY)
-      .setDestination(tmpIndexName)
-      .addScope(ScopeType.SETTINGS)
-      .addScope(ScopeType.RULES)
-      .addScope(ScopeType.SYNONYMS),
-    requestOptions
-  );
-  waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+    copyOperationResponse = operationIndex(
+      indexName,
+      new OperationIndexParams()
+        .setOperation(OperationType.COPY)
+        .setDestination(tmpIndexName)
+        .addScope(ScopeType.SETTINGS)
+        .addScope(ScopeType.RULES)
+        .addScope(ScopeType.SYNONYMS),
+      requestOptions
+    );
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-  // Move temporary index to source index
-  UpdatedAtResponse moveOperationResponse = operationIndex(
-    tmpIndexName,
-    new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
-    requestOptions
-  );
-  waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+    // Move temporary index to source index
+    UpdatedAtResponse moveOperationResponse = operationIndex(
+      tmpIndexName,
+      new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
+      requestOptions
+    );
+    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
 
-  return new ReplaceAllObjectsResponse()
-    .setCopyOperationResponse(copyOperationResponse)
-    .setBatchResponses(batchResponses)
-    .setMoveOperationResponse(moveOperationResponse);
+    return new ReplaceAllObjectsResponse()
+      .setCopyOperationResponse(copyOperationResponse)
+      .setBatchResponses(batchResponses)
+      .setMoveOperationResponse(moveOperationResponse);
+  } catch (Exception e) {
+    deleteIndex(tmpIndexName);
+
+    throw e;
+  }
 }
 
 /**
