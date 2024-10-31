@@ -169,6 +169,10 @@ browseObjects<T>(
   }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
   requestOptions?: RequestOptions
 ): Promise<BrowseResponse<T>> {
+  if (browseParams.hitsPerPage == null) {
+    browseParams.hitsPerPage = 1000;
+  }
+
   return createIterablePromise<BrowseResponse<T>>({
     func: (previousResponse) => {
       return this.browse(

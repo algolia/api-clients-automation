@@ -128,6 +128,8 @@
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
+        browse_params.hits_per_page = browse_params.hits_per_page or 1000
+
         {{^isSyncClient}}async {{/isSyncClient}}def _func(_prev: Optional[BrowseResponse]) -> BrowseResponse:
             if _prev is not None and _prev.cursor is not None:
                 browse_params.cursor = _prev.cursor

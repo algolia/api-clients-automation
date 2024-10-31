@@ -298,6 +298,10 @@ public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation) {
 public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params, Class<T> innerType, RequestOptions requestOptions) {
   final Holder<String> currentCursor = new Holder<>();
 
+  if (params.getHitsPerPage() == null) {
+    params.setHitsPerPage(1000);
+  }
+
   return AlgoliaIterableHelper.createIterable(
     () -> {
       BrowseResponse<T> response = this.browse(indexName, params, innerType, requestOptions);

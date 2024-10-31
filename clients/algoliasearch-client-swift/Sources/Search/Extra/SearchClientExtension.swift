@@ -243,9 +243,13 @@ public extension SearchClient {
         aggregator: @escaping (BrowseResponse<T>) -> Void,
         requestOptions: RequestOptions? = nil
     ) async throws -> BrowseResponse<T> {
-        try await createIterable(
+        var updatedBrowseParams = browseParams
+        if updatedBrowseParams.hitsPerPage == nil {
+          updatedBrowseParams.hitsPerPage = 1000
+        }
+
+        return try await createIterable(
             execute: { previousResponse in
-                var updatedBrowseParams = browseParams
                 if let previousResponse {
                     updatedBrowseParams.cursor = previousResponse.cursor
                 }
