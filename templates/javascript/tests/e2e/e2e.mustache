@@ -22,12 +22,7 @@ if (!process.env.{{e2eApiKey}}) {
   throw new Error("please provide an `{{e2eApiKey}}` env var for e2e tests");
 }
 
-{{^isCompositionClient}}
-const client = {{{clientName}}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isSearchClient}};
-{{/isCompositionClient}}
-{{#isCompositionClient}}
-const client = compositionClient(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}});
-{{/isCompositionClient}}
+const client = {{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}){{^isStandaloneClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isStandaloneClient}};
 
 {{#blocksE2E}}
 describe('{{operationId}}', () => {

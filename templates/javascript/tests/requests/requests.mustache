@@ -15,7 +15,7 @@ const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const clientOptions: ClientOptions = { requester: nodeEchoRequester() }; // this makes sure the types are correctly exported
-const client = {{#isSearchClient}}{{{clientName}}}{{/isSearchClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: clientOptions, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+const client = {{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: clientOptions, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 
 {{#blocksRequests}}
 describe('{{operationId}}', () => {

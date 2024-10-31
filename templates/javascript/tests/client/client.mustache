@@ -15,7 +15,7 @@ const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return {{#isSearchClient}}{{{clientName}}}{{/isSearchClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+  return {{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 }
 
 {{#blocksClient}}
@@ -24,8 +24,8 @@ function createClient() {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient =  {{#isSearchClient}}{{{clientName}}}{{/isSearchClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
-    const headerClient =  {{#isSearchClient}}{{{clientName}}}{{/isSearchClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+    const qpClient =  {{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+    const headerClient =  {{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',
