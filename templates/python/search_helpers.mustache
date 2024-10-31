@@ -167,7 +167,7 @@
             )
         return {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < hits_per_page,
+            validate=lambda _resp: len(_resp.hits) < hits_per_page,
             aggregator=aggregator,
         )
 
@@ -197,7 +197,7 @@
             return resp
         return {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < hits_per_page,
+            validate=lambda _resp: len(_resp.hits) < hits_per_page,
             aggregator=aggregator,
         )
 
