@@ -27,7 +27,15 @@ sealed trait AuthInputPartial
 
 trait AuthInputPartialTrait extends AuthInputPartial
 
-object AuthInputPartial {}
+object AuthInputPartial {
+
+  case class MapOfStringString(value: Map[String, String]) extends AuthInputPartial
+
+  def apply(value: Map[String, String]): AuthInputPartial = {
+    AuthInputPartial.MapOfStringString(value)
+  }
+
+}
 
 object AuthInputPartialSerializer extends Serializer[AuthInputPartial] {
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), AuthInputPartial] = {
@@ -41,6 +49,7 @@ object AuthInputPartialSerializer extends Serializer[AuthInputPartial] {
         case value: JObject if value.obj.exists(_._1 == "url")      => Extraction.extract[AuthOAuthPartial](value)
         case value: JObject                                         => Extraction.extract[AuthAlgoliaPartial](value)
         case value: JObject => Extraction.extract[AuthAlgoliaInsightsPartial](value)
+        case value: JObject => AuthInputPartial.apply(Extraction.extract[Map[String, String]](value))
         case _              => throw new MappingException("Can't convert " + json + " to AuthInputPartial")
       }
   }
