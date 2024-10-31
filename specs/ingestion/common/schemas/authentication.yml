@@ -339,3 +339,4 @@ AuthInputPartial:
     - $ref: '#/AuthOAuthPartial'
     - $ref: '#/AuthAlgoliaPartial'
     - $ref: '#/AuthAlgoliaInsightsPartial'
+    - $ref: '#/AuthSecrets'
