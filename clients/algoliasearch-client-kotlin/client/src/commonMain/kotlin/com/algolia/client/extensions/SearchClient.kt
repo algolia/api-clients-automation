@@ -607,7 +607,7 @@ public suspend fun SearchClient.browseObjects(
       browse(
         indexName,
         params.copy(hitsPerPage = params.hitsPerPage ?: 1000, cursor = previousResponse?.cursor),
-        requestOptions
+        requestOptions,
       )
     },
     validate = validate,
@@ -639,9 +639,9 @@ public suspend fun SearchClient.browseRules(
         indexName,
         searchRulesParams.copy(
           page = if (previousResponse != null) (previousResponse.page + 1) else 0,
-          hitsPerPage = hitsPerPage
+          hitsPerPage = hitsPerPage,
         ),
-        requestOptions
+        requestOptions,
       )
     },
     validate = validate ?: { response -> response.hits.count() < hitsPerPage },
@@ -675,9 +675,9 @@ public suspend fun SearchClient.browseSynonyms(
           indexName,
           searchSynonymsParams = searchSynonymsParams.copy(
             page = page,
-            hitsPerPage = hitsPerPage
+            hitsPerPage = hitsPerPage,
           ),
-          requestOptions
+          requestOptions,
         )
       } finally {
         page += 1
