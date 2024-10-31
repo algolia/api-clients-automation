@@ -226,7 +226,7 @@ browseRules(
         requestOptions
       );
     },
-    validate: (response) => response.nbHits < params.hitsPerPage,
+    validate: (response) => response.hits.length < params.hitsPerPage,
     ...browseRulesOptions,
   });
 },
@@ -271,7 +271,7 @@ browseSynonyms(
       params.page += 1;
       return resp;
     },
-    validate: (response) => response.nbHits < params.hitsPerPage,
+    validate: (response) => response.hits.length < params.hitsPerPage,
     ...browseSynonymsOptions,
   });
 },
