@@ -130,7 +130,7 @@ def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new
       rules.concat(res.hits)
     end
     search_rules_params.page += 1
-    break if res.nb_hits < search_rules_params.hits_per_page
+    break if res.hits.length < search_rules_params.hits_per_page
   end
 
   rules unless block_given?
@@ -154,7 +154,7 @@ def browse_synonyms(index_name, search_synonyms_params = Search::SearchSynonymsP
       synonyms.concat(res.hits)
     end
     search_synonyms_params.page += 1
-    break if res.nb_hits < search_synonyms_params.hits_per_page
+    break if res.hits.length < search_synonyms_params.hits_per_page
   end
 
   synonyms unless block_given?
