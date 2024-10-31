@@ -298,7 +298,7 @@ public extension SearchClient {
                 )
             },
             validate: validate ?? { response in
-                response.nbHits < hitsPerPage
+              response.hits.count < hitsPerPage
             },
             aggregator: aggregator
         )
@@ -341,7 +341,7 @@ public extension SearchClient {
                 )
             },
             validate: validate ?? { response in
-                response.nbHits < hitsPerPage
+              response.hits.count < hitsPerPage
             },
             aggregator: aggregator
         )
