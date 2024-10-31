@@ -2,10 +2,10 @@
   {
     "parameters": {
       "compositionID": "foo",
-      "taskID": "bar"
+      "taskID": 42
     },
     "request": {
-      "path": "/1/compositions/foo/task/bar",
+      "path": "/1/compositions/foo/task/42",
       "method": "GET"
     }
   }

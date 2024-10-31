@@ -4,8 +4,8 @@
       "requests": [{"action":"upsert","body":{"objectID":"foo","behavior": {"injection":{"main":{"source":{"search":{"index":"bar"}}},"insets":[]}}}},{"action":"delete","body":{"objectID":"baz"}}]
     },
     "request": {
-      "path": "/1/compositions/foo",
-      "method": "GET"
+      "path": "/1/compositions/*/batch",
+      "method": "POST"
     }
   }
 ]
