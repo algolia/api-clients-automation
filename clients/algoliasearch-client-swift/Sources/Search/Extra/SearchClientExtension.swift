@@ -245,7 +245,7 @@ public extension SearchClient {
     ) async throws -> BrowseResponse<T> {
         var updatedBrowseParams = browseParams
         if updatedBrowseParams.hitsPerPage == nil {
-          updatedBrowseParams.hitsPerPage = 1000
+            updatedBrowseParams.hitsPerPage = 1000
         }
 
         return try await createIterable(
@@ -302,7 +302,7 @@ public extension SearchClient {
                 )
             },
             validate: validate ?? { response in
-              response.hits.count < hitsPerPage
+                response.hits.count < hitsPerPage
             },
             aggregator: aggregator
         )
@@ -345,7 +345,7 @@ public extension SearchClient {
                 )
             },
             validate: validate ?? { response in
-              response.hits.count < hitsPerPage
+                response.hits.count < hitsPerPage
             },
             aggregator: aggregator
         )
