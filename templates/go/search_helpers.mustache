@@ -363,7 +363,7 @@ func (c *APIClient) BrowseRules(
 			)
 		},
 		func(response *SearchRulesResponse, err error) (bool, error) {
-			return err != nil || (response != nil && int32(len(response.Hits)) < hitsPerPage), err
+			return err != nil || (response != nil && len(response.Hits) < int(hitsPerPage)), err
 		},
 		opts...,
 	)
@@ -409,7 +409,7 @@ func (c *APIClient) BrowseSynonyms(
 			)
 		},
 		func(response *SearchSynonymsResponse, err error) (bool, error) {
-			return err != nil || (response != nil && int32(len(response.Hits)) < hitsPerPage), err
+			return err != nil || (response != nil && len(response.Hits) < int(hitsPerPage)), err
 		},
 		opts...,
 	)
