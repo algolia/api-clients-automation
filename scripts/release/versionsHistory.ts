@@ -46,17 +46,8 @@ function getEligibility(currentMajor: int, previousMajor: int, version: string, 
     return { status: 'eligible' };
   }
 
-  if (versionMajor == previousMajor) {
-    console.log(
-      versionMajor,
-      previousMajor,
-      generatedReleaseDate.toISOString().split('T')[0],
-      eligibilityEndDate.toISOString().split('T')[0],
-    );
-
-    if (eligibilityEndDate >= new Date()) {
-      return { status: 'replaced', date: eligibilityEndDate.toISOString().split('T')[0] };
-    }
+  if (versionMajor == previousMajor && eligibilityEndDate >= new Date()) {
+    return { status: 'replaced', date: eligibilityEndDate.toISOString().split('T')[0] };
   }
 
   return { status: 'not eligible' };
