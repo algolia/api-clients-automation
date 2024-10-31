@@ -5,7 +5,35 @@
     },
     "request": {
       "path": "/1/compositions/*/batch",
-      "method": "POST"
+      "method": "POST",
+      "body": {
+        "requests":  [
+          {
+            "action": "upsert",
+            "body":  {
+              "behavior":  {
+                "injection":  {
+                  "insets":  [],
+                  "main":  {
+                    "source":  {
+                      "search":  {
+                        "index": "bar"
+                      }
+                    }
+                  }
+                }
+              },
+              "objectID": "foo"
+            }
+          },
+          {
+            "action": "delete",
+            "body":  {
+              "objectID": "baz"
+            }
+          }
+        ]
+      }
     }
   }
 ]
