@@ -1,0 +1,149 @@
+get:
+  tags:
+    - config
+  operationId: getConfig
+  x-acl:
+    - search
+    - browse
+    - recommendation
+  summary: Retrieve the configuration
+  description: Retrieves a list of configuration objects for each index.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getConfigResponse
+            type: object
+            properties:
+              indices:
+                type: array
+                items:
+                  title: configurationObject
+                  type: object
+                  properties:
+                    index:
+                      type: string
+                    affinities:
+                      type: array
+                      items:
+                        type: string
+                    source:
+                      title: source
+                      type: object
+                      properties:
+                        type:
+                          $ref: '../common/enums.yml#/type'
+                        events:
+                          $ref: '../common/schemas/Configuration.yml#/events'
+                    errors:
+                      type: array
+                      items:
+                        $ref: '../common/schemas/Configuration.yml#/issue'
+                    warnings:
+                      type: array
+                      items:
+                        $ref: '../common/schemas/Configuration.yml#/issue'
+                    lastUpdatedAt:
+                      type: string
+                  required:
+                    [index, affinities, source, errors, warnings, lastUpdatedAt]
+              personalizationReRanking:
+                $ref: '../common/schemas/Configuration.yml#/personalizationReRanking'
+              profileType:
+                $ref: '../common/schemas/Configuration.yml#/profileType'
+              status:
+                title: status
+                type: object
+                properties:
+                  type:
+                    $ref: '../common/enums.yml#/status'
+                  errors:
+                    type: array
+                    items:
+                      $ref: '../common/enums.yml#/errorCodes'
+            required: [indices, personalzationReRanking, profileType, status]
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '404':
+      $ref: '../common/responses/ConfigurationNotFound.yml'
+    '500':
+      $ref: '../common/responses/InternalServerError.yml'
+
+put:
+  tags:
+    - config
+  operationId: putConfig
+  x-acl:
+    - search
+    - browse
+    - recommendation
+  summary: Update the configuration
+  description: |
+    Updates the configuration.
+
+    The configuration is a list of configuration objects for each index. To configure AI Personalization for an index, create a new configuration object for the index.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: configurationParameters
+          type: object
+          properties:
+            indices:
+              type: array
+              items:
+                title: configurationParametersObject
+                type: object
+                properties:
+                  index:
+                    type: string
+                  affinities:
+                    type: array
+                    items:
+                      type: string
+                  source:
+                    title: source
+                    type: object
+                    properties:
+                      type:
+                        $ref: '../common/enums.yml#/type'
+                      events:
+                        $ref: '../common/schemas/Configuration.yml#/events'
+                    required: [type]
+              required: [index, affinities, source]
+            personalizationReRanking:
+              $ref: '../common/schemas/Configuration.yml#/personalizationReRanking'
+            profileType:
+              $ref: '../common/schemas/Configuration.yml#/profileType'
+          required: [indices, personalizationReRanking, profileType]
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: putConfigResponse
+            type: object
+            properties:
+              status:
+                type: number
+              errors:
+                type: array
+                items:
+                  $ref: '../common/schemas/Configuration.yml#/issue'
+              warnings:
+                type: array
+                items:
+                  $ref: '../common/schemas/Configuration.yml#/issue'
+              message:
+                type: string
+            required: [status, errors, warnings, message]
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '500':
+      $ref: '../common/responses/InternalServerError.yml'

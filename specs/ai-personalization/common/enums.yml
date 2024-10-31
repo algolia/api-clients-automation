@@ -1,0 +1,22 @@
+errorCodes:
+  title: errorCodes
+  type: string
+  enum:
+    - blocked
+    - deleted
+    - no_perso_access
+    - all_attr_value_filtered
+    - missing_index
+    - no_events_last_30_days
+    - pending_pipelines
+    - invalid_config
+    
+status:
+  title: status
+  type: string
+  enum: [pending, active, paused]
+
+type:
+  title: type
+  type: string
+  enum: [insights]
