@@ -20,7 +20,9 @@ public enum AuthenticationType {
 
   ALGOLIA("algolia"),
 
-  ALGOLIA_INSIGHTS("algoliaInsights");
+  ALGOLIA_INSIGHTS("algoliaInsights"),
+
+  SECRETS("secrets");
 
   private final String value;
 
