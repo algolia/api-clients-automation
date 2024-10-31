@@ -213,7 +213,7 @@ public class ClientExtensionsTests
           It.IsAny<CancellationToken>()
         )
       )
-      // First call return 1000 Hits
+      // Only one call since it will take the hit list length and conclude there isn't more
       .Returns(
         Task.FromResult(
           new AlgoliaHttpResponse
@@ -228,56 +228,8 @@ public class ClientExtensionsTests
                     {
                       new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
                       new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                    }, // Not 1000 but it doesn't matter
-                    NbHits = 1000,
-                  }
-                )
-              )
-            ),
-          }
-        )
-      )
-      // Second call return again 1000 Hits
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 200,
-            Body = new MemoryStream(
-              Encoding.UTF8.GetBytes(
-                serializer.Serialize(
-                  new SearchSynonymsResponse()
-                  {
-                    Hits = new List<SynonymHit>()
-                    {
-                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                    }, // Not 1000 but it doesn't matter
-                    NbHits = 1000,
-                  }
-                )
-              )
-            ),
-          }
-        )
-      )
-      // Third call return 999 Hits
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 200,
-            Body = new MemoryStream(
-              Encoding.UTF8.GetBytes(
-                serializer.Serialize(
-                  new SearchSynonymsResponse
-                  {
-                    Hits = new List<SynonymHit>
-                    {
-                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                    }, // Not 1000 but it doesn't matter
-                    NbHits = 999,
+                    },
+                    NbHits = 2,
                   }
                 )
               )
@@ -302,10 +254,10 @@ public class ClientExtensionsTests
           It.IsAny<TimeSpan>(),
           It.IsAny<CancellationToken>()
         ),
-      Times.Exactly(3)
+      Times.Exactly(1)
     );
 
-    Assert.Equal(6, browseSynonymsAsync.Count());
+    Assert.Equal(2, browseSynonymsAsync.Count());
   }
 
   [Fact]
@@ -323,7 +275,7 @@ public class ClientExtensionsTests
           It.IsAny<CancellationToken>()
         )
       )
-      // First call return 1000 Hits
+      // Only one call since it will take the hit list length and conclude there isn't more
       .Returns(
         Task.FromResult(
           new AlgoliaHttpResponse
@@ -335,65 +287,13 @@ public class ClientExtensionsTests
                   new SearchRulesResponse
                   {
                     Page = 0,
-                    NbPages = 2,
+                    NbPages = 1,
                     Hits = new List<Rule>
                     {
                       new() { ObjectID = "XXX" },
                       new() { ObjectID = "XXX" },
-                    }, // Not 1000 but it doesn't matter
-                    NbHits = 1000,
-                  }
-                )
-              )
-            ),
-          }
-        )
-      )
-      // Second call return again 1000 Hits
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 200,
-            Body = new MemoryStream(
-              Encoding.UTF8.GetBytes(
-                serializer.Serialize(
-                  new SearchRulesResponse
-                  {
-                    Page = 0,
-                    NbPages = 2,
-                    Hits = new List<Rule>
-                    {
-                      new() { ObjectID = "XXX" },
-                      new() { ObjectID = "XXX" },
-                    }, // Not 1000 but it doesn't matter
-                    NbHits = 1000,
-                  }
-                )
-              )
-            ),
-          }
-        )
-      )
-      // Third call return 999 Hits
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 200,
-            Body = new MemoryStream(
-              Encoding.UTF8.GetBytes(
-                serializer.Serialize(
-                  new SearchRulesResponse
-                  {
-                    Page = 0,
-                    NbPages = 2,
-                    Hits = new List<Rule>
-                    {
-                      new() { ObjectID = "XXX" },
-                      new() { ObjectID = "XXX" },
-                    }, // Not 1000 but it doesn't matter
-                    NbHits = 999,
+                    },
+                    NbHits = 2,
                   }
                 )
               )
@@ -416,10 +316,10 @@ public class ClientExtensionsTests
           It.IsAny<TimeSpan>(),
           It.IsAny<CancellationToken>()
         ),
-      Times.Exactly(3)
+      Times.Exactly(1)
     );
 
-    Assert.Equal(6, browseSynonymsAsync.Count());
+    Assert.Equal(2, browseSynonymsAsync.Count());
   }
 
   [Fact]
