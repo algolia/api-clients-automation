@@ -2,7 +2,7 @@ event:
   type: object
   properties:
     type:
-      $ref: '#/type'
+      $ref: '#/eventType'
     subtype:
       $ref: '#/subtype'
     name:
@@ -56,7 +56,7 @@ profileType:
     Basic profiles are based on past behaviors, ensuring search results align with previous interests.
     Predictive profiles are AI-powered profiles that predict and adapt to users' interests, ensuring search results align with evolving preferences.
 
-type:
+eventType:
   type: string
   enum: [view, click, conversion]
 

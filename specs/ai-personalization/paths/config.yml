@@ -34,7 +34,7 @@ get:
                       type: object
                       properties:
                         type:
-                          $ref: '../common/enums.yml#/type'
+                          $ref: '../common/enums.yml#/sourceType'
                         events:
                           $ref: '../common/schemas/Configuration.yml#/events'
                     errors:
@@ -109,7 +109,7 @@ put:
                     type: object
                     properties:
                       type:
-                        $ref: '../common/enums.yml#/type'
+                        $ref: '../common/enums.yml#/sourceType'
                       events:
                         $ref: '../common/schemas/Configuration.yml#/events'
                     required: [type]

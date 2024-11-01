@@ -10,13 +10,13 @@ errorCodes:
     - no_events_last_30_days
     - pending_pipelines
     - invalid_config
-    
+
 status:
   title: status
   type: string
   enum: [pending, active, paused]
 
-type:
+sourceType:
   title: type
   type: string
   enum: [insights]
