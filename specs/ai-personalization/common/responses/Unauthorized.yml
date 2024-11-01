@@ -1,0 +1,5 @@
+description: Not authorized to access this resource.
+content:
+  application/json:
+    schema:
+      $ref: './BaseResponse.yml'
