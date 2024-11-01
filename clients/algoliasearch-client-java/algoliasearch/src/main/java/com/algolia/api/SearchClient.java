@@ -6126,6 +6126,10 @@ public class SearchClient extends ApiClient {
   public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params, Class<T> innerType, RequestOptions requestOptions) {
     final Holder<String> currentCursor = new Holder<>();
 
+    if (params.getHitsPerPage() == null) {
+      params.setHitsPerPage(1000);
+    }
+
     return AlgoliaIterableHelper.createIterable(
       () -> {
         BrowseResponse<T> response = this.browse(indexName, params, innerType, requestOptions);
@@ -6175,7 +6179,7 @@ public class SearchClient extends ApiClient {
     return AlgoliaIterableHelper.createIterable(
       () -> {
         SearchSynonymsResponse response = this.searchSynonyms(indexName, params, requestOptions);
-        currentPage.value = response.getNbHits() < params.getHitsPerPage() ? null : currentPage.value + 1;
+        currentPage.value = response.getHits().size() < params.getHitsPerPage() ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
       () -> currentPage.value != null
@@ -6217,7 +6221,7 @@ public class SearchClient extends ApiClient {
     return AlgoliaIterableHelper.createIterable(
       () -> {
         SearchRulesResponse response = this.searchRules(indexName, params.setPage(currentPage.value), requestOptions);
-        currentPage.value = response.getNbHits() < hitsPerPage ? null : currentPage.value + 1;
+        currentPage.value = response.getHits().size() < hitsPerPage ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
       () -> currentPage.value != null

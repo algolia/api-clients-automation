@@ -41,7 +41,7 @@
         "default": "./dist/builds/browser.umd.js"
       }
     },
-    "./src/*": "./src/*.ts"
+    "./dist/builds/*": "./dist/builds/*.js"
   },
   "jsdelivr": "./dist/builds/browser.umd.js",
   "unpkg": "./dist/builds/browser.umd.js",
@@ -101,7 +101,9 @@
         "import": "./dist/lite/builds/browser.js",
         "default": "./dist/lite/builds/browser.umd.js"
       }
-    }
+    },
+    "./dist/*": "./dist/*.js",
+    "./dist/lite/builds/*": "./dist/lite/builds/*.js"
   },
   "jsdelivr": "./dist/algoliasearch.umd.js",
   "unpkg": "./dist/algoliasearch.umd.js",
