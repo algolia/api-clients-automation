@@ -14,48 +14,7 @@ get:
       content:
         application/json:
           schema:
-            title: getConfigResponse
-            type: object
-            properties:
-              indices:
-                type: array
-                items:
-                  title: configurationObject
-                  type: object
-                  properties:
-                    index:
-                      type: string
-                    affinities:
-                      type: array
-                      items:
-                        type: string
-                    source:
-                      title: source
-                      type: object
-                      properties:
-                        type:
-                          $ref: '../common/enums.yml#/sourceType'
-                        events:
-                          $ref: '../common/schemas/Configuration.yml#/events'
-                    errors:
-                      type: array
-                      items:
-                        $ref: '../common/schemas/Configuration.yml#/issue'
-                    warnings:
-                      type: array
-                      items:
-                        $ref: '../common/schemas/Configuration.yml#/issue'
-                    lastUpdatedAt:
-                      type: string
-                  required:
-                    [index, affinities, source, errors, warnings, lastUpdatedAt]
-              personalizationReRanking:
-                $ref: '../common/schemas/Configuration.yml#/personalizationReRanking'
-              profileType:
-                $ref: '../common/schemas/Configuration.yml#/profileType'
-              status:
-                $ref: '../common/schemas/Configuration.yml#/status'
-            required: [indices, personalzationReRanking, profileType, status]
+            $ref: '../common/schemas/ConfigurationObject.yml#/configurationObject'
     '401':
       $ref: '../common/responses/Unauthorized.yml'
     '404':
