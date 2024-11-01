@@ -63,3 +63,13 @@ eventType:
 subtype:
   type: string
   enum: [addToCart, purchase]
+
+status:
+  type: object
+  properties:
+    type:
+      $ref: '../enums.yml#/status'
+    errors:
+      type: array
+      items:
+        $ref: '../enums.yml#/errorCodes'
