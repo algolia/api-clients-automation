@@ -83,7 +83,7 @@ __metadata:
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
-    eslint-plugin-yml: "npm:1.14.0"
+    eslint-plugin-yml: "npm:1.15.0"
     husky: "npm:9.1.6"
     lint-staged: "npm:15.2.10"
     oxlint: "npm:0.10.3"
@@ -3692,7 +3692,7 @@ __metadata:
     "@types/eslint": "npm:9.6.1"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
-    eslint-plugin-yml: "npm:1.14.0"
+    eslint-plugin-yml: "npm:1.15.0"
     eslint-vitest-rule-tester: "npm:0.6.1"
     typescript: "npm:5.6.3"
     vitest: "npm:2.1.4"
@@ -3710,9 +3710,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:1.14.0":
-  version: 1.14.0
-  resolution: "eslint-plugin-yml@npm:1.14.0"
+"eslint-plugin-yml@npm:1.15.0":
+  version: 1.15.0
+  resolution: "eslint-plugin-yml@npm:1.15.0"
   dependencies:
     debug: "npm:^4.3.2"
     eslint-compat-utils: "npm:^0.5.0"
@@ -3721,7 +3721,7 @@ __metadata:
     yaml-eslint-parser: "npm:^1.2.1"
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: 10/11611f94aced40d688f1d7c28d378e713149f0fa0711a6459865f37f994fb47395a94c4c27241e8749e9746b34d6a869aa3074793a5d3b5c4fe499a3946abbfe
+  checksum: 10/79bf0bf2977bc8f16e3de2e1d0e8e5625d20902ccab940e53269cf7e5379e74cf7b148c3d849525bd451264108b6a49aafbf2ea88cf30405a742516b2983ba22
   languageName: node
   linkType: hard
 
