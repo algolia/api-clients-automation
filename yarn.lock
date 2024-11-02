@@ -79,7 +79,7 @@ __metadata:
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": "npm:2.15.0"
-    "@redocly/cli": "npm:1.25.9"
+    "@redocly/cli": "npm:1.25.10"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
@@ -1461,11 +1461,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:1.25.9":
-  version: 1.25.9
-  resolution: "@redocly/cli@npm:1.25.9"
+"@redocly/cli@npm:1.25.10":
+  version: 1.25.10
+  resolution: "@redocly/cli@npm:1.25.10"
   dependencies:
-    "@redocly/openapi-core": "npm:1.25.9"
+    "@redocly/openapi-core": "npm:1.25.10"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -1487,7 +1487,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/76909c831a195f99b86b82067d907cf2e9b8012c957ba4a0a98c63ebd89ddd3e6018b7a4524a4e5da8bba75acb3133a5e6c8b2425342393b6af49a9cc2bc58d4
+  checksum: 10/1d0756b1217a55adf9889c1b7393bd16b8b191ddd773bdf15e85a4af659cc64d10ba896c476fb52094feec040f49cfe8185ee46297fa5bcf96b2e84ab66d1dc2
   languageName: node
   linkType: hard
 
@@ -1498,7 +1498,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:1.25.9, @redocly/openapi-core@npm:^1.4.0":
+"@redocly/config@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "@redocly/config@npm:0.16.0"
+  checksum: 10/f5356a4b6d28d8c0a24ba7b1507b71cd9d9c30cfa1165c2fb11135ee511d5835605d9c698c9156f0293e2893f3b4cd118b325f6e46d496cf8ced552f6a021065
+  languageName: node
+  linkType: hard
+
+"@redocly/openapi-core@npm:1.25.10":
+  version: 1.25.10
+  resolution: "@redocly/openapi-core@npm:1.25.10"
+  dependencies:
+    "@redocly/ajv": "npm:^8.11.2"
+    "@redocly/config": "npm:^0.16.0"
+    colorette: "npm:^1.2.0"
+    https-proxy-agent: "npm:^7.0.4"
+    js-levenshtein: "npm:^1.1.6"
+    js-yaml: "npm:^4.1.0"
+    lodash.isequal: "npm:^4.5.0"
+    minimatch: "npm:^5.0.1"
+    node-fetch: "npm:^2.6.1"
+    pluralize: "npm:^8.0.0"
+    yaml-ast-parser: "npm:0.0.43"
+  checksum: 10/6f2e4fcd10c365b5cb1f32c5b16737f36fc10568cf37ca57e05e3bbbb101b859f81d89462059490c6552d05838ec90aa092aaa092c3399d6a7901de7ec888da4
+  languageName: node
+  linkType: hard
+
+"@redocly/openapi-core@npm:^1.4.0":
   version: 1.25.9
   resolution: "@redocly/openapi-core@npm:1.25.9"
   dependencies:
