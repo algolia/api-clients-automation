@@ -42,8 +42,8 @@ compositionSource:
           type: string
           description: Composition Main Index name.
           example: Products
-    params:
-      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery'
+        params:
+          $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery'
       required:
         - index
   required:
