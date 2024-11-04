@@ -1,0 +1,5 @@
+description: Invalid user ID format.
+content:
+  application/json:
+    schema:
+      $ref: './BaseResponse.yml'
