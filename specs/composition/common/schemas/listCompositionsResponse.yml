@@ -6,7 +6,7 @@ listCompositionsResponse:
       type: array
       description: All compositions in your Algolia application.
       items:
-        $ref: '#/fetchedComposition'
+        $ref: '#/composition'
     nbPages:
       type: integer
       description: Number of pages.
@@ -15,7 +15,7 @@ listCompositionsResponse:
     - items
     - nbPages
 
-fetchedComposition:
+composition:
   type: object
   additionalProperties: false
   properties:

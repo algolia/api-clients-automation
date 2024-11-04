@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/listCompositionsResponse.yml#/fetchedComposition'
+            $ref: '../../common/schemas/listCompositionsResponse.yml#/composition'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
