@@ -18,6 +18,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
   private boolean isAlgoliasearchClient;
+  private boolean isAlgoliaCompositionClient;
 
   @Override
   public String getName() {
@@ -30,6 +31,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     CLIENT = Helpers.camelize((String) additionalProperties.get("client"));
     isAlgoliasearchClient = CLIENT.equals("algoliasearch");
+    isAlgoliaCompositionClient = CLIENT.equals("composition");
 
     // generator specific options
     setSupportsES6(true);
@@ -155,6 +157,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
+    additionalProperties.put("isAlgoliaCompositionClient", isAlgoliaCompositionClient);
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
     additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);

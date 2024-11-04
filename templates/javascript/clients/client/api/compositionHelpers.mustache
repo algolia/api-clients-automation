@@ -1,0 +1,35 @@
+/**
+ * Helper: Wait for a composition-level task to be published (completed) for a given `compositionID` and `taskID`.
+ *
+ * @summary Helper method that waits for a task to be published (completed).
+ * @param WaitForCompositionTaskOptions - The `WaitForCompositionTaskOptions` object.
+ * @param WaitForCompositionTaskOptions.compositionID - The `compositionID` where the operation was performed.
+ * @param WaitForCompositionTaskOptions.taskID - The `taskID` returned in the method response.
+ * @param WaitForCompositionTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+ * @param WaitForCompositionTaskOptions.timeout - The function to decide how long to wait between retries.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+ */
+waitForCompositionTask(
+  {
+    compositionID,
+    taskID,
+    maxRetries = 50,
+    timeout = (retryCount: number): number =>
+      Math.min(retryCount * 200, 5000),
+  }: WaitForCompositionTaskOptions,
+  requestOptions?: RequestOptions
+): Promise<GetTaskResponse> {
+  let retryCount = 0;
+
+  return createIterablePromise({
+    func: () => this.getTask({ compositionID, taskID }, requestOptions),
+    validate: (response) => response.status === 'published',
+    aggregator: () => (retryCount += 1),
+    error: {
+      validate: () => retryCount >= maxRetries,
+      message: () =>
+        `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+    },
+    timeout: () => timeout(retryCount),
+  });
+},

@@ -73,3 +73,6 @@ paths:
   # ###############
   /setClientApiKey:
     $ref: '../common/helpers/setClientApiKey.yml#/method'
+
+  /waitForCompositionTask:
+    $ref: 'helpers/waitForCompositionTask.yml#/method'
