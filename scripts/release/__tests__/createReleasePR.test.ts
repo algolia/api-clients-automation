@@ -283,22 +283,22 @@ describe('createReleasePR', () => {
         ],
       });
 
-      expect(versions).toEqual({
-        java: {
-          current: '0.1.2',
-          next: '0.2.0',
-          releaseType: 'minor',
-        },
-        javascript: {
-          current: '0.1.2',
-          next: '0.2.0',
-          releaseType: 'minor',
-        },
-        php: {
-          current: '0.1.2',
-          next: '0.2.0',
-          releaseType: 'minor',
-        },
+      expect(versions.java).toEqual({
+        current: '0.1.2',
+        next: '0.2.0',
+        releaseType: 'minor',
+      });
+
+      expect(versions.javascript).toEqual({
+        current: '0.1.2',
+        next: '0.2.0',
+        releaseType: 'minor',
+      });
+
+      expect(versions.php).toEqual({
+        current: '0.1.2',
+        next: '0.2.0',
+        releaseType: 'minor',
       });
     });
   });
