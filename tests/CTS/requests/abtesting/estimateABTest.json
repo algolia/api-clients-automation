@@ -1,6 +1,7 @@
 [
   {
     "testName": "estimate AB Test sample size",
+    "parameters": {},
     "request": {
       "path": "/2/abtests/estimate",
       "method": "POST",
