@@ -154,7 +154,7 @@ MinimumDetectableEffect:
       description: |
         Smallest difference in an observable metric between variants.
         For example, to detect a 10% difference between variants, set this value to 0.1.
-    effect:
+    metric:
       $ref: '#/Effect'
 
 Effect:
