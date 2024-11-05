@@ -12,7 +12,6 @@ import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
-import { generateVersionsHistory } from '../release/versionsHistory.js';
 import { buildSpecs } from '../specs/index.js';
 import type { Language } from '../types.js';
 
@@ -33,10 +32,6 @@ const flags = {
   verbose: {
     flag: '-v, --verbose',
     description: 'make the generation verbose',
-  },
-  skipCache: {
-    flag: '-s, --skip-cache',
-    description: 'skip cache checking to force building specs',
   },
 };
 
@@ -141,7 +136,7 @@ buildCommand
   .description('Build a specified spec')
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.skipCache.flag, flags.skipCache.description)
+  .option('-s, --skip-cache', 'skip cache checking to force building specs')
   .option('-json, --output-json', 'outputs the spec in JSON instead of yml')
   .option('-d, --docs', 'generates the doc specs with the code snippets')
   .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {
@@ -312,16 +307,11 @@ program
   .action(async ({ verbose, releaseType, dryRun, versionsHistory, breaking }) => {
     setVerbose(Boolean(verbose));
 
-    if (versionsHistory) {
-      await generateVersionsHistory({});
-
-      return;
-    }
-
     await createReleasePR({
       releaseType,
       dryRun,
       breaking,
+      versionsHistory,
     });
   });
 

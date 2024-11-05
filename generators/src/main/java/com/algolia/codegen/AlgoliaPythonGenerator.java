@@ -161,4 +161,28 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     // always default to None in the client, to let the server handle the default value.
     return "None";
   }
+
+  public static String toEnum(String value) {
+    // we only convert the full lowercase enums as they have a fallback to camelCase enums with the
+    // same name so no BC is introduced
+    if (!value.toLowerCase().equals(value)) {
+      // special edge case for onewaysynonym because there's no way to distinguish the two at the
+      // generation level
+      if (value.equals("'oneWaySynonym'")) {
+        return Helpers.toSnakeCase(value);
+      }
+      return value;
+    }
+    return Helpers.toScreamingSnakeCase(value);
+  }
+
+  @Override
+  public String toEnumVariableName(String value, String datatype) {
+    return super.toEnumVariableName(toEnum(value), datatype);
+  }
+
+  @Override
+  public String toEnumVarName(String value, String datatype) {
+    return super.toEnumVarName(toEnum(value), datatype);
+  }
 }

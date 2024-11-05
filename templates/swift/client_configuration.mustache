@@ -22,7 +22,7 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
   public var hosts: [RetryableHost]
   public let compression: CompressionAlgorithm
 
-  init(appID: String,
+  public init(appID: String,
       apiKey: String,{{#hasRegionalHost}}
       region: Region{{#fallbackToAliasHost}}? = nil{{/fallbackToAliasHost}},{{/hasRegionalHost}}
       writeTimeout: TimeInterval = DefaultConfiguration.default.writeTimeout,

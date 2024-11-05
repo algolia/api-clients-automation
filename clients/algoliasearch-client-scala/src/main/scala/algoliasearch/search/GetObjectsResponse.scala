@@ -35,9 +35,12 @@ package algoliasearch.search
 
 /** GetObjectsResponse
   *
+  * @param message
+  *   An optional status message.
   * @param results
   *   Retrieved records.
   */
 case class GetObjectsResponse(
+    message: Option[String] = scala.None,
     results: Seq[Any]
 )

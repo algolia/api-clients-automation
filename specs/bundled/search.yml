@@ -1210,6 +1210,10 @@ paths:
                 type: object
                 additionalProperties: false
                 properties:
+                  message:
+                    type: string
+                    description: An optional status message.
+                    example: Index INDEX_NAME does not exist.
                   results:
                     type: array
                     description: Retrieved records.
@@ -3510,6 +3514,15 @@ paths:
             items:
               type: object
         - in: query
+          name: waitForTasks
+          description: >-
+            Whether or not we should wait until every `batch` tasks has been
+            processed, this operation may slow the total execution time of this
+            method but is more reliable.
+          required: false
+          schema:
+            type: boolean
+        - in: query
           name: requestOptions
           description: The request options to pass to the `batch` method.
           required: false
@@ -3552,6 +3565,15 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: waitForTasks
+          description: >-
+            Whether or not we should wait until every `batch` tasks has been
+            processed, this operation may slow the total execution time of this
+            method but is more reliable.
+          required: false
+          schema:
+            type: boolean
         - in: query
           name: requestOptions
           description: The request options to pass to the `batch` method.
@@ -3603,6 +3625,15 @@ paths:
           description: >-
             To be provided if non-existing objects are passed, otherwise, the
             call will fail.
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: waitForTasks
+          description: >-
+            Whether or not we should wait until every `batch` tasks has been
+            processed, this operation may slow the total execution time of this
+            method but is more reliable.
           required: false
           schema:
             type: boolean
@@ -6764,6 +6795,9 @@ components:
         - altcorrection1
         - altcorrection2
         - placeholder
+        - oneWaySynonym
+        - altCorrection1
+        - altCorrection2
     synonymHit:
       type: object
       description: Synonym object.

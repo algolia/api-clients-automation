@@ -11,7 +11,7 @@ This section hosts informations about the [API clients automation](https://githu
 To contribute to the repository, make sure to take a look at our guidelines and recommendations:
 
 - [Setup the repository tooling](/docs/setup-repository): to install our tooling.
-  - CLI commands can be found at [CLI > specs commands](/docs/CLI/specs-commands), [CLI > clients commands](/docs/CLI/clients-commands) and [CLI > CTS commands](/docs/CLI/cts-commands).
+  - CLI commands can be found at [CLI > build commands](/docs/CLI/build-commands), [CLI > generate commands](/docs/CLI/generate-commands) and [CLI > CTS commands](/docs/CLI/cts-commands).
 - [Add a new client](/docs/add-new-api-client): to add a new API spec to generate a client.
 - [Support a new language](/docs/add-new-language): to add a new supported language to the API clients.
 - [Commit and Pull-request](/docs/commit-and-pull-request): to see what to commit and send pull-requests.

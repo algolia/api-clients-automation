@@ -2101,6 +2101,7 @@ components:
         - oauth
         - algolia
         - algoliaInsights
+        - secrets
     Platform:
       default: null
       oneOf:
@@ -2237,6 +2238,11 @@ components:
           description: |
             Algolia API key with the ACL: `search`.
             This field is `null` in the API response.
+    AuthSecrets:
+      type: object
+      description: A key:value authentication for your transformations.
+      additionalProperties:
+        type: string
     AuthInputPartial:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
@@ -2245,6 +2251,7 @@ components:
         - $ref: '#/components/schemas/AuthOAuthPartial'
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
+        - $ref: '#/components/schemas/AuthSecrets'
     createdAt:
       type: string
       description: Date of creation in RFC 3339 format.
@@ -2419,6 +2426,7 @@ components:
         - $ref: '#/components/schemas/AuthOAuth'
         - $ref: '#/components/schemas/AuthAlgolia'
         - $ref: '#/components/schemas/AuthAlgoliaInsights'
+        - $ref: '#/components/schemas/AuthSecrets'
     AuthenticationCreate:
       type: object
       description: Request body for creating a new authentication resource.

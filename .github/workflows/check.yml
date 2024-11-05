@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     env:
-      CACHE_VERSION: 1.02 # bump this to run all clients on the CI.
+      CACHE_VERSION: 1.10 # bump this to run all clients on the CI.
     steps:
       - name: debugging - dump GitHub context
         env:
@@ -351,7 +351,7 @@ jobs:
         run: yarn cli build playground ${{ matrix.client.language }}
 
       - name: Run Java 'algoliasearch' public API validation
-        if: ${{ matrix.client.language == 'java' && matrix.client.isMainVersion && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-bc]') }}
+        if: ${{ github.base_ref == 'main' && matrix.client.language == 'java' && matrix.client.isMainVersion && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-bc]') }}
         run: |
           cd ${{ matrix.client.path }}
           exit_code=0

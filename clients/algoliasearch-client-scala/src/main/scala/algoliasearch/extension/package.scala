@@ -3,6 +3,7 @@ package algoliasearch
 import algoliasearch.api.SearchClient
 import algoliasearch.config.RequestOptions
 import algoliasearch.exception.AlgoliaApiException
+import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
 import algoliasearch.search._
 
@@ -251,6 +252,8 @@ package object extension {
       *   The index in which to perform the request.
       * @param objects
       *   The list of objects to save.
+      * @param waitForTasks
+      *   Whether to wait for the tasks to complete.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -259,9 +262,10 @@ package object extension {
     def saveObjects(
         indexName: String,
         objects: Seq[Any],
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, objects, Action.AddObject, false, 1000, requestOptions)
+      chunkedBatch(indexName, objects, Action.AddObject, waitForTasks, 1000, requestOptions)
     }
 
     /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which
@@ -271,6 +275,8 @@ package object extension {
       *   The index in which to perform the request.
       * @param objectIDs
       *   The list of objectIDs to delete.
+      * @param waitForTasks
+      *   Whether to wait for the tasks to complete.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -279,13 +285,14 @@ package object extension {
     def deleteObjects(
         indexName: String,
         objectIDs: Seq[String],
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
         objectIDs.map(id => new { val objectID: String = id }),
         Action.DeleteObject,
-        false,
+        waitForTasks,
         1000,
         requestOptions
       )
@@ -300,6 +307,8 @@ package object extension {
       *   The list of objects to save.
       * @param createIfNotExists
       *   To be provided if non-existing objects are passed, otherwise, the call will fail.
+      * @param waitForTasks
+      *   Whether to wait for the tasks to complete.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -309,13 +318,14 @@ package object extension {
         indexName: String,
         objects: Seq[Any],
         createIfNotExists: Boolean = false,
+        waitForTasks: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
         objects,
         if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
-        false,
+        waitForTasks,
         1000,
         requestOptions
       )
@@ -345,9 +355,6 @@ package object extension {
         batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
-      val requests = objects.map { record =>
-        BatchRequest(action = Action.AddObject, body = record)
-      }
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
       for {
@@ -396,6 +403,12 @@ package object extension {
       )
     }
 
+    /** Check if an index exists.
+      * @param indexName
+      *   The index name to check.
+      * @return
+      *   A future containing a boolean indicating if the index exists.
+      */
     def indexExists(indexName: String)(implicit ec: ExecutionContext): Future[Boolean] = {
       try {
         client.getSettings(indexName)
@@ -405,6 +418,129 @@ package object extension {
       }
 
       Future.successful(true)
+    }
+
+    /** Browse objects in an index.
+      * @param indexName
+      *   The index name to browse.
+      * @param browseParams
+      *   The browse parameters.
+      * @param validate
+      *   The validation function. Default is to check if the cursor is defined.
+      * @param aggregator
+      *   The aggregation function. This is where you can aggregate the results.
+      * @param requestOptions
+      *   Additional request configuration.
+      * @return
+      *   A future containing the last browse response.
+      */
+    def browseObjects(
+        indexName: String,
+        browseParams: BrowseParamsObject,
+        validate: BrowseResponse => Boolean = response => response.cursor.isEmpty,
+        aggregator: BrowseResponse => Unit,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[BrowseResponse] = {
+      createIterable(
+        execute = (previousResponse: Option[BrowseResponse]) =>
+          client.browse(
+            indexName,
+            Some(
+              browseParams.copy(
+                hitsPerPage = previousResponse.flatMap(_.hitsPerPage.orElse(Some(1000))),
+                cursor = previousResponse.flatMap(_.cursor)
+              )
+            ),
+            requestOptions
+          ),
+        validate = validate,
+        aggregator = Some(aggregator)
+      )
+    }
+
+    /** Browse rules in an index.
+      * @param indexName
+      *   The index name to browse.
+      * @param searchRulesParams
+      *   The search rules parameters.
+      * @param validate
+      *   The validation function. Default is to check if the number of hits is less than the hits per page.
+      * @param aggregator
+      *   The aggregation function. This is where you can aggregate the results.
+      * @param requestOptions
+      *   Additional request configuration.
+      * @return
+      *   A future containing the last search rules response.
+      */
+    def browseRules(
+        indexName: String,
+        searchRulesParams: SearchRulesParams,
+        validate: Option[SearchRulesResponse => Boolean] = None,
+        aggregator: SearchRulesResponse => Unit,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[SearchRulesResponse] = {
+      val hitsPerPage = 1000
+
+      createIterable(
+        execute = (previousResponse: Option[SearchRulesResponse]) =>
+          client.searchRules(
+            indexName,
+            Some(
+              searchRulesParams.copy(
+                page = previousResponse.map(_.page + 1).orElse(Some(0)),
+                hitsPerPage = Some(hitsPerPage)
+              )
+            ),
+            requestOptions
+          ),
+        validate = validate.getOrElse((response: SearchRulesResponse) => response.hits.length < hitsPerPage),
+        aggregator = Some(aggregator)
+      )
+    }
+
+    /** Browse synonyms in an index.
+      * @param indexName
+      *   The index name to browse.
+      * @param searchSynonymsParams
+      *   The search synonyms parameters.
+      * @param validate
+      *   The validation function. Default is to check if the number of hits is less than the hits per page.
+      * @param aggregator
+      *   The aggregation function. This is where you can aggregate the results.
+      * @param requestOptions
+      *   Additional request configuration.
+      * @return
+      *   A future containing the last search synonyms response.
+      */
+    def browseSynonyms(
+        indexName: String,
+        searchSynonymsParams: SearchSynonymsParams,
+        validate: Option[SearchSynonymsResponse => Boolean] = None,
+        aggregator: SearchSynonymsResponse => Unit,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[SearchSynonymsResponse] = {
+      val hitsPerPage = 1000
+      var page = searchSynonymsParams.page.getOrElse(0)
+
+      createIterable(
+        execute = (_: Option[SearchSynonymsResponse]) =>
+          try {
+            client.searchSynonyms(
+              indexName,
+              Some(
+                searchSynonymsParams.copy(
+                  page = Some(page),
+                  hitsPerPage = Some(hitsPerPage)
+                )
+              ),
+              requestOptions
+            )
+          } finally {
+            page += 1
+          },
+        validate = validate.getOrElse((response: SearchSynonymsResponse) => response.hits.length < hitsPerPage),
+        aggregator = Some(aggregator)
+      )
     }
   }
 }

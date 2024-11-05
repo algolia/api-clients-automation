@@ -27,7 +27,15 @@ sealed trait AuthInput
 
 trait AuthInputTrait extends AuthInput
 
-object AuthInput {}
+object AuthInput {
+
+  case class MapOfStringString(value: Map[String, String]) extends AuthInput
+
+  def apply(value: Map[String, String]): AuthInput = {
+    AuthInput.MapOfStringString(value)
+  }
+
+}
 
 object AuthInputSerializer extends Serializer[AuthInput] {
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), AuthInput] = {
@@ -45,7 +53,8 @@ object AuthInputSerializer extends Serializer[AuthInput] {
         case value: JObject if value.obj.exists(_._1 == "key") => Extraction.extract[AuthAPIKey](value)
         case value: JObject                                    => Extraction.extract[AuthAlgolia](value)
         case value: JObject                                    => Extraction.extract[AuthAlgoliaInsights](value)
-        case _ => throw new MappingException("Can't convert " + json + " to AuthInput")
+        case value: JObject => AuthInput.apply(Extraction.extract[Map[String, String]](value))
+        case _              => throw new MappingException("Can't convert " + json + " to AuthInput")
       }
   }
 

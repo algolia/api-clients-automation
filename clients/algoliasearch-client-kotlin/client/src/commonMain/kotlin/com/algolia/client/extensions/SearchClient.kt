@@ -2,6 +2,7 @@ package com.algolia.client.extensions
 
 import com.algolia.client.api.SearchClient
 import com.algolia.client.exception.AlgoliaApiException
+import com.algolia.client.extensions.internal.*
 import com.algolia.client.extensions.internal.DisjunctiveFaceting
 import com.algolia.client.extensions.internal.buildRestrictionString
 import com.algolia.client.extensions.internal.encodeKeySHA256
@@ -369,6 +370,7 @@ public suspend fun SearchClient.chunkedBatch(
  *
  * @param indexName The index in which to perform the request.
  * @param objects The list of objects to index.
+ * @param waitForTask If true, wait for the task to complete.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
  * @return The list of responses from the batch requests.
  *
@@ -376,13 +378,14 @@ public suspend fun SearchClient.chunkedBatch(
 public suspend fun SearchClient.saveObjects(
   indexName: String,
   objects: List<JsonObject>,
+  waitForTask: Boolean = false,
   requestOptions: RequestOptions? = null,
 ): List<BatchResponse> {
   return this.chunkedBatch(
     indexName = indexName,
     objects = objects,
     action = Action.AddObject,
-    waitForTask = false,
+    waitForTask = waitForTask,
     batchSize = 1000,
     requestOptions = requestOptions,
   )
@@ -393,6 +396,7 @@ public suspend fun SearchClient.saveObjects(
  *
  * @param indexName The index in which to perform the request.
  * @param objectIDs The list of objectIDs to delete from the index.
+ * @param waitForTask If true, wait for the task to complete.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
  * @return The list of responses from the batch requests.
  *
@@ -400,13 +404,14 @@ public suspend fun SearchClient.saveObjects(
 public suspend fun SearchClient.deleteObjects(
   indexName: String,
   objectIDs: List<String>,
+  waitForTask: Boolean = false,
   requestOptions: RequestOptions? = null,
 ): List<BatchResponse> {
   return this.chunkedBatch(
     indexName = indexName,
     objects = objectIDs.map { id -> JsonObject(mapOf("objectID" to Json.encodeToJsonElement(id))) },
     action = Action.DeleteObject,
-    waitForTask = false,
+    waitForTask = waitForTask,
     batchSize = 1000,
     requestOptions = requestOptions,
   )
@@ -418,6 +423,7 @@ public suspend fun SearchClient.deleteObjects(
  * @param indexName The index in which to perform the request.
  * @param objects The list of objects to update in the index.
  * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail..
+ * @param waitForTask If true, wait for the task to complete.
  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
  * @return The list of responses from the batch requests.
  *
@@ -426,13 +432,14 @@ public suspend fun SearchClient.partialUpdateObjects(
   indexName: String,
   objects: List<JsonObject>,
   createIfNotExists: Boolean,
+  waitForTask: Boolean = false,
   requestOptions: RequestOptions? = null,
 ): List<BatchResponse> {
   return this.chunkedBatch(
     indexName = indexName,
     objects = objects,
     action = if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
-    waitForTask = false,
+    waitForTask = waitForTask,
     batchSize = 1000,
     requestOptions = requestOptions,
   )
@@ -576,4 +583,107 @@ public suspend fun SearchClient.searchDisjunctiveFaceting(
   val queries = helper.buildQueries()
   val responses = searchForHits(queries, requestOptions = requestOptions)
   return helper.mergeResponses(responses)
+}
+
+/**
+ * Helper: Returns an iterator on top of the `browse` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param params The `browse` parameters.
+ * @param validate The function to validate the response. Default is to check if the cursor is not null.
+ * @param aggregator The function to aggregate the response.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public suspend fun SearchClient.browseObjects(
+  indexName: String,
+  params: BrowseParamsObject,
+  validate: (BrowseResponse) -> Boolean = { response -> response.cursor == null },
+  aggregator: ((BrowseResponse) -> Unit),
+  requestOptions: RequestOptions? = null,
+): BrowseResponse {
+  return createIterable(
+    execute = { previousResponse ->
+      browse(
+        indexName,
+        params.copy(hitsPerPage = params.hitsPerPage ?: 1000, cursor = previousResponse?.cursor),
+        requestOptions,
+      )
+    },
+    validate = validate,
+    aggregator = aggregator,
+  )
+}
+
+/**
+ * Helper: Returns an iterator on top of the `browse` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param searchRulesParams The search rules request parameters
+ * @param validate The function to validate the response. Default is to check if the cursor is not null.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public suspend fun SearchClient.browseRules(
+  indexName: String,
+  searchRulesParams: SearchRulesParams,
+  validate: ((SearchRulesResponse) -> Boolean)? = null,
+  aggregator: (SearchRulesResponse) -> Unit,
+  requestOptions: RequestOptions? = null,
+): SearchRulesResponse {
+  val hitsPerPage = searchRulesParams.hitsPerPage ?: 1000
+
+  return createIterable(
+    execute = { previousResponse ->
+      searchRules(
+        indexName,
+        searchRulesParams.copy(
+          page = if (previousResponse != null) (previousResponse.page + 1) else 0,
+          hitsPerPage = hitsPerPage,
+        ),
+        requestOptions,
+      )
+    },
+    validate = validate ?: { response -> response.hits.count() < hitsPerPage },
+    aggregator = aggregator,
+  )
+}
+
+/**
+ * Helper: Returns an iterator on top of the `browse` method.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param searchSynonymsParams The search synonyms request parameters
+ * @param validate The function to validate the response. Default is to check if the cursor is not null.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with
+ *     the transporter requestOptions. (optional)
+ */
+public suspend fun SearchClient.browseSynonyms(
+  indexName: String,
+  searchSynonymsParams: SearchSynonymsParams,
+  validate: ((SearchSynonymsResponse) -> Boolean)? = null,
+  aggregator: (SearchSynonymsResponse) -> Unit,
+  requestOptions: RequestOptions? = null,
+): SearchSynonymsResponse {
+  val hitsPerPage = 1000
+  var page = searchSynonymsParams.page ?: 0
+
+  return createIterable(
+    execute = { _ ->
+      try {
+        searchSynonyms(
+          indexName,
+          searchSynonymsParams = searchSynonymsParams.copy(
+            page = page,
+            hitsPerPage = hitsPerPage,
+          ),
+          requestOptions,
+        )
+      } finally {
+        page += 1
+      }
+    },
+    validate = validate ?: { response -> response.hits.count() < hitsPerPage },
+    aggregator = aggregator,
+  )
 }

@@ -103,7 +103,7 @@ AuthenticationSearch:
 AuthenticationType:
   type: string
   description: Type of authentication. This determines the type of credentials required in the `input` object.
-  enum: [googleServiceAccount, basic, apiKey, oauth, algolia, algoliaInsights]
+  enum: [googleServiceAccount, basic, apiKey, oauth, algolia, algoliaInsights, secrets]
 
 Platform:
   default: null
@@ -298,6 +298,12 @@ AuthAlgolia:
     - appID
     - apiKey
 
+AuthSecrets:
+  type: object
+  description: A key:value authentication for your transformations.
+  additionalProperties:
+    type: string
+
 AuthAlgoliaInsights:
   type: object
   additionalProperties: false
@@ -323,6 +329,7 @@ AuthInput:
     - $ref: '#/AuthOAuth'
     - $ref: '#/AuthAlgolia'
     - $ref: '#/AuthAlgoliaInsights'
+    - $ref: '#/AuthSecrets'
 
 AuthInputPartial:
   oneOf:
@@ -332,3 +339,4 @@ AuthInputPartial:
     - $ref: '#/AuthOAuthPartial'
     - $ref: '#/AuthAlgoliaPartial'
     - $ref: '#/AuthAlgoliaInsightsPartial'
+    - $ref: '#/AuthSecrets'

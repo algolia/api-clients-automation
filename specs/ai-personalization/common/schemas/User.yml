@@ -1,0 +1,30 @@
+user:
+  type: object
+  properties:
+    userID:
+      type: string
+    affinities:
+      type: array
+      items:
+        title: affinity
+        type: object
+        properties:
+          name:
+            type: string
+          indices:
+            type: array
+            items:
+              type: string
+              minimum: 1
+          value:
+            type: string
+          score:
+            type: number
+            minimum: 1
+            maximum: 20
+          lastUpdatedAt:
+            type: string
+        required: [name, indices, value, score, lastUpdatedAt]
+    lastUpdatedAt:
+      type: string
+  required: [userID, affinities, lastUpdatedAt]
