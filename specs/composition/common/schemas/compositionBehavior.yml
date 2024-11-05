@@ -25,7 +25,6 @@ compositionBehavior:
             $ref: '#/compositionInset'
       required:
         - main
-        - insets
   required:
     - injection
 

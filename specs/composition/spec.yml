@@ -37,6 +37,11 @@ tags:
   - name: Compositions
     description: |
       Manage your compositions and composition settings.
+  - name: Rules
+    description: |
+      Manage your compositions rules.
+  - name: Search
+    description: Search one or more indices for matching records or facet values.
 x-tagGroups:
   - name: Search
     tags:
@@ -48,6 +53,12 @@ paths:
   /{path}:
     $ref: '../common/paths/customRequest.yml'
 
+  # ########################
+  # ### Search Endpoints ###
+  # ########################
+  /1/compositions/{compositionID}/run:
+    $ref: 'paths/search/run.yml'
+
   # #########################
   # ### Objects Endpoints ###
   # #########################
@@ -55,6 +66,16 @@ paths:
     $ref: 'paths/objects/objects.yml'
   /1/compositions/*/batch:
     $ref: 'paths/objects/multipleBatch.yml'
+
+  # #######################
+  # ### Rules Endpoints ###
+  # #######################
+  /1/compositions/{compositionID}/rules/{objectID}:
+    $ref: 'paths/rules/rule.yml'
+  /1/compositions/{compositionID}/rules/batch:
+    $ref: 'paths/rules/saveRules.yml'
+  /1/compositions/{compositionID}/rules/search:
+    $ref: 'paths/rules/searchRules.yml'
 
   # ##########################
   # ### Advanced Endpoints ###
