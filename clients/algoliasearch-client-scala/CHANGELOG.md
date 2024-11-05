@@ -1,3 +1,8 @@
+## [2.8.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.7.0...2.8.0)
+
+- [801241e12](https://github.com/algolia/api-clients-automation/commit/801241e12) fix(specs): add secrets payload for updates ([#4061](https://github.com/algolia/api-clients-automation/pull/4061)) by [@shortcuts](https://github.com/shortcuts/)
+- [5c136050a](https://github.com/algolia/api-clients-automation/commit/5c136050a) feat(scala): browse helpers ([#4062](https://github.com/algolia/api-clients-automation/pull/4062)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.7.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.6.0...2.7.0)
 
 - [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)

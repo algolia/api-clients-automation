@@ -1,3945 +1,5616 @@
 {
   "csharp": {
     "1.1.0.0": {
-      "releaseDate": "2013-08-04"
+      "releaseDate": "2013-08-04",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.0": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.0": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.0": {
-      "releaseDate": "2013-12-06"
+      "releaseDate": "2013-12-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.7.0": {
-      "releaseDate": "2014-01-02"
+      "releaseDate": "2014-01-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.0": {
-      "releaseDate": "2014-02-24"
+      "releaseDate": "2014-02-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.0": {
-      "releaseDate": "2014-03-27"
+      "releaseDate": "2014-03-27",
+      "eligibilityStatus": "not eligible"
     },
     "1.11.0": {
-      "releaseDate": "2014-05-02"
+      "releaseDate": "2014-05-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.0": {
-      "releaseDate": "2014-06-10"
+      "releaseDate": "2014-06-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.13.0": {
-      "releaseDate": "2014-07-17"
+      "releaseDate": "2014-07-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.14.0": {
-      "releaseDate": "2014-07-24"
+      "releaseDate": "2014-07-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.15.0": {
-      "releaseDate": "2014-07-24"
+      "releaseDate": "2014-07-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.16.0": {
-      "releaseDate": "2014-08-04"
+      "releaseDate": "2014-08-04",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.0": {
-      "releaseDate": "2014-08-13"
+      "releaseDate": "2014-08-13",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.0": {
-      "releaseDate": "2014-09-14"
+      "releaseDate": "2014-09-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.0": {
-      "releaseDate": "2014-10-14"
+      "releaseDate": "2014-10-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.1": {
-      "releaseDate": "2014-10-22"
+      "releaseDate": "2014-10-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.2": {
-      "releaseDate": "2014-11-24"
+      "releaseDate": "2014-11-24",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.3": {
-      "releaseDate": "2014-11-25"
+      "releaseDate": "2014-11-25",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.0": {
-      "releaseDate": "2014-11-30"
+      "releaseDate": "2014-11-30",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.1": {
-      "releaseDate": "2014-12-04"
+      "releaseDate": "2014-12-04",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.1": {
-      "releaseDate": "2015-01-02"
+      "releaseDate": "2015-01-02",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.0": {
-      "releaseDate": "2015-01-02"
+      "releaseDate": "2015-01-02",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.1": {
-      "releaseDate": "2015-01-03"
+      "releaseDate": "2015-01-03",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.2": {
-      "releaseDate": "2015-01-04"
+      "releaseDate": "2015-01-04",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.3": {
-      "releaseDate": "2015-01-09"
+      "releaseDate": "2015-01-09",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.4": {
-      "releaseDate": "2015-01-21"
+      "releaseDate": "2015-01-21",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.5": {
-      "releaseDate": "2015-02-18"
+      "releaseDate": "2015-02-18",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.0": {
-      "releaseDate": "2015-04-10"
+      "releaseDate": "2015-04-10",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.1": {
-      "releaseDate": "2015-05-04"
+      "releaseDate": "2015-05-04",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.2": {
-      "releaseDate": "2015-06-03"
+      "releaseDate": "2015-06-03",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.4": {
-      "releaseDate": "2015-06-30"
+      "releaseDate": "2015-06-30",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.5": {
-      "releaseDate": "2015-08-30"
+      "releaseDate": "2015-08-30",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.6": {
-      "releaseDate": "2015-08-30"
+      "releaseDate": "2015-08-30",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.7": {
-      "releaseDate": "2015-08-31"
+      "releaseDate": "2015-08-31",
+      "eligibilityStatus": "not eligible"
     },
     "3.2.0": {
-      "releaseDate": "2015-09-08"
+      "releaseDate": "2015-09-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.3.0": {
-      "releaseDate": "2015-09-08"
+      "releaseDate": "2015-09-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.3.1": {
-      "releaseDate": "2015-10-09"
+      "releaseDate": "2015-10-09",
+      "eligibilityStatus": "not eligible"
     },
     "3.3.2": {
-      "releaseDate": "2015-10-12"
+      "releaseDate": "2015-10-12",
+      "eligibilityStatus": "not eligible"
     },
     "3.3.3": {
-      "releaseDate": "2015-10-13"
+      "releaseDate": "2015-10-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.4.0": {
-      "releaseDate": "2015-10-16"
+      "releaseDate": "2015-10-16",
+      "eligibilityStatus": "not eligible"
     },
     "3.4.1": {
-      "releaseDate": "2015-11-11"
+      "releaseDate": "2015-11-11",
+      "eligibilityStatus": "not eligible"
     },
     "3.4.2": {
-      "releaseDate": "2015-11-11"
+      "releaseDate": "2015-11-11",
+      "eligibilityStatus": "not eligible"
     },
     "3.4.3": {
-      "releaseDate": "2016-02-05"
+      "releaseDate": "2016-02-05",
+      "eligibilityStatus": "not eligible"
     },
     "3.4.4": {
-      "releaseDate": "2016-02-11"
+      "releaseDate": "2016-02-11",
+      "eligibilityStatus": "not eligible"
     },
     "3.5.0": {
-      "releaseDate": "2016-03-25"
+      "releaseDate": "2016-03-25",
+      "eligibilityStatus": "not eligible"
     },
     "3.6.0": {
-      "releaseDate": "2016-04-12"
+      "releaseDate": "2016-04-12",
+      "eligibilityStatus": "not eligible"
     },
     "3.6.1": {
-      "releaseDate": "2016-04-14"
+      "releaseDate": "2016-04-14",
+      "eligibilityStatus": "not eligible"
     },
     "3.6.10": {
-      "releaseDate": "2016-11-17"
+      "releaseDate": "2016-11-17",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.0": {
-      "releaseDate": "2016-12-12"
+      "releaseDate": "2016-12-12",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.1": {
-      "releaseDate": "2017-01-03"
+      "releaseDate": "2017-01-03",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.2": {
-      "releaseDate": "2017-01-30"
+      "releaseDate": "2017-01-30",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.3": {
-      "releaseDate": "2017-02-07"
+      "releaseDate": "2017-02-07",
+      "eligibilityStatus": "not eligible"
     },
     "4.0.0": {
-      "releaseDate": "2017-05-23"
+      "releaseDate": "2017-05-23",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.0": {
-      "releaseDate": "2018-06-14"
+      "releaseDate": "2018-06-14",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.0": {
-      "releaseDate": "2018-06-25"
+      "releaseDate": "2018-06-25",
+      "eligibilityStatus": "not eligible"
     },
     "5.2.0": {
-      "releaseDate": "2018-10-10"
+      "releaseDate": "2018-10-10",
+      "eligibilityStatus": "not eligible"
     },
     "5.2.1": {
-      "releaseDate": "2018-12-03"
+      "releaseDate": "2018-12-03",
+      "eligibilityStatus": "not eligible"
     },
     "5.3.0": {
-      "releaseDate": "2018-12-17"
+      "releaseDate": "2018-12-17",
+      "eligibilityStatus": "not eligible"
     },
     "5.3.1": {
-      "releaseDate": "2018-12-18"
+      "releaseDate": "2018-12-18",
+      "eligibilityStatus": "not eligible"
     },
     "6.0.0": {
-      "releaseDate": "2019-02-07"
+      "releaseDate": "2019-02-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.0.1": {
-      "releaseDate": "2019-02-11"
+      "releaseDate": "2019-02-11",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.0.2": {
-      "releaseDate": "2019-02-13"
+      "releaseDate": "2019-02-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.1.0": {
-      "releaseDate": "2019-02-26"
+      "releaseDate": "2019-02-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.1.1": {
-      "releaseDate": "2019-02-27"
+      "releaseDate": "2019-02-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.1.2": {
-      "releaseDate": "2019-03-14"
+      "releaseDate": "2019-03-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.1.3": {
-      "releaseDate": "2019-04-03"
+      "releaseDate": "2019-04-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.2.0": {
-      "releaseDate": "2019-06-25"
+      "releaseDate": "2019-06-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.3.0": {
-      "releaseDate": "2019-08-22"
+      "releaseDate": "2019-08-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.4.0": {
-      "releaseDate": "2019-08-30"
+      "releaseDate": "2019-08-30",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.4.1": {
-      "releaseDate": "2019-10-03"
+      "releaseDate": "2019-10-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.5.0": {
-      "releaseDate": "2019-11-06"
+      "releaseDate": "2019-11-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.5.1": {
-      "releaseDate": "2019-11-26"
+      "releaseDate": "2019-11-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.6.0": {
-      "releaseDate": "2020-04-01"
+      "releaseDate": "2020-04-01",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.7.0": {
-      "releaseDate": "2020-07-20"
+      "releaseDate": "2020-07-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.8.0": {
-      "releaseDate": "2020-08-17"
+      "releaseDate": "2020-08-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.9.0": {
-      "releaseDate": "2020-12-07"
+      "releaseDate": "2020-12-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.9.1": {
-      "releaseDate": "2021-01-28"
+      "releaseDate": "2021-01-28",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.10.0": {
-      "releaseDate": "2021-05-07"
+      "releaseDate": "2021-05-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.10.1": {
-      "releaseDate": "2021-06-02"
+      "releaseDate": "2021-06-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.10.2": {
-      "releaseDate": "2021-09-23"
+      "releaseDate": "2021-09-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.11.0": {
-      "releaseDate": "2021-10-19"
+      "releaseDate": "2021-10-19",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.12.0": {
-      "releaseDate": "2021-11-05"
+      "releaseDate": "2021-11-05",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.12.1": {
-      "releaseDate": "2022-02-14"
+      "releaseDate": "2022-02-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.13.0": {
-      "releaseDate": "2022-08-31"
+      "releaseDate": "2022-08-31",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.14.0": {
-      "releaseDate": "2022-11-08"
+      "releaseDate": "2022-11-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.15.0": {
-      "releaseDate": "2023-08-08"
+      "releaseDate": "2023-08-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.16.0": {
-      "releaseDate": "2023-11-20"
+      "releaseDate": "2023-11-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "6.17.0": {
-      "releaseDate": "2024-02-26"
+      "releaseDate": "2024-02-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "7.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "7.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "7.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "7.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "7.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "7.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "7.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "7.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "7.2.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "7.2.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "7.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "7.3.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "7.3.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "7.4.0": {
-      "releaseDate": "2024-09-18"
+      "releaseDate": "2024-09-18",
+      "eligibilityStatus": "eligible"
     },
     "7.4.1": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "7.4.2": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "7.4.3": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "7.5.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "7.6.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "7.6.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "7.6.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "7.6.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "7.6.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "7.7.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "7.8.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "7.8.1": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "dart": {
     "1.0.0": {
-      "releaseDate": "2023-10-19"
+      "releaseDate": "2023-10-19",
+      "eligibilityStatus": "eligible"
     },
     "1.1.0": {
-      "releaseDate": "2023-11-07"
+      "releaseDate": "2023-11-07",
+      "eligibilityStatus": "eligible"
     },
     "1.2.0": {
-      "releaseDate": "2023-11-09"
+      "releaseDate": "2023-11-09",
+      "eligibilityStatus": "eligible"
     },
     "1.2.1": {
-      "releaseDate": "2023-12-28"
+      "releaseDate": "2023-12-28",
+      "eligibilityStatus": "eligible"
     },
     "1.2.2": {
-      "releaseDate": "2024-01-04"
+      "releaseDate": "2024-01-04",
+      "eligibilityStatus": "eligible"
     },
     "1.3.0": {
-      "releaseDate": "2024-01-09"
+      "releaseDate": "2024-01-09",
+      "eligibilityStatus": "eligible"
     },
     "1.4.0": {
-      "releaseDate": "2024-01-16"
+      "releaseDate": "2024-01-16",
+      "eligibilityStatus": "eligible"
     },
     "1.5.0": {
-      "releaseDate": "2024-01-23"
+      "releaseDate": "2024-01-23",
+      "eligibilityStatus": "eligible"
     },
     "1.5.1": {
-      "releaseDate": "2024-02-29"
+      "releaseDate": "2024-02-29",
+      "eligibilityStatus": "eligible"
     },
     "1.6.0": {
-      "releaseDate": "2024-03-13"
+      "releaseDate": "2024-03-13",
+      "eligibilityStatus": "eligible"
     },
     "1.6.1": {
-      "releaseDate": "2024-03-19"
+      "releaseDate": "2024-03-19",
+      "eligibilityStatus": "eligible"
     },
     "1.6.2": {
-      "releaseDate": "2024-03-25"
+      "releaseDate": "2024-03-25",
+      "eligibilityStatus": "eligible"
     },
     "1.6.3": {
-      "releaseDate": "2024-04-03"
+      "releaseDate": "2024-04-03",
+      "eligibilityStatus": "eligible"
     },
     "1.7.0": {
-      "releaseDate": "2024-04-09"
+      "releaseDate": "2024-04-09",
+      "eligibilityStatus": "eligible"
     },
     "1.8.0": {
-      "releaseDate": "2024-04-16"
+      "releaseDate": "2024-04-16",
+      "eligibilityStatus": "eligible"
     },
     "1.9.0": {
-      "releaseDate": "2024-04-23"
+      "releaseDate": "2024-04-23",
+      "eligibilityStatus": "eligible"
     },
     "1.10.0": {
-      "releaseDate": "2024-05-17"
+      "releaseDate": "2024-05-17",
+      "eligibilityStatus": "eligible"
     },
     "1.11.0": {
-      "releaseDate": "2024-06-11"
+      "releaseDate": "2024-06-11",
+      "eligibilityStatus": "eligible"
     },
     "1.12.0": {
-      "releaseDate": "2024-06-13"
+      "releaseDate": "2024-06-13",
+      "eligibilityStatus": "eligible"
     },
     "1.13.0": {
-      "releaseDate": "2024-06-21"
+      "releaseDate": "2024-06-21",
+      "eligibilityStatus": "eligible"
     },
     "1.14.0": {
-      "releaseDate": "2024-06-24"
+      "releaseDate": "2024-06-24",
+      "eligibilityStatus": "eligible"
     },
     "1.15.0": {
-      "releaseDate": "2024-06-26"
+      "releaseDate": "2024-06-26",
+      "eligibilityStatus": "eligible"
     },
     "1.15.1": {
-      "releaseDate": "2024-06-27"
+      "releaseDate": "2024-06-27",
+      "eligibilityStatus": "eligible"
     },
     "1.16.0": {
-      "releaseDate": "2024-07-01"
+      "releaseDate": "2024-07-01",
+      "eligibilityStatus": "eligible"
     },
     "1.17.0": {
-      "releaseDate": "2024-07-08"
+      "releaseDate": "2024-07-08",
+      "eligibilityStatus": "eligible"
     },
     "1.17.1": {
-      "releaseDate": "2024-07-12"
+      "releaseDate": "2024-07-12",
+      "eligibilityStatus": "eligible"
     },
     "1.18.0": {
-      "releaseDate": "2024-07-19"
+      "releaseDate": "2024-07-19",
+      "eligibilityStatus": "eligible"
     },
     "1.19.0": {
-      "releaseDate": "2024-07-26"
+      "releaseDate": "2024-07-26",
+      "eligibilityStatus": "eligible"
     },
     "1.20.0": {
-      "releaseDate": "2024-08-01"
+      "releaseDate": "2024-08-01",
+      "eligibilityStatus": "eligible"
     },
     "1.21.0": {
-      "releaseDate": "2024-08-06"
+      "releaseDate": "2024-08-06",
+      "eligibilityStatus": "eligible"
     },
     "1.22.0": {
-      "releaseDate": "2024-08-09"
+      "releaseDate": "2024-08-09",
+      "eligibilityStatus": "eligible"
     },
     "1.22.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "1.22.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "1.22.3": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "1.23.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "1.23.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "1.23.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "1.23.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "1.23.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "1.24.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "1.24.1": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "1.24.2": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "1.25.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "1.26.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "1.26.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "1.26.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "1.26.3": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "1.27.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     }
   },
   "go": {
     "1.0.0": {
-      "releaseDate": "2014-10-16"
+      "releaseDate": "2014-10-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.0.1": {
-      "releaseDate": "2014-10-22"
+      "releaseDate": "2014-10-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.0.2": {
-      "releaseDate": "2014-11-27"
+      "releaseDate": "2014-11-27",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.0": {
-      "releaseDate": "2014-11-30"
+      "releaseDate": "2014-11-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.1": {
-      "releaseDate": "2015-01-23"
+      "releaseDate": "2015-01-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.0": {
-      "releaseDate": "2015-04-09"
+      "releaseDate": "2015-04-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.1": {
-      "releaseDate": "2015-05-04"
+      "releaseDate": "2015-05-04",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.0": {
-      "releaseDate": "2015-07-07"
+      "releaseDate": "2015-07-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.0": {
-      "releaseDate": "2015-10-16"
+      "releaseDate": "2015-10-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.0": {
-      "releaseDate": "2016-06-01"
+      "releaseDate": "2016-06-01",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.0": {
-      "releaseDate": "2016-06-06"
+      "releaseDate": "2016-06-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.0": {
-      "releaseDate": "2016-10-03"
+      "releaseDate": "2016-10-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.1": {
-      "releaseDate": "2016-10-03"
+      "releaseDate": "2016-10-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.2": {
-      "releaseDate": "2016-10-19"
+      "releaseDate": "2016-10-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.0": {
-      "releaseDate": "2016-10-19"
+      "releaseDate": "2016-10-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.0": {
-      "releaseDate": "2016-11-02"
+      "releaseDate": "2016-11-02",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.1": {
-      "releaseDate": "2016-11-02"
+      "releaseDate": "2016-11-02",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.0": {
-      "releaseDate": "2016-11-02"
+      "releaseDate": "2016-11-02",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.0": {
-      "releaseDate": "2016-11-29"
+      "releaseDate": "2016-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.0": {
-      "releaseDate": "2016-12-08"
+      "releaseDate": "2016-12-08",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.0": {
-      "releaseDate": "2016-12-28"
+      "releaseDate": "2016-12-28",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.1": {
-      "releaseDate": "2017-01-25"
+      "releaseDate": "2017-01-25",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.0": {
-      "releaseDate": "2017-02-14"
+      "releaseDate": "2017-02-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.0": {
-      "releaseDate": "2017-02-24"
+      "releaseDate": "2017-02-24",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.1": {
-      "releaseDate": "2017-03-22"
+      "releaseDate": "2017-03-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.10.0": {
-      "releaseDate": "2017-03-24"
+      "releaseDate": "2017-03-24",
+      "eligibilityStatus": "not eligible"
     },
     "2.11.0": {
-      "releaseDate": "2017-03-24"
+      "releaseDate": "2017-03-24",
+      "eligibilityStatus": "not eligible"
     },
     "2.12.0": {
-      "releaseDate": "2017-04-12"
+      "releaseDate": "2017-04-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.13.0": {
-      "releaseDate": "2017-04-26"
+      "releaseDate": "2017-04-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.14.0": {
-      "releaseDate": "2017-06-06"
+      "releaseDate": "2017-06-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.0": {
-      "releaseDate": "2017-06-30"
+      "releaseDate": "2017-06-30",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.0": {
-      "releaseDate": "2017-08-02"
+      "releaseDate": "2017-08-02",
+      "eligibilityStatus": "not eligible"
     },
     "2.17.0": {
-      "releaseDate": "2017-08-07"
+      "releaseDate": "2017-08-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.18.0": {
-      "releaseDate": "2017-08-23"
+      "releaseDate": "2017-08-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.19.0": {
-      "releaseDate": "2017-08-28"
+      "releaseDate": "2017-08-28",
+      "eligibilityStatus": "not eligible"
     },
     "2.19.1": {
-      "releaseDate": "2017-09-06"
+      "releaseDate": "2017-09-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.20.0": {
-      "releaseDate": "2017-10-11"
+      "releaseDate": "2017-10-11",
+      "eligibilityStatus": "not eligible"
     },
     "2.21.0": {
-      "releaseDate": "2017-11-14"
+      "releaseDate": "2017-11-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.21.1": {
-      "releaseDate": "2017-11-29"
+      "releaseDate": "2017-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "2.21.2": {
-      "releaseDate": "2018-02-05"
+      "releaseDate": "2018-02-05",
+      "eligibilityStatus": "not eligible"
     },
     "2.21.3": {
-      "releaseDate": "2018-02-13"
+      "releaseDate": "2018-02-13",
+      "eligibilityStatus": "not eligible"
     },
     "2.22.0": {
-      "releaseDate": "2018-03-26"
+      "releaseDate": "2018-03-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.23.0": {
-      "releaseDate": "2018-06-19"
+      "releaseDate": "2018-06-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.23.1": {
-      "releaseDate": "2018-06-29"
+      "releaseDate": "2018-06-29",
+      "eligibilityStatus": "not eligible"
     },
     "2.24.0": {
-      "releaseDate": "2018-08-24"
+      "releaseDate": "2018-08-24",
+      "eligibilityStatus": "not eligible"
     },
     "2.25.0": {
-      "releaseDate": "2018-09-06"
+      "releaseDate": "2018-09-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.26.0": {
-      "releaseDate": "2018-12-07"
+      "releaseDate": "2018-12-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.26.1": {
-      "releaseDate": "2018-12-07"
+      "releaseDate": "2018-12-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.27.0": {
-      "releaseDate": "2018-12-17"
+      "releaseDate": "2018-12-17",
+      "eligibilityStatus": "not eligible"
     },
     "2.28.0": {
-      "releaseDate": "2019-04-10"
+      "releaseDate": "2019-04-10",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.0": {
-      "releaseDate": "2019-06-11"
+      "releaseDate": "2019-06-11",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.1.0": {
-      "releaseDate": "2019-07-08"
+      "releaseDate": "2019-07-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.2.0": {
-      "releaseDate": "2019-08-20"
+      "releaseDate": "2019-08-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.2.1": {
-      "releaseDate": "2019-08-21"
+      "releaseDate": "2019-08-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.3.0": {
-      "releaseDate": "2019-09-06"
+      "releaseDate": "2019-09-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.4.0": {
-      "releaseDate": "2019-09-25"
+      "releaseDate": "2019-09-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.5.0": {
-      "releaseDate": "2019-12-13"
+      "releaseDate": "2019-12-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.5.1": {
-      "releaseDate": "2020-01-24"
+      "releaseDate": "2020-01-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.5.2": {
-      "releaseDate": "2020-01-24"
+      "releaseDate": "2020-01-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.6.0": {
-      "releaseDate": "2020-03-09"
+      "releaseDate": "2020-03-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.6.1": {
-      "releaseDate": "2020-04-06"
+      "releaseDate": "2020-04-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.7.0": {
-      "releaseDate": "2020-05-07"
+      "releaseDate": "2020-05-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.8.0": {
-      "releaseDate": "2020-05-20"
+      "releaseDate": "2020-05-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.8.1": {
-      "releaseDate": "2020-06-26"
+      "releaseDate": "2020-06-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.8.2": {
-      "releaseDate": "2020-07-03"
+      "releaseDate": "2020-07-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.9.0": {
-      "releaseDate": "2020-07-20"
+      "releaseDate": "2020-07-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.10.0": {
-      "releaseDate": "2020-08-12"
+      "releaseDate": "2020-08-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.11.0": {
-      "releaseDate": "2020-08-13"
+      "releaseDate": "2020-08-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.12.0": {
-      "releaseDate": "2020-09-29"
+      "releaseDate": "2020-09-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.12.1": {
-      "releaseDate": "2020-10-02"
+      "releaseDate": "2020-10-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.13.0": {
-      "releaseDate": "2020-10-15"
+      "releaseDate": "2020-10-15",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.14.0": {
-      "releaseDate": "2020-11-24"
+      "releaseDate": "2020-11-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.15.0": {
-      "releaseDate": "2021-01-06"
+      "releaseDate": "2021-01-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.15.1": {
-      "releaseDate": "2021-01-14"
+      "releaseDate": "2021-01-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.0": {
-      "releaseDate": "2021-01-30"
+      "releaseDate": "2021-01-30",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.17.0": {
-      "releaseDate": "2021-03-08"
+      "releaseDate": "2021-03-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.18.0": {
-      "releaseDate": "2021-03-26"
+      "releaseDate": "2021-03-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.18.1": {
-      "releaseDate": "2021-04-02"
+      "releaseDate": "2021-04-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.19.0": {
-      "releaseDate": "2021-06-23"
+      "releaseDate": "2021-06-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.20.0": {
-      "releaseDate": "2021-07-05"
+      "releaseDate": "2021-07-05",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.21.0": {
-      "releaseDate": "2021-07-26"
+      "releaseDate": "2021-07-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.22.0": {
-      "releaseDate": "2021-11-08"
+      "releaseDate": "2021-11-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.23.0": {
-      "releaseDate": "2022-01-11"
+      "releaseDate": "2022-01-11",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.24.0": {
-      "releaseDate": "2022-03-25"
+      "releaseDate": "2022-03-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.25.0": {
-      "releaseDate": "2022-04-13"
+      "releaseDate": "2022-04-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.26.0": {
-      "releaseDate": "2022-07-04"
+      "releaseDate": "2022-07-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.26.1": {
-      "releaseDate": "2022-08-31"
+      "releaseDate": "2022-08-31",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.26.2": {
-      "releaseDate": "2023-01-18"
+      "releaseDate": "2023-01-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.26.3": {
-      "releaseDate": "2023-02-16"
+      "releaseDate": "2023-02-16",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.26.4": {
-      "releaseDate": "2023-02-24"
+      "releaseDate": "2023-02-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.26.5": {
-      "releaseDate": "2023-03-29"
+      "releaseDate": "2023-03-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.27.0": {
-      "releaseDate": "2023-03-30"
+      "releaseDate": "2023-03-30",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.28.0": {
-      "releaseDate": "2023-04-13"
+      "releaseDate": "2023-04-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.28.1": {
-      "releaseDate": "2023-04-19"
+      "releaseDate": "2023-04-19",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.29.0": {
-      "releaseDate": "2023-05-09"
+      "releaseDate": "2023-05-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.29.1": {
-      "releaseDate": "2023-05-09"
+      "releaseDate": "2023-05-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.29.2": {
-      "releaseDate": "2023-05-11"
+      "releaseDate": "2023-05-11",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.29.4": {
-      "releaseDate": "2023-05-22"
+      "releaseDate": "2023-05-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.30.0": {
-      "releaseDate": "2023-06-06"
+      "releaseDate": "2023-06-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.30.1": {
-      "releaseDate": "2023-07-05"
+      "releaseDate": "2023-07-05",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.31.0": {
-      "releaseDate": "2023-08-25"
+      "releaseDate": "2023-08-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.31.1": {
-      "releaseDate": "2024-03-04"
+      "releaseDate": "2024-03-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.31.2": {
-      "releaseDate": "2024-06-25"
+      "releaseDate": "2024-06-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "4.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "4.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "4.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "4.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "4.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "4.2.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "4.2.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "4.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "4.3.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "4.3.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "4.3.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "3.31.3": {
-      "releaseDate": "2024-09-23"
+      "releaseDate": "2024-09-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.3.4": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "4.3.5": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "4.4.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "4.5.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "4.5.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "4.5.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "4.5.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "4.5.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "4.6.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "4.7.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "4.7.1": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "java": {
     "2.0.0": {
-      "releaseDate": "2016-07-06"
+      "releaseDate": "2016-07-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.0": {
-      "releaseDate": "2016-07-12"
+      "releaseDate": "2016-07-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.0": {
-      "releaseDate": "2016-07-27"
+      "releaseDate": "2016-07-27",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.1": {
-      "releaseDate": "2016-08-03"
+      "releaseDate": "2016-08-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.0": {
-      "releaseDate": "2016-08-22"
+      "releaseDate": "2016-08-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.1": {
-      "releaseDate": "2016-09-01"
+      "releaseDate": "2016-09-01",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.0": {
-      "releaseDate": "2016-10-03"
+      "releaseDate": "2016-10-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.1": {
-      "releaseDate": "2016-10-04"
+      "releaseDate": "2016-10-04",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.0": {
-      "releaseDate": "2016-11-08"
+      "releaseDate": "2016-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.0": {
-      "releaseDate": "2016-12-09"
+      "releaseDate": "2016-12-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.1": {
-      "releaseDate": "2016-12-09"
+      "releaseDate": "2016-12-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.0": {
-      "releaseDate": "2016-12-20"
+      "releaseDate": "2016-12-20",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.0": {
-      "releaseDate": "2017-02-06"
+      "releaseDate": "2017-02-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.0": {
-      "releaseDate": "2017-04-11"
+      "releaseDate": "2017-04-11",
+      "eligibilityStatus": "not eligible"
     },
     "2.10.0": {
-      "releaseDate": "2017-05-30"
+      "releaseDate": "2017-05-30",
+      "eligibilityStatus": "not eligible"
     },
     "2.11.0": {
-      "releaseDate": "2017-07-03"
+      "releaseDate": "2017-07-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.11.1": {
-      "releaseDate": "2017-07-07"
+      "releaseDate": "2017-07-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.11.2": {
-      "releaseDate": "2017-07-21"
+      "releaseDate": "2017-07-21",
+      "eligibilityStatus": "not eligible"
     },
     "2.11.3": {
-      "releaseDate": "2017-08-01"
+      "releaseDate": "2017-08-01",
+      "eligibilityStatus": "not eligible"
     },
     "2.12.0": {
-      "releaseDate": "2017-08-22"
+      "releaseDate": "2017-08-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.13.0": {
-      "releaseDate": "2017-09-13"
+      "releaseDate": "2017-09-13",
+      "eligibilityStatus": "not eligible"
     },
     "2.13.1": {
-      "releaseDate": "2017-09-25"
+      "releaseDate": "2017-09-25",
+      "eligibilityStatus": "not eligible"
     },
     "2.13.2": {
-      "releaseDate": "2017-09-27"
+      "releaseDate": "2017-09-27",
+      "eligibilityStatus": "not eligible"
     },
     "2.13.3": {
-      "releaseDate": "2017-10-09"
+      "releaseDate": "2017-10-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.14.0": {
-      "releaseDate": "2017-10-19"
+      "releaseDate": "2017-10-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.0": {
-      "releaseDate": "2017-11-14"
+      "releaseDate": "2017-11-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.1": {
-      "releaseDate": "2017-11-17"
+      "releaseDate": "2017-11-17",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.2": {
-      "releaseDate": "2017-11-20"
+      "releaseDate": "2017-11-20",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.3": {
-      "releaseDate": "2017-12-07"
+      "releaseDate": "2017-12-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.4": {
-      "releaseDate": "2017-12-11"
+      "releaseDate": "2017-12-11",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.5": {
-      "releaseDate": "2017-12-29"
+      "releaseDate": "2017-12-29",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.6": {
-      "releaseDate": "2018-01-24"
+      "releaseDate": "2018-01-24",
+      "eligibilityStatus": "not eligible"
     },
     "2.15.7": {
-      "releaseDate": "2018-02-20"
+      "releaseDate": "2018-02-20",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.0": {
-      "releaseDate": "2018-02-26"
+      "releaseDate": "2018-02-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.1": {
-      "releaseDate": "2018-02-27"
+      "releaseDate": "2018-02-27",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.2": {
-      "releaseDate": "2018-02-28"
+      "releaseDate": "2018-02-28",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.3": {
-      "releaseDate": "2018-03-05"
+      "releaseDate": "2018-03-05",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.4": {
-      "releaseDate": "2018-03-06"
+      "releaseDate": "2018-03-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.5": {
-      "releaseDate": "2018-03-07"
+      "releaseDate": "2018-03-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.6": {
-      "releaseDate": "2018-03-09"
+      "releaseDate": "2018-03-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.7": {
-      "releaseDate": "2018-04-03"
+      "releaseDate": "2018-04-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.16.8": {
-      "releaseDate": "2018-04-03"
+      "releaseDate": "2018-04-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.17.0": {
-      "releaseDate": "2018-06-07"
+      "releaseDate": "2018-06-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.17.1": {
-      "releaseDate": "2018-06-07"
+      "releaseDate": "2018-06-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.17.2": {
-      "releaseDate": "2018-06-12"
+      "releaseDate": "2018-06-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.17.3": {
-      "releaseDate": "2018-06-15"
+      "releaseDate": "2018-06-15",
+      "eligibilityStatus": "not eligible"
     },
     "2.18.0": {
-      "releaseDate": "2018-07-26"
+      "releaseDate": "2018-07-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.18.1": {
-      "releaseDate": "2018-08-07"
+      "releaseDate": "2018-08-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.19.0": {
-      "releaseDate": "2018-09-03"
+      "releaseDate": "2018-09-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.20.0": {
-      "releaseDate": "2018-10-18"
+      "releaseDate": "2018-10-18",
+      "eligibilityStatus": "not eligible"
     },
     "2.21.0": {
-      "releaseDate": "2018-12-17"
+      "releaseDate": "2018-12-17",
+      "eligibilityStatus": "not eligible"
     },
     "2.21.1": {
-      "releaseDate": "2018-12-18"
+      "releaseDate": "2018-12-18",
+      "eligibilityStatus": "not eligible"
     },
     "2.22.0": {
-      "releaseDate": "2019-01-17"
+      "releaseDate": "2019-01-17",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.0": {
-      "releaseDate": "2019-06-10"
+      "releaseDate": "2019-06-10",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.23.0": {
-      "releaseDate": "2019-07-10"
+      "releaseDate": "2019-07-10",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.0": {
-      "releaseDate": "2019-08-07"
+      "releaseDate": "2019-08-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.2.0": {
-      "releaseDate": "2019-08-14"
+      "releaseDate": "2019-08-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.2.1": {
-      "releaseDate": "2019-08-19"
+      "releaseDate": "2019-08-19",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.3.0": {
-      "releaseDate": "2019-10-21"
+      "releaseDate": "2019-10-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.4.0": {
-      "releaseDate": "2019-10-24"
+      "releaseDate": "2019-10-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.5.0": {
-      "releaseDate": "2019-10-31"
+      "releaseDate": "2019-10-31",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.6.0": {
-      "releaseDate": "2019-11-06"
+      "releaseDate": "2019-11-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.6.1": {
-      "releaseDate": "2019-11-12"
+      "releaseDate": "2019-11-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.6.2": {
-      "releaseDate": "2019-11-26"
+      "releaseDate": "2019-11-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.7.0": {
-      "releaseDate": "2020-02-06"
+      "releaseDate": "2020-02-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.8.0": {
-      "releaseDate": "2020-03-25"
+      "releaseDate": "2020-03-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.8.1": {
-      "releaseDate": "2020-03-26"
+      "releaseDate": "2020-03-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.9.0": {
-      "releaseDate": "2020-04-21"
+      "releaseDate": "2020-04-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.10.0": {
-      "releaseDate": "2020-06-12"
+      "releaseDate": "2020-06-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.11.0": {
-      "releaseDate": "2020-07-17"
+      "releaseDate": "2020-07-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.12.0": {
-      "releaseDate": "2020-07-28"
+      "releaseDate": "2020-07-28",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.12.1": {
-      "releaseDate": "2020-11-03"
+      "releaseDate": "2020-11-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.13.0": {
-      "releaseDate": "2021-03-31"
+      "releaseDate": "2021-03-31",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.14.0": {
-      "releaseDate": "2021-04-29"
+      "releaseDate": "2021-04-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.14.1": {
-      "releaseDate": "2021-05-03"
+      "releaseDate": "2021-05-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.14.2": {
-      "releaseDate": "2021-06-02"
+      "releaseDate": "2021-06-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.14.3": {
-      "releaseDate": "2021-06-29"
+      "releaseDate": "2021-06-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.15.0": {
-      "releaseDate": "2021-07-23"
+      "releaseDate": "2021-07-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.15.1": {
-      "releaseDate": "2021-08-20"
+      "releaseDate": "2021-08-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.0": {
-      "releaseDate": "2021-10-14"
+      "releaseDate": "2021-10-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.1": {
-      "releaseDate": "2021-10-29"
+      "releaseDate": "2021-10-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.2": {
-      "releaseDate": "2022-01-07"
+      "releaseDate": "2022-01-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.3": {
-      "releaseDate": "2022-01-27"
+      "releaseDate": "2022-01-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.4": {
-      "releaseDate": "2022-02-07"
+      "releaseDate": "2022-02-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.5": {
-      "releaseDate": "2022-03-18"
+      "releaseDate": "2022-03-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.6": {
-      "releaseDate": "2022-08-03"
+      "releaseDate": "2022-08-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.7": {
-      "releaseDate": "2023-06-02"
+      "releaseDate": "2023-06-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.8": {
-      "releaseDate": "2023-12-20"
+      "releaseDate": "2023-12-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.16.9": {
-      "releaseDate": "2024-02-08"
+      "releaseDate": "2024-02-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "4.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "4.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "4.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "4.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "4.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "4.2.3": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "4.2.4": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "4.2.5": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "4.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "4.3.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "4.3.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "4.3.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "4.3.4": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "4.3.5": {
-      "releaseDate": "2024-09-20"
+      "releaseDate": "2024-09-20",
+      "eligibilityStatus": "eligible"
     },
     "4.3.6": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "4.3.7": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "4.4.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "4.5.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "4.5.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "4.5.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "4.5.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "4.5.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "4.6.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "3.16.10": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.7.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "4.7.1": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "javascript": {
     "2.0.0": {
-      "releaseDate": "2013-10-07"
+      "releaseDate": "2013-10-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.1": {
-      "releaseDate": "2013-10-15"
+      "releaseDate": "2013-10-15",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.0": {
-      "releaseDate": "2013-11-03"
+      "releaseDate": "2013-11-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.0": {
-      "releaseDate": "2013-11-07"
+      "releaseDate": "2013-11-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.0": {
-      "releaseDate": "2013-11-07"
+      "releaseDate": "2013-11-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.1": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.2": {
-      "releaseDate": "2013-11-22"
+      "releaseDate": "2013-11-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.3": {
-      "releaseDate": "2013-11-29"
+      "releaseDate": "2013-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.4": {
-      "releaseDate": "2013-12-04"
+      "releaseDate": "2013-12-04",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.6": {
-      "releaseDate": "2013-12-17"
+      "releaseDate": "2013-12-17",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.7": {
-      "releaseDate": "2014-01-08"
+      "releaseDate": "2014-01-08",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.8": {
-      "releaseDate": "2014-01-16"
+      "releaseDate": "2014-01-16",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.0": {
-      "releaseDate": "2014-02-12"
+      "releaseDate": "2014-02-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.1": {
-      "releaseDate": "2014-02-19"
+      "releaseDate": "2014-02-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.3": {
-      "releaseDate": "2014-03-12"
+      "releaseDate": "2014-03-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.4": {
-      "releaseDate": "2014-03-19"
+      "releaseDate": "2014-03-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.6": {
-      "releaseDate": "2014-04-05"
+      "releaseDate": "2014-04-05",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.7": {
-      "releaseDate": "2014-04-23"
+      "releaseDate": "2014-04-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.0": {
-      "releaseDate": "2014-05-09"
+      "releaseDate": "2014-05-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.1": {
-      "releaseDate": "2014-05-14"
+      "releaseDate": "2014-05-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.2": {
-      "releaseDate": "2014-06-05"
+      "releaseDate": "2014-06-05",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.3": {
-      "releaseDate": "2014-07-23"
+      "releaseDate": "2014-07-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.0": {
-      "releaseDate": "2014-09-06"
+      "releaseDate": "2014-09-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.1": {
-      "releaseDate": "2014-09-20"
+      "releaseDate": "2014-09-20",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.2": {
-      "releaseDate": "2014-09-20"
+      "releaseDate": "2014-09-20",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.3": {
-      "releaseDate": "2014-09-23"
+      "releaseDate": "2014-09-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.4": {
-      "releaseDate": "2014-09-23"
+      "releaseDate": "2014-09-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.5": {
-      "releaseDate": "2014-09-26"
+      "releaseDate": "2014-09-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.6": {
-      "releaseDate": "2014-10-07"
+      "releaseDate": "2014-10-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.0": {
-      "releaseDate": "2014-10-15"
+      "releaseDate": "2014-10-15",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.1": {
-      "releaseDate": "2014-10-15"
+      "releaseDate": "2014-10-15",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.2": {
-      "releaseDate": "2014-10-27"
+      "releaseDate": "2014-10-27",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.3": {
-      "releaseDate": "2014-10-29"
+      "releaseDate": "2014-10-29",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.4": {
-      "releaseDate": "2014-11-12"
+      "releaseDate": "2014-11-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.5": {
-      "releaseDate": "2014-11-25"
+      "releaseDate": "2014-11-25",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.0": {
-      "releaseDate": "2014-11-29"
+      "releaseDate": "2014-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.1": {
-      "releaseDate": "2014-12-09"
+      "releaseDate": "2014-12-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.2": {
-      "releaseDate": "2014-12-23"
+      "releaseDate": "2014-12-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.3": {
-      "releaseDate": "2014-12-30"
+      "releaseDate": "2014-12-30",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.4": {
-      "releaseDate": "2014-12-31"
+      "releaseDate": "2014-12-31",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.5": {
-      "releaseDate": "2015-01-07"
+      "releaseDate": "2015-01-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.6": {
-      "releaseDate": "2015-01-13"
+      "releaseDate": "2015-01-13",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.0": {
-      "releaseDate": "2015-01-14"
+      "releaseDate": "2015-01-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.1": {
-      "releaseDate": "2015-02-03"
+      "releaseDate": "2015-02-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.2": {
-      "releaseDate": "2015-02-16"
+      "releaseDate": "2015-02-16",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.3": {
-      "releaseDate": "2015-03-19"
+      "releaseDate": "2015-03-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.4": {
-      "releaseDate": "2015-03-20"
+      "releaseDate": "2015-03-20",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.0": {
-      "releaseDate": "2015-03-25"
+      "releaseDate": "2015-03-25",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.1": {
-      "releaseDate": "2015-03-26"
+      "releaseDate": "2015-03-26",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.2": {
-      "releaseDate": "2015-03-26"
+      "releaseDate": "2015-03-26",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.3": {
-      "releaseDate": "2015-03-28"
+      "releaseDate": "2015-03-28",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.5": {
-      "releaseDate": "2015-04-02"
+      "releaseDate": "2015-04-02",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.4": {
-      "releaseDate": "2015-04-02"
+      "releaseDate": "2015-04-02",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.5": {
-      "releaseDate": "2015-04-02"
+      "releaseDate": "2015-04-02",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.6": {
-      "releaseDate": "2015-04-03"
+      "releaseDate": "2015-04-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.6": {
-      "releaseDate": "2015-04-10"
+      "releaseDate": "2015-04-10",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.7": {
-      "releaseDate": "2015-04-10"
+      "releaseDate": "2015-04-10",
+      "eligibilityStatus": "not eligible"
     },
     "3.1.0": {
-      "releaseDate": "2015-04-14"
+      "releaseDate": "2015-04-14",
+      "eligibilityStatus": "not eligible"
     },
     "3.2.0": {
-      "releaseDate": "2015-04-24"
+      "releaseDate": "2015-04-24",
+      "eligibilityStatus": "not eligible"
     },
     "3.2.1": {
-      "releaseDate": "2015-04-29"
+      "releaseDate": "2015-04-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.2.2": {
-      "releaseDate": "2015-05-06"
+      "releaseDate": "2015-05-06",
+      "eligibilityStatus": "not eligible"
     },
     "3.2.3": {
-      "releaseDate": "2015-05-09"
+      "releaseDate": "2015-05-09",
+      "eligibilityStatus": "not eligible"
     },
     "3.2.4": {
-      "releaseDate": "2015-05-11"
+      "releaseDate": "2015-05-11",
+      "eligibilityStatus": "not eligible"
     },
     "3.3.0": {
-      "releaseDate": "2015-05-12"
+      "releaseDate": "2015-05-12",
+      "eligibilityStatus": "not eligible"
     },
     "3.3.1": {
-      "releaseDate": "2015-05-13"
+      "releaseDate": "2015-05-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.3.2": {
-      "releaseDate": "2015-05-14"
+      "releaseDate": "2015-05-14",
+      "eligibilityStatus": "not eligible"
     },
     "3.4.0": {
-      "releaseDate": "2015-05-23"
+      "releaseDate": "2015-05-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.9.7": {
-      "releaseDate": "2015-06-03"
+      "releaseDate": "2015-06-03",
+      "eligibilityStatus": "not eligible"
     },
     "3.5.0": {
-      "releaseDate": "2015-06-03"
+      "releaseDate": "2015-06-03",
+      "eligibilityStatus": "not eligible"
     },
     "3.6.0": {
-      "releaseDate": "2015-06-05"
+      "releaseDate": "2015-06-05",
+      "eligibilityStatus": "not eligible"
     },
     "3.6.1": {
-      "releaseDate": "2015-06-16"
+      "releaseDate": "2015-06-16",
+      "eligibilityStatus": "not eligible"
     },
     "3.6.2": {
-      "releaseDate": "2015-06-17"
+      "releaseDate": "2015-06-17",
+      "eligibilityStatus": "not eligible"
     },
     "3.6.3": {
-      "releaseDate": "2015-06-18"
+      "releaseDate": "2015-06-18",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.0": {
-      "releaseDate": "2015-06-23"
+      "releaseDate": "2015-06-23",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.1": {
-      "releaseDate": "2015-07-08"
+      "releaseDate": "2015-07-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.2": {
-      "releaseDate": "2015-07-08"
+      "releaseDate": "2015-07-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.3": {
-      "releaseDate": "2015-07-09"
+      "releaseDate": "2015-07-09",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.4": {
-      "releaseDate": "2015-07-20"
+      "releaseDate": "2015-07-20",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.5": {
-      "releaseDate": "2015-07-23"
+      "releaseDate": "2015-07-23",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.6": {
-      "releaseDate": "2015-08-24"
+      "releaseDate": "2015-08-24",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.7": {
-      "releaseDate": "2015-08-27"
+      "releaseDate": "2015-08-27",
+      "eligibilityStatus": "not eligible"
     },
     "3.7.8": {
-      "releaseDate": "2015-09-01"
+      "releaseDate": "2015-09-01",
+      "eligibilityStatus": "not eligible"
     },
     "3.8.0": {
-      "releaseDate": "2015-09-17"
+      "releaseDate": "2015-09-17",
+      "eligibilityStatus": "not eligible"
     },
     "3.8.1": {
-      "releaseDate": "2015-09-21"
+      "releaseDate": "2015-09-21",
+      "eligibilityStatus": "not eligible"
     },
     "3.9.0": {
-      "releaseDate": "2015-10-23"
+      "releaseDate": "2015-10-23",
+      "eligibilityStatus": "not eligible"
     },
     "3.9.1": {
-      "releaseDate": "2015-11-02"
+      "releaseDate": "2015-11-02",
+      "eligibilityStatus": "not eligible"
     },
     "3.9.2": {
-      "releaseDate": "2015-11-05"
+      "releaseDate": "2015-11-05",
+      "eligibilityStatus": "not eligible"
     },
     "3.9.3": {
-      "releaseDate": "2015-12-01"
+      "releaseDate": "2015-12-01",
+      "eligibilityStatus": "not eligible"
     },
     "3.9.4": {
-      "releaseDate": "2015-12-04"
+      "releaseDate": "2015-12-04",
+      "eligibilityStatus": "not eligible"
     },
     "3.10.0": {
-      "releaseDate": "2015-12-08"
+      "releaseDate": "2015-12-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.10.1": {
-      "releaseDate": "2015-12-11"
+      "releaseDate": "2015-12-11",
+      "eligibilityStatus": "not eligible"
     },
     "3.10.2": {
-      "releaseDate": "2015-12-14"
+      "releaseDate": "2015-12-14",
+      "eligibilityStatus": "not eligible"
     },
     "3.11.0": {
-      "releaseDate": "2016-01-29"
+      "releaseDate": "2016-01-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.12.0": {
-      "releaseDate": "2016-02-05"
+      "releaseDate": "2016-02-05",
+      "eligibilityStatus": "not eligible"
     },
     "3.13.0": {
-      "releaseDate": "2016-02-23"
+      "releaseDate": "2016-02-23",
+      "eligibilityStatus": "not eligible"
     },
     "3.13.1": {
-      "releaseDate": "2016-03-24"
+      "releaseDate": "2016-03-24",
+      "eligibilityStatus": "not eligible"
     },
     "3.14.0": {
-      "releaseDate": "2016-05-04"
+      "releaseDate": "2016-05-04",
+      "eligibilityStatus": "not eligible"
     },
     "3.14.1": {
-      "releaseDate": "2016-05-12"
+      "releaseDate": "2016-05-12",
+      "eligibilityStatus": "not eligible"
     },
     "3.14.2": {
-      "releaseDate": "2016-05-24"
+      "releaseDate": "2016-05-24",
+      "eligibilityStatus": "not eligible"
     },
     "3.14.3": {
-      "releaseDate": "2016-05-25"
+      "releaseDate": "2016-05-25",
+      "eligibilityStatus": "not eligible"
     },
     "3.14.4": {
-      "releaseDate": "2016-05-25"
+      "releaseDate": "2016-05-25",
+      "eligibilityStatus": "not eligible"
     },
     "3.14.5": {
-      "releaseDate": "2016-05-26"
+      "releaseDate": "2016-05-26",
+      "eligibilityStatus": "not eligible"
     },
     "3.14.6": {
-      "releaseDate": "2016-05-30"
+      "releaseDate": "2016-05-30",
+      "eligibilityStatus": "not eligible"
     },
     "3.15.0": {
-      "releaseDate": "2016-06-07"
+      "releaseDate": "2016-06-07",
+      "eligibilityStatus": "not eligible"
     },
     "3.15.1": {
-      "releaseDate": "2016-06-16"
+      "releaseDate": "2016-06-16",
+      "eligibilityStatus": "not eligible"
     },
     "3.16.0": {
-      "releaseDate": "2016-06-22"
+      "releaseDate": "2016-06-22",
+      "eligibilityStatus": "not eligible"
     },
     "3.17.0": {
-      "releaseDate": "2016-07-06"
+      "releaseDate": "2016-07-06",
+      "eligibilityStatus": "not eligible"
     },
     "3.18.0": {
-      "releaseDate": "2016-07-22"
+      "releaseDate": "2016-07-22",
+      "eligibilityStatus": "not eligible"
     },
     "3.18.1": {
-      "releaseDate": "2016-08-31"
+      "releaseDate": "2016-08-31",
+      "eligibilityStatus": "not eligible"
     },
     "3.19.0": {
-      "releaseDate": "2016-10-26"
+      "releaseDate": "2016-10-26",
+      "eligibilityStatus": "not eligible"
     },
     "3.19.1": {
-      "releaseDate": "2016-11-10"
+      "releaseDate": "2016-11-10",
+      "eligibilityStatus": "not eligible"
     },
     "3.19.2": {
-      "releaseDate": "2016-11-28"
+      "releaseDate": "2016-11-28",
+      "eligibilityStatus": "not eligible"
     },
     "3.20.0": {
-      "releaseDate": "2016-12-14"
+      "releaseDate": "2016-12-14",
+      "eligibilityStatus": "not eligible"
     },
     "3.20.1": {
-      "releaseDate": "2016-12-16"
+      "releaseDate": "2016-12-16",
+      "eligibilityStatus": "not eligible"
     },
     "3.20.2": {
-      "releaseDate": "2016-12-19"
+      "releaseDate": "2016-12-19",
+      "eligibilityStatus": "not eligible"
     },
     "3.20.3": {
-      "releaseDate": "2017-01-04"
+      "releaseDate": "2017-01-04",
+      "eligibilityStatus": "not eligible"
     },
     "3.20.4": {
-      "releaseDate": "2017-01-16"
+      "releaseDate": "2017-01-16",
+      "eligibilityStatus": "not eligible"
     },
     "3.21.0": {
-      "releaseDate": "2017-02-06"
+      "releaseDate": "2017-02-06",
+      "eligibilityStatus": "not eligible"
     },
     "3.21.1": {
-      "releaseDate": "2017-02-08"
+      "releaseDate": "2017-02-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.22.0": {
-      "releaseDate": "2017-03-13"
+      "releaseDate": "2017-03-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.22.1": {
-      "releaseDate": "2017-03-13"
+      "releaseDate": "2017-03-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.22.2": {
-      "releaseDate": "2017-05-18"
+      "releaseDate": "2017-05-18",
+      "eligibilityStatus": "not eligible"
     },
     "3.22.3": {
-      "releaseDate": "2017-05-29"
+      "releaseDate": "2017-05-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.23.0": {
-      "releaseDate": "2017-06-08"
+      "releaseDate": "2017-06-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.0": {
-      "releaseDate": "2017-06-21"
+      "releaseDate": "2017-06-21",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.1": {
-      "releaseDate": "2017-07-20"
+      "releaseDate": "2017-07-20",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.2": {
-      "releaseDate": "2017-07-24"
+      "releaseDate": "2017-07-24",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.3": {
-      "releaseDate": "2017-07-24"
+      "releaseDate": "2017-07-24",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.4": {
-      "releaseDate": "2017-09-21"
+      "releaseDate": "2017-09-21",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.5": {
-      "releaseDate": "2017-10-02"
+      "releaseDate": "2017-10-02",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.6": {
-      "releaseDate": "2017-11-16"
+      "releaseDate": "2017-11-16",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.7": {
-      "releaseDate": "2017-11-29"
+      "releaseDate": "2017-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.8": {
-      "releaseDate": "2017-12-13"
+      "releaseDate": "2017-12-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.9": {
-      "releaseDate": "2017-12-29"
+      "releaseDate": "2017-12-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.10": {
-      "releaseDate": "2018-02-07"
+      "releaseDate": "2018-02-07",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.11": {
-      "releaseDate": "2018-02-08"
+      "releaseDate": "2018-02-08",
+      "eligibilityStatus": "not eligible"
     },
     "3.24.12": {
-      "releaseDate": "2018-02-28"
+      "releaseDate": "2018-02-28",
+      "eligibilityStatus": "not eligible"
     },
     "3.25.0": {
-      "releaseDate": "2018-03-07"
+      "releaseDate": "2018-03-07",
+      "eligibilityStatus": "not eligible"
     },
     "3.25.1": {
-      "releaseDate": "2018-03-07"
+      "releaseDate": "2018-03-07",
+      "eligibilityStatus": "not eligible"
     },
     "3.26.0": {
-      "releaseDate": "2018-03-21"
+      "releaseDate": "2018-03-21",
+      "eligibilityStatus": "not eligible"
     },
     "3.27.0": {
-      "releaseDate": "2018-04-16"
+      "releaseDate": "2018-04-16",
+      "eligibilityStatus": "not eligible"
     },
     "3.27.1": {
-      "releaseDate": "2018-05-03"
+      "releaseDate": "2018-05-03",
+      "eligibilityStatus": "not eligible"
     },
     "3.28.0": {
-      "releaseDate": "2018-06-13"
+      "releaseDate": "2018-06-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.29.0": {
-      "releaseDate": "2018-06-20"
+      "releaseDate": "2018-06-20",
+      "eligibilityStatus": "not eligible"
     },
     "3.30.0": {
-      "releaseDate": "2018-08-01"
+      "releaseDate": "2018-08-01",
+      "eligibilityStatus": "not eligible"
     },
     "3.31.0": {
-      "releaseDate": "2018-12-04"
+      "releaseDate": "2018-12-04",
+      "eligibilityStatus": "not eligible"
     },
     "3.32.0": {
-      "releaseDate": "2018-12-17"
+      "releaseDate": "2018-12-17",
+      "eligibilityStatus": "not eligible"
     },
     "3.32.1": {
-      "releaseDate": "2019-03-14"
+      "releaseDate": "2019-03-14",
+      "eligibilityStatus": "not eligible"
     },
     "3.33.0": {
-      "releaseDate": "2019-05-09"
+      "releaseDate": "2019-05-09",
+      "eligibilityStatus": "not eligible"
     },
     "3.34.0": {
-      "releaseDate": "2019-08-29"
+      "releaseDate": "2019-08-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.35.0": {
-      "releaseDate": "2019-09-26"
+      "releaseDate": "2019-09-26",
+      "eligibilityStatus": "not eligible"
     },
     "3.35.1": {
-      "releaseDate": "2019-10-08"
+      "releaseDate": "2019-10-08",
+      "eligibilityStatus": "not eligible"
     },
     "4.0.0": {
-      "releaseDate": "2020-02-03"
+      "releaseDate": "2020-02-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.0.1": {
-      "releaseDate": "2020-02-03"
+      "releaseDate": "2020-02-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.0.2": {
-      "releaseDate": "2020-02-07"
+      "releaseDate": "2020-02-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.0.3": {
-      "releaseDate": "2020-02-13"
+      "releaseDate": "2020-02-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.1.0": {
-      "releaseDate": "2020-03-09"
+      "releaseDate": "2020-03-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.2.0": {
-      "releaseDate": "2020-04-21"
+      "releaseDate": "2020-04-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.3.0": {
-      "releaseDate": "2020-06-11"
+      "releaseDate": "2020-06-11",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.3.1": {
-      "releaseDate": "2020-07-20"
+      "releaseDate": "2020-07-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.4.0": {
-      "releaseDate": "2020-08-06"
+      "releaseDate": "2020-08-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.5.0": {
-      "releaseDate": "2020-09-14"
+      "releaseDate": "2020-09-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.5.1": {
-      "releaseDate": "2020-09-14"
+      "releaseDate": "2020-09-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.6.0": {
-      "releaseDate": "2020-11-02"
+      "releaseDate": "2020-11-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.7.0": {
-      "releaseDate": "2020-11-16"
+      "releaseDate": "2020-11-16",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.8.0": {
-      "releaseDate": "2020-11-19"
+      "releaseDate": "2020-11-19",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.8.1": {
-      "releaseDate": "2020-11-25"
+      "releaseDate": "2020-11-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.8.2": {
-      "releaseDate": "2020-11-26"
+      "releaseDate": "2020-11-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.8.3": {
-      "releaseDate": "2020-12-03"
+      "releaseDate": "2020-12-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.8.4": {
-      "releaseDate": "2021-01-20"
+      "releaseDate": "2021-01-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.8.5": {
-      "releaseDate": "2021-02-08"
+      "releaseDate": "2021-02-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.8.6": {
-      "releaseDate": "2021-03-08"
+      "releaseDate": "2021-03-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.9.0": {
-      "releaseDate": "2021-04-13"
+      "releaseDate": "2021-04-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.9.1": {
-      "releaseDate": "2021-04-26"
+      "releaseDate": "2021-04-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.9.2": {
-      "releaseDate": "2021-06-10"
+      "releaseDate": "2021-06-10",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.9.3": {
-      "releaseDate": "2021-06-15"
+      "releaseDate": "2021-06-15",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.10.0": {
-      "releaseDate": "2021-06-23"
+      "releaseDate": "2021-06-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.10.2": {
-      "releaseDate": "2021-06-23"
+      "releaseDate": "2021-06-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.10.3": {
-      "releaseDate": "2021-07-05"
+      "releaseDate": "2021-07-05",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.10.4": {
-      "releaseDate": "2021-08-23"
+      "releaseDate": "2021-08-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.10.5": {
-      "releaseDate": "2021-08-26"
+      "releaseDate": "2021-08-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.11.0": {
-      "releaseDate": "2021-10-20"
+      "releaseDate": "2021-10-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.12.0": {
-      "releaseDate": "2022-01-07"
+      "releaseDate": "2022-01-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.12.1": {
-      "releaseDate": "2022-01-28"
+      "releaseDate": "2022-01-28",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.12.2": {
-      "releaseDate": "2022-03-02"
+      "releaseDate": "2022-03-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.13.0": {
-      "releaseDate": "2022-03-14"
+      "releaseDate": "2022-03-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.13.1": {
-      "releaseDate": "2022-05-18"
+      "releaseDate": "2022-05-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.14.0": {
-      "releaseDate": "2022-07-18"
+      "releaseDate": "2022-07-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.14.1": {
-      "releaseDate": "2022-07-20"
+      "releaseDate": "2022-07-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.14.2": {
-      "releaseDate": "2022-07-27"
+      "releaseDate": "2022-07-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.14.3": {
-      "releaseDate": "2022-12-19"
+      "releaseDate": "2022-12-19",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.15.0": {
-      "releaseDate": "2023-03-02"
+      "releaseDate": "2023-03-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.16.0": {
-      "releaseDate": "2023-03-22"
+      "releaseDate": "2023-03-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.17.0": {
-      "releaseDate": "2023-04-03"
+      "releaseDate": "2023-04-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.17.1": {
-      "releaseDate": "2023-05-24"
+      "releaseDate": "2023-05-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.17.2": {
-      "releaseDate": "2023-06-08"
+      "releaseDate": "2023-06-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.18.0": {
-      "releaseDate": "2023-06-23"
+      "releaseDate": "2023-06-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.19.0": {
-      "releaseDate": "2023-07-18"
+      "releaseDate": "2023-07-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.19.1": {
-      "releaseDate": "2023-07-20"
+      "releaseDate": "2023-07-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.20.0": {
-      "releaseDate": "2023-09-12"
+      "releaseDate": "2023-09-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.21.0": {
-      "releaseDate": "2023-12-11"
+      "releaseDate": "2023-12-11",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.21.1": {
-      "releaseDate": "2023-12-12"
+      "releaseDate": "2023-12-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.22.0": {
-      "releaseDate": "2023-12-14"
+      "releaseDate": "2023-12-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.22.1": {
-      "releaseDate": "2024-01-09"
+      "releaseDate": "2024-01-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.23.0": {
-      "releaseDate": "2024-03-26"
+      "releaseDate": "2024-03-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.23.1": {
-      "releaseDate": "2024-03-26"
+      "releaseDate": "2024-03-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.23.2": {
-      "releaseDate": "2024-03-27"
+      "releaseDate": "2024-03-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.23.3": {
-      "releaseDate": "2024-04-10"
+      "releaseDate": "2024-04-10",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.24.0": {
-      "releaseDate": "2024-06-25"
+      "releaseDate": "2024-06-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "5.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "5.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "5.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "5.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "5.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "5.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "5.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "5.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "5.2.3": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "5.2.4": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "5.2.5": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "5.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "5.3.1": {
-      "releaseDate": "2024-09-09"
+      "releaseDate": "2024-09-09",
+      "eligibilityStatus": "eligible"
     },
     "5.3.2": {
-      "releaseDate": "2024-09-09"
+      "releaseDate": "2024-09-09",
+      "eligibilityStatus": "eligible"
     },
     "5.4.0": {
-      "releaseDate": "2024-09-10"
+      "releaseDate": "2024-09-10",
+      "eligibilityStatus": "eligible"
     },
     "5.4.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "5.4.2": {
-      "releaseDate": "2024-09-13"
+      "releaseDate": "2024-09-13",
+      "eligibilityStatus": "eligible"
     },
     "5.4.3": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "5.5.0": {
-      "releaseDate": "2024-09-18"
+      "releaseDate": "2024-09-18",
+      "eligibilityStatus": "eligible"
     },
     "5.5.1": {
-      "releaseDate": "2024-09-18"
+      "releaseDate": "2024-09-18",
+      "eligibilityStatus": "eligible"
     },
     "5.5.2": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "5.5.3": {
-      "releaseDate": "2024-09-20"
+      "releaseDate": "2024-09-20",
+      "eligibilityStatus": "eligible"
     },
     "5.6.0": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "5.6.1": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "5.7.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "5.8.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "5.8.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "5.9.0": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "5.9.1": {
-      "releaseDate": "2024-10-18"
+      "releaseDate": "2024-10-18",
+      "eligibilityStatus": "eligible"
     },
     "5.10.0": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "5.10.1": {
-      "releaseDate": "2024-10-22"
+      "releaseDate": "2024-10-22",
+      "eligibilityStatus": "eligible"
     },
     "5.10.2": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "5.11.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "5.12.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "5.13.0": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "kotlin": {
     "1.0.0": {
-      "releaseDate": "2019-06-03"
+      "releaseDate": "2019-06-03",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.0": {
-      "releaseDate": "2019-07-29"
+      "releaseDate": "2019-07-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.1": {
-      "releaseDate": "2019-08-01"
+      "releaseDate": "2019-08-01",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.2": {
-      "releaseDate": "2019-08-09"
+      "releaseDate": "2019-08-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.3": {
-      "releaseDate": "2019-08-27"
+      "releaseDate": "2019-08-27",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.4": {
-      "releaseDate": "2019-09-05"
+      "releaseDate": "2019-09-05",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.0": {
-      "releaseDate": "2019-11-26"
+      "releaseDate": "2019-11-26",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.1": {
-      "releaseDate": "2019-12-12"
+      "releaseDate": "2019-12-12",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.2": {
-      "releaseDate": "2020-02-20"
+      "releaseDate": "2020-02-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.1": {
-      "releaseDate": "2020-02-24"
+      "releaseDate": "2020-02-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.0": {
-      "releaseDate": "2020-06-04"
+      "releaseDate": "2020-06-04",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.0": {
-      "releaseDate": "2020-09-21"
+      "releaseDate": "2020-09-21",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.1": {
-      "releaseDate": "2020-11-02"
+      "releaseDate": "2020-11-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.2": {
-      "releaseDate": "2020-11-10"
+      "releaseDate": "2020-11-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.0": {
-      "releaseDate": "2020-11-24"
+      "releaseDate": "2020-11-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.1": {
-      "releaseDate": "2020-12-15"
+      "releaseDate": "2020-12-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.2": {
-      "releaseDate": "2021-01-20"
+      "releaseDate": "2021-01-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.7.0": {
-      "releaseDate": "2021-02-22"
+      "releaseDate": "2021-02-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.8.0": {
-      "releaseDate": "2021-06-21"
+      "releaseDate": "2021-06-21",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.0": {
-      "releaseDate": "2021-07-13"
+      "releaseDate": "2021-07-13",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.1": {
-      "releaseDate": "2021-07-23"
+      "releaseDate": "2021-07-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.2": {
-      "releaseDate": "2021-08-10"
+      "releaseDate": "2021-08-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.0": {
-      "releaseDate": "2021-09-21"
+      "releaseDate": "2021-09-21",
+      "eligibilityStatus": "not eligible"
     },
     "1.11.0": {
-      "releaseDate": "2021-10-07"
+      "releaseDate": "2021-10-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.0": {
-      "releaseDate": "2021-10-28"
+      "releaseDate": "2021-10-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.1": {
-      "releaseDate": "2022-01-27"
+      "releaseDate": "2022-01-27",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.2": {
-      "releaseDate": "2022-03-08"
+      "releaseDate": "2022-03-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.13.0": {
-      "releaseDate": "2022-04-14"
+      "releaseDate": "2022-04-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.0": {
-      "releaseDate": "2022-05-17"
+      "releaseDate": "2022-05-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.0": {
-      "releaseDate": "2022-06-16"
+      "releaseDate": "2022-06-16",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.1": {
-      "releaseDate": "2022-09-26"
+      "releaseDate": "2022-09-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.2": {
-      "releaseDate": "2023-01-30"
+      "releaseDate": "2023-01-30",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.3": {
-      "releaseDate": "2023-02-03"
+      "releaseDate": "2023-02-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.4": {
-      "releaseDate": "2023-06-08"
+      "releaseDate": "2023-06-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.5": {
-      "releaseDate": "2023-06-22"
+      "releaseDate": "2023-06-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.6": {
-      "releaseDate": "2023-08-21"
+      "releaseDate": "2023-08-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.7": {
-      "releaseDate": "2023-09-04"
+      "releaseDate": "2023-09-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.8": {
-      "releaseDate": "2023-10-10"
+      "releaseDate": "2023-10-10",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.9": {
-      "releaseDate": "2023-12-07"
+      "releaseDate": "2023-12-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.10": {
-      "releaseDate": "2024-03-27"
+      "releaseDate": "2024-03-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.11": {
-      "releaseDate": "2024-05-16"
+      "releaseDate": "2024-05-16",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.12": {
-      "releaseDate": "2024-05-28"
+      "releaseDate": "2024-05-28",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.13": {
-      "releaseDate": "2024-06-17"
+      "releaseDate": "2024-06-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.14": {
-      "releaseDate": "2024-08-06"
+      "releaseDate": "2024-08-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "3.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "3.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "3.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "3.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "3.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "3.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "3.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "3.2.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "3.2.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "3.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "3.3.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "3.3.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "3.3.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "3.4.0": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "3.4.1": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "3.5.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "3.6.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "3.6.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "3.6.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "3.6.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "3.6.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "3.7.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "3.8.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "3.9.0": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "php": {
     "1.0.0": {
-      "releaseDate": "2013-12-16"
+      "releaseDate": "2013-12-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.0": {
-      "releaseDate": "2013-12-23"
+      "releaseDate": "2013-12-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.1": {
-      "releaseDate": "2014-01-20"
+      "releaseDate": "2014-01-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.2": {
-      "releaseDate": "2014-01-29"
+      "releaseDate": "2014-01-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.3": {
-      "releaseDate": "2014-01-29"
+      "releaseDate": "2014-01-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.5": {
-      "releaseDate": "2014-01-31"
+      "releaseDate": "2014-01-31",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.6": {
-      "releaseDate": "2014-02-13"
+      "releaseDate": "2014-02-13",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.7": {
-      "releaseDate": "2014-03-06"
+      "releaseDate": "2014-03-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.8": {
-      "releaseDate": "2014-04-02"
+      "releaseDate": "2014-04-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.9": {
-      "releaseDate": "2014-04-30"
+      "releaseDate": "2014-04-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.0": {
-      "releaseDate": "2014-06-14"
+      "releaseDate": "2014-06-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.1": {
-      "releaseDate": "2014-07-08"
+      "releaseDate": "2014-07-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.2": {
-      "releaseDate": "2014-07-17"
+      "releaseDate": "2014-07-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.0": {
-      "releaseDate": "2014-07-24"
+      "releaseDate": "2014-07-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.1": {
-      "releaseDate": "2014-07-24"
+      "releaseDate": "2014-07-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.2": {
-      "releaseDate": "2014-07-28"
+      "releaseDate": "2014-07-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.3": {
-      "releaseDate": "2014-07-28"
+      "releaseDate": "2014-07-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.4": {
-      "releaseDate": "2014-08-18"
+      "releaseDate": "2014-08-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.5": {
-      "releaseDate": "2014-09-14"
+      "releaseDate": "2014-09-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.0": {
-      "releaseDate": "2014-10-17"
+      "releaseDate": "2014-10-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.1": {
-      "releaseDate": "2014-10-22"
+      "releaseDate": "2014-10-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.0": {
-      "releaseDate": "2014-11-29"
+      "releaseDate": "2014-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.1": {
-      "releaseDate": "2014-12-11"
+      "releaseDate": "2014-12-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.2": {
-      "releaseDate": "2015-01-07"
+      "releaseDate": "2015-01-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.3": {
-      "releaseDate": "2015-01-20"
+      "releaseDate": "2015-01-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.4": {
-      "releaseDate": "2015-03-12"
+      "releaseDate": "2015-03-12",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.5": {
-      "releaseDate": "2015-04-09"
+      "releaseDate": "2015-04-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.6": {
-      "releaseDate": "2015-04-30"
+      "releaseDate": "2015-04-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.8": {
-      "releaseDate": "2015-05-27"
+      "releaseDate": "2015-05-27",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.0": {
-      "releaseDate": "2015-07-03"
+      "releaseDate": "2015-07-03",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.1": {
-      "releaseDate": "2015-09-07"
+      "releaseDate": "2015-09-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.7.0": {
-      "releaseDate": "2015-10-16"
+      "releaseDate": "2015-10-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.2": {
-      "releaseDate": "2015-11-19"
+      "releaseDate": "2015-11-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.3": {
-      "releaseDate": "2015-12-07"
+      "releaseDate": "2015-12-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.7.1": {
-      "releaseDate": "2016-02-23"
+      "releaseDate": "2016-02-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.8.0": {
-      "releaseDate": "2016-02-24"
+      "releaseDate": "2016-02-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.8.1": {
-      "releaseDate": "2016-03-08"
+      "releaseDate": "2016-03-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.8.2": {
-      "releaseDate": "2016-05-05"
+      "releaseDate": "2016-05-05",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.0": {
-      "releaseDate": "2016-05-10"
+      "releaseDate": "2016-05-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.1": {
-      "releaseDate": "2016-05-17"
+      "releaseDate": "2016-05-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.2": {
-      "releaseDate": "2016-05-18"
+      "releaseDate": "2016-05-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.3": {
-      "releaseDate": "2016-06-03"
+      "releaseDate": "2016-06-03",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.4": {
-      "releaseDate": "2016-06-14"
+      "releaseDate": "2016-06-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.0": {
-      "releaseDate": "2016-06-23"
+      "releaseDate": "2016-06-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.1": {
-      "releaseDate": "2016-06-29"
+      "releaseDate": "2016-06-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.2": {
-      "releaseDate": "2016-08-05"
+      "releaseDate": "2016-08-05",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.3": {
-      "releaseDate": "2016-10-03"
+      "releaseDate": "2016-10-03",
+      "eligibilityStatus": "not eligible"
     },
     "1.11.0": {
-      "releaseDate": "2016-10-20"
+      "releaseDate": "2016-10-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.0": {
-      "releaseDate": "2016-12-08"
+      "releaseDate": "2016-12-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.1": {
-      "releaseDate": "2016-12-09"
+      "releaseDate": "2016-12-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.13.0": {
-      "releaseDate": "2016-12-21"
+      "releaseDate": "2016-12-21",
+      "eligibilityStatus": "not eligible"
     },
     "1.14.0": {
-      "releaseDate": "2017-02-07"
+      "releaseDate": "2017-02-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.15.0": {
-      "releaseDate": "2017-02-25"
+      "releaseDate": "2017-02-25",
+      "eligibilityStatus": "not eligible"
     },
     "1.16.0": {
-      "releaseDate": "2017-02-28"
+      "releaseDate": "2017-02-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.17.0": {
-      "releaseDate": "2017-04-03"
+      "releaseDate": "2017-04-03",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.0": {
-      "releaseDate": "2017-05-22"
+      "releaseDate": "2017-05-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.19.0": {
-      "releaseDate": "2017-08-28"
+      "releaseDate": "2017-08-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.20.0": {
-      "releaseDate": "2017-08-30"
+      "releaseDate": "2017-08-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.21.0": {
-      "releaseDate": "2017-10-06"
+      "releaseDate": "2017-10-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.22.0": {
-      "releaseDate": "2017-10-17"
+      "releaseDate": "2017-10-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.23.0": {
-      "releaseDate": "2017-10-26"
+      "releaseDate": "2017-10-26",
+      "eligibilityStatus": "not eligible"
     },
     "1.23.1": {
-      "releaseDate": "2017-11-07"
+      "releaseDate": "2017-11-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.24.0": {
-      "releaseDate": "2017-12-12"
+      "releaseDate": "2017-12-12",
+      "eligibilityStatus": "not eligible"
     },
     "1.25.0": {
-      "releaseDate": "2017-12-28"
+      "releaseDate": "2017-12-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.25.1": {
-      "releaseDate": "2018-03-02"
+      "releaseDate": "2018-03-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.26.0": {
-      "releaseDate": "2018-06-07"
+      "releaseDate": "2018-06-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.26.1": {
-      "releaseDate": "2018-06-15"
+      "releaseDate": "2018-06-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.27.0": {
-      "releaseDate": "2018-06-19"
+      "releaseDate": "2018-06-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.28.0": {
-      "releaseDate": "2018-11-06"
+      "releaseDate": "2018-11-06",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.0": {
-      "releaseDate": "2018-11-22"
+      "releaseDate": "2018-11-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.1": {
-      "releaseDate": "2018-12-12"
+      "releaseDate": "2018-12-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.0": {
-      "releaseDate": "2018-12-19"
+      "releaseDate": "2018-12-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.1": {
-      "releaseDate": "2018-12-19"
+      "releaseDate": "2018-12-19",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.2": {
-      "releaseDate": "2018-12-26"
+      "releaseDate": "2018-12-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.3": {
-      "releaseDate": "2019-01-11"
+      "releaseDate": "2019-01-11",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.0": {
-      "releaseDate": "2019-01-23"
+      "releaseDate": "2019-01-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.1": {
-      "releaseDate": "2019-02-21"
+      "releaseDate": "2019-02-21",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.2": {
-      "releaseDate": "2019-02-26"
+      "releaseDate": "2019-02-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.3": {
-      "releaseDate": "2019-02-26"
+      "releaseDate": "2019-02-26",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.4": {
-      "releaseDate": "2019-05-07"
+      "releaseDate": "2019-05-07",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.5": {
-      "releaseDate": "2019-05-14"
+      "releaseDate": "2019-05-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.6": {
-      "releaseDate": "2019-05-15"
+      "releaseDate": "2019-05-15",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.0": {
-      "releaseDate": "2019-07-18"
+      "releaseDate": "2019-07-18",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.0": {
-      "releaseDate": "2019-09-11"
+      "releaseDate": "2019-09-11",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.0": {
-      "releaseDate": "2019-11-05"
+      "releaseDate": "2019-11-05",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.1": {
-      "releaseDate": "2020-01-27"
+      "releaseDate": "2020-01-27",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.0": {
-      "releaseDate": "2020-03-09"
+      "releaseDate": "2020-03-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.1": {
-      "releaseDate": "2020-04-16"
+      "releaseDate": "2020-04-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.28.1": {
-      "releaseDate": "2020-06-03"
+      "releaseDate": "2020-06-03",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.2": {
-      "releaseDate": "2020-06-23"
+      "releaseDate": "2020-06-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.0": {
-      "releaseDate": "2020-06-25"
+      "releaseDate": "2020-06-25",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.1": {
-      "releaseDate": "2020-11-12"
+      "releaseDate": "2020-11-12",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.2": {
-      "releaseDate": "2020-11-24"
+      "releaseDate": "2020-11-24",
+      "eligibilityStatus": "not eligible"
     },
     "2.7.3": {
-      "releaseDate": "2020-12-22"
+      "releaseDate": "2020-12-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.8.0": {
-      "releaseDate": "2021-04-07"
+      "releaseDate": "2021-04-07",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.0": {
-      "releaseDate": "2021-04-14"
+      "releaseDate": "2021-04-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.0.1": {
-      "releaseDate": "2021-04-23"
+      "releaseDate": "2021-04-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.0.2": {
-      "releaseDate": "2021-05-04"
+      "releaseDate": "2021-05-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.1.0": {
-      "releaseDate": "2021-08-31"
+      "releaseDate": "2021-08-31",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.2.0": {
-      "releaseDate": "2022-01-04"
+      "releaseDate": "2022-01-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.3.0": {
-      "releaseDate": "2022-07-06"
+      "releaseDate": "2022-07-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.3.1": {
-      "releaseDate": "2022-08-02"
+      "releaseDate": "2022-08-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.3.2": {
-      "releaseDate": "2022-09-22"
+      "releaseDate": "2022-09-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.4.0": {
-      "releaseDate": "2023-08-10"
+      "releaseDate": "2023-08-10",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.4.1": {
-      "releaseDate": "2023-08-28"
+      "releaseDate": "2023-08-28",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "4.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "4.2.0": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "4.3.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "4.3.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "4.3.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "4.3.3": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "4.3.4": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "4.3.5": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "4.4.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "4.4.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "4.4.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "4.4.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "4.4.4": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "4.5.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "4.6.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "4.6.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "4.6.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "4.6.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "4.6.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "4.7.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "4.8.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "4.8.1": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "python": {
     "1.0.0": {
-      "releaseDate": "2013-10-09"
+      "releaseDate": "2013-10-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.0.1": {
-      "releaseDate": "2013-10-09"
+      "releaseDate": "2013-10-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.0.2": {
-      "releaseDate": "2013-10-11"
+      "releaseDate": "2013-10-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.0": {
-      "releaseDate": "2013-11-07"
+      "releaseDate": "2013-11-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.1": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.3": {
-      "releaseDate": "2013-12-06"
+      "releaseDate": "2013-12-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.5": {
-      "releaseDate": "2013-12-06"
+      "releaseDate": "2013-12-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.6": {
-      "releaseDate": "2013-12-10"
+      "releaseDate": "2013-12-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.1": {
-      "releaseDate": "2013-12-18"
+      "releaseDate": "2013-12-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.2": {
-      "releaseDate": "2013-12-23"
+      "releaseDate": "2013-12-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.3": {
-      "releaseDate": "2014-01-11"
+      "releaseDate": "2014-01-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.4": {
-      "releaseDate": "2014-01-11"
+      "releaseDate": "2014-01-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.5": {
-      "releaseDate": "2014-01-31"
+      "releaseDate": "2014-01-31",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.6": {
-      "releaseDate": "2014-02-02"
+      "releaseDate": "2014-02-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.9": {
-      "releaseDate": "2014-03-31"
+      "releaseDate": "2014-03-31",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.10": {
-      "releaseDate": "2014-04-18"
+      "releaseDate": "2014-04-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.11": {
-      "releaseDate": "2014-07-17"
+      "releaseDate": "2014-07-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.12": {
-      "releaseDate": "2014-08-20"
+      "releaseDate": "2014-08-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.13": {
-      "releaseDate": "2014-08-21"
+      "releaseDate": "2014-08-21",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.14": {
-      "releaseDate": "2014-08-22"
+      "releaseDate": "2014-08-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.1": {
-      "releaseDate": "2014-09-14"
+      "releaseDate": "2014-09-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.4": {
-      "releaseDate": "2014-09-15"
+      "releaseDate": "2014-09-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.7": {
-      "releaseDate": "2014-09-17"
+      "releaseDate": "2014-09-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.8": {
-      "releaseDate": "2014-09-17"
+      "releaseDate": "2014-09-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.9": {
-      "releaseDate": "2014-09-17"
+      "releaseDate": "2014-09-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.10": {
-      "releaseDate": "2014-10-11"
+      "releaseDate": "2014-10-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.11": {
-      "releaseDate": "2014-10-22"
+      "releaseDate": "2014-10-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.0": {
-      "releaseDate": "2014-11-29"
+      "releaseDate": "2014-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.0": {
-      "releaseDate": "2014-12-26"
+      "releaseDate": "2014-12-26",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.1": {
-      "releaseDate": "2015-03-13"
+      "releaseDate": "2015-03-13",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.2": {
-      "releaseDate": "2015-04-09"
+      "releaseDate": "2015-04-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.3": {
-      "releaseDate": "2015-04-24"
+      "releaseDate": "2015-04-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.4": {
-      "releaseDate": "2015-05-04"
+      "releaseDate": "2015-05-04",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.5": {
-      "releaseDate": "2015-06-16"
+      "releaseDate": "2015-06-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.6": {
-      "releaseDate": "2015-06-18"
+      "releaseDate": "2015-06-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.7": {
-      "releaseDate": "2015-06-19"
+      "releaseDate": "2015-06-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.8": {
-      "releaseDate": "2015-07-10"
+      "releaseDate": "2015-07-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.9": {
-      "releaseDate": "2015-07-22"
+      "releaseDate": "2015-07-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.0": {
-      "releaseDate": "2015-07-30"
+      "releaseDate": "2015-07-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.1": {
-      "releaseDate": "2015-07-30"
+      "releaseDate": "2015-07-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.2": {
-      "releaseDate": "2015-08-01"
+      "releaseDate": "2015-08-01",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.3": {
-      "releaseDate": "2015-08-13"
+      "releaseDate": "2015-08-13",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.4": {
-      "releaseDate": "2015-08-17"
+      "releaseDate": "2015-08-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.6": {
-      "releaseDate": "2015-09-07"
+      "releaseDate": "2015-09-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.7": {
-      "releaseDate": "2015-10-06"
+      "releaseDate": "2015-10-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.8": {
-      "releaseDate": "2015-10-07"
+      "releaseDate": "2015-10-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.7.0": {
-      "releaseDate": "2015-10-16"
+      "releaseDate": "2015-10-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.7.1": {
-      "releaseDate": "2015-10-23"
+      "releaseDate": "2015-10-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.8.0": {
-      "releaseDate": "2016-02-11"
+      "releaseDate": "2016-02-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.0": {
-      "releaseDate": "2016-06-15"
+      "releaseDate": "2016-06-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.1": {
-      "releaseDate": "2016-07-05"
+      "releaseDate": "2016-07-05",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.2": {
-      "releaseDate": "2016-08-08"
+      "releaseDate": "2016-08-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.0": {
-      "releaseDate": "2016-10-19"
+      "releaseDate": "2016-10-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.11.0": {
-      "releaseDate": "2016-12-02"
+      "releaseDate": "2016-12-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.11.2": {
-      "releaseDate": "2017-01-31"
+      "releaseDate": "2017-01-31",
+      "eligibilityStatus": "not eligible"
     },
     "1.11.3": {
-      "releaseDate": "2017-02-23"
+      "releaseDate": "2017-02-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.0": {
-      "releaseDate": "2017-03-02"
+      "releaseDate": "2017-03-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.14.0": {
-      "releaseDate": "2017-10-30"
+      "releaseDate": "2017-10-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.14.1": {
-      "releaseDate": "2017-11-06"
+      "releaseDate": "2017-11-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.15.0": {
-      "releaseDate": "2017-12-05"
+      "releaseDate": "2017-12-05",
+      "eligibilityStatus": "not eligible"
     },
     "1.15.2": {
-      "releaseDate": "2017-12-18"
+      "releaseDate": "2017-12-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.15.3": {
-      "releaseDate": "2018-03-15"
+      "releaseDate": "2018-03-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.16.0": {
-      "releaseDate": "2018-06-07"
+      "releaseDate": "2018-06-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.17.0": {
-      "releaseDate": "2018-06-19"
+      "releaseDate": "2018-06-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.0": {
-      "releaseDate": "2018-11-23"
+      "releaseDate": "2018-11-23",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.1": {
-      "releaseDate": "2018-11-26"
+      "releaseDate": "2018-11-26",
+      "eligibilityStatus": "not eligible"
     },
     "1.19.0": {
-      "releaseDate": "2018-12-18"
+      "releaseDate": "2018-12-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.20.0": {
-      "releaseDate": "2019-01-23"
+      "releaseDate": "2019-01-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.0": {
-      "releaseDate": "2019-04-23"
+      "releaseDate": "2019-04-23",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.1": {
-      "releaseDate": "2019-05-14"
+      "releaseDate": "2019-05-14",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.2": {
-      "releaseDate": "2019-05-21"
+      "releaseDate": "2019-05-21",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.3": {
-      "releaseDate": "2019-05-28"
+      "releaseDate": "2019-05-28",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.4": {
-      "releaseDate": "2019-06-17"
+      "releaseDate": "2019-06-17",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.0": {
-      "releaseDate": "2019-09-04"
+      "releaseDate": "2019-09-04",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.0": {
-      "releaseDate": "2020-03-09"
+      "releaseDate": "2020-03-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.0": {
-      "releaseDate": "2020-06-04"
+      "releaseDate": "2020-06-04",
+      "eligibilityStatus": "not eligible"
     },
     "2.3.1": {
-      "releaseDate": "2020-07-09"
+      "releaseDate": "2020-07-09",
+      "eligibilityStatus": "not eligible"
     },
     "2.4.0": {
-      "releaseDate": "2020-08-10"
+      "releaseDate": "2020-08-10",
+      "eligibilityStatus": "not eligible"
     },
     "2.5.0": {
-      "releaseDate": "2021-04-30"
+      "releaseDate": "2021-04-30",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.0": {
-      "releaseDate": "2021-10-08"
+      "releaseDate": "2021-10-08",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.1": {
-      "releaseDate": "2021-12-13"
+      "releaseDate": "2021-12-13",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.2": {
-      "releaseDate": "2022-05-04"
+      "releaseDate": "2022-05-04",
+      "eligibilityStatus": "not eligible"
     },
     "2.6.3": {
-      "releaseDate": "2023-01-03"
+      "releaseDate": "2023-01-03",
+      "eligibilityStatus": "not eligible"
     },
     "3.0.0": {
-      "releaseDate": "2023-02-27"
+      "releaseDate": "2023-02-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "4.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "4.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "4.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "4.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "4.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "4.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "4.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "4.2.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "4.2.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "4.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "4.4.0": {
-      "releaseDate": "2024-09-09"
+      "releaseDate": "2024-09-09",
+      "eligibilityStatus": "eligible"
     },
     "4.4.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "4.4.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "4.4.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "4.4.4": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "4.4.5": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "4.4.6": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "4.5.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "4.6.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "4.6.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "4.6.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "4.6.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "4.6.4": {
-      "releaseDate": "2024-10-22"
+      "releaseDate": "2024-10-22",
+      "eligibilityStatus": "eligible"
     },
     "4.6.5": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "4.7.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "4.8.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "4.8.1": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "ruby": {
     "1.1.6": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.5": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.4": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.3": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.7": {
-      "releaseDate": "2013-11-08"
+      "releaseDate": "2013-11-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.8": {
-      "releaseDate": "2013-11-26"
+      "releaseDate": "2013-11-26",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.10": {
-      "releaseDate": "2013-11-29"
+      "releaseDate": "2013-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.11": {
-      "releaseDate": "2013-11-29"
+      "releaseDate": "2013-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.14": {
-      "releaseDate": "2013-12-11"
+      "releaseDate": "2013-12-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.15": {
-      "releaseDate": "2013-12-16"
+      "releaseDate": "2013-12-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.16": {
-      "releaseDate": "2013-12-20"
+      "releaseDate": "2013-12-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.17": {
-      "releaseDate": "2014-01-02"
+      "releaseDate": "2014-01-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.0": {
-      "releaseDate": "2014-01-07"
+      "releaseDate": "2014-01-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.1": {
-      "releaseDate": "2014-01-07"
+      "releaseDate": "2014-01-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.2": {
-      "releaseDate": "2014-01-11"
+      "releaseDate": "2014-01-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.3": {
-      "releaseDate": "2014-02-10"
+      "releaseDate": "2014-02-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.6": {
-      "releaseDate": "2014-03-19"
+      "releaseDate": "2014-03-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.7": {
-      "releaseDate": "2014-03-25"
+      "releaseDate": "2014-03-25",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.8": {
-      "releaseDate": "2014-03-28"
+      "releaseDate": "2014-03-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.9": {
-      "releaseDate": "2014-07-10"
+      "releaseDate": "2014-07-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.10": {
-      "releaseDate": "2014-08-22"
+      "releaseDate": "2014-08-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.11": {
-      "releaseDate": "2014-09-14"
+      "releaseDate": "2014-09-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.12": {
-      "releaseDate": "2014-10-08"
+      "releaseDate": "2014-10-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.13": {
-      "releaseDate": "2014-10-22"
+      "releaseDate": "2014-10-22",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.14": {
-      "releaseDate": "2014-11-10"
+      "releaseDate": "2014-11-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.0": {
-      "releaseDate": "2014-11-29"
+      "releaseDate": "2014-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.1": {
-      "releaseDate": "2014-11-29"
+      "releaseDate": "2014-11-29",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.0": {
-      "releaseDate": "2015-03-17"
+      "releaseDate": "2015-03-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.1": {
-      "releaseDate": "2015-04-10"
+      "releaseDate": "2015-04-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.2": {
-      "releaseDate": "2015-05-04"
+      "releaseDate": "2015-05-04",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.3": {
-      "releaseDate": "2015-05-27"
+      "releaseDate": "2015-05-27",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.0": {
-      "releaseDate": "2015-06-05"
+      "releaseDate": "2015-06-05",
+      "eligibilityStatus": "not eligible"
     },
     "1.5.1": {
-      "releaseDate": "2015-07-14"
+      "releaseDate": "2015-07-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.0": {
-      "releaseDate": "2015-07-20"
+      "releaseDate": "2015-07-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.6.1": {
-      "releaseDate": "2015-08-01"
+      "releaseDate": "2015-08-01",
+      "eligibilityStatus": "not eligible"
     },
     "1.7.0": {
-      "releaseDate": "2016-01-09"
+      "releaseDate": "2016-01-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.8.1": {
-      "releaseDate": "2016-04-14"
+      "releaseDate": "2016-04-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.9.0": {
-      "releaseDate": "2016-06-17"
+      "releaseDate": "2016-06-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.10.0": {
-      "releaseDate": "2016-07-11"
+      "releaseDate": "2016-07-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.11.0": {
-      "releaseDate": "2016-08-21"
+      "releaseDate": "2016-08-21",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.0": {
-      "releaseDate": "2016-10-31"
+      "releaseDate": "2016-10-31",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.1": {
-      "releaseDate": "2016-11-25"
+      "releaseDate": "2016-11-25",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.2": {
-      "releaseDate": "2016-12-05"
+      "releaseDate": "2016-12-05",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.3": {
-      "releaseDate": "2016-12-06"
+      "releaseDate": "2016-12-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.4": {
-      "releaseDate": "2016-12-07"
+      "releaseDate": "2016-12-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.5": {
-      "releaseDate": "2017-01-11"
+      "releaseDate": "2017-01-11",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.6": {
-      "releaseDate": "2017-01-25"
+      "releaseDate": "2017-01-25",
+      "eligibilityStatus": "not eligible"
     },
     "1.12.7": {
-      "releaseDate": "2017-03-01"
+      "releaseDate": "2017-03-01",
+      "eligibilityStatus": "not eligible"
     },
     "1.13.0": {
-      "releaseDate": "2017-03-17"
+      "releaseDate": "2017-03-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.14.0": {
-      "releaseDate": "2017-07-31"
+      "releaseDate": "2017-07-31",
+      "eligibilityStatus": "not eligible"
     },
     "1.15.0": {
-      "releaseDate": "2017-08-17"
+      "releaseDate": "2017-08-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.15.1": {
-      "releaseDate": "2017-08-17"
+      "releaseDate": "2017-08-17",
+      "eligibilityStatus": "not eligible"
     },
     "1.16.0": {
-      "releaseDate": "2017-09-14"
+      "releaseDate": "2017-09-14",
+      "eligibilityStatus": "not eligible"
     },
     "1.17.0": {
-      "releaseDate": "2017-10-10"
+      "releaseDate": "2017-10-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.0": {
-      "releaseDate": "2017-11-02"
+      "releaseDate": "2017-11-02",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.1": {
-      "releaseDate": "2017-11-15"
+      "releaseDate": "2017-11-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.2": {
-      "releaseDate": "2017-11-28"
+      "releaseDate": "2017-11-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.3": {
-      "releaseDate": "2017-12-04"
+      "releaseDate": "2017-12-04",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.4": {
-      "releaseDate": "2017-12-06"
+      "releaseDate": "2017-12-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.18.5": {
-      "releaseDate": "2017-12-07"
+      "releaseDate": "2017-12-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.19.0": {
-      "releaseDate": "2017-12-15"
+      "releaseDate": "2017-12-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.19.1": {
-      "releaseDate": "2017-12-18"
+      "releaseDate": "2017-12-18",
+      "eligibilityStatus": "not eligible"
     },
     "1.19.2": {
-      "releaseDate": "2018-04-03"
+      "releaseDate": "2018-04-03",
+      "eligibilityStatus": "not eligible"
     },
     "1.20.0": {
-      "releaseDate": "2018-05-07"
+      "releaseDate": "2018-05-07",
+      "eligibilityStatus": "not eligible"
     },
     "1.20.1": {
-      "releaseDate": "2018-05-15"
+      "releaseDate": "2018-05-15",
+      "eligibilityStatus": "not eligible"
     },
     "1.21.0": {
-      "releaseDate": "2018-05-24"
+      "releaseDate": "2018-05-24",
+      "eligibilityStatus": "not eligible"
     },
     "1.22.0": {
-      "releaseDate": "2018-05-30"
+      "releaseDate": "2018-05-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.23.0": {
-      "releaseDate": "2018-06-19"
+      "releaseDate": "2018-06-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.24.0": {
-      "releaseDate": "2018-11-28"
+      "releaseDate": "2018-11-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.25.0": {
-      "releaseDate": "2018-12-19"
+      "releaseDate": "2018-12-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.25.1": {
-      "releaseDate": "2018-12-19"
+      "releaseDate": "2018-12-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.25.2": {
-      "releaseDate": "2018-12-19"
+      "releaseDate": "2018-12-19",
+      "eligibilityStatus": "not eligible"
     },
     "1.26.0": {
-      "releaseDate": "2019-02-12"
+      "releaseDate": "2019-02-12",
+      "eligibilityStatus": "not eligible"
     },
     "1.26.1": {
-      "releaseDate": "2019-07-31"
+      "releaseDate": "2019-07-31",
+      "eligibilityStatus": "not eligible"
     },
     "1.27.0": {
-      "releaseDate": "2019-09-16"
+      "releaseDate": "2019-09-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.27.1": {
-      "releaseDate": "2019-09-26"
+      "releaseDate": "2019-09-26",
+      "eligibilityStatus": "not eligible"
     },
     "1.27.2": {
-      "releaseDate": "2020-04-28"
+      "releaseDate": "2020-04-28",
+      "eligibilityStatus": "not eligible"
     },
     "1.27.3": {
-      "releaseDate": "2020-06-03"
+      "releaseDate": "2020-06-03",
+      "eligibilityStatus": "not eligible"
     },
     "1.27.4": {
-      "releaseDate": "2020-09-16"
+      "releaseDate": "2020-09-16",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.0": {
-      "releaseDate": "2020-10-27"
+      "releaseDate": "2020-10-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.27.5": {
-      "releaseDate": "2020-10-28"
+      "releaseDate": "2020-10-28",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.1": {
-      "releaseDate": "2020-11-02"
+      "releaseDate": "2020-11-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.0.2": {
-      "releaseDate": "2020-11-09"
+      "releaseDate": "2020-11-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.0.3": {
-      "releaseDate": "2020-11-24"
+      "releaseDate": "2020-11-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.0.4": {
-      "releaseDate": "2021-01-05"
+      "releaseDate": "2021-01-05",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.0": {
-      "releaseDate": "2021-03-31"
+      "releaseDate": "2021-03-31",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.1.1": {
-      "releaseDate": "2021-05-27"
+      "releaseDate": "2021-05-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.2.0": {
-      "releaseDate": "2021-11-08"
+      "releaseDate": "2021-11-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.2.1": {
-      "releaseDate": "2021-11-12"
+      "releaseDate": "2021-11-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.2.2": {
-      "releaseDate": "2021-12-08"
+      "releaseDate": "2021-12-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.2.3": {
-      "releaseDate": "2022-04-21"
+      "releaseDate": "2022-04-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.2.4": {
-      "releaseDate": "2022-05-24"
+      "releaseDate": "2022-05-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.2.5": {
-      "releaseDate": "2022-05-24"
+      "releaseDate": "2022-05-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.3.0": {
-      "releaseDate": "2022-09-26"
+      "releaseDate": "2022-09-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.3.1": {
-      "releaseDate": "2022-10-21"
+      "releaseDate": "2022-10-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.3.2": {
-      "releaseDate": "2023-06-07"
+      "releaseDate": "2023-06-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.3.3": {
-      "releaseDate": "2023-11-14"
+      "releaseDate": "2023-11-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.3.4": {
-      "releaseDate": "2023-11-27"
+      "releaseDate": "2023-11-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "3.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "3.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "3.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "3.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "3.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "3.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "3.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "3.2.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "3.2.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "3.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "3.3.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "3.3.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "3.3.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "3.3.4": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "3.4.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "3.5.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "3.5.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "3.5.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "3.5.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "3.5.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "3.6.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "3.7.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "3.7.1": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "scala": {
     "1.0.0": {
-      "releaseDate": "2015-12-22"
+      "releaseDate": "2015-12-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.1.0": {
-      "releaseDate": "2016-01-25"
+      "releaseDate": "2016-01-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.2.0": {
-      "releaseDate": "2016-02-02"
+      "releaseDate": "2016-02-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.3.0": {
-      "releaseDate": "2016-02-18"
+      "releaseDate": "2016-02-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.4.0": {
-      "releaseDate": "2016-02-18"
+      "releaseDate": "2016-02-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.5": {
-      "releaseDate": "2016-03-09"
+      "releaseDate": "2016-03-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.6.0": {
-      "releaseDate": "2016-03-23"
+      "releaseDate": "2016-03-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.6.1": {
-      "releaseDate": "2016-05-17"
+      "releaseDate": "2016-05-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.6.2": {
-      "releaseDate": "2016-05-18"
+      "releaseDate": "2016-05-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.7.0": {
-      "releaseDate": "2016-06-01"
+      "releaseDate": "2016-06-01",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.7.1": {
-      "releaseDate": "2016-06-06"
+      "releaseDate": "2016-06-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.7.2": {
-      "releaseDate": "2016-06-06"
+      "releaseDate": "2016-06-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.8.0": {
-      "releaseDate": "2016-06-06"
+      "releaseDate": "2016-06-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.9.0": {
-      "releaseDate": "2016-06-09"
+      "releaseDate": "2016-06-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.10.0": {
-      "releaseDate": "2016-06-21"
+      "releaseDate": "2016-06-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.11.0": {
-      "releaseDate": "2016-07-12"
+      "releaseDate": "2016-07-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.12": {
-      "releaseDate": "2016-07-13"
+      "releaseDate": "2016-07-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.12.0": {
-      "releaseDate": "2016-07-13"
+      "releaseDate": "2016-07-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.13.0": {
-      "releaseDate": "2016-07-26"
+      "releaseDate": "2016-07-26",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.13.1": {
-      "releaseDate": "2016-08-03"
+      "releaseDate": "2016-08-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.14.0": {
-      "releaseDate": "2016-08-19"
+      "releaseDate": "2016-08-19",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.15.0": {
-      "releaseDate": "2016-10-06"
+      "releaseDate": "2016-10-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.16.0": {
-      "releaseDate": "2016-12-09"
+      "releaseDate": "2016-12-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.17.0": {
-      "releaseDate": "2016-12-20"
+      "releaseDate": "2016-12-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.18.0": {
-      "releaseDate": "2017-02-06"
+      "releaseDate": "2017-02-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.19.0": {
-      "releaseDate": "2017-03-13"
+      "releaseDate": "2017-03-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.19.1": {
-      "releaseDate": "2017-03-17"
+      "releaseDate": "2017-03-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.20.0": {
-      "releaseDate": "2017-04-10"
+      "releaseDate": "2017-04-10",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.21.0": {
-      "releaseDate": "2017-04-25"
+      "releaseDate": "2017-04-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.22.0": {
-      "releaseDate": "2017-05-24"
+      "releaseDate": "2017-05-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.22.1": {
-      "releaseDate": "2017-07-18"
+      "releaseDate": "2017-07-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.23.0": {
-      "releaseDate": "2017-07-25"
+      "releaseDate": "2017-07-25",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.23.1": {
-      "releaseDate": "2017-08-01"
+      "releaseDate": "2017-08-01",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.23.2": {
-      "releaseDate": "2017-08-01"
+      "releaseDate": "2017-08-01",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.24.0": {
-      "releaseDate": "2017-08-22"
+      "releaseDate": "2017-08-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.24.1": {
-      "releaseDate": "2017-09-04"
+      "releaseDate": "2017-09-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.25.0": {
-      "releaseDate": "2017-09-12"
+      "releaseDate": "2017-09-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.26.0": {
-      "releaseDate": "2017-09-14"
+      "releaseDate": "2017-09-14",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.26.1": {
-      "releaseDate": "2017-10-09"
+      "releaseDate": "2017-10-09",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.27.0": {
-      "releaseDate": "2018-01-03"
+      "releaseDate": "2018-01-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.28.0": {
-      "releaseDate": "2018-07-10"
+      "releaseDate": "2018-07-10",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.29.0": {
-      "releaseDate": "2018-09-04"
+      "releaseDate": "2018-09-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.30.0": {
-      "releaseDate": "2018-11-30"
+      "releaseDate": "2018-11-30",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.31.0": {
-      "releaseDate": "2018-12-17"
+      "releaseDate": "2018-12-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.32.0": {
-      "releaseDate": "2019-01-08"
+      "releaseDate": "2019-01-08",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.33.0": {
-      "releaseDate": "2019-07-18"
+      "releaseDate": "2019-07-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.34.0": {
-      "releaseDate": "2019-08-07"
+      "releaseDate": "2019-08-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.35.0": {
-      "releaseDate": "2020-01-27"
+      "releaseDate": "2020-01-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.35.1": {
-      "releaseDate": "2020-04-06"
+      "releaseDate": "2020-04-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.36.0": {
-      "releaseDate": "2020-07-20"
+      "releaseDate": "2020-07-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.37.0": {
-      "releaseDate": "2020-08-03"
+      "releaseDate": "2020-08-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.38.0": {
-      "releaseDate": "2020-08-06"
+      "releaseDate": "2020-08-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.38.1": {
-      "releaseDate": "2020-09-11"
+      "releaseDate": "2020-09-11",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.38.2": {
-      "releaseDate": "2020-10-05"
+      "releaseDate": "2020-10-05",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.39.0": {
-      "releaseDate": "2020-11-03"
+      "releaseDate": "2020-11-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.39.1": {
-      "releaseDate": "2021-03-01"
+      "releaseDate": "2021-03-01",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.40.0": {
-      "releaseDate": "2021-04-28"
+      "releaseDate": "2021-04-28",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.41.0": {
-      "releaseDate": "2021-07-23"
+      "releaseDate": "2021-07-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.42.0": {
-      "releaseDate": "2021-08-03"
+      "releaseDate": "2021-08-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.43.0": {
-      "releaseDate": "2021-08-03"
+      "releaseDate": "2021-08-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.43.1": {
-      "releaseDate": "2021-09-22"
+      "releaseDate": "2021-09-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.44.0": {
-      "releaseDate": "2021-10-29"
+      "releaseDate": "2021-10-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.44.1": {
-      "releaseDate": "2022-02-24"
+      "releaseDate": "2022-02-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.45.0": {
-      "releaseDate": "2022-05-17"
+      "releaseDate": "2022-05-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.45.1": {
-      "releaseDate": "2022-12-15"
+      "releaseDate": "2022-12-15",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "1.45.2": {
-      "releaseDate": "2024-05-16"
+      "releaseDate": "2024-05-16",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "2.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "2.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "2.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "2.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "2.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "2.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "2.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "2.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "2.2.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "2.2.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "2.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "2.3.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "2.3.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "2.3.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "2.3.4": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "2.3.5": {
-      "releaseDate": "2024-09-20"
+      "releaseDate": "2024-09-20",
+      "eligibilityStatus": "eligible"
     },
     "2.3.6": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "2.3.7": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "2.4.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "2.5.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "2.5.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "2.5.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "2.5.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "2.5.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "2.6.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "2.7.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "2.8.0": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   },
   "swift": {
     "1.0": {
-      "releaseDate": "2015-03-09"
+      "releaseDate": "2015-03-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.0": {
-      "releaseDate": "2015-03-30"
+      "releaseDate": "2015-03-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.1": {
-      "releaseDate": "2015-04-09"
+      "releaseDate": "2015-04-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.1.2": {
-      "releaseDate": "2015-05-27"
+      "releaseDate": "2015-05-27",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.0": {
-      "releaseDate": "2015-06-08"
+      "releaseDate": "2015-06-08",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.1": {
-      "releaseDate": "2015-06-09"
+      "releaseDate": "2015-06-09",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.2": {
-      "releaseDate": "2015-06-16"
+      "releaseDate": "2015-06-16",
+      "eligibilityStatus": "not eligible"
     },
     "1.2.3": {
-      "releaseDate": "2015-06-20"
+      "releaseDate": "2015-06-20",
+      "eligibilityStatus": "not eligible"
     },
     "1.3.0": {
-      "releaseDate": "2015-06-30"
+      "releaseDate": "2015-06-30",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.0": {
-      "releaseDate": "2015-07-06"
+      "releaseDate": "2015-07-06",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.1": {
-      "releaseDate": "2015-07-10"
+      "releaseDate": "2015-07-10",
+      "eligibilityStatus": "not eligible"
     },
     "1.4.2": {
-      "releaseDate": "2015-08-18"
+      "releaseDate": "2015-08-18",
+      "eligibilityStatus": "not eligible"
     },
     "2.0.0": {
-      "releaseDate": "2015-09-22"
+      "releaseDate": "2015-09-22",
+      "eligibilityStatus": "not eligible"
     },
     "2.1.0": {
-      "releaseDate": "2015-10-20"
+      "releaseDate": "2015-10-20",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.0": {
-      "releaseDate": "2015-12-11"
+      "releaseDate": "2015-12-11",
+      "eligibilityStatus": "not eligible"
     },
     "2.2.1": {
-      "releaseDate": "2016-02-05"
+      "releaseDate": "2016-02-05",
+      "eligibilityStatus": "not eligible"
     },
     "2.3": {
-      "releaseDate": "2016-04-01"
+      "releaseDate": "2016-04-01",
+      "eligibilityStatus": "not eligible"
     },
     "3.0a1": {
-      "releaseDate": "2016-04-13"
+      "releaseDate": "2016-04-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.0": {
-      "releaseDate": "2016-04-13"
+      "releaseDate": "2016-04-13",
+      "eligibilityStatus": "not eligible"
     },
     "3.1": {
-      "releaseDate": "2016-05-09"
+      "releaseDate": "2016-05-09",
+      "eligibilityStatus": "not eligible"
     },
     "3.2": {
-      "releaseDate": "2016-05-26"
+      "releaseDate": "2016-05-26",
+      "eligibilityStatus": "not eligible"
     },
     "3.2.1": {
-      "releaseDate": "2016-05-27"
+      "releaseDate": "2016-05-27",
+      "eligibilityStatus": "not eligible"
     },
     "3.3": {
-      "releaseDate": "2016-06-29"
+      "releaseDate": "2016-06-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.4": {
-      "releaseDate": "2016-07-25"
+      "releaseDate": "2016-07-25",
+      "eligibilityStatus": "not eligible"
     },
     "3.5": {
-      "releaseDate": "2016-07-29"
+      "releaseDate": "2016-07-29",
+      "eligibilityStatus": "not eligible"
     },
     "3.6": {
-      "releaseDate": "2016-08-09"
+      "releaseDate": "2016-08-09",
+      "eligibilityStatus": "not eligible"
     },
     "3.7": {
-      "releaseDate": "2016-09-07"
+      "releaseDate": "2016-09-07",
+      "eligibilityStatus": "not eligible"
     },
     "4.0a1": {
-      "releaseDate": "2016-09-12"
+      "releaseDate": "2016-09-12",
+      "eligibilityStatus": "not eligible"
     },
     "4.0": {
-      "releaseDate": "2016-09-14"
+      "releaseDate": "2016-09-14",
+      "eligibilityStatus": "not eligible"
     },
     "4.0.1": {
-      "releaseDate": "2016-09-15"
+      "releaseDate": "2016-09-15",
+      "eligibilityStatus": "not eligible"
     },
     "4.1": {
-      "releaseDate": "2016-10-03"
+      "releaseDate": "2016-10-03",
+      "eligibilityStatus": "not eligible"
     },
     "4.2": {
-      "releaseDate": "2016-11-02"
+      "releaseDate": "2016-11-02",
+      "eligibilityStatus": "not eligible"
     },
     "4.3": {
-      "releaseDate": "2016-11-09"
+      "releaseDate": "2016-11-09",
+      "eligibilityStatus": "not eligible"
     },
     "4.4": {
-      "releaseDate": "2016-11-18"
+      "releaseDate": "2016-11-18",
+      "eligibilityStatus": "not eligible"
     },
     "4.5": {
-      "releaseDate": "2016-12-07"
+      "releaseDate": "2016-12-07",
+      "eligibilityStatus": "not eligible"
     },
     "4.6": {
-      "releaseDate": "2016-12-28"
+      "releaseDate": "2016-12-28",
+      "eligibilityStatus": "not eligible"
     },
     "4.6.1": {
-      "releaseDate": "2017-01-10"
+      "releaseDate": "2017-01-10",
+      "eligibilityStatus": "not eligible"
     },
     "4.7": {
-      "releaseDate": "2017-02-08"
+      "releaseDate": "2017-02-08",
+      "eligibilityStatus": "not eligible"
     },
     "4.8": {
-      "releaseDate": "2017-04-03"
+      "releaseDate": "2017-04-03",
+      "eligibilityStatus": "not eligible"
     },
     "4.8.1": {
-      "releaseDate": "2017-04-18"
+      "releaseDate": "2017-04-18",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.0": {
-      "releaseDate": "2017-09-26"
+      "releaseDate": "2017-09-26",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.1": {
-      "releaseDate": "2017-09-26"
+      "releaseDate": "2017-09-26",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.2": {
-      "releaseDate": "2017-09-27"
+      "releaseDate": "2017-09-27",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.3": {
-      "releaseDate": "2017-10-03"
+      "releaseDate": "2017-10-03",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.4": {
-      "releaseDate": "2017-10-10"
+      "releaseDate": "2017-10-10",
+      "eligibilityStatus": "not eligible"
     },
     "4.8.2": {
-      "releaseDate": "2017-10-11"
+      "releaseDate": "2017-10-11",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.5": {
-      "releaseDate": "2017-10-13"
+      "releaseDate": "2017-10-13",
+      "eligibilityStatus": "not eligible"
     },
     "5.0.6": {
-      "releaseDate": "2017-10-17"
+      "releaseDate": "2017-10-17",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.0": {
-      "releaseDate": "2017-10-20"
+      "releaseDate": "2017-10-20",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.1": {
-      "releaseDate": "2018-01-10"
+      "releaseDate": "2018-01-10",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.2": {
-      "releaseDate": "2018-02-02"
+      "releaseDate": "2018-02-02",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.3": {
-      "releaseDate": "2018-03-02"
+      "releaseDate": "2018-03-02",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.4": {
-      "releaseDate": "2018-03-02"
+      "releaseDate": "2018-03-02",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.5": {
-      "releaseDate": "2018-03-02"
+      "releaseDate": "2018-03-02",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.6": {
-      "releaseDate": "2018-03-05"
+      "releaseDate": "2018-03-05",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.7": {
-      "releaseDate": "2018-05-04"
+      "releaseDate": "2018-05-04",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.8": {
-      "releaseDate": "2018-05-17"
+      "releaseDate": "2018-05-17",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.9": {
-      "releaseDate": "2018-05-24"
+      "releaseDate": "2018-05-24",
+      "eligibilityStatus": "not eligible"
     },
     "5.1.10": {
-      "releaseDate": "2018-05-28"
+      "releaseDate": "2018-05-28",
+      "eligibilityStatus": "not eligible"
     },
     "5.2.0": {
-      "releaseDate": "2018-06-15"
+      "releaseDate": "2018-06-15",
+      "eligibilityStatus": "not eligible"
     },
     "5.3.0": {
-      "releaseDate": "2018-06-21"
+      "releaseDate": "2018-06-21",
+      "eligibilityStatus": "not eligible"
     },
     "5.4": {
-      "releaseDate": "2018-09-21"
+      "releaseDate": "2018-09-21",
+      "eligibilityStatus": "not eligible"
     },
     "5.4.0": {
-      "releaseDate": "2018-09-21"
+      "releaseDate": "2018-09-21",
+      "eligibilityStatus": "not eligible"
     },
     "6.0.0": {
-      "releaseDate": "2018-09-24"
+      "releaseDate": "2018-09-24",
+      "eligibilityStatus": "not eligible"
     },
     "6.1.0": {
-      "releaseDate": "2018-10-15"
+      "releaseDate": "2018-10-15",
+      "eligibilityStatus": "not eligible"
     },
     "6.1.1": {
-      "releaseDate": "2018-11-30"
+      "releaseDate": "2018-11-30",
+      "eligibilityStatus": "not eligible"
     },
     "6.2.0": {
-      "releaseDate": "2019-02-11"
+      "releaseDate": "2019-02-11",
+      "eligibilityStatus": "not eligible"
     },
     "6.3.0": {
-      "releaseDate": "2019-03-18"
+      "releaseDate": "2019-03-18",
+      "eligibilityStatus": "not eligible"
     },
     "7.0.0": {
-      "releaseDate": "2019-04-18"
+      "releaseDate": "2019-04-18",
+      "eligibilityStatus": "not eligible"
     },
     "7.0.1": {
-      "releaseDate": "2019-11-15"
+      "releaseDate": "2019-11-15",
+      "eligibilityStatus": "not eligible"
     },
     "7.0.2": {
-      "releaseDate": "2019-12-13"
+      "releaseDate": "2019-12-13",
+      "eligibilityStatus": "not eligible"
     },
     "7.0.3": {
-      "releaseDate": "2019-12-16"
+      "releaseDate": "2019-12-16",
+      "eligibilityStatus": "not eligible"
     },
     "2dev": {
-      "releaseDate": "2020-03-23"
+      "releaseDate": "2020-03-23",
+      "eligibilityStatus": "not eligible"
     },
     "7.0.4": {
-      "releaseDate": "2020-03-24"
+      "releaseDate": "2020-03-24",
+      "eligibilityStatus": "not eligible"
     },
     "7.0.5": {
-      "releaseDate": "2020-05-26"
+      "releaseDate": "2020-05-26",
+      "eligibilityStatus": "not eligible"
     },
     "8.0.0": {
-      "releaseDate": "2020-07-20"
+      "releaseDate": "2020-07-20",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.0.1": {
-      "releaseDate": "2020-07-28"
+      "releaseDate": "2020-07-28",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.1.0": {
-      "releaseDate": "2020-08-04"
+      "releaseDate": "2020-08-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.1.1": {
-      "releaseDate": "2020-09-17"
+      "releaseDate": "2020-09-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.1.2": {
-      "releaseDate": "2020-10-06"
+      "releaseDate": "2020-10-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.1.3": {
-      "releaseDate": "2020-10-27"
+      "releaseDate": "2020-10-27",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.2.0": {
-      "releaseDate": "2020-11-03"
+      "releaseDate": "2020-11-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.3.0": {
-      "releaseDate": "2020-11-23"
+      "releaseDate": "2020-11-23",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.4.0": {
-      "releaseDate": "2020-12-17"
+      "releaseDate": "2020-12-17",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.4.1": {
-      "releaseDate": "2020-12-18"
+      "releaseDate": "2020-12-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.4.2": {
-      "releaseDate": "2020-12-21"
+      "releaseDate": "2020-12-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.5.0": {
-      "releaseDate": "2021-01-18"
+      "releaseDate": "2021-01-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.6.0": {
-      "releaseDate": "2021-02-03"
+      "releaseDate": "2021-02-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.7.0": {
-      "releaseDate": "2021-02-15"
+      "releaseDate": "2021-02-15",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.8.0": {
-      "releaseDate": "2021-03-02"
+      "releaseDate": "2021-03-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.8.1": {
-      "releaseDate": "2021-03-03"
+      "releaseDate": "2021-03-03",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.9.0": {
-      "releaseDate": "2021-07-07"
+      "releaseDate": "2021-07-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.10.0": {
-      "releaseDate": "2021-07-13"
+      "releaseDate": "2021-07-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.11.0": {
-      "releaseDate": "2021-10-06"
+      "releaseDate": "2021-10-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.12.0": {
-      "releaseDate": "2021-11-05"
+      "releaseDate": "2021-11-05",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.13.0": {
-      "releaseDate": "2021-12-13"
+      "releaseDate": "2021-12-13",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.13.1": {
-      "releaseDate": "2021-12-22"
+      "releaseDate": "2021-12-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.13.2": {
-      "releaseDate": "2022-01-12"
+      "releaseDate": "2022-01-12",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.13.3": {
-      "releaseDate": "2022-01-21"
+      "releaseDate": "2022-01-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.13.4": {
-      "releaseDate": "2022-02-21"
+      "releaseDate": "2022-02-21",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.14.0": {
-      "releaseDate": "2022-03-18"
+      "releaseDate": "2022-03-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.15.0": {
-      "releaseDate": "2022-08-04"
+      "releaseDate": "2022-08-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.15.1": {
-      "releaseDate": "2022-08-29"
+      "releaseDate": "2022-08-29",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.16.0": {
-      "releaseDate": "2022-10-24"
+      "releaseDate": "2022-10-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.17.0": {
-      "releaseDate": "2023-02-06"
+      "releaseDate": "2023-02-06",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.18.0": {
-      "releaseDate": "2023-03-24"
+      "releaseDate": "2023-03-24",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.18.1": {
-      "releaseDate": "2023-06-22"
+      "releaseDate": "2023-06-22",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.18.2": {
-      "releaseDate": "2023-08-15"
+      "releaseDate": "2023-08-15",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.19.0": {
-      "releaseDate": "2023-12-07"
+      "releaseDate": "2023-12-07",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.20.0": {
-      "releaseDate": "2024-02-02"
+      "releaseDate": "2024-02-02",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "8.20.1": {
-      "releaseDate": "2024-03-04"
+      "releaseDate": "2024-03-04",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "9.0.0": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "9.0.1": {
-      "releaseDate": "2024-08-14"
+      "releaseDate": "2024-08-14",
+      "eligibilityStatus": "eligible"
     },
     "9.0.2": {
-      "releaseDate": "2024-08-19"
+      "releaseDate": "2024-08-19",
+      "eligibilityStatus": "eligible"
     },
     "9.1.0": {
-      "releaseDate": "2024-08-20"
+      "releaseDate": "2024-08-20",
+      "eligibilityStatus": "eligible"
     },
     "9.1.1": {
-      "releaseDate": "2024-08-21"
+      "releaseDate": "2024-08-21",
+      "eligibilityStatus": "eligible"
     },
     "9.2.0": {
-      "releaseDate": "2024-08-27"
+      "releaseDate": "2024-08-27",
+      "eligibilityStatus": "eligible"
     },
     "9.2.1": {
-      "releaseDate": "2024-08-28"
+      "releaseDate": "2024-08-28",
+      "eligibilityStatus": "eligible"
     },
     "9.2.2": {
-      "releaseDate": "2024-08-29"
+      "releaseDate": "2024-08-29",
+      "eligibilityStatus": "eligible"
     },
     "9.2.3": {
-      "releaseDate": "2024-09-02"
+      "releaseDate": "2024-09-02",
+      "eligibilityStatus": "eligible"
     },
     "9.2.4": {
-      "releaseDate": "2024-09-03"
+      "releaseDate": "2024-09-03",
+      "eligibilityStatus": "eligible"
     },
     "9.3.0": {
-      "releaseDate": "2024-09-06"
+      "releaseDate": "2024-09-06",
+      "eligibilityStatus": "eligible"
     },
     "9.3.1": {
-      "releaseDate": "2024-09-12"
+      "releaseDate": "2024-09-12",
+      "eligibilityStatus": "eligible"
     },
     "9.3.2": {
-      "releaseDate": "2024-09-17"
+      "releaseDate": "2024-09-17",
+      "eligibilityStatus": "eligible"
     },
     "8.21.0": {
-      "releaseDate": "2024-09-18"
+      "releaseDate": "2024-09-18",
+      "eligibilityDate": "2026-08-14",
+      "eligibilityStatus": "replaced"
     },
     "9.3.3": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "9.4.0": {
-      "releaseDate": "2024-09-19"
+      "releaseDate": "2024-09-19",
+      "eligibilityStatus": "eligible"
     },
     "9.5.0": {
-      "releaseDate": "2024-09-24"
+      "releaseDate": "2024-09-24",
+      "eligibilityStatus": "eligible"
     },
     "9.5.1": {
-      "releaseDate": "2024-09-25"
+      "releaseDate": "2024-09-25",
+      "eligibilityStatus": "eligible"
     },
     "9.6.0": {
-      "releaseDate": "2024-10-01"
+      "releaseDate": "2024-10-01",
+      "eligibilityStatus": "eligible"
     },
     "9.7.0": {
-      "releaseDate": "2024-10-08"
+      "releaseDate": "2024-10-08",
+      "eligibilityStatus": "eligible"
     },
     "9.7.1": {
-      "releaseDate": "2024-10-10"
+      "releaseDate": "2024-10-10",
+      "eligibilityStatus": "eligible"
     },
     "9.7.2": {
-      "releaseDate": "2024-10-17"
+      "releaseDate": "2024-10-17",
+      "eligibilityStatus": "eligible"
     },
     "9.7.3": {
-      "releaseDate": "2024-10-21"
+      "releaseDate": "2024-10-21",
+      "eligibilityStatus": "eligible"
     },
     "9.7.4": {
-      "releaseDate": "2024-10-23"
+      "releaseDate": "2024-10-23",
+      "eligibilityStatus": "eligible"
     },
     "9.8.0": {
-      "releaseDate": "2024-10-29"
+      "releaseDate": "2024-10-29",
+      "eligibilityStatus": "eligible"
     },
     "9.9.0": {
-      "releaseDate": "2024-10-30"
+      "releaseDate": "2024-10-30",
+      "eligibilityStatus": "eligible"
+    },
+    "9.9.1": {
+      "releaseDate": "2024-11-05",
+      "eligibilityStatus": "eligible"
     }
   }
 }
