@@ -1,0 +1,42 @@
+get:
+  tags:
+    - users
+  operationId: getUsers
+  x-acl:
+    - search
+    - browse
+    - recommendation
+  summary: Get a list of user profiles
+  description: Retrieves a list of user profiles in [lexicographical order](https://www.educative.io/answers/what-is-a-lexicographic-order).
+  parameters:
+    - $ref: '../common/schemas/UsersParams.yml#/startDate'
+    - $ref: '../common/schemas/UsersParams.yml#/endDate'
+    - $ref: '../common/schemas/UsersParams.yml#/indices'
+    - $ref: '../common/schemas/UsersParams.yml#/affinity'
+    - $ref: '../common/schemas/UsersParams.yml#/limit'
+    - $ref: '../common/schemas/UsersParams.yml#/nextPageToken'
+    - $ref: '../common/schemas/UsersParams.yml#/previousPageToken'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getUsersResponse
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: '../common/schemas/User.yml#/user'
+              previousPageToken:
+                type: string
+              nextPageToken:
+                type: string
+            required: [users]
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '500':
+      $ref: '../common/responses/InternalServerError.yml'

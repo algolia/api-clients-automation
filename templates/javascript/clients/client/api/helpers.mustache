@@ -176,6 +176,7 @@ browseObjects<T>(
           indexName,
           browseParams: {
             cursor: previousResponse ? previousResponse.cursor : undefined,
+            hitsPerPage: 1000,
             ...browseParams,
           },
         },
@@ -226,7 +227,7 @@ browseRules(
         requestOptions
       );
     },
-    validate: (response) => response.nbHits < params.hitsPerPage,
+    validate: (response) => response.hits.length < params.hitsPerPage,
     ...browseRulesOptions,
   });
 },
@@ -271,7 +272,7 @@ browseSynonyms(
       params.page += 1;
       return resp;
     },
-    validate: (response) => response.nbHits < params.hitsPerPage,
+    validate: (response) => response.hits.length < params.hitsPerPage,
     ...browseSynonymsOptions,
   });
 },
@@ -317,14 +318,15 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
  * @param saveObjects - The `saveObjects` object.
  * @param saveObjects.indexName - The `indexName` to save `objects` in.
  * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
  */
 async saveObjects(
-  { indexName, objects }: SaveObjectsOptions,
+  { indexName, objects, waitForTasks }: SaveObjectsOptions,
   requestOptions?: RequestOptions
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
-    { indexName, objects, action: 'addObject' },
+    { indexName, objects, action: 'addObject', waitForTasks },
     requestOptions
   );
 },
@@ -336,10 +338,11 @@ async saveObjects(
  * @param deleteObjects - The `deleteObjects` object.
  * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
  * @param deleteObjects.objectIDs - The objectIDs to delete.
+ * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
  */
 async deleteObjects(
-  { indexName, objectIDs }: DeleteObjectsOptions,
+  { indexName, objectIDs, waitForTasks }: DeleteObjectsOptions,
   requestOptions?: RequestOptions
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
@@ -347,6 +350,7 @@ async deleteObjects(
       indexName,
       objects: objectIDs.map((objectID) => ({ objectID })),
       action: 'deleteObject',
+      waitForTasks,
     },
     requestOptions
   );
@@ -360,10 +364,11 @@ async deleteObjects(
  * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
  * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
  * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
+ * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
 async partialUpdateObjects(
-  { indexName, objects, createIfNotExists }: PartialUpdateObjectsOptions,
+  { indexName, objects, createIfNotExists, waitForTasks }: PartialUpdateObjectsOptions,
   requestOptions?: RequestOptions
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
@@ -373,6 +378,7 @@ async partialUpdateObjects(
       action: createIfNotExists
         ? 'partialUpdateObject'
         : 'partialUpdateObjectNoCreate',
+      waitForTasks
     },
     requestOptions
   );

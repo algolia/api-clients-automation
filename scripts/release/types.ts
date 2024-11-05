@@ -4,8 +4,8 @@ import type { Language } from '../types.js';
 
 export type Version = {
   current: string;
-  releaseType: ReleaseType;
-  next: string;
+  releaseType?: ReleaseType;
+  next?: string;
 };
 
 export type Versions = {

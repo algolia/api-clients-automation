@@ -9,7 +9,7 @@ It is automatically generated for all languages from JSON files and ensure prope
 
 :::info
 
-While some clients can run tests from source, languages like Java or JavaScript and other requires clients to be built, see [CLI > clients commands page](/docs/CLI/clients-commands)
+While some clients can run tests from source, languages like Java or JavaScript and other requires clients to be built, see [CLI > generate commands page](/docs/CLI/generate-commands)
 
 :::
 

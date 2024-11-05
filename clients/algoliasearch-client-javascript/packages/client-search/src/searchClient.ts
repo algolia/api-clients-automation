@@ -143,7 +143,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.10.2';
+export const apiClientVersion = '5.12.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -412,6 +412,7 @@ export function createSearchClient({
               indexName,
               browseParams: {
                 cursor: previousResponse ? previousResponse.cursor : undefined,
+                hitsPerPage: 1000,
                 ...browseParams,
               },
             },
@@ -456,7 +457,7 @@ export function createSearchClient({
             requestOptions,
           );
         },
-        validate: (response) => response.nbHits < params.hitsPerPage,
+        validate: (response) => response.hits.length < params.hitsPerPage,
         ...browseRulesOptions,
       });
     },
@@ -501,7 +502,7 @@ export function createSearchClient({
           params.page += 1;
           return resp;
         },
-        validate: (response) => response.nbHits < params.hitsPerPage,
+        validate: (response) => response.hits.length < params.hitsPerPage,
         ...browseSynonymsOptions,
       });
     },
@@ -550,13 +551,14 @@ export function createSearchClient({
      * @param saveObjects - The `saveObjects` object.
      * @param saveObjects.indexName - The `indexName` to save `objects` in.
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
+     * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async saveObjects(
-      { indexName, objects }: SaveObjectsOptions,
+      { indexName, objects, waitForTasks }: SaveObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
-      return await this.chunkedBatch({ indexName, objects, action: 'addObject' }, requestOptions);
+      return await this.chunkedBatch({ indexName, objects, action: 'addObject', waitForTasks }, requestOptions);
     },
 
     /**
@@ -566,10 +568,11 @@ export function createSearchClient({
      * @param deleteObjects - The `deleteObjects` object.
      * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
      * @param deleteObjects.objectIDs - The objectIDs to delete.
+     * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async deleteObjects(
-      { indexName, objectIDs }: DeleteObjectsOptions,
+      { indexName, objectIDs, waitForTasks }: DeleteObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -577,6 +580,7 @@ export function createSearchClient({
           indexName,
           objects: objectIDs.map((objectID) => ({ objectID })),
           action: 'deleteObject',
+          waitForTasks,
         },
         requestOptions,
       );
@@ -590,10 +594,11 @@ export function createSearchClient({
      * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
      * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
+     * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async partialUpdateObjects(
-      { indexName, objects, createIfNotExists }: PartialUpdateObjectsOptions,
+      { indexName, objects, createIfNotExists, waitForTasks }: PartialUpdateObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -601,6 +606,7 @@ export function createSearchClient({
           indexName,
           objects,
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
+          waitForTasks,
         },
         requestOptions,
       );

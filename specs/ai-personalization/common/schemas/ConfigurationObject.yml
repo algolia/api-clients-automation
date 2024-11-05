@@ -1,0 +1,41 @@
+configurationObject:
+  type: object
+  properties:
+    indices:
+      type: array
+      items:
+        title: configurationObject
+        type: object
+        properties:
+          index:
+            type: string
+          affinities:
+            type: array
+            items:
+              type: string
+          source:
+            title: source
+            type: object
+            properties:
+              type:
+                $ref: '../enums.yml#/sourceType'
+              events:
+                $ref: './Configuration.yml#/events'
+          errors:
+            type: array
+            items:
+              $ref: './Configuration.yml#/issue'
+          warnings:
+            type: array
+            items:
+              $ref: './Configuration.yml#/issue'
+          lastUpdatedAt:
+            type: string
+        required: [index, affinities, source, errors, warnings, lastUpdatedAt]
+    personalizationReRanking:
+      $ref: './Configuration.yml#/personalizationReRanking'
+    profileType:
+      $ref: './Configuration.yml#/profileType'
+    status:
+      $ref: './Configuration.yml#/status'
+  required: [indices, personalzationReRanking, profileType, status]

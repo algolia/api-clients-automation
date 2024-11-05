@@ -351,6 +351,7 @@ class SearchClient:
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
+        browse_params.hits_per_page = browse_params.hits_per_page or 1000
 
         async def _func(_prev: Optional[BrowseResponse]) -> BrowseResponse:
             if _prev is not None and _prev.cursor is not None:
@@ -392,7 +393,7 @@ class SearchClient:
 
         return await create_iterable(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < hits_per_page,
+            validate=lambda _resp: len(_resp.hits) < hits_per_page,
             aggregator=aggregator,
         )
 
@@ -427,7 +428,7 @@ class SearchClient:
 
         return await create_iterable(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < hits_per_page,
+            validate=lambda _resp: len(_resp.hits) < hits_per_page,
             aggregator=aggregator,
         )
 
@@ -491,6 +492,7 @@ class SearchClient:
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
+        wait_for_tasks: bool = False,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
@@ -500,6 +502,7 @@ class SearchClient:
             index_name=index_name,
             objects=objects,
             action=Action.ADDOBJECT,
+            wait_for_tasks=wait_for_tasks,
             request_options=request_options,
         )
 
@@ -507,6 +510,7 @@ class SearchClient:
         self,
         index_name: str,
         object_ids: List[str],
+        wait_for_tasks: bool = False,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
@@ -516,6 +520,7 @@ class SearchClient:
             index_name=index_name,
             objects=[{"objectID": id} for id in object_ids],
             action=Action.DELETEOBJECT,
+            wait_for_tasks=wait_for_tasks,
             request_options=request_options,
         )
 
@@ -524,6 +529,7 @@ class SearchClient:
         index_name: str,
         objects: List[Dict[str, Any]],
         create_if_not_exists: bool = False,
+        wait_for_tasks: bool = False,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
@@ -535,6 +541,7 @@ class SearchClient:
             action=Action.PARTIALUPDATEOBJECT
             if create_if_not_exists
             else Action.PARTIALUPDATEOBJECTNOCREATE,
+            wait_for_tasks=wait_for_tasks,
             request_options=request_options,
         )
 
@@ -5356,6 +5363,7 @@ class SearchClientSync:
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
+        browse_params.hits_per_page = browse_params.hits_per_page or 1000
 
         def _func(_prev: Optional[BrowseResponse]) -> BrowseResponse:
             if _prev is not None and _prev.cursor is not None:
@@ -5397,7 +5405,7 @@ class SearchClientSync:
 
         return create_iterable_sync(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < hits_per_page,
+            validate=lambda _resp: len(_resp.hits) < hits_per_page,
             aggregator=aggregator,
         )
 
@@ -5430,7 +5438,7 @@ class SearchClientSync:
 
         return create_iterable_sync(
             func=_func,
-            validate=lambda _resp: _resp.nb_hits < hits_per_page,
+            validate=lambda _resp: len(_resp.hits) < hits_per_page,
             aggregator=aggregator,
         )
 
@@ -5494,6 +5502,7 @@ class SearchClientSync:
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
+        wait_for_tasks: bool = False,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
@@ -5503,6 +5512,7 @@ class SearchClientSync:
             index_name=index_name,
             objects=objects,
             action=Action.ADDOBJECT,
+            wait_for_tasks=wait_for_tasks,
             request_options=request_options,
         )
 
@@ -5510,6 +5520,7 @@ class SearchClientSync:
         self,
         index_name: str,
         object_ids: List[str],
+        wait_for_tasks: bool = False,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
@@ -5519,6 +5530,7 @@ class SearchClientSync:
             index_name=index_name,
             objects=[{"objectID": id} for id in object_ids],
             action=Action.DELETEOBJECT,
+            wait_for_tasks=wait_for_tasks,
             request_options=request_options,
         )
 
@@ -5527,6 +5539,7 @@ class SearchClientSync:
         index_name: str,
         objects: List[Dict[str, Any]],
         create_if_not_exists: bool = False,
+        wait_for_tasks: bool = False,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> List[BatchResponse]:
         """
@@ -5538,6 +5551,7 @@ class SearchClientSync:
             action=Action.PARTIALUPDATEOBJECT
             if create_if_not_exists
             else Action.PARTIALUPDATEOBJECTNOCREATE,
+            wait_for_tasks=wait_for_tasks,
             request_options=request_options,
         )
 

@@ -5322,6 +5322,10 @@ paths:
                 type: object
                 additionalProperties: false
                 properties:
+                  message:
+                    type: string
+                    description: An optional status message.
+                    example: Index INDEX_NAME does not exist.
                   results:
                     type: array
                     description: Retrieved records.
@@ -19778,6 +19782,9 @@ components:
         - altcorrection1
         - altcorrection2
         - placeholder
+        - oneWaySynonym
+        - altCorrection1
+        - altCorrection2
     synonymHit:
       type: object
       description: Synonym object.

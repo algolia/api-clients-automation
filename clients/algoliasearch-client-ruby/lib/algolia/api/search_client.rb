@@ -3201,6 +3201,8 @@ module Algolia
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
     # @param block [Proc] the block to execute on each object of the index.
     def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
+      browse_params[:hits_per_page] = browse_params[:hits_per_page] || 1000
+
       hits = []
       loop do
         res = browse(index_name, browse_params, request_options)
@@ -3243,7 +3245,7 @@ module Algolia
         end
 
         search_rules_params.page += 1
-        break if res.nb_hits < search_rules_params.hits_per_page
+        break if res.hits.length < search_rules_params.hits_per_page
       end
 
       rules unless block_given?
@@ -3273,7 +3275,7 @@ module Algolia
         end
 
         search_synonyms_params.page += 1
-        break if res.nb_hits < search_synonyms_params.hits_per_page
+        break if res.hits.length < search_synonyms_params.hits_per_page
       end
 
       synonyms unless block_given?
@@ -3333,16 +3335,17 @@ module Algolia
     #
     # @param index_name [String]: The `index_name` to save `objects` in.
     # @param objects [Array]: The array of `objects` to store in the given Algolia `indexName`.
+    # @param wait_for_tasks [Boolean]: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def save_objects(index_name, objects, request_options = {})
+    def save_objects(index_name, objects, wait_for_tasks = false, request_options = {})
       chunked_batch(
         index_name,
         objects,
         Search::Action::ADD_OBJECT,
-        false,
+        wait_for_tasks,
         1000,
         request_options
       )
@@ -3352,16 +3355,17 @@ module Algolia
     #
     # @param index_name [String]: The `index_name` to delete `object_ids` from.
     # @param object_ids [Array]: The object_ids to delete.
+    # @param wait_for_tasks [Boolean]: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def delete_objects(index_name, object_ids, request_options = {})
+    def delete_objects(index_name, object_ids, wait_for_tasks = false, request_options = {})
       chunked_batch(
         index_name,
         object_ids.map { |id| {"objectID" => id} },
         Search::Action::DELETE_OBJECT,
-        false,
+        wait_for_tasks,
         1000,
         request_options
       )
@@ -3372,16 +3376,17 @@ module Algolia
     # @param index_name [String]: The `index_name` to delete `object_ids` from.
     # @param objects [Array]: The objects to partially update.
     # @param create_if_not_exists [Boolean]: To be provided if non-existing objects are passed, otherwise, the call will fail.
+    # @param wait_for_tasks [Boolean] Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def partial_update_objects(index_name, objects, create_if_not_exists, request_options = {})
+    def partial_update_objects(index_name, objects, create_if_not_exists, wait_for_tasks = false, request_options = {})
       chunked_batch(
         index_name,
         objects,
         create_if_not_exists ? Search::Action::PARTIAL_UPDATE_OBJECT : Search::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE,
-        false,
+        wait_for_tasks,
         1000,
         request_options
       )

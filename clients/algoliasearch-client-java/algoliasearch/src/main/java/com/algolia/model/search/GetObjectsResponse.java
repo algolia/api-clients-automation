@@ -12,8 +12,22 @@ import java.util.Objects;
 /** GetObjectsResponse */
 public class GetObjectsResponse<T> {
 
+  @JsonProperty("message")
+  private String message;
+
   @JsonProperty("results")
   private List<T> results = new ArrayList<>();
+
+  public GetObjectsResponse<T> setMessage(String message) {
+    this.message = message;
+    return this;
+  }
+
+  /** An optional status message. */
+  @javax.annotation.Nullable
+  public String getMessage() {
+    return message;
+  }
 
   public GetObjectsResponse<T> setResults(List<T> results) {
     this.results = results;
@@ -40,18 +54,19 @@ public class GetObjectsResponse<T> {
       return false;
     }
     GetObjectsResponse<?> getObjectsResponse = (GetObjectsResponse<?>) o;
-    return Objects.equals(this.results, getObjectsResponse.results);
+    return Objects.equals(this.message, getObjectsResponse.message) && Objects.equals(this.results, getObjectsResponse.results);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(results);
+    return Objects.hash(message, results);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetObjectsResponse {\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    results: ").append(toIndentedString(results)).append("\n");
     sb.append("}");
     return sb.toString();

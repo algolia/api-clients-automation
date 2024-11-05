@@ -9,8 +9,13 @@ part 'get_objects_response.g.dart';
 final class GetObjectsResponse {
   /// Returns a new [GetObjectsResponse] instance.
   const GetObjectsResponse({
+    this.message,
     required this.results,
   });
+
+  /// An optional status message.
+  @JsonKey(name: r'message')
+  final String? message;
 
   /// Retrieved records.
   @JsonKey(name: r'results')
@@ -19,10 +24,12 @@ final class GetObjectsResponse {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GetObjectsResponse && other.results == results;
+      other is GetObjectsResponse &&
+          other.message == message &&
+          other.results == results;
 
   @override
-  int get hashCode => results.hashCode;
+  int get hashCode => message.hashCode + results.hashCode;
 
   factory GetObjectsResponse.fromJson(Map<String, dynamic> json) =>
       _$GetObjectsResponseFromJson(json);

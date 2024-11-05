@@ -6,14 +6,44 @@ package com.algolia.model.ingestion;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /** AuthInputPartial */
 @JsonDeserialize(using = AuthInputPartial.Deserializer.class)
 public interface AuthInputPartial {
+  // AuthInputPartial as Map<String, String> wrapper.
+  static AuthInputPartial of(Map<String, String> value) {
+    return new MapOfStringStringWrapper(value);
+  }
+
+  // AuthInputPartial as Map<String, String> wrapper.
+  @JsonSerialize(using = MapOfStringStringWrapper.Serializer.class)
+  class MapOfStringStringWrapper implements AuthInputPartial {
+
+    private final Map<String, String> value;
+
+    MapOfStringStringWrapper(Map<String, String> value) {
+      this.value = value;
+    }
+
+    public Map<String, String> getValue() {
+      return value;
+    }
+
+    static class Serializer extends JsonSerializer<MapOfStringStringWrapper> {
+
+      @Override
+      public void serialize(MapOfStringStringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
   class Deserializer extends JsonDeserializer<AuthInputPartial> {
 
     private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
@@ -79,6 +109,16 @@ public interface AuthInputPartial {
           LOGGER.finest(
             "Failed to deserialize oneOf AuthAlgoliaInsightsPartial (error: " + e.getMessage() + ") (type: AuthAlgoliaInsightsPartial)"
           );
+        }
+      }
+      // deserialize Map<String, String>
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          Map<String, String> value = parser.readValueAs(new TypeReference<Map<String, String>>() {});
+          return new AuthInputPartial.MapOfStringStringWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf Map<String, String> (error: " + e.getMessage() + ") (type: Map<String, String>)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

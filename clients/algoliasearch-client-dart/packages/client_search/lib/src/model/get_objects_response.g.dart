@@ -12,6 +12,7 @@ GetObjectsResponse _$GetObjectsResponseFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = GetObjectsResponse(
+          message: $checkedConvert('message', (v) => v as String?),
           results: $checkedConvert('results',
               (v) => (v as List<dynamic>).map((e) => e as Object).toList()),
         );
@@ -19,7 +20,16 @@ GetObjectsResponse _$GetObjectsResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$GetObjectsResponseToJson(GetObjectsResponse instance) =>
-    <String, dynamic>{
-      'results': instance.results,
-    };
+Map<String, dynamic> _$GetObjectsResponseToJson(GetObjectsResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('message', instance.message);
+  val['results'] = instance.results;
+  return val;
+}

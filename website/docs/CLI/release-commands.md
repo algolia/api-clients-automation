@@ -4,6 +4,12 @@ title: Release commands
 
 # Release commands
 
+:::info
+
+You can use `yarn cli` as a drop in replacement for `apic`.
+
+:::
+
 The Release commands are used to release every, or a subset of API clients.
 
 ## Usage

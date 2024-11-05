@@ -152,22 +152,28 @@ The file [`config/clients.config.json`](https://github.com/algolia/api-clients-a
 
 The following fields are required:
 
-| Option               | Description                                                                                       |
-| -------------------- | ------------------------------------------------------------------------------------------------- |
-| `folder`             | Path to the parent folder of every client for this language.                                      |
-| `gitRepoId`          | Name of the repository for this API client.                                                       |
-| `packageVersion`     | Initial version number to publish for the generated client. It will be automatically incremented. |
-| `modelFolder`        | Path to the `model` folder that will host the generated code.                                     |
-| `apiFolder`          | Path to the `api` folder that will host the generated code.                                       |
-| `tests.extension`    | Test file extension, such as `.test.java` or `_test.py`                                           |
-| `tests.outputFolder` | Path to the folder that holds the tests for this language, such as `tests/`                       |
+| Option                 | Description                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| `clients`              | The clients to generate, either a list of string (matching the api name), or see below            |
+| `clients.name`         | The name of the client to generate (matching the API name)                                        |
+| `clients.output`       | The output folder                                                                                 |
+| `folder`               | Path to the parent folder of every client for this language.                                      |
+| `gitRepoId`            | Name of the repository for this API client.                                                       |
+| `packageVersion`       | Initial version number to publish for the generated client. It will be automatically incremented. |
+| `modelFolder`          | Path to the `model` folder that will host the generated code.                                     |
+| `apiFolder`            | Path to the `api` folder that will host the generated code.                                       |
+| `dockerImage`          | The name of the docker image that runs this client `apic_base` | `apic_ruby` | `apic_swift`       |
+| `tests.extension`      | Test file extension, such as `.test.java` or `_test.py`                                           |
+| `tests.outputFolder`   | Path to the folder that holds the tests for this language, such as `tests/`                       |
+| `snippets.extension`   | Snippet file extension, such as `.java` or `.py`                                                  |
+| `snippets.outputFolder`| Path to the folder that holds the snippets for this language, such as `lib/`                      |
 
 ## 3. Generate the client
 
 Use the CLI to generate the clients:
 
-- [Commands for working with specs](./CLI/specs-commands.md)
-- [Commands for working with clients](./CLI/clients-commands.md)
+- [Commands for working with specs](./CLI/build-commands.md)
+- [Commands for working with clients](./CLI/generate-commands.md)
 
 ## 4. Add tests with the Common Test Suite
 

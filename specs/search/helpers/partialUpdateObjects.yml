@@ -29,6 +29,12 @@ method:
         schema:
           type: boolean
       - in: query
+        name: waitForTasks
+        description: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+        required: false
+        schema:
+          type: boolean
+      - in: query
         name: requestOptions
         description: The request options to pass to the `batch` method.
         required: false

@@ -132,7 +132,7 @@ export type SearchClientNodeHelpers = {
 }
 {{/isSearchClient}}
 
-export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
+export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks'> & {
   /**
    * The objectIDs to delete.
    */
@@ -141,7 +141,7 @@ export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
 
 export type PartialUpdateObjectsOptions = Pick<
   ChunkedBatchOptions,
-  'indexName' | 'objects'
+  'indexName' | 'objects' | 'waitForTasks'
 > & {
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
@@ -151,7 +151,7 @@ export type PartialUpdateObjectsOptions = Pick<
 
 export type SaveObjectsOptions = Pick<
   ChunkedBatchOptions,
-  'indexName' | 'objects'
+  'indexName' | 'objects' | 'waitForTasks'
 >;
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
