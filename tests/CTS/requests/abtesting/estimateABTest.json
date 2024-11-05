@@ -2,12 +2,19 @@
   {
     "testName": "estimate AB Test sample size",
     "parameters": {
-      "endAt": "2022-12-31T00:00:00.000Z",
-      "name": "myABTest",
+      "configuration": {
+        "emptySearch": {
+          "exclude": true
+        },
+        "minimumDetectableEffect": {
+          "size": 0.03,
+          "metric": "conversionrate"
+        }
+      },
       "variants": [
         {
           "index": "AB_TEST_1",
-          "trafficPercentage": 30
+          "trafficPercentage": 50
         },
         {
           "index": "AB_TEST_2",
