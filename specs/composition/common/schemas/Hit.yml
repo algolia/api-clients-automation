@@ -16,6 +16,25 @@ hit:
     _snippetResult:
       $ref: '../../../common/schemas/SnippetResult.yml#/snippetResultMap'
     _rankingInfo:
-      $ref: '../../../common/schemas/Hit.yml#/rankingInfo'
+      $ref: '#/rankingInfo'
     _distinctSeqID:
       $ref: '../../../common/schemas/Hit.yml#/distinctSeqID'
+
+rankingInfo:
+  allOf:
+    - $ref: '../../../common/schemas/Hit.yml#/rankingInfo'
+    - $ref: '#/compositionRankingInfo'
+
+compositionRankingInfo:
+  type: object
+  additionalProperties: false
+  properties:
+    composed:
+      title: composedRankingInfo
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+        inset:
+          type: string
