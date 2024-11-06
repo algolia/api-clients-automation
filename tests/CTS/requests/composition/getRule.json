@@ -1,0 +1,12 @@
+[
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "objectID": "123"
+    },
+    "request": {
+      "path": "/1/compositions/foo/rules/123",
+      "method": "GET"
+    }
+  }
+]

@@ -1,0 +1,60 @@
+post:
+  tags:
+    - Compositions
+  operationId: multipleBatch
+  description: |
+    Adds, updates, or deletes compositions with a single API request.
+  x-acl:
+    - editSettings
+  summary: Batch action to multiple compositions
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: batchParams
+          description: Batch parameters.
+          type: object
+          additionalProperties: false
+          properties:
+            requests:
+              type: array
+              items:
+                title: multipleBatchRequest
+                type: object
+                additionalProperties: false
+                properties:
+                  action:
+                    $ref: '../../common/schemas/Batch.yml#/action'
+                  body:
+                    $ref: '../../common/schemas/batchCompositionAction.yml#/batchCompositionAction'
+                required:
+                  - action
+                  - body
+          required:
+            - requests
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: multipleBatchResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                type: object
+                description: Task IDs. One for each index.
+                additionalProperties:
+                  $ref: '../../../common/responses/common.yml#/taskID'
+            required:
+              - taskID
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

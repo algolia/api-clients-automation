@@ -113,12 +113,7 @@
       "extension": ".java",
       "outputFolder": "src/test/java/com/algolia"
     },
-    "supportedVersions": [
-      "8",
-      "11",
-      "21",
-      "17"
-    ]
+    "supportedVersions": ["8", "11", "21", "17"]
   },
   "javascript": {
     "clients": [
@@ -161,6 +156,10 @@
       {
         "name": "search",
         "output": "clients/algoliasearch-client-javascript/packages/client-search"
+      },
+      {
+        "name": "composition",
+        "output": "clients/algoliasearch-client-javascript/packages/client-composition"
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",
@@ -257,13 +256,7 @@
       "extension": ".py",
       "outputFolder": ""
     },
-    "supportedVersions": [
-      "3.8",
-      "3.9",
-      "3.10",
-      "3.11",
-      "3.12"
-    ]
+    "supportedVersions": ["3.8", "3.9", "3.10", "3.11", "3.12"]
   },
   "ruby": {
     "clients": [

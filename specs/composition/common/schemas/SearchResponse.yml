@@ -1,0 +1,35 @@
+searchResponse:
+  additionalProperties: true
+  allOf:
+    - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '#/searchResults'
+
+searchResults:
+  type: object
+  additionalProperties: false
+  properties:
+    results:
+      type: array
+      description: Search results.
+      items:
+        $ref: '#/searchResultsItem'
+
+searchResultsItem:
+  allOf:
+    - $ref: '#/searchHits'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'
+
+searchHits:
+  type: object
+  additionalProperties: true
+  properties:
+    hits:
+      type: array
+      description: |
+        Search results (hits).
+
+        Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
+      items:
+        $ref: 'Hit.yml#/hit'
+  required:
+    - hits
