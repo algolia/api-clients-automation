@@ -1,8 +1,10 @@
+import fsp from 'fs/promises';
 import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common.js';
 import { isPreRelease } from '../../release/versionsHistory.js';
 import type { Language } from '../../types.js';
 import { cloneRepository } from '../utils.js';
 
+import { resolve } from 'path';
 import { commitStartRelease } from './text.js';
 
 async function createGitHubRelease(lang: Language): Promise<void> {
@@ -38,14 +40,27 @@ async function createGitHubRelease(lang: Language): Promise<void> {
     previousVersion = tags[tags.length - 1];
   }
 
+  // extract the changelog from CHANGELOG.md, until the first ## to the second ##
+  const fullChangelog = (await fsp.readFile(resolve(tempGitDir, 'CHANGELOG.md')))
+    .toString()
+    .matchAll(/^##.*?\n(.*?)##/gms);
+  if (!fullChangelog) {
+    throw new Error('unable to find changelog');
+  }
+
+  const changelog = [...fullChangelog][0][1].trim().replaceAll(/- \[/g, '* [');
+
   const repository = `algoliasearch-client-${lang}`;
   const repositoryLink = `https://github.com/${OWNER}/${repository}`;
   const content = `
-New ${isMajor ? '**major** ' : ''}version released!
+# New ${isMajor ? '**major** ' : ''}version released!
+## What's Changed
+${changelog}
+
+**Full Changelog**: ${repositoryLink}/compare/${previousVersion}...${newVersion}
 
 → [Browse the Algolia documentation](https://www.algolia.com/doc/libraries/${lang})
-→ [Browse the changelog](${repositoryLink}/blob/main/CHANGELOG.md)
-→ [Browse the commits](${repositoryLink}/compare/${previousVersion}...${newVersion})`;
+`;
 
   try {
     await getOctokit().repos.createRelease({
