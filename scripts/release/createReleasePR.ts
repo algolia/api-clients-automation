@@ -204,6 +204,8 @@ export function decideReleaseStrategy({
     if (relevantCommits.length === 0) {
       console.log(`    > Skipping, no commits found for ${lang}.`);
 
+      versionsToPublish[lang] = { current: currentVersion };
+
       continue;
     }
 
@@ -304,18 +306,20 @@ async function getCommits(force?: boolean): Promise<{
 /**
  * Ensure the release environment is correct before triggering.
  */
-async function prepareGitEnvironment(): Promise<void> {
-  ensureGitHubToken();
+async function prepareGitEnvironment(dryRun: boolean): Promise<void> {
+  if (!dryRun) {
+    ensureGitHubToken();
+  }
 
-  if (CI) {
+  if (CI && !dryRun) {
     await configureGitHubAuthor();
   }
 
-  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
+  if (!dryRun && (await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
     throw new Error(`You can run this script only from \`${MAIN_BRANCH}\` branch.`);
   }
 
-  if (!process.env.FORCE && (await getNbGitDiff({ head: null })) !== 0) {
+  if (!dryRun && !process.env.FORCE && (await getNbGitDiff({ head: null })) !== 0) {
     throw new Error('Working directory is not clean. Commit all the changes first.');
   }
 
@@ -327,7 +331,10 @@ async function prepareGitEnvironment(): Promise<void> {
     console.log('Pulling from origin...');
     await run('git fetch origin');
     await run('git fetch --tags --force');
-    await run('git pull origin $(git branch --show-current)');
+
+    if (!dryRun) {
+      await run('git pull origin $(git branch --show-current)');
+    }
   }
 }
 
@@ -335,14 +342,14 @@ export async function createReleasePR({
   releaseType,
   dryRun,
   breaking,
+  versionsHistory,
 }: {
   releaseType?: semver.ReleaseType;
   dryRun?: boolean;
   breaking?: boolean;
+  versionsHistory?: boolean;
 }): Promise<void> {
-  if (!dryRun) {
-    await prepareGitEnvironment();
-  }
+  await prepareGitEnvironment(dryRun || versionsHistory || false);
 
   console.log('Searching for commits since last release...');
   const { validCommits, skippedCommits } = await getCommits(releaseType !== undefined);
@@ -350,6 +357,12 @@ export async function createReleasePR({
   const versions = decideReleaseStrategy({ commits: validCommits, releaseType });
 
   await generateVersionsHistory(versions);
+
+  if (versionsHistory) {
+    console.log('Asked for a versions history refresh only, stopping here');
+
+    return;
+  }
 
   const versionChanges = getVersionChangesText(versions);
   const languages = Object.keys(versions).join(', ');

@@ -1,0 +1,71 @@
+get:
+  tags:
+    - users
+  operationId: getUser
+  x-acl:
+    - search
+    - browse
+    - recommendation
+  summary: Get a user profile
+  description: Retrieves a user profile.
+  parameters:
+    - $ref: '../common/schemas/UsersParams.yml#/userID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/User.yml#/user'
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '404':
+      $ref: '../common/responses/UserNotFound.yml'
+    '422':
+      $ref: '../common/responses/InvalidUserID.yml'
+    '500':
+      $ref: '../common/responses/InternalServerError.yml'
+
+delete:
+  tags:
+    - users
+  operationId: deleteUser
+  x-acl:
+    - search
+    - browse
+    - recommendation
+  summary: Delete a user profile
+  description: Deletes a user profile.
+  parameters:
+    - $ref: '../common/schemas/UsersParams.yml#/userID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: deleteUserResponse
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+              userID:
+                type: string
+              deletedUntil:
+                type: string
+              deletedAt:
+                type: string
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '404':
+      $ref: '../common/responses/UserNotFound.yml'
+    '422':
+      $ref: '../common/responses/InvalidUserID.yml'
+    '500':
+      $ref: '../common/responses/InternalServerError.yml'
