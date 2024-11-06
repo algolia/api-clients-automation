@@ -1,0 +1,64 @@
+[
+  {
+    "parameters": {
+      "requests": [
+        {
+          "action": "upsert",
+          "body": {
+            "objectID": "foo",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "bar"
+                    }
+                  }
+                },
+                "insets": []
+              }
+            }
+          }
+        },
+        {
+          "action": "delete",
+          "body": {
+            "objectID": "baz"
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/compositions/*/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "behavior": {
+                "injection": {
+                  "insets": [],
+                  "main": {
+                    "source": {
+                      "search": {
+                        "index": "bar"
+                      }
+                    }
+                  }
+                }
+              },
+              "objectID": "foo"
+            }
+          },
+          {
+            "action": "delete",
+            "body": {
+              "objectID": "baz"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

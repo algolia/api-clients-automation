@@ -9,6 +9,9 @@ import {
   serializeQueryParameters,
   createIterablePromise,
   {{/isSearchClient}}
+  {{#isAlgoliaCompositionClient}}
+  createIterablePromise,
+  {{/isAlgoliaCompositionClient}}
 } from '@algolia/client-common';
 import type {
   CreateClientOptions,
@@ -39,6 +42,9 @@ import type {
     WaitForAppTaskOptions,
     WaitForTaskOptions,
   {{/isSearchClient}}
+  {{#isAlgoliaCompositionClient}}
+    WaitForCompositionTaskOptions,
+  {{/isAlgoliaCompositionClient}}
   {{#operation}}
     {{#vendorExtensions}}
       {{#x-create-wrapping-object}}

@@ -1,0 +1,17 @@
+[
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "searchCompositionRulesParams": {
+        "query": "batman"
+      }
+    },
+    "request": {
+      "path": "/1/compositions/foo/rules/search",
+      "method": "POST",
+      "body": {
+        "query": "batman"
+      }
+    }
+  }
+]
