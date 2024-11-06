@@ -1,22 +1,47 @@
 [
   {
     "parameters": {
-      "requests": [{"action":"upsert","body":{"objectID":"foo","behavior": {"injection":{"main":{"source":{"search":{"index":"bar"}}},"insets":[]}}}},{"action":"delete","body":{"objectID":"baz"}}]
+      "requests": [
+        {
+          "action": "upsert",
+          "body": {
+            "objectID": "foo",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "bar"
+                    }
+                  }
+                },
+                "insets": []
+              }
+            }
+          }
+        },
+        {
+          "action": "delete",
+          "body": {
+            "objectID": "baz"
+          }
+        }
+      ]
     },
     "request": {
       "path": "/1/compositions/*/batch",
       "method": "POST",
       "body": {
-        "requests":  [
+        "requests": [
           {
             "action": "upsert",
-            "body":  {
-              "behavior":  {
-                "injection":  {
-                  "insets":  [],
-                  "main":  {
-                    "source":  {
-                      "search":  {
+            "body": {
+              "behavior": {
+                "injection": {
+                  "insets": [],
+                  "main": {
+                    "source": {
+                      "search": {
                         "index": "bar"
                       }
                     }
@@ -28,7 +53,7 @@
           },
           {
             "action": "delete",
-            "body":  {
+            "body": {
               "objectID": "baz"
             }
           }
