@@ -17,9 +17,8 @@ export function assertValidTimeouts(expectedCount: number): void {
   for (const [lang, state] of Object.entries(timeoutState)) {
     let numberOfTestSuites = 1;
 
-    // composition api is also testing the retry strategy in JS
     // python has sync and async tests
-    if (lang === 'python' || lang === 'javascript') {
+    if (lang === 'python') {
       numberOfTestSuites = 2;
     }
 

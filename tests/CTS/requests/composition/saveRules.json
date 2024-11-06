@@ -1,0 +1,67 @@
+[
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "rules": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "123",
+              "conditions": [
+                {
+                  "pattern": "a"
+                }
+              ],
+              "consequence": {
+                "params": {
+                  "injection": {
+                    "main": {
+                      "source": {
+                        "search": {
+                          "index": "<YOUR_INDEX_NAME>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/compositions/foo/rules/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "123",
+              "conditions": [
+                {
+                  "pattern": "a"
+                }
+              ],
+              "consequence": {
+                "params": {
+                  "injection": {
+                    "main": {
+                      "source": {
+                        "search": {
+                          "index": "<YOUR_INDEX_NAME>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]
