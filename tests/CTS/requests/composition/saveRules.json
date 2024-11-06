@@ -14,7 +14,7 @@
                 }
               ],
               "consequence": {
-                "params": {
+                "behavior": {
                   "injection": {
                     "main": {
                       "source": {
@@ -46,7 +46,7 @@
                 }
               ],
               "consequence": {
-                "params": {
+                "behavior": {
                   "injection": {
                     "main": {
                       "source": {
