@@ -87,7 +87,7 @@ async function createGitHubReleases(languagesReleased: Language[]): Promise<void
   if (!lastCommitMessage.startsWith(commitStartRelease)) {
     console.log('No release commit found, skipping release generation');
 
-    //return;
+    return;
   }
 
   await Promise.all(
