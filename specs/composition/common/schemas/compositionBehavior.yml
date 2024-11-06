@@ -13,7 +13,25 @@ compositionBehavior:
           additionalProperties: false
           properties:
             source:
-              $ref: '#/compositionSource'
+              title: compositionSource
+              type: object
+              additionalProperties: false
+              properties:
+                search:
+                  title: compositionSourceSearch
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    index:
+                      type: string
+                      description: Composition Main Index name.
+                      example: Products
+                    params:
+                      $ref: './SearchParams.yml#/mainInjectionQueryParameters'
+                  required:
+                    - index
+              required:
+                - search
           required:
             - source
         insets:
@@ -28,26 +46,6 @@ compositionBehavior:
   required:
     - injection
 
-compositionSource:
-  type: object
-  additionalProperties: false
-  properties:
-    search:
-      title: search
-      type: object
-      additionalProperties: false
-      properties:
-        index:
-          type: string
-          description: Composition Main Index name.
-          example: Products
-        params:
-          $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery'
-      required:
-        - index
-  required:
-    - search
-
 compositionInset:
   type: object
   additionalProperties: false
@@ -56,7 +54,25 @@ compositionInset:
       type: string
       description: Inset name.
     source:
-      $ref: '#/compositionSource'
+      title: compositionInsetSource
+      type: object
+      additionalProperties: false
+      properties:
+        search:
+          title: compositionInsetSourceSearch
+          type: object
+          additionalProperties: false
+          properties:
+            index:
+              type: string
+              description: Composition Main Index name.
+              example: Products
+            params:
+              $ref: './SearchParams.yml#/InsetsQueryParameters'
+          required:
+            - index
+      required:
+        - search
     position:
       type: integer
       minimum: 0
