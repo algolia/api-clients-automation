@@ -11,12 +11,23 @@ post:
     content:
       application/json:
         schema:
-          title: estimateABTestRequest
+          title: estimateRequest
           type: object
           additionalProperties: false
           properties:
             configuration:
-              $ref: '../common/schemas/ABTest.yml#/ABTestConfiguration'
+              title: configuration
+              type: object
+              description: A/B test configuration.
+              properties:
+                outliers:
+                  $ref: '../common/schemas/ABTest.yml#/Outliers'
+                emptySearch:
+                  $ref: '../common/schemas/ABTest.yml#/EmptySearch'
+                minimumDetectableEffect:
+                  $ref: '../common/schemas/ABTest.yml#/MinimumDetectableEffect'
+              required:
+                - minimumDetectableEffect
             variants:
               type: array
               description: A/B test variants.
