@@ -8,7 +8,7 @@
         },
         "minimumDetectableEffect": {
           "size": 0.03,
-          "metric": "conversionrate"
+          "metric": "conversionRate"
         }
       },
       "variants": [
@@ -32,7 +32,7 @@
           },
           "minimumDetectableEffect": {
             "size": 0.03,
-            "metric": "conversionrate"
+            "metric": "conversionRate"
           }
         },
         "variants": [
