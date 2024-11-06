@@ -47,6 +47,7 @@
     ],
     "folder": "clients/algoliasearch-client-dart",
     "gitRepoId": "algoliasearch-client-dart",
+    "packageVersion": "1.27.0",
     "modelFolder": "lib/src/model",
     "apiFolder": "lib/src/api",
     "dockerImage": "apic_base",
