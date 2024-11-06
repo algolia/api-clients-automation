@@ -17,8 +17,10 @@ compositionRule:
       description: Effect of the rule.
       additionalProperties: false
       properties:
-        params:
+        behavior:
           $ref: './compositionBehavior.yml#/compositionBehavior'
+      required:
+        - behavior
     description:
       type: string
       description: Description of the rule's purpose to help you distinguish between different rules.

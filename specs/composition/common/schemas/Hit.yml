@@ -38,3 +38,6 @@ compositionRankingInfo:
           type: string
         inset:
           type: string
+      required:
+        - index
+        - inset
