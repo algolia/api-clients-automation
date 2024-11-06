@@ -11,14 +11,14 @@ post:
     content:
       application/json:
         schema:
-          title: estimateRequest
+          title: estimateABTestRequest
           type: object
           additionalProperties: false
           properties:
             configuration:
-              title: configuration
+              title: estimateConfiguration
               type: object
-              description: A/B test configuration.
+              description: A/B test configuration for estimating the sample size and duration using minimum detectable effect.
               properties:
                 outliers:
                   $ref: '../common/schemas/ABTest.yml#/Outliers'
@@ -51,7 +51,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/EstimateResponse.yml#/EstimateResponse'
+            $ref: '../common/schemas/EstimateABTestResponse.yml#/EstimateABTestResponse'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

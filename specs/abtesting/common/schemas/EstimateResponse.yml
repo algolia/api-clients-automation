@@ -1,2 +1,0 @@
-EstimateABTestResponse:
-  $ref: '../parameters.yml#/minimumDetectableEffect'
