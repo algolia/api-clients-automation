@@ -2,8 +2,22 @@ searchResponse:
   additionalProperties: true
   allOf:
     - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
-    - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'
+    - $ref: '#/searchResults'
+
+searchResults:
+  type: object
+  additionalProperties: false
+  properties:
+    results:
+      type: array
+      description: Search results.
+      items:
+        $ref: '#/searchResultsItem'
+
+searchResultsItem:
+  allOf:
     - $ref: '#/searchHits'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'
 
 searchHits:
   type: object
@@ -17,13 +31,5 @@ searchHits:
         Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
       items:
         $ref: 'Hit.yml#/hit'
-    query:
-      $ref: '../../../common/schemas/SearchParams.yml#/query'
-    params:
-      type: string
-      description: URL-encoded string of all search parameters.
-      example: query=a&hitsPerPage=20
   required:
     - hits
-    - query
-    - params

@@ -8,7 +8,7 @@ searchParams:
     filters:
       $ref: '../../../common/schemas/SearchParams.yml#/filters'
     page:
-      $ref: '#/page'
+      $ref: '../../../common/schemas/SearchParams.yml#/page'
     getRankingInfo:
       type: boolean
       description: Whether the search response should include detailed ranking information.
