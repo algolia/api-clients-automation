@@ -21,6 +21,9 @@
     "deleteABTest": {
       "default": "var response = await client.DeleteABTestAsync(42);"
     },
+    "estimateABTest": {
+      "default": "var response = await client.EstimateABTestAsync(\n  new EstimateABTestRequest\n  {\n    Configuration = new EstimateConfiguration\n    {\n      EmptySearch = new EmptySearch { Exclude = true },\n      MinimumDetectableEffect = new MinimumDetectableEffect\n      {\n        Size = 0.03,\n        Metric = Enum.Parse<EffectMetric>(\"ConversionRate\"),\n      },\n    },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 50 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
+    },
     "getABTest": {
       "default": "var response = await client.GetABTestAsync(42);"
     },
@@ -63,6 +66,9 @@
     "deleteABTest": {
       "default": "response, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
+    "estimateABTest": {
+      "default": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(\n      abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(\n      abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric(\"conversionRate\")))).SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
     "getABTest": {
       "default": "response, err := client.GetABTest(client.NewApiGetABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
@@ -103,6 +109,9 @@
     },
     "deleteABTest": {
       "default": "client.deleteABTest(42);"
+    },
+    "estimateABTest": {
+      "default": "client.estimateABTest(\n  new EstimateABTestRequest()\n    .setConfiguration(\n      new EstimateConfiguration()\n        .setEmptySearch(new EmptySearch().setExclude(true))\n        .setMinimumDetectableEffect(new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE))\n    )\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(50),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
     },
     "getABTest": {
       "default": "client.getABTest(42);"
@@ -145,6 +154,9 @@
     "deleteABTest": {
       "default": "const response = await client.deleteABTest({ id: 42 });"
     },
+    "estimateABTest": {
+      "default": "const response = await client.estimateABTest({\n  configuration: {\n    emptySearch: { exclude: true },\n    minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' },\n  },\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 50 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+    },
     "getABTest": {
       "default": "const response = await client.getABTest({ id: 42 });"
     },
@@ -185,6 +197,9 @@
     },
     "deleteABTest": {
       "default": "var response = client.deleteABTest(\n  id = 42,\n)"
+    },
+    "estimateABTest": {
+      "default": "var response = client.estimateABTest(\n  estimateABTestRequest = EstimateABTestRequest(\n    configuration = EstimateConfiguration(\n      emptySearch = EmptySearch(\n        exclude = true,\n      ),\n      minimumDetectableEffect = MinimumDetectableEffect(\n        size = 0.03,\n        metric = EffectMetric.entries.first { it.value == \"conversionRate\" },\n      ),\n    ),\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 50,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n  ),\n)"
     },
     "getABTest": {
       "default": "var response = client.getABTest(\n  id = 42,\n)"
@@ -227,6 +242,9 @@
     "deleteABTest": {
       "default": "$response = $client->deleteABTest(\n    42,\n);"
     },
+    "estimateABTest": {
+      "default": "$response = $client->estimateABTest(\n    ['configuration' => ['emptySearch' => ['exclude' => true,\n    ],\n        'minimumDetectableEffect' => ['size' => 0.03,\n            'metric' => 'conversionRate',\n        ],\n    ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 50,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+    },
     "getABTest": {
       "default": "$response = $client->getABTest(\n    42,\n);"
     },
@@ -267,6 +285,9 @@
     },
     "deleteABTest": {
       "default": "response = client.delete_ab_test(\n    id=42,\n)"
+    },
+    "estimateABTest": {
+      "default": "response = client.estimate_ab_test(\n    estimate_ab_test_request={\n        \"configuration\": {\n            \"emptySearch\": {\n                \"exclude\": True,\n            },\n            \"minimumDetectableEffect\": {\n                \"size\": 0.03,\n                \"metric\": \"conversionRate\",\n            },\n        },\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 50,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
     },
     "getABTest": {
       "default": "response = client.get_ab_test(\n    id=42,\n)"
@@ -309,6 +330,9 @@
     "deleteABTest": {
       "default": "response = client.delete_ab_test(42)"
     },
+    "estimateABTest": {
+      "default": "response = client.estimate_ab_test(\n  Algolia::Abtesting::EstimateABTestRequest.new(\n    configuration: Algolia::Abtesting::EstimateConfiguration.new(\n      empty_search: Algolia::Abtesting::EmptySearch.new(exclude: true),\n      minimum_detectable_effect: Algolia::Abtesting::MinimumDetectableEffect.new(size: 0.03, metric: \"conversionRate\")\n    ),\n    variants: [\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 50),\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+    },
     "getABTest": {
       "default": "response = client.get_ab_test(42)"
     },
@@ -350,6 +374,9 @@
     "deleteABTest": {
       "default": "val response = client.deleteABTest(\n  id = 42\n)"
     },
+    "estimateABTest": {
+      "default": "val response = client.estimateABTest(\n  estimateABTestRequest = EstimateABTestRequest(\n    configuration = EstimateConfiguration(\n      emptySearch = Some(\n        EmptySearch(\n          exclude = Some(true)\n        )\n      ),\n      minimumDetectableEffect = MinimumDetectableEffect(\n        size = 0.03,\n        metric = EffectMetric.withName(\"conversionRate\")\n      )\n    ),\n    variants = Seq(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 50\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50\n      )\n    )\n  )\n)"
+    },
     "getABTest": {
       "default": "val response = client.getABTest(\n  id = 42\n)"
     },
@@ -387,6 +414,9 @@
     },
     "deleteABTest": {
       "default": "let response = try await client.deleteABTest(id: 42)"
+    },
+    "estimateABTest": {
+      "default": "let response = try await client.estimateABTest(estimateABTestRequest: EstimateABTestRequest(\n    configuration: EstimateConfiguration(\n        emptySearch: EmptySearch(exclude: true),\n        minimumDetectableEffect: MinimumDetectableEffect(\n            size: 0.03,\n            metric: EffectMetric.conversionRate\n        )\n    ),\n    variants: [\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_1\", trafficPercentage: 50)),\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_2\", trafficPercentage: 50)),\n    ]\n))"
     },
     "getABTest": {
       "default": "let response = try await client.getABTest(id: 42)"

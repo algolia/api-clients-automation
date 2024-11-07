@@ -319,6 +319,36 @@ class TestAbtestingClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # estimate AB Test sample size
+  def test_estimate_ab_test
+    req = @client.estimate_ab_test_with_http_info(
+      Algolia::Abtesting::EstimateABTestRequest.new(
+        configuration: Algolia::Abtesting::EstimateConfiguration.new(
+          empty_search: Algolia::Abtesting::EmptySearch.new(exclude: true),
+          minimum_detectable_effect: Algolia::Abtesting::MinimumDetectableEffect.new(
+            size: 0.03,
+            metric: "conversionRate"
+          )
+        ),
+        variants: [
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 50),
+          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/abtests/estimate", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"configuration\":{\"emptySearch\":{\"exclude\":true},\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"conversionRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # getABTest
   def test_get_ab_test
     req = @client.get_ab_test_with_http_info(42)

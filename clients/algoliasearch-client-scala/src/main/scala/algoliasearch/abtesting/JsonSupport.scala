@@ -28,7 +28,7 @@ import org.json4s._
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EffectSerializer() :+
+    new EffectMetricSerializer() :+
     new StatusSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
