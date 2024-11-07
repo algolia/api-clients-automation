@@ -133,6 +133,43 @@ public class SnippetAbtestingClient
   }
 
   /// <summary>
+  /// Snippet for the EstimateABTest method.
+  ///
+  /// estimate AB Test sample size
+  /// </summary>
+  public async Task SnippetForAbtestingClientEstimateABTest()
+  {
+    // >SEPARATOR estimateABTest default
+    // Initialize the client
+    var client = new AbtestingClient(
+      new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.EstimateABTestAsync(
+      new EstimateABTestRequest
+      {
+        Configuration = new EstimateConfiguration
+        {
+          EmptySearch = new EmptySearch { Exclude = true },
+          MinimumDetectableEffect = new MinimumDetectableEffect
+          {
+            Size = 0.03,
+            Metric = Enum.Parse<EffectMetric>("ConversionRate"),
+          },
+        },
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 50 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetABTest method.
   ///
   /// getABTest

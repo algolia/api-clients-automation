@@ -107,8 +107,8 @@ tags:
       Manage A/B tests.
 
 
-      A/B tests are configurations of two indices, usually your production index
-      and an index with different settings that you want to test.
+      A/B tests are configurations one or more indices, usually your production
+      index and an index with different settings that you want to test.
 externalDocs:
   url: https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/
   description: |
@@ -2569,6 +2569,436 @@ paths:
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
               --data '{"name":"Custom ranking sales rank test","variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}],"scheduledAt":"2023-06-15T15:06:44.400601Z","endAt":"2023-06-17T00:00:00Z"}'
+  /2/abtests/estimate:
+    post:
+      tags:
+        - abtest
+      operationId: estimateABTest
+      x-acl:
+        - analytics
+      summary: Estimate the sample size and duration of an A/B test
+      description: >-
+        Given the traffic percentage and the expected effect size, this endpoint
+        estimates the sample size and duration of an A/B test based on
+        historical traffic.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: estimateABTestRequest
+              type: object
+              additionalProperties: false
+              properties:
+                configuration:
+                  title: estimateConfiguration
+                  type: object
+                  description: >-
+                    A/B test configuration for estimating the sample size and
+                    duration using minimum detectable effect.
+                  properties:
+                    outliers:
+                      $ref: '#/components/schemas/Outliers'
+                    emptySearch:
+                      $ref: '#/components/schemas/EmptySearch'
+                    minimumDetectableEffect:
+                      $ref: '#/components/schemas/MinimumDetectableEffect'
+                  required:
+                    - minimumDetectableEffect
+                variants:
+                  type: array
+                  description: A/B test variants.
+                  minItems: 2
+                  maxItems: 2
+                  items:
+                    $ref: '#/components/schemas/AddABTestsVariant'
+              required:
+                - configuration
+                - variants
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateABTestResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.EstimateABTestAsync(
+              new EstimateABTestRequest
+              {
+                Configuration = new EstimateConfiguration
+                {
+                  EmptySearch = new EmptySearch { Exclude = true },
+                  MinimumDetectableEffect = new MinimumDetectableEffect
+                  {
+                    Size = 0.03,
+                    Metric = Enum.Parse<EffectMetric>("ConversionRate"),
+                  },
+                },
+                Variants = new List<AddABTestsVariant>
+                {
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 50 }),
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+                },
+              }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.EstimateABTest(client.NewApiEstimateABTestRequest(
+
+              abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(
+                abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(
+                  abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(
+                  abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric("conversionRate")))).SetVariants(
+                []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new
+            AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.estimateABTest(
+              new EstimateABTestRequest()
+                .setConfiguration(
+                  new EstimateConfiguration()
+                    .setEmptySearch(new EmptySearch().setExclude(true))
+                    .setMinimumDetectableEffect(new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE))
+                )
+                .setVariants(
+                  Arrays.asList(
+                    new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+                    new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+                  )
+                )
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.estimateABTest({
+              configuration: {
+                emptySearch: { exclude: true },
+                minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' },
+              },
+              variants: [
+                { index: 'AB_TEST_1', trafficPercentage: 50 },
+                { index: 'AB_TEST_2', trafficPercentage: 50 },
+              ],
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.estimateABTest(
+              estimateABTestRequest = EstimateABTestRequest(
+                configuration = EstimateConfiguration(
+                  emptySearch = EmptySearch(
+                    exclude = true,
+                  ),
+                  minimumDetectableEffect = MinimumDetectableEffect(
+                    size = 0.03,
+                    metric = EffectMetric.entries.first { it.value == "conversionRate" },
+                  ),
+                ),
+                variants = listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 50,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->estimateABTest(
+                ['configuration' => ['emptySearch' => ['exclude' => true,
+                ],
+                    'minimumDetectableEffect' => ['size' => 0.03,
+                        'metric' => 'conversionRate',
+                    ],
+                ],
+                    'variants' => [
+                        ['index' => 'AB_TEST_1',
+                            'trafficPercentage' => 50,
+                        ],
+
+                        ['index' => 'AB_TEST_2',
+                            'trafficPercentage' => 50,
+                        ],
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.estimate_ab_test(
+                estimate_ab_test_request={
+                    "configuration": {
+                        "emptySearch": {
+                            "exclude": True,
+                        },
+                        "minimumDetectableEffect": {
+                            "size": 0.03,
+                            "metric": "conversionRate",
+                        },
+                    },
+                    "variants": [
+                        {
+                            "index": "AB_TEST_1",
+                            "trafficPercentage": 50,
+                        },
+                        {
+                            "index": "AB_TEST_2",
+                            "trafficPercentage": 50,
+                        },
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.estimate_ab_test(
+              Algolia::Abtesting::EstimateABTestRequest.new(
+                configuration: Algolia::Abtesting::EstimateConfiguration.new(
+                  empty_search: Algolia::Abtesting::EmptySearch.new(exclude: true),
+                  minimum_detectable_effect: Algolia::Abtesting::MinimumDetectableEffect.new(size: 0.03, metric: "conversionRate")
+                ),
+                variants: [
+                  Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 50),
+                  Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+                ]
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = client.estimateABTest(
+              estimateABTestRequest = EstimateABTestRequest(
+                configuration = EstimateConfiguration(
+                  emptySearch = Some(
+                    EmptySearch(
+                      exclude = Some(true)
+                    )
+                  ),
+                  minimumDetectableEffect = MinimumDetectableEffect(
+                    size = 0.03,
+                    metric = EffectMetric.withName("conversionRate")
+                  )
+                ),
+                variants = Seq(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 50
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50
+                  )
+                )
+              )
+            )
+
+            // >LOG
+            // Use the response
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.estimateABTest(estimateABTestRequest: EstimateABTestRequest(
+                configuration: EstimateConfiguration(
+                    emptySearch: EmptySearch(exclude: true),
+                    minimumDetectableEffect: MinimumDetectableEffect(
+                        size: 0.03,
+                        metric: EffectMetric.conversionRate
+                    )
+                ),
+                variants: [
+                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 50)),
+                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                ]
+            ))
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://analytics.us.algolia.com/2/abtests/estimate \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"configuration":{"outliers":{"exclude":true},"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"}},"variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}]}'
 components:
   securitySchemes:
     appId:
@@ -2920,7 +3350,7 @@ components:
         exclude:
           type: boolean
           description: Whether to exclude empty searches when calculating A/B test results.
-    Effect:
+    EffectMetric:
       type: string
       description: Metric for which you want to detect the smallest relative difference.
       enum:
@@ -2944,8 +3374,11 @@ components:
 
             For example, to detect a 10% difference between variants, set this
             value to 0.1.
-        effect:
-          $ref: '#/components/schemas/Effect'
+        metric:
+          $ref: '#/components/schemas/EffectMetric'
+      required:
+        - size
+        - metric
     ABTestConfiguration:
       title: configuration
       type: object
@@ -3150,6 +3583,31 @@ components:
           $ref: '#/components/schemas/abTestScheduleID'
       required:
         - abTestScheduleID
+    EstimateABTestResponse:
+      type: object
+      properties:
+        durationDays:
+          type: integer
+          format: int64
+          description: >-
+            Estimated number of days needed to reach the sample sizes required
+            for detecting the configured effect. This value is based on
+            historical traffic.
+          example: 21
+        controlSampleSize:
+          type: integer
+          format: int64
+          description: >-
+            Number of tracked searches needed to be able to detect the
+            configured effect for the control variant.
+          example: 23415
+        experimentSampleSize:
+          type: integer
+          format: int64
+          description: >-
+            Number of tracked searches needed to be able to detect the
+            configured effect for the experiment variant.
+          example: 23415
   responses:
     BadRequest:
       description: Bad request or request arguments.

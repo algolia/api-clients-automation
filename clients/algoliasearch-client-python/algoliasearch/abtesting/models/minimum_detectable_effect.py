@@ -18,11 +18,11 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.abtesting.models.effect import Effect
+from algoliasearch.abtesting.models.effect_metric import EffectMetric
 
 _ALIASES = {
     "size": "size",
-    "effect": "effect",
+    "metric": "metric",
 }
 
 
@@ -35,9 +35,9 @@ class MinimumDetectableEffect(BaseModel):
     Configuration for the smallest difference between test variants you want to detect.
     """
 
-    size: Optional[float] = None
+    size: float
     """ Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.  """
-    effect: Optional[Effect] = None
+    metric: EffectMetric
 
     model_config = ConfigDict(
         use_enum_values=True,
@@ -72,6 +72,6 @@ class MinimumDetectableEffect(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        obj["effect"] = obj.get("effect")
+        obj["metric"] = obj.get("metric")
 
         return cls.model_validate(obj)

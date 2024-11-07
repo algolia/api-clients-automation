@@ -10,13 +10,13 @@ module Algolia
       # Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
       attr_accessor :size
 
-      attr_accessor :effect
+      attr_accessor :metric
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :size => :size,
-          :effect => :effect
+          :metric => :metric
         }
       end
 
@@ -29,7 +29,7 @@ module Algolia
       def self.types_mapping
         {
           :size => :"Float",
-          :effect => :"Effect"
+          :metric => :"EffectMetric"
         }
       end
 
@@ -65,10 +65,14 @@ module Algolia
 
         if attributes.key?(:size)
           self.size = attributes[:size]
+        else
+          self.size = nil
         end
 
-        if attributes.key?(:effect)
-          self.effect = attributes[:effect]
+        if attributes.key?(:metric)
+          self.metric = attributes[:metric]
+        else
+          self.metric = nil
         end
       end
 
@@ -78,7 +82,7 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           size == other.size &&
-          effect == other.effect
+          metric == other.metric
       end
 
       # @see the `==` method
@@ -90,7 +94,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [size, effect].hash
+        [size, metric].hash
       end
 
       # Builds the object from hash

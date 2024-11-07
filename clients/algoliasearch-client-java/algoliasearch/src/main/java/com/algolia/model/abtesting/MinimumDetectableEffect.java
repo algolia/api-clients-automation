@@ -13,8 +13,8 @@ public class MinimumDetectableEffect {
   @JsonProperty("size")
   private Double size;
 
-  @JsonProperty("effect")
-  private Effect effect;
+  @JsonProperty("metric")
+  private EffectMetric metric;
 
   public MinimumDetectableEffect setSize(Double size) {
     this.size = size;
@@ -25,20 +25,20 @@ public class MinimumDetectableEffect {
    * Smallest difference in an observable metric between variants. For example, to detect a 10%
    * difference between variants, set this value to 0.1. minimum: 0 maximum: 1
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Double getSize() {
     return size;
   }
 
-  public MinimumDetectableEffect setEffect(Effect effect) {
-    this.effect = effect;
+  public MinimumDetectableEffect setMetric(EffectMetric metric) {
+    this.metric = metric;
     return this;
   }
 
-  /** Get effect */
-  @javax.annotation.Nullable
-  public Effect getEffect() {
-    return effect;
+  /** Get metric */
+  @javax.annotation.Nonnull
+  public EffectMetric getMetric() {
+    return metric;
   }
 
   @Override
@@ -50,12 +50,12 @@ public class MinimumDetectableEffect {
       return false;
     }
     MinimumDetectableEffect minimumDetectableEffect = (MinimumDetectableEffect) o;
-    return Objects.equals(this.size, minimumDetectableEffect.size) && Objects.equals(this.effect, minimumDetectableEffect.effect);
+    return Objects.equals(this.size, minimumDetectableEffect.size) && Objects.equals(this.metric, minimumDetectableEffect.metric);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(size, effect);
+    return Objects.hash(size, metric);
   }
 
   @Override
@@ -63,7 +63,7 @@ public class MinimumDetectableEffect {
     StringBuilder sb = new StringBuilder();
     sb.append("class MinimumDetectableEffect {\n");
     sb.append("    size: ").append(toIndentedString(size)).append("\n");
-    sb.append("    effect: ").append(toIndentedString(effect)).append("\n");
+    sb.append("    metric: ").append(toIndentedString(metric)).append("\n");
     sb.append("}");
     return sb.toString();
   }

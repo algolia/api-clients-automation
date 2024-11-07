@@ -102,6 +102,33 @@ class SnippetAbtestingClient {
     // SEPARATOR<
   }
 
+  // Snippet for the estimateABTest method.
+  //
+  // estimate AB Test sample size
+  void snippetForEstimateABTest() throws Exception {
+    // >SEPARATOR estimateABTest default
+    // Initialize the client
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.estimateABTest(
+      new EstimateABTestRequest()
+        .setConfiguration(
+          new EstimateConfiguration()
+            .setEmptySearch(new EmptySearch().setExclude(true))
+            .setMinimumDetectableEffect(new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE))
+        )
+        .setVariants(
+          Arrays.asList(
+            new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+            new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+          )
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the getABTest method.
   //
   // getABTest

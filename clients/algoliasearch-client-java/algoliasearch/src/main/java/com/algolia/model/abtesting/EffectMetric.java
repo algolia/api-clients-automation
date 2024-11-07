@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /** Metric for which you want to detect the smallest relative difference. */
-public enum Effect {
+public enum EffectMetric {
   ADD_TO_CART_RATE("addToCartRate"),
 
   CLICK_THROUGH_RATE("clickThroughRate"),
@@ -18,7 +18,7 @@ public enum Effect {
 
   private final String value;
 
-  Effect(String value) {
+  EffectMetric(String value) {
     this.value = value;
   }
 
@@ -33,8 +33,8 @@ public enum Effect {
   }
 
   @JsonCreator
-  public static Effect fromValue(String value) {
-    for (Effect b : Effect.values()) {
+  public static EffectMetric fromValue(String value) {
+    for (EffectMetric b : EffectMetric.values()) {
       if (b.value.equals(value)) {
         return b;
       }

@@ -429,6 +429,31 @@ func TestAbtesting_DeleteABTest(t *testing.T) {
 	})
 }
 
+func TestAbtesting_EstimateABTest(t *testing.T) {
+	client, echo := createAbtestingClient(t)
+	_ = echo
+
+	t.Run("estimate AB Test sample size", func(t *testing.T) {
+		_, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(
+
+			abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(
+				abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(
+					abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(
+					abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric("conversionRate")))).SetVariants(
+				[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+					abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+					abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/abtests/estimate", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"configuration":{"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
+	})
+}
+
 func TestAbtesting_GetABTest(t *testing.T) {
 	client, echo := createAbtestingClient(t)
 	_ = echo
