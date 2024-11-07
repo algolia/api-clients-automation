@@ -2,17 +2,17 @@ EstimateABTestResponse:
   type: object
   properties:
     durationDays:
-      type: number
+      type: integer
       format: int64
       description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
       example: 21
     controlSampleSize:
-      type: number
+      type: integer
       format: int64
       description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
       example: 23415
     experimentSampleSize:
-      type: number
+      type: integer
       format: int64
       description: Number of tracked searches needed to be able to detect the configured effect for the experiment variant.
       example: 23415
