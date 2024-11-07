@@ -1,0 +1,12 @@
+ObjectIDRule:
+  in: path
+  name: objectID
+  description: Unique identifier of a rule object.
+  required: true
+  schema:
+    $ref: '../../../common/parameters.yml#/ruleID'
+
+query:
+  type: string
+  description: Search query for rules.
+  default: ''

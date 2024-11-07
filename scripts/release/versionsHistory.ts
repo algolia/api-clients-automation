@@ -10,6 +10,20 @@ import type { Language } from '../types.js';
 import { preReleaseRegExp } from './createReleasePR.js';
 import type { Version, Versions } from './types.js';
 
+// the date of the generated api clients release
+const generatedReleaseDate = new Date('2024-08-14');
+
+// number of years of eligibility
+const eligibilityDuration = 2;
+const eligibilityEndDate = new Date(
+  generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + eligibilityDuration),
+);
+
+type Eligibility = {
+  status: 'eligible' | 'not eligible' | 'replaced';
+  date?: string;
+};
+
 export function isPreRelease(version: string): boolean {
   return (
     version.match(preReleaseRegExp) !== null ||
@@ -19,6 +33,24 @@ export function isPreRelease(version: string): boolean {
     version.startsWith('0') ||
     isNaN(parseInt(version.charAt(0), 10))
   );
+}
+
+function getCurrentMajor(version: string): int {
+  return parseInt(version.match(/\d+/)[0]);
+}
+
+function getEligibility(currentMajor: int, previousMajor: int, version: string, releaseDate: Date): Eligibility {
+  const versionMajor = getCurrentMajor(version);
+
+  if (versionMajor == currentMajor) {
+    return { status: 'eligible' };
+  }
+
+  if (versionMajor == previousMajor && eligibilityEndDate >= new Date()) {
+    return { status: 'replaced', date: eligibilityEndDate.toISOString().split('T')[0] };
+  }
+
+  return { status: 'not eligible' };
 }
 
 // fetches the git tags on the given `lang` repository, throws if none.
@@ -56,8 +88,10 @@ export function generateLanguageVersionsHistory(
   lang: Language,
   version: Version,
 ): Record<string, { releaseDate: string }> {
-  const versions: Record<string, { releaseDate: string }> = {};
+  const versions: Record<string, { releaseDate: string } & Eligibility> = {};
 
+  const currentMajor = getCurrentMajor(version.current);
+  const previousMajor = currentMajor - 1 || currentMajor;
   let prevTagVersion = '';
 
   for (const tag of tags) {
@@ -73,8 +107,12 @@ export function generateLanguageVersionsHistory(
       continue;
     }
 
+    const eligibility = getEligibility(currentMajor, previousMajor, tagVersion, new Date(tagReleaseDate));
+
     versions[tagVersion] = {
       releaseDate: new Date(tagReleaseDate).toISOString().split('T')[0],
+      eligibilityDate: eligibility.date,
+      eligibilityStatus: eligibility.status,
     };
 
     prevTagVersion = tagVersion;
@@ -84,6 +122,7 @@ export function generateLanguageVersionsHistory(
   if (version?.next && !isPreRelease(version?.next) && version?.next !== prevTagVersion) {
     versions[version.next] = {
       releaseDate: new Date().toISOString().split('T')[0],
+      eligibilityStatus: 'eligible',
     };
   }
 

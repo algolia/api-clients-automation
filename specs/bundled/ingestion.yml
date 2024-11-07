@@ -2238,6 +2238,11 @@ components:
           description: |
             Algolia API key with the ACL: `search`.
             This field is `null` in the API response.
+    AuthSecrets:
+      type: object
+      description: A key:value authentication for your transformations.
+      additionalProperties:
+        type: string
     AuthInputPartial:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
@@ -2246,6 +2251,7 @@ components:
         - $ref: '#/components/schemas/AuthOAuthPartial'
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
+        - $ref: '#/components/schemas/AuthSecrets'
     createdAt:
       type: string
       description: Date of creation in RFC 3339 format.
@@ -2412,11 +2418,6 @@ components:
       required:
         - appID
         - apiKey
-    AuthSecrets:
-      type: object
-      description: A key:value authentication for your transformations.
-      additionalProperties:
-        type: string
     AuthInput:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccount'

@@ -20,15 +20,23 @@ describe('generateLanguageVersionsHistory', () => {
       expect(versions).toEqual({
         '1.2.4': {
           releaseDate: '2023-12-28',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
         '1.2.5': {
           releaseDate: '2024-01-02',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
         '1.2.6': {
           releaseDate: '2024-01-02',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
         '1.2.7': {
           releaseDate: '2024-01-04',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
       });
     });
@@ -36,27 +44,41 @@ describe('generateLanguageVersionsHistory', () => {
     it('parses version of different same minor', () => {
       const versions = generateLanguageVersionsHistory(
         [
-          '1.1.4 Thu Dec 28 15:48:25 2023 +0000',
-          '1.2.5 Tue Jan 2 14:17:11 2024 +0000',
-          '1.3.6 Tue Jan 2 15:26:06 2024 +0000',
-          '1.4.7 Thu Jan 4 15:09:11 2024 +0000',
+          '1.1.4 Thu Dec 28 15:48:25 2022 +0000',
+          '2.1.2 Tue Jan 2 14:17:11 2022 +0000',
+          '2.2.5 Tue Jan 2 14:17:11 2024 +0000',
+          '2.3.6 Tue Jan 2 15:26:06 2024 +0000',
+          '3.4.7 Thu Jan 4 15:09:11 2024 +0000',
         ],
         'javascript',
-        { current: '1.4.7', next: null, releaseType: null },
+        { current: '3.4.7', next: null, releaseType: null },
       );
 
       expect(versions).toEqual({
         '1.1.4': {
-          releaseDate: '2023-12-28',
+          releaseDate: '2022-12-28',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'not eligible',
         },
-        '1.2.5': {
+        '2.1.2': {
+          releaseDate: '2022-01-02',
+          eligibilityDate: '2026-08-14',
+          eligibilityStatus: 'replaced',
+        },
+        '2.2.5': {
           releaseDate: '2024-01-02',
+          eligibilityDate: '2026-08-14',
+          eligibilityStatus: 'replaced',
         },
-        '1.3.6': {
+        '2.3.6': {
           releaseDate: '2024-01-02',
+          eligibilityDate: '2026-08-14',
+          eligibilityStatus: 'replaced',
         },
-        '1.4.7': {
+        '3.4.7': {
           releaseDate: '2024-01-04',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
       });
     });
@@ -77,6 +99,8 @@ describe('generateLanguageVersionsHistory', () => {
       expect(versions).toEqual({
         '1.2.4': {
           releaseDate: '2023-12-28',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
       });
     });
@@ -91,9 +115,13 @@ describe('generateLanguageVersionsHistory', () => {
       expect(versions).toEqual({
         '1.2.4': {
           releaseDate: '2023-12-28',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
         '2.0.0': {
           releaseDate: start.toISOString().split('T')[0],
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
       });
     });
@@ -108,9 +136,13 @@ describe('generateLanguageVersionsHistory', () => {
       expect(versions).toEqual({
         '1.2.4': {
           releaseDate: '2023-12-28',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
         '1.3.0': {
           releaseDate: start.toISOString().split('T')[0],
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
       });
     });
@@ -125,9 +157,13 @@ describe('generateLanguageVersionsHistory', () => {
       expect(versions).toEqual({
         '1.2.4': {
           releaseDate: '2023-12-28',
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
         '1.2.5': {
           releaseDate: start.toISOString().split('T')[0],
+          eligibilityDate: undefined,
+          eligibilityStatus: 'eligible',
         },
       });
     });

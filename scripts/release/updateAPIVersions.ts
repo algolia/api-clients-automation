@@ -46,6 +46,10 @@ export async function updateAPIVersions(versions: Versions, changelog: Changelog
   await updateConfigFiles(versions);
 
   for (const [lang, { current, releaseType, next }] of Object.entries(versions)) {
+    if (!next) {
+      continue;
+    }
+
     if (lang === 'dart') {
       await updateDartPackages(changelog[lang]!, next);
 

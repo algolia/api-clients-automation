@@ -1,0 +1,88 @@
+compositionBehavior:
+  type: object
+  additionalProperties: false
+  properties:
+    injection:
+      title: injection
+      type: object
+      additionalProperties: false
+      properties:
+        main:
+          title: main
+          type: object
+          additionalProperties: false
+          properties:
+            source:
+              title: compositionSource
+              type: object
+              additionalProperties: false
+              properties:
+                search:
+                  title: compositionSourceSearch
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    index:
+                      type: string
+                      description: Composition Main Index name.
+                      example: Products
+                    params:
+                      $ref: './SearchParams.yml#/mainInjectionQueryParameters'
+                  required:
+                    - index
+              required:
+                - search
+          required:
+            - source
+        insets:
+          type: array
+          description: list of insets of the current Composition.
+          minItems: 0
+          maxItems: 2
+          items:
+            $ref: '#/compositionInset'
+      required:
+        - main
+  required:
+    - injection
+
+compositionInset:
+  type: object
+  additionalProperties: false
+  properties:
+    name:
+      type: string
+      description: Inset name.
+    source:
+      title: compositionInsetSource
+      type: object
+      additionalProperties: false
+      properties:
+        search:
+          title: compositionInsetSourceSearch
+          type: object
+          additionalProperties: false
+          properties:
+            index:
+              type: string
+              description: Composition Main Index name.
+              example: Products
+            params:
+              $ref: './SearchParams.yml#/InsetsQueryParameters'
+          required:
+            - index
+      required:
+        - search
+    position:
+      type: integer
+      minimum: 0
+      maximum: 19
+    length:
+      type: integer
+      minimum: 0
+      maximum: 20
+  required:
+    - name
+    - source
+    - position
+    - length
