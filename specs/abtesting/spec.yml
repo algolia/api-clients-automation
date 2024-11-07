@@ -79,7 +79,7 @@ tags:
     description: |
       Manage A/B tests.
 
-      A/B tests are configurations of two indices, usually your production index and an index with different settings that you want to test.
+      A/B tests are configurations one or more indices, usually your production index and an index with different settings that you want to test.
 x-tagGroups:
   - name: General
     tags:
@@ -99,6 +99,8 @@ paths:
     $ref: 'paths/stopABTest.yml'
   /2/abtests/schedule:
     $ref: 'paths/scheduleABTest.yml'
+  /2/abtests/estimate:
+    $ref: 'paths/estimate.yml'
 
   # ###############
   # ### Helpers ###
