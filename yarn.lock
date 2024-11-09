@@ -79,7 +79,7 @@ __metadata:
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": "npm:2.15.0"
-    "@redocly/cli": "npm:1.25.10"
+    "@redocly/cli": "npm:1.25.11"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
@@ -1467,11 +1467,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:1.25.10":
-  version: 1.25.10
-  resolution: "@redocly/cli@npm:1.25.10"
+"@redocly/cli@npm:1.25.11":
+  version: 1.25.11
+  resolution: "@redocly/cli@npm:1.25.11"
   dependencies:
-    "@redocly/openapi-core": "npm:1.25.10"
+    "@redocly/openapi-core": "npm:1.25.11"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -1493,7 +1493,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/1d0756b1217a55adf9889c1b7393bd16b8b191ddd773bdf15e85a4af659cc64d10ba896c476fb52094feec040f49cfe8185ee46297fa5bcf96b2e84ab66d1dc2
+  checksum: 10/ad2ab282ee8cd5733b94e61ef8dab2c8441e92438c22f17083c635da37074b2046a75a25f619ab4ca8855372c5ef8572c1216116a996762df90eb18b1c48150e
   languageName: node
   linkType: hard
 
@@ -1511,9 +1511,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:1.25.10":
-  version: 1.25.10
-  resolution: "@redocly/openapi-core@npm:1.25.10"
+"@redocly/openapi-core@npm:1.25.11":
+  version: 1.25.11
+  resolution: "@redocly/openapi-core@npm:1.25.11"
   dependencies:
     "@redocly/ajv": "npm:^8.11.2"
     "@redocly/config": "npm:^0.16.0"
@@ -1526,7 +1526,7 @@ __metadata:
     node-fetch: "npm:^2.6.1"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/6f2e4fcd10c365b5cb1f32c5b16737f36fc10568cf37ca57e05e3bbbb101b859f81d89462059490c6552d05838ec90aa092aaa092c3399d6a7901de7ec888da4
+  checksum: 10/8094be605d9522946e567146605a5a7b26107fa231cc16514c9047feae3e95f583dabdcbbf25ab1486bf2e017b6707bc78213893eb3b280135f2802be9f7ecef
   languageName: node
   linkType: hard
 
