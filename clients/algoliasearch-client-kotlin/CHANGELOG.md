@@ -1,3 +1,7 @@
+## [3.10.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.9.0...3.10.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses [skip-bc] ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [3.9.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.8.0...3.9.0)
 
 - [801241e12](https://github.com/algolia/api-clients-automation/commit/801241e12) fix(specs): add secrets payload for updates ([#4061](https://github.com/algolia/api-clients-automation/pull/4061)) by [@shortcuts](https://github.com/shortcuts/)
