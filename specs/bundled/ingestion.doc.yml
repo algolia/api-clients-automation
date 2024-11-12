@@ -14103,7 +14103,6 @@ components:
         - destinationID
         - trigger
         - enabled
-        - action
         - createdAt
     OnDemandTriggerInput:
       type: object
@@ -14275,7 +14274,6 @@ components:
         - sourceID
         - destinationID
         - enabled
-        - action
         - createdAt
     TaskCreate:
       type: object
