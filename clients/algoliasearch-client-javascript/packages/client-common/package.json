@@ -34,7 +34,7 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.16.4",
+    "@arethetypeswrong/cli": "0.17.0",
     "@types/node": "22.9.0",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
