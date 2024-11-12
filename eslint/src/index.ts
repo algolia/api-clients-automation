@@ -1,4 +1,5 @@
 import { endWithDot } from './rules/endWithDot.js';
+import { noBigInt } from './rules/noBigInt.js';
 import { noFinalDot } from './rules/noFinalDot.js';
 import { noNewLine } from './rules/noNewLine.js';
 import { createOutOfLineRule } from './rules/outOfLineRule.js';
@@ -9,15 +10,16 @@ import { validInlineTitle } from './rules/validInlineTitle.js';
 
 const rules = {
   'end-with-dot': endWithDot,
+  'no-big-int': noBigInt,
   'no-final-dot': noFinalDot,
-  'out-of-line-enum': createOutOfLineRule({ property: 'enum' }),
-  'out-of-line-one-of': createOutOfLineRule({ property: 'oneOf' }),
+  'no-new-line': noNewLine,
   'out-of-line-all-of': createOutOfLineRule({ property: 'allOf' }),
   'out-of-line-any-of': createOutOfLineRule({ property: 'anyOf' }),
+  'out-of-line-enum': createOutOfLineRule({ property: 'enum' }),
+  'out-of-line-one-of': createOutOfLineRule({ property: 'oneOf' }),
+  'ref-common': refCommon,
   'single-quote-ref': singleQuoteRef,
   'valid-acl': validACL,
-  'no-new-line': noNewLine,
-  'ref-common': refCommon,
   'valid-inline-title': validInlineTitle,
 };
 
