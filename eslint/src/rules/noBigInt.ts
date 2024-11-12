@@ -6,13 +6,13 @@ import { isPairWithKey, isScalar } from '../utils.js';
 export const noBigInt = createRule('noBigInt', {
   meta: {
     docs: {
-      description: 'type big integer is forbidden, did you mean long ?',
+      description: 'type big integer is forbidden, did you mean type: integer ?',
       categories: null,
       extensionRule: false,
       layout: false,
     },
     messages: {
-      noBigInt: 'type bigInt is forbidden',
+      noBigInt: 'type big integer is forbidden, did you mean type: integer ?',
     },
     type: 'layout',
     schema: [],
