@@ -1,3 +1,8 @@
+## [5.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.13.0...5.14.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses [skip-bc] ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+- [4a6d17540](https://github.com/algolia/api-clients-automation/commit/4a6d17540) chore(deps): dependencies 2024-11-11 [skip-bc] ([#4080](https://github.com/algolia/api-clients-automation/pull/4080)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.12.0...5.13.0)
 
 - [f598e77b1](https://github.com/algolia/api-clients-automation/commit/f598e77b1) fix(javascript): allow import from dist ([#4060](https://github.com/algolia/api-clients-automation/pull/4060)) by [@shortcuts](https://github.com/shortcuts/)
