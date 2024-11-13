@@ -2,15 +2,15 @@
   {
     "parameters": {
       "compositionID": "foo",
-      "params": {
-        "query": "batman"
+      "searchCompositionParams": {
+        "params": {"query": "batman"}
       }
     },
     "request": {
       "path": "/1/compositions/foo/run",
       "method": "POST",
       "body": {
-        "query": "batman"
+        "params": {"query": "batman"}
       }
     }
   }

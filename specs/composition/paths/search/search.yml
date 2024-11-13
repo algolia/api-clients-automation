@@ -15,7 +15,12 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/SearchParams.yml#/params'
+          title: searchCompositionParams
+          type: object
+          additionalProperties: false
+          properties:
+            params:
+              $ref: '../../common/schemas/SearchParams.yml#/params'
   responses:
     '200':
       description: OK
