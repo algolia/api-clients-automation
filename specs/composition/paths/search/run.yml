@@ -1,7 +1,7 @@
 post:
   tags:
     - Search
-  operationId: runSingleComposition
+  operationId: search
   x-use-read-transporter: true
   x-cacheable: true
   x-acl:
@@ -11,10 +11,15 @@ post:
   parameters:
     - $ref: '../../common/parameters.yml#/compositionID'
   requestBody:
+    required: true
     content:
       application/json:
         schema:
-          $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
+          title: params
+          additionalProperties: false
+          properties:
+            params:
+              $ref: '../../../common/schemas/SearchParams.yml#/searchParams'
   responses:
     '200':
       description: OK
