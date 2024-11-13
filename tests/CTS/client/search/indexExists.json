@@ -82,7 +82,7 @@
         "expected": {
           "error": {
             "csharp": "{\\\"message\\\":\\\"Invalid API key\\\"}",
-            "go": "API error [403] {\\\"message\\\":\\\"Invalid API key\\\"}",
+            "go": "API error [403] Invalid API key",
             "java": "Status Code: 403 - {\\\"message\\\":\\\"Invalid API key\\\"}",
             "javascript": "Invalid API key",
             "kotlin": "Client request(GET http://%localhost%:6681/1/indexes/indexExistsERROR/settings) invalid: 403 Forbidden. Text: \\\"{\\\"message\\\":\\\"Invalid API key\\\"}\\\"",
