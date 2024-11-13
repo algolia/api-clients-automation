@@ -28,7 +28,7 @@ import {
 import { getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
 
-import { getFileChanges, getLastReleasedTag } from './common.js';
+import { getFileChanges, getLastReleasedTag, stripCommitMessage } from './common.js';
 import TEXT from './text.js';
 import type { Changelog, Commit, CommitType, ParsedCommit, Scope, Versions } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
@@ -202,7 +202,7 @@ export function decideReleaseStrategy({
     console.log(`Deciding next version bump for ${lang}.`);
 
     if (relevantCommits.length === 0) {
-      console.log(`    > Skipping, no commits found for ${lang}.`);
+      console.log(`    > Skipping, no commits found for ${lang}, staying on '${currentVersion}'.`);
 
       versionsToPublish[lang] = { current: currentVersion };
 
@@ -383,7 +383,7 @@ export async function createReleasePR({
 
       const changelogCommit = [
         `[${validCommit.hash}](https://github.com/${OWNER}/${REPO}/commit/${validCommit.hash})`,
-        validCommit.message,
+        stripCommitMessage(validCommit.message),
         validCommit.prNumber
           ? `([#${validCommit.prNumber}](https://github.com/${OWNER}/${REPO}/pull/${validCommit.prNumber}))`
           : undefined,
