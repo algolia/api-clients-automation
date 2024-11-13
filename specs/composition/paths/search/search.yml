@@ -15,7 +15,7 @@ post:
     content:
       application/json:
         schema:
-          title: searchCompositionParams
+          title: body
           type: object
           additionalProperties: false
           properties:
