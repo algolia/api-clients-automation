@@ -396,7 +396,7 @@ func TestSearchindexExists2(t *testing.T) {
 	res, err = client.IndexExists(
 		"indexExistsERROR",
 	)
-	require.EqualError(t, err, "API error [403] {\"message\":\"Invalid API key\"}")
+	require.EqualError(t, err, "API error [403] Invalid API key")
 }
 
 // client throws with invalid parameters
@@ -619,7 +619,7 @@ func TestSearchsaveObjects1(t *testing.T) {
 		"cts_e2e_saveObjects_go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
 	)
-	require.EqualError(t, err, "API error [403] {\"message\":\"Invalid Application-ID or API key\",\"status\":403}")
+	require.EqualError(t, err, "API error [403] Invalid Application-ID or API key")
 }
 
 // switch API key
