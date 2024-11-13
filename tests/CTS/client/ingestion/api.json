@@ -1,0 +1,42 @@
+[
+  {
+    "testName": "can handle HTML error",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "customHosts": [
+            {
+              "port": 6676
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/html-error"
+        },
+        "expected": {
+          "error": {
+            "csharp": "<html><body>429 too many requests</body></html>",
+            "go": "API error [429] Too Many Requests",
+            "java": "Status Code: 429 - <html><body>429 Too Many Requests</body></html>",
+            "javascript": "<html><body>429 Too Many Requests</body></html>",
+            "kotlin": "Client request(GET http://%localhost%:6676/1/html-error) invalid: 429 Too Many Requests. Text: \"<html><body>429 Too Many Requests</body></html>\"",
+            "php": "json_decode error: Syntax error",
+            "python": "Too Many Requests",
+            "ruby": "unexpected token at '<html><body>429 Too Many Requests</body></html>'",
+            "scala": "<html><body>429 Too Many Requests</body></html>",
+            "swift": "HTTP error: Status code: 429 Message: No message"
+          }
+        }
+      }
+    ]
+  }
+]
