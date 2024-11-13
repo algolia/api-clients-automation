@@ -2,7 +2,7 @@
   {
     "parameters": {
       "compositionID": "foo",
-      "searchParams": {
+      "params": {
         "query": "batman"
       }
     },
