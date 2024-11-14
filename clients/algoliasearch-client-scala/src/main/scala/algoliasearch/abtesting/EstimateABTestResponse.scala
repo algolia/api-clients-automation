@@ -29,13 +29,11 @@ package algoliasearch.abtesting
   * @param durationDays
   *   Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value
   *   is based on historical traffic.
-  * @param controlSampleSize
-  *   Number of tracked searches needed to be able to detect the configured effect for the control variant.
-  * @param experimentSampleSize
-  *   Number of tracked searches needed to be able to detect the configured effect for the experiment variant.
+  * @param sampleSizes
+  *   Sample size estimates for each variant. The first element is the control variant. Each element is the estimated
+  *   number of searches required to achieve the desired statistical significance.
   */
 case class EstimateABTestResponse(
     durationDays: Option[Long] = scala.None,
-    controlSampleSize: Option[Long] = scala.None,
-    experimentSampleSize: Option[Long] = scala.None
+    sampleSizes: Option[Seq[Long]] = scala.None
 )

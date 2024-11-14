@@ -1200,20 +1200,21 @@ components:
             for detecting the configured effect. This value is based on
             historical traffic.
           example: 21
-        controlSampleSize:
-          type: integer
-          format: int64
-          description: >-
-            Number of tracked searches needed to be able to detect the
-            configured effect for the control variant.
-          example: 23415
-        experimentSampleSize:
-          type: integer
-          format: int64
-          description: >-
-            Number of tracked searches needed to be able to detect the
-            configured effect for the experiment variant.
-          example: 23415
+        sampleSizes:
+          type: array
+          description: >
+            Sample size estimates for each variant. The first element is the
+            control variant.
+
+            Each element is the estimated number of searches required to achieve
+            the desired statistical significance.
+          items:
+            type: integer
+            format: int64
+            description: >-
+              Number of tracked searches needed to be able to detect the
+              configured effect for the control variant.
+            example: 23415
   responses:
     BadRequest:
       description: Bad request or request arguments.
