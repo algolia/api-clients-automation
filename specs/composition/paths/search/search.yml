@@ -15,7 +15,7 @@ post:
     content:
       application/json:
         schema:
-          title: request
+          title: requestBody
           type: object
           additionalProperties: false
           properties:
