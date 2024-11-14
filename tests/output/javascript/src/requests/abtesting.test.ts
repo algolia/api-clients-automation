@@ -289,6 +289,35 @@ describe('deleteABTest', () => {
   });
 });
 
+describe('estimateABTest', () => {
+  test('estimate AB Test sample size', async () => {
+    const req = (await client.estimateABTest({
+      configuration: {
+        emptySearch: { exclude: true },
+        minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' },
+      },
+      variants: [
+        { index: 'AB_TEST_1', trafficPercentage: 50 },
+        { index: 'AB_TEST_2', trafficPercentage: 50 },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/abtests/estimate');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      configuration: {
+        emptySearch: { exclude: true },
+        minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' },
+      },
+      variants: [
+        { index: 'AB_TEST_1', trafficPercentage: 50 },
+        { index: 'AB_TEST_2', trafficPercentage: 50 },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getABTest', () => {
   test('getABTest', async () => {
     const req = (await client.getABTest({ id: 42 })) as unknown as EchoResponse;

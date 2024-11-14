@@ -1,7 +1,12 @@
 // {{generationBanner}}
 import { describe, test, expect } from 'vitest';
 
+{{^isCompositionClient}}
 import { {{{clientName}}} } from '{{{importPackage}}}';
+{{/isCompositionClient}}
+{{#isCompositionClient}}
+import { compositionClient } from '@algolia/client-composition';
+{{/isCompositionClient}}
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
 import type { ClientOptions } from '@algolia/client-common';
@@ -10,7 +15,7 @@ const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const clientOptions: ClientOptions = { requester: nodeEchoRequester() }; // this makes sure the types are correctly exported
-const client = {{{clientName}}}(appId, apiKey{{#isSearchClient}}, { requester: nodeEchoRequester() }{{/isSearchClient}}){{^isSearchClient}}.{{{initMethod}}}({ options: clientOptions, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isSearchClient}};
+const client = {{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: clientOptions, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 
 {{#blocksRequests}}
 describe('{{operationId}}', () => {

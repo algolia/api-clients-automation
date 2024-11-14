@@ -157,7 +157,7 @@ public class Task {
   }
 
   /** Get action */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public ActionType getAction() {
     return action;
   }

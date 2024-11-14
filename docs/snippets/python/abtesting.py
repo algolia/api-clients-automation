@@ -161,6 +161,50 @@ def snippet_for_delete_ab_test():
     # SEPARATOR<
 
 
+def snippet_for_estimate_ab_test():
+    """
+    Snippet for the estimateABTest method.
+
+    estimate AB Test sample size
+    """
+    # >SEPARATOR estimateABTest default
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingClient instead, which exposes the exact same methods.
+    client = AbtestingClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.estimate_ab_test(
+        estimate_ab_test_request={
+            "configuration": {
+                "emptySearch": {
+                    "exclude": True,
+                },
+                "minimumDetectableEffect": {
+                    "size": 0.03,
+                    "metric": "conversionRate",
+                },
+            },
+            "variants": [
+                {
+                    "index": "AB_TEST_1",
+                    "trafficPercentage": 50,
+                },
+                {
+                    "index": "AB_TEST_2",
+                    "trafficPercentage": 50,
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_get_ab_test():
     """
     Snippet for the getABTest method.

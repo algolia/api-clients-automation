@@ -575,6 +575,62 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
+   * Given the traffic percentage and the expected effect size, this endpoint estimates the sample
+   * size and duration of an A/B test based on historical traffic.
+   *
+   * @param estimateABTestRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public EstimateABTestResponse estimateABTest(@Nonnull EstimateABTestRequest estimateABTestRequest, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(estimateABTestAsync(estimateABTestRequest, requestOptions));
+  }
+
+  /**
+   * Given the traffic percentage and the expected effect size, this endpoint estimates the sample
+   * size and duration of an A/B test based on historical traffic.
+   *
+   * @param estimateABTestRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public EstimateABTestResponse estimateABTest(@Nonnull EstimateABTestRequest estimateABTestRequest) throws AlgoliaRuntimeException {
+    return this.estimateABTest(estimateABTestRequest, null);
+  }
+
+  /**
+   * (asynchronously) Given the traffic percentage and the expected effect size, this endpoint
+   * estimates the sample size and duration of an A/B test based on historical traffic.
+   *
+   * @param estimateABTestRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<EstimateABTestResponse> estimateABTestAsync(
+    @Nonnull EstimateABTestRequest estimateABTestRequest,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(estimateABTestRequest, "Parameter `estimateABTestRequest` is required when calling `estimateABTest`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/abtests/estimate").setMethod("POST").setBody(estimateABTestRequest).build();
+    return executeAsync(request, requestOptions, new TypeReference<EstimateABTestResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Given the traffic percentage and the expected effect size, this endpoint
+   * estimates the sample size and duration of an A/B test based on historical traffic.
+   *
+   * @param estimateABTestRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<EstimateABTestResponse> estimateABTestAsync(@Nonnull EstimateABTestRequest estimateABTestRequest)
+    throws AlgoliaRuntimeException {
+    return this.estimateABTestAsync(estimateABTestRequest, null);
+  }
+
+  /**
    * Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)

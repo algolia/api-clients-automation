@@ -174,6 +174,52 @@ class SnippetAbtestingClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the estimateABTest method.
+    *
+    * estimate AB Test sample size
+    */
+  def snippetForAbtestingClientEstimateABTest(): Unit = {
+    // >SEPARATOR estimateABTest default
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = client.estimateABTest(
+      estimateABTestRequest = EstimateABTestRequest(
+        configuration = EstimateConfiguration(
+          emptySearch = Some(
+            EmptySearch(
+              exclude = Some(true)
+            )
+          ),
+          minimumDetectableEffect = MinimumDetectableEffect(
+            size = 0.03,
+            metric = EffectMetric.withName("conversionRate")
+          )
+        ),
+        variants = Seq(
+          AbTestsVariant(
+            index = "AB_TEST_1",
+            trafficPercentage = 50
+          ),
+          AbTestsVariant(
+            index = "AB_TEST_2",
+            trafficPercentage = 50
+          )
+        )
+      )
+    )
+
+    // >LOG
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the getABTest method.
     *
     * getABTest

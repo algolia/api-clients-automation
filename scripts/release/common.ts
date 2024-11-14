@@ -35,3 +35,7 @@ export function getGitAuthor(): { name: string; email: string } {
 export async function writeJsonFile(ppath: string, data: Record<string, any>): Promise<void> {
   await fsp.writeFile(ppath, JSON.stringify(data, null, 2).concat('\n'));
 }
+
+export function stripCommitMessage(message: string): string {
+  return message.replace(/ \[skip-bc\]/g, '').replace(/ \[skip-e2e\]/g, '');
+}

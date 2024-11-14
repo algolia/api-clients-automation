@@ -459,19 +459,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
   }
 
 	if res.StatusCode >= 300 {
-		newErr := &APIError{
-      Message: string(resBody),
-			Status: res.StatusCode,
-		}
-
-    var v ErrorBase
-    err = c.decode(&v, resBody)
-    if err != nil {
-      newErr.Message = err.Error()
-      return {{#returnType}}returnValue, {{/returnType}}newErr
-    }
-
-		return {{#returnType}}returnValue, {{/returnType}}newErr
+			return {{#returnType}}returnValue, {{/returnType}}c.decodeError(res, resBody)
 	}
 
 	{{#returnType}}

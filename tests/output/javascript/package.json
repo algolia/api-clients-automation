@@ -6,11 +6,12 @@
     "test": "tsc --noEmit && vitest run"
   },
   "dependencies": {
+    "@algolia/client-composition": "link:../../../clients/algoliasearch-client-javascript/packages/client-composition",
     "@algolia/requester-testing": "link:../../../clients/algoliasearch-client-javascript/packages/requester-testing",
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
   },
   "devDependencies": {
-    "@types/node": "22.8.7",
+    "@types/node": "22.9.0",
     "dotenv": "16.4.5",
     "typescript": "5.6.3",
     "vitest": "2.1.4"

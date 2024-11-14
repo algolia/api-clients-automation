@@ -507,6 +507,38 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('estimate AB Test sample size')]
+    public function testEstimateABTest(): void
+    {
+        $client = $this->getClient();
+        $client->estimateABTest(
+            ['configuration' => ['emptySearch' => ['exclude' => true,
+            ],
+                'minimumDetectableEffect' => ['size' => 0.03,
+                    'metric' => 'conversionRate',
+                ],
+            ],
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 50,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/abtests/estimate',
+                'method' => 'POST',
+                'body' => json_decode('{"configuration":{"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('getABTest')]
     public function testGetABTest(): void
     {

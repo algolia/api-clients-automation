@@ -1,1 +1,1 @@
-const client = {{{clientName}}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region: '{{defaultRegion}}'} {{/hasRegionalHost}}){{/isSearchClient}};
+const client = {{{clientName}}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"){{^isSearchClient}}{{^isCompositionClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region: '{{defaultRegion}}'} {{/hasRegionalHost}}){{/isCompositionClient}}{{/isSearchClient}};
