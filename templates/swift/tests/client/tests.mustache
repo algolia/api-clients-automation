@@ -29,14 +29,8 @@
         {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#testUserAgent}}
-          let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
-          guard let userAgent = userAgent else {
-            XCTFail("Expected user-agent header")
-            return
-          }
-
           let pattern = "{{#lambda.escapeSlash}}{{{match.value}}}{{/lambda.escapeSlash}}"
-          XCTAssertNoThrow(try regexMatch(userAgent, against: pattern), "Expected " + userAgent + " to match the following regex: " + pattern);
+          XCTAssertNoThrow(try regexMatch(echoResponse.algoliaAgent, against: pattern), "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern);
         {{/testUserAgent}}
         {{#testTimeouts}}
           XCTAssertEqual(TimeInterval({{{matchResponseTimeout}}} / 1000), echoResponse.timeout);
