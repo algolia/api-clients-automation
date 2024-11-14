@@ -97,6 +97,9 @@ public func union(expected: Any?, received: Any?) -> Any? {
 }
 
 public func regexMatch(_ received: String, against: String) -> Bool {
-    let matches = try! NSRegularExpression(pattern: against).matches(in: received, range: .init(location: 0, length: received.utf16.count))
+    let matches = try! NSRegularExpression(pattern: against).matches(
+        in: received,
+        range: .init(location: 0, length: received.utf16.count)
+    )
     return !matches.isEmpty
 }

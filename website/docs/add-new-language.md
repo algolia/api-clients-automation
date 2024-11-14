@@ -110,7 +110,7 @@ The `User-Agent` MUST match the following regular expression:
 ^Algolia for <LANGUAGE> \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; <CLIENT> (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$
 ```
 
-The function MUST be named `addAlgoliaAgent` because of JavaScript exception that doesn't allow custom `User-Agent` in the header, and must use `x-algolia-agent` for JavaScript.
+The function MUST be named `addAlgoliaAgent` because of JavaScript exception that doesn't allow custom `User-Agent` in the header, and must use `x-algolia-agent` for JavaScript and Dart.
 
 ### Dependencies
 
