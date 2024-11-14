@@ -1,0 +1,59 @@
+post:
+  tags:
+    - Search
+  operationId: searchForFacetValues
+  x-use-read-transporter: true
+  x-cacheable: true
+  x-acl:
+    - search
+  summary: Search for facet values
+  description: |
+    Searches for values of a specified facet attribute on the composition's main source's index.
+
+    - By default, facet values are sorted by decreasing count.
+      You can adjust this with the `sortFacetValueBy` parameter.
+    - Searching for facet values doesn't work if you have **more than 65 searchable facets and searchable attributes combined**.
+  parameters:
+    - $ref: '../../common/parameters.yml#/compositionID'
+    - name: facetName
+      description: |
+        Facet attribute in which to search for values.
+
+        This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier.
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          title: searchForFacetValuesRequest
+          type: object
+          additionalProperties: false
+          properties:
+            params:
+              title: searchForFacetValuesParams
+              type: object
+              properties:
+                query:
+                  $ref: '../../../common/schemas/SearchParams.yml#/query'
+                maxFacetHits:
+                  $ref: '../../../common/schemas/IndexSettings.yml#/maxFacetHits'
+                searchQuery:
+                  $ref: '../../common/schemas/SearchParams.yml#/searchParams'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/SearchForFacetValuesResponse.yml#/searchForFacetValuesResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

@@ -35,7 +35,6 @@ Task:
     - sourceID
     - destinationID
     - enabled
-    - action
     - createdAt
 
 TaskV1:
@@ -74,7 +73,6 @@ TaskV1:
     - destinationID
     - trigger
     - enabled
-    - action
     - createdAt
 
 Trigger:

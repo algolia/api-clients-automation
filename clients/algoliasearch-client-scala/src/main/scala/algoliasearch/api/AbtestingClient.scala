@@ -7,6 +7,8 @@ import algoliasearch.abtesting.ABTest
 import algoliasearch.abtesting.ABTestResponse
 import algoliasearch.abtesting.AddABTestsRequest
 import algoliasearch.abtesting.ErrorBase
+import algoliasearch.abtesting.EstimateABTestRequest
+import algoliasearch.abtesting.EstimateABTestResponse
 import algoliasearch.abtesting.ListABTestsResponse
 import algoliasearch.abtesting.ScheduleABTestResponse
 import algoliasearch.abtesting.ScheduleABTestsRequest
@@ -207,6 +209,29 @@ class AbtestingClient(
       .withPath(s"/2/abtests/${escape(id)}")
       .build()
     execute[ABTestResponse](request, requestOptions)
+  }
+
+  /** Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of
+    * an A/B test based on historical traffic.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    */
+  def estimateABTest(estimateABTestRequest: EstimateABTestRequest, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[EstimateABTestResponse] = Future {
+    requireNotNull(
+      estimateABTestRequest,
+      "Parameter `estimateABTestRequest` is required when calling `estimateABTest`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/2/abtests/estimate")
+      .withBody(estimateABTestRequest)
+      .build()
+    execute[EstimateABTestResponse](request, requestOptions)
   }
 
   /** Retrieves the details for an A/B test by its ID.

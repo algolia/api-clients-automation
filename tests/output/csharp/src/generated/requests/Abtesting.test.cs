@@ -554,6 +554,39 @@ public class AbtestingClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "estimate AB Test sample size")]
+  public async Task EstimateABTestTest()
+  {
+    await client.EstimateABTestAsync(
+      new EstimateABTestRequest
+      {
+        Configuration = new EstimateConfiguration
+        {
+          EmptySearch = new EmptySearch { Exclude = true },
+          MinimumDetectableEffect = new MinimumDetectableEffect
+          {
+            Size = 0.03,
+            Metric = Enum.Parse<EffectMetric>("ConversionRate"),
+          },
+        },
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 50 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/abtests/estimate", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"configuration\":{\"emptySearch\":{\"exclude\":true},\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"conversionRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "getABTest")]
   public async Task GetABTestTest()
   {

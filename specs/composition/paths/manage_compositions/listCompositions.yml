@@ -1,0 +1,28 @@
+get:
+  tags:
+    - Compositions
+  operationId: listCompositions
+  x-acl:
+    - editSettings
+    - settings
+  summary: List compositions
+  description: |
+    Lists all compositions in the current Algolia application.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Page'
+    - $ref: '../../../common/parameters.yml#/HitsPerPage'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/listCompositionsResponse.yml#/listCompositionsResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/CompositionNotFound.yml'

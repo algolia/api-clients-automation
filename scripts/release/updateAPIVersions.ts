@@ -12,8 +12,10 @@ import type { Changelog, Versions } from './types.js';
 
 async function updateConfigFiles(versionsToRelease: Versions): Promise<void> {
   // update the other versions in clients.config.json
-  for (const lang of Object.keys(versionsToRelease)) {
-    clientsConfig[lang].packageVersion = versionsToRelease[lang].next;
+  for (const lang of Object.keys(versionsToRelease) as Language[]) {
+    if (versionsToRelease[lang]?.next) {
+      clientsConfig[lang].packageVersion = versionsToRelease[lang].next;
+    }
   }
 
   await writeJsonFile(toAbsolutePath('config/clients.config.json'), clientsConfig);

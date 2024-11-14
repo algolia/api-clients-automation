@@ -739,6 +739,7 @@ components:
         - no_events_last_30_days
         - pending_pipelines
         - invalid_config
+        - all_facets_invalid
     Configuration_status:
       type: object
       properties:

@@ -1,7 +1,7 @@
-{{^autoCreateClient}}const client = {{/autoCreateClient}}{{{clientName}}}(
+{{^autoCreateClient}}const client = {{/autoCreateClient}}{{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}'
-  {{#isSearchClient}},
+  {{#isStandaloneClient}},
   {
     {{#useEchoRequester}}
     requester: nodeEchoRequester(),
@@ -19,8 +19,8 @@
     ]
     {{/hasCustomHosts}} 
   }
-  {{/isSearchClient}}
-){{^isSearchClient}}.{{{initMethod}}}(
+  {{/isStandaloneClient}}
+){{^isStandaloneClient}}.{{{initMethod}}}(
   {
     options: {
     {{#useEchoRequester}}
@@ -44,4 +44,4 @@
  region: '{{{parametersWithDataTypeMap.region.value}}}'
  {{/hasRegionalHost}}
 })
-{{/isSearchClient}};
+{{/isStandaloneClient}};

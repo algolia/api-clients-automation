@@ -24,7 +24,7 @@
   */
 package algoliasearch.abtesting
 
-import algoliasearch.abtesting.Effect._
+import algoliasearch.abtesting.EffectMetric._
 
 /** Configuration for the smallest difference between test variants you want to detect.
   *
@@ -33,6 +33,6 @@ import algoliasearch.abtesting.Effect._
   *   variants, set this value to 0.1.
   */
 case class MinimumDetectableEffect(
-    size: Option[Double] = scala.None,
-    effect: Option[Effect] = scala.None
+    size: Double,
+    metric: EffectMetric
 )

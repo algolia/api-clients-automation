@@ -184,6 +184,42 @@ func SnippetForDeleteABTestOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForEstimateABTestOfAbtesting() {
+	/*
+	   Snippet for the estimateABTest method.
+
+	   estimate AB Test sample size
+	*/
+
+	// >SEPARATOR estimateABTest default
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(
+
+		abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(
+			abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(
+				abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(
+				abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric("conversionRate")))).SetVariants(
+			[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetABTestOfAbtesting() {
 	/*
 	   Snippet for the getABTest method.

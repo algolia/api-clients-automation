@@ -276,6 +276,10 @@ export async function callGenerator(gen: Generator): Promise<void> {
   );
 }
 
+export function isWSL(): boolean {
+  return process.env.WSL_DISTRO_NAME !== undefined;
+}
+
 export async function setupAndGen(
   generators: Generator[],
   mode: GeneratorMode,

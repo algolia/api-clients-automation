@@ -1,4 +1,4 @@
-import { callGenerator, setupAndGen } from './common.js';
+import { callGenerator, isWSL, run, setupAndGen } from './common.js';
 import { getLanguageFolder } from './config.js';
 import { formatter } from './formatter.js';
 import { removeExistingCodegen } from './pre-gen/index.js';
@@ -15,6 +15,9 @@ export async function generate(generators: Generator[]): Promise<void> {
   });
 
   for (const lang of [...new Set(generators.map((gen) => gen.language))]) {
+    if (isWSL()) {
+      await run(`sudo chmod 777 -R ${getLanguageFolder(lang)}`);
+    }
     await formatter(lang, getLanguageFolder(lang));
   }
 }

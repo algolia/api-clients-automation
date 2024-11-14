@@ -133,6 +133,37 @@ def snippet_for_delete_ab_test
   # SEPARATOR<
 end
 
+# Snippet for the estimateABTest method.
+#
+# estimate AB Test sample size
+def snippet_for_estimate_ab_test
+  # >SEPARATOR estimateABTest default
+  # Initialize the client
+  client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.estimate_ab_test(
+    Algolia::Abtesting::EstimateABTestRequest.new(
+      configuration: Algolia::Abtesting::EstimateConfiguration.new(
+        empty_search: Algolia::Abtesting::EmptySearch.new(exclude: true),
+        minimum_detectable_effect: Algolia::Abtesting::MinimumDetectableEffect.new(size: 0.03, metric: "conversionRate")
+      ),
+      variants: [
+        Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 50),
+        Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getABTest method.
 #
 # getABTest

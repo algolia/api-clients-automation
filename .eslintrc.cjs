@@ -51,6 +51,7 @@ module.exports = {
           files: ['specs/**/*.yml'],
           rules: {
             'automation-custom/end-with-dot': 'error',
+            'automation-custom/no-big-int': 'error',
             'automation-custom/no-final-dot': 'error',
             'automation-custom/single-quote-ref': 'error',
           },
@@ -58,12 +59,12 @@ module.exports = {
             {
               files: ['!specs/bundled/*.yml'],
               rules: {
-                'automation-custom/out-of-line-enum': 'error',
-                'automation-custom/out-of-line-one-of': 'error',
                 'automation-custom/out-of-line-all-of': 'error',
                 'automation-custom/out-of-line-any-of': 'error',
-                'automation-custom/valid-acl': 'error',
+                'automation-custom/out-of-line-enum': 'error',
+                'automation-custom/out-of-line-one-of': 'error',
                 'automation-custom/ref-common': 'error',
+                'automation-custom/valid-acl': 'error',
                 'automation-custom/valid-inline-title': 'error',
               },
             },

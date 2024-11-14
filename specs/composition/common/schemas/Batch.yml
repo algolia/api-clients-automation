@@ -1,0 +1,6 @@
+action:
+  type: string
+  enum:
+    - upsert
+    - delete
+  description: Type of Composition Batch operation.
