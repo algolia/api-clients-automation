@@ -57,7 +57,7 @@ paths:
   # ### Search Endpoints ###
   # ########################
   /1/compositions/{compositionID}/run:
-    $ref: 'paths/search/run.yml'
+    $ref: 'paths/search/search.yml'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     $ref: 'paths/search/searchForFacetValues.yml'
 
