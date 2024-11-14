@@ -1,3 +1,7 @@
+## [1.27.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.27.0...1.27.1)
+
+- [0985a1ced](https://github.com/algolia/api-clients-automation/commit/0985a1ced) fix(clients): use correct user agent ([#4103](https://github.com/algolia/api-clients-automation/pull/4103)) by [@millotp](https://github.com/millotp/)
+
 ## [1.27.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.26.3...1.27.0)
 
 - [312d33731](https://github.com/algolia/api-clients-automation/commit/312d33731) feat(specs): add missing message attribute to GetObjectsResponse [skip-bc] ([#4029](https://github.com/algolia/api-clients-automation/pull/4029)) by [@kombucha](https://github.com/kombucha/)
