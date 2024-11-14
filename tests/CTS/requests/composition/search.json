@@ -9,7 +9,7 @@
     "request": {
       "path": "/1/compositions/foo/run",
       "method": "POST",
-      "request": {
+      "body": {
         "params": { "query": "batman" }
       }
     }
