@@ -5,6 +5,7 @@ import type { Language } from '../../types.js';
 import { cloneRepository } from '../utils.js';
 
 import { resolve } from 'path';
+import { stripCommitMessage } from '../../release/common.js';
 import { commitStartRelease } from './text.js';
 
 async function createGitHubRelease(lang: Language): Promise<void> {
@@ -55,7 +56,7 @@ async function createGitHubRelease(lang: Language): Promise<void> {
   const content = `
 # New ${isMajor ? '**major** ' : ''}version released!
 ## What's Changed
-${changelog}
+${stripCommitMessage(changelog)}
 
 **Full Changelog**: ${repositoryLink}/compare/${previousVersion}...${newVersion}
 

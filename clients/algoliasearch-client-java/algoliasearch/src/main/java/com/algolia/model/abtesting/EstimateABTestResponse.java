@@ -5,6 +5,8 @@ package com.algolia.model.abtesting;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** EstimateABTestResponse */
@@ -13,11 +15,8 @@ public class EstimateABTestResponse {
   @JsonProperty("durationDays")
   private Long durationDays;
 
-  @JsonProperty("controlSampleSize")
-  private Long controlSampleSize;
-
-  @JsonProperty("experimentSampleSize")
-  private Long experimentSampleSize;
+  @JsonProperty("sampleSizes")
+  private List<Long> sampleSizes;
 
   public EstimateABTestResponse setDurationDays(Long durationDays) {
     this.durationDays = durationDays;
@@ -33,32 +32,26 @@ public class EstimateABTestResponse {
     return durationDays;
   }
 
-  public EstimateABTestResponse setControlSampleSize(Long controlSampleSize) {
-    this.controlSampleSize = controlSampleSize;
+  public EstimateABTestResponse setSampleSizes(List<Long> sampleSizes) {
+    this.sampleSizes = sampleSizes;
+    return this;
+  }
+
+  public EstimateABTestResponse addSampleSizes(Long sampleSizesItem) {
+    if (this.sampleSizes == null) {
+      this.sampleSizes = new ArrayList<>();
+    }
+    this.sampleSizes.add(sampleSizesItem);
     return this;
   }
 
   /**
-   * Number of tracked searches needed to be able to detect the configured effect for the control
-   * variant.
+   * Sample size estimates for each variant. The first element is the control variant. Each element
+   * is the estimated number of searches required to achieve the desired statistical significance.
    */
   @javax.annotation.Nullable
-  public Long getControlSampleSize() {
-    return controlSampleSize;
-  }
-
-  public EstimateABTestResponse setExperimentSampleSize(Long experimentSampleSize) {
-    this.experimentSampleSize = experimentSampleSize;
-    return this;
-  }
-
-  /**
-   * Number of tracked searches needed to be able to detect the configured effect for the experiment
-   * variant.
-   */
-  @javax.annotation.Nullable
-  public Long getExperimentSampleSize() {
-    return experimentSampleSize;
+  public List<Long> getSampleSizes() {
+    return sampleSizes;
   }
 
   @Override
@@ -72,14 +65,13 @@ public class EstimateABTestResponse {
     EstimateABTestResponse estimateABTestResponse = (EstimateABTestResponse) o;
     return (
       Objects.equals(this.durationDays, estimateABTestResponse.durationDays) &&
-      Objects.equals(this.controlSampleSize, estimateABTestResponse.controlSampleSize) &&
-      Objects.equals(this.experimentSampleSize, estimateABTestResponse.experimentSampleSize)
+      Objects.equals(this.sampleSizes, estimateABTestResponse.sampleSizes)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(durationDays, controlSampleSize, experimentSampleSize);
+    return Objects.hash(durationDays, sampleSizes);
   }
 
   @Override
@@ -87,8 +79,7 @@ public class EstimateABTestResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class EstimateABTestResponse {\n");
     sb.append("    durationDays: ").append(toIndentedString(durationDays)).append("\n");
-    sb.append("    controlSampleSize: ").append(toIndentedString(controlSampleSize)).append("\n");
-    sb.append("    experimentSampleSize: ").append(toIndentedString(experimentSampleSize)).append("\n");
+    sb.append("    sampleSizes: ").append(toIndentedString(sampleSizes)).append("\n");
     sb.append("}");
     return sb.toString();
   }
