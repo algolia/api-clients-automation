@@ -46,7 +46,7 @@ const fetchedUsers: Record<string, string> = {};
 
 export function getVersionChangesText(versions: Versions): string {
   return LANGUAGES.map((lang) => {
-    if (!versions[lang]) {
+    if (!versions[lang]?.next) {
       return `- ~${lang}: ${getPackageVersionDefault(lang)} (no commit)~`;
     }
 
