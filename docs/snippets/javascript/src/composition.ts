@@ -177,24 +177,6 @@ export async function snippetForMultipleBatch(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the runSingleComposition method.
-//
-// runSingleComposition
-export async function snippetForRunSingleComposition(): Promise<void> {
-  // >SEPARATOR runSingleComposition default
-  // Initialize the client
-  //
-  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
-
-  // Call the API
-  const response = await client.runSingleComposition({ compositionID: 'foo', searchParams: { query: 'batman' } });
-
-  // >LOG
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the saveRules method.
 //
 // saveRules
@@ -220,6 +202,24 @@ export async function snippetForSaveRules(): Promise<void> {
       ],
     },
   });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search
+export async function snippetForSearch(): Promise<void> {
+  // >SEPARATOR search default
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({ compositionID: 'foo', requestBody: { params: { query: 'batman' } } });
 
   // >LOG
   // use typed response
