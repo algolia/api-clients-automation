@@ -338,20 +338,6 @@ describe('multipleBatch', () => {
   });
 });
 
-describe('runSingleComposition', () => {
-  test('runSingleComposition', async () => {
-    const req = (await client.runSingleComposition({
-      compositionID: 'foo',
-      searchParams: { query: 'batman' },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/compositions/foo/run');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ query: 'batman' });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('saveRules', () => {
   test('saveRules', async () => {
     const req = (await client.saveRules({
@@ -386,6 +372,20 @@ describe('saveRules', () => {
         },
       ],
     });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('search', () => {
+  test('search', async () => {
+    const req = (await client.search({
+      compositionID: 'foo',
+      requestBody: { params: { query: 'batman' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/foo/run');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ params: { query: 'batman' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

@@ -8,7 +8,6 @@
   "scripts": {
     "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/client-composition' --include-dependencies",
     "clean": "lerna run clean",
-    "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
     "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/scripts/publish.js",
     "test": "lerna run test $*",
     "test:size": "bundlesize",
@@ -16,12 +15,10 @@
   },
   "devDependencies": {
     "@types/node": "22.9.0",
-    "@types/semver": "7.5.8",
     "bundlesize": "0.18.2",
     "execa": "9.5.1",
     "lerna": "8.1.9",
     "rollup": "4.25.0",
-    "semver": "7.6.3",
     "typescript": "5.6.3"
   },
   "engines": {
