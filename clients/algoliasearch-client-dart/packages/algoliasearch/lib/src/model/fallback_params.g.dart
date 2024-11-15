@@ -34,13 +34,7 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
           minimumAroundRadius: $checkedConvert(
               'minimumAroundRadius', (v) => (v as num?)?.toInt()),
-          insideBoundingBox: $checkedConvert(
-              'insideBoundingBox',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => (e as List<dynamic>)
-                      .map((e) => (e as num).toDouble())
-                      .toList())
-                  .toList()),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
               (v) => (v as List<dynamic>?)
@@ -111,6 +105,8 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
                   )),
           attributeForDistinct:
               $checkedConvert('attributeForDistinct', (v) => v as String?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
@@ -156,8 +152,7 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
           removeWordsIfNoResults: $checkedConvert('removeWordsIfNoResults',
               (v) => $enumDecodeNullable(_$RemoveWordsIfNoResultsEnumMap, v)),
           advancedSyntax: $checkedConvert('advancedSyntax', (v) => v as bool?),
-          optionalWords: $checkedConvert('optionalWords',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          optionalWords: $checkedConvert('optionalWords', (v) => v),
           disableExactOnAttributes: $checkedConvert('disableExactOnAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           exactOnSingleWordQuery: $checkedConvert('exactOnSingleWordQuery',
@@ -179,8 +174,6 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           maxValuesPerFacet:
               $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
@@ -262,6 +255,7 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
   writeNotNull('userData', instance.userData);
   writeNotNull('customNormalization', instance.customNormalization);
   writeNotNull('attributeForDistinct', instance.attributeForDistinct);
+  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
   writeNotNull('ranking', instance.ranking);
   writeNotNull('relevancyStrictness', instance.relevancyStrictness);
@@ -302,7 +296,6 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
       'replaceSynonymsInHighlight', instance.replaceSynonymsInHighlight);
   writeNotNull('minProximity', instance.minProximity);
   writeNotNull('responseFields', instance.responseFields);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
   writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
   writeNotNull('attributeCriteriaComputedByMinProximity',

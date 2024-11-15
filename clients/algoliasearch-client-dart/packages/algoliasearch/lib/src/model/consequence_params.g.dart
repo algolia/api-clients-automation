@@ -37,13 +37,7 @@ ConsequenceParams _$ConsequenceParamsFromJson(Map<String, dynamic> json) =>
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
           minimumAroundRadius: $checkedConvert(
               'minimumAroundRadius', (v) => (v as num?)?.toInt()),
-          insideBoundingBox: $checkedConvert(
-              'insideBoundingBox',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => (e as List<dynamic>)
-                      .map((e) => (e as num).toDouble())
-                      .toList())
-                  .toList()),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
               (v) => (v as List<dynamic>?)
@@ -128,8 +122,7 @@ ConsequenceParams _$ConsequenceParamsFromJson(Map<String, dynamic> json) =>
                   ? null
                   : SemanticSearch.fromJson(v as Map<String, dynamic>)),
           advancedSyntax: $checkedConvert('advancedSyntax', (v) => v as bool?),
-          optionalWords: $checkedConvert('optionalWords',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          optionalWords: $checkedConvert('optionalWords', (v) => v),
           disableExactOnAttributes: $checkedConvert('disableExactOnAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           exactOnSingleWordQuery: $checkedConvert('exactOnSingleWordQuery',
@@ -151,8 +144,6 @@ ConsequenceParams _$ConsequenceParamsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           maxValuesPerFacet:
               $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
@@ -266,7 +257,6 @@ Map<String, dynamic> _$ConsequenceParamsToJson(ConsequenceParams instance) {
       'replaceSynonymsInHighlight', instance.replaceSynonymsInHighlight);
   writeNotNull('minProximity', instance.minProximity);
   writeNotNull('responseFields', instance.responseFields);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
   writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
   writeNotNull('attributeCriteriaComputedByMinProximity',

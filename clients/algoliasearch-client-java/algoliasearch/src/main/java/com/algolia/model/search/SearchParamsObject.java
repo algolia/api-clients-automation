@@ -71,7 +71,7 @@ public class SearchParamsObject implements SearchParams {
   private Integer minimumAroundRadius;
 
   @JsonProperty("insideBoundingBox")
-  private List<List<Double>> insideBoundingBox;
+  private InsideBoundingBox insideBoundingBox;
 
   @JsonProperty("insidePolygon")
   private List<List<Double>> insidePolygon;
@@ -194,7 +194,7 @@ public class SearchParamsObject implements SearchParams {
   private Boolean advancedSyntax;
 
   @JsonProperty("optionalWords")
-  private List<String> optionalWords;
+  private OptionalWords optionalWords;
 
   @JsonProperty("disableExactOnAttributes")
   private List<String> disableExactOnAttributes;
@@ -219,9 +219,6 @@ public class SearchParamsObject implements SearchParams {
 
   @JsonProperty("responseFields")
   private List<String> responseFields;
-
-  @JsonProperty("maxFacetHits")
-  private Integer maxFacetHits;
 
   @JsonProperty("maxValuesPerFacet")
   private Integer maxValuesPerFacet;
@@ -516,28 +513,14 @@ public class SearchParamsObject implements SearchParams {
     return minimumAroundRadius;
   }
 
-  public SearchParamsObject setInsideBoundingBox(List<List<Double>> insideBoundingBox) {
+  public SearchParamsObject setInsideBoundingBox(InsideBoundingBox insideBoundingBox) {
     this.insideBoundingBox = insideBoundingBox;
     return this;
   }
 
-  public SearchParamsObject addInsideBoundingBox(List<Double> insideBoundingBoxItem) {
-    if (this.insideBoundingBox == null) {
-      this.insideBoundingBox = new ArrayList<>();
-    }
-    this.insideBoundingBox.add(insideBoundingBoxItem);
-    return this;
-  }
-
-  /**
-   * Coordinates for a rectangular area in which to search. Each bounding box is defined by the two
-   * opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1
-   * long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more
-   * information, see [rectangular
-   * area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
-   */
+  /** Get insideBoundingBox */
   @javax.annotation.Nullable
-  public List<List<Double>> getInsideBoundingBox() {
+  public InsideBoundingBox getInsideBoundingBox() {
     return insideBoundingBox;
   }
 
@@ -1202,38 +1185,14 @@ public class SearchParamsObject implements SearchParams {
     return advancedSyntax;
   }
 
-  public SearchParamsObject setOptionalWords(List<String> optionalWords) {
+  public SearchParamsObject setOptionalWords(OptionalWords optionalWords) {
     this.optionalWords = optionalWords;
     return this;
   }
 
-  public SearchParamsObject addOptionalWords(String optionalWordsItem) {
-    if (this.optionalWords == null) {
-      this.optionalWords = new ArrayList<>();
-    }
-    this.optionalWords.add(optionalWordsItem);
-    return this;
-  }
-
-  /**
-   * Words that should be considered optional when found in the query. By default, records must
-   * match all words in the search query to be included in the search results. Adding optional words
-   * can help to increase the number of search results by running an additional search query that
-   * doesn't include the optional words. For example, if the search query is \"action video\" and
-   * \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and
-   * one for \"action\". Records that match all words are ranked higher. For a search query with 4
-   * or more words **and** all its words are optional, the number of matched words required for a
-   * record to be included in the search results increases for every 1,000 records: - If
-   * `optionalWords` has less than 10 words, the required number of matched words increases by 1:
-   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If
-   * `optionalWords` has 10 or more words, the number of required matched words increases by the
-   * number of optional words divided by 5 (rounded down). For example, with 18 optional words:
-   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words. For more
-   * information, see [Optional
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-   */
+  /** Get optionalWords */
   @javax.annotation.Nullable
-  public List<String> getOptionalWords() {
+  public OptionalWords getOptionalWords() {
     return optionalWords;
   }
 
@@ -1400,21 +1359,6 @@ public class SearchParamsObject implements SearchParams {
     return responseFields;
   }
 
-  public SearchParamsObject setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-    return this;
-  }
-
-  /**
-   * Maximum number of facet values to return when [searching for facet
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-   * maximum: 100
-   */
-  @javax.annotation.Nullable
-  public Integer getMaxFacetHits() {
-    return maxFacetHits;
-  }
-
   public SearchParamsObject setMaxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
     return this;
@@ -1576,7 +1520,6 @@ public class SearchParamsObject implements SearchParams {
       Objects.equals(this.replaceSynonymsInHighlight, searchParamsObject.replaceSynonymsInHighlight) &&
       Objects.equals(this.minProximity, searchParamsObject.minProximity) &&
       Objects.equals(this.responseFields, searchParamsObject.responseFields) &&
-      Objects.equals(this.maxFacetHits, searchParamsObject.maxFacetHits) &&
       Objects.equals(this.maxValuesPerFacet, searchParamsObject.maxValuesPerFacet) &&
       Objects.equals(this.sortFacetValuesBy, searchParamsObject.sortFacetValuesBy) &&
       Objects.equals(this.attributeCriteriaComputedByMinProximity, searchParamsObject.attributeCriteriaComputedByMinProximity) &&
@@ -1658,7 +1601,6 @@ public class SearchParamsObject implements SearchParams {
       replaceSynonymsInHighlight,
       minProximity,
       responseFields,
-      maxFacetHits,
       maxValuesPerFacet,
       sortFacetValuesBy,
       attributeCriteriaComputedByMinProximity,
@@ -1741,7 +1683,6 @@ public class SearchParamsObject implements SearchParams {
     sb.append("    replaceSynonymsInHighlight: ").append(toIndentedString(replaceSynonymsInHighlight)).append("\n");
     sb.append("    minProximity: ").append(toIndentedString(minProximity)).append("\n");
     sb.append("    responseFields: ").append(toIndentedString(responseFields)).append("\n");
-    sb.append("    maxFacetHits: ").append(toIndentedString(maxFacetHits)).append("\n");
     sb.append("    maxValuesPerFacet: ").append(toIndentedString(maxValuesPerFacet)).append("\n");
     sb.append("    sortFacetValuesBy: ").append(toIndentedString(sortFacetValuesBy)).append("\n");
     sb

@@ -673,7 +673,7 @@ final class SearchClient implements ApiClient {
   /// * [indexName] Name of the index on which to perform the operation.
   /// * [deleteByParams]
   /// * [requestOptions] additional request configuration.
-  Future<DeletedAtResponse> deleteBy({
+  Future<UpdatedAtResponse> deleteBy({
     required String indexName,
     required DeleteByParams deleteByParams,
     RequestOptions? requestOptions,
@@ -692,9 +692,9 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
-    return deserialize<DeletedAtResponse, DeletedAtResponse>(
+    return deserialize<UpdatedAtResponse, UpdatedAtResponse>(
       response,
-      'DeletedAtResponse',
+      'UpdatedAtResponse',
       growable: true,
     );
   }

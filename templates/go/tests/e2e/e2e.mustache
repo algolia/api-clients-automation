@@ -15,11 +15,11 @@ import (
 func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) *{{clientPrefix}}.APIClient {
   t.Helper()
 
-  appID := os.Getenv("ALGOLIA_APPLICATION_ID")
+  appID := os.Getenv("{{e2eAppID}}")
   if appID == "" && os.Getenv("CI") != "true" {
     err := godotenv.Load("../../../../.env")
     require.NoError(t, err)
-    appID = os.Getenv("ALGOLIA_APPLICATION_ID")
+    appID = os.Getenv("{{e2eAppID}}")
   }
   apiKey := os.Getenv("{{e2eApiKey}}")
   client, err := {{clientPrefix}}.NewClient(appID, apiKey, {{#hasRegionalHost}}{{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}})

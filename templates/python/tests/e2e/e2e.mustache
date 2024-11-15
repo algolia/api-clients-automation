@@ -16,9 +16,9 @@ load_dotenv("../../.env")
 {{#modes}}
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}E2E:
     _helpers = Helpers()
-    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    _e2e_app_id = environ.get("{{e2eAppID}}")
     if _e2e_app_id is None:
-        raise Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
+        raise Exception("please provide an `{{e2eAppID}}` env var for e2e tests")
 
     _e2e_api_key = environ.get("{{e2eApiKey}}")
     if _e2e_api_key is None:

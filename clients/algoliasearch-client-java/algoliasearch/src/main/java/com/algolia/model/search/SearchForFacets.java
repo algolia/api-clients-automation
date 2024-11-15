@@ -74,7 +74,7 @@ public class SearchForFacets implements SearchQuery {
   private Integer minimumAroundRadius;
 
   @JsonProperty("insideBoundingBox")
-  private List<List<Double>> insideBoundingBox;
+  private InsideBoundingBox insideBoundingBox;
 
   @JsonProperty("insidePolygon")
   private List<List<Double>> insidePolygon;
@@ -197,7 +197,7 @@ public class SearchForFacets implements SearchQuery {
   private Boolean advancedSyntax;
 
   @JsonProperty("optionalWords")
-  private List<String> optionalWords;
+  private OptionalWords optionalWords;
 
   @JsonProperty("disableExactOnAttributes")
   private List<String> disableExactOnAttributes;
@@ -222,9 +222,6 @@ public class SearchForFacets implements SearchQuery {
 
   @JsonProperty("responseFields")
   private List<String> responseFields;
-
-  @JsonProperty("maxFacetHits")
-  private Integer maxFacetHits;
 
   @JsonProperty("maxValuesPerFacet")
   private Integer maxValuesPerFacet;
@@ -252,6 +249,9 @@ public class SearchForFacets implements SearchQuery {
 
   @JsonProperty("facetQuery")
   private String facetQuery;
+
+  @JsonProperty("maxFacetHits")
+  private Integer maxFacetHits;
 
   @JsonProperty("type")
   private SearchTypeFacet type;
@@ -542,28 +542,14 @@ public class SearchForFacets implements SearchQuery {
     return minimumAroundRadius;
   }
 
-  public SearchForFacets setInsideBoundingBox(List<List<Double>> insideBoundingBox) {
+  public SearchForFacets setInsideBoundingBox(InsideBoundingBox insideBoundingBox) {
     this.insideBoundingBox = insideBoundingBox;
     return this;
   }
 
-  public SearchForFacets addInsideBoundingBox(List<Double> insideBoundingBoxItem) {
-    if (this.insideBoundingBox == null) {
-      this.insideBoundingBox = new ArrayList<>();
-    }
-    this.insideBoundingBox.add(insideBoundingBoxItem);
-    return this;
-  }
-
-  /**
-   * Coordinates for a rectangular area in which to search. Each bounding box is defined by the two
-   * opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1
-   * long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more
-   * information, see [rectangular
-   * area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
-   */
+  /** Get insideBoundingBox */
   @javax.annotation.Nullable
-  public List<List<Double>> getInsideBoundingBox() {
+  public InsideBoundingBox getInsideBoundingBox() {
     return insideBoundingBox;
   }
 
@@ -1228,38 +1214,14 @@ public class SearchForFacets implements SearchQuery {
     return advancedSyntax;
   }
 
-  public SearchForFacets setOptionalWords(List<String> optionalWords) {
+  public SearchForFacets setOptionalWords(OptionalWords optionalWords) {
     this.optionalWords = optionalWords;
     return this;
   }
 
-  public SearchForFacets addOptionalWords(String optionalWordsItem) {
-    if (this.optionalWords == null) {
-      this.optionalWords = new ArrayList<>();
-    }
-    this.optionalWords.add(optionalWordsItem);
-    return this;
-  }
-
-  /**
-   * Words that should be considered optional when found in the query. By default, records must
-   * match all words in the search query to be included in the search results. Adding optional words
-   * can help to increase the number of search results by running an additional search query that
-   * doesn't include the optional words. For example, if the search query is \"action video\" and
-   * \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and
-   * one for \"action\". Records that match all words are ranked higher. For a search query with 4
-   * or more words **and** all its words are optional, the number of matched words required for a
-   * record to be included in the search results increases for every 1,000 records: - If
-   * `optionalWords` has less than 10 words, the required number of matched words increases by 1:
-   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If
-   * `optionalWords` has 10 or more words, the number of required matched words increases by the
-   * number of optional words divided by 5 (rounded down). For example, with 18 optional words:
-   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words. For more
-   * information, see [Optional
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-   */
+  /** Get optionalWords */
   @javax.annotation.Nullable
-  public List<String> getOptionalWords() {
+  public OptionalWords getOptionalWords() {
     return optionalWords;
   }
 
@@ -1426,21 +1388,6 @@ public class SearchForFacets implements SearchQuery {
     return responseFields;
   }
 
-  public SearchForFacets setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-    return this;
-  }
-
-  /**
-   * Maximum number of facet values to return when [searching for facet
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-   * maximum: 100
-   */
-  @javax.annotation.Nullable
-  public Integer getMaxFacetHits() {
-    return maxFacetHits;
-  }
-
   public SearchForFacets setMaxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
     return this;
@@ -1556,6 +1503,21 @@ public class SearchForFacets implements SearchQuery {
     return facetQuery;
   }
 
+  public SearchForFacets setMaxFacetHits(Integer maxFacetHits) {
+    this.maxFacetHits = maxFacetHits;
+    return this;
+  }
+
+  /**
+   * Maximum number of facet values to return when [searching for facet
+   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+   * maximum: 100
+   */
+  @javax.annotation.Nullable
+  public Integer getMaxFacetHits() {
+    return maxFacetHits;
+  }
+
   public SearchForFacets setType(SearchTypeFacet type) {
     this.type = type;
     return this;
@@ -1647,7 +1609,6 @@ public class SearchForFacets implements SearchQuery {
       Objects.equals(this.replaceSynonymsInHighlight, searchForFacets.replaceSynonymsInHighlight) &&
       Objects.equals(this.minProximity, searchForFacets.minProximity) &&
       Objects.equals(this.responseFields, searchForFacets.responseFields) &&
-      Objects.equals(this.maxFacetHits, searchForFacets.maxFacetHits) &&
       Objects.equals(this.maxValuesPerFacet, searchForFacets.maxValuesPerFacet) &&
       Objects.equals(this.sortFacetValuesBy, searchForFacets.sortFacetValuesBy) &&
       Objects.equals(this.attributeCriteriaComputedByMinProximity, searchForFacets.attributeCriteriaComputedByMinProximity) &&
@@ -1657,6 +1618,7 @@ public class SearchForFacets implements SearchQuery {
       Objects.equals(this.facet, searchForFacets.facet) &&
       Objects.equals(this.indexName, searchForFacets.indexName) &&
       Objects.equals(this.facetQuery, searchForFacets.facetQuery) &&
+      Objects.equals(this.maxFacetHits, searchForFacets.maxFacetHits) &&
       Objects.equals(this.type, searchForFacets.type)
     );
   }
@@ -1734,7 +1696,6 @@ public class SearchForFacets implements SearchQuery {
       replaceSynonymsInHighlight,
       minProximity,
       responseFields,
-      maxFacetHits,
       maxValuesPerFacet,
       sortFacetValuesBy,
       attributeCriteriaComputedByMinProximity,
@@ -1744,6 +1705,7 @@ public class SearchForFacets implements SearchQuery {
       facet,
       indexName,
       facetQuery,
+      maxFacetHits,
       type
     );
   }
@@ -1822,7 +1784,6 @@ public class SearchForFacets implements SearchQuery {
     sb.append("    replaceSynonymsInHighlight: ").append(toIndentedString(replaceSynonymsInHighlight)).append("\n");
     sb.append("    minProximity: ").append(toIndentedString(minProximity)).append("\n");
     sb.append("    responseFields: ").append(toIndentedString(responseFields)).append("\n");
-    sb.append("    maxFacetHits: ").append(toIndentedString(maxFacetHits)).append("\n");
     sb.append("    maxValuesPerFacet: ").append(toIndentedString(maxValuesPerFacet)).append("\n");
     sb.append("    sortFacetValuesBy: ").append(toIndentedString(sortFacetValuesBy)).append("\n");
     sb
@@ -1835,6 +1796,7 @@ public class SearchForFacets implements SearchQuery {
     sb.append("    facet: ").append(toIndentedString(facet)).append("\n");
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    facetQuery: ").append(toIndentedString(facetQuery)).append("\n");
+    sb.append("    maxFacetHits: ").append(toIndentedString(maxFacetHits)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();

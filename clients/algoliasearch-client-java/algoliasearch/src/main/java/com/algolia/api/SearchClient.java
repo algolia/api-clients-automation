@@ -1490,7 +1490,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public DeletedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams, RequestOptions requestOptions)
+  public UpdatedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(deleteByAsync(indexName, deleteByParams, requestOptions));
   }
@@ -1504,7 +1504,7 @@ public class SearchClient extends ApiClient {
    * @param deleteByParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public DeletedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams) throws AlgoliaRuntimeException {
+  public UpdatedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams) throws AlgoliaRuntimeException {
     return this.deleteBy(indexName, deleteByParams, null);
   }
 
@@ -1519,7 +1519,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<DeletedAtResponse> deleteByAsync(
+  public CompletableFuture<UpdatedAtResponse> deleteByAsync(
     @Nonnull String indexName,
     @Nonnull DeleteByParams deleteByParams,
     RequestOptions requestOptions
@@ -1533,7 +1533,7 @@ public class SearchClient extends ApiClient {
       .setMethod("POST")
       .setBody(deleteByParams)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<DeletedAtResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
   }
 
   /**
@@ -1545,7 +1545,7 @@ public class SearchClient extends ApiClient {
    * @param deleteByParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<DeletedAtResponse> deleteByAsync(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams)
+  public CompletableFuture<UpdatedAtResponse> deleteByAsync(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams)
     throws AlgoliaRuntimeException {
     return this.deleteByAsync(indexName, deleteByParams, null);
   }

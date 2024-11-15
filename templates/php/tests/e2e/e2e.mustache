@@ -17,7 +17,7 @@ use Psr\Http\Message\RequestInterface;
 use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
-if (getenv('ALGOLIA_APPLICATION_ID')) {
+if (getenv('{{e2eAppID}}')) {
     $_ENV = getenv();
 } else {
     $dotenv = Dotenv::createImmutable('tests');
@@ -44,7 +44,7 @@ class {{clientPrefix}}Test extends TestCase
 
     protected function getClient(): {{client}}
     {
-        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['{{e2eApiKey}}']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
+        return {{client}}::create($_ENV['{{e2eAppID}}'], $_ENV['{{e2eApiKey}}']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
     }
 
     {{#blocksE2E}}

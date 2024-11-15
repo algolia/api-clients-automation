@@ -89,7 +89,6 @@ final class SearchForFacets {
     this.replaceSynonymsInHighlight,
     this.minProximity,
     this.responseFields,
-    this.maxFacetHits,
     this.maxValuesPerFacet,
     this.sortFacetValuesBy,
     this.attributeCriteriaComputedByMinProximity,
@@ -99,6 +98,7 @@ final class SearchForFacets {
     required this.facet,
     required this.indexName,
     this.facetQuery,
+    this.maxFacetHits,
     required this.type,
   });
 
@@ -202,9 +202,11 @@ final class SearchForFacets {
   @JsonKey(name: r'minimumAroundRadius')
   final int? minimumAroundRadius;
 
-  /// Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
+  /// One of types:
+  /// - [List<List<double>>]
+  /// - [String]
   @JsonKey(name: r'insideBoundingBox')
-  final List<List<double>>? insideBoundingBox;
+  final dynamic insideBoundingBox;
 
   /// Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
   @JsonKey(name: r'insidePolygon')
@@ -373,9 +375,11 @@ final class SearchForFacets {
   @JsonKey(name: r'advancedSyntax')
   final bool? advancedSyntax;
 
-  /// Words that should be considered optional when found in the query.  By default, records must match all words in the search query to be included in the search results. Adding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words. For example, if the search query is \"action video\" and \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and one for \"action\". Records that match all words are ranked higher.  For a search query with 4 or more words **and** all its words are optional, the number of matched words required for a record to be included in the search results increases for every 1,000 records:  - If `optionalWords` has less than 10 words, the required number of matched words increases by 1:   results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).   For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.  For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+  /// One of types:
+  /// - [String]
+  /// - [List<String>]
   @JsonKey(name: r'optionalWords')
-  final List<String>? optionalWords;
+  final dynamic optionalWords;
 
   /// Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive.  This can be useful for attributes with long values, where the likelihood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
   @JsonKey(name: r'disableExactOnAttributes')
@@ -411,11 +415,6 @@ final class SearchForFacets {
   /// Properties to include in the API response of `search` and `browse` requests.  By default, all response properties are included. To reduce the response size, you can select, which attributes should be included.  You can't exclude these properties: `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter.  Don't exclude properties that you might need in your search UI.
   @JsonKey(name: r'responseFields')
   final List<String>? responseFields;
-
-  /// Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-  // maximum: 100
-  @JsonKey(name: r'maxFacetHits')
-  final int? maxFacetHits;
 
   /// Maximum number of facet values to return for each facet.
   // maximum: 1000
@@ -455,6 +454,11 @@ final class SearchForFacets {
   /// Text to search inside the facet's values.
   @JsonKey(name: r'facetQuery')
   final String? facetQuery;
+
+  /// Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+  // maximum: 100
+  @JsonKey(name: r'maxFacetHits')
+  final int? maxFacetHits;
 
   @JsonKey(name: r'type')
   final SearchTypeFacet type;
@@ -535,7 +539,6 @@ final class SearchForFacets {
           other.replaceSynonymsInHighlight == replaceSynonymsInHighlight &&
           other.minProximity == minProximity &&
           other.responseFields == responseFields &&
-          other.maxFacetHits == maxFacetHits &&
           other.maxValuesPerFacet == maxValuesPerFacet &&
           other.sortFacetValuesBy == sortFacetValuesBy &&
           other.attributeCriteriaComputedByMinProximity ==
@@ -546,6 +549,7 @@ final class SearchForFacets {
           other.facet == facet &&
           other.indexName == indexName &&
           other.facetQuery == facetQuery &&
+          other.maxFacetHits == maxFacetHits &&
           other.type == type;
 
   @override
@@ -570,7 +574,7 @@ final class SearchForFacets {
       aroundRadius.hashCode +
       aroundPrecision.hashCode +
       minimumAroundRadius.hashCode +
-      insideBoundingBox.hashCode +
+      (insideBoundingBox == null ? 0 : insideBoundingBox.hashCode) +
       insidePolygon.hashCode +
       naturalLanguages.hashCode +
       ruleContexts.hashCode +
@@ -611,7 +615,7 @@ final class SearchForFacets {
       mode.hashCode +
       semanticSearch.hashCode +
       advancedSyntax.hashCode +
-      optionalWords.hashCode +
+      (optionalWords == null ? 0 : optionalWords.hashCode) +
       disableExactOnAttributes.hashCode +
       exactOnSingleWordQuery.hashCode +
       alternativesAsExact.hashCode +
@@ -620,7 +624,6 @@ final class SearchForFacets {
       replaceSynonymsInHighlight.hashCode +
       minProximity.hashCode +
       responseFields.hashCode +
-      maxFacetHits.hashCode +
       maxValuesPerFacet.hashCode +
       sortFacetValuesBy.hashCode +
       attributeCriteriaComputedByMinProximity.hashCode +
@@ -630,6 +633,7 @@ final class SearchForFacets {
       facet.hashCode +
       indexName.hashCode +
       facetQuery.hashCode +
+      maxFacetHits.hashCode +
       type.hashCode;
 
   factory SearchForFacets.fromJson(Map<String, dynamic> json) =>

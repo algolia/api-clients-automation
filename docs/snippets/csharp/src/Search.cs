@@ -767,7 +767,7 @@ public class SnippetSearchClient
           AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
           Mode = Enum.Parse<Mode>("NeuralSearch"),
           HitsPerPage = 10,
-          OptionalWords = new List<string> { "one", "two" },
+          OptionalWords = new OptionalWords(new List<string> { "one", "two" }),
         },
       }
     );
