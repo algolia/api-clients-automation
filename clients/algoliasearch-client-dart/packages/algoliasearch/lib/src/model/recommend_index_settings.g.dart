@@ -56,6 +56,8 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
                   )),
           attributeForDistinct:
               $checkedConvert('attributeForDistinct', (v) => v as String?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
@@ -101,8 +103,7 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
           removeWordsIfNoResults: $checkedConvert('removeWordsIfNoResults',
               (v) => $enumDecodeNullable(_$RemoveWordsIfNoResultsEnumMap, v)),
           advancedSyntax: $checkedConvert('advancedSyntax', (v) => v as bool?),
-          optionalWords: $checkedConvert('optionalWords',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          optionalWords: $checkedConvert('optionalWords', (v) => v),
           disableExactOnAttributes: $checkedConvert('disableExactOnAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           exactOnSingleWordQuery: $checkedConvert('exactOnSingleWordQuery',
@@ -124,8 +125,6 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
               $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           maxValuesPerFacet:
               $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
@@ -177,6 +176,7 @@ Map<String, dynamic> _$RecommendIndexSettingsToJson(
   writeNotNull('userData', instance.userData);
   writeNotNull('customNormalization', instance.customNormalization);
   writeNotNull('attributeForDistinct', instance.attributeForDistinct);
+  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
   writeNotNull('ranking', instance.ranking);
   writeNotNull('relevancyStrictness', instance.relevancyStrictness);
@@ -217,7 +217,6 @@ Map<String, dynamic> _$RecommendIndexSettingsToJson(
       'replaceSynonymsInHighlight', instance.replaceSynonymsInHighlight);
   writeNotNull('minProximity', instance.minProximity);
   writeNotNull('responseFields', instance.responseFields);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
   writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
   writeNotNull('attributeCriteriaComputedByMinProximity',

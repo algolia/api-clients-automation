@@ -2781,7 +2781,9 @@ class SearchClientRequestsTests {
                 .setIgnorePlurals(IgnorePlurals.of(false))
                 .setIndexName("theIndexName")
                 .setInsideBoundingBox(
-                  Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
+                  InsideBoundingBox.of(
+                    Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
+                  )
                 )
                 .setInsidePolygon(
                   Arrays.asList(
@@ -2800,7 +2802,7 @@ class SearchClientRequestsTests {
                 .setNumericFilters(NumericFilters.of(Arrays.asList(NumericFilters.of(""))))
                 .setOffset(0)
                 .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of(""))))
-                .setOptionalWords(Arrays.asList(""))
+                .setOptionalWords(OptionalWords.of(Arrays.asList("")))
                 .setPage(0)
                 .setPercentileComputation(true)
                 .setPersonalizationImpact(0)
@@ -3461,7 +3463,7 @@ class SearchClientRequestsTests {
           .setMinWordSizefor2Typos(11)
           .setMode(Mode.NEURAL_SEARCH)
           .setNumericAttributesForFiltering(Arrays.asList("algolia"))
-          .setOptionalWords(Arrays.asList("myspace"))
+          .setOptionalWords(OptionalWords.of(Arrays.asList("myspace")))
           .setPaginationLimitedTo(0)
           .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
           .setQueryType(QueryType.PREFIX_LAST)

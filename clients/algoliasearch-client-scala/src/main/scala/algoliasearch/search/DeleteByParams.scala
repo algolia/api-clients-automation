@@ -54,11 +54,6 @@ package algoliasearch.search
   *   records included within a circle around this central location are included in the results. The radius of the
   *   circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you
   *   also specify `insidePolygon` or `insideBoundingBox`.
-  * @param insideBoundingBox
-  *   Coordinates for a rectangular area in which to search. Each bounding box is defined by the two opposite points of
-  *   its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple
-  *   bounding boxes as nested arrays. For more information, see [rectangular
-  *   area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
   * @param insidePolygon
   *   Coordinates of a polygon in which to search. Polygons are defined by 3 to 10,000 points. Each point is represented
   *   by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering
@@ -73,6 +68,6 @@ case class DeleteByParams(
     tagFilters: Option[TagFilters] = scala.None,
     aroundLatLng: Option[String] = scala.None,
     aroundRadius: Option[AroundRadius] = scala.None,
-    insideBoundingBox: Option[Seq[Seq[Double]]] = scala.None,
+    insideBoundingBox: Option[InsideBoundingBox] = scala.None,
     insidePolygon: Option[Seq[Seq[Double]]] = scala.None
 )

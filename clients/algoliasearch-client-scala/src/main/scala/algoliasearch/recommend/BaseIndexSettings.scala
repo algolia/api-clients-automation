@@ -135,6 +135,9 @@ import algoliasearch.recommend.SupportedLanguage._
   *   `distinct` search parameter to control how many items per group are included in the search results. If you want to
   *   use the same attribute also for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting.
   *   This applies faceting _after_ deduplication, which will result in accurate facet counts.
+  * @param maxFacetHits
+  *   Maximum number of facet values to return when [searching for facet
+  *   values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
   */
 case class BaseIndexSettings(
     attributesForFaceting: Option[Seq[String]] = scala.None,
@@ -153,5 +156,6 @@ case class BaseIndexSettings(
     searchableAttributes: Option[Seq[String]] = scala.None,
     userData: Option[Any] = scala.None,
     customNormalization: Option[Map[String, Map[String, String]]] = scala.None,
-    attributeForDistinct: Option[String] = scala.None
+    attributeForDistinct: Option[String] = scala.None,
+    maxFacetHits: Option[Int] = scala.None
 )

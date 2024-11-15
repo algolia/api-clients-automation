@@ -71,8 +71,7 @@ IndexSettingsAsSearchParams _$IndexSettingsAsSearchParamsFromJson(
                   ? null
                   : SemanticSearch.fromJson(v as Map<String, dynamic>)),
           advancedSyntax: $checkedConvert('advancedSyntax', (v) => v as bool?),
-          optionalWords: $checkedConvert('optionalWords',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          optionalWords: $checkedConvert('optionalWords', (v) => v),
           disableExactOnAttributes: $checkedConvert('disableExactOnAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           exactOnSingleWordQuery: $checkedConvert('exactOnSingleWordQuery',
@@ -94,8 +93,6 @@ IndexSettingsAsSearchParams _$IndexSettingsAsSearchParamsFromJson(
               $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           maxValuesPerFacet:
               $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
@@ -172,7 +169,6 @@ Map<String, dynamic> _$IndexSettingsAsSearchParamsToJson(
       'replaceSynonymsInHighlight', instance.replaceSynonymsInHighlight);
   writeNotNull('minProximity', instance.minProximity);
   writeNotNull('responseFields', instance.responseFields);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
   writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
   writeNotNull('attributeCriteriaComputedByMinProximity',

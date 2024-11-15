@@ -80,8 +80,10 @@ object JsonSupport {
     FacetFiltersSerializer :+
     HighlightResultSerializer :+
     IgnorePluralsSerializer :+
+    InsideBoundingBoxSerializer :+
     NumericFiltersSerializer :+
     OptionalFiltersSerializer :+
+    OptionalWordsSerializer :+
     PromoteSerializer :+
     ReRankingApplyFilterSerializer :+
     RemoveStopWordsSerializer :+

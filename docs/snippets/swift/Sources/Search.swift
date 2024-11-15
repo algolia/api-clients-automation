@@ -575,7 +575,7 @@ final class SearchClientSnippet {
                     hitsPerPage: 10,
                     typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.strict),
                     mode: SearchMode.neuralSearch,
-                    optionalWords: ["one", "two"]
+                    optionalWords: SearchOptionalWords.arrayOfString(["one", "two"])
                 ),
                 filters: "category:Book OR category:Ebook AND _tags:published",
                 validUntil: Int64(2_524_604_400),

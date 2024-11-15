@@ -65,6 +65,9 @@ public class IndexSettings {
   @JsonProperty("attributeForDistinct")
   private String attributeForDistinct;
 
+  @JsonProperty("maxFacetHits")
+  private Integer maxFacetHits;
+
   @JsonProperty("attributesToRetrieve")
   private List<String> attributesToRetrieve;
 
@@ -150,7 +153,7 @@ public class IndexSettings {
   private Boolean advancedSyntax;
 
   @JsonProperty("optionalWords")
-  private List<String> optionalWords;
+  private OptionalWords optionalWords;
 
   @JsonProperty("disableExactOnAttributes")
   private List<String> disableExactOnAttributes;
@@ -175,9 +178,6 @@ public class IndexSettings {
 
   @JsonProperty("responseFields")
   private List<String> responseFields;
-
-  @JsonProperty("maxFacetHits")
-  private Integer maxFacetHits;
 
   @JsonProperty("maxValuesPerFacet")
   private Integer maxValuesPerFacet;
@@ -583,6 +583,21 @@ public class IndexSettings {
   @javax.annotation.Nullable
   public String getAttributeForDistinct() {
     return attributeForDistinct;
+  }
+
+  public IndexSettings setMaxFacetHits(Integer maxFacetHits) {
+    this.maxFacetHits = maxFacetHits;
+    return this;
+  }
+
+  /**
+   * Maximum number of facet values to return when [searching for facet
+   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+   * maximum: 100
+   */
+  @javax.annotation.Nullable
+  public Integer getMaxFacetHits() {
+    return maxFacetHits;
   }
 
   public IndexSettings setAttributesToRetrieve(List<String> attributesToRetrieve) {
@@ -1050,38 +1065,14 @@ public class IndexSettings {
     return advancedSyntax;
   }
 
-  public IndexSettings setOptionalWords(List<String> optionalWords) {
+  public IndexSettings setOptionalWords(OptionalWords optionalWords) {
     this.optionalWords = optionalWords;
     return this;
   }
 
-  public IndexSettings addOptionalWords(String optionalWordsItem) {
-    if (this.optionalWords == null) {
-      this.optionalWords = new ArrayList<>();
-    }
-    this.optionalWords.add(optionalWordsItem);
-    return this;
-  }
-
-  /**
-   * Words that should be considered optional when found in the query. By default, records must
-   * match all words in the search query to be included in the search results. Adding optional words
-   * can help to increase the number of search results by running an additional search query that
-   * doesn't include the optional words. For example, if the search query is \"action video\" and
-   * \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and
-   * one for \"action\". Records that match all words are ranked higher. For a search query with 4
-   * or more words **and** all its words are optional, the number of matched words required for a
-   * record to be included in the search results increases for every 1,000 records: - If
-   * `optionalWords` has less than 10 words, the required number of matched words increases by 1:
-   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If
-   * `optionalWords` has 10 or more words, the number of required matched words increases by the
-   * number of optional words divided by 5 (rounded down). For example, with 18 optional words:
-   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words. For more
-   * information, see [Optional
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-   */
+  /** Get optionalWords */
   @javax.annotation.Nullable
-  public List<String> getOptionalWords() {
+  public OptionalWords getOptionalWords() {
     return optionalWords;
   }
 
@@ -1248,21 +1239,6 @@ public class IndexSettings {
     return responseFields;
   }
 
-  public IndexSettings setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-    return this;
-  }
-
-  /**
-   * Maximum number of facet values to return when [searching for facet
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-   * maximum: 100
-   */
-  @javax.annotation.Nullable
-  public Integer getMaxFacetHits() {
-    return maxFacetHits;
-  }
-
   public IndexSettings setMaxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
     return this;
@@ -1372,6 +1348,7 @@ public class IndexSettings {
       Objects.equals(this.userData, indexSettings.userData) &&
       Objects.equals(this.customNormalization, indexSettings.customNormalization) &&
       Objects.equals(this.attributeForDistinct, indexSettings.attributeForDistinct) &&
+      Objects.equals(this.maxFacetHits, indexSettings.maxFacetHits) &&
       Objects.equals(this.attributesToRetrieve, indexSettings.attributesToRetrieve) &&
       Objects.equals(this.ranking, indexSettings.ranking) &&
       Objects.equals(this.customRanking, indexSettings.customRanking) &&
@@ -1409,7 +1386,6 @@ public class IndexSettings {
       Objects.equals(this.replaceSynonymsInHighlight, indexSettings.replaceSynonymsInHighlight) &&
       Objects.equals(this.minProximity, indexSettings.minProximity) &&
       Objects.equals(this.responseFields, indexSettings.responseFields) &&
-      Objects.equals(this.maxFacetHits, indexSettings.maxFacetHits) &&
       Objects.equals(this.maxValuesPerFacet, indexSettings.maxValuesPerFacet) &&
       Objects.equals(this.sortFacetValuesBy, indexSettings.sortFacetValuesBy) &&
       Objects.equals(this.attributeCriteriaComputedByMinProximity, indexSettings.attributeCriteriaComputedByMinProximity) &&
@@ -1439,6 +1415,7 @@ public class IndexSettings {
       userData,
       customNormalization,
       attributeForDistinct,
+      maxFacetHits,
       attributesToRetrieve,
       ranking,
       customRanking,
@@ -1476,7 +1453,6 @@ public class IndexSettings {
       replaceSynonymsInHighlight,
       minProximity,
       responseFields,
-      maxFacetHits,
       maxValuesPerFacet,
       sortFacetValuesBy,
       attributeCriteriaComputedByMinProximity,
@@ -1507,6 +1483,7 @@ public class IndexSettings {
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    customNormalization: ").append(toIndentedString(customNormalization)).append("\n");
     sb.append("    attributeForDistinct: ").append(toIndentedString(attributeForDistinct)).append("\n");
+    sb.append("    maxFacetHits: ").append(toIndentedString(maxFacetHits)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    ranking: ").append(toIndentedString(ranking)).append("\n");
     sb.append("    customRanking: ").append(toIndentedString(customRanking)).append("\n");
@@ -1544,7 +1521,6 @@ public class IndexSettings {
     sb.append("    replaceSynonymsInHighlight: ").append(toIndentedString(replaceSynonymsInHighlight)).append("\n");
     sb.append("    minProximity: ").append(toIndentedString(minProximity)).append("\n");
     sb.append("    responseFields: ").append(toIndentedString(responseFields)).append("\n");
-    sb.append("    maxFacetHits: ").append(toIndentedString(maxFacetHits)).append("\n");
     sb.append("    maxValuesPerFacet: ").append(toIndentedString(maxValuesPerFacet)).append("\n");
     sb.append("    sortFacetValuesBy: ").append(toIndentedString(sortFacetValuesBy)).append("\n");
     sb
