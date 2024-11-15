@@ -887,7 +887,7 @@ paths:
               $ref: '#/components/schemas/deleteByParams'
       responses:
         '200':
-          $ref: '#/components/responses/DeletedAt'
+          $ref: '#/components/responses/UpdatedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
