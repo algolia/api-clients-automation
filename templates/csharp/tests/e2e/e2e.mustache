@@ -25,10 +25,10 @@ public class {{client}}RequestTestsE2E
   {
     DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: true, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
 
-    var appId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
+    var appId = Environment.GetEnvironmentVariable("{{e2eAppID}}");
     if (appId == null)
     {
-      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+      throw new Exception("please provide an `{{e2eAppID}}` env var for e2e tests");
     }
 
     var apiKey = Environment.GetEnvironmentVariable("{{e2eApiKey}}");

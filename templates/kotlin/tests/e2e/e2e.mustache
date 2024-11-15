@@ -21,10 +21,10 @@ class {{clientPrefix}}Test {
 
     init {
       if (System.getenv("CI") == "true") {
-        this.client = {{client}}(appId = System.getenv("ALGOLIA_APPLICATION_ID"), apiKey = System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, region = "{{defaultRegion}}", {{/hasRegionalHost}});
+        this.client = {{client}}(appId = System.getenv("{{e2eAppID}}"), apiKey = System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, region = "{{defaultRegion}}", {{/hasRegionalHost}});
       } else {
         val dotenv = Dotenv.configure().directory("../../").load()
-        this.client = {{client}}(appId = dotenv["ALGOLIA_APPLICATION_ID"], apiKey = dotenv["{{e2eApiKey}}"]{{#hasRegionalHost}}, region = "{{defaultRegion}}", {{/hasRegionalHost}});
+        this.client = {{client}}(appId = dotenv["{{e2eAppID}}"], apiKey = dotenv["{{e2eApiKey}}"]{{#hasRegionalHost}}, region = "{{defaultRegion}}", {{/hasRegionalHost}});
       }
     }
 

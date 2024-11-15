@@ -26,14 +26,14 @@ class {{clientPrefix}}TestE2E extends AnyFunSuite {
     {{/hasRegionalHost}}
     if (System.getenv("CI") == "true") {
       {{client}}(
-        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
+        appId = System.getenv("{{e2eAppID}}"),
         apiKey = System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}},
         region = region{{/hasRegionalHost}}
       )
     } else {
       val dotenv = Dotenv.configure.directory("../../").load
       {{client}}(
-        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
+        appId = dotenv.get("{{e2eAppID}}"),
         apiKey = dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}},
         region = region{{/hasRegionalHost}}
       )
