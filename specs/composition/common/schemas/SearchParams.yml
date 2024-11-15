@@ -1,4 +1,4 @@
-searchParams:
+params:
   title: Composition Search parameters as object
   type: object
   additionalProperties: false
