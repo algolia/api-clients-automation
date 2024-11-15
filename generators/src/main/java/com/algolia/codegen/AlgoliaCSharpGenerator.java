@@ -161,7 +161,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
 
   /** Convert a Seq type to a valid class name. */
   private String typeToName(String content) {
-    String[] parts = content.split("<");
+    // for dictionary, remove the key type
+    String[] parts = content.replace("string, ", "").split("<");
     String name = "";
     for (int i = 0; i < parts.length; i++) {
       name += Helpers.capitalize(parts[i].replace(">", "").replace(",", "").replace(" ", ""));
