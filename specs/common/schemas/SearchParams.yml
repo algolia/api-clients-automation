@@ -338,8 +338,9 @@ aroundLatLngViaIP:
 
 insideBoundingBox:
   oneOf:
-    - $ref: '#/insideBoundingBoxArray'
     - type: string
+    - type: 'null'
+    - $ref: '#/insideBoundingBoxArray'
 
 insideBoundingBoxArray:
   type: array

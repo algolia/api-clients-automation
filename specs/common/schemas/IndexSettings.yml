@@ -1216,6 +1216,7 @@ booleanString:
 optionalWords:
   oneOf:
     - type: string
+    - type: 'null'
     - $ref: '#/optionalWordsArray'
 
 optionalWordsArray:
