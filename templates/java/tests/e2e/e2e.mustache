@@ -24,10 +24,10 @@ class {{client}}RequestsTestsE2E {
         this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
        
         if ("true".equals(System.getenv("CI"))) {
-          this.client = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+          this.client = new {{client}}(System.getenv("{{e2eAppID}}"), System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
         } else {
           Dotenv dotenv = Dotenv.configure().directory("../../").load();
-          this.client = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+          this.client = new {{client}}(dotenv.get("{{e2eAppID}}"), dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
         }
     }
 
