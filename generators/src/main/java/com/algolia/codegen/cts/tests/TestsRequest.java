@@ -81,7 +81,11 @@ public class TestsRequest extends TestsGenerator {
     List<Object> blocksE2E = new ArrayList<>();
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, false);
 
-    bundle.put("e2eApiKey", client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY");
+    bundle.put("e2eAppID", client.equals("composition") ? "METIS_APPLICATION_ID" : "ALGOLIA_APPLICATION_ID");
+    bundle.put(
+      "e2eApiKey",
+      client.equals("composition") ? "METIS_API_KEY" : (client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY")
+    );
     bundle.put("useEchoRequester", true);
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {

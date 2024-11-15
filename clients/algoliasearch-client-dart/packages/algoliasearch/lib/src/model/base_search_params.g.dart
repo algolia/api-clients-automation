@@ -38,13 +38,7 @@ BaseSearchParams _$BaseSearchParamsFromJson(Map<String, dynamic> json) =>
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
           minimumAroundRadius: $checkedConvert(
               'minimumAroundRadius', (v) => (v as num?)?.toInt()),
-          insideBoundingBox: $checkedConvert(
-              'insideBoundingBox',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => (e as List<dynamic>)
-                      .map((e) => (e as num).toDouble())
-                      .toList())
-                  .toList()),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
               (v) => (v as List<dynamic>?)

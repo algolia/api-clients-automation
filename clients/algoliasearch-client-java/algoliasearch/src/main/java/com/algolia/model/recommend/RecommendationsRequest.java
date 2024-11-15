@@ -66,17 +66,6 @@ public interface RecommendationsRequest {
           LOGGER.finest("Failed to deserialize oneOf LookingSimilarQuery (error: " + e.getMessage() + ") (type: LookingSimilarQuery)");
         }
       }
-      // deserialize RecommendedForYouQuery
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(RecommendedForYouQuery.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf RecommendedForYouQuery (error: " + e.getMessage() + ") (type: RecommendedForYouQuery)"
-          );
-        }
-      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

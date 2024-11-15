@@ -72,8 +72,6 @@ baseRecommendIndexSettings:
       $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/minProximity'
     responseFields:
       $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/responseFields'
-    maxFacetHits:
-      $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/maxFacetHits'
     maxValuesPerFacet:
       $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams/properties/maxValuesPerFacet'
     sortFacetValuesBy:

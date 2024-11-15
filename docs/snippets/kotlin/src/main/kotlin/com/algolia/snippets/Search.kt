@@ -790,7 +790,7 @@ class SnippetSearchClient {
           aroundRadius = AroundRadiusAll.entries.first { it.value == "all" },
           mode = Mode.entries.first { it.value == "neuralSearch" },
           hitsPerPage = 10,
-          optionalWords = listOf("one", "two"),
+          optionalWords = OptionalWords.of(listOf("one", "two")),
         ),
       ),
     )

@@ -534,7 +534,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"test-record-123","description":"my lovely crafted composition","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"sumOrFiltersScores":false,"facets":["*"],"maxValuesPerFacet":100,"facetingAfterDistinct":false,"sortFacetValuesBy":"count","attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"length":0,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}}},"insets":[{"name":"lorem","source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}},"position":0,"length":0}]}}}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"test-record-123","description":"my lovely crafted composition","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"sumOrFiltersScores":false,"facets":["*"],"maxValuesPerFacet":100,"facetingAfterDistinct":false,"sortFacetValuesBy":"count","attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"length":0,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}}},"insets":[{"name":"lorem","source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":"lorem","disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}},"position":0,"length":0}]}}}}]}'
   /1/compositions/{compositionID}/rules/{objectID}:
     get:
       tags:
@@ -915,7 +915,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}'
+              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}'
 components:
   securitySchemes:
     appId:
@@ -1258,7 +1258,7 @@ components:
         - $ref: '#/components/schemas/aroundPrecisionFromValue'
       x-categories:
         - Geo-Search
-    insideBoundingBox:
+    insideBoundingBoxArray:
       type: array
       items:
         type: array
@@ -1293,6 +1293,11 @@ components:
           - 1.9916
       x-categories:
         - Geo-Search
+    insideBoundingBox:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/insideBoundingBoxArray'
     insidePolygon:
       type: array
       items:
@@ -3285,6 +3290,58 @@ components:
           default: true
           x-categories:
             - Filtering
+    optionalWordsArray:
+      type: array
+      items:
+        type: string
+      example:
+        - blue
+        - iphone case
+      description: >
+        Words that should be considered optional when found in the query.
+
+
+        By default, records must match all words in the search query to be
+        included in the search results.
+
+        Adding optional words can help to increase the number of search results
+        by running an additional search query that doesn't include the optional
+        words.
+
+        For example, if the search query is "action video" and "video" is an
+        optional word,
+
+        the search engine runs two queries. One for "action video" and one for
+        "action".
+
+        Records that match all words are ranked higher.
+
+
+        For a search query with 4 or more words **and** all its words are
+        optional,
+
+        the number of matched words required for a record to be included in the
+        search results increases for every 1,000 records:
+
+
+        - If `optionalWords` has less than 10 words, the required number of
+        matched words increases by 1:
+          results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
+        - If `optionalWords` has 10 or more words, the number of required
+        matched words increases by the number of optional words divided by 5
+        (rounded down).
+          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+
+        For more information, see [Optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/optionalWordsArray'
     InsetsQueryParameters:
       title: Composition Insets Query parameters as object
       type: object
@@ -3635,52 +3692,7 @@ components:
           x-categories:
             - Query strategy
         optionalWords:
-          type: array
-          items:
-            type: string
-          example:
-            - blue
-            - iphone case
-          description: >
-            Words that should be considered optional when found in the query.
-
-
-            By default, records must match all words in the search query to be
-            included in the search results.
-
-            Adding optional words can help to increase the number of search
-            results by running an additional search query that doesn't include
-            the optional words.
-
-            For example, if the search query is "action video" and "video" is an
-            optional word,
-
-            the search engine runs two queries. One for "action video" and one
-            for "action".
-
-            Records that match all words are ranked higher.
-
-
-            For a search query with 4 or more words **and** all its words are
-            optional,
-
-            the number of matched words required for a record to be included in
-            the search results increases for every 1,000 records:
-
-
-            - If `optionalWords` has less than 10 words, the required number of
-            matched words increases by 1:
-              results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-            - If `optionalWords` has 10 or more words, the number of required
-            matched words increases by the number of optional words divided by 5
-            (rounded down).
-              For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
-
-            For more information, see [Optional
-            words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-          default: []
-          x-categories:
-            - Query strategy
+          $ref: '#/components/schemas/optionalWords'
         disableExactOnAttributes:
           type: array
           items:
