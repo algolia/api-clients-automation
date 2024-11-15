@@ -17,7 +17,6 @@ final class GetRecommendationsParams {
   /// - [LookingSimilarQuery]
   /// - [RelatedQuery]
   /// - [TrendingItemsQuery]
-  /// - [RecommendedForYouQuery]
   /// - [TrendingFacetsQuery]
   /// - [BoughtTogetherQuery]
   @JsonKey(name: r'requests')

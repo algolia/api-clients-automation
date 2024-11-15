@@ -43,7 +43,6 @@ object JsonSupport {
     new MatchLevelSerializer() :+
     new QueryTypeSerializer() :+
     new RecommendModelsSerializer() :+
-    new RecommendedForYouModelSerializer() :+
     new RelatedModelSerializer() :+
     new RemoveWordsIfNoResultsSerializer() :+
     new SortRemainingBySerializer() :+

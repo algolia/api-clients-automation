@@ -5151,26 +5151,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseRecommendRequest'
         - $ref: '#/components/schemas/lookingSimilar'
-    recommendedForYouModel:
-      type: string
-      description: |
-        "Recommened for you" model.
-      enum:
-        - recommended-for-you
-    recommendedForYou:
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/recommendedForYouModel'
-        fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
-      required:
-        - model
-    recommendedForYouQuery:
-      title: Recommended for you
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/recommendedForYou'
     recommendationsRequest:
       oneOf:
         - $ref: '#/components/schemas/boughtTogetherQuery'
@@ -5178,7 +5158,6 @@ components:
         - $ref: '#/components/schemas/trendingItemsQuery'
         - $ref: '#/components/schemas/trendingFacetsQuery'
         - $ref: '#/components/schemas/lookingSimilarQuery'
-        - $ref: '#/components/schemas/recommendedForYouQuery'
     processingTimeMS:
       type: integer
       description: Time the server took to process the request, in milliseconds.
