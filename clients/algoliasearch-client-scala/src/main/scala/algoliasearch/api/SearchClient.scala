@@ -546,7 +546,7 @@ class SearchClient(
     */
   def deleteBy(indexName: String, deleteByParams: DeleteByParams, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
-  ): Future[DeletedAtResponse] = Future {
+  ): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `deleteBy`.")
     requireNotNull(deleteByParams, "Parameter `deleteByParams` is required when calling `deleteBy`.")
 
@@ -556,7 +556,7 @@ class SearchClient(
       .withPath(s"/1/indexes/${escape(indexName)}/deleteByQuery")
       .withBody(deleteByParams)
       .build()
-    execute[DeletedAtResponse](request, requestOptions)
+    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Deletes an index and all its settings. - Deleting an index doesn't delete its analytics data. - If you try to
