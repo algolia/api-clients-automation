@@ -30,7 +30,7 @@
         /// Initializes a new instance of the {{classname}} class
         /// with a {{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}
         /// </summary>
-        /// <param name="actualInstance">An instance of {{dataType}}.</param>
+        /// <param name="actualInstance">An instance of {{{dataType}}}.</param>
         public {{classname}}({{{dataType}}} actualInstance)
         {
             ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
@@ -44,7 +44,7 @@
           /// Initializes a new instance of the {{classname}} class
           /// with a {{#lambdaCref}}{{{dataType}}}{{/lambdaCref}}
           /// </summary>
-          /// <param name="actualInstance">An instance of {{dataType}}.</param>
+          /// <param name="actualInstance">An instance of {{{dataType}}}.</param>
           public {{classname}}(object actualInstance)
           {
               ActualInstance = actualInstance{{^model.isNullable}}{{^isPrimitiveType}}{{^allowableValues}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/allowableValues}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{#isArray}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isArray}}{{#isFreeFormObject}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isFreeFormObject}}{{#isString}} ?? throw new ArgumentException("Invalid instance found. Must not be null."){{/isString}}{{/isPrimitiveType}}{{/model.isNullable}};
@@ -65,7 +65,7 @@
         /// the InvalidClassException will be thrown{{/lambda.escape-generic}}
         /// </summary>
         /// <returns>An instance of {{#lambda.escape-generic}}{{dataType}}{{/lambda.escape-generic}}</returns>
-        public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} As{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}()
+        public {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} As{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}()
         {
             return ({{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}})ActualInstance;
         }
@@ -81,7 +81,7 @@
                 /// {{#lambda.escape-generic}}Check if the actual instance is of `{{{dataType}}}` type.{{/lambda.escape-generic}}
                 /// </summary>
                 /// <returns>Whether or not the instance is the type</returns>
-                public bool Is{{#lambda.titlecase}}{{baseType}}{{/lambda.titlecase}}{{#lambda.titlecase}}{{{items.dataType}}}{{/lambda.titlecase}}()
+                public bool Is{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}()
                 {
                     return ActualInstance.GetType() == typeof({{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}});
                 }

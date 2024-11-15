@@ -2,7 +2,9 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -155,5 +157,24 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+  }
+
+  /** Convert a Seq type to a valid class name. */
+  private String typeToName(String content) {
+    String[] parts = content.split("<");
+    String name = "";
+    for (int i = 0; i < parts.length; i++) {
+      name += Helpers.capitalize(parts[i].replace(">", "").replace(",", "").replace(" ", ""));
+    }
+    return name;
+  }
+
+  @Override
+  protected Builder<String, Lambda> addMustacheLambdas() {
+    Builder<String, Lambda> lambdas = super.addMustacheLambdas();
+
+    lambdas.put("type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+
+    return lambdas;
   }
 }
