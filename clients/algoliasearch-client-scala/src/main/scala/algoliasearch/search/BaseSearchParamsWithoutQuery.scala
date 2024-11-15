@@ -87,11 +87,6 @@ import algoliasearch.search.SupportedLanguage._
   *   Whether to obtain the coordinates from the request's IP address.
   * @param minimumAroundRadius
   *   Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
-  * @param insideBoundingBox
-  *   Coordinates for a rectangular area in which to search. Each bounding box is defined by the two opposite points of
-  *   its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple
-  *   bounding boxes as nested arrays. For more information, see [rectangular
-  *   area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
   * @param insidePolygon
   *   Coordinates of a polygon in which to search. Polygons are defined by 3 to 10,000 points. Each point is represented
   *   by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering
@@ -151,7 +146,7 @@ case class BaseSearchParamsWithoutQuery(
     aroundRadius: Option[AroundRadius] = scala.None,
     aroundPrecision: Option[AroundPrecision] = scala.None,
     minimumAroundRadius: Option[Int] = scala.None,
-    insideBoundingBox: Option[Seq[Seq[Double]]] = scala.None,
+    insideBoundingBox: Option[InsideBoundingBox] = scala.None,
     insidePolygon: Option[Seq[Seq[Double]]] = scala.None,
     naturalLanguages: Option[Seq[SupportedLanguage]] = scala.None,
     ruleContexts: Option[Seq[String]] = scala.None,

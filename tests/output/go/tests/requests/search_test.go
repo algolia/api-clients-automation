@@ -1923,17 +1923,17 @@ func TestSearch_Search(t *testing.T) {
 						[]string{""}).SetDisableTypoToleranceOnAttributes(
 						[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
 						[]search.FacetFilters{*search.StringAsFacetFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
-						[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("theIndexName").SetInsideBoundingBox(
+						[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("theIndexName").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 						[][]float64{
 							[]float64{47.3165, 4.9665, 47.3424, 5.0201},
-							[]float64{40.9234, 2.1185, 38.643, 1.9916}}).SetInsidePolygon(
+							[]float64{40.9234, 2.1185, 38.643, 1.9916}})).SetInsidePolygon(
 						[][]float64{
 							[]float64{47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9},
 							[]float64{40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104}}).SetKeepDiacriticsOnCharacters("").SetLength(1).SetMaxValuesPerFacet(0).SetMinProximity(1).SetMinWordSizefor1Typo(0).SetMinWordSizefor2Typos(0).SetMinimumAroundRadius(1).SetNaturalLanguages(
 						[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
 						[]search.NumericFilters{*search.StringAsNumericFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-						[]search.OptionalFilters{*search.StringAsOptionalFilters("")})).SetOptionalWords(
-						[]string{""}).SetPage(0).SetPercentileComputation(true).SetPersonalizationImpact(0).SetQuery("").SetQueryLanguages(
+						[]search.OptionalFilters{*search.StringAsOptionalFilters("")})).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
+						[]string{""})).SetPage(0).SetPercentileComputation(true).SetPersonalizationImpact(0).SetQuery("").SetQueryLanguages(
 						[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixAll")).SetRanking(
 						[]string{""}).SetReRankingApplyFilter(search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
 						[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("")})).SetRelevancyStrictness(0).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("allOptional")).SetRenderingContent(
@@ -2391,8 +2391,8 @@ func TestSearch_SetSettings(t *testing.T) {
 				[]string{"algolia"}).SetDisableTypoToleranceOnWords(
 				[]string{"algolia"}).SetDistinct(search.Int32AsDistinct(3)).SetEnablePersonalization(true).SetEnableReRanking(false).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetHighlightPreTag("<span>").SetHighlightPostTag("</span>").SetHitsPerPage(10).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexLanguages(
 				[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetKeepDiacriticsOnCharacters("abc").SetMaxFacetHits(20).SetMaxValuesPerFacet(30).SetMinProximity(6).SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.Mode("neuralSearch")).SetNumericAttributesForFiltering(
-				[]string{"algolia"}).SetOptionalWords(
-				[]string{"myspace"}).SetPaginationLimitedTo(0).SetQueryLanguages(
+				[]string{"algolia"}).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
+				[]string{"myspace"})).SetPaginationLimitedTo(0).SetQueryLanguages(
 				[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixLast")).SetRanking(
 				[]string{"geo"}).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetRelevancyStrictness(10).SetRemoveStopWords(search.BoolAsRemoveStopWords(false)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("lastWords")).SetRenderingContent(
 				search.NewEmptyRenderingContent().SetFacetOrdering(

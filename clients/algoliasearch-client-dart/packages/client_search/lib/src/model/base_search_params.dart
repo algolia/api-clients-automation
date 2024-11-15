@@ -140,9 +140,11 @@ final class BaseSearchParams {
   @JsonKey(name: r'minimumAroundRadius')
   final int? minimumAroundRadius;
 
-  /// Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
+  /// One of types:
+  /// - [List<List<double>>]
+  /// - [String]
   @JsonKey(name: r'insideBoundingBox')
-  final List<List<double>>? insideBoundingBox;
+  final dynamic insideBoundingBox;
 
   /// Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
   @JsonKey(name: r'insidePolygon')
@@ -252,7 +254,7 @@ final class BaseSearchParams {
       aroundRadius.hashCode +
       aroundPrecision.hashCode +
       minimumAroundRadius.hashCode +
-      insideBoundingBox.hashCode +
+      (insideBoundingBox == null ? 0 : insideBoundingBox.hashCode) +
       insidePolygon.hashCode +
       naturalLanguages.hashCode +
       ruleContexts.hashCode +

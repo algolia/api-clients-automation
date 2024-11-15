@@ -2641,7 +2641,8 @@ class SearchTest extends AnyFunSuite {
             hitsPerPage = Some(1),
             ignorePlurals = Some(IgnorePlurals(false)),
             indexName = "theIndexName",
-            insideBoundingBox = Some(Seq(Seq(47.3165, 4.9665, 47.3424, 5.0201), Seq(40.9234, 2.1185, 38.643, 1.9916))),
+            insideBoundingBox =
+              Some(InsideBoundingBox(Seq(Seq(47.3165, 4.9665, 47.3424, 5.0201), Seq(40.9234, 2.1185, 38.643, 1.9916)))),
             insidePolygon = Some(
               Seq(
                 Seq(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
@@ -2659,7 +2660,7 @@ class SearchTest extends AnyFunSuite {
             numericFilters = Some(NumericFilters(Seq(NumericFilters("")))),
             offset = Some(0),
             optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("")))),
-            optionalWords = Some(Seq("")),
+            optionalWords = Some(OptionalWords(Seq(""))),
             page = Some(0),
             percentileComputation = Some(true),
             personalizationImpact = Some(0),
@@ -3315,7 +3316,7 @@ class SearchTest extends AnyFunSuite {
         minWordSizefor2Typos = Some(11),
         mode = Some(Mode.withName("neuralSearch")),
         numericAttributesForFiltering = Some(Seq("algolia")),
-        optionalWords = Some(Seq("myspace")),
+        optionalWords = Some(OptionalWords(Seq("myspace"))),
         paginationLimitedTo = Some(0),
         queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
         queryType = Some(QueryType.withName("prefixLast")),

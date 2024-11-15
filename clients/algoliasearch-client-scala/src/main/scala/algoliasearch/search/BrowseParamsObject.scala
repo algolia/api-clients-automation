@@ -95,11 +95,6 @@ import algoliasearch.search.SupportedLanguage._
   *   Whether to obtain the coordinates from the request's IP address.
   * @param minimumAroundRadius
   *   Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
-  * @param insideBoundingBox
-  *   Coordinates for a rectangular area in which to search. Each bounding box is defined by the two opposite points of
-  *   its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple
-  *   bounding boxes as nested arrays. For more information, see [rectangular
-  *   area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
   * @param insidePolygon
   *   Coordinates of a polygon in which to search. Polygons are defined by 3 to 10,000 points. Each point is represented
   *   by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering
@@ -239,19 +234,6 @@ import algoliasearch.search.SupportedLanguage._
   * @param advancedSyntax
   *   Whether to support phrase matching and excluding words from search queries. Use the `advancedSyntaxFeatures`
   *   parameter to control which feature is supported.
-  * @param optionalWords
-  *   Words that should be considered optional when found in the query. By default, records must match all words in the
-  *   search query to be included in the search results. Adding optional words can help to increase the number of search
-  *   results by running an additional search query that doesn't include the optional words. For example, if the search
-  *   query is \"action video\" and \"video\" is an optional word, the search engine runs two queries. One for \"action
-  *   video\" and one for \"action\". Records that match all words are ranked higher. For a search query with 4 or more
-  *   words **and** all its words are optional, the number of matched words required for a record to be included in the
-  *   search results increases for every 1,000 records: - If `optionalWords` has less than 10 words, the required number
-  *   of matched words increases by 1: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched
-  *   words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of
-  *   optional words divided by 5 (rounded down). For example, with 18 optional words: results 1 to 1,000 require 1
-  *   matched word, results 1,001 to 2000 need 4 matched words. For more information, see [Optional
-  *   words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
   * @param disableExactOnAttributes
   *   Searchable attributes for which you want to [turn off the Exact ranking
   *   criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
@@ -291,9 +273,6 @@ import algoliasearch.search.SupportedLanguage._
   *   these properties: `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or
   *   any property triggered by the `getRankingInfo` parameter. Don't exclude properties that you might need in your
   *   search UI.
-  * @param maxFacetHits
-  *   Maximum number of facet values to return when [searching for facet
-  *   values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
   * @param maxValuesPerFacet
   *   Maximum number of facet values to return for each facet.
   * @param sortFacetValuesBy
@@ -334,7 +313,7 @@ case class BrowseParamsObject(
     aroundRadius: Option[AroundRadius] = scala.None,
     aroundPrecision: Option[AroundPrecision] = scala.None,
     minimumAroundRadius: Option[Int] = scala.None,
-    insideBoundingBox: Option[Seq[Seq[Double]]] = scala.None,
+    insideBoundingBox: Option[InsideBoundingBox] = scala.None,
     insidePolygon: Option[Seq[Seq[Double]]] = scala.None,
     naturalLanguages: Option[Seq[SupportedLanguage]] = scala.None,
     ruleContexts: Option[Seq[String]] = scala.None,
@@ -375,7 +354,7 @@ case class BrowseParamsObject(
     mode: Option[Mode] = scala.None,
     semanticSearch: Option[SemanticSearch] = scala.None,
     advancedSyntax: Option[Boolean] = scala.None,
-    optionalWords: Option[Seq[String]] = scala.None,
+    optionalWords: Option[OptionalWords] = scala.None,
     disableExactOnAttributes: Option[Seq[String]] = scala.None,
     exactOnSingleWordQuery: Option[ExactOnSingleWordQuery] = scala.None,
     alternativesAsExact: Option[Seq[AlternativesAsExact]] = scala.None,
@@ -384,7 +363,6 @@ case class BrowseParamsObject(
     replaceSynonymsInHighlight: Option[Boolean] = scala.None,
     minProximity: Option[Int] = scala.None,
     responseFields: Option[Seq[String]] = scala.None,
-    maxFacetHits: Option[Int] = scala.None,
     maxValuesPerFacet: Option[Int] = scala.None,
     sortFacetValuesBy: Option[String] = scala.None,
     attributeCriteriaComputedByMinProximity: Option[Boolean] = scala.None,

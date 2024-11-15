@@ -18,13 +18,7 @@ DeleteByParams _$DeleteByParamsFromJson(Map<String, dynamic> json) =>
           tagFilters: $checkedConvert('tagFilters', (v) => v),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
-          insideBoundingBox: $checkedConvert(
-              'insideBoundingBox',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => (e as List<dynamic>)
-                      .map((e) => (e as num).toDouble())
-                      .toList())
-                  .toList()),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
               (v) => (v as List<dynamic>?)
