@@ -2723,11 +2723,13 @@ public class SearchClientRequestTests
               HitsPerPage = 1,
               IgnorePlurals = new IgnorePlurals(false),
               IndexName = "theIndexName",
-              InsideBoundingBox = new List<List<Double>>
-              {
-                new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201 },
-                new List<Double> { 40.9234, 2.1185, 38.643, 1.9916 },
-              },
+              InsideBoundingBox = new InsideBoundingBox(
+                new List<List<Double>>
+                {
+                  new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201 },
+                  new List<Double> { 40.9234, 2.1185, 38.643, 1.9916 },
+                }
+              ),
               InsidePolygon = new List<List<Double>>
               {
                 new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9 },
@@ -2751,7 +2753,7 @@ public class SearchClientRequestTests
               OptionalFilters = new OptionalFilters(
                 new List<OptionalFilters> { new OptionalFilters("") }
               ),
-              OptionalWords = new List<string> { "" },
+              OptionalWords = new OptionalWords(new List<string> { "" }),
               Page = 0,
               PercentileComputation = true,
               PersonalizationImpact = 0,
@@ -3463,7 +3465,7 @@ public class SearchClientRequestTests
         MinWordSizefor2Typos = 11,
         Mode = Enum.Parse<Mode>("NeuralSearch"),
         NumericAttributesForFiltering = new List<string> { "algolia" },
-        OptionalWords = new List<string> { "myspace" },
+        OptionalWords = new OptionalWords(new List<string> { "myspace" }),
         PaginationLimitedTo = 0,
         QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
         QueryType = Enum.Parse<QueryType>("PrefixLast"),
