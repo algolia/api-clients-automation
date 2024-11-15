@@ -13,7 +13,7 @@
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
     "pushGeneratedCode": "yarn runScript dist/ci/codegen/pushGeneratedCode.js",
     "pushToAlgoliaDoc": "yarn runScript dist/ci/codegen/pushToAlgoliaDoc.js",
-    "pushToAlgoliaWeb": "yarn runScript dist/ci/codegen/pushToAlgoliaWeb.js",
+    "pushToRepo": "yarn runScript dist/ci/codegen/pushToRepo.js",
     "runScript": "NODE_NO_WARNINGS=1 node --enable-source-maps",
     "setRunVariables": "yarn runScript dist/ci/githubActions/setRunVariables.js",
     "spreadGeneration": "yarn runScript dist/ci/codegen/spreadGeneration.js",

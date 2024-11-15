@@ -1,4 +1,4 @@
-name: Push snippets to AlgoliaWeb
+name: Push snippets to Repos
 
 on: workflow_dispatch
 
@@ -18,7 +18,7 @@ jobs:
         with:
           type: minimal
 
-      - run: yarn workspace scripts pushToAlgoliaWeb
+      - run: yarn workspace scripts pushToRepo
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           FORCE: true

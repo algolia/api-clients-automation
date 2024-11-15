@@ -277,7 +277,7 @@ jobs:
 
       - name: Generate code snippets
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
-      
+
       - name: Build the snippets to check validity
         run: yarn cli build snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
@@ -695,6 +695,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Push guides to algolia/AlgoliaWeb
-        run: yarn workspace scripts pushToAlgoliaWeb
+        run: yarn workspace scripts pushToRepo
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
