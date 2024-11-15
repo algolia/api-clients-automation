@@ -16,11 +16,8 @@ def main():
     print("client initialized", client)
 
     try:
-        resp = client.save_objects("foo", [{"foo": "bar"}])
-        print(resp)
-
-        for r in resp:
-            client.wait_for_task(index_name="foo", task_id=r.task_id)
+        resp = client.delete_by(index_name="foo", delete_by_params={"filters": "brand:name"})
+        print(resp.to_json())
     finally:
         client.close()
 
