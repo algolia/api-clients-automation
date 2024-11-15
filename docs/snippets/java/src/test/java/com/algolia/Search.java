@@ -661,7 +661,7 @@ class SnippetSearchClient {
             .setAroundRadius(AroundRadiusAll.ALL)
             .setMode(Mode.NEURAL_SEARCH)
             .setHitsPerPage(10)
-            .setOptionalWords(Arrays.asList("one", "two"))
+            .setOptionalWords(OptionalWords.of(Arrays.asList("one", "two")))
         )
     );
     // >LOG

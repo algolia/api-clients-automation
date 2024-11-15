@@ -39,13 +39,7 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
           minimumAroundRadius: $checkedConvert(
               'minimumAroundRadius', (v) => (v as num?)?.toInt()),
-          insideBoundingBox: $checkedConvert(
-              'insideBoundingBox',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => (e as List<dynamic>)
-                      .map((e) => (e as num).toDouble())
-                      .toList())
-                  .toList()),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
               (v) => (v as List<dynamic>?)
@@ -130,8 +124,7 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
                   ? null
                   : SemanticSearch.fromJson(v as Map<String, dynamic>)),
           advancedSyntax: $checkedConvert('advancedSyntax', (v) => v as bool?),
-          optionalWords: $checkedConvert('optionalWords',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          optionalWords: $checkedConvert('optionalWords', (v) => v),
           disableExactOnAttributes: $checkedConvert('disableExactOnAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           exactOnSingleWordQuery: $checkedConvert('exactOnSingleWordQuery',
@@ -153,8 +146,6 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           maxValuesPerFacet:
               $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
@@ -173,6 +164,8 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
           facet: $checkedConvert('facet', (v) => v as String),
           indexName: $checkedConvert('indexName', (v) => v as String),
           facetQuery: $checkedConvert('facetQuery', (v) => v as String?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           type: $checkedConvert(
               'type', (v) => $enumDecode(_$SearchTypeFacetEnumMap, v)),
         );
@@ -270,7 +263,6 @@ Map<String, dynamic> _$SearchForFacetsToJson(SearchForFacets instance) {
       'replaceSynonymsInHighlight', instance.replaceSynonymsInHighlight);
   writeNotNull('minProximity', instance.minProximity);
   writeNotNull('responseFields', instance.responseFields);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
   writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
   writeNotNull('attributeCriteriaComputedByMinProximity',
@@ -281,6 +273,7 @@ Map<String, dynamic> _$SearchForFacetsToJson(SearchForFacets instance) {
   val['facet'] = instance.facet;
   val['indexName'] = instance.indexName;
   writeNotNull('facetQuery', instance.facetQuery);
+  writeNotNull('maxFacetHits', instance.maxFacetHits);
   val['type'] = instance.type.toJson();
   return val;
 }

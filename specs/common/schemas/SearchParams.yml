@@ -337,6 +337,12 @@ aroundLatLngViaIP:
     - Geo-Search
 
 insideBoundingBox:
+  oneOf:
+    - type: string
+    - type: 'null'
+    - $ref: '#/insideBoundingBoxArray'
+
+insideBoundingBoxArray:
   type: array
   items:
     type: array
