@@ -20,7 +20,7 @@ post:
           $ref: '../../common/schemas/DeleteByParams.yml#/deleteByParams'
   responses:
     '200':
-      $ref: '../../../common/responses/DeletedAt.yml'
+      $ref: '../../../common/responses/UpdatedAt.yml'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
