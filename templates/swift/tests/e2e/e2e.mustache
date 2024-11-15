@@ -35,9 +35,9 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
       }
 
       do {
-          APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
+          APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["{{e2eAppID}}"])
       } catch {
-          XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
+          XCTFail("Please provide an `{{e2eAppID}}` env var for e2e tests")
       }
 
       do {
