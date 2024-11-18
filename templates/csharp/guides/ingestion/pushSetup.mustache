@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 {{> snippets/import}}
 
-class Program
+using Action = Algolia.Search.Models.Ingestion.Action;
+
+class PushSetup
 {
     public static async Task Main(string[] args)
     {
         string jsonContent = File.ReadAllText("/my-raw-records.json");
 
-        var records = JsonSerializer.Deserialize<List<dynamic>>(content);
+        var records = JsonSerializer.Deserialize<List<Algolia.Search.Models.Ingestion.PushTaskRecords>>(jsonContent);
 
         // use the region matching your applicationID
         {{> snippets/init}}
