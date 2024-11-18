@@ -1,0 +1,24 @@
+package org.example
+{{> snippets/import}}
+{{#isSearchClient}}
+import com.algolia.client.extensions.*
+{{/isSearchClient}}
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+
+suspend fun main() {
+    val json = File("/my-raw-records.json").readText()
+    val records: List<JsonObject> = Json.decodeFromString(ListSerializer(JsonObject.serializer()), json)
+
+    // use the region matching your applicationID
+    {{> snippets/init}}
+
+    try {
+        val run = client.{{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+
+        println(run)
+    } catch(e: Exception) {
+        println(e.message)
+    }
+}
