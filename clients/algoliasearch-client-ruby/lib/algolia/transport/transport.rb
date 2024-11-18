@@ -70,7 +70,7 @@ module Algolia
           )
           if outcome == FAILURE
             # handle HTML error
-            if response.headers["content-type"].include?("text/html")
+            if response.headers["content-type"]&.include?("text/html")
               raise Algolia::AlgoliaHttpError.new(response.status, response.reason_phrase)
             end
 
