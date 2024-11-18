@@ -1,0 +1,1 @@
+packages/algoliasearch/CHANGELOG.md
