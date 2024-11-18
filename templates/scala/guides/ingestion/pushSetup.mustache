@@ -1,0 +1,34 @@
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+{{> snippets/import}}
+{{#isSearchClient}}
+import algoliasearch.extension.SearchClientExtensions
+{{/isSearchClient}}
+
+import org.json4s.native.JsonMethods
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+    implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+
+    val result = Source.fromFile("/my-raw-records.json").getLines().mkString
+    val records = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
+
+    // use the region matching your applicationID
+    {{> snippets/init}}
+
+    try {
+      val run = Await.result(
+        {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}},
+        Duration(100, "sec")
+      )
+
+      // use runID in the Observability debugger
+      println(run)
+    } catch {
+      case e: Exception => println(e)
+    }
+  }
+}
