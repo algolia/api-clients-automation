@@ -7,18 +7,20 @@ import Core
 {{> snippets/import}}
 
 func pushSetup() async throws {
-    let data = try Data(contentsOf: URL(string: "/my-raw-records.json")!)
-    let records = try JSONDecoder().decode([PushTaskRecords].self, from: data)
-    
-    // use the region matching your applicationID
-    {{> snippets/init}}
-
     do {
+        let path = URL(string: #file)!.deletingLastPathComponent()
+            .appendingPathComponent("/my-raw-records.json")
+        let data = try Data(contentsOf: URL(fileURLWithPath: path.absoluteString))
+        let records = try JSONDecoder().decode([PushTaskRecords].self, from: data)
+
+        // use the region matching your applicationID
+        {{> snippets/init}}
+
         let run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
         // use runID in the Observability debugger
-        print(run)
+        dump(run)
     } catch {
-        print(error.localizedDescription)
+        print(error)
     }
 }
