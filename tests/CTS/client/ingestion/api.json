@@ -27,7 +27,7 @@
             "csharp": "<html><body>429 too many requests</body></html>",
             "go": "API error [429] Too Many Requests",
             "java": "Status Code: 429 - Too Many Requests",
-            "javascript": "<html><body>429 Too Many Requests</body></html>",
+            "javascript": "Too Many Requests",
             "kotlin": "Client request(GET http://%localhost%:6676/1/html-error) invalid: 429 Too Many Requests. Text: \\\"<html><body>429 Too Many Requests</body></html>\\\"",
             "php": "429: Too Many Requests",
             "python": "Too Many Requests",
