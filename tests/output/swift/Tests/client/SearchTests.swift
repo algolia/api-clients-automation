@@ -166,7 +166,7 @@ final class SearchClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.10.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.10.1\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -258,7 +258,7 @@ final class SearchClientClientTests: XCTestCase {
                         hitsPerPage: 10,
                         typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.strict),
                         mode: SearchMode.neuralSearch,
-                        optionalWords: ["one", "two"]
+                        optionalWords: SearchOptionalWords.arrayOfString(["one", "two"])
                     ),
                     filters: "category:Book OR category:Ebook AND _tags:published",
                     validUntil: Int64(2_524_604_400),

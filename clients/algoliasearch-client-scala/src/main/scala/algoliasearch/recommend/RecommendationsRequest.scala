@@ -29,7 +29,7 @@
   */
 package algoliasearch.recommend
 
-import algoliasearch.recommend.RecommendedForYouModel._
+import algoliasearch.recommend.LookingSimilarModel._
 
 import org.json4s._
 
@@ -51,7 +51,6 @@ object RecommendationsRequestSerializer extends Serializer[RecommendationsReques
         case value: JObject => Extraction.extract[TrendingItemsQuery](value)
         case value: JObject => Extraction.extract[TrendingFacetsQuery](value)
         case value: JObject => Extraction.extract[LookingSimilarQuery](value)
-        case value: JObject => Extraction.extract[RecommendedForYouQuery](value)
         case _              => throw new MappingException("Can't convert " + json + " to RecommendationsRequest")
       }
   }
@@ -59,12 +58,11 @@ object RecommendationsRequestSerializer extends Serializer[RecommendationsReques
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
     case value: RecommendationsRequest =>
       value match {
-        case value: BoughtTogetherQuery    => Extraction.decompose(value)(format - this)
-        case value: RelatedQuery           => Extraction.decompose(value)(format - this)
-        case value: TrendingItemsQuery     => Extraction.decompose(value)(format - this)
-        case value: TrendingFacetsQuery    => Extraction.decompose(value)(format - this)
-        case value: LookingSimilarQuery    => Extraction.decompose(value)(format - this)
-        case value: RecommendedForYouQuery => Extraction.decompose(value)(format - this)
+        case value: BoughtTogetherQuery => Extraction.decompose(value)(format - this)
+        case value: RelatedQuery        => Extraction.decompose(value)(format - this)
+        case value: TrendingItemsQuery  => Extraction.decompose(value)(format - this)
+        case value: TrendingFacetsQuery => Extraction.decompose(value)(format - this)
+        case value: LookingSimilarQuery => Extraction.decompose(value)(format - this)
       }
   }
 }

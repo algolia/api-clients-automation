@@ -31,7 +31,7 @@ public class DeleteByParams {
   private AroundRadius aroundRadius;
 
   @JsonProperty("insideBoundingBox")
-  private List<List<Double>> insideBoundingBox;
+  private InsideBoundingBox insideBoundingBox;
 
   @JsonProperty("insidePolygon")
   private List<List<Double>> insidePolygon;
@@ -124,28 +124,14 @@ public class DeleteByParams {
     return aroundRadius;
   }
 
-  public DeleteByParams setInsideBoundingBox(List<List<Double>> insideBoundingBox) {
+  public DeleteByParams setInsideBoundingBox(InsideBoundingBox insideBoundingBox) {
     this.insideBoundingBox = insideBoundingBox;
     return this;
   }
 
-  public DeleteByParams addInsideBoundingBox(List<Double> insideBoundingBoxItem) {
-    if (this.insideBoundingBox == null) {
-      this.insideBoundingBox = new ArrayList<>();
-    }
-    this.insideBoundingBox.add(insideBoundingBoxItem);
-    return this;
-  }
-
-  /**
-   * Coordinates for a rectangular area in which to search. Each bounding box is defined by the two
-   * opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1
-   * long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more
-   * information, see [rectangular
-   * area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
-   */
+  /** Get insideBoundingBox */
   @javax.annotation.Nullable
-  public List<List<Double>> getInsideBoundingBox() {
+  public InsideBoundingBox getInsideBoundingBox() {
     return insideBoundingBox;
   }
 

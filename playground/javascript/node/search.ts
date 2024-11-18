@@ -1,6 +1,5 @@
 import { ApiError } from '@algolia/client-common';
-import { apiClientVersion, searchClient } from '@algolia/client-search';
-import { SearchQuery } from '@algolia/client-search';
+import { apiClientVersion, searchClient, SearchQuery } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** SEARCH_API_KEY *****';

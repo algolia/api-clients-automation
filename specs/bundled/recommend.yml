@@ -1025,7 +1025,7 @@ components:
       minimum: 1
       x-categories:
         - Geo-Search
-    insideBoundingBox:
+    insideBoundingBoxArray:
       type: array
       items:
         type: array
@@ -1060,6 +1060,11 @@ components:
           - 1.9916
       x-categories:
         - Geo-Search
+    insideBoundingBox:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/insideBoundingBoxArray'
     insidePolygon:
       type: array
       items:
@@ -1371,6 +1376,15 @@ components:
 
         You can store up to 32kB as custom data.
       default: {}
+      x-categories:
+        - Advanced
+    maxFacetHits:
+      type: integer
+      description: >-
+        Maximum number of facet values to return when [searching for facet
+        values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+      maximum: 100
+      default: 10
       x-categories:
         - Advanced
     baseIndexSettings:
@@ -1775,6 +1789,8 @@ components:
             accurate facet counts.
           example: url
           type: string
+        maxFacetHits:
+          $ref: '#/components/schemas/maxFacetHits'
     attributesToRetrieve:
       type: array
       items:
@@ -2248,7 +2264,7 @@ components:
       default: false
       x-categories:
         - Query strategy
-    optionalWords:
+    optionalWordsArray:
       type: array
       items:
         type: string
@@ -2295,6 +2311,11 @@ components:
       default: []
       x-categories:
         - Query strategy
+    optionalWords:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/optionalWordsArray'
     disableExactOnAttributes:
       type: array
       items:
@@ -2532,15 +2553,6 @@ components:
         Don't exclude properties that you might need in your search UI.
       default:
         - '*'
-      x-categories:
-        - Advanced
-    maxFacetHits:
-      type: integer
-      description: >-
-        Maximum number of facet values to return when [searching for facet
-        values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-      maximum: 100
-      default: 10
       x-categories:
         - Advanced
     maxValuesPerFacet:
@@ -2825,8 +2837,6 @@ components:
           $ref: '#/components/schemas/minProximity'
         responseFields:
           $ref: '#/components/schemas/responseFields'
-        maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
         maxValuesPerFacet:
           $ref: '#/components/schemas/maxValuesPerFacet'
         sortFacetValuesBy:
@@ -3047,26 +3057,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseRecommendRequest'
         - $ref: '#/components/schemas/lookingSimilar'
-    recommendedForYouModel:
-      type: string
-      description: |
-        "Recommened for you" model.
-      enum:
-        - recommended-for-you
-    recommendedForYou:
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/recommendedForYouModel'
-        fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
-      required:
-        - model
-    recommendedForYouQuery:
-      title: Recommended for you
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/recommendedForYou'
     recommendationsRequest:
       oneOf:
         - $ref: '#/components/schemas/boughtTogetherQuery'
@@ -3074,7 +3064,6 @@ components:
         - $ref: '#/components/schemas/trendingItemsQuery'
         - $ref: '#/components/schemas/trendingFacetsQuery'
         - $ref: '#/components/schemas/lookingSimilarQuery'
-        - $ref: '#/components/schemas/recommendedForYouQuery'
     processingTimeMS:
       type: integer
       description: Time the server took to process the request, in milliseconds.

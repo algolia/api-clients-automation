@@ -216,7 +216,7 @@ func TestSearchcommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.8.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.8.1\).*`), echo.Header.Get("User-Agent"))
 }
 
 // calls api with default read timeouts
@@ -310,8 +310,8 @@ func TestSearchgenerateSecuredApiKey1(t *testing.T) {
 			"2640659426d5107b6e47d75db9cbaef8",
 			search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
 				[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
-				search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(
-					[]string{"one", "two"})),
+				search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
+					[]string{"one", "two"}))),
 		)
 		require.NoError(t, err)
 		require.Equal(t, "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", res)

@@ -55,6 +55,8 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
                   )),
           attributeForDistinct:
               $checkedConvert('attributeForDistinct', (v) => v as String?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -90,6 +92,7 @@ Map<String, dynamic> _$BaseIndexSettingsToJson(BaseIndexSettings instance) {
   writeNotNull('userData', instance.userData);
   writeNotNull('customNormalization', instance.customNormalization);
   writeNotNull('attributeForDistinct', instance.attributeForDistinct);
+  writeNotNull('maxFacetHits', instance.maxFacetHits);
   return val;
 }
 
