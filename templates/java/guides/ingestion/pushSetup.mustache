@@ -1,0 +1,22 @@
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
+
+{{> snippets/import}}
+
+public class pushSetup {
+  public static void main(String[] args) throws Exception {
+    JsonNode content = Json.mapper().readTree(new File("/my-raw-records.json"));
+    List<Map<String, Object>> records = new ObjectMapper().readerForListOf(Map.class).readValue(value);
+
+    // use the region matching your applicationID
+    {{> snippets/init}}
+
+    run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
+
+    // use runID in the Observability debugger
+    System.out.println(run.get("runID"));
+
+    client.close();
+  }
+}
