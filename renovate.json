@@ -18,7 +18,7 @@
     "pip_requirements",
     "poetry",
     "pub",
-    "regex",
+    "custom.regex",
     "sbt"
   ],
   "baseBranches": [
@@ -35,16 +35,16 @@
       "rangeStrategy": "bump"
     },
     {
-      "matchPackagePatterns": [
-        "openapi-generator"
-      ],
-      "groupName": "openapi-generator"
+      "groupName": "openapi-generator",
+      "matchPackageNames": [
+        "/openapi-generator/"
+      ]
     },
     {
-      "matchPackagePrefixes": [
+      "allowedVersions": "4.0.0",
+      "matchPackageNames": [
         "github.com/algolia/algoliasearch-client-go/v4"
-      ],
-      "allowedVersions": "4.0.0"
+      ]
     },
     {
       "matchDatasources": [
@@ -53,8 +53,9 @@
       "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
+      "customType": "regex",
       "description": "Update openapitools-cli version in the generation file",
       "fileMatch": [
         "generateOpenapitools.ts"
@@ -66,6 +67,7 @@
       "datasourceTemplate": "maven"
     },
     {
+      "customType": "regex",
       "description": "Update pyproject.toml mustache devDeps",
       "fileMatch": [
         "pyproject.mustache"
@@ -78,6 +80,7 @@
       "datasourceTemplate": "pypi"
     },
     {
+      "customType": "regex",
       "description": "Update package.json mustache devDeps",
       "fileMatch": [
         "package.mustache"
@@ -88,6 +91,7 @@
       "datasourceTemplate": "npm"
     },
     {
+      "customType": "regex",
       "description": "Update the java formatter",
       "fileMatch": [
         "Dockerfile",
@@ -102,6 +106,7 @@
       "extractVersionTemplate": "^v(?<version>.*)$"
     },
     {
+      "customType": "regex",
       "description": "Update java packages in mustache files",
       "fileMatch": "build.mustache",
       "matchStrings": [
@@ -110,6 +115,7 @@
       "datasourceTemplate": "maven"
     },
     {
+      "customType": "regex",
       "description": "Update yarn version",
       "fileMatch": ".yarnrc.yml",
       "matchStrings": [
@@ -119,6 +125,7 @@
       "datasourceTemplate": "github-releases"
     },
     {
+      "customType": "regex",
       "description": "Update yarn for netlify",
       "fileMatch": "netlify.toml",
       "matchStrings": [
@@ -128,6 +135,7 @@
       "datasourceTemplate": "github-releases"
     },
     {
+      "customType": "regex",
       "description": "Update pubspec.yaml for Dart",
       "fileMatch": "pubspec.mustache",
       "matchStrings": [
@@ -139,6 +147,7 @@
       "versioningTemplate": "npm"
     },
     {
+      "customType": "regex",
       "description": "Update .csharp-version",
       "fileMatch": ".csharp-version",
       "matchStrings": [
@@ -148,6 +157,7 @@
       "depNameTemplate": "dotnet-sdk"
     },
     {
+      "customType": "regex",
       "description": "Update .java-version",
       "fileMatch": ".java-version",
       "matchStrings": [
@@ -157,6 +167,7 @@
       "depNameTemplate": "java"
     },
     {
+      "customType": "regex",
       "description": "Update .dart-version",
       "fileMatch": ".dart-version",
       "matchStrings": [
@@ -166,6 +177,7 @@
       "depNameTemplate": "dart"
     },
     {
+      "customType": "regex",
       "description": "Update .go-version",
       "fileMatch": ".go-version",
       "matchStrings": [
@@ -175,6 +187,7 @@
       "depNameTemplate": "golang"
     },
     {
+      "customType": "regex",
       "description": "Update .php-version",
       "fileMatch": ".php-version",
       "matchStrings": [
@@ -185,6 +198,7 @@
       "extractVersionTemplate": "^php-(?<version>.*)$"
     },
     {
+      "customType": "regex",
       "description": "Update .ruby-version",
       "fileMatch": ".ruby-version",
       "matchStrings": [
@@ -194,6 +208,7 @@
       "depNameTemplate": "ruby"
     },
     {
+      "customType": "regex",
       "description": "Update .swift-version",
       "fileMatch": ".swift-version",
       "matchStrings": [
@@ -204,6 +219,7 @@
       "extractVersionTemplate": "^swift-(?<version>.*)-RELEASE$"
     },
     {
+      "customType": "regex",
       "description": "Update swiftformat version",
       "fileMatch": [
         "Dockerfile",
