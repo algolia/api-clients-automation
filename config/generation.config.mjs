@@ -49,6 +49,8 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/debug/*',
   '!clients/algoliasearch-client-go/algolia/utils/*',
 
+  '!docs/guides/go/src/main.go',
+
   '!tests/output/go/go.*',
 
   // Java
