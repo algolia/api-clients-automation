@@ -84,6 +84,9 @@ public final class RetryStrategy implements Interceptor {
 
     try {
       String message = response.body() != null ? response.body().string() : response.message();
+      if (response.header("Content-Type", "application/json").contains("text/html")) {
+        message = response.message();
+      }
       throw isRetryable(response)
         ? new AlgoliaRequestException(message, response.code())
         : new AlgoliaApiException(message, response.code());
