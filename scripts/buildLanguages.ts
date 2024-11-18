@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 
 import { createClientName, run, toAbsolutePath } from './common.js';
 import { getLanguageFolder } from './config.js';
+import { formatter } from './formatter.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
 
@@ -82,7 +83,10 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       // );
       break;
     case 'python':
-      // there is no type checking for the playground or snippets
+      // there is no type checking for the snippets
+      if (buildType === 'playground') {
+        await formatter(language, cwd); // ruff can detect some types issues.
+      }
       if (buildType === 'client') {
         await run('poetry build', { cwd, language });
       }
