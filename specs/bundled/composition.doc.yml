@@ -689,8 +689,6 @@ paths:
       tags:
         - Rules
       operationId: searchCompositionRules
-      x-use-read-transporter: true
-      x-cacheable: true
       x-acl:
         - settings
       summary: Search for composition rules
