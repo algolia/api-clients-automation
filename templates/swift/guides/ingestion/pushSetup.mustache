@@ -1,0 +1,30 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func pushSetup() async throws {
+    let url = URL(string: "/my-raw-records.json")!
+    var data: Data? = nil
+    #if os(Linux) // For linux interop
+        (data, _) = try await URLSession.shared.asyncData(for: URLRequest(url: url))
+    #else
+        (data, _) = try await URLSession.shared.data(from: url)
+    #endif
+    let records = try JSONDecoder().decode([AnyCodable].self, from: data!)
+    
+    // use the region matching your applicationID
+    {{> snippets/init}}
+
+    do {
+        let run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+
+        // use runID in the Observability debugger
+        print(run)
+    } catch {
+        print(error.localizedDescription)
+    }
+}
