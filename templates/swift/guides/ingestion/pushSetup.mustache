@@ -7,14 +7,8 @@ import Core
 {{> snippets/import}}
 
 func pushSetup() async throws {
-    let url = URL(string: "/my-raw-records.json")!
-    var data: Data? = nil
-    #if os(Linux) // For linux interop
-        (data, _) = try await URLSession.shared.asyncData(for: URLRequest(url: url))
-    #else
-        (data, _) = try await URLSession.shared.data(from: url)
-    #endif
-    let records = try JSONDecoder().decode([AnyCodable].self, from: data!)
+    let data = try Data(contentsOf: URL(string: "/my-raw-records.json")!)
+    let records = try JSONDecoder().decode([PushTaskRecords].self, from: data)
     
     // use the region matching your applicationID
     {{> snippets/init}}
