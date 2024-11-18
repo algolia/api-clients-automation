@@ -78,7 +78,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@openapitools/openapi-generator-cli": "npm:2.15.0"
+    "@openapitools/openapi-generator-cli": "npm:2.15.3"
     "@redocly/cli": "npm:1.25.11"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
@@ -86,7 +86,7 @@ __metadata:
     eslint-plugin-yml: "npm:1.15.0"
     husky: "npm:9.1.6"
     lint-staged: "npm:15.2.10"
-    oxlint: "npm:0.10.3"
+    oxlint: "npm:0.11.1"
     pinst: "npm:3.0.0"
     prettier: "npm:3.3.3"
     prettier-plugin-java: "npm:2.6.5"
@@ -928,20 +928,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/axios@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@nestjs/axios@npm:3.1.0"
+"@nestjs/axios@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@nestjs/axios@npm:3.1.1"
   peerDependencies:
     "@nestjs/common": ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
     axios: ^1.3.1
     rxjs: ^6.0.0 || ^7.0.0
-  checksum: 10/b5ff6baa5aae0bdf75fac4fc4e8d71314f0e0ba370c6d9229f59135d3688bd979fee7ed8616b131454e2c0c6f969057bfca057bc6b8094759b97e3ce346bd926
+  checksum: 10/2022e63016577f9448837591ec5c700c724bf48763ec3006f41acd3edba4e18d5508bcf5f513dfdb8c0f25eb8c6c84aa6378ed6e3ed6abb4aab3f8b8e851db96
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:10.4.5":
-  version: 10.4.5
-  resolution: "@nestjs/common@npm:10.4.5"
+"@nestjs/common@npm:10.4.6":
+  version: 10.4.6
+  resolution: "@nestjs/common@npm:10.4.6"
   dependencies:
     iterare: "npm:1.2.1"
     tslib: "npm:2.7.0"
@@ -956,13 +956,13 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 10/134245a327b4ae512db412274305a2be6e7efce577f940e353f78cd7d064814857955d2108917addc052cf5091d898fc1cc78de59ff5de80d5dbeef28d67667f
+  checksum: 10/bf1887715a8612e207c621a00761c0caed5c32f3fce9f6abd7de6a9c6f0217f825696f4dde218952017967493e47bd6fcc5b85d6f5d7fe82e31be9811179d2f5
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:10.4.5":
-  version: 10.4.5
-  resolution: "@nestjs/core@npm:10.4.5"
+"@nestjs/core@npm:10.4.6":
+  version: 10.4.6
+  resolution: "@nestjs/core@npm:10.4.6"
   dependencies:
     "@nuxtjs/opencollective": "npm:0.3.2"
     fast-safe-stringify: "npm:2.1.1"
@@ -984,7 +984,7 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: 10/23f6cb677853210c8748862cb883d0ad143f87ee2e693687ebc872177c8f134ed0cc8106311baf0fe7200db8d2321fef2298a246cd2b991b91c441ac80b9f3d3
+  checksum: 10/09dd2b2a44a4c3cb546db78027ec76fbd6b12510b3013217d012b670abcbf6f7f021a91b0a59fe65eb5bc0cd53634edb9daebb61341d1d10e44476087759d21a
   languageName: node
   linkType: hard
 
@@ -1313,13 +1313,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openapitools/openapi-generator-cli@npm:2.15.0":
-  version: 2.15.0
-  resolution: "@openapitools/openapi-generator-cli@npm:2.15.0"
+"@openapitools/openapi-generator-cli@npm:2.15.3":
+  version: 2.15.3
+  resolution: "@openapitools/openapi-generator-cli@npm:2.15.3"
   dependencies:
-    "@nestjs/axios": "npm:3.1.0"
-    "@nestjs/common": "npm:10.4.5"
-    "@nestjs/core": "npm:10.4.5"
+    "@nestjs/axios": "npm:3.1.1"
+    "@nestjs/common": "npm:10.4.6"
+    "@nestjs/core": "npm:10.4.6"
     "@nuxtjs/opencollective": "npm:0.3.2"
     axios: "npm:1.7.7"
     chalk: "npm:4.1.2"
@@ -1334,65 +1334,65 @@ __metadata:
     proxy-agent: "npm:6.4.0"
     reflect-metadata: "npm:0.1.13"
     rxjs: "npm:7.8.1"
-    tslib: "npm:2.7.0"
+    tslib: "npm:2.8.1"
   bin:
     openapi-generator-cli: main.js
-  checksum: 10/9e9fddf304bc0d7cd234c0d8ca6720d5ee5c43fad5f29dbc79459df62d2e87d18cc0b0cf03a2e601e8d416dfb14537211664feef790e22ae1b557359d153ed4b
+  checksum: 10/8956772c697b11205c577a3f77161853a00cfdc405189fdc4d71cc20a1bc2d2d07a28ae50b0e2d7c43dee89ad57af1dab2b4675599d9ce2e223811542c8b5cd0
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-arm64@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/darwin-arm64@npm:0.10.3"
+"@oxlint/darwin-arm64@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/darwin-arm64@npm:0.11.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-x64@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/darwin-x64@npm:0.10.3"
+"@oxlint/darwin-x64@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/darwin-x64@npm:0.11.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-gnu@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/linux-arm64-gnu@npm:0.10.3"
+"@oxlint/linux-arm64-gnu@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/linux-arm64-gnu@npm:0.11.1"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-musl@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/linux-arm64-musl@npm:0.10.3"
+"@oxlint/linux-arm64-musl@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/linux-arm64-musl@npm:0.11.1"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-gnu@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/linux-x64-gnu@npm:0.10.3"
+"@oxlint/linux-x64-gnu@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/linux-x64-gnu@npm:0.11.1"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-musl@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/linux-x64-musl@npm:0.10.3"
+"@oxlint/linux-x64-musl@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/linux-x64-musl@npm:0.11.1"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/win32-arm64@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/win32-arm64@npm:0.10.3"
+"@oxlint/win32-arm64@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/win32-arm64@npm:0.11.1"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/win32-x64@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@oxlint/win32-x64@npm:0.10.3"
+"@oxlint/win32-x64@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@oxlint/win32-x64@npm:0.11.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -5215,12 +5215,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"jiti@npm:^2.3.3":
-  version: 2.3.3
-  resolution: "jiti@npm:2.3.3"
+"jiti@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "jiti@npm:2.4.0"
   bin:
     jiti: lib/jiti-cli.mjs
-  checksum: 10/21d1e89d909101c702769537e75ad87b433f980bc6938a6f64a90d1fbe7cb1510a0d4b82d4020b3093b47cebff5568af5e39d883e26aa4413564ced43b8cfd84
+  checksum: 10/10aa999a4f9bccc82b1dab9ebaf4484a8770450883c1bf7fafc07f8fca1e417fd8e7731e651337d1060c9e2ff3f97362dcdfd27e86d1f385db97f4adf7b5a21d
   languageName: node
   linkType: hard
 
@@ -5336,19 +5336,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:5.34.1":
-  version: 5.34.1
-  resolution: "knip@npm:5.34.1"
+"knip@npm:5.37.1":
+  version: 5.37.1
+  resolution: "knip@npm:5.37.1"
   dependencies:
     "@nodelib/fs.walk": "npm:1.2.8"
     "@snyk/github-codeowners": "npm:1.1.0"
     easy-table: "npm:1.2.0"
     enhanced-resolve: "npm:^5.17.1"
     fast-glob: "npm:^3.3.2"
-    jiti: "npm:^2.3.3"
+    jiti: "npm:^2.4.0"
     js-yaml: "npm:^4.1.0"
     minimist: "npm:^1.2.8"
-    picocolors: "npm:^1.0.0"
+    picocolors: "npm:^1.1.0"
     picomatch: "npm:^4.0.1"
     pretty-ms: "npm:^9.0.0"
     smol-toml: "npm:^1.3.0"
@@ -5362,7 +5362,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/303caade953cfb5debbbe80d847bff8cb9e20930e45fba9781306efd236d19f8cb1a241c2f81721ae126a0200c11b9d899a35f5a5208decf1027da62ed17e486
+  checksum: 10/e73962f7daac5eb3d275654bbf719e91001aca8d03da9d0dc303cbe0cd47000114cf99d341b377b866f815e7d6821e3fdb1fca24e0a178e8204c1adaa2f2f41c
   languageName: node
   linkType: hard
 
@@ -6237,18 +6237,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oxlint@npm:0.10.3":
-  version: 0.10.3
-  resolution: "oxlint@npm:0.10.3"
+"oxlint@npm:0.11.1":
+  version: 0.11.1
+  resolution: "oxlint@npm:0.11.1"
   dependencies:
-    "@oxlint/darwin-arm64": "npm:0.10.3"
-    "@oxlint/darwin-x64": "npm:0.10.3"
-    "@oxlint/linux-arm64-gnu": "npm:0.10.3"
-    "@oxlint/linux-arm64-musl": "npm:0.10.3"
-    "@oxlint/linux-x64-gnu": "npm:0.10.3"
-    "@oxlint/linux-x64-musl": "npm:0.10.3"
-    "@oxlint/win32-arm64": "npm:0.10.3"
-    "@oxlint/win32-x64": "npm:0.10.3"
+    "@oxlint/darwin-arm64": "npm:0.11.1"
+    "@oxlint/darwin-x64": "npm:0.11.1"
+    "@oxlint/linux-arm64-gnu": "npm:0.11.1"
+    "@oxlint/linux-arm64-musl": "npm:0.11.1"
+    "@oxlint/linux-x64-gnu": "npm:0.11.1"
+    "@oxlint/linux-x64-musl": "npm:0.11.1"
+    "@oxlint/win32-arm64": "npm:0.11.1"
+    "@oxlint/win32-x64": "npm:0.11.1"
   dependenciesMeta:
     "@oxlint/darwin-arm64":
       optional: true
@@ -6269,7 +6269,7 @@ __metadata:
   bin:
     oxc_language_server: bin/oxc_language_server
     oxlint: bin/oxlint
-  checksum: 10/f8cb4b506123d64f10b40c9a206393ed6b3508ece0da6c35cf7c78dcce2c7f7409129aad5452670a99f84bdda7245669dab8ed3830f31bb35d787194530a3bd7
+  checksum: 10/dba58dafbf82dec1816985f0f2b3a9ee95f21d68aefdfa3e154aa5c41547ce7211ae5b5d0910298153c02b81c0c94abfa474896cbb5fa0f76bc58c5ad0153fdc
   languageName: node
   linkType: hard
 
@@ -7228,7 +7228,7 @@ __metadata:
     fs-extra: "npm:11.2.0"
     httpsnippet: "npm:3.0.9"
     js-yaml: "npm:4.1.0"
-    knip: "npm:5.34.1"
+    knip: "npm:5.37.1"
     micromatch: "npm:4.0.8"
     semver: "npm:7.6.3"
     spinnies: "npm:0.5.1"
@@ -8024,6 +8024,13 @@ __metadata:
   version: 2.7.0
   resolution: "tslib@npm:2.7.0"
   checksum: 10/9a5b47ddac65874fa011c20ff76db69f97cf90c78cff5934799ab8894a5342db2d17b4e7613a087046bc1d133d21547ddff87ac558abeec31ffa929c88b7fce6
+  languageName: node
+  linkType: hard
+
+"tslib@npm:2.8.1":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
   languageName: node
   linkType: hard
 
