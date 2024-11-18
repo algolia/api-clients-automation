@@ -14,7 +14,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
           },
         );
       } else {
-        await run('dotnet format', { cwd, language });
+        await run('dotnet tool install --allow-roll-forward csharpier && dotnet format', { cwd, language });
       }
       break;
     case 'dart':
