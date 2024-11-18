@@ -12,7 +12,7 @@
     logger: createNullLogger(),
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
-    authMode: 'WithinQueryParameters',
+    authMode: 'Within{{#isAlgoliaCompositionClient}}Headers{{/isAlgoliaCompositionClient}}{{^isAlgoliaCompositionClient}}QueryParameters{{/isAlgoliaCompositionClient}}',
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
