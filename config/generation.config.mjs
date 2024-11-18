@@ -24,6 +24,8 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
 
+  '!docs/guides/csharp/src/program.cs',
+
   'tests/output/csharp/global.json',
 
   // Dart
