@@ -6,10 +6,13 @@ export async function formatter(language: string, cwd: string): Promise<void> {
   switch (language) {
     case 'csharp':
       if (cwd.includes('tests') || cwd.includes('snippets') || cwd.includes('guides')) {
-        await run('dotnet format --no-restore && dotnet tool restore && dotnet dotnet-csharpier .', {
-          cwd,
-          language,
-        });
+        await run(
+          'dotnet tool install --allow-roll-forward csharpier && dotnet format --no-restore && dotnet tool restore && dotnet dotnet-csharpier .',
+          {
+            cwd,
+            language,
+          },
+        );
       } else {
         await run('dotnet format', { cwd, language });
       }
