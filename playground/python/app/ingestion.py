@@ -1,6 +1,7 @@
 from asyncio import run
 
-from algoliasearch.ingestion import IngestionClient, __version__
+from algoliasearch.ingestion import __version__
+from algoliasearch.ingestion.client import IngestionClient
 
 
 async def main():
@@ -11,7 +12,7 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.get_sources()
+        response = await client.list_sources()
 
         print(response)
     finally:

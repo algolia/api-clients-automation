@@ -41,10 +41,13 @@ async function createGitHubRelease(lang: Language): Promise<void> {
     previousVersion = tags[tags.length - 1];
   }
 
+  let changelogPath = resolve(tempGitDir, 'CHANGELOG.md');
+  if (lang === 'dart') {
+    changelogPath = resolve(tempGitDir, 'packages', 'algoliasearch', 'CHANGELOG.md');
+  }
+
   // extract the changelog from CHANGELOG.md, until the first ## to the second ##
-  const fullChangelog = (await fsp.readFile(resolve(tempGitDir, 'CHANGELOG.md')))
-    .toString()
-    .matchAll(/^##.*?\n(.*?)##/gms);
+  const fullChangelog = (await fsp.readFile(changelogPath)).toString().matchAll(/^##.*?\n(.*?)##/gms);
   if (!fullChangelog) {
     throw new Error('unable to find changelog');
   }

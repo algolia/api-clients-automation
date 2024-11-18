@@ -16,7 +16,9 @@ def main():
     print("client initialized", client)
 
     try:
-        resp = client.delete_by(index_name="foo", delete_by_params={"filters": "brand:name"})
+        resp = client.delete_by(
+            index_name="foo", delete_by_params={"filters": "brand:name"}
+        )
         print(resp.to_json())
     finally:
         client.close()
