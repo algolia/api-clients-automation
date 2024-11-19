@@ -13,9 +13,10 @@ post:
       a new record is added to the index **if** `createIfNotExists` is true.
     - If the index doesn't exist yet, this method creates a new index.
     - You can use any first-level attribute but not nested attributes.
-      If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+      If you specify a nested attribute, this operation replaces its first-level ancestor.
 
-    To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.
+    To update an attribute without pushing the entire record, you can use these built-in operations.
+    These operations can be helpful if you don't have access to your initial data.
 
     - Increment: increment a numeric attribute
     - Decrement: decrement a numeric attribute
@@ -29,6 +30,8 @@ post:
 
     - _operation: the operation to apply on the attribute
     - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+
+    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
