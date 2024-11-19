@@ -1,0 +1,12 @@
+{
+  "pushSetup": {
+    "method": "pushTask",
+    "parameters": {
+      "taskID": "YOUR_TASK_ID",
+      "pushTaskPayload": {
+        "action": "addObject",
+        "records": "$var: records" 
+      }
+    }
+  }
+}

@@ -1,12 +1,11 @@
 using System;
-using System.Text.Json;
-using System.Net.Http;
 using System.Collections.Generic;
-
+using System.Net.Http;
+using System.Text.Json;
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 
-class Program
+class SaveObjectsMovies
 {
   public static async Task Main(string[] args)
   {
@@ -25,9 +24,7 @@ class Program
     // push data to algolia
     try
     {
-      var result = await client.SaveObjectsAsync("<YOUR_INDEX_NAME>"
-, movies
-);
+      var result = await client.SaveObjectsAsync("<YOUR_INDEX_NAME>", movies);
     }
     catch (Exception e)
     {

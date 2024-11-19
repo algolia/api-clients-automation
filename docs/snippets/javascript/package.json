@@ -1,6 +1,7 @@
 {
   "name": "javascript-snippets",
   "version": "1.0.0",
+  "type": "module",
   "dependencies": {
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common",
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http",

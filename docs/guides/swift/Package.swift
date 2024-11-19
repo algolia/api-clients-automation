@@ -12,11 +12,18 @@ let package = Package(
         .tvOS(.v13),
         .watchOS(.v6),
     ],
+    products: [
+        .library(
+            name: "AlgoliaSearchClientGuides",
+            type: .static,
+            targets: ["AlgoliaSearchClientGuides"]
+        ),
+    ],
     dependencies: [
         .package(path: "../../../clients/algoliasearch-client-swift"),
     ],
     targets: [
-        .executableTarget(
+        .target(
             name: "AlgoliaSearchClientGuides",
             dependencies: [
                 .product(

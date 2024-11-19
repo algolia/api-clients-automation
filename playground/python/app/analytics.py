@@ -1,6 +1,7 @@
 from asyncio import run
 
-from algoliasearch.analytics import AnalyticsClient, __version__
+from algoliasearch.analytics import __version__
+from algoliasearch.analytics.client import AnalyticsClient
 
 
 async def main():

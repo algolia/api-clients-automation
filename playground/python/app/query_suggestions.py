@@ -1,6 +1,11 @@
 from asyncio import run
 
-from algoliasearch.query_suggestions import QuerySuggestionsClient, __version__
+from algoliasearch.query_suggestions import __version__
+from algoliasearch.query_suggestions.client import QuerySuggestionsClient
+from algoliasearch.query_suggestions.models.configuration_with_index import (
+    ConfigurationWithIndex,
+)
+from algoliasearch.query_suggestions.models.source_index import SourceIndex
 
 
 async def main():
@@ -11,7 +16,12 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.create_config(index_name="nvim")
+        response = await client.create_config(
+            configuration_with_index=ConfigurationWithIndex(
+                index_name="products",
+                source_indices=[SourceIndex(index_name="products")],
+            )
+        )
 
         print(response)
     finally:

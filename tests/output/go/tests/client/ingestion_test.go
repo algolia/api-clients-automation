@@ -31,6 +31,32 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 	return client, echo
 }
 
+// can handle HTML error
+func TestIngestionapi0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *ingestion.APIClient
+	var cfg ingestion.IngestionConfiguration
+	_ = client
+	_ = echo
+	cfg = ingestion.IngestionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite)},
+		},
+		Region: ingestion.Region("us"),
+	}
+	client, err = ingestion.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/html-error",
+	))
+	require.EqualError(t, err, "API error [429] Too Many Requests")
+}
+
 // calls api with correct user agent
 func TestIngestioncommonApi0(t *testing.T) {
 	var err error

@@ -444,14 +444,14 @@ extraParameters:
 
 safetyChecks:
   type: object
-  description: Safety checks for ensuring data integrity between crawls.
+  description: Checks to ensure the crawl was successful.
   properties:
     beforeIndexPublishing:
       $ref: '#/beforeIndexPublishing'
 
 beforeIndexPublishing:
   type: object
-  description: Checks triggered after the crawl finishes and before the records are added to the Algolia index.
+  description: These checks are triggered after the crawl finishes but before the records are added to the Algolia index.
   properties:
     maxLostRecordsPercentage:
       type: number
@@ -464,6 +464,11 @@ beforeIndexPublishing:
       minimum: 1
       maximum: 100
       default: 10
+    maxFailedUrls:
+      type: number
+      description: |
+        Stops the crawler if a specified number of pages fail to crawl.
+        If undefined, the crawler won't stop if it encounters such errors.
 
 schedule:
   type: string

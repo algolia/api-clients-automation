@@ -1,6 +1,7 @@
 from asyncio import run
 
-from algoliasearch.abtesting import AbtestingClient, __version__
+from algoliasearch.abtesting import __version__
+from algoliasearch.abtesting.client import AbtestingClient
 
 
 async def main():
