@@ -97,6 +97,11 @@ function addRoutes(app: express.Express): void {
 
     // no response, just hang
   });
+
+  app.get('/1/html-error', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.status(429).send('<html><body>429 Too Many Requests</body></html>');
+  });
 }
 
 export function timeoutServer(): Promise<Server> {
