@@ -1,5 +1,5 @@
 import fsp from 'fs/promises';
-import { resolve } from 'path';
+import path, { resolve } from 'path';
 
 import {
   configureGitHubAuthor,
@@ -34,20 +34,19 @@ async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<v
 }
 
 async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promise<void> {
-  const outputFile = toAbsolutePath(`${tempGitDir}/${guide.output}`);
-
   const guides = {};
   for (const language of LANGUAGES) {
     if (!(await exists(toAbsolutePath(`docs/guides/${language}`)))) {
       continue;
     }
 
+    const extension = getClientsConfigField(language, ['snippets', 'extension']);
     const pathToGuides = toAbsolutePath(
       `docs/guides/${language}/${getClientsConfigField(language, ['snippets', 'outputFolder'])}`,
     );
+
     const files = await fsp.readdir(pathToGuides);
     for (const file of files.filter((file) => guide.names.some((guideName) => guideName === file.split('.')[0]))) {
-      const extension = getClientsConfigField(language, ['snippets', 'extension']);
       if (!file.endsWith(extension)) {
         continue;
       }
@@ -67,7 +66,11 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
     }
   }
 
-  await fsp.writeFile(outputFile, JSON.stringify(guides, null, 2));
+  const outputPath = toAbsolutePath(`${tempGitDir}/${guide.output}`);
+
+  await fsp.mkdir(path.dirname(outputPath), { recursive: true });
+
+  await fsp.writeFile(outputPath, JSON.stringify(guides, null, 2));
 }
 
 async function pushToRepository(repository: string, config: RepositoryConfiguration): Promise<void> {
@@ -110,13 +113,13 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       await handleGuideFiles(task.files, tempGitDir);
     }
 
-    console.log(`Pushing to ${OWNER}/${repository}`);
-
     if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
       console.log(`❎ Skipping push to ${OWNER}/${repository} because there is no change.`);
 
-      return;
+      continue;
     }
+
+    console.log(`Pushing to '${task.prBranch}`);
 
     await configureGitHubAuthor(tempGitDir);
 
@@ -126,6 +129,13 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
+
+    if (process.env.DRYRUN) {
+      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
+
+      continue;
+    }
+
     await run(`git push -f -u origin ${task.prBranch}`, { cwd: tempGitDir });
 
     console.log(`Creating pull request on ${OWNER}/${repository}...`);
