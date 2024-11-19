@@ -320,7 +320,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
-        "Invalid API key".sub("%localhost%", ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"),
+        "403: Invalid API key".sub("%localhost%", ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"),
         e.message
       )
     end
@@ -597,7 +597,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
-        "Invalid Application-ID or API key".sub(
+        "403: Invalid Application-ID or API key".sub(
           "%localhost%",
           ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
         ),
