@@ -1,0 +1,18 @@
+import asyncio
+import json
+{{> snippets/import}}
+
+
+async def main():
+    # use the region matching your applicationID
+    _{{> snippets/init}}
+
+    with open("/my-raw-records.json") as f:
+        records = json.load(f)
+
+        run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+
+        # use runID in the Observability debugger
+        print(run.run_id)
+
+asyncio.run(main())
