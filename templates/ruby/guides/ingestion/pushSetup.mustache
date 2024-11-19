@@ -9,4 +9,4 @@ records = JSON.parse(File.read('/my-raw-records.json'))
 run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
 # use runID in the Observability debugger
-puts(run)
+puts run.run_id

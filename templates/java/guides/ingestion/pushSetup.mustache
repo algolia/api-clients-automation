@@ -16,7 +16,7 @@ public class pushSetup {
     RunResponse run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
 
     // use runID in the Observability debugger
-    System.out.println(run);
+    System.out.println(run.runID);
 
     client.close();
   }

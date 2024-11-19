@@ -13,6 +13,6 @@ async def main():
         run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
         # use runID in the Observability debugger
-        print(run.to_dict()["runID"])
+        print(run.run_id)
 
 asyncio.run(main())

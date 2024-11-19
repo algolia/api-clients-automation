@@ -5,6 +5,7 @@ using System.Collections.Generic;
 {{> snippets/import}}
 
 using Action = Algolia.Search.Models.Ingestion.Action;
+using PushTaskRecords = Algolia.Search.Models.Ingestion.PushTaskRecords;
 
 class PushSetup
 {
@@ -12,7 +13,7 @@ class PushSetup
     {
         string jsonContent = File.ReadAllText("/my-raw-records.json");
 
-        var records = JsonSerializer.Deserialize<List<Algolia.Search.Models.Ingestion.PushTaskRecords>>(jsonContent);
+        var records = JsonSerializer.Deserialize<List<PushTaskRecords>>(jsonContent);
 
         // use the region matching your applicationID
         {{> snippets/init}}
