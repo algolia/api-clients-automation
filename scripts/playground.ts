@@ -25,13 +25,9 @@ export async function playground({ language, client }: { language: AllLanguage; 
       );
       break;
     case 'kotlin':
-      await run(
-        `./gradle/gradlew -p playground/kotlin -PmainClass=com.algolia.playground.${createClientName(
-          client,
-          'kotlin',
-        )}Kt run`,
-        { language },
-      );
+      await run(`./gradle/gradlew -p playground/kotlin run -Pclient=${createClientName(client, 'kotlin')}`, {
+        language,
+      });
       break;
     case 'php':
       await runComposerInstall();

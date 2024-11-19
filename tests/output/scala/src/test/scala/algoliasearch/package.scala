@@ -10,7 +10,10 @@ package object algoliasearch {
 
   def assertError(message: String)(call: => Unit)(implicit ec: ExecutionContextExecutor): Unit = {
     val error = intercept[Exception](call)
-    assert(error.getMessage == message)
+    assert(
+      error.getMessage == message,
+      s"Error message does not match, expected: $message, got: ${error.getMessage}"
+    )
   }
 
   @targetName("assertErrorFuture")

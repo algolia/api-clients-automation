@@ -18864,6 +18864,7 @@ components:
     highlightResultMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
+      x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
         $ref: '#/components/schemas/highlightResult'
@@ -18894,6 +18895,7 @@ components:
     snippetResultMap:
       type: object
       description: Snippets that show the context around a matching search query.
+      x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
         $ref: '#/components/schemas/snippetResult'

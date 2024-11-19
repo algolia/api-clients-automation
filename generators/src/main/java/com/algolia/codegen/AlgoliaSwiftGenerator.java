@@ -75,6 +75,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "indexsettingsassearchparams",
     "insideboundingbox",
     "languages",
+    "loglevel",
     "matchedgeolocation",
     "matchlevel",
     "mode",
@@ -111,6 +112,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "status",
     "supportedlanguage",
     "tagfilters",
+    "task",
     "taskstatus",
     "timerange",
     "typotolerance",
@@ -241,7 +243,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
         file.getTemplateFile().equals("Podspec.mustache")
     );
 
-    reservedWords.add("LogLevel");
     nameMapping.put("appId", "appID");
 
     setProjectName(getClientName(CLIENT));
