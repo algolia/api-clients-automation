@@ -111,6 +111,12 @@ export async function parseCommit(commit: string): Promise<Commit> {
   }
 
   const languageScopes = new Set();
+
+  // if the scope of the commit (e.g. feat(javascript)) is the language directly, we can add it to the scopes (e.g. if only a generator file changes)
+  if (typeAndScope && typeAndScope[2] && LANGUAGES.includes(typeAndScope[2] as Language)) {
+    languageScopes.add(typeAndScope[2]);
+  }
+
   for (const change of diff.split('\n').map((line) => line.trim())) {
     if (change.startsWith('clients/')) {
       const lang = change.split('/')[1].replace('algoliasearch-client-', '') as Language;
