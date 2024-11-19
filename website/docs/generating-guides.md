@@ -14,29 +14,45 @@ Whenever API client methods are updated, a PR will be automatically generated ba
 
 ## Create a push config
 
-Go to `scripts` > `ci` > `codegen` > `pushConfigs.ts` and add a new config to the `pushConfigs` array
+See the [`pushToRepositoryConfiguration`](https://github.com/algolia/api-clients-automation/blob/main/scripts/ci/codegen/types.ts#L38) and add your repository to the map, or a `task` if it's already listed.
 
 ### Push Config Properties
 
-- `destination`: (`object`)
-  - `repo`: (`string`) the name of the destination repository
-  - `prBranch`: (`string`) the name of the branch referenced in the created pull request
-  - `baseBranch`: (`string`) the branch in the destination repo that you want to merge the created PR into
-- `commitMessage`: (`string`) the PR commit message
-- `guides`: (`string[]`) an array containing the name of the generated guides to include in the output file
-- `outputFilePath`: (`string`) the path in the destination repo where the file will be written
+> [See the definition of `RepositoryConfiguration`](https://github.com/algolia/api-clients-automation/blob/main/scripts/ci/codegen/types.ts#L30)
 
 ### Example config
 
+> A `task` describes a pull request action for the files selected
+
 ```js
 {
-  destination: {
-    repo: 'AlgoliaWeb',
-    prBranch: 'feat/automated-update-from-api-clients-automation-repository',
+  AlgoliaWeb: {
     baseBranch: 'develop',
+    tasks: [
+      {
+        prBranch: 'feat/update-generated-onboarding-guides',
+        commitMessage: 'feat: update generated onboarding guides',
+        files: {
+          type: 'guides',
+          names: ['saveObjectsMovies'],
+          output: '_client/src/routes/launchpad/onboarding-snippets.json',
+          placeholderVariables: {
+            ALGOLIA_APPLICATION_ID: 'YourApplicationID',
+            ALGOLIA_API_KEY: 'YourWriteAPIKey',
+            '<YOUR_INDEX_NAME>': 'movies_index',
+          },
+        },
+      },
+      {
+        prBranch: 'feat/update-generated-ingestion-guides',
+        commitMessage: 'feat: update generated ingestion guides',
+        files: {
+          type: 'guides',
+          names: ['pushSetup'],
+          output: '_client/src/routes/connectors/generated/ingestion-snippets.json',
+        },
+      },
+    ],
   },
-  commitMessage: 'feat: update generated guides',
-  guides: ['saveObjectsMovies'],
-  outputFilePath: '_client/src/routes/launchpad/onboarding-snippets.json'
 }
 ```
