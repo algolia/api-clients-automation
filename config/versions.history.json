@@ -496,6 +496,10 @@
     "7.9.1": {
       "releaseDate": "2024-11-15",
       "eligibilityStatus": "eligible"
+    },
+    "7.9.2": {
+      "releaseDate": "2024-11-19",
+      "eligibilityStatus": "eligible"
     }
   },
   "dart": {
@@ -697,6 +701,10 @@
     },
     "1.27.2": {
       "releaseDate": "2024-11-15",
+      "eligibilityStatus": "eligible"
+    },
+    "1.27.3": {
+      "releaseDate": "2024-11-19",
       "eligibilityStatus": "eligible"
     }
   },
@@ -1283,6 +1291,10 @@
     "4.8.1": {
       "releaseDate": "2024-11-15",
       "eligibilityStatus": "eligible"
+    },
+    "4.8.2": {
+      "releaseDate": "2024-11-19",
+      "eligibilityStatus": "eligible"
     }
   },
   "java": {
@@ -1800,6 +1812,10 @@
     },
     "4.8.1": {
       "releaseDate": "2024-11-15",
+      "eligibilityStatus": "eligible"
+    },
+    "4.8.2": {
+      "releaseDate": "2024-11-19",
       "eligibilityStatus": "eligible"
     }
   },
@@ -2844,6 +2860,10 @@
     "5.14.1": {
       "releaseDate": "2024-11-15",
       "eligibilityStatus": "eligible"
+    },
+    "5.15.0": {
+      "releaseDate": "2024-11-19",
+      "eligibilityStatus": "eligible"
     }
   },
   "kotlin": {
@@ -3686,6 +3706,10 @@
     "4.9.1": {
       "releaseDate": "2024-11-15",
       "eligibilityStatus": "eligible"
+    },
+    "4.9.2": {
+      "releaseDate": "2024-11-19",
+      "eligibilityStatus": "eligible"
     }
   },
   "python": {
@@ -4144,6 +4168,10 @@
     },
     "4.9.1": {
       "releaseDate": "2024-11-15",
+      "eligibilityStatus": "eligible"
+    },
+    "4.9.2": {
+      "releaseDate": "2024-11-19",
       "eligibilityStatus": "eligible"
     }
   },
@@ -4657,6 +4685,10 @@
     "3.8.1": {
       "releaseDate": "2024-11-15",
       "eligibilityStatus": "eligible"
+    },
+    "3.8.2": {
+      "releaseDate": "2024-11-19",
+      "eligibilityStatus": "eligible"
     }
   },
   "scala": {
@@ -5104,6 +5136,10 @@
     },
     "2.9.1": {
       "releaseDate": "2024-11-15",
+      "eligibilityStatus": "eligible"
+    },
+    "2.9.2": {
+      "releaseDate": "2024-11-19",
       "eligibilityStatus": "eligible"
     }
   },
@@ -5703,6 +5739,10 @@
     },
     "9.10.1": {
       "releaseDate": "2024-11-15",
+      "eligibilityStatus": "eligible"
+    },
+    "9.10.2": {
+      "releaseDate": "2024-11-19",
       "eligibilityStatus": "eligible"
     }
   }

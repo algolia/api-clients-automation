@@ -84,7 +84,8 @@ export function getSkippedCommitsText({
 }
 
 export async function parseCommit(commit: string): Promise<Commit> {
-  const [hash, authorEmail, message] = commit.split('|');
+  let [hash, authorEmail, message] = commit.split('|');
+  message = message.replace(/(`.+?`)/g, '');
   const typeAndScope = message.match(/(.+?)(?:\((.+)\))?:/);
   const prNumberMatch = message.match(/#(\d+)/);
   const prNumber = prNumberMatch ? parseInt(prNumberMatch[1], 10) : 0;
