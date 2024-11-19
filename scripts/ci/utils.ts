@@ -29,13 +29,12 @@ export async function getNbGitDiff({
   const checkHead = head === null ? '' : `...${head}`;
 
   const changes = parseInt(
-    (
-      await run(`git add -N . && git diff --shortstat ${branch}${checkHead} -- ${path} | wc -l`, {
-        cwd,
-      })
-    ).trim(),
+    await run(`git add -N . && git diff --shortstat ${branch}${checkHead} -- ${path} | wc -l | tr -d ' '`, {
+      cwd,
+    }),
     10,
   );
+
   if (isNaN(changes)) {
     return 0;
   }
