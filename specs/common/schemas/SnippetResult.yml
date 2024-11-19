@@ -16,6 +16,7 @@ snippetResultOption:
 snippetResultMap:
   type: object
   description: Snippets that show the context around a matching search query.
+  x-is-free-form: false # openapi-generator thinks this is a free-form object since https://github.com/OpenAPITools/openapi-generator/pull/19605
   additionalProperties:
     x-additionalPropertiesName: attribute
     $ref: '#/snippetResult'
