@@ -25,21 +25,13 @@ SearchSynonymsParams _$SearchSynonymsParamsFromJson(
     );
 
 Map<String, dynamic> _$SearchSynonymsParamsToJson(
-    SearchSynonymsParams instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('query', instance.query);
-  writeNotNull('type', instance.type?.toJson());
-  writeNotNull('page', instance.page);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
-  return val;
-}
+        SearchSynonymsParams instance) =>
+    <String, dynamic>{
+      if (instance.query case final value?) 'query': value,
+      if (instance.type?.toJson() case final value?) 'type': value,
+      if (instance.page case final value?) 'page': value,
+      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
+    };
 
 const _$SynonymTypeEnumMap = {
   SynonymType.synonym: 'synonym',

@@ -26,18 +26,11 @@ ParamsConsequence _$ParamsConsequenceFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$ParamsConsequenceToJson(ParamsConsequence instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('automaticFacetFilters',
-      instance.automaticFacetFilters?.map((e) => e.toJson()).toList());
-  writeNotNull('filters', instance.filters);
-  writeNotNull('optionalFilters', instance.optionalFilters);
-  return val;
-}
+Map<String, dynamic> _$ParamsConsequenceToJson(ParamsConsequence instance) =>
+    <String, dynamic>{
+      if (instance.automaticFacetFilters?.map((e) => e.toJson()).toList()
+          case final value?)
+        'automaticFacetFilters': value,
+      if (instance.filters case final value?) 'filters': value,
+      if (instance.optionalFilters case final value?) 'optionalFilters': value,
+    };

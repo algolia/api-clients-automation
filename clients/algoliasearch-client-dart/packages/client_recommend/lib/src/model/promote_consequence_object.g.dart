@@ -21,16 +21,8 @@ PromoteConsequenceObject _$PromoteConsequenceObjectFromJson(
     );
 
 Map<String, dynamic> _$PromoteConsequenceObjectToJson(
-    PromoteConsequenceObject instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('objectID', instance.objectID);
-  writeNotNull('position', instance.position);
-  return val;
-}
+        PromoteConsequenceObject instance) =>
+    <String, dynamic>{
+      if (instance.objectID case final value?) 'objectID': value,
+      if (instance.position case final value?) 'position': value,
+    };

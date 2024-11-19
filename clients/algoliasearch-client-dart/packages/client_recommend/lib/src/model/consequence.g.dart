@@ -33,17 +33,11 @@ Consequence _$ConsequenceFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ConsequenceToJson(Consequence instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('hide', instance.hide?.map((e) => e.toJson()).toList());
-  writeNotNull('promote', instance.promote?.map((e) => e.toJson()).toList());
-  writeNotNull('params', instance.params?.toJson());
-  return val;
-}
+Map<String, dynamic> _$ConsequenceToJson(Consequence instance) =>
+    <String, dynamic>{
+      if (instance.hide?.map((e) => e.toJson()).toList() case final value?)
+        'hide': value,
+      if (instance.promote?.map((e) => e.toJson()).toList() case final value?)
+        'promote': value,
+      if (instance.params?.toJson() case final value?) 'params': value,
+    };

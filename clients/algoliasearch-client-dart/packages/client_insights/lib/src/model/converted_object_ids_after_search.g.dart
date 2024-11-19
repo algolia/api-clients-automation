@@ -30,26 +30,18 @@ ConvertedObjectIDsAfterSearch _$ConvertedObjectIDsAfterSearchFromJson(
     );
 
 Map<String, dynamic> _$ConvertedObjectIDsAfterSearchToJson(
-    ConvertedObjectIDsAfterSearch instance) {
-  final val = <String, dynamic>{
-    'eventName': instance.eventName,
-    'eventType': instance.eventType.toJson(),
-    'index': instance.index,
-    'objectIDs': instance.objectIDs,
-    'queryID': instance.queryID,
-    'userToken': instance.userToken,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
-  writeNotNull('timestamp', instance.timestamp);
-  return val;
-}
+        ConvertedObjectIDsAfterSearch instance) =>
+    <String, dynamic>{
+      'eventName': instance.eventName,
+      'eventType': instance.eventType.toJson(),
+      'index': instance.index,
+      'objectIDs': instance.objectIDs,
+      'queryID': instance.queryID,
+      'userToken': instance.userToken,
+      if (instance.authenticatedUserToken case final value?)
+        'authenticatedUserToken': value,
+      if (instance.timestamp case final value?) 'timestamp': value,
+    };
 
 const _$ConversionEventEnumMap = {
   ConversionEvent.conversion: 'conversion',

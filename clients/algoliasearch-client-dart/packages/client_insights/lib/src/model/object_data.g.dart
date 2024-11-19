@@ -19,17 +19,9 @@ ObjectData _$ObjectDataFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ObjectDataToJson(ObjectData instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('price', instance.price);
-  writeNotNull('quantity', instance.quantity);
-  writeNotNull('discount', instance.discount);
-  return val;
-}
+Map<String, dynamic> _$ObjectDataToJson(ObjectData instance) =>
+    <String, dynamic>{
+      if (instance.price case final value?) 'price': value,
+      if (instance.quantity case final value?) 'quantity': value,
+      if (instance.discount case final value?) 'discount': value,
+    };

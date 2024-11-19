@@ -2187,7 +2187,7 @@ __metadata:
   resolution: "algoliasearch-client-javascript@workspace:."
   dependencies:
     "@types/node": "npm:22.9.0"
-    bundlewatch: "npm:^0.4.0"
+    bundlewatch: "npm:0.4.0"
     execa: "npm:9.5.1"
     lerna: "npm:8.1.9"
     rollup: "npm:4.27.2"
@@ -2511,7 +2511,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bundlewatch@npm:^0.4.0":
+"bundlewatch@npm:0.4.0":
   version: 0.4.0
   resolution: "bundlewatch@npm:0.4.0"
   dependencies:

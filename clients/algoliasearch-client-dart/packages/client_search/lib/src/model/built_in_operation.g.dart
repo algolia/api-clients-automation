@@ -21,20 +21,11 @@ BuiltInOperation _$BuiltInOperationFromJson(Map<String, dynamic> json) =>
       fieldKeyMap: const {'operation': '_operation'},
     );
 
-Map<String, dynamic> _$BuiltInOperationToJson(BuiltInOperation instance) {
-  final val = <String, dynamic>{
-    '_operation': instance.operation.toJson(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('value', instance.value);
-  return val;
-}
+Map<String, dynamic> _$BuiltInOperationToJson(BuiltInOperation instance) =>
+    <String, dynamic>{
+      '_operation': instance.operation.toJson(),
+      if (instance.value case final value?) 'value': value,
+    };
 
 const _$BuiltInOperationTypeEnumMap = {
   BuiltInOperationType.increment: 'Increment',
