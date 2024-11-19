@@ -57,10 +57,13 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
         guides[guideName] = {};
       }
 
-      guides[guideName][language] = (await fsp.readFile(`${pathToGuides}/${file}`, 'utf-8'))
-        .replace('ALGOLIA_APPLICATION_ID', 'YourApplicationID')
-        .replace('ALGOLIA_API_KEY', 'YourWriteAPIKey')
-        .replace('<YOUR_INDEX_NAME>', 'movies_index');
+      guides[guideName][language] = await fsp.readFile(`${pathToGuides}/${file}`, 'utf-8');
+
+      if (guide.placeholderVariables) {
+        for (const [k, v] of Object.entries(guide.placeholderVariables)) {
+          guides[guideName][language] = guides[guideName][language].replace(k, v);
+        }
+      }
     }
   }
 
@@ -145,7 +148,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
-  setVerbose(true);
+  setVerbose(false);
   const repositories = process.argv.slice(2) as Array<string>;
 
   await Promise.allSettled(

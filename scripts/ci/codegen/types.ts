@@ -7,6 +7,9 @@ export type GuidesToPush = {
 
   // the name of the JSON file output that will contain every guides in `names`
   output: string;
+
+  // a key-value of the variable in guides to replace, with the name you'd like to use instead
+  placeholderVariables?: Record<string, string>;
 };
 
 export type SpecsToPush = {
@@ -43,6 +46,11 @@ export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc']: Repos
           type: 'guides',
           names: ['saveObjectsMovies'],
           output: '_client/src/routes/launchpad/onboarding-snippets.json',
+          placeholderVariables: {
+            ALGOLIA_APPLICATION_ID: 'YourApplicationID',
+            ALGOLIA_API_KEY: 'YourWriteAPIKey',
+            '<YOUR_INDEX_NAME>': 'movies_index',
+          },
         },
       },
       {
