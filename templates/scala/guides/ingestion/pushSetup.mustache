@@ -3,30 +3,31 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
 {{> snippets/import}}
-import algoliasearch.extension.SearchClientExtensions
+import algoliasearch.config.*
+import algoliasearch.ingestion.*
 
 import org.json4s.native.JsonMethods
 import org.json4s.jvalue2extractable
 
-object Main {
+object PushSetup {
   def main(args: Array[String]): Unit = {
     implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
     implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
 
-    // Fetch sample dataset
-    val url = "https://dashboard.algolia.com/sample_datasets/movie.json"
-    val result = Source.fromURL(url).mkString
-    val movies = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
+    val result = Source.fromFile("/my-raw-records.json").getLines().mkString
+    val records = JsonMethods.parse(result).extract[Seq[algoliasearch.ingestion.PushTaskRecords]]
 
-    // Connect and authenticate with your Algolia app
+    // use the region matching your applicationID
     {{> snippets/init}}
 
-    // Save records in Algolia index
     try {
-      Await.result(
-        {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}},
+      val run = Await.result(
+        {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}},
         Duration(100, "sec")
       )
+
+      // use runID in the Observability debugger
+      println(run.runID)
     } catch {
       case e: Exception => println(e)
     }

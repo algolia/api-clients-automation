@@ -43,7 +43,7 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
     this.operations = operations;
     this.paramsType = new ParametersWithDataType(models, language, client, true);
 
-    JsonNode snippetsFile = Helpers.readJsonFile("tests/CTS/guides/search.json");
+    JsonNode snippetsFile = Helpers.readJsonFile("tests/CTS/guides/" + client + ".json");
     this.snippets = Json.mapper().convertValue(snippetsFile, new TypeReference<Map<String, Snippet>>() {});
 
     // we can't access the default template manager, so we have to create our own
