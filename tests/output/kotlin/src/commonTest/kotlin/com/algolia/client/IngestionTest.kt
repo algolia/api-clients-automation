@@ -16,6 +16,16 @@ import kotlin.test.*
 class IngestionTest {
 
   @Test
+  fun `can handle HTML error`() = runTest {
+    val client = IngestionClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
+    assertFails {
+      client.customGet(
+        path = "1/html-error",
+      )
+    }.let { error -> assertError(error, "Client request(GET http://%localhost%:6676/1/html-error) invalid: 429 Too Many Requests. Text: \"<html><body>429 Too Many Requests</body></html>\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+  }
+
+  @Test
   fun `calls api with correct user agent`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
