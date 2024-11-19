@@ -26,6 +26,39 @@ public class IngestionClientTests
   [Fact]
   public void Dispose() { }
 
+  [Fact(DisplayName = "can handle HTML error")]
+  public async Task ApiTest0()
+  {
+    IngestionConfig _config = new IngestionConfig("test-app-id", "test-api-key", "us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6676,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new IngestionClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.CustomGetAsync("1/html-error");
+    });
+    Assert.Equal(
+      "<html><body>429 too many requests</body></html>".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
   [Fact(DisplayName = "calls api with correct user agent")]
   public async Task CommonApiTest0()
   {
