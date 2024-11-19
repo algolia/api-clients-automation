@@ -123,6 +123,7 @@ tags:
       url: https://www.algolia.com/doc/guides/security/api-keys/
       description: |
         Related guide: API keys.
+
   - name: Clusters
     description: |
       Multi-cluster operations.
@@ -224,6 +225,7 @@ paths:
   # ######################
   /{path}:
     $ref: '../common/paths/customRequest.yml'
+
   # ########################
   # ### Search Endpoints ###
   # ########################
@@ -235,6 +237,7 @@ paths:
     $ref: 'paths/search/searchForFacetValues.yml'
   /1/indexes/{indexName}/browse:
     $ref: 'paths/search/browse.yml'
+
   # #########################
   # ### Objects Endpoints ###
   # #########################
@@ -254,11 +257,13 @@ paths:
     $ref: 'paths/objects/multipleBatch.yml'
   /1/indexes/*/objects:
     $ref: 'paths/objects/getObjects.yml'
+
   # ##########################
   # ### Settings Endpoints ###
   # ##########################
   /1/indexes/{indexName}/settings:
     $ref: 'paths/settings/settings.yml'
+
   # ##########################
   # ### Synonyms Endpoints ###
   # ##########################
@@ -270,6 +275,7 @@ paths:
     $ref: 'paths/synonyms/clearSynonyms.yml'
   /1/indexes/{indexName}/synonyms/search:
     $ref: 'paths/synonyms/searchSynonyms.yml'
+
   # ######################
   # ### Keys Endpoints ###
   # ######################
@@ -279,6 +285,7 @@ paths:
     $ref: 'paths/keys/key.yml'
   /1/keys/{key}/restore:
     $ref: 'paths/keys/restoreApiKey.yml'
+
   # #######################
   # ### Rules Endpoints ###
   # #######################
@@ -290,6 +297,7 @@ paths:
     $ref: 'paths/rules/clearRules.yml'
   /1/indexes/{indexName}/rules/search:
     $ref: 'paths/rules/searchRules.yml'
+
   # ##############################
   # ### Dictionaries Endpoints ###
   # ##############################
@@ -301,6 +309,7 @@ paths:
     $ref: 'paths/dictionaries/dictionarySettings.yml'
   /1/dictionaries/*/languages:
     $ref: 'paths/dictionaries/getDictionaryLanguages.yml'
+
   # ###############################
   # ### MultiClusters Endpoints ###
   # ###############################
@@ -318,6 +327,7 @@ paths:
     $ref: 'paths/multiclusters/searchUserIds.yml'
   /1/clusters/mapping/pending:
     $ref: 'paths/multiclusters/hasPendingMappings.yml'
+
   # #######################
   # ### Vault Endpoints ###
   # #######################
@@ -327,6 +337,7 @@ paths:
     $ref: 'paths/vault/appendSource.yml'
   /1/security/sources/{source}:
     $ref: 'paths/vault/deleteSource.yml'
+
   # ##########################
   # ### Advanced Endpoints ###
   # ##########################
@@ -336,6 +347,7 @@ paths:
     $ref: 'paths/advanced/getAppTask.yml'
   /1/indexes/{indexName}/task/{taskID}:
     $ref: 'paths/advanced/getTask.yml'
+
   # ################################
   # ### Manage Indices Endpoints ###
   # ################################
@@ -343,30 +355,42 @@ paths:
     $ref: 'paths/manage_indices/operationIndex.yml'
   /1/indexes:
     $ref: 'paths/manage_indices/listIndices.yml'
+
   # ###############
   # ### Helpers ###
   # ###############
   /waitForApiKey:
     $ref: 'helpers/waitForApiKey.yml#/method'
+
   /waitForTask:
     $ref: 'helpers/waitForTask.yml#/method'
+
   /waitForAppTask:
     $ref: 'helpers/waitForAppTask.yml#/method'
+
   /browseObjects:
     $ref: 'helpers/browseObjects.yml#/method'
+
   /generateSecuredApiKey:
     $ref: 'helpers/generateSecuredApiKey.yml#/method'
+
   /replaceAllObjects:
     $ref: 'helpers/replaceAllObjects.yml#/method'
+
   /chunkedBatch:
     $ref: 'helpers/chunkedBatch.yml#/method'
+
   /saveObjects:
     $ref: 'helpers/saveObjects.yml#/method'
+
   /deleteObjects:
     $ref: 'helpers/deleteObjects.yml#/method'
+
   /partialUpdateObjects:
     $ref: 'helpers/partialUpdateObjects.yml#/method'
+
   /indexExists:
     $ref: 'helpers/indexExists.yml#/method'
+
   /setClientApiKey:
     $ref: '../common/helpers/setClientApiKey.yml#/method'
