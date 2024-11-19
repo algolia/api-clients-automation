@@ -50,7 +50,7 @@ class InsightsClientRequestsTestsE2E {
               .setIndex("products")
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1731715200000L)
+              .setTimestamp(1731974400000L)
               .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
             new ViewedObjectIDs()
@@ -59,7 +59,7 @@ class InsightsClientRequestsTestsE2E {
               .setIndex("products")
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1731715200000L)
+              .setTimestamp(1731974400000L)
               .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
           )
         )
