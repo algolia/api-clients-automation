@@ -5,12 +5,11 @@ import { HarRequest, HTTPSnippet } from 'httpsnippet';
 import yaml from 'js-yaml';
 
 import { Cache } from '../cache.js';
-import { exists, GENERATORS, run, toAbsolutePath } from '../common.js';
+import { GENERATORS, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Spec } from '../types.js';
 
-import { getCodeSampleLabel, transformCodeSamplesToGuideMethods, transformSnippetsToCodeSamples } from './snippets.js';
-import type { SnippetSamples } from './types.js';
+import { bundleCodeSamplesForDoc, getCodeSampleLabel, transformGeneratedSnippetsToCodeSamples } from './snippets.js';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');
@@ -37,48 +36,26 @@ export async function lintCommon(useCache: boolean): Promise<void> {
   spinner.succeed();
 }
 
-/*
- * This function will transform properties in the bundle depending on the context.
- * E.g:
- * - Check tags definition
- * - Add name of the client in tags
- * - Remove unecessary punctuation for documentation
- * - etc...
- */
-export async function transformBundle({
-  bundledPath,
-  docs,
-  clientName,
-  alias,
-}: {
-  bundledPath: string;
-  docs: boolean;
-  clientName: string;
-  alias?: string;
-}): Promise<void> {
-  if (!(await exists(bundledPath))) {
-    throw new Error(`Bundled file not found ${bundledPath}.`);
-  }
+export async function bundleSpecsForClient(bundledPath: string, clientName: string): Promise<void> {
+  const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
 
+  Object.values(bundledSpec.paths).forEach((pathMethods) => {
+    Object.values(pathMethods).forEach((specMethod) => (specMethod.tags = [clientName]));
+  });
+
+  await fsp.writeFile(bundledPath, yaml.dump(bundledSpec, { noRefs: true }));
+}
+
+export async function bundleSpecsForDoc(bundledPath: string, clientName: string): Promise<void> {
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
   const harRequests = await oas2har.oas2har(bundledSpec as any, { includeVendorExamples: true });
   const tagsDefinitions = bundledSpec.tags;
-  const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : ({} as SnippetSamples);
+  const codeSamples = await transformGeneratedSnippetsToCodeSamples(clientName);
 
-  if (docs) {
-    const snippets = transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples)));
-    await fsp.writeFile(toAbsolutePath(`docs/bundled/${clientName}-snippets.json`), snippets);
-  }
+  await bundleCodeSamplesForDoc(JSON.parse(JSON.stringify(codeSamples)), clientName);
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
-      if (!docs) {
-        // In the main bundle we need to have only the clientName
-        // because open-api-generator will use this to determine the name of the client
-        specMethod.tags = [clientName];
-        continue;
-      }
-
       if (specMethod['x-helper']) {
         delete bundledSpec.paths[pathKey];
         break;
@@ -94,11 +71,11 @@ export async function transformBundle({
           specMethod['x-codeSamples'] = [];
         }
 
-        if (snippetSamples[gen.language][specMethod.operationId]) {
+        if (codeSamples[gen.language][specMethod.operationId]) {
           specMethod['x-codeSamples'].push({
             lang: gen.language,
             label: getCodeSampleLabel(gen.language),
-            source: Object.values(snippetSamples[gen.language][specMethod.operationId])[0],
+            source: Object.values(codeSamples[gen.language][specMethod.operationId])[0],
           });
         }
       }
@@ -142,12 +119,6 @@ export async function transformBundle({
           );
         }
 
-        if (alias && tag === alias) {
-          throw new Error(
-            `Tag name "${tag} for operation ${specMethod.operationId} must be different from alias ${alias}`,
-          );
-        }
-
         const tagExists = tagsDefinitions ? tagsDefinitions.find((t) => t.name === tag) : null;
         if (!tagExists) {
           throw new Error(
@@ -158,8 +129,5 @@ export async function transformBundle({
     }
   }
 
-  await fsp.writeFile(
-    docs ? toAbsolutePath(`specs/bundled/${clientName}.doc.yml`) : bundledPath,
-    yaml.dump(bundledSpec, { noRefs: true }),
-  );
+  await fsp.writeFile(toAbsolutePath(`specs/bundled/${clientName}.doc.yml`), yaml.dump(bundledSpec, { noRefs: true }));
 }
