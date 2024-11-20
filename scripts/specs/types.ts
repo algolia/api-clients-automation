@@ -6,12 +6,19 @@ export type BaseBuildSpecsOptions = {
   useCache: boolean;
 };
 
+export type SampleForOperationWithAPIDefinition = SampleForOperation & {
+  parameters: Array<Record<string, any>>;
+  responses: Record<string, Record<string, any>>;
+};
+export type CodeSamplesWithAPIDefinition = Record<Language, Record<string, SampleForOperationWithAPIDefinition>>;
+
 export type SampleForOperation = Record<string, string>;
 export type CodeSamples = Record<Language, Record<string, SampleForOperation>>;
 
 export type OpenAPICodeSample = {
   lang:
     | 'c'
+    | 'cURL'
     | 'c++'
     | 'coffeescript'
     | 'csharp'
@@ -38,6 +45,7 @@ export type OpenAPICodeSample = {
     | 'typescript';
   label:
     | 'C'
+    | 'curl'
     | 'C#'
     | 'C++'
     | 'CoffeeScript'

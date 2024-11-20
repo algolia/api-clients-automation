@@ -1,9 +1,10 @@
+import $RefParser from '@apidevtools/json-schema-ref-parser';
 import fsp from 'fs/promises';
 
-import { GENERATORS, capitalize, createClientName, exists, toAbsolutePath } from '../common.js';
-import type { Language } from '../types.js';
+import { GENERATORS, LANGUAGES, capitalize, createClientName, exists, toAbsolutePath } from '../common.js';
+import type { Language, Spec } from '../types.js';
 
-import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.js';
+import type { CodeSamples, CodeSamplesWithAPIDefinition, OpenAPICodeSample, SampleForOperation } from './types.js';
 
 export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label'] {
   switch (language) {
@@ -19,7 +20,8 @@ export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label
 }
 
 // Iterates over the result of `transformSnippetsToCodeSamples` in order to generate a JSON file for the doc to consume.
-export async function bundleCodeSamplesForDoc(codeSamples: CodeSamples, clientName: string): Promise<void> {
+export async function bundleCodeSamplesForDoc(spec: Spec, codeSamples: CodeSamples, clientName: string): Promise<void> {
+  // first we build the end JSON file with our given code samples
   for (const [language, operationWithSamples] of Object.entries(codeSamples)) {
     for (const [operation, samples] of Object.entries(operationWithSamples)) {
       if (operation === 'import') {
@@ -48,7 +50,33 @@ export async function bundleCodeSamplesForDoc(codeSamples: CodeSamples, clientNa
     }
   }
 
-  await fsp.writeFile(toAbsolutePath(`docs/bundled/${clientName}-snippets.json`), JSON.stringify(codeSamples, null, 2));
+  const codeSamplesWithParameters = { ...codeSamples } as CodeSamplesWithAPIDefinition;
+  const dereferencedSpec = (await $RefParser.dereference(spec, {
+    mutateInputSchema: false,
+    dereference: { circular: 'ignore' },
+  })) as Spec;
+
+  for (const [_, operations] of Object.entries(dereferencedSpec.paths)) {
+    for (const operation of Object.values(operations)) {
+      for (const lang of LANGUAGES) {
+        if (operation.operationId in codeSamplesWithParameters[lang]) {
+          codeSamplesWithParameters[lang][operation.operationId].parameters = operation.parameters || [];
+          codeSamplesWithParameters[lang][operation.operationId].responses = operation.responses || {};
+
+          if (operation.requestBody?.content?.['application/json']?.schema?.properties) {
+            codeSamplesWithParameters[lang][operation.operationId].parameters.push(
+              ...new Set([operation.requestBody?.content?.['application/json']?.schema?.properties]),
+            );
+          }
+        }
+      }
+    }
+  }
+
+  await fsp.writeFile(
+    toAbsolutePath(`docs/bundled/${clientName}-snippets.json`),
+    JSON.stringify(codeSamplesWithParameters, null, 2),
+  );
 }
 
 // Reads the generated `docs/snippets/` file for every languages of the given `clientName` and builds an hashmap of snippets per operationId per language.

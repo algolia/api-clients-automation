@@ -52,7 +52,7 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
   const tagsDefinitions = bundledSpec.tags;
   const codeSamples = await transformGeneratedSnippetsToCodeSamples(clientName);
 
-  await bundleCodeSamplesForDoc(JSON.parse(JSON.stringify(codeSamples)), clientName);
+  await bundleCodeSamplesForDoc(bundledSpec, JSON.parse(JSON.stringify(codeSamples)), clientName);
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
