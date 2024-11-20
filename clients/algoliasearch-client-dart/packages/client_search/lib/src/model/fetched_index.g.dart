@@ -32,27 +32,18 @@ FetchedIndex _$FetchedIndexFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$FetchedIndexToJson(FetchedIndex instance) {
-  final val = <String, dynamic>{
-    'name': instance.name,
-    'createdAt': instance.createdAt,
-    'updatedAt': instance.updatedAt,
-    'entries': instance.entries,
-    'dataSize': instance.dataSize,
-    'fileSize': instance.fileSize,
-    'lastBuildTimeS': instance.lastBuildTimeS,
-    'numberOfPendingTasks': instance.numberOfPendingTasks,
-    'pendingTask': instance.pendingTask,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('primary', instance.primary);
-  writeNotNull('replicas', instance.replicas);
-  writeNotNull('virtual', instance.virtual);
-  return val;
-}
+Map<String, dynamic> _$FetchedIndexToJson(FetchedIndex instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+      'entries': instance.entries,
+      'dataSize': instance.dataSize,
+      'fileSize': instance.fileSize,
+      'lastBuildTimeS': instance.lastBuildTimeS,
+      'numberOfPendingTasks': instance.numberOfPendingTasks,
+      'pendingTask': instance.pendingTask,
+      if (instance.primary case final value?) 'primary': value,
+      if (instance.replicas case final value?) 'replicas': value,
+      if (instance.virtual case final value?) 'virtual': value,
+    };

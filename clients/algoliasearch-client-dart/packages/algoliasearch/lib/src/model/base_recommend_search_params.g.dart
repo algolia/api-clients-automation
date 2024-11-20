@@ -68,47 +68,47 @@ BaseRecommendSearchParams _$BaseRecommendSearchParamsFromJson(
     );
 
 Map<String, dynamic> _$BaseRecommendSearchParamsToJson(
-    BaseRecommendSearchParams instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('similarQuery', instance.similarQuery);
-  writeNotNull('filters', instance.filters);
-  writeNotNull('facetFilters', instance.facetFilters);
-  writeNotNull('optionalFilters', instance.optionalFilters);
-  writeNotNull('numericFilters', instance.numericFilters);
-  writeNotNull('tagFilters', instance.tagFilters);
-  writeNotNull('sumOrFiltersScores', instance.sumOrFiltersScores);
-  writeNotNull(
-      'restrictSearchableAttributes', instance.restrictSearchableAttributes);
-  writeNotNull('facets', instance.facets);
-  writeNotNull('facetingAfterDistinct', instance.facetingAfterDistinct);
-  writeNotNull('aroundLatLng', instance.aroundLatLng);
-  writeNotNull('aroundLatLngViaIP', instance.aroundLatLngViaIP);
-  writeNotNull('aroundRadius', instance.aroundRadius);
-  writeNotNull('aroundPrecision', instance.aroundPrecision);
-  writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
-  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
-  writeNotNull('insidePolygon', instance.insidePolygon);
-  writeNotNull('naturalLanguages',
-      instance.naturalLanguages?.map((e) => e.toJson()).toList());
-  writeNotNull('ruleContexts', instance.ruleContexts);
-  writeNotNull('personalizationImpact', instance.personalizationImpact);
-  writeNotNull('userToken', instance.userToken);
-  writeNotNull('getRankingInfo', instance.getRankingInfo);
-  writeNotNull('synonyms', instance.synonyms);
-  writeNotNull('clickAnalytics', instance.clickAnalytics);
-  writeNotNull('analytics', instance.analytics);
-  writeNotNull('analyticsTags', instance.analyticsTags);
-  writeNotNull('percentileComputation', instance.percentileComputation);
-  writeNotNull('enableABTest', instance.enableABTest);
-  return val;
-}
+        BaseRecommendSearchParams instance) =>
+    <String, dynamic>{
+      if (instance.similarQuery case final value?) 'similarQuery': value,
+      if (instance.filters case final value?) 'filters': value,
+      if (instance.facetFilters case final value?) 'facetFilters': value,
+      if (instance.optionalFilters case final value?) 'optionalFilters': value,
+      if (instance.numericFilters case final value?) 'numericFilters': value,
+      if (instance.tagFilters case final value?) 'tagFilters': value,
+      if (instance.sumOrFiltersScores case final value?)
+        'sumOrFiltersScores': value,
+      if (instance.restrictSearchableAttributes case final value?)
+        'restrictSearchableAttributes': value,
+      if (instance.facets case final value?) 'facets': value,
+      if (instance.facetingAfterDistinct case final value?)
+        'facetingAfterDistinct': value,
+      if (instance.aroundLatLng case final value?) 'aroundLatLng': value,
+      if (instance.aroundLatLngViaIP case final value?)
+        'aroundLatLngViaIP': value,
+      if (instance.aroundRadius case final value?) 'aroundRadius': value,
+      if (instance.aroundPrecision case final value?) 'aroundPrecision': value,
+      if (instance.minimumAroundRadius case final value?)
+        'minimumAroundRadius': value,
+      if (instance.insideBoundingBox case final value?)
+        'insideBoundingBox': value,
+      if (instance.insidePolygon case final value?) 'insidePolygon': value,
+      if (instance.naturalLanguages?.map((e) => e.toJson()).toList()
+          case final value?)
+        'naturalLanguages': value,
+      if (instance.ruleContexts case final value?) 'ruleContexts': value,
+      if (instance.personalizationImpact case final value?)
+        'personalizationImpact': value,
+      if (instance.userToken case final value?) 'userToken': value,
+      if (instance.getRankingInfo case final value?) 'getRankingInfo': value,
+      if (instance.synonyms case final value?) 'synonyms': value,
+      if (instance.clickAnalytics case final value?) 'clickAnalytics': value,
+      if (instance.analytics case final value?) 'analytics': value,
+      if (instance.analyticsTags case final value?) 'analyticsTags': value,
+      if (instance.percentileComputation case final value?)
+        'percentileComputation': value,
+      if (instance.enableABTest case final value?) 'enableABTest': value,
+    };
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',

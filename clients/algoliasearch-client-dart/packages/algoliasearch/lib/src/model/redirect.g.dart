@@ -22,15 +22,7 @@ Redirect _$RedirectFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$RedirectToJson(Redirect instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('index', instance.index?.map((e) => e.toJson()).toList());
-  return val;
-}
+Map<String, dynamic> _$RedirectToJson(Redirect instance) => <String, dynamic>{
+      if (instance.index?.map((e) => e.toJson()).toList() case final value?)
+        'index': value,
+    };

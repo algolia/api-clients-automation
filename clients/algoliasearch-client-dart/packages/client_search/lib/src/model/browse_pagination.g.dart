@@ -22,18 +22,10 @@ BrowsePagination _$BrowsePaginationFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$BrowsePaginationToJson(BrowsePagination instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('page', instance.page);
-  writeNotNull('nbHits', instance.nbHits);
-  writeNotNull('nbPages', instance.nbPages);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
-  return val;
-}
+Map<String, dynamic> _$BrowsePaginationToJson(BrowsePagination instance) =>
+    <String, dynamic>{
+      if (instance.page case final value?) 'page': value,
+      if (instance.nbHits case final value?) 'nbHits': value,
+      if (instance.nbPages case final value?) 'nbPages': value,
+      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
+    };

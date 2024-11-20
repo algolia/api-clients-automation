@@ -38,6 +38,21 @@ class IngestionTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
+    #[TestDox('can handle HTML error')]
+    public function test0api(): void
+    {
+        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676']));
+
+        try {
+            $res = $client->customGet(
+                '1/html-error',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), '429: Too Many Requests');
+        }
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
@@ -62,7 +77,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.9.1\).*/',
+                '/^Algolia for PHP \(4.9.2\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

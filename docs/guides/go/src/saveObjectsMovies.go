@@ -8,7 +8,7 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 )
 
-func main() {
+func saveObjectsMovies() {
 	// read json file
 	url := "https://dashboard.algolia.com/sample_datasets/movie.json"
 	response, err := http.Get(url)

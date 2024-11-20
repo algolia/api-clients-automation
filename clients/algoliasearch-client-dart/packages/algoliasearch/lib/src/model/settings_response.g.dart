@@ -158,93 +158,116 @@ SettingsResponse _$SettingsResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SettingsResponseToJson(SettingsResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('attributesForFaceting', instance.attributesForFaceting);
-  writeNotNull('replicas', instance.replicas);
-  writeNotNull('paginationLimitedTo', instance.paginationLimitedTo);
-  writeNotNull('unretrievableAttributes', instance.unretrievableAttributes);
-  writeNotNull(
-      'disableTypoToleranceOnWords', instance.disableTypoToleranceOnWords);
-  writeNotNull('attributesToTransliterate', instance.attributesToTransliterate);
-  writeNotNull('camelCaseAttributes', instance.camelCaseAttributes);
-  writeNotNull('decompoundedAttributes', instance.decompoundedAttributes);
-  writeNotNull('indexLanguages',
-      instance.indexLanguages?.map((e) => e.toJson()).toList());
-  writeNotNull('disablePrefixOnAttributes', instance.disablePrefixOnAttributes);
-  writeNotNull('allowCompressionOfIntegerArray',
-      instance.allowCompressionOfIntegerArray);
-  writeNotNull(
-      'numericAttributesForFiltering', instance.numericAttributesForFiltering);
-  writeNotNull('separatorsToIndex', instance.separatorsToIndex);
-  writeNotNull('searchableAttributes', instance.searchableAttributes);
-  writeNotNull('userData', instance.userData);
-  writeNotNull('customNormalization', instance.customNormalization);
-  writeNotNull('attributeForDistinct', instance.attributeForDistinct);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
-  writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
-  writeNotNull('ranking', instance.ranking);
-  writeNotNull('customRanking', instance.customRanking);
-  writeNotNull('relevancyStrictness', instance.relevancyStrictness);
-  writeNotNull('attributesToHighlight', instance.attributesToHighlight);
-  writeNotNull('attributesToSnippet', instance.attributesToSnippet);
-  writeNotNull('highlightPreTag', instance.highlightPreTag);
-  writeNotNull('highlightPostTag', instance.highlightPostTag);
-  writeNotNull('snippetEllipsisText', instance.snippetEllipsisText);
-  writeNotNull('restrictHighlightAndSnippetArrays',
-      instance.restrictHighlightAndSnippetArrays);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
-  writeNotNull('minWordSizefor1Typo', instance.minWordSizefor1Typo);
-  writeNotNull('minWordSizefor2Typos', instance.minWordSizefor2Typos);
-  writeNotNull('typoTolerance', instance.typoTolerance);
-  writeNotNull('allowTyposOnNumericTokens', instance.allowTyposOnNumericTokens);
-  writeNotNull('disableTypoToleranceOnAttributes',
-      instance.disableTypoToleranceOnAttributes);
-  writeNotNull('ignorePlurals', instance.ignorePlurals);
-  writeNotNull('removeStopWords', instance.removeStopWords);
-  writeNotNull(
-      'keepDiacriticsOnCharacters', instance.keepDiacriticsOnCharacters);
-  writeNotNull('queryLanguages',
-      instance.queryLanguages?.map((e) => e.toJson()).toList());
-  writeNotNull('decompoundQuery', instance.decompoundQuery);
-  writeNotNull('enableRules', instance.enableRules);
-  writeNotNull('enablePersonalization', instance.enablePersonalization);
-  writeNotNull('queryType', instance.queryType?.toJson());
-  writeNotNull(
-      'removeWordsIfNoResults', instance.removeWordsIfNoResults?.toJson());
-  writeNotNull('mode', instance.mode?.toJson());
-  writeNotNull('semanticSearch', instance.semanticSearch?.toJson());
-  writeNotNull('advancedSyntax', instance.advancedSyntax);
-  writeNotNull('optionalWords', instance.optionalWords);
-  writeNotNull('disableExactOnAttributes', instance.disableExactOnAttributes);
-  writeNotNull(
-      'exactOnSingleWordQuery', instance.exactOnSingleWordQuery?.toJson());
-  writeNotNull('alternativesAsExact',
-      instance.alternativesAsExact?.map((e) => e.toJson()).toList());
-  writeNotNull('advancedSyntaxFeatures',
-      instance.advancedSyntaxFeatures?.map((e) => e.toJson()).toList());
-  writeNotNull('distinct', instance.distinct);
-  writeNotNull(
-      'replaceSynonymsInHighlight', instance.replaceSynonymsInHighlight);
-  writeNotNull('minProximity', instance.minProximity);
-  writeNotNull('responseFields', instance.responseFields);
-  writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
-  writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
-  writeNotNull('attributeCriteriaComputedByMinProximity',
-      instance.attributeCriteriaComputedByMinProximity);
-  writeNotNull('renderingContent', instance.renderingContent?.toJson());
-  writeNotNull('enableReRanking', instance.enableReRanking);
-  writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
-  writeNotNull('primary', instance.primary);
-  return val;
-}
+Map<String, dynamic> _$SettingsResponseToJson(SettingsResponse instance) =>
+    <String, dynamic>{
+      if (instance.attributesForFaceting case final value?)
+        'attributesForFaceting': value,
+      if (instance.replicas case final value?) 'replicas': value,
+      if (instance.paginationLimitedTo case final value?)
+        'paginationLimitedTo': value,
+      if (instance.unretrievableAttributes case final value?)
+        'unretrievableAttributes': value,
+      if (instance.disableTypoToleranceOnWords case final value?)
+        'disableTypoToleranceOnWords': value,
+      if (instance.attributesToTransliterate case final value?)
+        'attributesToTransliterate': value,
+      if (instance.camelCaseAttributes case final value?)
+        'camelCaseAttributes': value,
+      if (instance.decompoundedAttributes case final value?)
+        'decompoundedAttributes': value,
+      if (instance.indexLanguages?.map((e) => e.toJson()).toList()
+          case final value?)
+        'indexLanguages': value,
+      if (instance.disablePrefixOnAttributes case final value?)
+        'disablePrefixOnAttributes': value,
+      if (instance.allowCompressionOfIntegerArray case final value?)
+        'allowCompressionOfIntegerArray': value,
+      if (instance.numericAttributesForFiltering case final value?)
+        'numericAttributesForFiltering': value,
+      if (instance.separatorsToIndex case final value?)
+        'separatorsToIndex': value,
+      if (instance.searchableAttributes case final value?)
+        'searchableAttributes': value,
+      if (instance.userData case final value?) 'userData': value,
+      if (instance.customNormalization case final value?)
+        'customNormalization': value,
+      if (instance.attributeForDistinct case final value?)
+        'attributeForDistinct': value,
+      if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
+      if (instance.attributesToRetrieve case final value?)
+        'attributesToRetrieve': value,
+      if (instance.ranking case final value?) 'ranking': value,
+      if (instance.customRanking case final value?) 'customRanking': value,
+      if (instance.relevancyStrictness case final value?)
+        'relevancyStrictness': value,
+      if (instance.attributesToHighlight case final value?)
+        'attributesToHighlight': value,
+      if (instance.attributesToSnippet case final value?)
+        'attributesToSnippet': value,
+      if (instance.highlightPreTag case final value?) 'highlightPreTag': value,
+      if (instance.highlightPostTag case final value?)
+        'highlightPostTag': value,
+      if (instance.snippetEllipsisText case final value?)
+        'snippetEllipsisText': value,
+      if (instance.restrictHighlightAndSnippetArrays case final value?)
+        'restrictHighlightAndSnippetArrays': value,
+      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
+      if (instance.minWordSizefor1Typo case final value?)
+        'minWordSizefor1Typo': value,
+      if (instance.minWordSizefor2Typos case final value?)
+        'minWordSizefor2Typos': value,
+      if (instance.typoTolerance case final value?) 'typoTolerance': value,
+      if (instance.allowTyposOnNumericTokens case final value?)
+        'allowTyposOnNumericTokens': value,
+      if (instance.disableTypoToleranceOnAttributes case final value?)
+        'disableTypoToleranceOnAttributes': value,
+      if (instance.ignorePlurals case final value?) 'ignorePlurals': value,
+      if (instance.removeStopWords case final value?) 'removeStopWords': value,
+      if (instance.keepDiacriticsOnCharacters case final value?)
+        'keepDiacriticsOnCharacters': value,
+      if (instance.queryLanguages?.map((e) => e.toJson()).toList()
+          case final value?)
+        'queryLanguages': value,
+      if (instance.decompoundQuery case final value?) 'decompoundQuery': value,
+      if (instance.enableRules case final value?) 'enableRules': value,
+      if (instance.enablePersonalization case final value?)
+        'enablePersonalization': value,
+      if (instance.queryType?.toJson() case final value?) 'queryType': value,
+      if (instance.removeWordsIfNoResults?.toJson() case final value?)
+        'removeWordsIfNoResults': value,
+      if (instance.mode?.toJson() case final value?) 'mode': value,
+      if (instance.semanticSearch?.toJson() case final value?)
+        'semanticSearch': value,
+      if (instance.advancedSyntax case final value?) 'advancedSyntax': value,
+      if (instance.optionalWords case final value?) 'optionalWords': value,
+      if (instance.disableExactOnAttributes case final value?)
+        'disableExactOnAttributes': value,
+      if (instance.exactOnSingleWordQuery?.toJson() case final value?)
+        'exactOnSingleWordQuery': value,
+      if (instance.alternativesAsExact?.map((e) => e.toJson()).toList()
+          case final value?)
+        'alternativesAsExact': value,
+      if (instance.advancedSyntaxFeatures?.map((e) => e.toJson()).toList()
+          case final value?)
+        'advancedSyntaxFeatures': value,
+      if (instance.distinct case final value?) 'distinct': value,
+      if (instance.replaceSynonymsInHighlight case final value?)
+        'replaceSynonymsInHighlight': value,
+      if (instance.minProximity case final value?) 'minProximity': value,
+      if (instance.responseFields case final value?) 'responseFields': value,
+      if (instance.maxValuesPerFacet case final value?)
+        'maxValuesPerFacet': value,
+      if (instance.sortFacetValuesBy case final value?)
+        'sortFacetValuesBy': value,
+      if (instance.attributeCriteriaComputedByMinProximity case final value?)
+        'attributeCriteriaComputedByMinProximity': value,
+      if (instance.renderingContent?.toJson() case final value?)
+        'renderingContent': value,
+      if (instance.enableReRanking case final value?) 'enableReRanking': value,
+      if (instance.reRankingApplyFilter case final value?)
+        'reRankingApplyFilter': value,
+      if (instance.primary case final value?) 'primary': value,
+    };
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',

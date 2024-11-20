@@ -19,15 +19,7 @@ SemanticSearch _$SemanticSearchFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SemanticSearchToJson(SemanticSearch instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('eventSources', instance.eventSources);
-  return val;
-}
+Map<String, dynamic> _$SemanticSearchToJson(SemanticSearch instance) =>
+    <String, dynamic>{
+      if (instance.eventSources case final value?) 'eventSources': value,
+    };

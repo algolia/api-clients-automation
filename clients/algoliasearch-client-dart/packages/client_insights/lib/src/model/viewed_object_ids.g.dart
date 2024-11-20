@@ -27,25 +27,17 @@ ViewedObjectIDs _$ViewedObjectIDsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$ViewedObjectIDsToJson(ViewedObjectIDs instance) {
-  final val = <String, dynamic>{
-    'eventName': instance.eventName,
-    'eventType': instance.eventType.toJson(),
-    'index': instance.index,
-    'objectIDs': instance.objectIDs,
-    'userToken': instance.userToken,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
-  writeNotNull('timestamp', instance.timestamp);
-  return val;
-}
+Map<String, dynamic> _$ViewedObjectIDsToJson(ViewedObjectIDs instance) =>
+    <String, dynamic>{
+      'eventName': instance.eventName,
+      'eventType': instance.eventType.toJson(),
+      'index': instance.index,
+      'objectIDs': instance.objectIDs,
+      'userToken': instance.userToken,
+      if (instance.authenticatedUserToken case final value?)
+        'authenticatedUserToken': value,
+      if (instance.timestamp case final value?) 'timestamp': value,
+    };
 
 const _$ViewEventEnumMap = {
   ViewEvent.view: 'view',

@@ -70,8 +70,9 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       break;
     case 'java':
     case 'kotlin':
+      // the playground specify search but it will still build everything
       await run(
-        `./gradle/gradlew -p ${cwd} ${buildType === 'client' || buildType === 'playground' ? 'assemble' : 'build'}`,
+        `./gradle/gradlew -p ${cwd} ${buildType === 'client' || buildType === 'playground' ? 'assemble -Pclient=Search' : 'build'}`,
         { language },
       );
       break;

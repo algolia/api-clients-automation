@@ -1,0 +1,33 @@
+name: Push generated files to the given repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'the name of the repository to push files to'
+        required: true
+        type: choice
+        options:
+          - AlgoliaWeb
+          - doc
+
+jobs:
+  push:
+    name: Push generated files to the given repository
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Setup
+        id: setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - run: yarn workspace scripts pushToRepository ${{ inputs.name }} 
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          FORCE: true

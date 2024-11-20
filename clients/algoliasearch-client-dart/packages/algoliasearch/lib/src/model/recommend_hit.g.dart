@@ -46,21 +46,13 @@ const _$RecommendHitFieldMap = <String, String>{
   'score': '_score',
 };
 
-Map<String, dynamic> _$RecommendHitToJson(RecommendHit instance) {
-  final val = <String, dynamic>{
-    'objectID': instance.objectID,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('_highlightResult', instance.highlightResult);
-  writeNotNull('_snippetResult', instance.snippetResult);
-  writeNotNull('_rankingInfo', instance.rankingInfo?.toJson());
-  writeNotNull('_distinctSeqID', instance.distinctSeqID);
-  writeNotNull('_score', instance.score);
-  return val;
-}
+Map<String, dynamic> _$RecommendHitToJson(RecommendHit instance) =>
+    <String, dynamic>{
+      'objectID': instance.objectID,
+      if (instance.highlightResult case final value?) '_highlightResult': value,
+      if (instance.snippetResult case final value?) '_snippetResult': value,
+      if (instance.rankingInfo?.toJson() case final value?)
+        '_rankingInfo': value,
+      if (instance.distinctSeqID case final value?) '_distinctSeqID': value,
+      if (instance.score case final value?) '_score': value,
+    };

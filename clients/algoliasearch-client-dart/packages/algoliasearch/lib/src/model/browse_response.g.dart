@@ -91,49 +91,48 @@ BrowseResponse _$BrowseResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$BrowseResponseToJson(BrowseResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('abTestID', instance.abTestID);
-  writeNotNull('abTestVariantID', instance.abTestVariantID);
-  writeNotNull('aroundLatLng', instance.aroundLatLng);
-  writeNotNull('automaticRadius', instance.automaticRadius);
-  writeNotNull('exhaustive', instance.exhaustive?.toJson());
-  writeNotNull('appliedRules', instance.appliedRules);
-  writeNotNull('exhaustiveFacetsCount', instance.exhaustiveFacetsCount);
-  writeNotNull('exhaustiveNbHits', instance.exhaustiveNbHits);
-  writeNotNull('exhaustiveTypo', instance.exhaustiveTypo);
-  writeNotNull('facets', instance.facets);
-  writeNotNull('facets_stats',
-      instance.facetsStats?.map((k, e) => MapEntry(k, e.toJson())));
-  writeNotNull('index', instance.index);
-  writeNotNull('indexUsed', instance.indexUsed);
-  writeNotNull('message', instance.message);
-  writeNotNull('nbSortedHits', instance.nbSortedHits);
-  writeNotNull('parsedQuery', instance.parsedQuery);
-  val['processingTimeMS'] = instance.processingTimeMS;
-  writeNotNull('processingTimingsMS', instance.processingTimingsMS);
-  writeNotNull('queryAfterRemoval', instance.queryAfterRemoval);
-  writeNotNull('redirect', instance.redirect?.toJson());
-  writeNotNull('renderingContent', instance.renderingContent?.toJson());
-  writeNotNull('serverTimeMS', instance.serverTimeMS);
-  writeNotNull('serverUsed', instance.serverUsed);
-  writeNotNull('userData', instance.userData);
-  writeNotNull('queryID', instance.queryID);
-  writeNotNull('_automaticInsights', instance.automaticInsights);
-  writeNotNull('page', instance.page);
-  writeNotNull('nbHits', instance.nbHits);
-  writeNotNull('nbPages', instance.nbPages);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
-  val['hits'] = instance.hits.map((e) => e.toJson()).toList();
-  val['query'] = instance.query;
-  val['params'] = instance.params;
-  writeNotNull('cursor', instance.cursor);
-  return val;
-}
+Map<String, dynamic> _$BrowseResponseToJson(BrowseResponse instance) =>
+    <String, dynamic>{
+      if (instance.abTestID case final value?) 'abTestID': value,
+      if (instance.abTestVariantID case final value?) 'abTestVariantID': value,
+      if (instance.aroundLatLng case final value?) 'aroundLatLng': value,
+      if (instance.automaticRadius case final value?) 'automaticRadius': value,
+      if (instance.exhaustive?.toJson() case final value?) 'exhaustive': value,
+      if (instance.appliedRules case final value?) 'appliedRules': value,
+      if (instance.exhaustiveFacetsCount case final value?)
+        'exhaustiveFacetsCount': value,
+      if (instance.exhaustiveNbHits case final value?)
+        'exhaustiveNbHits': value,
+      if (instance.exhaustiveTypo case final value?) 'exhaustiveTypo': value,
+      if (instance.facets case final value?) 'facets': value,
+      if (instance.facetsStats?.map((k, e) => MapEntry(k, e.toJson()))
+          case final value?)
+        'facets_stats': value,
+      if (instance.index case final value?) 'index': value,
+      if (instance.indexUsed case final value?) 'indexUsed': value,
+      if (instance.message case final value?) 'message': value,
+      if (instance.nbSortedHits case final value?) 'nbSortedHits': value,
+      if (instance.parsedQuery case final value?) 'parsedQuery': value,
+      'processingTimeMS': instance.processingTimeMS,
+      if (instance.processingTimingsMS case final value?)
+        'processingTimingsMS': value,
+      if (instance.queryAfterRemoval case final value?)
+        'queryAfterRemoval': value,
+      if (instance.redirect?.toJson() case final value?) 'redirect': value,
+      if (instance.renderingContent?.toJson() case final value?)
+        'renderingContent': value,
+      if (instance.serverTimeMS case final value?) 'serverTimeMS': value,
+      if (instance.serverUsed case final value?) 'serverUsed': value,
+      if (instance.userData case final value?) 'userData': value,
+      if (instance.queryID case final value?) 'queryID': value,
+      if (instance.automaticInsights case final value?)
+        '_automaticInsights': value,
+      if (instance.page case final value?) 'page': value,
+      if (instance.nbHits case final value?) 'nbHits': value,
+      if (instance.nbPages case final value?) 'nbPages': value,
+      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
+      'hits': instance.hits.map((e) => e.toJson()).toList(),
+      'query': instance.query,
+      'params': instance.params,
+      if (instance.cursor case final value?) 'cursor': value,
+    };

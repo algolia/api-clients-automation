@@ -20,20 +20,11 @@ Edit _$EditFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$EditToJson(Edit instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('type', instance.type?.toJson());
-  writeNotNull('delete', instance.delete);
-  writeNotNull('insert', instance.insert);
-  return val;
-}
+Map<String, dynamic> _$EditToJson(Edit instance) => <String, dynamic>{
+      if (instance.type?.toJson() case final value?) 'type': value,
+      if (instance.delete case final value?) 'delete': value,
+      if (instance.insert case final value?) 'insert': value,
+    };
 
 const _$EditTypeEnumMap = {
   EditType.remove: 'remove',

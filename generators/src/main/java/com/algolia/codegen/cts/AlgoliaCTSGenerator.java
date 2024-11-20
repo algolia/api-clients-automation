@@ -9,6 +9,7 @@ import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
+import java.io.File;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -159,7 +160,9 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       bundle.put("isSyncClient", false);
       // special lambda for dynamic templates
       bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
-      bundle.put("dynamicSnippet", new DynamicSnippetLambda(this, models, operations, language, client));
+      if (new File("tests/CTS/guides/" + client + ".json").exists()) {
+        bundle.put("dynamicSnippet", new DynamicSnippetLambda(this, models, operations, language, client));
+      }
       bundle.put("lambda", lambda);
 
       String languageVersion = ctsManager.getLanguageVersion((String) additionalProperties.getOrDefault("languageVersion", ""));

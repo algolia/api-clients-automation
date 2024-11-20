@@ -1,0 +1,36 @@
+package main
+
+import (
+  "os"
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+
+{{> snippets/import}}
+
+func push() {
+  // use the region matching your applicationID
+  {{> snippets/init}}
+
+  content, err := os.ReadFile("/my-raw-records.json")
+  if err != nil {
+    panic(err)
+  }
+
+  var records []ingestion.PushTaskRecords
+
+  err = json.Unmarshal(content, &records)
+  if err != nil {
+    panic(err)
+  }
+
+  run, err := {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+
+  // use runID in the Observability debugger
+  fmt.Println("run", run.RunID)
+}

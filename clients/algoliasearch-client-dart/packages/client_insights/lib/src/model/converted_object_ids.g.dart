@@ -27,25 +27,17 @@ ConvertedObjectIDs _$ConvertedObjectIDsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$ConvertedObjectIDsToJson(ConvertedObjectIDs instance) {
-  final val = <String, dynamic>{
-    'eventName': instance.eventName,
-    'eventType': instance.eventType.toJson(),
-    'index': instance.index,
-    'objectIDs': instance.objectIDs,
-    'userToken': instance.userToken,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
-  writeNotNull('timestamp', instance.timestamp);
-  return val;
-}
+Map<String, dynamic> _$ConvertedObjectIDsToJson(ConvertedObjectIDs instance) =>
+    <String, dynamic>{
+      'eventName': instance.eventName,
+      'eventType': instance.eventType.toJson(),
+      'index': instance.index,
+      'objectIDs': instance.objectIDs,
+      'userToken': instance.userToken,
+      if (instance.authenticatedUserToken case final value?)
+        'authenticatedUserToken': value,
+      if (instance.timestamp case final value?) 'timestamp': value,
+    };
 
 const _$ConversionEventEnumMap = {
   ConversionEvent.conversion: 'conversion',

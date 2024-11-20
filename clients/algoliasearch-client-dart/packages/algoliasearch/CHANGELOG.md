@@ -1,3 +1,7 @@
+## [1.27.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.27.2...1.27.3)
+
+- [ff954678e](https://github.com/algolia/api-clients-automation/commit/ff954678e) fix(playground): add formatter for python ([#4125](https://github.com/algolia/api-clients-automation/pull/4125)) by [@millotp](https://github.com/millotp/)
+
 ## [1.27.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.27.1...1.27.2)
 
 - [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)

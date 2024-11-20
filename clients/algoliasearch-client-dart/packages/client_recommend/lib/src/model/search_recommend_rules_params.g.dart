@@ -30,22 +30,15 @@ SearchRecommendRulesParams _$SearchRecommendRulesParamsFromJson(
     );
 
 Map<String, dynamic> _$SearchRecommendRulesParamsToJson(
-    SearchRecommendRulesParams instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('query', instance.query);
-  writeNotNull('context', instance.context);
-  writeNotNull('page', instance.page);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
-  writeNotNull('enabled', instance.enabled);
-  writeNotNull('filters', instance.filters);
-  writeNotNull('facets', instance.facets);
-  writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
-  return val;
-}
+        SearchRecommendRulesParams instance) =>
+    <String, dynamic>{
+      if (instance.query case final value?) 'query': value,
+      if (instance.context case final value?) 'context': value,
+      if (instance.page case final value?) 'page': value,
+      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
+      if (instance.enabled case final value?) 'enabled': value,
+      if (instance.filters case final value?) 'filters': value,
+      if (instance.facets case final value?) 'facets': value,
+      if (instance.maxValuesPerFacet case final value?)
+        'maxValuesPerFacet': value,
+    };
