@@ -46,31 +46,22 @@ Log _$LogFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$LogToJson(Log instance) {
-  final val = <String, dynamic>{
-    'timestamp': instance.timestamp,
-    'method': instance.method,
-    'answer_code': instance.answerCode,
-    'query_body': instance.queryBody,
-    'answer': instance.answer,
-    'url': instance.url,
-    'ip': instance.ip,
-    'query_headers': instance.queryHeaders,
-    'sha1': instance.sha1,
-    'nb_api_calls': instance.nbApiCalls,
-    'processing_time_ms': instance.processingTimeMs,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('index', instance.index);
-  writeNotNull('query_params', instance.queryParams);
-  writeNotNull('query_nb_hits', instance.queryNbHits);
-  writeNotNull(
-      'inner_queries', instance.innerQueries?.map((e) => e.toJson()).toList());
-  return val;
-}
+Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
+      'timestamp': instance.timestamp,
+      'method': instance.method,
+      'answer_code': instance.answerCode,
+      'query_body': instance.queryBody,
+      'answer': instance.answer,
+      'url': instance.url,
+      'ip': instance.ip,
+      'query_headers': instance.queryHeaders,
+      'sha1': instance.sha1,
+      'nb_api_calls': instance.nbApiCalls,
+      'processing_time_ms': instance.processingTimeMs,
+      if (instance.index case final value?) 'index': value,
+      if (instance.queryParams case final value?) 'query_params': value,
+      if (instance.queryNbHits case final value?) 'query_nb_hits': value,
+      if (instance.innerQueries?.map((e) => e.toJson()).toList()
+          case final value?)
+        'inner_queries': value,
+    };

@@ -34,25 +34,20 @@ LookingSimilarQuery _$LookingSimilarQueryFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$LookingSimilarQueryToJson(LookingSimilarQuery instance) {
-  final val = <String, dynamic>{
-    'indexName': instance.indexName,
-    'threshold': instance.threshold,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('maxRecommendations', instance.maxRecommendations);
-  writeNotNull('queryParameters', instance.queryParameters?.toJson());
-  val['model'] = instance.model.toJson();
-  val['objectID'] = instance.objectID;
-  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
-  return val;
-}
+Map<String, dynamic> _$LookingSimilarQueryToJson(
+        LookingSimilarQuery instance) =>
+    <String, dynamic>{
+      'indexName': instance.indexName,
+      'threshold': instance.threshold,
+      if (instance.maxRecommendations case final value?)
+        'maxRecommendations': value,
+      if (instance.queryParameters?.toJson() case final value?)
+        'queryParameters': value,
+      'model': instance.model.toJson(),
+      'objectID': instance.objectID,
+      if (instance.fallbackParameters?.toJson() case final value?)
+        'fallbackParameters': value,
+    };
 
 const _$LookingSimilarModelEnumMap = {
   LookingSimilarModel.lookingSimilar: 'looking-similar',

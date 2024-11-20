@@ -33,26 +33,17 @@ ApiKey _$ApiKeyFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ApiKeyToJson(ApiKey instance) {
-  final val = <String, dynamic>{
-    'acl': instance.acl.map((e) => e.toJson()).toList(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('description', instance.description);
-  writeNotNull('indexes', instance.indexes);
-  writeNotNull('maxHitsPerQuery', instance.maxHitsPerQuery);
-  writeNotNull('maxQueriesPerIPPerHour', instance.maxQueriesPerIPPerHour);
-  writeNotNull('queryParameters', instance.queryParameters);
-  writeNotNull('referers', instance.referers);
-  writeNotNull('validity', instance.validity);
-  return val;
-}
+Map<String, dynamic> _$ApiKeyToJson(ApiKey instance) => <String, dynamic>{
+      'acl': instance.acl.map((e) => e.toJson()).toList(),
+      if (instance.description case final value?) 'description': value,
+      if (instance.indexes case final value?) 'indexes': value,
+      if (instance.maxHitsPerQuery case final value?) 'maxHitsPerQuery': value,
+      if (instance.maxQueriesPerIPPerHour case final value?)
+        'maxQueriesPerIPPerHour': value,
+      if (instance.queryParameters case final value?) 'queryParameters': value,
+      if (instance.referers case final value?) 'referers': value,
+      if (instance.validity case final value?) 'validity': value,
+    };
 
 const _$AclEnumMap = {
   Acl.addObject: 'addObject',

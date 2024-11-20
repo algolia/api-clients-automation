@@ -14,6 +14,8 @@ post:
 
     To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject).
     To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+
+    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   summary: Add or replace a record
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
@@ -51,7 +53,6 @@ post:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
-
 delete:
   tags:
     - Indices

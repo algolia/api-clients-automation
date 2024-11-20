@@ -72,7 +72,7 @@ Co-authored-by: %an <%ae>
 
   console.log(`Pushing code to generated branch: '${branchToPush}'`);
   await run('git add .');
-  await run(`git commit -m "${message.replaceAll('"', '\\"')}"`);
+  await run(`git commit -m "${message.replaceAll('"', '\\"').replaceAll('`', '\\`')}"`);
   await run(`git push origin ${branchToPush}`);
 
   setOutput('GENERATED_COMMIT', await run('git rev-parse HEAD'));

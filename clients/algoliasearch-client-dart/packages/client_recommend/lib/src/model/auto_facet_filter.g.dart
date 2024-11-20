@@ -19,16 +19,8 @@ AutoFacetFilter _$AutoFacetFilterFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$AutoFacetFilterToJson(AutoFacetFilter instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('facet', instance.facet);
-  writeNotNull('negative', instance.negative);
-  return val;
-}
+Map<String, dynamic> _$AutoFacetFilterToJson(AutoFacetFilter instance) =>
+    <String, dynamic>{
+      if (instance.facet case final value?) 'facet': value,
+      if (instance.negative case final value?) 'negative': value,
+    };

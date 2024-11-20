@@ -27,17 +27,9 @@ BatchDictionaryEntriesParams _$BatchDictionaryEntriesParamsFromJson(
     );
 
 Map<String, dynamic> _$BatchDictionaryEntriesParamsToJson(
-    BatchDictionaryEntriesParams instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('clearExistingDictionaryEntries',
-      instance.clearExistingDictionaryEntries);
-  val['requests'] = instance.requests.map((e) => e.toJson()).toList();
-  return val;
-}
+        BatchDictionaryEntriesParams instance) =>
+    <String, dynamic>{
+      if (instance.clearExistingDictionaryEntries case final value?)
+        'clearExistingDictionaryEntries': value,
+      'requests': instance.requests.map((e) => e.toJson()).toList(),
+    };

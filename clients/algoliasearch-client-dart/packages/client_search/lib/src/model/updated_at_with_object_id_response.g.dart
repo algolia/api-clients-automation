@@ -22,17 +22,9 @@ UpdatedAtWithObjectIdResponse _$UpdatedAtWithObjectIdResponseFromJson(
     );
 
 Map<String, dynamic> _$UpdatedAtWithObjectIdResponseToJson(
-    UpdatedAtWithObjectIdResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('taskID', instance.taskID);
-  writeNotNull('updatedAt', instance.updatedAt);
-  writeNotNull('objectID', instance.objectID);
-  return val;
-}
+        UpdatedAtWithObjectIdResponse instance) =>
+    <String, dynamic>{
+      if (instance.taskID case final value?) 'taskID': value,
+      if (instance.updatedAt case final value?) 'updatedAt': value,
+      if (instance.objectID case final value?) 'objectID': value,
+    };

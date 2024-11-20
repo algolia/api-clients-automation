@@ -42,20 +42,11 @@ const _$HitFieldMap = <String, String>{
   'distinctSeqID': '_distinctSeqID',
 };
 
-Map<String, dynamic> _$HitToJson(Hit instance) {
-  final val = <String, dynamic>{
-    'objectID': instance.objectID,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('_highlightResult', instance.highlightResult);
-  writeNotNull('_snippetResult', instance.snippetResult);
-  writeNotNull('_rankingInfo', instance.rankingInfo?.toJson());
-  writeNotNull('_distinctSeqID', instance.distinctSeqID);
-  return val;
-}
+Map<String, dynamic> _$HitToJson(Hit instance) => <String, dynamic>{
+      'objectID': instance.objectID,
+      if (instance.highlightResult case final value?) '_highlightResult': value,
+      if (instance.snippetResult case final value?) '_snippetResult': value,
+      if (instance.rankingInfo?.toJson() case final value?)
+        '_rankingInfo': value,
+      if (instance.distinctSeqID case final value?) '_distinctSeqID': value,
+    };

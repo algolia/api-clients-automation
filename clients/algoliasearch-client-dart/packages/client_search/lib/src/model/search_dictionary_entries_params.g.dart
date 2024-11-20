@@ -25,22 +25,13 @@ SearchDictionaryEntriesParams _$SearchDictionaryEntriesParamsFromJson(
     );
 
 Map<String, dynamic> _$SearchDictionaryEntriesParamsToJson(
-    SearchDictionaryEntriesParams instance) {
-  final val = <String, dynamic>{
-    'query': instance.query,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('page', instance.page);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
-  writeNotNull('language', instance.language?.toJson());
-  return val;
-}
+        SearchDictionaryEntriesParams instance) =>
+    <String, dynamic>{
+      'query': instance.query,
+      if (instance.page case final value?) 'page': value,
+      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
+      if (instance.language?.toJson() case final value?) 'language': value,
+    };
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',

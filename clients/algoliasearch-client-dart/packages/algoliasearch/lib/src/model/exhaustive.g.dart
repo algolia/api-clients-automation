@@ -21,19 +21,11 @@ Exhaustive _$ExhaustiveFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ExhaustiveToJson(Exhaustive instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('facetsCount', instance.facetsCount);
-  writeNotNull('facetValues', instance.facetValues);
-  writeNotNull('nbHits', instance.nbHits);
-  writeNotNull('rulesMatch', instance.rulesMatch);
-  writeNotNull('typo', instance.typo);
-  return val;
-}
+Map<String, dynamic> _$ExhaustiveToJson(Exhaustive instance) =>
+    <String, dynamic>{
+      if (instance.facetsCount case final value?) 'facetsCount': value,
+      if (instance.facetValues case final value?) 'facetValues': value,
+      if (instance.nbHits case final value?) 'nbHits': value,
+      if (instance.rulesMatch case final value?) 'rulesMatch': value,
+      if (instance.typo case final value?) 'typo': value,
+    };
