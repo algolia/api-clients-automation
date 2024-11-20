@@ -20,18 +20,9 @@ SaveObjectResponse _$SaveObjectResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SaveObjectResponseToJson(SaveObjectResponse instance) {
-  final val = <String, dynamic>{
-    'createdAt': instance.createdAt,
-    'taskID': instance.taskID,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('objectID', instance.objectID);
-  return val;
-}
+Map<String, dynamic> _$SaveObjectResponseToJson(SaveObjectResponse instance) =>
+    <String, dynamic>{
+      'createdAt': instance.createdAt,
+      'taskID': instance.taskID,
+      if (instance.objectID case final value?) 'objectID': value,
+    };

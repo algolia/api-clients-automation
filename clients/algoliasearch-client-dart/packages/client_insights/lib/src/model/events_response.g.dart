@@ -19,16 +19,8 @@ EventsResponse _$EventsResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$EventsResponseToJson(EventsResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('message', instance.message);
-  writeNotNull('status', instance.status);
-  return val;
-}
+Map<String, dynamic> _$EventsResponseToJson(EventsResponse instance) =>
+    <String, dynamic>{
+      if (instance.message case final value?) 'message': value,
+      if (instance.status case final value?) 'status': value,
+    };

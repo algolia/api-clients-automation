@@ -22,17 +22,9 @@ Personalization _$PersonalizationFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$PersonalizationToJson(Personalization instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('filtersScore', instance.filtersScore);
-  writeNotNull('rankingScore', instance.rankingScore);
-  writeNotNull('score', instance.score);
-  return val;
-}
+Map<String, dynamic> _$PersonalizationToJson(Personalization instance) =>
+    <String, dynamic>{
+      if (instance.filtersScore case final value?) 'filtersScore': value,
+      if (instance.rankingScore case final value?) 'rankingScore': value,
+      if (instance.score case final value?) 'score': value,
+    };

@@ -23,21 +23,12 @@ MultipleBatchRequest _$MultipleBatchRequestFromJson(
     );
 
 Map<String, dynamic> _$MultipleBatchRequestToJson(
-    MultipleBatchRequest instance) {
-  final val = <String, dynamic>{
-    'action': instance.action.toJson(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('body', instance.body);
-  val['indexName'] = instance.indexName;
-  return val;
-}
+        MultipleBatchRequest instance) =>
+    <String, dynamic>{
+      'action': instance.action.toJson(),
+      if (instance.body case final value?) 'body': value,
+      'indexName': instance.indexName,
+    };
 
 const _$ActionEnumMap = {
   Action.addObject: 'addObject',

@@ -23,17 +23,9 @@ SearchForFacetValuesRequest _$SearchForFacetValuesRequestFromJson(
     );
 
 Map<String, dynamic> _$SearchForFacetValuesRequestToJson(
-    SearchForFacetValuesRequest instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('params', instance.params);
-  writeNotNull('facetQuery', instance.facetQuery);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
-  return val;
-}
+        SearchForFacetValuesRequest instance) =>
+    <String, dynamic>{
+      if (instance.params case final value?) 'params': value,
+      if (instance.facetQuery case final value?) 'facetQuery': value,
+      if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
+    };

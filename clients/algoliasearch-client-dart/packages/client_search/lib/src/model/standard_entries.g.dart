@@ -32,17 +32,9 @@ StandardEntries _$StandardEntriesFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$StandardEntriesToJson(StandardEntries instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('plurals', instance.plurals);
-  writeNotNull('stopwords', instance.stopwords);
-  writeNotNull('compounds', instance.compounds);
-  return val;
-}
+Map<String, dynamic> _$StandardEntriesToJson(StandardEntries instance) =>
+    <String, dynamic>{
+      if (instance.plurals case final value?) 'plurals': value,
+      if (instance.stopwords case final value?) 'stopwords': value,
+      if (instance.compounds case final value?) 'compounds': value,
+    };

@@ -26,22 +26,14 @@ HighlightResultOption _$HighlightResultOptionFromJson(
     );
 
 Map<String, dynamic> _$HighlightResultOptionToJson(
-    HighlightResultOption instance) {
-  final val = <String, dynamic>{
-    'value': instance.value,
-    'matchLevel': instance.matchLevel.toJson(),
-    'matchedWords': instance.matchedWords,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('fullyHighlighted', instance.fullyHighlighted);
-  return val;
-}
+        HighlightResultOption instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'matchLevel': instance.matchLevel.toJson(),
+      'matchedWords': instance.matchedWords,
+      if (instance.fullyHighlighted case final value?)
+        'fullyHighlighted': value,
+    };
 
 const _$MatchLevelEnumMap = {
   MatchLevel.none: 'none',

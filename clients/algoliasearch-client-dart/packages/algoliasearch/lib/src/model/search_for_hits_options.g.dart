@@ -22,20 +22,11 @@ SearchForHitsOptions _$SearchForHitsOptionsFromJson(
     );
 
 Map<String, dynamic> _$SearchForHitsOptionsToJson(
-    SearchForHitsOptions instance) {
-  final val = <String, dynamic>{
-    'indexName': instance.indexName,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('type', instance.type?.toJson());
-  return val;
-}
+        SearchForHitsOptions instance) =>
+    <String, dynamic>{
+      'indexName': instance.indexName,
+      if (instance.type?.toJson() case final value?) 'type': value,
+    };
 
 const _$SearchTypeDefaultEnumMap = {
   SearchTypeDefault.default_: 'default',

@@ -221,6 +221,9 @@ tags:
       order determined by your ranking.
 
       Records are schemaless JSON objects.
+
+      When adding or updating many records, check the [indexing rate
+      limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     externalDocs:
       url: >-
         https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/
@@ -2564,6 +2567,10 @@ paths:
 
         To add, update, or replace multiple records, use the [`batch`
         operation](#tag/Records/operation/batch).
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       summary: Add or replace a record
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -3524,16 +3531,29 @@ paths:
       operationId: deleteBy
       x-acl:
         - deleteIndex
-      summary: Delete records matching a query
+      summary: Delete records matching a filter
       description: >
-        This operation doesn't accept empty queries or filters.
+        This operation doesn't accept empty filters.
 
+
+        This operation is resource-intensive.
+
+        You should only use it if you can't get the object IDs of the records
+        you want to delete.
 
         It's more efficient to get a list of object IDs with the [`browse`
         operation](#tag/Search/operation/browse),
 
         and then delete the records using the [`batch`
         operation](#tag/Records/operation/batch).
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+      externalDocs:
+        url: >-
+          https://support.algolia.com/hc/en-us/articles/16385098766353-Should-I-use-the-deleteby-method-for-deleting-records-matching-a-query-
+        description: Should I use the deleteBy method for deleting records.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -3813,9 +3833,12 @@ paths:
       x-acl:
         - deleteIndex
       summary: Delete all records from an index
-      description: >-
+      description: >
         Deletes only the records from an index while keeping settings, synonyms,
         and rules.
+
+        This operation is resource-intensive and subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -4076,11 +4099,13 @@ paths:
         - If the index doesn't exist yet, this method creates a new index.
 
         - You can use any first-level attribute but not nested attributes.
-          If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+          If you specify a nested attribute, this operation replaces its first-level ancestor.
 
         To update an attribute without pushing the entire record, you can use
-        these built-in operations. These operations can be helpful if you don't
-        have access to your initial data.
+        these built-in operations.
+
+        These operations can be helpful if you don't have access to your initial
+        data.
 
 
         - Increment: increment a numeric attribute
@@ -4120,6 +4145,10 @@ paths:
 
         - value: the right-hand side argument to the operation, for example,
         increment or decrement step, value to add or remove.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectID'
@@ -4426,6 +4455,10 @@ paths:
 
         - Actions are equivalent to the individual API requests of the same
         name.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       x-codegen-request-body-name: batchWriteParams
@@ -4853,6 +4886,10 @@ paths:
 
         - Actions are equivalent to the individual API requests of the same
         name.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       summary: Batch indexing operations on multiple indices
       requestBody:
         required: true
@@ -6583,9 +6620,14 @@ paths:
       x-acl:
         - editSettings
       summary: Create or replace synonyms
-      description: |
+      description: >
         If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
+
         Otherwise, existing synonyms are replaced.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ForwardToReplicas'
@@ -9044,6 +9086,10 @@ paths:
         new one.
 
         Otherwise, existing rules are replaced.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       x-codegen-request-body-name: rules
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -16060,6 +16106,8 @@ paths:
 
         - If the destination index doesn't exist yet, it'll be created.
 
+        - This operation is resource-intensive.
+
 
         **Copy**
 
@@ -16095,6 +16143,10 @@ paths:
 
         - Related guide: [Move
         indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:

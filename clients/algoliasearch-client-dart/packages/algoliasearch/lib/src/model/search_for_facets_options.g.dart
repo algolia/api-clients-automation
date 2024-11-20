@@ -26,23 +26,14 @@ SearchForFacetsOptions _$SearchForFacetsOptionsFromJson(
     );
 
 Map<String, dynamic> _$SearchForFacetsOptionsToJson(
-    SearchForFacetsOptions instance) {
-  final val = <String, dynamic>{
-    'facet': instance.facet,
-    'indexName': instance.indexName,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('facetQuery', instance.facetQuery);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
-  val['type'] = instance.type.toJson();
-  return val;
-}
+        SearchForFacetsOptions instance) =>
+    <String, dynamic>{
+      'facet': instance.facet,
+      'indexName': instance.indexName,
+      if (instance.facetQuery case final value?) 'facetQuery': value,
+      if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
+      'type': instance.type.toJson(),
+    };
 
 const _$SearchTypeFacetEnumMap = {
   SearchTypeFacet.facet: 'facet',

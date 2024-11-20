@@ -17,15 +17,6 @@ Cursor _$CursorFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$CursorToJson(Cursor instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('cursor', instance.cursor);
-  return val;
-}
+Map<String, dynamic> _$CursorToJson(Cursor instance) => <String, dynamic>{
+      if (instance.cursor case final value?) 'cursor': value,
+    };

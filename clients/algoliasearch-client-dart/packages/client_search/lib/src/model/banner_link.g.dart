@@ -17,15 +17,7 @@ BannerLink _$BannerLinkFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$BannerLinkToJson(BannerLink instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('url', instance.url);
-  return val;
-}
+Map<String, dynamic> _$BannerLinkToJson(BannerLink instance) =>
+    <String, dynamic>{
+      if (instance.url case final value?) 'url': value,
+    };

@@ -21,17 +21,9 @@ TrendingFacetHit _$TrendingFacetHitFromJson(Map<String, dynamic> json) =>
       fieldKeyMap: const {'score': '_score'},
     );
 
-Map<String, dynamic> _$TrendingFacetHitToJson(TrendingFacetHit instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('_score', instance.score);
-  val['facetName'] = instance.facetName;
-  val['facetValue'] = instance.facetValue;
-  return val;
-}
+Map<String, dynamic> _$TrendingFacetHitToJson(TrendingFacetHit instance) =>
+    <String, dynamic>{
+      if (instance.score case final value?) '_score': value,
+      'facetName': instance.facetName,
+      'facetValue': instance.facetValue,
+    };

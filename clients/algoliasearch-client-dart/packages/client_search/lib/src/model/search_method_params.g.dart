@@ -20,20 +20,11 @@ SearchMethodParams _$SearchMethodParamsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SearchMethodParamsToJson(SearchMethodParams instance) {
-  final val = <String, dynamic>{
-    'requests': instance.requests.toList(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('strategy', instance.strategy?.toJson());
-  return val;
-}
+Map<String, dynamic> _$SearchMethodParamsToJson(SearchMethodParams instance) =>
+    <String, dynamic>{
+      'requests': instance.requests.toList(),
+      if (instance.strategy?.toJson() case final value?) 'strategy': value,
+    };
 
 const _$SearchStrategyEnumMap = {
   SearchStrategy.none: 'none',

@@ -62,39 +62,43 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$BaseIndexSettingsToJson(BaseIndexSettings instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('attributesForFaceting', instance.attributesForFaceting);
-  writeNotNull('replicas', instance.replicas);
-  writeNotNull('paginationLimitedTo', instance.paginationLimitedTo);
-  writeNotNull('unretrievableAttributes', instance.unretrievableAttributes);
-  writeNotNull(
-      'disableTypoToleranceOnWords', instance.disableTypoToleranceOnWords);
-  writeNotNull('attributesToTransliterate', instance.attributesToTransliterate);
-  writeNotNull('camelCaseAttributes', instance.camelCaseAttributes);
-  writeNotNull('decompoundedAttributes', instance.decompoundedAttributes);
-  writeNotNull('indexLanguages',
-      instance.indexLanguages?.map((e) => e.toJson()).toList());
-  writeNotNull('disablePrefixOnAttributes', instance.disablePrefixOnAttributes);
-  writeNotNull('allowCompressionOfIntegerArray',
-      instance.allowCompressionOfIntegerArray);
-  writeNotNull(
-      'numericAttributesForFiltering', instance.numericAttributesForFiltering);
-  writeNotNull('separatorsToIndex', instance.separatorsToIndex);
-  writeNotNull('searchableAttributes', instance.searchableAttributes);
-  writeNotNull('userData', instance.userData);
-  writeNotNull('customNormalization', instance.customNormalization);
-  writeNotNull('attributeForDistinct', instance.attributeForDistinct);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
-  return val;
-}
+Map<String, dynamic> _$BaseIndexSettingsToJson(BaseIndexSettings instance) =>
+    <String, dynamic>{
+      if (instance.attributesForFaceting case final value?)
+        'attributesForFaceting': value,
+      if (instance.replicas case final value?) 'replicas': value,
+      if (instance.paginationLimitedTo case final value?)
+        'paginationLimitedTo': value,
+      if (instance.unretrievableAttributes case final value?)
+        'unretrievableAttributes': value,
+      if (instance.disableTypoToleranceOnWords case final value?)
+        'disableTypoToleranceOnWords': value,
+      if (instance.attributesToTransliterate case final value?)
+        'attributesToTransliterate': value,
+      if (instance.camelCaseAttributes case final value?)
+        'camelCaseAttributes': value,
+      if (instance.decompoundedAttributes case final value?)
+        'decompoundedAttributes': value,
+      if (instance.indexLanguages?.map((e) => e.toJson()).toList()
+          case final value?)
+        'indexLanguages': value,
+      if (instance.disablePrefixOnAttributes case final value?)
+        'disablePrefixOnAttributes': value,
+      if (instance.allowCompressionOfIntegerArray case final value?)
+        'allowCompressionOfIntegerArray': value,
+      if (instance.numericAttributesForFiltering case final value?)
+        'numericAttributesForFiltering': value,
+      if (instance.separatorsToIndex case final value?)
+        'separatorsToIndex': value,
+      if (instance.searchableAttributes case final value?)
+        'searchableAttributes': value,
+      if (instance.userData case final value?) 'userData': value,
+      if (instance.customNormalization case final value?)
+        'customNormalization': value,
+      if (instance.attributeForDistinct case final value?)
+        'attributeForDistinct': value,
+      if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
+    };
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',
