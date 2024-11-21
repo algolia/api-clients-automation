@@ -15,7 +15,7 @@ def main():
     )
     client.add_user_agent("playground")
 
-    print("user_agent", client._config.user_agent.get())
+    print("user_agent", client._config._user_agent.get())
     print("client initialized", client)
 
     try:

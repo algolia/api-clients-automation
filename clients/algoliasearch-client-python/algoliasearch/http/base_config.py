@@ -28,7 +28,7 @@ class BaseConfig:
         self.proxies: Optional[Dict[str, str]] = None
         self.hosts: Optional[HostsCollection] = None
 
-        self.user_agent: UserAgent = UserAgent()
+        self._user_agent: UserAgent = UserAgent()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
@@ -39,7 +39,7 @@ class BaseConfig:
 
     def add_user_agent(self, segment: str, version: Optional[str] = None) -> None:
         """adds a segment to the default user agent, and update the headers sent with each requests as well"""
-        self.user_agent = self.user_agent.add(segment, version)
+        self._user_agent = self._user_agent.add(segment, version)
 
         if self.headers is not None:
-            self.headers["user-agent"] = self.user_agent.get()
+            self.headers["user-agent"] = self._user_agent.get()

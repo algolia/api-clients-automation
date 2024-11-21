@@ -14,7 +14,7 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
     def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
         super().__init__(app_id, api_key)
 
-        self.user_agent = UserAgent().add("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}")
+        self._user_agent = UserAgent().add("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}")
 
         if app_id is None or not app_id:
              raise ValueError("`app_id` is missing.")
@@ -25,7 +25,7 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
         self.headers = {
              "x-algolia-application-id": app_id,
              "x-algolia-api-key": api_key,
-             "user-agent": self.user_agent.get(),
+             "user-agent": self._user_agent.get(),
              "content-type": "application/json",
          }
 
