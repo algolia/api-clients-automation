@@ -20,5 +20,7 @@ class UserAgent:
         return self.value
 
     def add(self, segment: str, version: Optional[str] = __version__) -> Self:
-        self.value += "; {} ({})".format(segment, __version__ if version is None else version)
+        self.value += "; {} ({})".format(
+            segment, __version__ if version is None else version
+        )
         return self
