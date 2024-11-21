@@ -2,6 +2,7 @@ from os import environ
 from typing import Dict, Optional
 
 from algoliasearch.http.hosts import HostsCollection
+from algoliasearch.http.user_agent import UserAgent
 
 
 class BaseConfig:
@@ -26,6 +27,8 @@ class BaseConfig:
         self.headers: Optional[Dict[str, str]] = None
         self.proxies: Optional[Dict[str, str]] = None
         self.hosts: Optional[HostsCollection] = None
+
+        self.user_agent: UserAgent = UserAgent()
 
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
