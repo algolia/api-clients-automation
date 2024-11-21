@@ -13,6 +13,8 @@ def main():
     client = SearchClientSync(
         environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY")
     )
+    client._config.user_agent.add("playground")
+
     print("client initialized", client)
 
     try:
