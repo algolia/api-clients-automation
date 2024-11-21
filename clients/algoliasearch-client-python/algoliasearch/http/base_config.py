@@ -36,3 +36,10 @@ class BaseConfig:
         if self.headers is None:
             self.headers = {}
         self.headers["x-algolia-api-key"] = api_key
+
+    def add_user_agent(self, segment: str, version: Optional[str] = None) -> None:
+        """adds a segment to the default user agent, and update the headers sent with each requests as well"""
+        self.user_agent = self.user_agent.add(segment, version)
+
+        if self.headers is not None:
+            self.headers["user-agent"] = self.user_agent.get()
