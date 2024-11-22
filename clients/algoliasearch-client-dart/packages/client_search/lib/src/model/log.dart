@@ -19,7 +19,7 @@ final class Log {
     required this.ip,
     required this.queryHeaders,
     required this.sha1,
-    required this.nbApiCalls,
+    this.nbApiCalls,
     required this.processingTimeMs,
     this.index,
     this.queryParams,
@@ -65,7 +65,7 @@ final class Log {
 
   /// Number of API requests.
   @JsonKey(name: r'nb_api_calls')
-  final String nbApiCalls;
+  final String? nbApiCalls;
 
   /// Processing time for the query in milliseconds. This doesn't include latency due to the network.
   @JsonKey(name: r'processing_time_ms')

@@ -102,6 +102,10 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         """Sets a new API key to authenticate requests."""
         self._transporter.config.set_client_api_key(api_key)
 
+    {{^isSyncClient}}async {{/isSyncClient}}def add_user_agent(self, segment: str, version: Optional[str] = None) -> None:
+        """adds a segment to the default user agent, and update the headers sent with each requests as well"""
+        self._transporter.config.add_user_agent(segment, version)
+
     {{#isSearchClient}}
 {{> search_helpers}}
     {{/isSearchClient}}
