@@ -1,0 +1,40 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+{{> snippets/import}}
+
+void main() async {
+  // initiate client
+  {{> snippets/init}}
+
+  // read json file from url
+  final datasetRequest = await http.get(
+      Uri.parse('https://dashboard.algolia.com/sample_datasets/movie.json'));
+
+  if (datasetRequest.statusCode == 200) {
+    final moviesData = jsonDecode(datasetRequest.body);
+
+    final batchRequests = <BatchRequest>[];
+
+    for (final movie in moviesData) {
+      batchRequests.add(
+        BatchRequest(action: Action.fromJson('addObject'), body: movie),
+      );
+    }
+
+    // testing algolia method snippet
+    {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+
+    try {
+      // push data to algolia
+      await client.batch(
+        indexName: 'movies_index',
+        batchWriteParams: BatchWriteParams(requests: batchRequests),
+      );
+      print("Successfully indexed records!");
+    } catch (e) {
+      print("Error: ${e.toString()}");
+    }
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
