@@ -2989,7 +2989,6 @@ paths:
                         - ip
                         - query_headers
                         - sha1
-                        - nb_api_calls
                         - processing_time_ms
         '400':
           $ref: '#/components/responses/BadRequest'

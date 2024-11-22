@@ -163,7 +163,7 @@ public class Log {
   }
 
   /** Number of API requests. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getNbApiCalls() {
     return nbApiCalls;
   }
