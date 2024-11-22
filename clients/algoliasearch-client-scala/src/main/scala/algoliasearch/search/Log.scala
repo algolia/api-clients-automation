@@ -78,7 +78,7 @@ case class Log(
     ip: String,
     queryHeaders: String,
     sha1: String,
-    nbApiCalls: String,
+    nbApiCalls: Option[String] = scala.None,
     processingTimeMs: String,
     index: Option[String] = scala.None,
     queryParams: Option[String] = scala.None,
