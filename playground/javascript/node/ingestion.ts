@@ -1,4 +1,4 @@
-import { ApiError, createIterablePromise } from '@algolia/client-common';
+import { ApiError } from '@algolia/client-common';
 import { ingestionClient } from '@algolia/ingestion';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
