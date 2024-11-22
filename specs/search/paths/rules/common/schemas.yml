@@ -33,6 +33,7 @@ rule:
         $ref: '../../../../common/schemas/Rule.yml#/timeRange'
   required:
     - objectID
+    - consequence
 
 condition:
   type: object
