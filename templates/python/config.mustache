@@ -8,13 +8,15 @@ from algoliasearch.http.hosts import (
 )
 from algoliasearch.http.user_agent import UserAgent
 from algoliasearch.http.base_config import BaseConfig
+from algoliasearch import __version__
 
 
 class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
     def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
         super().__init__(app_id, api_key)
 
-        self._user_agent = UserAgent().add("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}")
+        self._user_agent = UserAgent()
+        self.add_user_agent("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}", __version__)
 
         if app_id is None or not app_id:
              raise ValueError("`app_id` is missing.")

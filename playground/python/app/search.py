@@ -14,6 +14,7 @@ def main():
         environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY")
     )
     client.add_user_agent("playground")
+    client.add_user_agent("bar", "baz")
 
     print("user_agent", client._config._user_agent.get())
     print("client initialized", client)
