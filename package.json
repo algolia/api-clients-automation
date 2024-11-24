@@ -36,7 +36,7 @@
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-yml": "1.15.0",
-    "husky": "9.1.6",
+    "husky": "9.1.7",
     "lint-staged": "15.2.10",
     "oxlint": "0.11.1",
     "pinst": "3.0.0",
