@@ -23,7 +23,7 @@
     "https-browserify": "^1.0.0",
     "parcel": "2.13.0",
     "stream-http": "^3.1.0",
-    "typescript": "5.6.3",
+    "typescript": "5.7.2",
     "url": "^0.11.0"
   },
   "@parcel/resolver-default": {
