@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   notification:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 1
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
     permissions:
@@ -38,7 +38,7 @@ jobs:
             _Please do not push any generated code to this pull request._
 
   setup:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       CACHE_VERSION: 1.11 # bump this to run all clients on the CI.
@@ -127,7 +127,7 @@ jobs:
       RUN_MACOS_KOTLIN_BUILD: ${{ steps.gen-matrix.outputs.RUN_MACOS_KOTLIN_BUILD }}
 
   scripts:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
@@ -152,7 +152,7 @@ jobs:
         run: yarn workspace eslint-plugin-automation-custom test
 
   specs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: setup
     steps:
@@ -175,7 +175,7 @@ jobs:
 
   client_gen_javascript:
     timeout-minutes: 15
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - setup
       - specs
@@ -299,7 +299,7 @@ jobs:
 
   client_gen:
     timeout-minutes: 15
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - setup
       - specs
@@ -512,7 +512,7 @@ jobs:
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   codegen:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     needs:
       - setup
@@ -633,7 +633,7 @@ jobs:
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   check_green:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs:
       - codegen
@@ -648,7 +648,7 @@ jobs:
           fi
 
   push_and_release:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     needs:
       - codegen
