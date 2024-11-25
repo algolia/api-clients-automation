@@ -11,7 +11,12 @@
               "pattern": "smartphone",
               "anchoring": "contains"
             }
-          ]
+          ],
+          "consequence": {
+            "params": {
+              "filters": "brand:apple"
+            }
+          }
         },
         {
           "objectID": "a-second-rule-id",
@@ -20,7 +25,12 @@
               "pattern": "apple",
               "anchoring": "contains"
             }
-          ]
+          ],
+          "consequence": {
+            "params": {
+              "filters": "brand:samsung"
+            }
+          }
         }
       ],
       "forwardToReplicas": false,
@@ -37,7 +47,12 @@
               "pattern": "smartphone",
               "anchoring": "contains"
             }
-          ]
+          ],
+          "consequence": {
+            "params": {
+              "filters": "brand:apple"
+            }
+          }
         },
         {
           "objectID": "a-second-rule-id",
@@ -46,7 +61,12 @@
               "pattern": "apple",
               "anchoring": "contains"
             }
-          ]
+          ],
+          "consequence": {
+            "params": {
+              "filters": "brand:samsung"
+            }
+          }
         }
       ],
       "queryParameters": {
