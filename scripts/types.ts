@@ -1,4 +1,4 @@
-import type config from '../config/clients.config.json';
+import config from '../config/clients.config.json' assert { type: 'json' };
 
 import type { CodeSamples } from './specs/types.js';
 
