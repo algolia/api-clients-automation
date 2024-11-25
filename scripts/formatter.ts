@@ -21,7 +21,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
           language,
         });
       } else {
-        await run('dart pub get && melos bs && melos build --no-select && melos lint', {
+        await run('dart pub get && dart pub outdated && melos bs && melos build --no-select && melos lint', {
           cwd,
           language,
         });
