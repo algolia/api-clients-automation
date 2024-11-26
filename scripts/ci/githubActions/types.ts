@@ -24,10 +24,6 @@ export type ClientMatrix = {
      */
     language: string;
     /**
-     * The command to build the clients.
-     */
-    buildCommand: string;
-    /**
      * The root of the test folder.
      */
     testsRootFolder: string;
