@@ -12,6 +12,7 @@ try {
   expect(res, {{#match}}{{> tests/param_value}}{{/match}});
   {{/match.isPrimitive}}
   {{/testResponse}}
+  print('successfully indexed records!');
 } on InterceptionException catch (_) {
   // Ignore InterceptionException
 }
