@@ -81,7 +81,7 @@ class ChopperRequester implements Requester {
   /// Executes the [request] and returns the response as an [HttpResponse].
   Future<Response<Map<String, dynamic>>> execute(HttpRequest request) async {
     final Request chopperRequest = Request(
-      request.method,
+      request.method.toUpperCase(),
       requestUri(request),
       Uri(),
       body: request.body,
