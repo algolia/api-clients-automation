@@ -20,17 +20,10 @@ def main():
     print("client initialized", client)
 
     try:
-        resp = client.search_synonyms("test_Website_django_ci-1732613837.75547")
+        resp = client.search_synonyms("foo")
         print(resp)
-        client.browse_synonyms("test_Website_django_ci-1732613837.75547", lambda _resp: print(_resp))
+        client.browse_synonyms("foo", lambda _resp: print(_resp))
     finally:
         client.close()
 
         print("client closed")
-
-
-main()
-main()
-main()
-main()
-main()
