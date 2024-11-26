@@ -52,11 +52,7 @@ put:
           $ref: 'common/schemas.yml#/rule'
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: 'common/schemas.yml#/updatedRuleResponse'
+      $ref: '../../../common/responses/UpdatedAt.yml'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
