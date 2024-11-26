@@ -334,7 +334,7 @@ jobs:
       - name: Generate clients
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
-      # no need to build the clients here, it will be done in the test Run CTS step anyway.
+      # no need to build the clients here, it will be done in the Run CTS step anyway.
 
       - name: Update composer.lock
         if: ${{ matrix.client.language == 'php' && startsWith(github.head_ref, 'chore/renovateBaseBranch')  && matrix.client.isMainVersion }}
