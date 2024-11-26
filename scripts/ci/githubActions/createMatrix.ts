@@ -83,7 +83,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       language,
       path: matrix[language].path,
       toRun,
-      buildCommand: `yarn cli build clients ${language} ${toRun}`,
       testsRootFolder,
       // We delete tests to ensure the CI only run tests against what changed.
       testsToDelete: `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`,
@@ -112,7 +111,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'javascript':
-        languageMatrix.buildCommand = `cd ${matrix[language].path} && yarn build`;
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/package.json`;
 
         setOutput('JAVASCRIPT_DATA', JSON.stringify(languageMatrix));
