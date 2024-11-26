@@ -441,8 +441,8 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          type: minimal
           language: kotlin
+          version: ${{ fromJSON(needs.setup.outputs.KOTLIN_DATA).version }}
 
       - name: Generate clients
         run: yarn cli generate kotlin ${{ fromJSON(needs.setup.outputs.KOTLIN_DATA).toRun }}
@@ -493,7 +493,6 @@ jobs:
         uses: ./.github/actions/setup
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         with:
-          type: minimal
           language: swift
           version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
 
