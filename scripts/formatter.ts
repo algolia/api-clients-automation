@@ -15,13 +15,13 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       }
       break;
     case 'dart':
-      if (cwd.includes('tests') || cwd.includes('snippets')) {
-        await run('dart pub get && dart fix --apply && dart format .', {
+      if (cwd.includes('clients')) {
+        await run('dart pub get && melos bs && melos build --no-select && melos lint', {
           cwd,
           language,
         });
       } else {
-        await run('dart pub get && melos bs && melos build --no-select && melos lint', {
+        await run('dart pub get && dart fix --apply && dart format .', {
           cwd,
           language,
         });
