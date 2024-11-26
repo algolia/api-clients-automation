@@ -1,0 +1,17 @@
+try {
+  {{#hasResponse}}final res = {{/hasResponse}}await client.{{method}}(
+      {{#parametersWithDataType}}
+      {{> tests/request_param}}
+      {{/parametersWithDataType}}
+  );
+  {{#testResponse}}
+  {{^match.isPrimitive}}
+  expectBody(res, """{{{match.value}}}""");
+  {{/match.isPrimitive}}
+  {{#match.isPrimitive}}
+  expect(res, {{#match}}{{> tests/param_value}}{{/match}});
+  {{/match.isPrimitive}}
+  {{/testResponse}}
+} on InterceptionException catch (_) {
+  // Ignore InterceptionException
+}
