@@ -13,6 +13,6 @@ try {
   {{/match.isPrimitive}}
   {{/testResponse}}
   print('successfully indexed records!');
-} on InterceptionException catch (_) {
-  // Ignore InterceptionException
+} catch(e) {
+ print('Error: $e');
 }
