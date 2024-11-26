@@ -289,18 +289,3 @@ automaticFacetFilter:
         If false, multiple occurences are combined with the logical `AND` operation.
   required:
     - facet
-
-updatedRuleResponse:
-  type: object
-  additionalProperties: false
-  properties:
-    objectID:
-      $ref: '../../../../common/parameters.yml#/ruleID'
-    updatedAt:
-      $ref: '../../../../common/responses/common.yml#/updatedAt'
-    taskID:
-      $ref: '../../../../common/responses/common.yml#/taskID'
-  required:
-    - objectID
-    - updatedAt
-    - taskID
