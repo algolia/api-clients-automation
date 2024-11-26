@@ -20,14 +20,10 @@ def main():
     print("client initialized", client)
 
     try:
-        resp = client.delete_by(
-            index_name="foo", delete_by_params={"filters": "brand:name"}
-        )
-        print(resp.to_json())
+        resp = client.search_synonyms("foo")
+        print(resp)
+        client.browse_synonyms("foo", lambda _resp: print(_resp))
     finally:
         client.close()
 
         print("client closed")
-
-
-main()
