@@ -21,6 +21,8 @@ void main() async {
       );
     }
 
+    {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+
     try {
       // push data to algolia
       await client.batch(
