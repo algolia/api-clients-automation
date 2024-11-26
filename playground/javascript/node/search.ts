@@ -17,11 +17,10 @@ console.log('version', apiClientVersion, 'requests', requests);
 
 async function testSearch() {
   try {
-    const res = await client.browseRules({
+    const res = await client.saveRules({
       indexName: 'cts_e2e_search_facet',
-      aggregator: (resp: any) => {
-        console.log(resp);
-      },
+      rules:[{objectID:'foo', consequence:{params:{hitsPerPage:30}}}],
+      forwardToReplicas:true,
     });
 
     console.log(`[OK]`, res);

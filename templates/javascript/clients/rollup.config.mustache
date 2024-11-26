@@ -2,6 +2,7 @@ export default [
   {
     input: 'dist/{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.min.js',
     external: ['dom'],
+    cache: false,
     output: {
       esModule: false,
       file: 'dist/{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.umd.js',

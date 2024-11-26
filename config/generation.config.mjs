@@ -81,6 +81,7 @@ export const patterns = [
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/vitest.workspace.ts',
 
   'tests/output/javascript/package.json',
+  '!tests/output/javascript/yarn.lock',
 
   // Kotlin
   '!clients/algoliasearch-client-kotlin/**',
