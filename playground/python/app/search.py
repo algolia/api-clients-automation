@@ -20,14 +20,17 @@ def main():
     print("client initialized", client)
 
     try:
-        resp = client.delete_by(
-            index_name="foo", delete_by_params={"filters": "brand:name"}
-        )
-        print(resp.to_json())
+        resp = client.search_synonyms("test_Website_django_ci-1732613837.75547")
+        print(resp)
+        client.browse_synonyms("test_Website_django_ci-1732613837.75547", lambda _resp: print(_resp))
     finally:
         client.close()
 
         print("client closed")
 
 
+main()
+main()
+main()
+main()
 main()
