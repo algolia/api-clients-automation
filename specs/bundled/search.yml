@@ -7480,6 +7480,7 @@ components:
             $ref: '#/components/schemas/timeRange'
       required:
         - objectID
+        - consequence
     updatedRuleResponse:
       type: object
       additionalProperties: false

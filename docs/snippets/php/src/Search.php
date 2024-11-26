@@ -1813,6 +1813,9 @@ class SnippetSearchClient
                         'anchoring' => 'contains',
                     ],
                 ],
+                'consequence' => ['params' => ['filters' => 'brand:xiaomi',
+                ],
+                ],
             ],
         );
 
@@ -1843,6 +1846,9 @@ class SnippetSearchClient
                             'anchoring' => 'contains',
                         ],
                     ],
+                    'consequence' => ['params' => ['filters' => 'brand:apple',
+                    ],
+                    ],
                 ],
 
                 ['objectID' => 'a-second-rule-id',
@@ -1850,6 +1856,9 @@ class SnippetSearchClient
                         ['pattern' => 'apple',
                             'anchoring' => 'contains',
                         ],
+                    ],
+                    'consequence' => ['params' => ['filters' => 'brand:samsung',
+                    ],
                     ],
                 ],
             ],

@@ -2061,7 +2061,9 @@ func SnippetForSaveRuleOfSearch() {
 	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
 		"<YOUR_INDEX_NAME>", "id1",
 		search.NewEmptyRule().SetObjectID("id1").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}),
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi"))),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -2092,8 +2094,12 @@ func SnippetForSaveRulesOfSearch() {
 	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
 		"<YOUR_INDEX_NAME>",
 		[]search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))})},
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
 	).WithForwardToReplicas(false).WithClearExistingRules(true))
 	if err != nil {
 		// handle the eventual error

@@ -1177,7 +1177,8 @@ final class SearchClientSnippet {
             objectID: "id1",
             rule: Rule(
                 objectID: "id1",
-                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:xiaomi"))
             )
         )
         // >LOG
@@ -1198,11 +1199,13 @@ final class SearchClientSnippet {
             rules: [
                 Rule(
                     objectID: "a-rule-id",
-                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)]
+                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
                 ),
                 Rule(
                     objectID: "a-second-rule-id",
-                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:samsung"))
                 ),
             ],
             forwardToReplicas: false,

@@ -1139,12 +1139,20 @@ describe('saveRule', () => {
     const req = (await client.saveRule({
       indexName: 'indexName',
       objectID: 'id1',
-      rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
+      rule: {
+        objectID: 'id1',
+        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+        consequence: { params: { filters: 'brand:xiaomi' } },
+      },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/rules/id1');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] });
+    expect(req.data).toEqual({
+      objectID: 'id1',
+      conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+      consequence: { params: { filters: 'brand:xiaomi' } },
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -1218,8 +1226,16 @@ describe('saveRules', () => {
     const req = (await client.saveRules({
       indexName: '<YOUR_INDEX_NAME>',
       rules: [
-        { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
-        { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
+        {
+          objectID: 'a-rule-id',
+          conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+          consequence: { params: { filters: 'brand:apple' } },
+        },
+        {
+          objectID: 'a-second-rule-id',
+          conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+          consequence: { params: { filters: 'brand:samsung' } },
+        },
       ],
       forwardToReplicas: false,
       clearExistingRules: true,
@@ -1228,8 +1244,16 @@ describe('saveRules', () => {
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
-      { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
-      { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
+      {
+        objectID: 'a-rule-id',
+        conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+        consequence: { params: { filters: 'brand:apple' } },
+      },
+      {
+        objectID: 'a-second-rule-id',
+        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+        consequence: { params: { filters: 'brand:samsung' } },
+      },
     ]);
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'false', clearExistingRules: 'true' });
   });

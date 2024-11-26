@@ -1412,7 +1412,11 @@ export async function snippetForSaveRule(): Promise<void> {
   const response = await client.saveRule({
     indexName: 'indexName',
     objectID: 'id1',
-    rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
+    rule: {
+      objectID: 'id1',
+      conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+      consequence: { params: { filters: 'brand:xiaomi' } },
+    },
   });
 
   // >LOG
@@ -1434,8 +1438,16 @@ export async function snippetForSaveRules(): Promise<void> {
   const response = await client.saveRules({
     indexName: '<YOUR_INDEX_NAME>',
     rules: [
-      { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
-      { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
+      {
+        objectID: 'a-rule-id',
+        conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+        consequence: { params: { filters: 'brand:apple' } },
+      },
+      {
+        objectID: 'a-second-rule-id',
+        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+        consequence: { params: { filters: 'brand:samsung' } },
+      },
     ],
     forwardToReplicas: false,
     clearExistingRules: true,
