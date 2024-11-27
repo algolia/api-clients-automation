@@ -568,43 +568,45 @@ public partial class SearchClient : ISearchClient
   /// <inheritdoc/>
   public async Task<List<BatchResponse>> SaveObjectsAsync<T>(string indexName, IEnumerable<T> objects,
     bool waitForTasks = false,
+    int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default) where T : class
   {
-    return await ChunkedBatchAsync(indexName, objects, Action.AddObject, waitForTasks, 1000, options, cancellationToken).ConfigureAwait(false);
+    return await ChunkedBatchAsync(indexName, objects, Action.AddObject, waitForTasks, batchSize, options, cancellationToken).ConfigureAwait(false);
   }
 
   /// <inheritdoc/>
-  public List<BatchResponse> SaveObjects<T>(string indexName, IEnumerable<T> objects, bool waitForTasks = false, RequestOptions options = null,
+  public List<BatchResponse> SaveObjects<T>(string indexName, IEnumerable<T> objects, bool waitForTasks = false, int batchSize = 1000, RequestOptions options = null,
     CancellationToken cancellationToken = default) where T : class =>
-    AsyncHelper.RunSync(() => SaveObjectsAsync(indexName, objects, waitForTasks, options, cancellationToken));
+    AsyncHelper.RunSync(() => SaveObjectsAsync(indexName, objects, waitForTasks, batchSize, options, cancellationToken));
 
   /// <inheritdoc/>
   public async Task<List<BatchResponse>> DeleteObjectsAsync(string indexName, IEnumerable<String> objectIDs,
     bool waitForTasks = false,
+    int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default)
   {
-    return await ChunkedBatchAsync(indexName, objectIDs.Select(id => new { objectID = id }), Action.DeleteObject, waitForTasks, 1000, options, cancellationToken).ConfigureAwait(false);
+    return await ChunkedBatchAsync(indexName, objectIDs.Select(id => new { objectID = id }), Action.DeleteObject, waitForTasks, batchSize, options, cancellationToken).ConfigureAwait(false);
   }
 
   /// <inheritdoc/>
-  public List<BatchResponse> DeleteObjects(string indexName, IEnumerable<String> objectIDs, bool waitForTasks = false, RequestOptions options = null,
+  public List<BatchResponse> DeleteObjects(string indexName, IEnumerable<String> objectIDs, bool waitForTasks = false, int batchSize = 1000, RequestOptions options = null,
     CancellationToken cancellationToken = default) =>
-    AsyncHelper.RunSync(() => DeleteObjectsAsync(indexName, objectIDs, waitForTasks, options, cancellationToken));
+    AsyncHelper.RunSync(() => DeleteObjectsAsync(indexName, objectIDs, waitForTasks, batchSize, options, cancellationToken));
 
   /// <inheritdoc/>
-  public async Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, bool waitForTasks = false,
+  public async Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, bool waitForTasks = false, int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default) where T : class
   {
-    return await ChunkedBatchAsync(indexName, objects, createIfNotExists ? Action.PartialUpdateObject : Action.PartialUpdateObjectNoCreate, waitForTasks, 1000, options, cancellationToken).ConfigureAwait(false);
+    return await ChunkedBatchAsync(indexName, objects, createIfNotExists ? Action.PartialUpdateObject : Action.PartialUpdateObjectNoCreate, waitForTasks, batchSize, options, cancellationToken).ConfigureAwait(false);
   }
 
   /// <inheritdoc/>
-  public List<BatchResponse> PartialUpdateObjects<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, bool waitForTasks = false,
+  public List<BatchResponse> PartialUpdateObjects<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, bool waitForTasks = false, int batchSize = 1000,
     RequestOptions options = null, CancellationToken cancellationToken = default) where T : class =>
-    AsyncHelper.RunSync(() => PartialUpdateObjectsAsync(indexName, objects, createIfNotExists, waitForTasks, options, cancellationToken));
+    AsyncHelper.RunSync(() => PartialUpdateObjectsAsync(indexName, objects, createIfNotExists, waitForTasks, batchSize, options, cancellationToken));
 
   private static async Task<List<TU>> CreateIterable<TU>(Func<TU, Task<TU>> executeQuery,
     Func<TU, bool> stopCondition)
