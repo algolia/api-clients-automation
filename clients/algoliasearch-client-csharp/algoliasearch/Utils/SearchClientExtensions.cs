@@ -167,6 +167,7 @@ public partial interface ISearchClient
   /// <param name="indexName">The index in which to perform the request.</param>
   /// <param name="objects">The list of `objects` to store in the given Algolia `indexName`.</param>
   /// <param name="waitForTasks">Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable..</param>
+  /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <typeparam name="T"></typeparam>
@@ -180,6 +181,7 @@ public partial interface ISearchClient
   /// <param name="indexName">The index in which to perform the request.</param>
   /// <param name="objectIDs">The list of `objectIDs` to remove from the given Algolia `indexName`.</param>
   /// <param name="waitForTasks">Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable..</param>
+  /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   Task<List<BatchResponse>> DeleteObjectsAsync(string indexName, IEnumerable<String> objectIDs, bool waitForTasks = false, RequestOptions options = null, CancellationToken cancellationToken = default);
@@ -193,6 +195,7 @@ public partial interface ISearchClient
   /// <param name="objects">The list of `objects` to update in the given Algolia `indexName`.</param>
   /// <param name="createIfNotExists">To be provided if non-existing objects are passed, otherwise, the call will fail.</param>
   /// <param name="waitForTasks">Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable..</param>
+  /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists, bool waitForTasks = false, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class;
