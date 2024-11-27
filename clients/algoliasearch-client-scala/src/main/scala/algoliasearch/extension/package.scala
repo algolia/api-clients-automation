@@ -254,6 +254,8 @@ package object extension {
       *   The list of objects to save.
       * @param waitForTasks
       *   Whether to wait for the tasks to complete.
+      * @param batchSize
+      *   The size of the batch. Default is 1000.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -263,9 +265,10 @@ package object extension {
         indexName: String,
         objects: Seq[Any],
         waitForTasks: Boolean = false,
+        batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, objects, Action.AddObject, waitForTasks, 1000, requestOptions)
+      chunkedBatch(indexName, objects, Action.AddObject, waitForTasks, batchSize, requestOptions)
     }
 
     /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which
@@ -277,6 +280,8 @@ package object extension {
       *   The list of objectIDs to delete.
       * @param waitForTasks
       *   Whether to wait for the tasks to complete.
+      * @param batchSize
+      *   The size of the batch. Default is 1000.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -286,6 +291,7 @@ package object extension {
         indexName: String,
         objectIDs: Seq[String],
         waitForTasks: Boolean = false,
+        batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
@@ -293,7 +299,7 @@ package object extension {
         objectIDs.map(id => new { val objectID: String = id }),
         Action.DeleteObject,
         waitForTasks,
-        1000,
+        batchSize,
         requestOptions
       )
     }
@@ -309,6 +315,8 @@ package object extension {
       *   To be provided if non-existing objects are passed, otherwise, the call will fail.
       * @param waitForTasks
       *   Whether to wait for the tasks to complete.
+      * @param batchSize
+      *   The size of the batch. Default is 1000.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -319,6 +327,7 @@ package object extension {
         objects: Seq[Any],
         createIfNotExists: Boolean = false,
         waitForTasks: Boolean = false,
+        batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
@@ -326,7 +335,7 @@ package object extension {
         objects,
         if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
         waitForTasks,
-        1000,
+        batchSize,
         requestOptions
       )
     }
