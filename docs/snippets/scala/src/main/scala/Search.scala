@@ -1355,6 +1355,13 @@ class SnippetSearchClient {
               anchoring = Some(Anchoring.withName("contains"))
             )
           )
+        ),
+        consequence = Consequence(
+          params = Some(
+            ConsequenceParams(
+              filters = Some("brand:xiaomi")
+            )
+          )
         )
       )
     )
@@ -1387,6 +1394,13 @@ class SnippetSearchClient {
                 anchoring = Some(Anchoring.withName("contains"))
               )
             )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("brand:apple")
+              )
+            )
           )
         ),
         Rule(
@@ -1396,6 +1410,13 @@ class SnippetSearchClient {
               Condition(
                 pattern = Some("apple"),
                 anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("brand:samsung")
               )
             )
           )

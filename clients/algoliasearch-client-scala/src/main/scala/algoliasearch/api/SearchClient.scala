@@ -68,7 +68,6 @@ import algoliasearch.search.SynonymHit
 import algoliasearch.search.UpdateApiKeyResponse
 import algoliasearch.search.UpdatedAtResponse
 import algoliasearch.search.UpdatedAtWithObjectIdResponse
-import algoliasearch.search.UpdatedRuleResponse
 import algoliasearch.search.UserId
 import algoliasearch.search._
 import algoliasearch.ApiClient
@@ -1363,7 +1362,7 @@ class SearchClient(
       rule: Rule,
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[UpdatedRuleResponse] = Future {
+  )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `saveRule`.")
     requireNotNull(rule, "Parameter `rule` is required when calling `saveRule`.")
@@ -1375,7 +1374,7 @@ class SearchClient(
       .withBody(rule)
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[UpdatedRuleResponse](request, requestOptions)
+    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia creates a new one.

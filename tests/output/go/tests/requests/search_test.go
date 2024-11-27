@@ -1495,7 +1495,9 @@ func TestSearch_SaveRule(t *testing.T) {
 		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
 			"indexName", "id1",
 			search.NewEmptyRule().SetObjectID("id1").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}),
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi"))),
 		))
 		require.NoError(t, err)
 
@@ -1503,7 +1505,7 @@ func TestSearch_SaveRule(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}`)
+		ja.Assertf(*echo.Body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}`)
 	})
 	t.Run("saveRule with all parameters", func(t *testing.T) {
 		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
@@ -1546,8 +1548,12 @@ func TestSearch_SaveRules(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
 			"<YOUR_INDEX_NAME>",
 			[]search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))})},
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
 		).WithForwardToReplicas(false).WithClearExistingRules(true))
 		require.NoError(t, err)
 
@@ -1555,7 +1561,7 @@ func TestSearch_SaveRules(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]`)
+		ja.Assertf(*echo.Body, `[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"false","clearExistingRules":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))

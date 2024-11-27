@@ -1506,6 +1506,11 @@ void snippetForsaveRule() async {
           anchoring: Anchoring.fromJson("contains"),
         ),
       ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          filters: "brand:xiaomi",
+        ),
+      ),
     ),
   );
   // >LOG
@@ -1533,6 +1538,11 @@ void snippetForsaveRules() async {
             anchoring: Anchoring.fromJson("contains"),
           ),
         ],
+        consequence: Consequence(
+          params: ConsequenceParams(
+            filters: "brand:apple",
+          ),
+        ),
       ),
       Rule(
         objectID: "a-second-rule-id",
@@ -1542,6 +1552,11 @@ void snippetForsaveRules() async {
             anchoring: Anchoring.fromJson("contains"),
           ),
         ],
+        consequence: Consequence(
+          params: ConsequenceParams(
+            filters: "brand:samsung",
+          ),
+        ),
       ),
     ],
     forwardToReplicas: false,

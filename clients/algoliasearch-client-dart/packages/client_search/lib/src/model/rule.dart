@@ -14,7 +14,7 @@ final class Rule {
   const Rule({
     required this.objectID,
     this.conditions,
-    this.consequence,
+    required this.consequence,
     this.description,
     this.enabled,
     this.validity,
@@ -29,7 +29,7 @@ final class Rule {
   final List<Condition>? conditions;
 
   @JsonKey(name: r'consequence')
-  final Consequence? consequence;
+  final Consequence consequence;
 
   /// Description of the rule's purpose to help you distinguish between different rules.
   @JsonKey(name: r'description')
