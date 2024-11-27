@@ -9031,11 +9031,7 @@ paths:
               $ref: '#/components/schemas/rule'
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/updatedRuleResponse'
+          $ref: '#/components/responses/UpdatedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -20548,20 +20544,6 @@ components:
       required:
         - objectID
         - consequence
-    updatedRuleResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        objectID:
-          $ref: '#/components/schemas/ruleID'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        taskID:
-          $ref: '#/components/schemas/taskID'
-      required:
-        - objectID
-        - updatedAt
-        - taskID
     parameters_query:
       type: string
       description: Search query for rules.

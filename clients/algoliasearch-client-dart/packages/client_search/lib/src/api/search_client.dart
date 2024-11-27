@@ -62,7 +62,6 @@ import 'package:algolia_client_search/src/model/synonym_hit.dart';
 import 'package:algolia_client_search/src/model/update_api_key_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_with_object_id_response.dart';
-import 'package:algolia_client_search/src/model/updated_rule_response.dart';
 import 'package:algolia_client_search/src/model/user_id.dart';
 
 final class SearchClient implements ApiClient {
@@ -1770,7 +1769,7 @@ final class SearchClient implements ApiClient {
   /// * [rule]
   /// * [forwardToReplicas] Whether changes are applied to replica indices.
   /// * [requestOptions] additional request configuration.
-  Future<UpdatedRuleResponse> saveRule({
+  Future<UpdatedAtResponse> saveRule({
     required String indexName,
     required String objectID,
     required Rule rule,
@@ -1801,9 +1800,9 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
-    return deserialize<UpdatedRuleResponse, UpdatedRuleResponse>(
+    return deserialize<UpdatedAtResponse, UpdatedAtResponse>(
       response,
-      'UpdatedRuleResponse',
+      'UpdatedAtResponse',
       growable: true,
     );
   }
