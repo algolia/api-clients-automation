@@ -2041,7 +2041,7 @@ class SearchClient
      * @param array  $rule      rule (required)
      *                          - $rule['objectID'] => (string) Unique identifier of a rule object. (required)
      *                          - $rule['conditions'] => (array) Conditions that trigger a rule.  Some consequences require specific conditions or don't require any condition. For more information, see [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
-     *                          - $rule['consequence'] => (array)
+     *                          - $rule['consequence'] => (array)  (required)
      *                          - $rule['description'] => (string) Description of the rule's purpose to help you distinguish between different rules.
      *                          - $rule['enabled'] => (bool) Whether the rule is active.
      *                          - $rule['validity'] => (array) Time periods when the rule is active.
@@ -2051,7 +2051,7 @@ class SearchClient
      * @param bool  $forwardToReplicas Whether changes are applied to replica indices. (optional)
      * @param array $requestOptions    the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedRuleResponse|array<string, mixed>
+     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|array<string, mixed>
      */
     public function saveRule($indexName, $objectID, $rule, $forwardToReplicas = null, $requestOptions = [])
     {

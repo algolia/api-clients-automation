@@ -4218,7 +4218,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(
+  public UpdatedAtResponse saveRule(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4239,7 +4239,7 @@ public class SearchClient extends ApiClient {
    * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule, Boolean forwardToReplicas)
+  public UpdatedAtResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule, Boolean forwardToReplicas)
     throws AlgoliaRuntimeException {
     return this.saveRule(indexName, objectID, rule, forwardToReplicas, null);
   }
@@ -4256,12 +4256,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(
-    @Nonnull String indexName,
-    @Nonnull String objectID,
-    @Nonnull Rule rule,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public UpdatedAtResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     return this.saveRule(indexName, objectID, rule, null, requestOptions);
   }
 
@@ -4275,7 +4271,7 @@ public class SearchClient extends ApiClient {
    * @param rule (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
+  public UpdatedAtResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
     throws AlgoliaRuntimeException {
     return this.saveRule(indexName, objectID, rule, null, null);
   }
@@ -4293,7 +4289,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4312,7 +4308,7 @@ public class SearchClient extends ApiClient {
       .setBody(rule)
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<UpdatedRuleResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
   }
 
   /**
@@ -4326,7 +4322,7 @@ public class SearchClient extends ApiClient {
    * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4347,7 +4343,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4366,7 +4362,7 @@ public class SearchClient extends ApiClient {
    * @param rule (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
     throws AlgoliaRuntimeException {
     return this.saveRuleAsync(indexName, objectID, rule, null, null);
   }

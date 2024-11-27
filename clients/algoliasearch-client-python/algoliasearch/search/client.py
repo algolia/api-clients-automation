@@ -129,7 +129,6 @@ from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
 from algoliasearch.search.models.updated_at_with_object_id_response import (
     UpdatedAtWithObjectIdResponse,
 )
-from algoliasearch.search.models.updated_rule_response import UpdatedRuleResponse
 from algoliasearch.search.models.user_id import UserId
 
 
@@ -349,13 +348,17 @@ class SearchClient:
         self,
         index_name: str,
         aggregator: Callable[[BrowseResponse], None],
-        browse_params: BrowseParamsObject = BrowseParamsObject(),
+        browse_params: Optional[BrowseParamsObject] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
-        browse_params.hits_per_page = browse_params.hits_per_page or 1000
+        if browse_params is None:
+            browse_params = BrowseParamsObject(hits_per_page=1000)
+
+        if browse_params.hits_per_page is None:
+            browse_params.hits_per_page = 1000
 
         async def _func(_prev: Optional[BrowseResponse]) -> BrowseResponse:
             if _prev is not None and _prev.cursor is not None:
@@ -376,14 +379,18 @@ class SearchClient:
         self,
         index_name: str,
         aggregator: Callable[[SearchRulesResponse], None],
-        search_rules_params: SearchRulesParams = SearchRulesParams(hits_per_page=1000),
+        search_rules_params: Optional[SearchRulesParams] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRulesResponse:
         """
         Helper: Iterate on the `search_rules` method of the client to allow aggregating rules of an index.
         """
+        if search_rules_params is None:
+            search_rules_params = SearchRulesParams(hits_per_page=1000)
+
         if search_rules_params.hits_per_page is None:
             search_rules_params.hits_per_page = 1000
+
         hits_per_page = search_rules_params.hits_per_page
 
         async def _func(_prev: Optional[SearchRulesResponse]) -> SearchRulesResponse:
@@ -405,14 +412,14 @@ class SearchClient:
         self,
         index_name: str,
         aggregator: Callable[[SearchSynonymsResponse], None],
-        search_synonyms_params: SearchSynonymsParams = SearchSynonymsParams(
-            hits_per_page=1000
-        ),
+        search_synonyms_params: Optional[SearchSynonymsParams] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchSynonymsResponse:
         """
         Helper: Iterate on the `search_synonyms` method of the client to allow aggregating synonyms of an index.
         """
+        if search_synonyms_params is None:
+            search_synonyms_params = SearchSynonymsParams(hits_per_page=1000, page=0)
         hits_per_page = 1000
         page = search_synonyms_params.page or 0
         search_synonyms_params.hits_per_page = hits_per_page
@@ -439,13 +446,13 @@ class SearchClient:
     async def generate_secured_api_key(
         self,
         parent_api_key: str,
-        restrictions: Optional[
-            Union[dict, SecuredApiKeyRestrictions]
-        ] = SecuredApiKeyRestrictions(),
+        restrictions: Optional[Union[dict, SecuredApiKeyRestrictions]] = None,
     ) -> str:
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
         """
+        if restrictions is None:
+            restrictions = SecuredApiKeyRestrictions()
         restrictions_dict = {}
         if isinstance(restrictions, SecuredApiKeyRestrictions):
             restrictions_dict = restrictions.to_dict()
@@ -4037,7 +4044,7 @@ class SearchClient:
             Field(description="Whether changes are applied to replica indices."),
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> UpdatedRuleResponse:
+    ) -> UpdatedAtResponse:
         """
         If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing rule is replaced.  To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
 
@@ -4053,12 +4060,12 @@ class SearchClient:
         :param forward_to_replicas: Whether changes are applied to replica indices.
         :type forward_to_replicas: bool
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the deserialized response in a 'UpdatedRuleResponse' result object.
+        :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
         resp = await self.save_rule_with_http_info(
             index_name, object_id, rule, forward_to_replicas, request_options
         )
-        return resp.deserialize(UpdatedRuleResponse, resp.raw_data)
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     async def save_rules_with_http_info(
         self,
@@ -5365,13 +5372,17 @@ class SearchClientSync:
         self,
         index_name: str,
         aggregator: Callable[[BrowseResponse], None],
-        browse_params: BrowseParamsObject = BrowseParamsObject(),
+        browse_params: Optional[BrowseParamsObject] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
-        browse_params.hits_per_page = browse_params.hits_per_page or 1000
+        if browse_params is None:
+            browse_params = BrowseParamsObject(hits_per_page=1000)
+
+        if browse_params.hits_per_page is None:
+            browse_params.hits_per_page = 1000
 
         def _func(_prev: Optional[BrowseResponse]) -> BrowseResponse:
             if _prev is not None and _prev.cursor is not None:
@@ -5392,14 +5403,18 @@ class SearchClientSync:
         self,
         index_name: str,
         aggregator: Callable[[SearchRulesResponse], None],
-        search_rules_params: SearchRulesParams = SearchRulesParams(hits_per_page=1000),
+        search_rules_params: Optional[SearchRulesParams] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchRulesResponse:
         """
         Helper: Iterate on the `search_rules` method of the client to allow aggregating rules of an index.
         """
+        if search_rules_params is None:
+            search_rules_params = SearchRulesParams(hits_per_page=1000)
+
         if search_rules_params.hits_per_page is None:
             search_rules_params.hits_per_page = 1000
+
         hits_per_page = search_rules_params.hits_per_page
 
         def _func(_prev: Optional[SearchRulesResponse]) -> SearchRulesResponse:
@@ -5421,14 +5436,14 @@ class SearchClientSync:
         self,
         index_name: str,
         aggregator: Callable[[SearchSynonymsResponse], None],
-        search_synonyms_params: SearchSynonymsParams = SearchSynonymsParams(
-            hits_per_page=1000
-        ),
+        search_synonyms_params: Optional[SearchSynonymsParams] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SearchSynonymsResponse:
         """
         Helper: Iterate on the `search_synonyms` method of the client to allow aggregating synonyms of an index.
         """
+        if search_synonyms_params is None:
+            search_synonyms_params = SearchSynonymsParams(hits_per_page=1000, page=0)
         hits_per_page = 1000
         page = search_synonyms_params.page or 0
         search_synonyms_params.hits_per_page = hits_per_page
@@ -5453,13 +5468,13 @@ class SearchClientSync:
     def generate_secured_api_key(
         self,
         parent_api_key: str,
-        restrictions: Optional[
-            Union[dict, SecuredApiKeyRestrictions]
-        ] = SecuredApiKeyRestrictions(),
+        restrictions: Optional[Union[dict, SecuredApiKeyRestrictions]] = None,
     ) -> str:
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
         """
+        if restrictions is None:
+            restrictions = SecuredApiKeyRestrictions()
         restrictions_dict = {}
         if isinstance(restrictions, SecuredApiKeyRestrictions):
             restrictions_dict = restrictions.to_dict()
@@ -9027,7 +9042,7 @@ class SearchClientSync:
             Field(description="Whether changes are applied to replica indices."),
         ] = None,
         request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> UpdatedRuleResponse:
+    ) -> UpdatedAtResponse:
         """
         If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing rule is replaced.  To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
 
@@ -9043,12 +9058,12 @@ class SearchClientSync:
         :param forward_to_replicas: Whether changes are applied to replica indices.
         :type forward_to_replicas: bool
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the deserialized response in a 'UpdatedRuleResponse' result object.
+        :return: Returns the deserialized response in a 'UpdatedAtResponse' result object.
         """
         resp = self.save_rule_with_http_info(
             index_name, object_id, rule, forward_to_replicas, request_options
         )
-        return resp.deserialize(UpdatedRuleResponse, resp.raw_data)
+        return resp.deserialize(UpdatedAtResponse, resp.raw_data)
 
     def save_rules_with_http_info(
         self,

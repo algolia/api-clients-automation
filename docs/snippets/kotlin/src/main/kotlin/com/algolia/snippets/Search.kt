@@ -1702,6 +1702,11 @@ class SnippetSearchClient {
             anchoring = Anchoring.entries.first { it.value == "contains" },
           ),
         ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            filters = "brand:xiaomi",
+          ),
+        ),
       ),
     )
 
@@ -1730,6 +1735,11 @@ class SnippetSearchClient {
               anchoring = Anchoring.entries.first { it.value == "contains" },
             ),
           ),
+          consequence = Consequence(
+            params = ConsequenceParams(
+              filters = "brand:apple",
+            ),
+          ),
         ),
         Rule(
           objectID = "a-second-rule-id",
@@ -1737,6 +1747,11 @@ class SnippetSearchClient {
             Condition(
               pattern = "apple",
               anchoring = Anchoring.entries.first { it.value == "contains" },
+            ),
+          ),
+          consequence = Consequence(
+            params = ConsequenceParams(
+              filters = "brand:samsung",
             ),
           ),
         ),

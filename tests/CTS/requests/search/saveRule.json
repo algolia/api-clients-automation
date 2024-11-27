@@ -11,7 +11,12 @@
             "pattern": "apple",
             "anchoring": "contains"
           }
-        ]
+        ],
+        "consequence": {
+          "params": {
+            "filters": "brand:xiaomi"
+          }
+        }
       }
     },
     "request": {
@@ -24,7 +29,12 @@
             "pattern": "apple",
             "anchoring": "contains"
           }
-        ]
+        ],
+        "consequence": {
+          "params": {
+            "filters": "brand:xiaomi"
+          }
+        }
       }
     }
   },

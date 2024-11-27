@@ -1568,7 +1568,10 @@ def snippet_for_save_rule
     "id1",
     Algolia::Search::Rule.new(
       object_id: "id1",
-      conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+      conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(filters: "brand:xiaomi")
+      )
     )
   )
 
@@ -1595,11 +1598,17 @@ def snippet_for_save_rules
     [
       Algolia::Search::Rule.new(
         object_id: "a-rule-id",
-        conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")]
+        conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
+        )
       ),
       Algolia::Search::Rule.new(
         object_id: "a-second-rule-id",
-        conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+        conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
+        )
       )
     ],
     false,
