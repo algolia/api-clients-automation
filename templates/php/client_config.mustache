@@ -43,24 +43,6 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
         return new static($config);
     }
 
-    public function getDefaultConfiguration()
-    {
-        return [
-            'appId' => '',
-            'apiKey' => '',
-            'hosts' => null,
-            'hasFullHosts' => false,
-            'readTimeout' => $this->defaultReadTimeout,
-            'writeTimeout' => $this->defaultWriteTimeout,
-            'connectTimeout' => $this->defaultConnectTimeout,
-            'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
-            'defaultMaxRetries' => $this->defaultMaxRetries,
-            'defaultHeaders' => [],
-            'defaultForwardToReplicas' => null,
-            'batchSize' => 1000,
-        ];
-    }
-
     public function getWaitTaskTimeBeforeRetry()
     {
         return $this->config['waitTaskTimeBeforeRetry'];
@@ -71,4 +53,24 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
         return $this->config['defaultMaxRetries'];
     }
     {{/isSearchClient}}
+
+    public function getDefaultConfiguration()
+    {
+        return [
+            'appId' => '',
+            'apiKey' => '',
+            'hosts' => null,
+            'hasFullHosts' => false,
+            'readTimeout' => {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}},
+            'writeTimeout' => {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}},
+            'connectTimeout' => {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}},
+            'defaultHeaders' => [],
+            {{#isSearchClient}}
+            'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
+            'defaultMaxRetries' => $this->defaultMaxRetries,
+            'defaultForwardToReplicas' => null,
+            'batchSize' => 1000,
+            {{/isSearchClient}}
+        ];
+    }
 }

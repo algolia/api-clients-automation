@@ -6,8 +6,15 @@ import java.util.*;
 
 public class Timeouts {
 
-  /** Inject timeouts info into the client bundle at x-timeouts */
   public static void enrichBundle(HashMap<String, Object> timeouts, Map<String, Object> bundle) throws ConfigException {
+    enrichBundle(timeouts, bundle, 1);
+  }
+
+  /**
+   * Inject timeouts (in miliseconds / divider) into the given bundle, under the x-timeouts property
+   * *
+   */
+  public static void enrichBundle(HashMap<String, Object> timeouts, Map<String, Object> bundle, int divider) throws ConfigException {
     HashMap<String, Object> xtimeouts = new HashMap<>();
 
     HashMap<String, Object> browser = new HashMap<>();
@@ -18,6 +25,7 @@ public class Timeouts {
       server = (HashMap<String, Object>) timeouts.getOrDefault("server", new HashMap<>());
     }
 
+    // the default below are what the search API expect, which was previously used for any client
     HashMap<String, Object> defaultBrowser = new HashMap<>();
     defaultBrowser.put("connect", 1000);
     defaultBrowser.put("read", 2000);
@@ -31,18 +39,18 @@ public class Timeouts {
     if (browser == null) {
       xtimeouts.put("browser", defaultBrowser);
     } else {
-      browser.put("connect", browser.getOrDefault("connect", defaultBrowser.get("connect")));
-      browser.put("read", browser.getOrDefault("read", defaultBrowser.get("read")));
-      browser.put("write", browser.getOrDefault("write", defaultBrowser.get("write")));
+      browser.put("connect", ((int) browser.getOrDefault("connect", defaultBrowser.get("connect"))) / divider);
+      browser.put("read", ((int) browser.getOrDefault("read", defaultBrowser.get("read"))) / divider);
+      browser.put("write", ((int) browser.getOrDefault("write", defaultBrowser.get("write"))) / divider);
       xtimeouts.put("browser", browser);
     }
 
     if (server == null) {
       xtimeouts.put("server", defaultServer);
     } else {
-      server.put("connect", server.getOrDefault("connect", defaultServer.get("connect")));
-      server.put("read", server.getOrDefault("read", defaultServer.get("read")));
-      server.put("write", server.getOrDefault("write", defaultServer.get("write")));
+      server.put("connect", ((int) server.getOrDefault("connect", defaultServer.get("connect"))) / divider);
+      server.put("read", ((int) server.getOrDefault("read", defaultServer.get("read"))) / divider);
+      server.put("write", ((int) server.getOrDefault("write", defaultServer.get("write"))) / divider);
       xtimeouts.put("server", server);
     }
 

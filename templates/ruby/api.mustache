@@ -25,6 +25,9 @@ module {{moduleName}}
 
       if region.is_a?(Hash) && (opts.nil? || opts.empty?)
         opts = region
+        opts.read_timeout = {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}}
+        opts.write_timeout = {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}}
+        opts.connect_timeout = {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}}
         region = nil
       end
 
