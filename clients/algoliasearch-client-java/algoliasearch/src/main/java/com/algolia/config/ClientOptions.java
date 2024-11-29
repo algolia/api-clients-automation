@@ -124,9 +124,9 @@ public final class ClientOptions implements ClientConfig {
     private final List<AlgoliaAgent.Segment> algoliaAgentSegments = new ArrayList<>();
     private final Map<String, String> defaultHeaders = new HashMap<>();
     private LogLevel logLevel = LogLevel.NONE;
-    private Duration connectTimeout = Duration.ofSeconds(2);
-    private Duration writeTimeout = Duration.ofSeconds(30);
-    private Duration readTimeout = Duration.ofSeconds(5);
+    private Duration connectTimeout = Duration.ZERO;
+    private Duration writeTimeout = Duration.ZERO;
+    private Duration readTimeout = Duration.ZERO;
     private CompressionType compressionType = CompressionType.NONE;
 
     public Builder setRequester(Requester requester) {

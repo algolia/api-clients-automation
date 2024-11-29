@@ -71,6 +71,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+    Timeouts.enrichBundle((HashMap<String, Object>) openAPI.getExtensions().get("x-timeouts"), additionalProperties);
   }
 
   @Override
