@@ -18,11 +18,6 @@ class BaseConfig:
         self.app_id = str(app_id)
         self.api_key = str(api_key)
 
-        # In milliseconds
-        self.read_timeout = 5000
-        self.write_timeout = 30000
-        self.connect_timeout = 2000
-
         self.wait_task_time_before_retry: Optional[int] = None
         self.headers: Optional[Dict[str, str]] = None
         self.proxies: Optional[Dict[str, str]] = None
