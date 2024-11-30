@@ -16,12 +16,12 @@
     "react-instantsearch": "7.13.8"
   },
   "devDependencies": {
-    "@parcel/core": "2.13.1",
-    "@parcel/packager-raw-url": "2.13.1",
-    "@parcel/transformer-webmanifest": "2.13.1",
+    "@parcel/core": "2.13.2",
+    "@parcel/packager-raw-url": "2.13.2",
+    "@parcel/transformer-webmanifest": "2.13.2",
     "@types/react": "^18.0.9",
     "https-browserify": "^1.0.0",
-    "parcel": "2.13.1",
+    "parcel": "2.13.2",
     "stream-http": "^3.1.0",
     "typescript": "5.7.2",
     "url": "^0.11.0"
