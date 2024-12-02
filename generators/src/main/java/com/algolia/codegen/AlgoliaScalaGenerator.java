@@ -7,6 +7,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -99,6 +100,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+    Timeouts.enrichBundle(openAPI, additionalProperties, ChronoUnit.SECONDS);
   }
 
   @Override

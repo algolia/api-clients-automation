@@ -34,9 +34,9 @@ import scala.concurrent.duration.Duration
 case class ClientOptions(
     agentSegments: Seq[AgentSegment] = Seq.empty,
     hosts: Seq[Host] = Seq.empty,
-    connectTimeout: Duration = Duration(2, TimeUnit.SECONDS),
-    writeTimeout: Duration = Duration(30, TimeUnit.SECONDS),
-    readTimeout: Duration = Duration(5, TimeUnit.SECONDS),
+    connectTimeout: Option[Duration] = Duration(2, TimeUnit.SECONDS),
+    writeTimeout: Option[Duration] = Duration(30, TimeUnit.SECONDS),
+    readTimeout: Option[Duration] = Duration(5, TimeUnit.SECONDS),
     defaultHeaders: Map[String, String] = Map.empty,
     compressionType: CompressionType = CompressionType.None,
     logging: Option[Logging] = None,

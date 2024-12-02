@@ -19,6 +19,12 @@ import scala.util.Try
   *   the name of the client
   * @param defaultHosts
   *   the default hosts
+  * @param defaultReadTimeout
+  *   the default read timeout
+  * @param defaultConnectTimeout
+  *   the default connect timeout
+  * @param defaultWriteTimeout
+  *   the default write timeout
   * @param formats
   *   the JSON formats
   * @param options
@@ -53,13 +59,21 @@ abstract class ApiClient(
       apiKey: String,
       clientName: String,
       options: ClientOptions,
-      defaultHosts: Seq[Host]
+      defaultHosts: Seq[Host],
+      defaultReadTimeout: Duration,
+      defaultConnectTimeout: Duration,
+      defaultWriteTimeout: Duration
   ): Requester = {
     val algoliaAgent = AlgoliaAgent(BuildInfo.version)
       .addSegment(AgentSegment(clientName, Some(BuildInfo.version)))
       .addSegments(options.agentSegments)
 
     val hosts = if (options.hosts.isEmpty) defaultHosts else options.hosts
+
+    option.readTimeout = Option(options.readTimeout).getOrElse(defaultReadTimeout)
+    option.writeTimeout = Option(options.writeTimeout).getOrElse(defaultWriteTimeout)
+    option.connectTimeout = Option(options.connectTimeout).getOrElse(defaultConnectTimeout)
+
     val statefulHosts = hosts.map(host => StatefulHost(host)).toList
 
     val builder = HttpRequester
