@@ -149,7 +149,10 @@ export function generateLanguageVersionsHistory(
   }
 
   // only the latest previous major version and latest current version receives support
-  if (latestPreviousMajorVersion && previousMajor !== currentMajor) {
+  if (
+    latestPreviousMajorVersion &&
+    (previousMajor !== currentMajor || (version.next && previousMajor !== getCurrentMajor(version?.next)))
+  ) {
     versions[latestPreviousMajorVersion] = {
       ...versions[latestPreviousMajorVersion],
       supportStatus: 'eligible',
@@ -157,10 +160,15 @@ export function generateLanguageVersionsHistory(
     };
   }
 
+  console.log(previousTagVersion, version);
+
   // if there's no release planned, just skip this language
-  if (version?.next && !isPreRelease(version?.next) && version?.next !== previousTagVersion) {
+  if (version?.next && !isPreRelease(version.next)) {
     versions[version.next] = {
-      releaseDate: new Date().toISOString().split('T')[0],
+      releaseDate:
+        version.next !== previousTagVersion
+          ? new Date().toISOString().split('T')[0]
+          : versions[version.next].releaseDate,
       slaStatus: 'eligible',
       supportStatus: 'eligible',
     };
