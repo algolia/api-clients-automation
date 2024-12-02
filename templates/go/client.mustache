@@ -42,9 +42,6 @@ return NewClientWithConfig({{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{
       DefaultHeader: make(map[string]string),
       UserAgent:     getUserAgent(),
       Requester:     transport.NewDefaultRequester(nil),
-			ReadTimeout:    {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}} * time.Millisecond,
-			ConnectTimeout: {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}} * time.Millisecond,
-			WriteTimeout:   {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}} * time.Millisecond,
     },{{#hasRegionalHost}}
     Region: region,{{/hasRegionalHost}}
 	})
@@ -67,6 +64,15 @@ func NewClientWithConfig(cfg {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}
   if cfg.UserAgent == "" {
     cfg.UserAgent = getUserAgent()
   }
+	if cfg.ReadTimeout == 0 {
+		cfg.ReadTimeout = {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}} * time.Millisecond
+	}
+	if cfg.ConnectTimeout == 0 {
+		cfg.ConnectTimeout = {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}} * time.Millisecond
+	}
+	if cfg.WriteTimeout == 0 {
+		cfg.WriteTimeout = {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}} * time.Millisecond
+	}
 
   return &APIClient{
 		appID: cfg.AppID,
