@@ -160,8 +160,6 @@ export function generateLanguageVersionsHistory(
     };
   }
 
-  console.log(previousTagVersion, version);
-
   // if there's no release planned, just skip this language
   if (version?.next && !isPreRelease(version.next)) {
     versions[version.next] = {

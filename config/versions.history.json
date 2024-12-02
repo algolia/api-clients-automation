@@ -879,9 +879,8 @@
     },
     "1.27.3": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
-      "releaseDate": "2024-11-19",
-      "supportEndDate": "2026-08-14"
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-11-19"
     },
     "1.28.0": {
       "releaseDate": "2024-12-02",
