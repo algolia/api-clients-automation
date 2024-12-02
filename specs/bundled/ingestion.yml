@@ -2697,7 +2697,6 @@ components:
         - ga4BigqueryExport
         - json
         - shopify
-        - sfcc
         - push
     sourceSortKeys:
       type: string
