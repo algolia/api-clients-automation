@@ -44,6 +44,10 @@ export function isPreRelease(version: string): boolean {
 }
 
 function getCurrentMajor(version: string): number {
+  if (!version) {
+    return 0;
+  }
+
   const matches = version.match(/\d+/);
 
   if (!matches || matches.length === 0) {
@@ -145,11 +149,13 @@ export function generateLanguageVersionsHistory(
   }
 
   // only the latest previous major version and latest current version receives support
-  versions[latestPreviousMajorVersion] = {
-    ...versions[latestPreviousMajorVersion],
-    supportStatus: 'eligible',
-    supportEndDate: slaEndDate.toISOString().split('T')[0],
-  };
+  if (latestPreviousMajorVersion && previousMajor !== currentMajor) {
+    versions[latestPreviousMajorVersion] = {
+      ...versions[latestPreviousMajorVersion],
+      supportStatus: 'eligible',
+      supportEndDate: slaEndDate.toISOString().split('T')[0],
+    };
+  }
 
   // if there's no release planned, just skip this language
   if (version?.next && !isPreRelease(version?.next) && version?.next !== previousTagVersion) {

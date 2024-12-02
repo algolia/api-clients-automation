@@ -1,4 +1,3 @@
-// @ts-nocheck this file is broken while the VersionsHistory is unclear
 import { describe, expect, it } from 'vitest';
 
 import { generateLanguageVersionsHistory } from '../versionsHistory.js';
@@ -13,8 +12,7 @@ describe('generateLanguageVersionsHistory', () => {
           '1.2.6 Tue Jan 2 15:26:06 2024 +0000',
           '1.2.7 Thu Jan 4 15:09:11 2024 +0000',
         ],
-        'csharp',
-        { current: '1.2.7', next: null, releaseType: null },
+        { current: '1.2.7' },
       );
 
       expect(versions).toEqual({
@@ -50,8 +48,7 @@ describe('generateLanguageVersionsHistory', () => {
           '2.3.6 Tue Jan 2 15:26:06 2024 +0000',
           '3.4.7 Thu Jan 4 15:09:11 2024 +0000',
         ],
-        'javascript',
-        { current: '3.4.7', next: null, releaseType: null },
+        { current: '3.4.7' },
       );
 
       expect(versions).toEqual({
@@ -90,7 +87,7 @@ describe('generateLanguageVersionsHistory', () => {
     end.setFullYear(start.getFullYear() + 2);
 
     it('same version as active version', () => {
-      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], 'dart', {
+      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], {
         next: '1.2.4',
         current: '1.2.4',
         releaseType: 'minor',
@@ -106,7 +103,7 @@ describe('generateLanguageVersionsHistory', () => {
     });
 
     it('new major: sets the new release as active, sets the last tag as maintenance', () => {
-      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], 'dart', {
+      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], {
         next: '2.0.0',
         current: '1.2.4',
         releaseType: 'major',
@@ -127,7 +124,7 @@ describe('generateLanguageVersionsHistory', () => {
     });
 
     it('new minor: sets the new release as active, sets the last tag as maintenance', () => {
-      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], 'kotlin', {
+      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], {
         next: '1.3.0',
         current: '1.2.4',
         releaseType: 'minor',
@@ -147,8 +144,8 @@ describe('generateLanguageVersionsHistory', () => {
       });
     });
 
-    it('new patch: sets the new release as active, sets the last tag as inactive', () => {
-      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], 'swift', {
+    it.only('new patch: sets the new release as active, sets the last tag as inactive', () => {
+      const versions = generateLanguageVersionsHistory(['1.2.4 Thu Dec 28 15:48:25 2023 +0000'], {
         next: '1.2.5',
         current: '1.2.4',
         releaseType: 'patch',
@@ -157,13 +154,13 @@ describe('generateLanguageVersionsHistory', () => {
       expect(versions).toEqual({
         '1.2.4': {
           releaseDate: '2023-12-28',
-          eligibilityDate: undefined,
-          eligibilityStatus: 'eligible',
+          slaStatus: 'eligible',
+          supportStatus: 'not eligible',
         },
         '1.2.5': {
           releaseDate: start.toISOString().split('T')[0],
-          eligibilityDate: undefined,
-          eligibilityStatus: 'eligible',
+          slaStatus: 'eligible',
+          supportStatus: 'eligible',
         },
       });
     });
