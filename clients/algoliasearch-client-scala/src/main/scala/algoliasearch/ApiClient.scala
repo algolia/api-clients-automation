@@ -6,6 +6,8 @@ import algoliasearch.internal.interceptor.{AuthInterceptor, RetryStrategy, UserA
 import algoliasearch.internal.{AlgoliaAgent, HttpRequester, StatefulHost}
 import org.json4s.Formats
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.util.Try
 
 /** Base class for all API clients. It provides a mechanism for request serialization and deserialization. It also
@@ -35,6 +37,9 @@ abstract class ApiClient(
     apiKey: String,
     clientName: String,
     defaultHosts: Seq[Host],
+    defaultReadTimeout: Duration,
+    defaultConnectTimeout: Duration,
+    defaultWriteTimeout: Duration,
     formats: Formats,
     options: ClientOptions = ClientOptions()
 ) extends AutoCloseable {
@@ -51,7 +56,16 @@ abstract class ApiClient(
   private val requester = options.customRequester match {
     case Some(customRequester) => customRequester
     case None =>
-      defaultRequester(appId, apiKey, clientName, options, defaultHosts)
+      defaultRequester(
+        appId,
+        apiKey,
+        clientName,
+        options,
+        defaultHosts,
+        defaultReadTimeout,
+        defaultConnectTimeout,
+        defaultWriteTimeout
+      )
   }
 
   private def defaultRequester(
@@ -69,12 +83,9 @@ abstract class ApiClient(
       .addSegments(options.agentSegments)
 
     val hosts = if (options.hosts.isEmpty) defaultHosts else options.hosts
-
-    option.readTimeout = Option(options.readTimeout).getOrElse(defaultReadTimeout)
-    option.writeTimeout = Option(options.writeTimeout).getOrElse(defaultWriteTimeout)
-    option.connectTimeout = Option(options.connectTimeout).getOrElse(defaultConnectTimeout)
-
     val statefulHosts = hosts.map(host => StatefulHost(host)).toList
+
+    options.withReadTimeout(Option(options.readTimeout).getOrElse(defaultReadTimeout)).withWriteTimeout(Option(options.writeTimeout).getOrElse(defaultWriteTimeout)).withConnectTimeout(Option(options.connectTimeout).getOrElse(defaultConnectTimeout))
 
     val builder = HttpRequester
       .builder(options.customFormats.getOrElse(formats))

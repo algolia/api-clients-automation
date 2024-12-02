@@ -9,9 +9,14 @@ import {{import}}
 import {{modelPackage}}._
 import algoliasearch.ApiClient
 import algoliasearch.api.{{classname}}.hosts
+import algoliasearch.api.{{classname}}.readTimeout
+import algoliasearch.api.{{classname}}.writeTimeout
+import algoliasearch.api.{{classname}}.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
