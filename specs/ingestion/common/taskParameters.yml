@@ -32,6 +32,19 @@ sourceID:
     items:
       $ref: './schemas/common.yml#/sourceID'
 
+sourceType:
+  name: sourceType
+  in: query
+  description: Filters the tasks with the specified source type.
+  required: false
+  style: form
+  explode: false
+  schema:
+    type: array
+    items:
+      $ref: './schemas/source.yml#/SourceType'
+    example: json,commercetools
+
 destinationID:
   name: destinationID
   in: query

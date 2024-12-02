@@ -30,9 +30,7 @@ runType:
   in: query
   description: Run type for filtering the list of task runs.
   schema:
-    type: array
-    items:
-      $ref: './schemas/run.yml#/RunType'
+    $ref: './schemas/run.yml#/RunType'
 
 taskID:
   name: taskID
