@@ -83,7 +83,7 @@ __metadata:
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
-    eslint-plugin-yml: "npm:1.15.0"
+    eslint-plugin-yml: "npm:1.16.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:15.2.10"
     oxlint: "npm:0.11.1"
@@ -3470,14 +3470,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-compat-utils@npm:^0.5.0":
-  version: 0.5.1
-  resolution: "eslint-compat-utils@npm:0.5.1"
+"eslint-compat-utils@npm:^0.6.0":
+  version: 0.6.4
+  resolution: "eslint-compat-utils@npm:0.6.4"
   dependencies:
     semver: "npm:^7.5.4"
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: 10/ac65ac1c6107cf19f63f5fc17cea361c9cb1336be7356f23dbb0fac10979974b4622e13e950be43cbf431801f2c07f7dab448573181ccf6edc0b86d5b5304511
+  checksum: 10/97f08f4aa8d9a1bc1087aaeceab46a5fa65a6d70703c1a2f2cd533562381208fdd0a293ce0f63ad607f1e697ddb348ef1076b02f5afa83c70f4a07ca0dcec90e
   languageName: node
   linkType: hard
 
@@ -3488,7 +3488,7 @@ __metadata:
     "@types/eslint": "npm:9.6.1"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
-    eslint-plugin-yml: "npm:1.15.0"
+    eslint-plugin-yml: "npm:1.16.0"
     eslint-vitest-rule-tester: "npm:0.6.1"
     typescript: "npm:5.7.2"
     vitest: "npm:2.1.6"
@@ -3506,18 +3506,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:1.15.0":
-  version: 1.15.0
-  resolution: "eslint-plugin-yml@npm:1.15.0"
+"eslint-plugin-yml@npm:1.16.0":
+  version: 1.16.0
+  resolution: "eslint-plugin-yml@npm:1.16.0"
   dependencies:
     debug: "npm:^4.3.2"
-    eslint-compat-utils: "npm:^0.5.0"
+    eslint-compat-utils: "npm:^0.6.0"
     lodash: "npm:^4.17.21"
     natural-compare: "npm:^1.4.0"
     yaml-eslint-parser: "npm:^1.2.1"
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: 10/79bf0bf2977bc8f16e3de2e1d0e8e5625d20902ccab940e53269cf7e5379e74cf7b148c3d849525bd451264108b6a49aafbf2ea88cf30405a742516b2983ba22
+  checksum: 10/523f3016098f2de340a68c1fa11228734b281191d3391b1ab8812c1c446455841f35815b4c4f036c2ab459a5f7b0c6496dd5bc57de912632d8db9da44e45eb44
   languageName: node
   linkType: hard
 

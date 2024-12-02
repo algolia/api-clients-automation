@@ -18,7 +18,7 @@ export const noBigInt = createRule('noBigInt', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices.isYAML) {
+    if (!context.getSourceCode().parserServices?.isYAML) {
       return {};
     }
 
