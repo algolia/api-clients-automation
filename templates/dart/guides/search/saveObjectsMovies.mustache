@@ -11,10 +11,26 @@ void main() async {
       Uri.parse('https://dashboard.algolia.com/sample_datasets/movie.json'));
 
   if (datasetRequest.statusCode == 200) {
-    final movies = jsonDecode(datasetRequest.body);
+    final moviesData = jsonDecode(datasetRequest.body);
+    final batchRequests = <BatchRequest>[];
 
-    // push data to algolia
-    {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+    for (final movie in moviesData) {
+      batchRequests.add(
+        BatchRequest(action: Action.fromJson('addObject'), body: movie),
+      );
+    }
+
+  // push data to algolia
+  try {
+      // push data to algolia
+      await client.batch(
+        indexName: 'movies_index',
+        batchWriteParams: BatchWriteParams(requests: batchRequests),
+      );
+      print("Successfully indexed records!");
+    } catch (e) {
+      print("Error: ${e.toString()}");
+    }
   } else {
     throw Exception('Failed to load data');
   }
