@@ -42,9 +42,9 @@ return NewClientWithConfig({{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{
       DefaultHeader: make(map[string]string),
       UserAgent:     getUserAgent(),
       Requester:     transport.NewDefaultRequester(nil),
-      ReadTimeout: {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}},
-      ConnectTimeout: {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}},
-      WriteTimeout: {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}},
+			ReadTimeout:    {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}} * time.Millisecond,
+			ConnectTimeout: {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}} * time.Millisecond,
+			WriteTimeout:   {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}} * time.Millisecond,
     },{{#hasRegionalHost}}
     Region: region,{{/hasRegionalHost}}
 	})
