@@ -79,16 +79,16 @@ __metadata:
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": "npm:2.15.3"
-    "@redocly/cli": "npm:1.25.15"
+    "@redocly/cli": "npm:1.25.13"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
-    eslint-plugin-yml: "npm:1.16.0"
+    eslint-plugin-yml: "npm:1.15.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:15.2.10"
     oxlint: "npm:0.11.1"
     pinst: "npm:3.0.0"
-    prettier: "npm:3.4.1"
+    prettier: "npm:3.3.3"
     prettier-plugin-java: "npm:2.6.5"
     prettier-plugin-organize-imports: "npm:4.1.0"
     renovate-config-algolia: "npm:2.2.0"
@@ -1306,11 +1306,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:1.25.15":
-  version: 1.25.15
-  resolution: "@redocly/cli@npm:1.25.15"
+"@redocly/cli@npm:1.25.13":
+  version: 1.25.13
+  resolution: "@redocly/cli@npm:1.25.13"
   dependencies:
-    "@redocly/openapi-core": "npm:1.25.15"
+    "@redocly/openapi-core": "npm:1.25.13"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -1332,7 +1332,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/60d3460ca288bb4d78dbe730cc98544aa9981f7b8dae8b08e97624e3e38fa3e01307760bc8111b7a1eae851a26c499b48f31e7c9f58d39e0adb9d68ec3058329
+  checksum: 10/3e7ca7ab7244e265bf0865b3f94ff60589d5383fa73427d92b08caa78eb52ca329022b302e228e2800e665b4f358df319342c656c23811cc392375b9b28e0aa3
   languageName: node
   linkType: hard
 
@@ -1343,19 +1343,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/config@npm:^0.17.0":
-  version: 0.17.1
-  resolution: "@redocly/config@npm:0.17.1"
-  checksum: 10/c4c5a172571aa9885680134e2590c0aed7338cd35abe9bbf23e73c1167609b9123c97d7b7052794e6f6c756ac07f7f79c26d74fb09938c0ac3cc26ebc8c305b1
-  languageName: node
-  linkType: hard
-
-"@redocly/openapi-core@npm:1.25.15":
-  version: 1.25.15
-  resolution: "@redocly/openapi-core@npm:1.25.15"
+"@redocly/openapi-core@npm:1.25.13":
+  version: 1.25.13
+  resolution: "@redocly/openapi-core@npm:1.25.13"
   dependencies:
     "@redocly/ajv": "npm:^8.11.2"
-    "@redocly/config": "npm:^0.17.0"
+    "@redocly/config": "npm:^0.16.0"
     colorette: "npm:^1.2.0"
     https-proxy-agent: "npm:^7.0.4"
     js-levenshtein: "npm:^1.1.6"
@@ -1365,7 +1358,7 @@ __metadata:
     node-fetch: "npm:^2.6.1"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/eb1af7bac66d792e3eedb2f5a5abf8b6f0dd696bea475a9531a08b4b07c11e9940951b454d5b3d4b4f78f568364c57987aa47134a9506c4c59cde3c636e788d5
+  checksum: 10/2af5b4ccfe1c14ed22c667da3bfed23eea0d1e39f6394c0a65b12f46a2e1d695ba9733facf0944a470774d9c574d7021cd69ab9320adcef69ee3ffd34c4d0c61
   languageName: node
   linkType: hard
 
@@ -3470,6 +3463,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-compat-utils@npm:^0.5.0":
+  version: 0.5.1
+  resolution: "eslint-compat-utils@npm:0.5.1"
+  dependencies:
+    semver: "npm:^7.5.4"
+  peerDependencies:
+    eslint: ">=6.0.0"
+  checksum: 10/ac65ac1c6107cf19f63f5fc17cea361c9cb1336be7356f23dbb0fac10979974b4622e13e950be43cbf431801f2c07f7dab448573181ccf6edc0b86d5b5304511
+  languageName: node
+  linkType: hard
+
 "eslint-compat-utils@npm:^0.6.0":
   version: 0.6.4
   resolution: "eslint-compat-utils@npm:0.6.4"
@@ -3503,6 +3507,21 @@ __metadata:
     lodash: "npm:^4.17.21"
     vscode-json-languageservice: "npm:^4.1.6"
   checksum: 10/d891eb5326cca9af5d4a2ebdef5e04761d9a2fca56841d533f755dd475539818d9f43cc7f1e19952276fca8493ea58b4e143ee68f75b2971e2ea8e5e244e0929
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-yml@npm:1.15.0":
+  version: 1.15.0
+  resolution: "eslint-plugin-yml@npm:1.15.0"
+  dependencies:
+    debug: "npm:^4.3.2"
+    eslint-compat-utils: "npm:^0.5.0"
+    lodash: "npm:^4.17.21"
+    natural-compare: "npm:^1.4.0"
+    yaml-eslint-parser: "npm:^1.2.1"
+  peerDependencies:
+    eslint: ">=6.0.0"
+  checksum: 10/79bf0bf2977bc8f16e3de2e1d0e8e5625d20902ccab940e53269cf7e5379e74cf7b148c3d849525bd451264108b6a49aafbf2ea88cf30405a742516b2983ba22
   languageName: node
   linkType: hard
 
@@ -6434,12 +6453,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.4.1":
-  version: 3.4.1
-  resolution: "prettier@npm:3.4.1"
+"prettier@npm:3.3.3":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10/1ee4d1b1a9b6761cbb847cd81b9d87e51a0f4b2a4d5fe5755627c24828afe057a7ee9b764c3ee777d84abd46218d173d8a204ee9cb3acdd321ff9a6b25f99c1c
+  checksum: 10/5beac1f30b5b40162532b8e2f7c3a4eb650910a2695e9c8512a62ffdc09dae93190c29db9107fa7f26d1b6c71aad3628ecb9b5de1ecb0911191099be109434d7
   languageName: node
   linkType: hard
 
