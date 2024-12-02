@@ -32,6 +32,7 @@
     "client.getUserID": "client.getUserId",
     "client.listApiKeys": "client.listApiKeys",
     "client.listIndices": "client.listIndices",
+    "client.listIndexes": "client.listIndices",
     "client.listUserIDs": "client.listUserIds",
     "client.moveIndex": "client.operationIndex",
     "client.multipleBatch": "client.multipleBatch",
