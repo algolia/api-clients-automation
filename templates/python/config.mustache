@@ -16,9 +16,9 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
         super().__init__(app_id, api_key)
 
         # In milliseconds
-        self.read_timeout = {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}}
-        self.write_timeout = {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}}
-        self.connect_timeout = {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}}
+        self.read_timeout = {{x-timeouts.server.read}}
+        self.write_timeout = {{x-timeouts.server.write}}
+        self.connect_timeout = {{x-timeouts.server.connect}}
 
         self._user_agent = UserAgent()
         self.add_user_agent("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}", __version__)

@@ -65,13 +65,13 @@ func NewClientWithConfig(cfg {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}
     cfg.UserAgent = getUserAgent()
   }
 	if cfg.ReadTimeout == 0 {
-		cfg.ReadTimeout = {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}} * time.Millisecond
+		cfg.ReadTimeout = {{x-timeouts.server.read}} * time.Millisecond
 	}
 	if cfg.ConnectTimeout == 0 {
-		cfg.ConnectTimeout = {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}} * time.Millisecond
+		cfg.ConnectTimeout = {{x-timeouts.server.connect}} * time.Millisecond
 	}
 	if cfg.WriteTimeout == 0 {
-		cfg.WriteTimeout = {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}} * time.Millisecond
+		cfg.WriteTimeout = {{x-timeouts.server.write}} * time.Millisecond
 	}
 
   return &APIClient{

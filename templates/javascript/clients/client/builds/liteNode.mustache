@@ -7,9 +7,9 @@ export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnTyp
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
     timeouts: {
-      connect: {{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}},
-      read: {{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}},
-      write: {{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}},
+      connect: {{x-timeouts.server.connect}},
+      read: {{x-timeouts.server.read}},
+      write: {{x-timeouts.server.write}},
     },
     logger: createNullLogger(),
     requester: createHttpRequester(),

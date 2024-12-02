@@ -25,9 +25,9 @@ public sealed class {{apiPackageName}}Config : AlgoliaConfig
   {
     DefaultHosts = GetDefaultHosts(region);
     Compression = CompressionType.None;
-    ReadTimeout = TimeSpan.FromSeconds({{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}});
-    WriteTimeout = TimeSpan.FromSeconds({{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}});
-    ConnectTimeout = TimeSpan.FromSeconds({{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}});
+    ReadTimeout = TimeSpan.FromSeconds({{x-timeouts.server.read}});
+    WriteTimeout = TimeSpan.FromSeconds({{x-timeouts.server.write}});
+    ConnectTimeout = TimeSpan.FromSeconds({{x-timeouts.server.connect}});
   }
 {{/hasRegionalHost}}
 {{^hasRegionalHost}}
@@ -41,9 +41,9 @@ public sealed class {{apiPackageName}}Config : AlgoliaConfig
   {
     DefaultHosts = GetDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}});
     Compression = CompressionType.None;
-    ReadTimeout = TimeSpan.fromSeconds({{#x-timeouts.server.read}}{{{.}}}{{/x-timeouts.server.read}});
-    WriteTimeout = TimeSpan.fromSeconds({{#x-timeouts.server.write}}{{{.}}}{{/x-timeouts.server.write}});
-    ConnectTimeout = TimeSpan.fromSeconds({{#x-timeouts.server.connect}}{{{.}}}{{/x-timeouts.server.connect}});
+    ReadTimeout = TimeSpan.fromSeconds({{x-timeouts.server.read}});
+    WriteTimeout = TimeSpan.fromSeconds({{x-timeouts.server.write}});
+    ConnectTimeout = TimeSpan.fromSeconds({{x-timeouts.server.connect}});
   }
 {{/hasRegionalHost}}
 {{#hostWithAppID}}
