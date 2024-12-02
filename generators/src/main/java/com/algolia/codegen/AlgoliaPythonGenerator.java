@@ -94,7 +94,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
-    Timeouts.enrichBundle((HashMap<String, Object>) openAPI.getExtensions().get("x-timeouts"), additionalProperties);
+    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override

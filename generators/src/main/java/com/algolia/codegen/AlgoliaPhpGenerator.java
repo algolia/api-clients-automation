@@ -5,6 +5,7 @@ import com.algolia.codegen.utils.*;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
@@ -68,7 +69,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
-    Timeouts.enrichBundle((HashMap<String, Object>) openAPI.getExtensions().get("x-timeouts"), additionalProperties, 1000);
+    Timeouts.enrichBundle(openAPI, additionalProperties, ChronoUnit.SECONDS);
   }
 
   @Override

@@ -2,58 +2,69 @@ package com.algolia.codegen.utils;
 
 import com.algolia.codegen.exceptions.*;
 import com.fasterxml.jackson.databind.*;
+import io.swagger.v3.oas.models.OpenAPI;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+
+class TimeoutsValues {
+
+  private ChronoUnit unit = ChronoUnit.MILLIS;
+  public long connect;
+  public long read;
+  public long write;
+
+  void toUnit(ChronoUnit unit) {
+    if (this.unit == ChronoUnit.MILLIS && unit == ChronoUnit.SECONDS) {
+      connect /= 1000;
+      read /= 1000;
+      write /= 1000;
+    }
+  }
+}
+
+class TimeoutsBundle {
+
+  public TimeoutsValues browser = new TimeoutsValues();
+  public TimeoutsValues server = new TimeoutsValues();
+}
 
 public class Timeouts {
 
-  public static void enrichBundle(HashMap<String, Object> timeouts, Map<String, Object> bundle) throws ConfigException {
-    enrichBundle(timeouts, bundle, 1);
+  public static void enrichBundle(OpenAPI spec, Map<String, Object> bundle) throws ConfigException {
+    enrichBundle(spec, bundle, ChronoUnit.MILLIS);
   }
 
   /**
    * Inject timeouts (in miliseconds / divider) into the given bundle, under the x-timeouts property
    * *
    */
-  public static void enrichBundle(HashMap<String, Object> timeouts, Map<String, Object> bundle, int divider) throws ConfigException {
-    HashMap<String, Object> xtimeouts = new HashMap<>();
-
-    HashMap<String, Object> browser = new HashMap<>();
-    HashMap<String, Object> server = new HashMap<>();
-
-    if (timeouts != null) {
-      browser = (HashMap<String, Object>) timeouts.getOrDefault("browser", new HashMap<>());
-      server = (HashMap<String, Object>) timeouts.getOrDefault("server", new HashMap<>());
-    }
-
+  public static void enrichBundle(OpenAPI spec, Map<String, Object> bundle, ChronoUnit unit) throws ConfigException {
+    TimeoutsBundle defaults = new TimeoutsBundle();
     // the default below are what the search API expect, which was previously used for any client
-    HashMap<String, Object> defaultBrowser = new HashMap<>();
-    defaultBrowser.put("connect", 1000);
-    defaultBrowser.put("read", 2000);
-    defaultBrowser.put("write", 30000);
+    defaults.browser.connect = 1000;
+    defaults.browser.read = 2000;
+    defaults.browser.write = 30000;
 
-    HashMap<String, Object> defaultServer = new HashMap<>();
-    defaultServer.put("connect", 2000);
-    defaultServer.put("read", 5000);
-    defaultServer.put("write", 30000);
+    defaults.server.connect = 2000;
+    defaults.server.read = 5000;
+    defaults.server.write = 30000;
 
-    if (browser == null) {
-      xtimeouts.put("browser", defaultBrowser);
-    } else {
-      browser.put("connect", ((int) browser.getOrDefault("connect", defaultBrowser.get("connect"))) / divider);
-      browser.put("read", ((int) browser.getOrDefault("read", defaultBrowser.get("read"))) / divider);
-      browser.put("write", ((int) browser.getOrDefault("write", defaultBrowser.get("write"))) / divider);
-      xtimeouts.put("browser", browser);
+    TimeoutsBundle specTimeouts = new ObjectMapper().convertValue(spec.getExtensions().get("x-timeouts"), TimeoutsBundle.class);
+    if (specTimeouts == null) {
+      specTimeouts = new TimeoutsBundle();
+      specTimeouts.browser = defaults.browser;
+      specTimeouts.server = defaults.server;
+    }
+    if (specTimeouts.browser == null) {
+      specTimeouts.browser = defaults.browser;
+    }
+    if (specTimeouts.server == null) {
+      specTimeouts.server = defaults.server;
     }
 
-    if (server == null) {
-      xtimeouts.put("server", defaultServer);
-    } else {
-      server.put("connect", ((int) server.getOrDefault("connect", defaultServer.get("connect"))) / divider);
-      server.put("read", ((int) server.getOrDefault("read", defaultServer.get("read"))) / divider);
-      server.put("write", ((int) server.getOrDefault("write", defaultServer.get("write"))) / divider);
-      xtimeouts.put("server", server);
-    }
+    specTimeouts.browser.toUnit(unit);
+    specTimeouts.server.toUnit(unit);
 
-    bundle.put("x-timeouts", xtimeouts);
+    bundle.put("x-timeouts", specTimeouts);
   }
 }
