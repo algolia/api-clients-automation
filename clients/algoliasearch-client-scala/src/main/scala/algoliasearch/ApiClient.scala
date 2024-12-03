@@ -78,24 +78,28 @@ abstract class ApiClient(
       defaultConnectTimeout: Duration,
       defaultWriteTimeout: Duration
   ): Requester = {
+    val optionsWithDefaultTimeouts = options.copy(
+      readTimeout = defaultReadTimeout,
+      connectTimeout = defaultConnectTimeout,
+      writeTimeout = defaultWriteTimeout
+    )
+
     val algoliaAgent = AlgoliaAgent(BuildInfo.version)
       .addSegment(AgentSegment(clientName, Some(BuildInfo.version)))
-      .addSegments(options.agentSegments)
+      .addSegments(optionsWithDefaultTimeouts.agentSegments)
 
-    val hosts = if (options.hosts.isEmpty) defaultHosts else options.hosts
+    val hosts = if (optionsWithDefaultTimeouts.hosts.isEmpty) defaultHosts else optionsWithDefaultTimeouts.hosts
     val statefulHosts = hosts.map(host => StatefulHost(host)).toList
-
-    options.withReadTimeout(Option(options.readTimeout).getOrElse(defaultReadTimeout)).withWriteTimeout(Option(options.writeTimeout).getOrElse(defaultWriteTimeout)).withConnectTimeout(Option(options.connectTimeout).getOrElse(defaultConnectTimeout))
-
+    
     val builder = HttpRequester
-      .builder(options.customFormats.getOrElse(formats))
+      .builder(optionsWithDefaultTimeouts.customFormats.getOrElse(formats))
       .withInterceptor(authInterceptor)
       .withInterceptor(new UserAgentInterceptor(algoliaAgent))
       .withInterceptor(new RetryStrategy(statefulHosts))
 
-    options.requesterConfig.foreach(_(builder))
+    optionsWithDefaultTimeouts.requesterConfig.foreach(_(builder))
 
-    builder.build(options)
+    builder.build(optionsWithDefaultTimeouts)
   }
 
   /** Executes the given request and returns the response.
