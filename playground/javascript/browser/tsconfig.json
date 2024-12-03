@@ -1,8 +1,7 @@
 {
-  "extends": "../../../config/base.tsconfig.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "lib": ["dom"]
-  },
-  "include": ["*.ts"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
