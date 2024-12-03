@@ -1111,6 +1111,7 @@ paths:
         - $ref: '#/components/parameters/action'
         - $ref: '#/components/parameters/enabled'
         - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/sourceType'
         - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
         - $ref: '#/components/parameters/taskParameters_sort'
@@ -1989,6 +1990,18 @@ components:
       description: Unique identifier of a task.
       schema:
         $ref: '#/components/schemas/taskID'
+    sourceType:
+      name: sourceType
+      in: query
+      description: Filters the tasks with the specified source type.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/SourceType'
+        example: json,commercetools
     transformationParameters_sort:
       name: sort
       in: query

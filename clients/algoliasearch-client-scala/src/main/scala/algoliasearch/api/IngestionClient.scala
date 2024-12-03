@@ -1032,6 +1032,8 @@ class IngestionClient(
     *   Whether to filter the list of tasks by the `enabled` status.
     * @param sourceID
     *   Source IDs for filtering the list of tasks.
+    * @param sourceType
+    *   Filters the tasks with the specified source type.
     * @param destinationID
     *   Destination IDs for filtering the list of tasks.
     * @param triggerType
@@ -1047,6 +1049,7 @@ class IngestionClient(
       action: Option[Seq[ActionType]] = None,
       enabled: Option[Boolean] = None,
       sourceID: Option[Seq[String]] = None,
+      sourceType: Option[Seq[SourceType]] = None,
       destinationID: Option[Seq[String]] = None,
       triggerType: Option[Seq[TriggerType]] = None,
       sort: Option[TaskSortKeys] = None,
@@ -1063,6 +1066,7 @@ class IngestionClient(
       .withQueryParameter("action", action)
       .withQueryParameter("enabled", enabled)
       .withQueryParameter("sourceID", sourceID)
+      .withQueryParameter("sourceType", sourceType)
       .withQueryParameter("destinationID", destinationID)
       .withQueryParameter("triggerType", triggerType)
       .withQueryParameter("sort", sort)
