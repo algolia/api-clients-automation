@@ -14,7 +14,7 @@ export async function generate(generators: Generator[]): Promise<void> {
     await callGenerator(gen);
   });
 
-  for (const lang of [...new Set(generators.map((gen) => gen.language))]) {
+  for (const lang of new Set(generators.map((gen) => gen.language))) {
     if (isWSL()) {
       await run(`sudo chmod 777 -R ${getLanguageFolder(lang)}`);
     }
