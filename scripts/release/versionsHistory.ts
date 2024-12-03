@@ -11,10 +11,7 @@ import type { Version, Versions } from './types.js';
 
 // the date of the generated api clients release
 const generatedReleaseDate = new Date('2024-08-14');
-
-// number of years of sla
-const slaDuration = 2;
-const slaEndDate = new Date(generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + slaDuration));
+const slaEndDate = new Date(generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + 2));
 
 type Status = 'eligible' | 'not eligible' | 'replaced';
 
