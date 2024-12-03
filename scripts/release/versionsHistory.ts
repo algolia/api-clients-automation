@@ -12,12 +12,7 @@ import type { Version, Versions } from './types.js';
 
 // the date of the generated api clients release
 const generatedReleaseDate = new Date('2024-08-14');
-
-// number of years of eligibility
-const eligibilityDuration = 2;
-const eligibilityEndDate = new Date(
-  generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + eligibilityDuration),
-);
+const eligibilityEndDate = new Date(generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + 2));
 
 type Eligibility = {
   status: 'eligible' | 'not eligible' | 'replaced';
