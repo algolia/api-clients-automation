@@ -9,7 +9,7 @@ import Core
 func pushSetup() async throws {
     do {
         let path = URL(string: #file)!.deletingLastPathComponent()
-            .appendingPathComponent("/my-raw-records.json")
+            .appendingPathComponent("records.json")
         let data = try Data(contentsOf: URL(fileURLWithPath: path.absoluteString))
         let records = try JSONDecoder().decode([PushTaskRecords].self, from: data)
 

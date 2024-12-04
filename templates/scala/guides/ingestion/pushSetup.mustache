@@ -14,7 +14,7 @@ object PushSetup {
     implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
     implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
 
-    val result = Source.fromFile("/my-raw-records.json").getLines().mkString
+    val result = Source.fromFile("records.json").getLines().mkString
     val records = JsonMethods.parse(result).extract[Seq[algoliasearch.ingestion.PushTaskRecords]]
 
     // use the region matching your applicationID
