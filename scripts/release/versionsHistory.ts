@@ -194,5 +194,8 @@ export async function generateVersionsHistory(versions: Versions): Promise<void>
       return acc;
     }, {});
 
-  await fsp.writeFile(toAbsolutePath('config/versions.history.json'), JSON.stringify(sortedVersionsHistory, null, 2));
+  await fsp.writeFile(
+    toAbsolutePath('docs/versions-history-with-sla-and-support-policy.json'),
+    JSON.stringify(sortedVersionsHistory, null, 2),
+  );
 }
