@@ -29,7 +29,6 @@ async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<v
   await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/clients.config.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('docs/bundled/*.json')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('docs/bundled/*.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('docs/versions-history-with-sla-and-support-policy.json')} ${pathToSpecs}`);
   // adblock extensions ban words like `analytics` so we use a different file name just so the doc dans render it
   await run(`mv ${pathToSpecs}/analytics.doc.yml ${pathToSpecs}/searchstats.doc.yml`);
