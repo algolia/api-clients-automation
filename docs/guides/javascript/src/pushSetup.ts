@@ -8,7 +8,7 @@ const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIn
 
 try {
   // read local JSON file containing array of records
-  const records = JSON.parse(fs.readFileSync('/my-raw-records.json', 'utf8')) as PushTaskRecords[];
+  const records = JSON.parse(fs.readFileSync('records.json', 'utf8')) as PushTaskRecords[];
 
   // push records to the API
   const run = await client.pushTask({

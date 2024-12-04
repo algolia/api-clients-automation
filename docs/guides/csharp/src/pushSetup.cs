@@ -10,7 +10,7 @@ class PushSetup
 {
   public static async Task Main(string[] args)
   {
-    string jsonContent = File.ReadAllText("/my-raw-records.json");
+    string jsonContent = File.ReadAllText("records.json");
 
     var records = JsonSerializer.Deserialize<List<PushTaskRecords>>(jsonContent);
 
