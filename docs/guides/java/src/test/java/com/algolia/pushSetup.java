@@ -8,7 +8,7 @@ import java.util.Map;
 public class pushSetup {
 
   public static void main(String[] args) throws Exception {
-    JsonNode content = new ObjectMapper().readTree(new File("/my-raw-records.json"));
+    JsonNode content = new ObjectMapper().readTree(new File("records.json"));
     List<PushTaskRecords> records = new ObjectMapper().readerForListOf(Map.class).readValue(content);
 
     // use the region matching your applicationID

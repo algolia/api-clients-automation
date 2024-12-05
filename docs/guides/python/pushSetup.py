@@ -9,7 +9,7 @@ async def main():
         "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
     )
 
-    with open("/my-raw-records.json") as f:
+    with open("records.json") as f:
         records = json.load(f)
 
         run = _client.push_task(

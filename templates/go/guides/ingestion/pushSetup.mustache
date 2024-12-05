@@ -14,7 +14,7 @@ func push() {
   // use the region matching your applicationID
   {{> snippets/init}}
 
-  content, err := os.ReadFile("/my-raw-records.json")
+  content, err := os.ReadFile("records.json")
   if err != nil {
     panic(err)
   }

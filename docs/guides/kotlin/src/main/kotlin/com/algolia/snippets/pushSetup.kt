@@ -8,7 +8,7 @@ import kotlinx.serialization.json.Json
 import java.io.File
 
 suspend fun main() {
-  val json = File("/my-raw-records.json").readText()
+  val json = File("records.json").readText()
   val records: List<PushTaskRecords> = Json.decodeFromString(ListSerializer(PushTaskRecords.serializer()), json)
 
   // use the region matching your applicationID

@@ -7,7 +7,7 @@ async def main():
     # use the region matching your applicationID
     _{{> snippets/init}}
 
-    with open("/my-raw-records.json") as f:
+    with open("records.json") as f:
         records = json.load(f)
 
         run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
