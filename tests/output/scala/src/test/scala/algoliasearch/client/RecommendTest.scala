@@ -89,32 +89,6 @@ class RecommendTest extends AnyFunSuite {
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
 
-  test("calls api with default read timeouts") {
-    val (client, echo) = testClient()
-
-    Await.ready(
-      client.customGet[JObject](
-        path = "1/test"
-      ),
-      Duration.Inf
-    )
-    assert(echo.lastResponse.get.connectTimeout == 2000)
-    assert(echo.lastResponse.get.responseTimeout == 5000)
-  }
-
-  test("calls api with default write timeouts") {
-    val (client, echo) = testClient()
-
-    Await.ready(
-      client.customPost[JObject](
-        path = "1/test"
-      ),
-      Duration.Inf
-    )
-    assert(echo.lastResponse.get.connectTimeout == 2000)
-    assert(echo.lastResponse.get.responseTimeout == 30000)
-  }
-
   test("switch API key") {
 
     val client = RecommendClient(

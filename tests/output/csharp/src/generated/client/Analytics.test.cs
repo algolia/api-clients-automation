@@ -52,28 +52,6 @@ public class AnalyticsClientTests
     }
   }
 
-  [Fact(DisplayName = "calls api with default read timeouts")]
-  public async Task CommonApiTest2()
-  {
-    var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomGetAsync("1/test");
-    EchoResponse result = _echo.LastResponse;
-
-    Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
-    Assert.Equal(5000, result.ResponseTimeout.TotalMilliseconds);
-  }
-
-  [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task CommonApiTest3()
-  {
-    var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomPostAsync("1/test");
-    EchoResponse result = _echo.LastResponse;
-
-    Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
-    Assert.Equal(30000, result.ResponseTimeout.TotalMilliseconds);
-  }
-
   [Fact(DisplayName = "fallbacks to the alias when region is not given")]
   public async Task ParametersTest0()
   {

@@ -46,46 +46,6 @@ void main() {
     }
   });
 
-  test('calls api with default read timeouts', () async {
-    final requester = RequestInterceptor();
-    final client = InsightsClient(
-      appId: 'appId',
-      apiKey: 'apiKey',
-      region: 'us',
-      options: ClientOptions(requester: requester),
-    );
-    requester.setOnRequest((request) {
-      expect(5000, request.timeout.inMilliseconds);
-    });
-    try {
-      final res = await client.customGet(
-        path: "1/test",
-      );
-    } on InterceptionException catch (_) {
-      // Ignore InterceptionException
-    }
-  });
-
-  test('calls api with default write timeouts', () async {
-    final requester = RequestInterceptor();
-    final client = InsightsClient(
-      appId: 'appId',
-      apiKey: 'apiKey',
-      region: 'us',
-      options: ClientOptions(requester: requester),
-    );
-    requester.setOnRequest((request) {
-      expect(30000, request.timeout.inMilliseconds);
-    });
-    try {
-      final res = await client.customPost(
-        path: "1/test",
-      );
-    } on InterceptionException catch (_) {
-      // Ignore InterceptionException
-    }
-  });
-
   test('fallbacks to the alias when region is not given', () async {
     final requester = RequestInterceptor();
     final client = InsightsClient(

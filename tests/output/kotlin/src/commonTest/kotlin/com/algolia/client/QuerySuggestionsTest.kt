@@ -50,38 +50,6 @@ class QuerySuggestionsTest {
   }
 
   @Test
-  fun `calls api with default read timeouts`() = runTest {
-    val client = QuerySuggestionsClient(appId = "appId", apiKey = "apiKey", region = "us")
-    client.runTest(
-      call = {
-        customGet(
-          path = "1/test",
-        )
-      },
-      intercept = {
-        assertEquals(2000, it.connectTimeout)
-        assertEquals(5000, it.socketTimeout)
-      },
-    )
-  }
-
-  @Test
-  fun `calls api with default write timeouts`() = runTest {
-    val client = QuerySuggestionsClient(appId = "appId", apiKey = "apiKey", region = "us")
-    client.runTest(
-      call = {
-        customPost(
-          path = "1/test",
-        )
-      },
-      intercept = {
-        assertEquals(2000, it.connectTimeout)
-        assertEquals(30000, it.socketTimeout)
-      },
-    )
-  }
-
-  @Test
   fun `throws when region is not given`() = runTest {
     assertFails {
       val client = QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "")

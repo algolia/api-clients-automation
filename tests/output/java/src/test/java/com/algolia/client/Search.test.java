@@ -181,6 +181,28 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("calls api with default read timeouts")
+  void apiTest6() {
+    SearchClient client = createClient();
+
+    client.customGet("1/test");
+    EchoResponse result = echo.getLastResponse();
+    assertEquals(2000, result.connectTimeout);
+    assertEquals(5000, result.responseTimeout);
+  }
+
+  @Test
+  @DisplayName("calls api with default write timeouts")
+  void apiTest7() {
+    SearchClient client = createClient();
+
+    client.customPost("1/test");
+    EchoResponse result = echo.getLastResponse();
+    assertEquals(2000, result.connectTimeout);
+    assertEquals(30000, result.responseTimeout);
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     SearchClient client = createClient();
@@ -214,28 +236,6 @@ class SearchClientClientTests {
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
       );
     }
-  }
-
-  @Test
-  @DisplayName("calls api with default read timeouts")
-  void commonApiTest2() {
-    SearchClient client = createClient();
-
-    client.customGet("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(5000, result.responseTimeout);
-  }
-
-  @Test
-  @DisplayName("calls api with default write timeouts")
-  void commonApiTest3() {
-    SearchClient client = createClient();
-
-    client.customPost("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(30000, result.responseTimeout);
   }
 
   @Test

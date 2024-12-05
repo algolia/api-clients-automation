@@ -80,38 +80,6 @@ class RecommendTest {
   }
 
   @Test
-  fun `calls api with default read timeouts`() = runTest {
-    val client = RecommendClient(appId = "appId", apiKey = "apiKey")
-    client.runTest(
-      call = {
-        customGet(
-          path = "1/test",
-        )
-      },
-      intercept = {
-        assertEquals(2000, it.connectTimeout)
-        assertEquals(5000, it.socketTimeout)
-      },
-    )
-  }
-
-  @Test
-  fun `calls api with default write timeouts`() = runTest {
-    val client = RecommendClient(appId = "appId", apiKey = "apiKey")
-    client.runTest(
-      call = {
-        customPost(
-          path = "1/test",
-        )
-      },
-      intercept = {
-        assertEquals(2000, it.connectTimeout)
-        assertEquals(30000, it.socketTimeout)
-      },
-    )
-  }
-
-  @Test
   fun `switch API key`() = runTest {
     val client = RecommendClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(

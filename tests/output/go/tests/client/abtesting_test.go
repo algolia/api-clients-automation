@@ -59,36 +59,6 @@ func TestAbtestingcommonApi1(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.8.2\).*`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
-func TestAbtestingcommonApi2(t *testing.T) {
-	var err error
-	var res any
-	_ = res
-	client, echo := createAbtestingClient(t)
-	_ = echo
-	res, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test",
-	))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
-}
-
-// calls api with default write timeouts
-func TestAbtestingcommonApi3(t *testing.T) {
-	var err error
-	var res any
-	_ = res
-	client, echo := createAbtestingClient(t)
-	_ = echo
-	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
-}
-
 // fallbacks to the alias when region is not given
 func TestAbtestingparameters0(t *testing.T) {
 	var err error

@@ -84,28 +84,6 @@ class MonitoringClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with default read timeouts")
-  void commonApiTest2() {
-    MonitoringClient client = createClient();
-
-    client.customGet("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(5000, result.responseTimeout);
-  }
-
-  @Test
-  @DisplayName("calls api with default write timeouts")
-  void commonApiTest3() {
-    MonitoringClient client = createClient();
-
-    client.customPost("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(30000, result.responseTimeout);
-  }
-
-  @Test
   @DisplayName("use the correct host")
   void parametersTest0() {
     MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", withEchoRequester());

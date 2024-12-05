@@ -46,32 +46,6 @@ final class MonitoringClientClientTests: XCTestCase {
         )
     }
 
-    /// calls api with default read timeouts
-    func testCommonApiTest2() async throws {
-        let configuration = try MonitoringClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = MonitoringClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.customGetWithHTTPInfo(path: "1/test")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertEqual(TimeInterval(5000 / 1000), echoResponse.timeout)
-    }
-
-    /// calls api with default write timeouts
-    func testCommonApiTest3() async throws {
-        let configuration = try MonitoringClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = MonitoringClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.customPostWithHTTPInfo(path: "1/test")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertEqual(TimeInterval(30000 / 1000), echoResponse.timeout)
-    }
-
     /// use the correct host
     func testParametersTest0() async throws {
         let configuration = try MonitoringClientConfiguration(appID: "my-app-id", apiKey: "my-api-key")

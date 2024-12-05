@@ -40,7 +40,16 @@ public class SearchClient extends ApiClient {
   }
 
   public SearchClient(String appId, String apiKey, ClientOptions options) {
-    super(appId, apiKey, "Search", options, getDefaultHosts(appId));
+    super(
+      appId,
+      apiKey,
+      "Search",
+      options,
+      getDefaultHosts(appId),
+      Duration.ofMillis(2000L),
+      Duration.ofMillis(5000L),
+      Duration.ofMillis(30000L)
+    );
   }
 
   private static List<Host> getDefaultHosts(String appId) {

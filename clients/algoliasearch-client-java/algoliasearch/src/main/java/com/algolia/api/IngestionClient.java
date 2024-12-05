@@ -10,6 +10,7 @@ import com.algolia.exceptions.*;
 import com.algolia.model.ingestion.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -26,7 +27,16 @@ public class IngestionClient extends ApiClient {
   }
 
   public IngestionClient(String appId, String apiKey, String region, ClientOptions options) {
-    super(appId, apiKey, "Ingestion", options, getDefaultHosts(region));
+    super(
+      appId,
+      apiKey,
+      "Ingestion",
+      options,
+      getDefaultHosts(region),
+      Duration.ofMillis(25000L),
+      Duration.ofMillis(25000L),
+      Duration.ofMillis(25000L)
+    );
   }
 
   private static List<Host> getDefaultHosts(String region) throws AlgoliaRuntimeException {

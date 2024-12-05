@@ -90,7 +90,7 @@ abstract class ApiClient(
 
     val hosts = if (optionsWithDefaultTimeouts.hosts.isEmpty) defaultHosts else optionsWithDefaultTimeouts.hosts
     val statefulHosts = hosts.map(host => StatefulHost(host)).toList
-    
+
     val builder = HttpRequester
       .builder(optionsWithDefaultTimeouts.customFormats.getOrElse(formats))
       .withInterceptor(authInterceptor)

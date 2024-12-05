@@ -75,15 +75,20 @@ import algoliasearch.ingestion.TriggerType._
 import algoliasearch.ingestion._
 import algoliasearch.ApiClient
 import algoliasearch.api.IngestionClient.hosts
+import algoliasearch.api.IngestionClient.readTimeout
+import algoliasearch.api.IngestionClient.writeTimeout
+import algoliasearch.api.IngestionClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object IngestionClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new IngestionClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -105,6 +110,18 @@ object IngestionClient {
     region = region,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
 
   private def hosts(region: String): Seq[Host] = {
     val allowedRegions = Seq("eu", "us")
@@ -128,6 +145,9 @@ class IngestionClient(
       apiKey = apiKey,
       clientName = "Ingestion",
       defaultHosts = hosts(region),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {

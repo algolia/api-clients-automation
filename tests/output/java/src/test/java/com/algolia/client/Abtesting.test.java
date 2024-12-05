@@ -85,28 +85,6 @@ class AbtestingClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with default read timeouts")
-  void commonApiTest2() {
-    AbtestingClient client = createClient();
-
-    client.customGet("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(5000, result.responseTimeout);
-  }
-
-  @Test
-  @DisplayName("calls api with default write timeouts")
-  void commonApiTest3() {
-    AbtestingClient client = createClient();
-
-    client.customPost("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(30000, result.responseTimeout);
-  }
-
-  @Test
   @DisplayName("fallbacks to the alias when region is not given")
   void parametersTest0() {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", withEchoRequester());

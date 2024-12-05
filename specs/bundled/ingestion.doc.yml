@@ -14649,3 +14649,12 @@ x-tagGroups:
       - sources
       - tasks
       - transformations
+x-timeouts:
+  browser:
+    connect: 25000
+    read: 25000
+    write: 25000
+  server:
+    connect: 25000
+    read: 25000
+    write: 25000

@@ -54,40 +54,6 @@ final class PersonalizationClientClientTests: XCTestCase {
         )
     }
 
-    /// calls api with default read timeouts
-    func testCommonApiTest2() async throws {
-        let configuration = try PersonalizationClientConfiguration(
-            appID: APPLICATION_ID,
-            apiKey: API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = PersonalizationClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.customGetWithHTTPInfo(path: "1/test")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertEqual(TimeInterval(5000 / 1000), echoResponse.timeout)
-    }
-
-    /// calls api with default write timeouts
-    func testCommonApiTest3() async throws {
-        let configuration = try PersonalizationClientConfiguration(
-            appID: APPLICATION_ID,
-            apiKey: API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = PersonalizationClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.customPostWithHTTPInfo(path: "1/test")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertEqual(TimeInterval(30000 / 1000), echoResponse.timeout)
-    }
-
     /// throws when region is not given
     func testParametersTest0() async throws {
         do {

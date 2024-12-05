@@ -72,15 +72,20 @@ import algoliasearch.search.UserId
 import algoliasearch.search._
 import algoliasearch.ApiClient
 import algoliasearch.api.SearchClient.hosts
+import algoliasearch.api.SearchClient.readTimeout
+import algoliasearch.api.SearchClient.writeTimeout
+import algoliasearch.api.SearchClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object SearchClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new SearchClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -99,6 +104,18 @@ object SearchClient {
     apiKey = apiKey,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(5, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(2, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(30, TimeUnit.SECONDS)
+  }
 
   private def hosts(appId: String): Seq[Host] = {
     val commonHosts = Random.shuffle(
@@ -124,6 +141,9 @@ class SearchClient(
       apiKey = apiKey,
       clientName = "Search",
       defaultHosts = hosts(appId),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {

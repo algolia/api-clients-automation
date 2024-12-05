@@ -8,7 +8,6 @@ import io.ktor.client.plugins.logging.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonBuilder
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
 
 public actual class ClientOptions(
   public actual val connectTimeout: Duration? = null,

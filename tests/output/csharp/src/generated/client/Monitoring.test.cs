@@ -52,28 +52,6 @@ public class MonitoringClientTests
     }
   }
 
-  [Fact(DisplayName = "calls api with default read timeouts")]
-  public async Task CommonApiTest2()
-  {
-    var client = new MonitoringClient(new MonitoringConfig("appId", "apiKey"), _echo);
-    await client.CustomGetAsync("1/test");
-    EchoResponse result = _echo.LastResponse;
-
-    Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
-    Assert.Equal(5000, result.ResponseTimeout.TotalMilliseconds);
-  }
-
-  [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task CommonApiTest3()
-  {
-    var client = new MonitoringClient(new MonitoringConfig("appId", "apiKey"), _echo);
-    await client.CustomPostAsync("1/test");
-    EchoResponse result = _echo.LastResponse;
-
-    Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
-    Assert.Equal(30000, result.ResponseTimeout.TotalMilliseconds);
-  }
-
   [Fact(DisplayName = "use the correct host")]
   public async Task ParametersTest0()
   {
