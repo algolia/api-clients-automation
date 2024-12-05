@@ -14,6 +14,7 @@ import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
 import java.io.IOException;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -290,6 +291,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+    Timeouts.enrichBundle(openAPI, additionalProperties, ChronoUnit.SECONDS);
   }
 
   @Override
