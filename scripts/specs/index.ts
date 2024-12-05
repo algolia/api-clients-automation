@@ -3,11 +3,11 @@ import fsp from 'fs/promises';
 import yaml from 'js-yaml';
 
 import { Cache } from '../cache.js';
-import { run, toAbsolutePath } from '../common.js';
+import { exists, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Spec } from '../types.js';
 
-import { lintCommon, transformBundle } from './format.js';
+import { bundleSpecsForClient, bundleSpecsForDoc, lintCommon } from './format.js';
 import type { BaseBuildSpecsOptions } from './types.js';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost', 'getRecommendations'];
@@ -53,12 +53,7 @@ async function buildLiteSpec({
   // remove unused components for the outputted light spec
   await run(`yarn openapi bundle ${bundledPath} -o ${bundledPath} --ext yml --remove-unused-components`);
 
-  await transformBundle({
-    bundledPath,
-    clientName: spec,
-    // Lite does not need documentation because it's just a subset
-    docs: false,
-  });
+  await bundleSpecsForClient(bundledPath, spec);
 }
 
 /**
@@ -70,15 +65,15 @@ async function buildSpec({
   docs,
   useCache,
 }: BaseBuildSpecsOptions & { spec: string }): Promise<void> {
-  const isAlgoliasearch = spec === 'algoliasearch';
+  const isLiteSpec = spec === 'algoliasearch';
 
-  if (docs && isAlgoliasearch) {
+  if (docs && isLiteSpec) {
     return;
   }
 
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
-  const specBase = isAlgoliasearch ? 'search' : spec;
-  const deps = isAlgoliasearch ? ['search', 'recommend'] : [spec];
+  const specBase = isLiteSpec ? 'search' : spec;
+  const deps = isLiteSpec ? ['search', 'recommend'] : [spec];
   const logSuffix = docs ? 'doc spec' : 'spec';
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
@@ -105,16 +100,16 @@ async function buildSpec({
   await run(`yarn specs:fix ${specBase}`);
 
   // Then bundle the file
-  const bundledPath = `specs/bundled/${spec}.${docs ? 'doc.' : ''}${outputFormat}`;
+  const bundledPath = toAbsolutePath(`specs/bundled/${spec}.${docs ? 'doc.' : ''}${outputFormat}`);
   await run(`yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`);
 
+  if (!(await exists(bundledPath))) {
+    throw new Error(`Bundled file not found ${bundledPath}.`);
+  }
+
   // Add the correct tags to be able to generate the proper client
-  if (!isAlgoliasearch) {
-    await transformBundle({
-      bundledPath: toAbsolutePath(bundledPath),
-      clientName: spec,
-      docs,
-    });
+  if (!isLiteSpec) {
+    docs ? await bundleSpecsForDoc(bundledPath, spec) : await bundleSpecsForClient(bundledPath, spec);
   } else {
     await buildLiteSpec({
       spec,
