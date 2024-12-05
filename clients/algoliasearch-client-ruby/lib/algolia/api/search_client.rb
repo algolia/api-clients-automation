@@ -252,7 +252,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::CreatedAtResponse")
     end
 
-    # Adds, updates, or deletes records in one index with a single API request.  Batching index updates reduces latency and increases data integrity.  - Actions are applied in the order they're specified. - Actions are equivalent to the individual API requests of the same name.
+    # Adds, updates, or deletes records in one index with a single API request.  Batching index updates reduces latency and increases data integrity.  - Actions are applied in the order they're specified. - Actions are equivalent to the individual API requests of the same name.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param batch_write_params [BatchWriteParams]  (required)
@@ -287,7 +287,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds, updates, or deletes records in one index with a single API request.  Batching index updates reduces latency and increases data integrity.  - Actions are applied in the order they're specified. - Actions are equivalent to the individual API requests of the same name.
+    # Adds, updates, or deletes records in one index with a single API request.  Batching index updates reduces latency and increases data integrity.  - Actions are applied in the order they're specified. - Actions are equivalent to the individual API requests of the same name.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param batch_write_params [BatchWriteParams]  (required)
@@ -458,7 +458,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::BrowseResponse")
     end
 
-    # Deletes only the records from an index while keeping settings, synonyms, and rules.
+    # Deletes only the records from an index while keeping settings, synonyms, and rules. This operation is resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - deleteIndex
@@ -490,7 +490,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Deletes only the records from an index while keeping settings, synonyms, and rules.
+    # Deletes only the records from an index while keeping settings, synonyms, and rules. This operation is resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - deleteIndex
@@ -816,7 +816,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::DeleteApiKeyResponse")
     end
 
-    # This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
+    # This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - deleteIndex
@@ -853,17 +853,17 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
+    # This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - deleteIndex
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param delete_by_params [DeleteByParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [DeletedAtResponse]
+    # @return [UpdatedAtResponse]
     def delete_by(index_name, delete_by_params, request_options = {})
       response = delete_by_with_http_info(index_name, delete_by_params, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::DeletedAtResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
     # Deletes an index and all its settings.  - Deleting an index doesn't delete its analytics data. - If you try to delete a non-existing index, the operation is ignored without warning. - If the index you want to delete has replica indices, the replicas become independent indices. - If the index you want to delete is a replica index, you must first unlink it from its primary index before you can delete it.   For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
@@ -1951,7 +1951,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::ListUserIdsResponse")
     end
 
-    # Adds, updates, or deletes records in multiple indices with a single API request.  - Actions are applied in the order they are specified. - Actions are equivalent to the individual API requests of the same name.
+    # Adds, updates, or deletes records in multiple indices with a single API request.  - Actions are applied in the order they are specified. - Actions are equivalent to the individual API requests of the same name.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
     # @param batch_params [BatchParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1981,7 +1981,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds, updates, or deletes records in multiple indices with a single API request.  - Actions are applied in the order they are specified. - Actions are equivalent to the individual API requests of the same name.
+    # Adds, updates, or deletes records in multiple indices with a single API request.  - Actions are applied in the order they are specified. - Actions are equivalent to the individual API requests of the same name.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
     # @param batch_params [BatchParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1991,7 +1991,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::MultipleBatchResponse")
     end
 
-    # Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+    # Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2028,7 +2028,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+    # Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2041,7 +2041,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2093,7 +2093,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2255,7 +2255,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::AddApiKeyResponse")
     end
 
-    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2292,7 +2292,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2360,13 +2360,13 @@ module Algolia
     # @param rule [Rule]  (required)
     # @param forward_to_replicas [Boolean] Whether changes are applied to replica indices.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [UpdatedRuleResponse]
+    # @return [UpdatedAtResponse]
     def save_rule(index_name, object_id, rule, forward_to_replicas = nil, request_options = {})
       response = save_rule_with_http_info(index_name, object_id, rule, forward_to_replicas, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedRuleResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
+    # Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -2413,7 +2413,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
+    # Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -2495,7 +2495,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::SaveSynonymResponse")
     end
 
-    # If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are replaced.
+    # If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -2542,7 +2542,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are replaced.
+    # If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -3201,6 +3201,8 @@ module Algolia
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
     # @param block [Proc] the block to execute on each object of the index.
     def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
+      browse_params[:hits_per_page] = browse_params[:hits_per_page] || 1000
+
       hits = []
       loop do
         res = browse(index_name, browse_params, request_options)
@@ -3243,7 +3245,7 @@ module Algolia
         end
 
         search_rules_params.page += 1
-        break if res.nb_hits < search_rules_params.hits_per_page
+        break if res.hits.length < search_rules_params.hits_per_page
       end
 
       rules unless block_given?
@@ -3273,7 +3275,7 @@ module Algolia
         end
 
         search_synonyms_params.page += 1
-        break if res.nb_hits < search_synonyms_params.hits_per_page
+        break if res.hits.length < search_synonyms_params.hits_per_page
       end
 
       synonyms unless block_given?
@@ -3286,7 +3288,7 @@ module Algolia
     #
     # @return [String]
     #
-    def generate_secured_api_key(parent_api_key, restrictions = {})
+    def self.generate_secured_api_key(parent_api_key, restrictions = {})
       restrictions = restrictions.to_hash
       if restrictions.key?(:searchParams)
         # merge searchParams with the root of the restrictions
@@ -3308,13 +3310,24 @@ module Algolia
       Base64.encode64("#{hmac}#{url_encoded_restrictions}").gsub("\n", "")
     end
 
+    # Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
+    #
+    # @param parent_api_key [String] Parent API key used the generate the secured key
+    # @param restrictions [SecuredApiKeyRestrictions] Restrictions to apply on the secured key
+    #
+    # @return [String]
+    #
+    def generate_secured_api_key(parent_api_key, restrictions = {})
+      self.class.generate_secured_api_key(parent_api_key, restrictions)
+    end
+
     # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
     #
     # @param secured_api_key [String]
     #
     # @return [Integer]
     #
-    def get_secured_api_key_remaining_validity(secured_api_key)
+    def self.get_secured_api_key_remaining_validity(secured_api_key)
       now = Time.now.to_i
       decoded_key = Base64.decode64(secured_api_key)
       regex = "validUntil=(\\d+)"
@@ -3329,22 +3342,33 @@ module Algolia
       valid_until - now
     end
 
+    # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
+    #
+    # @param secured_api_key [String]
+    #
+    # @return [Integer]
+    #
+    def get_secured_api_key_remaining_validity(secured_api_key)
+      self.class.get_secured_api_key_remaining_validity(secured_api_key)
+    end
+
     # Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
     #
     # @param index_name [String]: The `index_name` to save `objects` in.
     # @param objects [Array]: The array of `objects` to store in the given Algolia `indexName`.
     # @param wait_for_tasks [Boolean]: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def save_objects(index_name, objects, wait_for_tasks = false, request_options = {})
+    def save_objects(index_name, objects, wait_for_tasks = false, batch_size = 1000, request_options = {})
       chunked_batch(
         index_name,
         objects,
         Search::Action::ADD_OBJECT,
         wait_for_tasks,
-        1000,
+        batch_size,
         request_options
       )
     end
@@ -3354,17 +3378,18 @@ module Algolia
     # @param index_name [String]: The `index_name` to delete `object_ids` from.
     # @param object_ids [Array]: The object_ids to delete.
     # @param wait_for_tasks [Boolean]: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def delete_objects(index_name, object_ids, wait_for_tasks = false, request_options = {})
+    def delete_objects(index_name, object_ids, wait_for_tasks = false, batch_size = 1000, request_options = {})
       chunked_batch(
         index_name,
         object_ids.map { |id| {"objectID" => id} },
         Search::Action::DELETE_OBJECT,
         wait_for_tasks,
-        1000,
+        batch_size,
         request_options
       )
     end
@@ -3375,17 +3400,25 @@ module Algolia
     # @param objects [Array]: The objects to partially update.
     # @param create_if_not_exists [Boolean]: To be provided if non-existing objects are passed, otherwise, the call will fail.
     # @param wait_for_tasks [Boolean] Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def partial_update_objects(index_name, objects, create_if_not_exists, wait_for_tasks = false, request_options = {})
+    def partial_update_objects(
+      index_name,
+      objects,
+      create_if_not_exists,
+      wait_for_tasks = false,
+      batch_size = 1000,
+      request_options = {}
+    )
       chunked_batch(
         index_name,
         objects,
         create_if_not_exists ? Search::Action::PARTIAL_UPDATE_OBJECT : Search::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE,
         wait_for_tasks,
-        1000,
+        batch_size,
         request_options
       )
     end

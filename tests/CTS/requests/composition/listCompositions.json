@@ -1,0 +1,39 @@
+[
+  {
+    "parameters": {},
+    "request": {
+      "path": "/1/compositions",
+      "method": "GET"
+    }
+  },
+  {
+    "parameters": {},
+    "request": {
+      "path": "/1/compositions",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "items": [
+          {
+            "objectID": "id1",
+            "description": "the first ever composition from the client",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "cts_e2e_small"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "nbPages": 1
+      }
+    }
+  }
+]

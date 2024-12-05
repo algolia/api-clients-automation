@@ -989,8 +989,8 @@ func SnippetForGenerateSecuredApiKeyOfSearch1() {
 		"2640659426d5107b6e47d75db9cbaef8",
 		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
 			[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(
-				[]string{"one", "two"})),
+			search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
+				[]string{"one", "two"}))),
 	)
 	if err != nil {
 		// handle the eventual error
@@ -2061,7 +2061,9 @@ func SnippetForSaveRuleOfSearch() {
 	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
 		"<YOUR_INDEX_NAME>", "id1",
 		search.NewEmptyRule().SetObjectID("id1").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}),
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi"))),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -2092,8 +2094,12 @@ func SnippetForSaveRulesOfSearch() {
 	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
 		"<YOUR_INDEX_NAME>",
 		[]search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))})},
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
 	).WithForwardToReplicas(false).WithClearExistingRules(true))
 	if err != nil {
 		// handle the eventual error

@@ -6,18 +6,23 @@ import { union } from '../helpers.js';
 import * as dotenv from 'dotenv';
 
 dotenv.config({path:'../../.env'});
+{{^isCompositionClient}}
 import { {{{clientName}}} } from '{{{importPackage}}}';
+{{/isCompositionClient}}
+{{#isCompositionClient}}
+import { compositionClient } from '@algolia/client-composition';
+{{/isCompositionClient}}
 import type { RequestOptions } from '@algolia/client-common';
 
-if (!process.env.ALGOLIA_APPLICATION_ID) {
-  throw new Error("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+if (!process.env.{{e2eAppID}}) {
+  throw new Error("please provide an `{{e2eAppID}}` env var for e2e tests");
 }
 
 if (!process.env.{{e2eApiKey}}) {
   throw new Error("please provide an `{{e2eApiKey}}` env var for e2e tests");
 }
 
-const client = {{{clientName}}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}){{^isSearchClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isSearchClient}};
+const client = {{^isCompositionClient}}{{{clientName}}}{{/isCompositionClient}}{{#isCompositionClient}}compositionClient{{/isCompositionClient}}(process.env.{{e2eAppID}}, process.env.{{e2eApiKey}}){{^isStandaloneClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isStandaloneClient}};
 
 {{#blocksE2E}}
 describe('{{operationId}}', () => {

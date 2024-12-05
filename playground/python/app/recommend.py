@@ -1,6 +1,7 @@
 from asyncio import run
 
-from algoliasearch.recommend import RecommendClient, __version__
+from algoliasearch.recommend import __version__
+from algoliasearch.recommend.client import RecommendClient
 
 
 async def main():
@@ -11,7 +12,9 @@ async def main():
     print("client initialized", client)
 
     try:
-        response = await client.delete_recommend_rule(index_name="nvim")
+        response = await client.delete_recommend_rule(
+            index_name="nvim", model="test", object_id="objID"
+        )
 
         print(response)
     finally:

@@ -25,17 +25,11 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
-        guard let userAgent else {
-            XCTFail("Expected user-agent header")
-            return
-        }
-
         let pattern =
             "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; QuerySuggestions (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         XCTAssertNoThrow(
-            try regexMatch(userAgent, against: pattern),
-            "Expected " + userAgent + " to match the following regex: " + pattern
+            try regexMatch(echoResponse.algoliaAgent, against: pattern),
+            "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
         )
     }
 
@@ -53,16 +47,10 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
-        guard let userAgent else {
-            XCTFail("Expected user-agent header")
-            return
-        }
-
-        let pattern = "^Algolia for Swift \\(9.9.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.10.2\\).*"
         XCTAssertNoThrow(
-            try regexMatch(userAgent, against: pattern),
-            "Expected " + userAgent + " to match the following regex: " + pattern
+            try regexMatch(echoResponse.algoliaAgent, against: pattern),
+            "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
         )
     }
 

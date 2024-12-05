@@ -1,3 +1,23 @@
+## [9.10.2](https://github.com/algolia/algoliasearch-client-swift/compare/9.10.1...9.10.2)
+
+- [989a7277b](https://github.com/algolia/api-clients-automation/commit/989a7277b) fix(swift): prefix `Task` and `LogLevel` models with the client names ([#4132](https://github.com/algolia/api-clients-automation/pull/4132)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [9.10.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.10.0...9.10.1)
+
+- [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
+- [996ba5036](https://github.com/algolia/api-clients-automation/commit/996ba5036) fix(specs): remove private beta endpoint from recommend ([#4110](https://github.com/algolia/api-clients-automation/pull/4110)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [9.10.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.9.1...9.10.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+- [39ad05495](https://github.com/algolia/api-clients-automation/commit/39ad05495) feat(specs): update estimate response type ([#4101](https://github.com/algolia/api-clients-automation/pull/4101)) by [@cdhawke](https://github.com/cdhawke/)
+- [0985a1ced](https://github.com/algolia/api-clients-automation/commit/0985a1ced) fix(clients): use correct user agent ([#4103](https://github.com/algolia/api-clients-automation/pull/4103)) by [@millotp](https://github.com/millotp/)
+
+## [9.9.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.9.0...9.9.1)
+
+- [801241e12](https://github.com/algolia/api-clients-automation/commit/801241e12) fix(specs): add secrets payload for updates ([#4061](https://github.com/algolia/api-clients-automation/pull/4061)) by [@shortcuts](https://github.com/shortcuts/)
+- [625421783](https://github.com/algolia/api-clients-automation/commit/625421783) fix(clients): update browse iterator ([#4058](https://github.com/algolia/api-clients-automation/pull/4058)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [9.9.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.8.0...9.9.0)
 
 - [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)

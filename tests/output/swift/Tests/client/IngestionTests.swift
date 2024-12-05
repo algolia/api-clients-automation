@@ -11,6 +11,31 @@ final class IngestionClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
     let API_KEY = "my_api_key"
 
+    /// can handle HTML error
+    func testApiTest0() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6676"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.customGetWithHTTPInfo(path: "1/html-error")
+            let responseBodyData = try XCTUnwrap(response.bodyData)
+            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "HTTP error: Status code: 429 Message: No message")
+        }
+    }
+
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
         let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
@@ -21,17 +46,11 @@ final class IngestionClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
-        guard let userAgent else {
-            XCTFail("Expected user-agent header")
-            return
-        }
-
         let pattern =
             "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Ingestion (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
         XCTAssertNoThrow(
-            try regexMatch(userAgent, against: pattern),
-            "Expected " + userAgent + " to match the following regex: " + pattern
+            try regexMatch(echoResponse.algoliaAgent, against: pattern),
+            "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
         )
     }
 
@@ -45,16 +64,10 @@ final class IngestionClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
-        guard let userAgent else {
-            XCTFail("Expected user-agent header")
-            return
-        }
-
-        let pattern = "^Algolia for Swift \\(9.9.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.10.2\\).*"
         XCTAssertNoThrow(
-            try regexMatch(userAgent, against: pattern),
-            "Expected " + userAgent + " to match the following regex: " + pattern
+            try regexMatch(echoResponse.algoliaAgent, against: pattern),
+            "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
         )
     }
 

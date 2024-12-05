@@ -23,17 +23,9 @@ ListIndicesResponse _$ListIndicesResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$ListIndicesResponseToJson(ListIndicesResponse instance) {
-  final val = <String, dynamic>{
-    'items': instance.items.map((e) => e.toJson()).toList(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('nbPages', instance.nbPages);
-  return val;
-}
+Map<String, dynamic> _$ListIndicesResponseToJson(
+        ListIndicesResponse instance) =>
+    <String, dynamic>{
+      'items': instance.items.map((e) => e.toJson()).toList(),
+      if (instance.nbPages case final value?) 'nbPages': value,
+    };

@@ -329,6 +329,8 @@ public class SearchClient extends ApiClient {
    * Adds, updates, or deletes records in one index with a single API request. Batching index
    * updates reduces latency and increases data integrity. - Actions are applied in the order
    * they're specified. - Actions are equivalent to the individual API requests of the same name.
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -345,6 +347,8 @@ public class SearchClient extends ApiClient {
    * Adds, updates, or deletes records in one index with a single API request. Batching index
    * updates reduces latency and increases data integrity. - Actions are applied in the order
    * they're specified. - Actions are equivalent to the individual API requests of the same name.
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -358,7 +362,8 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds, updates, or deletes records in one index with a single API request.
    * Batching index updates reduces latency and increases data integrity. - Actions are applied in
    * the order they're specified. - Actions are equivalent to the individual API requests of the
-   * same name.
+   * same name. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -387,7 +392,8 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds, updates, or deletes records in one index with a single API request.
    * Batching index updates reduces latency and increases data integrity. - Actions are applied in
    * the order they're specified. - Actions are equivalent to the individual API requests of the
-   * same name.
+   * same name. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -753,7 +759,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Deletes only the records from an index while keeping settings, synonyms, and rules.
+   * Deletes only the records from an index while keeping settings, synonyms, and rules. This
+   * operation is resource-intensive and subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -765,7 +773,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Deletes only the records from an index while keeping settings, synonyms, and rules.
+   * Deletes only the records from an index while keeping settings, synonyms, and rules. This
+   * operation is resource-intensive and subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -776,7 +786,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes only the records from an index while keeping settings, synonyms, and
-   * rules.
+   * rules. This operation is resource-intensive and subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -793,7 +804,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes only the records from an index while keeping settings, synonyms, and
-   * rules.
+   * rules. This operation is resource-intensive and subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1480,9 +1492,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This operation doesn't accept empty queries or filters. It's more efficient to get a list of
-   * object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the
-   * records using the [`batch` operation](#tag/Records/operation/batch).
+   * This operation doesn't accept empty filters. This operation is resource-intensive. You should
+   * only use it if you can't get the object IDs of the records you want to delete. It's more
+   * efficient to get a list of object IDs with the [`browse`
+   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
+   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1490,28 +1505,34 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public DeletedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams, RequestOptions requestOptions)
+  public UpdatedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(deleteByAsync(indexName, deleteByParams, requestOptions));
   }
 
   /**
-   * This operation doesn't accept empty queries or filters. It's more efficient to get a list of
-   * object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the
-   * records using the [`batch` operation](#tag/Records/operation/batch).
+   * This operation doesn't accept empty filters. This operation is resource-intensive. You should
+   * only use it if you can't get the object IDs of the records you want to delete. It's more
+   * efficient to get a list of object IDs with the [`browse`
+   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
+   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public DeletedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams) throws AlgoliaRuntimeException {
+  public UpdatedAtResponse deleteBy(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams) throws AlgoliaRuntimeException {
     return this.deleteBy(indexName, deleteByParams, null);
   }
 
   /**
-   * (asynchronously) This operation doesn't accept empty queries or filters. It's more efficient to
-   * get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then
-   * delete the records using the [`batch` operation](#tag/Records/operation/batch).
+   * (asynchronously) This operation doesn't accept empty filters. This operation is
+   * resource-intensive. You should only use it if you can't get the object IDs of the records you
+   * want to delete. It's more efficient to get a list of object IDs with the [`browse`
+   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
+   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1519,7 +1540,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<DeletedAtResponse> deleteByAsync(
+  public CompletableFuture<UpdatedAtResponse> deleteByAsync(
     @Nonnull String indexName,
     @Nonnull DeleteByParams deleteByParams,
     RequestOptions requestOptions
@@ -1533,19 +1554,22 @@ public class SearchClient extends ApiClient {
       .setMethod("POST")
       .setBody(deleteByParams)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<DeletedAtResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
   }
 
   /**
-   * (asynchronously) This operation doesn't accept empty queries or filters. It's more efficient to
-   * get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then
-   * delete the records using the [`batch` operation](#tag/Records/operation/batch).
+   * (asynchronously) This operation doesn't accept empty filters. This operation is
+   * resource-intensive. You should only use it if you can't get the object IDs of the records you
+   * want to delete. It's more efficient to get a list of object IDs with the [`browse`
+   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
+   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<DeletedAtResponse> deleteByAsync(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams)
+  public CompletableFuture<UpdatedAtResponse> deleteByAsync(@Nonnull String indexName, @Nonnull DeleteByParams deleteByParams)
     throws AlgoliaRuntimeException {
     return this.deleteByAsync(indexName, deleteByParams, null);
   }
@@ -3382,7 +3406,8 @@ public class SearchClient extends ApiClient {
   /**
    * Adds, updates, or deletes records in multiple indices with a single API request. - Actions are
    * applied in the order they are specified. - Actions are equivalent to the individual API
-   * requests of the same name.
+   * requests of the same name. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3397,7 +3422,8 @@ public class SearchClient extends ApiClient {
   /**
    * Adds, updates, or deletes records in multiple indices with a single API request. - Actions are
    * applied in the order they are specified. - Actions are equivalent to the individual API
-   * requests of the same name.
+   * requests of the same name. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3409,7 +3435,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Adds, updates, or deletes records in multiple indices with a single API
    * request. - Actions are applied in the order they are specified. - Actions are equivalent to the
-   * individual API requests of the same name.
+   * individual API requests of the same name. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3427,7 +3454,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Adds, updates, or deletes records in multiple indices with a single API
    * request. - Actions are applied in the order they are specified. - Actions are equivalent to the
-   * individual API requests of the same name.
+   * individual API requests of the same name. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3439,11 +3467,11 @@ public class SearchClient extends ApiClient {
   /**
    * Copies or moves (renames) an index within the same Algolia application. - Existing destination
    * indices are overwritten, except for their analytics data. - If the destination index doesn't
-   * exist yet, it'll be created. **Copy** - Copying a source index that doesn't exist creates a new
-   * index with 0 records and default settings. - The API keys of the source index are merged with
-   * the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and
-   * `replicas` settings. - You can't copy to a destination index that already has replicas. - Be
-   * aware of the [size
+   * exist yet, it'll be created. - This operation is resource-intensive. **Copy** - Copying a
+   * source index that doesn't exist creates a new index with 0 records and default settings. - The
+   * API keys of the source index are merged with the existing keys in the destination index. - You
+   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
+   * destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -3453,6 +3481,8 @@ public class SearchClient extends ApiClient {
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3471,11 +3501,11 @@ public class SearchClient extends ApiClient {
   /**
    * Copies or moves (renames) an index within the same Algolia application. - Existing destination
    * indices are overwritten, except for their analytics data. - If the destination index doesn't
-   * exist yet, it'll be created. **Copy** - Copying a source index that doesn't exist creates a new
-   * index with 0 records and default settings. - The API keys of the source index are merged with
-   * the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and
-   * `replicas` settings. - You can't copy to a destination index that already has replicas. - Be
-   * aware of the [size
+   * exist yet, it'll be created. - This operation is resource-intensive. **Copy** - Copying a
+   * source index that doesn't exist creates a new index with 0 records and default settings. - The
+   * API keys of the source index are merged with the existing keys in the destination index. - You
+   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
+   * destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -3485,6 +3515,8 @@ public class SearchClient extends ApiClient {
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3498,11 +3530,11 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
    * Existing destination indices are overwritten, except for their analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
-   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
-   * source index are merged with the existing keys in the destination index. - You can't copy the
-   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
-   * that already has replicas. - Be aware of the [size
+   * destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.
+   * **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and
+   * default settings. - The API keys of the source index are merged with the existing keys in the
+   * destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. -
+   * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -3512,6 +3544,8 @@ public class SearchClient extends ApiClient {
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3539,11 +3573,11 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
    * Existing destination indices are overwritten, except for their analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
-   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
-   * source index are merged with the existing keys in the destination index. - You can't copy the
-   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
-   * that already has replicas. - Be aware of the [size
+   * destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.
+   * **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and
+   * default settings. - The API keys of the source index are merged with the existing keys in the
+   * destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. -
+   * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -3553,6 +3587,8 @@ public class SearchClient extends ApiClient {
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3569,26 +3605,28 @@ public class SearchClient extends ApiClient {
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
-   * the entire record, you can use these built-in operations. These operations can be helpful if
-   * you don't have access to your initial data. - Increment: increment a numeric attribute -
-   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
-   * attribute - Remove: remove all matching number or string elements from an array attribute made
-   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
-   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
-   * integer attribute only if the provided value matches the current value, and otherwise ignore
-   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
-   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
-   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
-   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
-   * the current value, and otherwise ignore the whole object update. For example, if you pass an
-   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
-   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
-   * object with the attribute to update as the key and its value being an object with the following
-   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
-   * argument to the operation, for example, increment or decrement step, value to add or remove.
+   * first-level attribute but not nested attributes. If you specify a nested attribute, this
+   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
+   * record, you can use these built-in operations. These operations can be helpful if you don't
+   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
+   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
+   * Remove: remove all matching number or string elements from an array attribute made of numbers
+   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
+   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
+   * only if the provided value matches the current value, and otherwise ignore the whole object
+   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
+   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
+   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
+   * increment a numeric integer attribute only if the provided value is greater than the current
+   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
+   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
+   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
+   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
+   * attribute to update as the key and its value being an object with the following properties: -
+   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
+   * the operation, for example, increment or decrement step, value to add or remove. This operation
+   * is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3613,26 +3651,28 @@ public class SearchClient extends ApiClient {
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
-   * the entire record, you can use these built-in operations. These operations can be helpful if
-   * you don't have access to your initial data. - Increment: increment a numeric attribute -
-   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
-   * attribute - Remove: remove all matching number or string elements from an array attribute made
-   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
-   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
-   * integer attribute only if the provided value matches the current value, and otherwise ignore
-   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
-   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
-   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
-   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
-   * the current value, and otherwise ignore the whole object update. For example, if you pass an
-   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
-   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
-   * object with the attribute to update as the key and its value being an object with the following
-   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
-   * argument to the operation, for example, increment or decrement step, value to add or remove.
+   * first-level attribute but not nested attributes. If you specify a nested attribute, this
+   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
+   * record, you can use these built-in operations. These operations can be helpful if you don't
+   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
+   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
+   * Remove: remove all matching number or string elements from an array attribute made of numbers
+   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
+   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
+   * only if the provided value matches the current value, and otherwise ignore the whole object
+   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
+   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
+   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
+   * increment a numeric integer attribute only if the provided value is greater than the current
+   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
+   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
+   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
+   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
+   * attribute to update as the key and its value being an object with the following properties: -
+   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
+   * the operation, for example, increment or decrement step, value to add or remove. This operation
+   * is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3654,26 +3694,28 @@ public class SearchClient extends ApiClient {
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
-   * the entire record, you can use these built-in operations. These operations can be helpful if
-   * you don't have access to your initial data. - Increment: increment a numeric attribute -
-   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
-   * attribute - Remove: remove all matching number or string elements from an array attribute made
-   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
-   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
-   * integer attribute only if the provided value matches the current value, and otherwise ignore
-   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
-   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
-   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
-   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
-   * the current value, and otherwise ignore the whole object update. For example, if you pass an
-   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
-   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
-   * object with the attribute to update as the key and its value being an object with the following
-   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
-   * argument to the operation, for example, increment or decrement step, value to add or remove.
+   * first-level attribute but not nested attributes. If you specify a nested attribute, this
+   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
+   * record, you can use these built-in operations. These operations can be helpful if you don't
+   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
+   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
+   * Remove: remove all matching number or string elements from an array attribute made of numbers
+   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
+   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
+   * only if the provided value matches the current value, and otherwise ignore the whole object
+   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
+   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
+   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
+   * increment a numeric integer attribute only if the provided value is greater than the current
+   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
+   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
+   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
+   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
+   * attribute to update as the key and its value being an object with the following properties: -
+   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
+   * the operation, for example, increment or decrement step, value to add or remove. This operation
+   * is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3695,26 +3737,28 @@ public class SearchClient extends ApiClient {
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
-   * the entire record, you can use these built-in operations. These operations can be helpful if
-   * you don't have access to your initial data. - Increment: increment a numeric attribute -
-   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
-   * attribute - Remove: remove all matching number or string elements from an array attribute made
-   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
-   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
-   * integer attribute only if the provided value matches the current value, and otherwise ignore
-   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
-   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
-   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
-   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
-   * the current value, and otherwise ignore the whole object update. For example, if you pass an
-   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
-   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
-   * you pass an IncrementSet value greater than 0. You can specify an operation by providing an
-   * object with the attribute to update as the key and its value being an object with the following
-   * properties: - _operation: the operation to apply on the attribute - value: the right-hand side
-   * argument to the operation, for example, increment or decrement step, value to add or remove.
+   * first-level attribute but not nested attributes. If you specify a nested attribute, this
+   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
+   * record, you can use these built-in operations. These operations can be helpful if you don't
+   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
+   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
+   * Remove: remove all matching number or string elements from an array attribute made of numbers
+   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
+   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
+   * only if the provided value matches the current value, and otherwise ignore the whole object
+   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
+   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
+   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
+   * increment a numeric integer attribute only if the provided value is greater than the current
+   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
+   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
+   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
+   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
+   * attribute to update as the key and its value being an object with the following properties: -
+   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
+   * the operation, for example, increment or decrement step, value to add or remove. This operation
+   * is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3734,13 +3778,13 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
-   * attribute without pushing the entire record, you can use these built-in operations. These
-   * operations can be helpful if you don't have access to your initial data. - Increment: increment
-   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
-   * element to an array attribute - Remove: remove all matching number or string elements from an
-   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
-   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * attribute, this operation replaces its first-level ancestor. To update an attribute without
+   * pushing the entire record, you can use these built-in operations. These operations can be
+   * helpful if you don't have access to your initial data. - Increment: increment a numeric
+   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
+   * to an array attribute - Remove: remove all matching number or string elements from an array
+   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
+   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
    * increment a numeric integer attribute only if the provided value matches the current value, and
    * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
    * for the version attribute, but the current value of the attribute is 1, the engine ignores the
@@ -3753,7 +3797,8 @@ public class SearchClient extends ApiClient {
    * providing an object with the attribute to update as the key and its value being an object with
    * the following properties: - _operation: the operation to apply on the attribute - value: the
    * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * add or remove. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3791,13 +3836,13 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
-   * attribute without pushing the entire record, you can use these built-in operations. These
-   * operations can be helpful if you don't have access to your initial data. - Increment: increment
-   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
-   * element to an array attribute - Remove: remove all matching number or string elements from an
-   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
-   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * attribute, this operation replaces its first-level ancestor. To update an attribute without
+   * pushing the entire record, you can use these built-in operations. These operations can be
+   * helpful if you don't have access to your initial data. - Increment: increment a numeric
+   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
+   * to an array attribute - Remove: remove all matching number or string elements from an array
+   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
+   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
    * increment a numeric integer attribute only if the provided value matches the current value, and
    * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
    * for the version attribute, but the current value of the attribute is 1, the engine ignores the
@@ -3810,7 +3855,8 @@ public class SearchClient extends ApiClient {
    * providing an object with the attribute to update as the key and its value being an object with
    * the following properties: - _operation: the operation to apply on the attribute - value: the
    * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * add or remove. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3833,13 +3879,13 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
-   * attribute without pushing the entire record, you can use these built-in operations. These
-   * operations can be helpful if you don't have access to your initial data. - Increment: increment
-   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
-   * element to an array attribute - Remove: remove all matching number or string elements from an
-   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
-   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * attribute, this operation replaces its first-level ancestor. To update an attribute without
+   * pushing the entire record, you can use these built-in operations. These operations can be
+   * helpful if you don't have access to your initial data. - Increment: increment a numeric
+   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
+   * to an array attribute - Remove: remove all matching number or string elements from an array
+   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
+   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
    * increment a numeric integer attribute only if the provided value matches the current value, and
    * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
    * for the version attribute, but the current value of the attribute is 1, the engine ignores the
@@ -3852,7 +3898,8 @@ public class SearchClient extends ApiClient {
    * providing an object with the attribute to update as the key and its value being an object with
    * the following properties: - _operation: the operation to apply on the attribute - value: the
    * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * add or remove. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3875,13 +3922,13 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
-   * attribute without pushing the entire record, you can use these built-in operations. These
-   * operations can be helpful if you don't have access to your initial data. - Increment: increment
-   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
-   * element to an array attribute - Remove: remove all matching number or string elements from an
-   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
-   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * attribute, this operation replaces its first-level ancestor. To update an attribute without
+   * pushing the entire record, you can use these built-in operations. These operations can be
+   * helpful if you don't have access to your initial data. - Increment: increment a numeric
+   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
+   * to an array attribute - Remove: remove all matching number or string elements from an array
+   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
+   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
    * increment a numeric integer attribute only if the provided value matches the current value, and
    * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
    * for the version attribute, but the current value of the attribute is 1, the engine ignores the
@@ -3894,7 +3941,8 @@ public class SearchClient extends ApiClient {
    * providing an object with the attribute to update as the key and its value being an object with
    * the following properties: - _operation: the operation to apply on the attribute - value: the
    * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove.
+   * add or remove. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4069,7 +4117,9 @@ public class SearchClient extends ApiClient {
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
    * that doesn't exist yet, a new index is created. To update _some_ attributes of a record, use
    * the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch). This
+   * operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4090,7 +4140,9 @@ public class SearchClient extends ApiClient {
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
    * that doesn't exist yet, a new index is created. To update _some_ attributes of a record, use
    * the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch). This
+   * operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4109,6 +4161,8 @@ public class SearchClient extends ApiClient {
    * to an index that doesn't exist yet, a new index is created. To update _some_ attributes of a
    * record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add,
    * update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4138,6 +4192,8 @@ public class SearchClient extends ApiClient {
    * to an index that doesn't exist yet, a new index is created. To update _some_ attributes of a
    * record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add,
    * update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4162,7 +4218,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(
+  public UpdatedAtResponse saveRule(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4183,7 +4239,7 @@ public class SearchClient extends ApiClient {
    * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule, Boolean forwardToReplicas)
+  public UpdatedAtResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule, Boolean forwardToReplicas)
     throws AlgoliaRuntimeException {
     return this.saveRule(indexName, objectID, rule, forwardToReplicas, null);
   }
@@ -4200,12 +4256,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(
-    @Nonnull String indexName,
-    @Nonnull String objectID,
-    @Nonnull Rule rule,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public UpdatedAtResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     return this.saveRule(indexName, objectID, rule, null, requestOptions);
   }
 
@@ -4219,7 +4271,7 @@ public class SearchClient extends ApiClient {
    * @param rule (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedRuleResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
+  public UpdatedAtResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
     throws AlgoliaRuntimeException {
     return this.saveRule(indexName, objectID, rule, null, null);
   }
@@ -4237,7 +4289,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4256,7 +4308,7 @@ public class SearchClient extends ApiClient {
       .setBody(rule)
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<UpdatedRuleResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
   }
 
   /**
@@ -4270,7 +4322,7 @@ public class SearchClient extends ApiClient {
    * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4291,7 +4343,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
     @Nonnull Rule rule,
@@ -4310,14 +4362,16 @@ public class SearchClient extends ApiClient {
    * @param rule (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
+  public CompletableFuture<UpdatedAtResponse> saveRuleAsync(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule)
     throws AlgoliaRuntimeException {
     return this.saveRuleAsync(indexName, objectID, rule, null, null);
   }
 
   /**
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
-   * creates a new one. Otherwise, existing rules are replaced.
+   * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
+   * [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4340,7 +4394,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
-   * creates a new one. Otherwise, existing rules are replaced.
+   * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
+   * [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4360,7 +4416,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
-   * creates a new one. Otherwise, existing rules are replaced.
+   * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
+   * [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4375,7 +4433,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
-   * creates a new one. Otherwise, existing rules are replaced.
+   * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
+   * [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4387,7 +4447,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
-   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
+   * operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4421,7 +4483,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
-   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
+   * operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4441,7 +4505,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
-   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
+   * operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4459,7 +4525,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
-   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
+   * operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4645,7 +4713,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
-   * synonyms are replaced.
+   * synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4668,7 +4737,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
-   * synonyms are replaced.
+   * synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4688,7 +4758,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
-   * synonyms are replaced.
+   * synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4703,7 +4774,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
-   * synonyms are replaced.
+   * synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4715,7 +4787,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
-   * Otherwise, existing synonyms are replaced.
+   * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4749,7 +4822,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
-   * Otherwise, existing synonyms are replaced.
+   * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4769,7 +4843,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
-   * Otherwise, existing synonyms are replaced.
+   * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4787,7 +4862,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
-   * Otherwise, existing synonyms are replaced.
+   * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
+   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -6126,6 +6202,10 @@ public class SearchClient extends ApiClient {
   public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params, Class<T> innerType, RequestOptions requestOptions) {
     final Holder<String> currentCursor = new Holder<>();
 
+    if (params.getHitsPerPage() == null) {
+      params.setHitsPerPage(1000);
+    }
+
     return AlgoliaIterableHelper.createIterable(
       () -> {
         BrowseResponse<T> response = this.browse(indexName, params, innerType, requestOptions);
@@ -6175,7 +6255,7 @@ public class SearchClient extends ApiClient {
     return AlgoliaIterableHelper.createIterable(
       () -> {
         SearchSynonymsResponse response = this.searchSynonyms(indexName, params, requestOptions);
-        currentPage.value = response.getNbHits() < params.getHitsPerPage() ? null : currentPage.value + 1;
+        currentPage.value = response.getHits().size() < params.getHitsPerPage() ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
       () -> currentPage.value != null
@@ -6217,7 +6297,7 @@ public class SearchClient extends ApiClient {
     return AlgoliaIterableHelper.createIterable(
       () -> {
         SearchRulesResponse response = this.searchRules(indexName, params.setPage(currentPage.value), requestOptions);
-        currentPage.value = response.getNbHits() < hitsPerPage ? null : currentPage.value + 1;
+        currentPage.value = response.getHits().size() < hitsPerPage ? null : currentPage.value + 1;
         return response.getHits().iterator();
       },
       () -> currentPage.value != null
@@ -6532,7 +6612,31 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
-    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, 1000, requestOptions);
+    return saveObjects(indexName, objects, false, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+   * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> saveObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, batchSize, requestOptions);
   }
 
   /**
@@ -6572,6 +6676,30 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, RequestOptions requestOptions) {
+    return deleteObjects(indexName, objectIDs, false, 1000, null);
+  }
+
+  /**
+   * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+   * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public List<BatchResponse> deleteObjects(
+    String indexName,
+    List<String> objectIDs,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
     List<Map<String, String>> objects = new ArrayList<>();
 
     for (String id : objectIDs) {
@@ -6580,7 +6708,7 @@ public class SearchClient extends ApiClient {
       objects.add(obj);
     }
 
-    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, 1000, requestOptions);
+    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions);
   }
 
   /**
@@ -6641,12 +6769,40 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     RequestOptions requestOptions
   ) {
+    return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+  }
+
+  /**
+   * Helper: Replaces object content of all the given objects according to their respective
+   * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+   * requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> partialUpdateObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
     return chunkedBatch(
       indexName,
       objects,
       createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
       waitForTasks,
-      1000,
+      batchSize,
       requestOptions
     );
   }

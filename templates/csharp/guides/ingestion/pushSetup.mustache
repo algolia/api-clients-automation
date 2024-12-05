@@ -1,0 +1,31 @@
+using System;
+using System.Text.Json;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+using Action = Algolia.Search.Models.Ingestion.Action;
+using static Algolia.Search.Models.Ingestion.PushTaskRecords;
+
+class PushSetup
+{
+    public static async Task Main(string[] args)
+    {
+        string jsonContent = File.ReadAllText("records.json");
+
+        var records = JsonSerializer.Deserialize<List<PushTaskRecords>>(jsonContent);
+
+        // use the region matching your applicationID
+        {{> snippets/init}}
+
+        try
+        {
+            var run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
+            Console.WriteLine(run.RunID);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+}

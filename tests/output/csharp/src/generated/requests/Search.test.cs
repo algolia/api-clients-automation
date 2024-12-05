@@ -1751,6 +1751,10 @@ public class SearchClientRequestTests
         {
           new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
         },
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { Filters = "brand:xiaomi" },
+        },
       }
     );
 
@@ -1758,7 +1762,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/indexName/rules/id1", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}",
+      "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:xiaomi\"}}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1872,6 +1876,10 @@ public class SearchClientRequestTests
           {
             new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains") },
           },
+          Consequence = new Consequence
+          {
+            Params = new ConsequenceParams { Filters = "brand:apple" },
+          },
         },
         new Rule
         {
@@ -1879,6 +1887,10 @@ public class SearchClientRequestTests
           Conditions = new List<Condition>
           {
             new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
+          },
+          Consequence = new Consequence
+          {
+            Params = new ConsequenceParams { Filters = "brand:samsung" },
           },
         },
       },
@@ -1890,7 +1902,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]",
+      "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:samsung\"}}}]",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -2723,11 +2735,13 @@ public class SearchClientRequestTests
               HitsPerPage = 1,
               IgnorePlurals = new IgnorePlurals(false),
               IndexName = "theIndexName",
-              InsideBoundingBox = new List<List<Double>>
-              {
-                new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201 },
-                new List<Double> { 40.9234, 2.1185, 38.643, 1.9916 },
-              },
+              InsideBoundingBox = new InsideBoundingBox(
+                new List<List<Double>>
+                {
+                  new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201 },
+                  new List<Double> { 40.9234, 2.1185, 38.643, 1.9916 },
+                }
+              ),
               InsidePolygon = new List<List<Double>>
               {
                 new List<Double> { 47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9 },
@@ -2751,7 +2765,7 @@ public class SearchClientRequestTests
               OptionalFilters = new OptionalFilters(
                 new List<OptionalFilters> { new OptionalFilters("") }
               ),
-              OptionalWords = new List<string> { "" },
+              OptionalWords = new OptionalWords(new List<string> { "" }),
               Page = 0,
               PercentileComputation = true,
               PersonalizationImpact = 0,
@@ -3463,7 +3477,7 @@ public class SearchClientRequestTests
         MinWordSizefor2Typos = 11,
         Mode = Enum.Parse<Mode>("NeuralSearch"),
         NumericAttributesForFiltering = new List<string> { "algolia" },
-        OptionalWords = new List<string> { "myspace" },
+        OptionalWords = new OptionalWords(new List<string> { "myspace" }),
         PaginationLimitedTo = 0,
         QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
         QueryType = Enum.Parse<QueryType>("PrefixLast"),

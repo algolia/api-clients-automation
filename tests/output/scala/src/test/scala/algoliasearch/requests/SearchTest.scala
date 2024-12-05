@@ -1783,6 +1783,13 @@ class SearchTest extends AnyFunSuite {
               anchoring = Some(Anchoring.withName("contains"))
             )
           )
+        ),
+        consequence = Consequence(
+          params = Some(
+            ConsequenceParams(
+              filters = Some("brand:xiaomi")
+            )
+          )
         )
       )
     )
@@ -1792,7 +1799,9 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/indexName/rules/id1")
     assert(res.method == "PUT")
-    val expectedBody = parse("""{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}""")
+    val expectedBody = parse(
+      """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -1814,57 +1823,55 @@ class SearchTest extends AnyFunSuite {
             )
           )
         ),
-        consequence = Some(
-          Consequence(
-            params = Some(
-              ConsequenceParams(
-                filters = Some("brand:apple"),
-                query = Some(
-                  ConsequenceQueryObject(
-                    remove = Some(Seq("algolia")),
-                    edits = Some(
-                      Seq(
-                        Edit(
-                          `type` = Some(EditType.withName("remove")),
-                          delete = Some("abc"),
-                          insert = Some("cde")
-                        ),
-                        Edit(
-                          `type` = Some(EditType.withName("replace")),
-                          delete = Some("abc"),
-                          insert = Some("cde")
-                        )
+        consequence = Consequence(
+          params = Some(
+            ConsequenceParams(
+              filters = Some("brand:apple"),
+              query = Some(
+                ConsequenceQueryObject(
+                  remove = Some(Seq("algolia")),
+                  edits = Some(
+                    Seq(
+                      Edit(
+                        `type` = Some(EditType.withName("remove")),
+                        delete = Some("abc"),
+                        insert = Some("cde")
+                      ),
+                      Edit(
+                        `type` = Some(EditType.withName("replace")),
+                        delete = Some("abc"),
+                        insert = Some("cde")
                       )
                     )
                   )
                 )
               )
-            ),
-            hide = Some(
-              Seq(
-                ConsequenceHide(
-                  objectID = "321"
-                )
+            )
+          ),
+          hide = Some(
+            Seq(
+              ConsequenceHide(
+                objectID = "321"
               )
-            ),
-            filterPromotes = Some(false),
-            userData = Some(
-              JObject(
-                List(
-                  JField("algolia", JString("aloglia"))
-                )
+            )
+          ),
+          filterPromotes = Some(false),
+          userData = Some(
+            JObject(
+              List(
+                JField("algolia", JString("aloglia"))
               )
-            ),
-            promote = Some(
-              Seq(
-                PromoteObjectID(
-                  objectID = "abc",
-                  position = 3
-                ),
-                PromoteObjectIDs(
-                  objectIDs = Seq("abc", "def"),
-                  position = 1
-                )
+            )
+          ),
+          promote = Some(
+            Seq(
+              PromoteObjectID(
+                objectID = "abc",
+                position = 3
+              ),
+              PromoteObjectIDs(
+                objectIDs = Seq("abc", "def"),
+                position = 1
               )
             )
           )
@@ -1916,6 +1923,13 @@ class SearchTest extends AnyFunSuite {
                 anchoring = Some(Anchoring.withName("contains"))
               )
             )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("brand:apple")
+              )
+            )
           )
         ),
         Rule(
@@ -1925,6 +1939,13 @@ class SearchTest extends AnyFunSuite {
               Condition(
                 pattern = Some("apple"),
                 anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("brand:samsung")
               )
             )
           )
@@ -1940,7 +1961,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]"""
+      """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1971,57 +1992,55 @@ class SearchTest extends AnyFunSuite {
               )
             )
           ),
-          consequence = Some(
-            Consequence(
-              params = Some(
-                ConsequenceParams(
-                  filters = Some("brand:apple"),
-                  query = Some(
-                    ConsequenceQueryObject(
-                      remove = Some(Seq("algolia")),
-                      edits = Some(
-                        Seq(
-                          Edit(
-                            `type` = Some(EditType.withName("remove")),
-                            delete = Some("abc"),
-                            insert = Some("cde")
-                          ),
-                          Edit(
-                            `type` = Some(EditType.withName("replace")),
-                            delete = Some("abc"),
-                            insert = Some("cde")
-                          )
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("brand:apple"),
+                query = Some(
+                  ConsequenceQueryObject(
+                    remove = Some(Seq("algolia")),
+                    edits = Some(
+                      Seq(
+                        Edit(
+                          `type` = Some(EditType.withName("remove")),
+                          delete = Some("abc"),
+                          insert = Some("cde")
+                        ),
+                        Edit(
+                          `type` = Some(EditType.withName("replace")),
+                          delete = Some("abc"),
+                          insert = Some("cde")
                         )
                       )
                     )
                   )
                 )
-              ),
-              hide = Some(
-                Seq(
-                  ConsequenceHide(
-                    objectID = "321"
-                  )
+              )
+            ),
+            hide = Some(
+              Seq(
+                ConsequenceHide(
+                  objectID = "321"
                 )
-              ),
-              filterPromotes = Some(false),
-              userData = Some(
-                JObject(
-                  List(
-                    JField("algolia", JString("aloglia"))
-                  )
+              )
+            ),
+            filterPromotes = Some(false),
+            userData = Some(
+              JObject(
+                List(
+                  JField("algolia", JString("aloglia"))
                 )
-              ),
-              promote = Some(
-                Seq(
-                  PromoteObjectID(
-                    objectID = "abc",
-                    position = 3
-                  ),
-                  PromoteObjectIDs(
-                    objectIDs = Seq("abc", "def"),
-                    position = 1
-                  )
+              )
+            ),
+            promote = Some(
+              Seq(
+                PromoteObjectID(
+                  objectID = "abc",
+                  position = 3
+                ),
+                PromoteObjectIDs(
+                  objectIDs = Seq("abc", "def"),
+                  position = 1
                 )
               )
             )
@@ -2641,7 +2660,8 @@ class SearchTest extends AnyFunSuite {
             hitsPerPage = Some(1),
             ignorePlurals = Some(IgnorePlurals(false)),
             indexName = "theIndexName",
-            insideBoundingBox = Some(Seq(Seq(47.3165, 4.9665, 47.3424, 5.0201), Seq(40.9234, 2.1185, 38.643, 1.9916))),
+            insideBoundingBox =
+              Some(InsideBoundingBox(Seq(Seq(47.3165, 4.9665, 47.3424, 5.0201), Seq(40.9234, 2.1185, 38.643, 1.9916)))),
             insidePolygon = Some(
               Seq(
                 Seq(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
@@ -2659,7 +2679,7 @@ class SearchTest extends AnyFunSuite {
             numericFilters = Some(NumericFilters(Seq(NumericFilters("")))),
             offset = Some(0),
             optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("")))),
-            optionalWords = Some(Seq("")),
+            optionalWords = Some(OptionalWords(Seq(""))),
             page = Some(0),
             percentileComputation = Some(true),
             personalizationImpact = Some(0),
@@ -3315,7 +3335,7 @@ class SearchTest extends AnyFunSuite {
         minWordSizefor2Typos = Some(11),
         mode = Some(Mode.withName("neuralSearch")),
         numericAttributesForFiltering = Some(Seq("algolia")),
-        optionalWords = Some(Seq("myspace")),
+        optionalWords = Some(OptionalWords(Seq("myspace"))),
         paginationLimitedTo = Some(0),
         queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
         queryType = Some(QueryType.withName("prefixLast")),

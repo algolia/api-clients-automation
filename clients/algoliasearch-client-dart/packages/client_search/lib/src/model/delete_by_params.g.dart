@@ -18,13 +18,7 @@ DeleteByParams _$DeleteByParamsFromJson(Map<String, dynamic> json) =>
           tagFilters: $checkedConvert('tagFilters', (v) => v),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
-          insideBoundingBox: $checkedConvert(
-              'insideBoundingBox',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => (e as List<dynamic>)
-                      .map((e) => (e as num).toDouble())
-                      .toList())
-                  .toList()),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
               (v) => (v as List<dynamic>?)
@@ -37,22 +31,15 @@ DeleteByParams _$DeleteByParamsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$DeleteByParamsToJson(DeleteByParams instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('facetFilters', instance.facetFilters);
-  writeNotNull('filters', instance.filters);
-  writeNotNull('numericFilters', instance.numericFilters);
-  writeNotNull('tagFilters', instance.tagFilters);
-  writeNotNull('aroundLatLng', instance.aroundLatLng);
-  writeNotNull('aroundRadius', instance.aroundRadius);
-  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
-  writeNotNull('insidePolygon', instance.insidePolygon);
-  return val;
-}
+Map<String, dynamic> _$DeleteByParamsToJson(DeleteByParams instance) =>
+    <String, dynamic>{
+      if (instance.facetFilters case final value?) 'facetFilters': value,
+      if (instance.filters case final value?) 'filters': value,
+      if (instance.numericFilters case final value?) 'numericFilters': value,
+      if (instance.tagFilters case final value?) 'tagFilters': value,
+      if (instance.aroundLatLng case final value?) 'aroundLatLng': value,
+      if (instance.aroundRadius case final value?) 'aroundRadius': value,
+      if (instance.insideBoundingBox case final value?)
+        'insideBoundingBox': value,
+      if (instance.insidePolygon case final value?) 'insidePolygon': value,
+    };

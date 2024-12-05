@@ -13,6 +13,32 @@ function createClient() {
   return algoliasearch(appId, apiKey).initIngestion({ options: { requester: nodeEchoRequester() }, region: 'us' });
 }
 
+describe('api', () => {
+  test('can handle HTML error', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key').initIngestion({
+      options: {
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6676,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+      // @ts-ignore
+      region: 'us',
+    });
+    try {
+      // @ts-ignore
+      const result = await client.customGet({ path: '1/html-error' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Too Many Requests');
+    }
+  }, 15000);
+});
+
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
     const client = createClient();
@@ -29,7 +55,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.12.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.15.0\).*/);
   }, 15000);
 
   test('calls api with default read timeouts', async () => {

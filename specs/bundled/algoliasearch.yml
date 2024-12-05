@@ -221,6 +221,9 @@ tags:
       order determined by your ranking.
 
       Records are schemaless JSON objects.
+
+      When adding or updating many records, check the [indexing rate
+      limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     externalDocs:
       url: >-
         https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/
@@ -751,7 +754,7 @@ components:
         - $ref: '#/components/schemas/aroundPrecisionFromValue'
       x-categories:
         - Geo-Search
-    insideBoundingBox:
+    insideBoundingBoxArray:
       type: array
       items:
         type: array
@@ -786,6 +789,11 @@ components:
           - 1.9916
       x-categories:
         - Geo-Search
+    insideBoundingBox:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/insideBoundingBoxArray'
     insidePolygon:
       type: array
       items:
@@ -1355,6 +1363,58 @@ components:
               items:
                 type: string
             - type: 'null'
+    optionalWordsArray:
+      type: array
+      items:
+        type: string
+      example:
+        - blue
+        - iphone case
+      description: >
+        Words that should be considered optional when found in the query.
+
+
+        By default, records must match all words in the search query to be
+        included in the search results.
+
+        Adding optional words can help to increase the number of search results
+        by running an additional search query that doesn't include the optional
+        words.
+
+        For example, if the search query is "action video" and "video" is an
+        optional word,
+
+        the search engine runs two queries. One for "action video" and one for
+        "action".
+
+        Records that match all words are ranked higher.
+
+
+        For a search query with 4 or more words **and** all its words are
+        optional,
+
+        the number of matched words required for a record to be included in the
+        search results increases for every 1,000 records:
+
+
+        - If `optionalWords` has less than 10 words, the required number of
+        matched words increases by 1:
+          results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
+        - If `optionalWords` has 10 or more words, the number of required
+        matched words increases by the number of optional words divided by 5
+        (rounded down).
+          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+
+        For more information, see [Optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/optionalWordsArray'
     exactOnSingleWordQuery:
       type: string
       enum:
@@ -1436,15 +1496,6 @@ components:
           minimum: 0
           maximum: 4
           default: 0
-      x-categories:
-        - Advanced
-    maxFacetHits:
-      type: integer
-      description: >-
-        Maximum number of facet values to return when [searching for facet
-        values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-      maximum: 100
-      default: 10
       x-categories:
         - Advanced
     order:
@@ -2008,52 +2059,7 @@ components:
           x-categories:
             - Query strategy
         optionalWords:
-          type: array
-          items:
-            type: string
-          example:
-            - blue
-            - iphone case
-          description: >
-            Words that should be considered optional when found in the query.
-
-
-            By default, records must match all words in the search query to be
-            included in the search results.
-
-            Adding optional words can help to increase the number of search
-            results by running an additional search query that doesn't include
-            the optional words.
-
-            For example, if the search query is "action video" and "video" is an
-            optional word,
-
-            the search engine runs two queries. One for "action video" and one
-            for "action".
-
-            Records that match all words are ranked higher.
-
-
-            For a search query with 4 or more words **and** all its words are
-            optional,
-
-            the number of matched words required for a record to be included in
-            the search results increases for every 1,000 records:
-
-
-            - If `optionalWords` has less than 10 words, the required number of
-            matched words increases by 1:
-              results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-            - If `optionalWords` has 10 or more words, the number of required
-            matched words increases by the number of optional words divided by 5
-            (rounded down).
-              For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
-
-            For more information, see [Optional
-            words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-          default: []
-          x-categories:
-            - Query strategy
+          $ref: '#/components/schemas/optionalWords'
         disableExactOnAttributes:
           type: array
           items:
@@ -2215,8 +2221,6 @@ components:
             - '*'
           x-categories:
             - Advanced
-        maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
         maxValuesPerFacet:
           type: integer
           description: Maximum number of facet values to return for each facet.
@@ -2603,6 +2607,7 @@ components:
     highlightResultMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
+      x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
         $ref: '#/components/schemas/highlightResult'
@@ -2633,6 +2638,7 @@ components:
     snippetResultMap:
       type: object
       description: Snippets that show the context around a matching search query.
+      x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
         $ref: '#/components/schemas/snippetResult'
@@ -2827,6 +2833,15 @@ components:
       description: Text to search inside the facet's values.
       example: george
       default: ''
+    maxFacetHits:
+      type: integer
+      description: >-
+        Maximum number of facet values to return when [searching for facet
+        values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+      maximum: 100
+      default: 10
+      x-categories:
+        - Advanced
     searchTypeFacet:
       type: string
       enum:
@@ -3363,6 +3378,8 @@ components:
             accurate facet counts.
           example: url
           type: string
+        maxFacetHits:
+          $ref: '#/components/schemas/maxFacetHits'
     indexSettings:
       description: Index settings.
       allOf:
@@ -4233,53 +4250,6 @@ components:
       default: false
       x-categories:
         - Query strategy
-    optionalWords:
-      type: array
-      items:
-        type: string
-      example:
-        - blue
-        - iphone case
-      description: >
-        Words that should be considered optional when found in the query.
-
-
-        By default, records must match all words in the search query to be
-        included in the search results.
-
-        Adding optional words can help to increase the number of search results
-        by running an additional search query that doesn't include the optional
-        words.
-
-        For example, if the search query is "action video" and "video" is an
-        optional word,
-
-        the search engine runs two queries. One for "action video" and one for
-        "action".
-
-        Records that match all words are ranked higher.
-
-
-        For a search query with 4 or more words **and** all its words are
-        optional,
-
-        the number of matched words required for a record to be included in the
-        search results increases for every 1,000 records:
-
-
-        - If `optionalWords` has less than 10 words, the required number of
-        matched words increases by 1:
-          results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-        - If `optionalWords` has 10 or more words, the number of required
-        matched words increases by the number of optional words divided by 5
-        (rounded down).
-          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
-
-        For more information, see [Optional
-        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
     disableExactOnAttributes:
       type: array
       items:
@@ -4573,8 +4543,6 @@ components:
           $ref: '#/components/schemas/minProximity'
         responseFields:
           $ref: '#/components/schemas/responseFields'
-        maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
         maxValuesPerFacet:
           $ref: '#/components/schemas/maxValuesPerFacet'
         sortFacetValuesBy:
@@ -4791,26 +4759,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseRecommendRequest'
         - $ref: '#/components/schemas/lookingSimilar'
-    recommendedForYouModel:
-      type: string
-      description: |
-        "Recommened for you" model.
-      enum:
-        - recommended-for-you
-    recommendedForYou:
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/recommendedForYouModel'
-        fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
-      required:
-        - model
-    recommendedForYouQuery:
-      title: Recommended for you
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/recommendedForYou'
     recommendationsRequest:
       oneOf:
         - $ref: '#/components/schemas/boughtTogetherQuery'
@@ -4818,7 +4766,6 @@ components:
         - $ref: '#/components/schemas/trendingItemsQuery'
         - $ref: '#/components/schemas/trendingFacetsQuery'
         - $ref: '#/components/schemas/lookingSimilarQuery'
-        - $ref: '#/components/schemas/recommendedForYouQuery'
     recommendScore:
       type: number
       format: double

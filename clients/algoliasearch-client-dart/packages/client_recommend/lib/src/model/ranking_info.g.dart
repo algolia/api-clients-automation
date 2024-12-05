@@ -43,27 +43,23 @@ RankingInfo _$RankingInfoFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$RankingInfoToJson(RankingInfo instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('filters', instance.filters);
-  val['firstMatchedWord'] = instance.firstMatchedWord;
-  val['geoDistance'] = instance.geoDistance;
-  writeNotNull('geoPrecision', instance.geoPrecision);
-  writeNotNull('matchedGeoLocation', instance.matchedGeoLocation?.toJson());
-  writeNotNull('personalization', instance.personalization?.toJson());
-  val['nbExactWords'] = instance.nbExactWords;
-  val['nbTypos'] = instance.nbTypos;
-  writeNotNull('promoted', instance.promoted);
-  writeNotNull('proximityDistance', instance.proximityDistance);
-  val['userScore'] = instance.userScore;
-  writeNotNull('words', instance.words);
-  writeNotNull('promotedByReRanking', instance.promotedByReRanking);
-  return val;
-}
+Map<String, dynamic> _$RankingInfoToJson(RankingInfo instance) =>
+    <String, dynamic>{
+      if (instance.filters case final value?) 'filters': value,
+      'firstMatchedWord': instance.firstMatchedWord,
+      'geoDistance': instance.geoDistance,
+      if (instance.geoPrecision case final value?) 'geoPrecision': value,
+      if (instance.matchedGeoLocation?.toJson() case final value?)
+        'matchedGeoLocation': value,
+      if (instance.personalization?.toJson() case final value?)
+        'personalization': value,
+      'nbExactWords': instance.nbExactWords,
+      'nbTypos': instance.nbTypos,
+      if (instance.promoted case final value?) 'promoted': value,
+      if (instance.proximityDistance case final value?)
+        'proximityDistance': value,
+      'userScore': instance.userScore,
+      if (instance.words case final value?) 'words': value,
+      if (instance.promotedByReRanking case final value?)
+        'promotedByReRanking': value,
+    };

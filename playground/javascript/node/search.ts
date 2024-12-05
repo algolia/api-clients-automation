@@ -1,6 +1,5 @@
 import { ApiError } from '@algolia/client-common';
-import { apiClientVersion, searchClient } from '@algolia/client-search';
-import { SearchQuery } from '@algolia/client-search';
+import { apiClientVersion, searchClient, SearchQuery } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** SEARCH_API_KEY *****';
@@ -18,11 +17,10 @@ console.log('version', apiClientVersion, 'requests', requests);
 
 async function testSearch() {
   try {
-    const res = await client.browseRules({
+    const res = await client.saveRules({
       indexName: 'cts_e2e_search_facet',
-      aggregator: (resp: any) => {
-        console.log(resp);
-      },
+      rules:[{objectID:'foo', consequence:{params:{hitsPerPage:30}}}],
+      forwardToReplicas:true,
     });
 
     console.log(`[OK]`, res);

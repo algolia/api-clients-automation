@@ -1,0 +1,62 @@
+{
+  "csharp": {},
+  "dart": {},
+  "go": {},
+  "java": {},
+  "javascript": {
+    "import": {
+      "default": "import { compositionClient } from '@algolia/client-composition';"
+    },
+    "customDelete": {
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });"
+    },
+    "customGet": {
+      "default": "const response = await client.customGet({ path: 'test/minimal' });"
+    },
+    "customPost": {
+      "default": "const response = await client.customPost({ path: 'test/minimal' });"
+    },
+    "customPut": {
+      "default": "const response = await client.customPut({ path: 'test/minimal' });"
+    },
+    "getComposition": {
+      "default": "const response = await client.getComposition({ compositionID: 'foo' });"
+    },
+    "getRule": {
+      "default": "const response = await client.getRule({ compositionID: 'foo', objectID: '123' });"
+    },
+    "getTask": {
+      "default": "const response = await client.getTask({ compositionID: 'foo', taskID: 42 });"
+    },
+    "listCompositions": {
+      "default": "const response = await client.listCompositions();"
+    },
+    "multipleBatch": {
+      "default": "const response = await client.multipleBatch({\n  requests: [\n    {\n      action: 'upsert',\n      body: {\n        objectID: 'foo',\n        behavior: { injection: { main: { source: { search: { index: 'bar' } } }, insets: [] } },\n      },\n    },\n    { action: 'delete', body: { objectID: 'baz' } },\n  ],\n});"
+    },
+    "saveRules": {
+      "default": "const response = await client.saveRules({\n  compositionID: 'foo',\n  rules: {\n    requests: [\n      {\n        action: 'upsert',\n        body: {\n          objectID: '123',\n          conditions: [{ pattern: 'a' }],\n          consequence: { behavior: { injection: { main: { source: { search: { index: '<YOUR_INDEX_NAME>' } } } } } },\n        },\n      },\n    ],\n  },\n});"
+    },
+    "search": {
+      "default": "const response = await client.search({ compositionID: 'foo', requestBody: { params: { query: 'batman' } } });"
+    },
+    "searchCompositionRules": {
+      "default": "const response = await client.searchCompositionRules({\n  compositionID: 'foo',\n  searchCompositionRulesParams: { query: 'batman' },\n});"
+    },
+    "searchForFacetValues": {
+      "default": "const response = await client.searchForFacetValues({\n  compositionID: 'foo',\n  facetName: 'brand',\n  searchForFacetValuesRequest: { params: { maxFacetHits: 10 } },\n});"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "init": {
+      "default": "//\nconst client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+    }
+  },
+  "kotlin": {},
+  "php": {},
+  "python": {},
+  "ruby": {},
+  "scala": {},
+  "swift": {}
+}

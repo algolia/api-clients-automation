@@ -43,7 +43,6 @@ object JsonSupport {
     new MatchLevelSerializer() :+
     new QueryTypeSerializer() :+
     new RecommendModelsSerializer() :+
-    new RecommendedForYouModelSerializer() :+
     new RelatedModelSerializer() :+
     new RemoveWordsIfNoResultsSerializer() :+
     new SortRemainingBySerializer() :+
@@ -60,8 +59,10 @@ object JsonSupport {
     FacetFiltersSerializer :+
     HighlightResultSerializer :+
     IgnorePluralsSerializer :+
+    InsideBoundingBoxSerializer :+
     NumericFiltersSerializer :+
     OptionalFiltersSerializer :+
+    OptionalWordsSerializer :+
     ReRankingApplyFilterSerializer :+
     RecommendationsHitSerializer :+
     RecommendationsRequestSerializer :+

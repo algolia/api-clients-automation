@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     env:
-      CACHE_VERSION: 1.10 # bump this to run all clients on the CI.
+      CACHE_VERSION: 1.13 # bump this to run all clients on the CI.
     steps:
       - name: debugging - dump GitHub context
         env:
@@ -189,6 +189,8 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+      METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
+      METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
       - uses: actions/checkout@v4
@@ -217,10 +219,13 @@ jobs:
         run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
       - name: Build clients
-        run: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).buildCommand }}
+        run: cd clients/algoliasearch-client-javascript && yarn build
 
       - name: Build the playground
         run: yarn cli build playground javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+
+      - name: Build the browser playground
+        run: yarn workspace javascript-playground-browser build
 
       - name: Run common and requester tests
         run: cd clients/algoliasearch-client-javascript && yarn test ${{ !contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun, 'algoliasearch') && '--ignore algoliasearch' || '' }}
@@ -275,7 +280,7 @@ jobs:
 
       - name: Generate code snippets
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
-      
+
       - name: Build the snippets to check validity
         run: yarn cli build snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
@@ -332,6 +337,8 @@ jobs:
       - name: Generate clients
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
+      # no need to build the clients here, it will be done in the Run CTS step anyway.
+
       - name: Update composer.lock
         if: ${{ matrix.client.language == 'php' && startsWith(github.head_ref, 'chore/renovateBaseBranch')  && matrix.client.isMainVersion }}
         run: cd ${{ matrix.client.path }} && composer update
@@ -343,9 +350,6 @@ jobs:
           cd clients/algoliasearch-client-swift
           find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d
           [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicate found"
-
-      - name: Build clients
-        run: ${{ matrix.client.buildCommand }}
 
       - name: Build the playground
         run: yarn cli build playground ${{ matrix.client.language }}
@@ -417,7 +421,8 @@ jobs:
     runs-on: macos-latest
     needs:
       - setup
-      - client_gen
+      - specs
+      - scripts
     if: |
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
@@ -430,18 +435,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download artifacts
+      - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
-          type: languages
-          languages: |
-            kotlin
+          type: specs
 
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          type: minimal
           language: kotlin
+          version: ${{ fromJSON(needs.setup.outputs.KOTLIN_DATA).version }}
+
+      - name: Generate clients
+        run: yarn cli generate kotlin ${{ fromJSON(needs.setup.outputs.KOTLIN_DATA).toRun }}
 
       - name: Build clients for macOS
         id: build
@@ -461,7 +467,8 @@ jobs:
     runs-on: macos-latest
     needs:
       - setup
-      - client_gen
+      - specs
+      - scripts
     if: |
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
@@ -479,21 +486,23 @@ jobs:
       - uses: actions/checkout@v4
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
 
-      - name: Download artifacts
+      - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         with:
-          type: languages
-          languages: |
-            swift
+          type: specs
 
       - name: Setup
         uses: ./.github/actions/setup
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         with:
-          type: minimal
           language: swift
           version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
+
+      - name: Generate clients
+        run: yarn cli generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+
+      - name: Generate tests
+        run: yarn cli cts generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
       - name: Run tests on macOS
         id: run-test
@@ -687,12 +696,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
-      - name: Push specs and snippets to algolia/doc
-        run: yarn workspace scripts pushToAlgoliaDoc
-        env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-
-      - name: Push guides to algolia/AlgoliaWeb
-        run: yarn workspace scripts pushToAlgoliaWeb
+      - name: Push generated files to repositories
+        run: yarn workspace scripts pushToRepository
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}

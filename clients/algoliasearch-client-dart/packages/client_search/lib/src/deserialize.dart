@@ -148,7 +148,6 @@ import 'package:algolia_client_search/src/model/typo_tolerance_enum.dart';
 import 'package:algolia_client_search/src/model/update_api_key_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_response.dart';
 import 'package:algolia_client_search/src/model/updated_at_with_object_id_response.dart';
-import 'package:algolia_client_search/src/model/updated_rule_response.dart';
 import 'package:algolia_client_search/src/model/user_highlight_result.dart';
 import 'package:algolia_client_search/src/model/user_hit.dart';
 import 'package:algolia_client_search/src/model/user_id.dart';
@@ -565,9 +564,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpdatedAtWithObjectIdResponse':
       return UpdatedAtWithObjectIdResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'UpdatedRuleResponse':
-      return UpdatedRuleResponse.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'UserHighlightResult':
       return UserHighlightResult.fromJson(value as Map<String, dynamic>)
           as ReturnType;

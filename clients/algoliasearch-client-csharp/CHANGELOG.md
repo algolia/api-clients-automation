@@ -1,3 +1,22 @@
+## [7.9.2](https://github.com/algolia/algoliasearch-client-csharp/compare/7.9.1...7.9.2)
+
+- [f246995a7](https://github.com/algolia/api-clients-automation/commit/f246995a7) chore(deps): dependencies 2024-11-18 ([#4109](https://github.com/algolia/api-clients-automation/pull/4109)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [7.9.1](https://github.com/algolia/algoliasearch-client-csharp/compare/7.9.0...7.9.1)
+
+- [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
+- [996ba5036](https://github.com/algolia/api-clients-automation/commit/996ba5036) fix(specs): remove private beta endpoint from recommend ([#4110](https://github.com/algolia/api-clients-automation/pull/4110)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [7.9.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.8.1...7.9.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+- [39ad05495](https://github.com/algolia/api-clients-automation/commit/39ad05495) feat(specs): update estimate response type ([#4101](https://github.com/algolia/api-clients-automation/pull/4101)) by [@cdhawke](https://github.com/cdhawke/)
+
+## [7.8.1](https://github.com/algolia/algoliasearch-client-csharp/compare/7.8.0...7.8.1)
+
+- [801241e12](https://github.com/algolia/api-clients-automation/commit/801241e12) fix(specs): add secrets payload for updates ([#4061](https://github.com/algolia/api-clients-automation/pull/4061)) by [@shortcuts](https://github.com/shortcuts/)
+- [625421783](https://github.com/algolia/api-clients-automation/commit/625421783) fix(clients): update browse iterator ([#4058](https://github.com/algolia/api-clients-automation/pull/4058)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [7.8.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.7.0...7.8.0)
 
 - [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)

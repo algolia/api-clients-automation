@@ -1809,6 +1809,9 @@ class SearchTest extends TestCase implements HttpClientInterface
                         'anchoring' => 'contains',
                     ],
                 ],
+                'consequence' => ['params' => ['filters' => 'brand:xiaomi',
+                ],
+                ],
             ],
         );
 
@@ -1816,7 +1819,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/indexName/rules/id1',
                 'method' => 'PUT',
-                'body' => json_decode('{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}'),
+                'body' => json_decode('{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}'),
             ],
         ]);
     }
@@ -1907,6 +1910,9 @@ class SearchTest extends TestCase implements HttpClientInterface
                             'anchoring' => 'contains',
                         ],
                     ],
+                    'consequence' => ['params' => ['filters' => 'brand:apple',
+                    ],
+                    ],
                 ],
 
                 ['objectID' => 'a-second-rule-id',
@@ -1914,6 +1920,9 @@ class SearchTest extends TestCase implements HttpClientInterface
                         ['pattern' => 'apple',
                             'anchoring' => 'contains',
                         ],
+                    ],
+                    'consequence' => ['params' => ['filters' => 'brand:samsung',
+                    ],
                     ],
                 ],
             ],
@@ -1925,7 +1934,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch',
                 'method' => 'POST',
-                'body' => json_decode('[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]'),
+                'body' => json_decode('[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]'),
                 'queryParameters' => json_decode('{"forwardToReplicas":"false","clearExistingRules":"true"}', true),
             ],
         ]);

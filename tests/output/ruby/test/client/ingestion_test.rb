@@ -3,6 +3,37 @@ require "algolia"
 require "test/unit"
 
 class TestClientIngestionClient < Test::Unit::TestCase
+  # can handle HTML error
+  def test_api0
+    client = Algolia::IngestionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6676,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "ingestionClient"
+      )
+    )
+    begin
+      client.custom_get("1/html-error")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "429: Too Many Requests".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
+  end
+
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::IngestionClient.create(
@@ -28,7 +59,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.7.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.8.2\).*/))
   end
 
   # calls api with default read timeouts

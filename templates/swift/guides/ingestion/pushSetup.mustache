@@ -1,0 +1,26 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func pushSetup() async throws {
+    do {
+        let path = URL(string: #file)!.deletingLastPathComponent()
+            .appendingPathComponent("records.json")
+        let data = try Data(contentsOf: URL(fileURLWithPath: path.absoluteString))
+        let records = try JSONDecoder().decode([PushTaskRecords].self, from: data)
+
+        // use the region matching your applicationID
+        {{> snippets/init}}
+
+        let run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+
+        // use runID in the Observability debugger
+        dump(run)
+    } catch {
+        print(error)
+    }
+}

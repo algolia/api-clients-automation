@@ -48,7 +48,7 @@ case class TaskV1(
     input: Option[TaskInput] = scala.None,
     enabled: Boolean,
     failureThreshold: Option[Int] = scala.None,
-    action: ActionType,
+    action: Option[ActionType] = scala.None,
     cursor: Option[String] = scala.None,
     createdAt: String,
     updatedAt: Option[String] = scala.None

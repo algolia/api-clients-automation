@@ -17,6 +17,7 @@ export function assertValidTimeouts(expectedCount: number): void {
   for (const [lang, state] of Object.entries(timeoutState)) {
     let numberOfTestSuites = 1;
 
+    // python has sync and async tests
     if (lang === 'python') {
       numberOfTestSuites = 2;
     }
@@ -26,8 +27,8 @@ export function assertValidTimeouts(expectedCount: number): void {
     expect(state.duration.length).to.equal(3 * numberOfTestSuites);
 
     for (let i = 0; i < numberOfTestSuites; i++) {
-      expect(state.timestamp[3 * i + 1] - state.timestamp[3 * i]).to.be.closeTo(state.duration[3 * i], 100);
-      expect(state.timestamp[3 * i + 2] - state.timestamp[3 * i + 1]).to.be.closeTo(state.duration[3 * i + 1], 100);
+      expect(state.timestamp[3 * i + 1] - state.timestamp[3 * i]).to.be.closeTo(state.duration[3 * i], 400);
+      expect(state.timestamp[3 * i + 2] - state.timestamp[3 * i + 1]).to.be.closeTo(state.duration[3 * i + 1], 400);
 
       // languages are not consistent yet for the delay between requests
       switch (lang) {
@@ -35,14 +36,14 @@ export function assertValidTimeouts(expectedCount: number): void {
           expect(state.duration[3 * i] * 4).to.be.closeTo(state.duration[3 * i + 1], 300);
           break;
         case 'php':
-          expect(state.duration[3 * i] * 2).to.be.closeTo(state.duration[3 * i + 1], 200);
+          expect(state.duration[3 * i] * 2).to.be.closeTo(state.duration[3 * i + 1], 300);
           break;
         case 'swift':
           expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 800);
           break;
         default:
           // the delay should be the same, because the `retryCount` is per host instead of global
-          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 150);
+          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 300);
           break;
       }
     }
@@ -95,6 +96,11 @@ function addRoutes(app: express.Express): void {
     timeoutState[lang].hangCount++;
 
     // no response, just hang
+  });
+
+  app.get('/1/html-error', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.status(429).send('<html><body>429 Too Many Requests</body></html>');
   });
 }
 

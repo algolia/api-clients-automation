@@ -209,6 +209,10 @@ class IngestionClient:
         """Sets a new API key to authenticate requests."""
         self._transporter.config.set_client_api_key(api_key)
 
+    async def add_user_agent(self, segment: str, version: Optional[str] = None) -> None:
+        """adds a segment to the default user agent, and update the headers sent with each requests as well"""
+        self._transporter.config.add_user_agent(segment, version)
+
     async def create_authentication_with_http_info(
         self,
         authentication_create: Union[AuthenticationCreate, dict[str, Any]],
@@ -2917,6 +2921,10 @@ class IngestionClient:
             Optional[List[StrictStr]],
             Field(description="Source IDs for filtering the list of tasks."),
         ] = None,
+        source_type: Annotated[
+            Optional[List[SourceType]],
+            Field(description="Filters the tasks with the specified source type."),
+        ] = None,
         destination_id: Annotated[
             Optional[List[StrictStr]],
             Field(description="Destination IDs for filtering the list of tasks."),
@@ -2961,6 +2969,8 @@ class IngestionClient:
         :type enabled: bool
         :param source_id: Source IDs for filtering the list of tasks.
         :type source_id: List[str]
+        :param source_type: Filters the tasks with the specified source type.
+        :type source_type: List[SourceType]
         :param destination_id: Destination IDs for filtering the list of tasks.
         :type destination_id: List[str]
         :param trigger_type: Type of task trigger for filtering the list of tasks.
@@ -2985,6 +2995,8 @@ class IngestionClient:
             _query_parameters["enabled"] = enabled
         if source_id is not None:
             _query_parameters["sourceID"] = source_id
+        if source_type is not None:
+            _query_parameters["sourceType"] = source_type
         if destination_id is not None:
             _query_parameters["destinationID"] = destination_id
         if trigger_type is not None:
@@ -3027,6 +3039,10 @@ class IngestionClient:
         source_id: Annotated[
             Optional[List[StrictStr]],
             Field(description="Source IDs for filtering the list of tasks."),
+        ] = None,
+        source_type: Annotated[
+            Optional[List[SourceType]],
+            Field(description="Filters the tasks with the specified source type."),
         ] = None,
         destination_id: Annotated[
             Optional[List[StrictStr]],
@@ -3072,6 +3088,8 @@ class IngestionClient:
         :type enabled: bool
         :param source_id: Source IDs for filtering the list of tasks.
         :type source_id: List[str]
+        :param source_type: Filters the tasks with the specified source type.
+        :type source_type: List[SourceType]
         :param destination_id: Destination IDs for filtering the list of tasks.
         :type destination_id: List[str]
         :param trigger_type: Type of task trigger for filtering the list of tasks.
@@ -3089,6 +3107,7 @@ class IngestionClient:
             action,
             enabled,
             source_id,
+            source_type,
             destination_id,
             trigger_type,
             sort,
@@ -4932,6 +4951,10 @@ class IngestionClientSync:
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
         self._transporter.config.set_client_api_key(api_key)
+
+    def add_user_agent(self, segment: str, version: Optional[str] = None) -> None:
+        """adds a segment to the default user agent, and update the headers sent with each requests as well"""
+        self._transporter.config.add_user_agent(segment, version)
 
     def create_authentication_with_http_info(
         self,
@@ -7631,6 +7654,10 @@ class IngestionClientSync:
             Optional[List[StrictStr]],
             Field(description="Source IDs for filtering the list of tasks."),
         ] = None,
+        source_type: Annotated[
+            Optional[List[SourceType]],
+            Field(description="Filters the tasks with the specified source type."),
+        ] = None,
         destination_id: Annotated[
             Optional[List[StrictStr]],
             Field(description="Destination IDs for filtering the list of tasks."),
@@ -7675,6 +7702,8 @@ class IngestionClientSync:
         :type enabled: bool
         :param source_id: Source IDs for filtering the list of tasks.
         :type source_id: List[str]
+        :param source_type: Filters the tasks with the specified source type.
+        :type source_type: List[SourceType]
         :param destination_id: Destination IDs for filtering the list of tasks.
         :type destination_id: List[str]
         :param trigger_type: Type of task trigger for filtering the list of tasks.
@@ -7699,6 +7728,8 @@ class IngestionClientSync:
             _query_parameters["enabled"] = enabled
         if source_id is not None:
             _query_parameters["sourceID"] = source_id
+        if source_type is not None:
+            _query_parameters["sourceType"] = source_type
         if destination_id is not None:
             _query_parameters["destinationID"] = destination_id
         if trigger_type is not None:
@@ -7741,6 +7772,10 @@ class IngestionClientSync:
         source_id: Annotated[
             Optional[List[StrictStr]],
             Field(description="Source IDs for filtering the list of tasks."),
+        ] = None,
+        source_type: Annotated[
+            Optional[List[SourceType]],
+            Field(description="Filters the tasks with the specified source type."),
         ] = None,
         destination_id: Annotated[
             Optional[List[StrictStr]],
@@ -7786,6 +7821,8 @@ class IngestionClientSync:
         :type enabled: bool
         :param source_id: Source IDs for filtering the list of tasks.
         :type source_id: List[str]
+        :param source_type: Filters the tasks with the specified source type.
+        :type source_type: List[SourceType]
         :param destination_id: Destination IDs for filtering the list of tasks.
         :type destination_id: List[str]
         :param trigger_type: Type of task trigger for filtering the list of tasks.
@@ -7803,6 +7840,7 @@ class IngestionClientSync:
             action,
             enabled,
             source_id,
+            source_type,
             destination_id,
             trigger_type,
             sort,

@@ -155,6 +155,43 @@ class SnippetAbtestingClient
     }
 
     /**
+     * Snippet for the EstimateABTest method.
+     *
+     * estimate AB Test sample size
+     */
+    public function snippetForEstimateABTest(): void
+    {
+        // >SEPARATOR estimateABTest default
+        // Initialize the client
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->estimateABTest(
+            ['configuration' => ['emptySearch' => ['exclude' => true,
+            ],
+                'minimumDetectableEffect' => ['size' => 0.03,
+                    'metric' => 'conversionRate',
+                ],
+            ],
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 50,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetABTest method.
      *
      * getABTest

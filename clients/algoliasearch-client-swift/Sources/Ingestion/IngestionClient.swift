@@ -1461,10 +1461,13 @@ open class IngestionClient {
     }
 
     /// - parameter taskID: (path) Unique identifier of a task.
-    /// - returns: Task
+    /// - returns: IngestionTask
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open func getTask(taskID: String, requestOptions: RequestOptions? = nil) async throws -> Task {
-        let response: Response<Task> = try await getTaskWithHTTPInfo(taskID: taskID, requestOptions: requestOptions)
+    open func getTask(taskID: String, requestOptions: RequestOptions? = nil) async throws -> IngestionTask {
+        let response: Response<IngestionTask> = try await getTaskWithHTTPInfo(
+            taskID: taskID,
+            requestOptions: requestOptions
+        )
 
         guard let body = response.body else {
             throw AlgoliaError.missingData
@@ -1480,12 +1483,12 @@ open class IngestionClient {
     //  - editSettings
     //
     // - parameter taskID: (path) Unique identifier of a task.
-    // - returns: RequestBuilder<Task>
+    // - returns: RequestBuilder<IngestionTask>
 
     open func getTaskWithHTTPInfo(
         taskID: String,
         requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<Task> {
+    ) async throws -> Response<IngestionTask> {
         guard !taskID.isEmpty else {
             throw AlgoliaError.invalidArgument("taskID", "getTask")
         }
@@ -2131,6 +2134,7 @@ open class IngestionClient {
     /// - parameter action: (query) Actions for filtering the list of tasks. (optional)
     /// - parameter enabled: (query) Whether to filter the list of tasks by the `enabled` status. (optional)
     /// - parameter sourceID: (query) Source IDs for filtering the list of tasks. (optional)
+    /// - parameter sourceType: (query) Filters the tasks with the specified source type. (optional)
     /// - parameter destinationID: (query) Destination IDs for filtering the list of tasks. (optional)
     /// - parameter triggerType: (query) Type of task trigger for filtering the list of tasks. (optional)
     /// - parameter sort: (query) Property by which to sort the list of tasks. (optional)
@@ -2143,6 +2147,7 @@ open class IngestionClient {
         action: [ActionType]? = nil,
         enabled: Bool? = nil,
         sourceID: [String]? = nil,
+        sourceType: [SourceType]? = nil,
         destinationID: [String]? = nil,
         triggerType: [TriggerType]? = nil,
         sort: TaskSortKeys? = nil,
@@ -2155,6 +2160,7 @@ open class IngestionClient {
             action: action,
             enabled: enabled,
             sourceID: sourceID,
+            sourceType: sourceType,
             destinationID: destinationID,
             triggerType: triggerType,
             sort: sort,
@@ -2185,6 +2191,8 @@ open class IngestionClient {
     //
     // - parameter sourceID: (query) Source IDs for filtering the list of tasks. (optional)
     //
+    // - parameter sourceType: (query) Filters the tasks with the specified source type. (optional)
+    //
     // - parameter destinationID: (query) Destination IDs for filtering the list of tasks. (optional)
     //
     // - parameter triggerType: (query) Type of task trigger for filtering the list of tasks. (optional)
@@ -2200,6 +2208,7 @@ open class IngestionClient {
         action: [ActionType]? = nil,
         enabled: Bool? = nil,
         sourceID: [String]? = nil,
+        sourceType: [SourceType]? = nil,
         destinationID: [String]? = nil,
         triggerType: [TriggerType]? = nil,
         sort: TaskSortKeys? = nil,
@@ -2214,6 +2223,7 @@ open class IngestionClient {
             "action": action?.encodeToJSON(),
             "enabled": enabled?.encodeToJSON(),
             "sourceID": sourceID?.encodeToJSON(),
+            "sourceType": sourceType?.encodeToJSON(),
             "destinationID": destinationID?.encodeToJSON(),
             "triggerType": triggerType?.encodeToJSON(),
             "sort": sort?.encodeToJSON(),
@@ -2808,10 +2818,13 @@ open class IngestionClient {
     }
 
     /// - parameter taskSearch: (body)
-    /// - returns: [Task]
+    /// - returns: [IngestionTask]
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open func searchTasks(taskSearch: TaskSearch, requestOptions: RequestOptions? = nil) async throws -> [Task] {
-        let response: Response<[Task]> = try await searchTasksWithHTTPInfo(
+    open func searchTasks(
+        taskSearch: TaskSearch,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [IngestionTask] {
+        let response: Response<[IngestionTask]> = try await searchTasksWithHTTPInfo(
             taskSearch: taskSearch,
             requestOptions: requestOptions
         )
@@ -2830,12 +2843,12 @@ open class IngestionClient {
     //  - editSettings
     //
     // - parameter taskSearch: (body)
-    // - returns: RequestBuilder<[Task]>
+    // - returns: RequestBuilder<[IngestionTask]>
 
     open func searchTasksWithHTTPInfo(
         taskSearch: TaskSearch,
         requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<[Task]> {
+    ) async throws -> Response<[IngestionTask]> {
         let resourcePath = "/2/tasks/search"
         let body = taskSearch
         let queryParameters: [String: Any?]? = nil

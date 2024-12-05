@@ -22,18 +22,9 @@ AutomaticFacetFilter _$AutomaticFacetFilterFromJson(
     );
 
 Map<String, dynamic> _$AutomaticFacetFilterToJson(
-    AutomaticFacetFilter instance) {
-  final val = <String, dynamic>{
-    'facet': instance.facet,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('score', instance.score);
-  writeNotNull('disjunctive', instance.disjunctive);
-  return val;
-}
+        AutomaticFacetFilter instance) =>
+    <String, dynamic>{
+      'facet': instance.facet,
+      if (instance.score case final value?) 'score': value,
+      if (instance.disjunctive case final value?) 'disjunctive': value,
+    };

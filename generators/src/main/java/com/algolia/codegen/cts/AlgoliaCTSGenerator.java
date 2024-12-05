@@ -9,6 +9,7 @@ import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
+import java.io.File;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -148,6 +149,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       // We can put whatever we want in the bundle, and it will be accessible in the template
       bundle.put("mode", mode);
       bundle.put("is" + Helpers.capitalize(client) + "Client", true);
+      bundle.put("isStandaloneClient", client.contains("search") || client.equals("composition"));
       bundle.put("isSearchClient", client.contains("search")); // just so algoliasearch is treated as a search client too
       bundle.put("client", Helpers.createClientName(importClientName, language) + "Client");
       bundle.put("clientPrefix", Helpers.createClientName(importClientName, language));
@@ -158,7 +160,9 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       bundle.put("isSyncClient", false);
       // special lambda for dynamic templates
       bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
-      bundle.put("dynamicSnippet", new DynamicSnippetLambda(this, models, operations, language, client));
+      if (new File("tests/CTS/guides/" + client + ".json").exists()) {
+        bundle.put("dynamicSnippet", new DynamicSnippetLambda(this, models, operations, language, client));
+      }
       bundle.put("lambda", lambda);
 
       String languageVersion = ctsManager.getLanguageVersion((String) additionalProperties.getOrDefault("languageVersion", ""));

@@ -23,7 +23,7 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
      */
     protected static $modelTypes = [
         'size' => 'float',
-        'effect' => '\Algolia\AlgoliaSearch\Model\Abtesting\Effect',
+        'metric' => '\Algolia\AlgoliaSearch\Model\Abtesting\EffectMetric',
     ];
 
     /**
@@ -33,7 +33,7 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
      */
     protected static $modelFormats = [
         'size' => 'double',
-        'effect' => null,
+        'metric' => null,
     ];
 
     /**
@@ -44,7 +44,7 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
      */
     protected static $attributeMap = [
         'size' => 'size',
-        'effect' => 'effect',
+        'metric' => 'metric',
     ];
 
     /**
@@ -54,7 +54,7 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
      */
     protected static $setters = [
         'size' => 'setSize',
-        'effect' => 'setEffect',
+        'metric' => 'setMetric',
     ];
 
     /**
@@ -64,7 +64,7 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
      */
     protected static $getters = [
         'size' => 'getSize',
-        'effect' => 'getEffect',
+        'metric' => 'getMetric',
     ];
 
     /**
@@ -84,8 +84,8 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
         if (isset($data['size'])) {
             $this->container['size'] = $data['size'];
         }
-        if (isset($data['effect'])) {
-            $this->container['effect'] = $data['effect'];
+        if (isset($data['metric'])) {
+            $this->container['metric'] = $data['metric'];
         }
     }
 
@@ -147,7 +147,16 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
      */
     public function listInvalidProperties()
     {
-        return [];
+        $invalidProperties = [];
+
+        if (!isset($this->container['size']) || null === $this->container['size']) {
+            $invalidProperties[] = "'size' can't be null";
+        }
+        if (!isset($this->container['metric']) || null === $this->container['metric']) {
+            $invalidProperties[] = "'metric' can't be null";
+        }
+
+        return $invalidProperties;
     }
 
     /**
@@ -164,7 +173,7 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
     /**
      * Gets size.
      *
-     * @return null|float
+     * @return float
      */
     public function getSize()
     {
@@ -174,7 +183,7 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
     /**
      * Sets size.
      *
-     * @param null|float $size Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
+     * @param float $size Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
      *
      * @return self
      */
@@ -186,25 +195,25 @@ class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \
     }
 
     /**
-     * Gets effect.
+     * Gets metric.
      *
-     * @return null|Effect
+     * @return EffectMetric
      */
-    public function getEffect()
+    public function getMetric()
     {
-        return $this->container['effect'] ?? null;
+        return $this->container['metric'] ?? null;
     }
 
     /**
-     * Sets effect.
+     * Sets metric.
      *
-     * @param null|Effect $effect effect
+     * @param EffectMetric $metric metric
      *
      * @return self
      */
-    public function setEffect($effect)
+    public function setMetric($metric)
     {
-        $this->container['effect'] = $effect;
+        $this->container['metric'] = $metric;
 
         return $this;
     }

@@ -27,6 +27,7 @@ final class BaseIndexSettings {
     this.userData,
     this.customNormalization,
     this.attributeForDistinct,
+    this.maxFacetHits,
   });
 
   /// Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).  Facets are attributes that let you categorize search results. They can be used for filtering search results. By default, no attribute is used for faceting. Attribute names are case-sensitive.  **Modifiers**  - `filterOnly(\"ATTRIBUTE\")`.   Allows the attribute to be used as a filter but doesn't evaluate the facet values.  - `searchable(\"ATTRIBUTE\")`.   Allows searching for facet values.  - `afterDistinct(\"ATTRIBUTE\")`.   Evaluates the facet count _after_ deduplication with `distinct`.   This ensures accurate facet counts.   You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
@@ -98,6 +99,11 @@ final class BaseIndexSettings {
   @JsonKey(name: r'attributeForDistinct')
   final String? attributeForDistinct;
 
+  /// Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+  // maximum: 100
+  @JsonKey(name: r'maxFacetHits')
+  final int? maxFacetHits;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -120,7 +126,8 @@ final class BaseIndexSettings {
           other.searchableAttributes == searchableAttributes &&
           other.userData == userData &&
           other.customNormalization == customNormalization &&
-          other.attributeForDistinct == attributeForDistinct;
+          other.attributeForDistinct == attributeForDistinct &&
+          other.maxFacetHits == maxFacetHits;
 
   @override
   int get hashCode =>
@@ -140,7 +147,8 @@ final class BaseIndexSettings {
       searchableAttributes.hashCode +
       userData.hashCode +
       customNormalization.hashCode +
-      attributeForDistinct.hashCode;
+      attributeForDistinct.hashCode +
+      maxFacetHits.hashCode;
 
   factory BaseIndexSettings.fromJson(Map<String, dynamic> json) =>
       _$BaseIndexSettingsFromJson(json);

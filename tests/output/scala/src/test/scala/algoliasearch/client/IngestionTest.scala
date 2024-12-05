@@ -39,6 +39,37 @@ class IngestionTest extends AnyFunSuite {
     )
   }
 
+  test("can handle HTML error") {
+
+    val client = IngestionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = "us",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6676)
+            )
+          )
+        )
+        .build()
+    )
+
+    assertError("<html><body>429 Too Many Requests</body></html>") {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/html-error"
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
   test("calls api with correct user agent") {
     val (client, echo) = testClient()
 
@@ -63,7 +94,7 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.7.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.9.2\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

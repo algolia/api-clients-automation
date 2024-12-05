@@ -1,0 +1,29 @@
+get:
+  tags:
+    - Rules
+  operationId: getRule
+  x-acl:
+    - settings
+  summary: Retrieve a rule
+  description: |
+    Retrieves a rule by its ID.
+    To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+
+  parameters:
+    - $ref: '../../common/parameters.yml#/compositionID'
+    - $ref: './parameters.yml#/ObjectIDRule'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/compositionRule.yml#/compositionRule'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

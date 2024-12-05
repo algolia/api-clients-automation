@@ -62,7 +62,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.8.0\).*/',
+                '/^Algolia for PHP \(4.9.2\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

@@ -1925,13 +1925,18 @@ class SearchTest {
                 anchoring = Anchoring.entries.first { it.value == "contains" },
               ),
             ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                filters = "brand:xiaomi",
+              ),
+            ),
           ),
         )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}""", it.body)
+        assertJsonBody("""{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}""", it.body)
       },
     )
   }
@@ -2030,6 +2035,11 @@ class SearchTest {
                   anchoring = Anchoring.entries.first { it.value == "contains" },
                 ),
               ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  filters = "brand:apple",
+                ),
+              ),
             ),
             Rule(
               objectID = "a-second-rule-id",
@@ -2037,6 +2047,11 @@ class SearchTest {
                 Condition(
                   pattern = "apple",
                   anchoring = Anchoring.entries.first { it.value == "contains" },
+                ),
+              ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  filters = "brand:samsung",
                 ),
               ),
             ),
@@ -2049,7 +2064,7 @@ class SearchTest {
         assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"forwardToReplicas":"false","clearExistingRules":"true"}""", it.url.encodedParameters)
-        assertJsonBody("""[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]""", it.body)
+        assertJsonBody("""[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]""", it.body)
       },
     )
   }
@@ -2644,7 +2659,7 @@ class SearchTest {
                 hitsPerPage = 1,
                 ignorePlurals = IgnorePlurals.of(false),
                 indexName = "theIndexName",
-                insideBoundingBox = listOf(listOf(47.3165, 4.9665, 47.3424, 5.0201), listOf(40.9234, 2.1185, 38.643, 1.9916)),
+                insideBoundingBox = InsideBoundingBox.of(listOf(listOf(47.3165, 4.9665, 47.3424, 5.0201), listOf(40.9234, 2.1185, 38.643, 1.9916))),
                 insidePolygon = listOf(listOf(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9), listOf(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)),
                 keepDiacriticsOnCharacters = "",
                 length = 1,
@@ -2657,7 +2672,7 @@ class SearchTest {
                 numericFilters = NumericFilters.of(listOf(NumericFilters.of(""))),
                 offset = 0,
                 optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of(""))),
-                optionalWords = listOf(""),
+                optionalWords = OptionalWords.of(listOf("")),
                 page = 0,
                 percentileComputation = true,
                 personalizationImpact = 0,
@@ -3257,7 +3272,7 @@ class SearchTest {
             minWordSizefor2Typos = 11,
             mode = Mode.entries.first { it.value == "neuralSearch" },
             numericAttributesForFiltering = listOf("algolia"),
-            optionalWords = listOf("myspace"),
+            optionalWords = OptionalWords.of(listOf("myspace")),
             paginationLimitedTo = 0,
             queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
             queryType = QueryType.entries.first { it.value == "prefixLast" },

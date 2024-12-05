@@ -49,6 +49,33 @@ class IngestionClientClientTests {
   }
 
   @Test
+  @DisplayName("can handle HTML error")
+  void apiTest0() {
+    IngestionClient client = new IngestionClient(
+      "test-app-id",
+      "test-api-key",
+      "us",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6676
+          )
+        ),
+        false
+      )
+    );
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        Object res = client.customGet("1/html-error");
+      });
+      assertEquals("Status Code: 429 - Too Many Requests", exception.getMessage());
+    }
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     IngestionClient client = createClient();
@@ -76,7 +103,7 @@ class IngestionClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.7.0\\).*";
+      String regexp = "^Algolia for Java \\(4.8.2\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

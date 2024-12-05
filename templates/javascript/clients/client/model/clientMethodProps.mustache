@@ -132,7 +132,7 @@ export type SearchClientNodeHelpers = {
 }
 {{/isSearchClient}}
 
-export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks'> & {
+export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks' | 'batchSize'> & {
   /**
    * The objectIDs to delete.
    */
@@ -141,7 +141,7 @@ export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'wait
 
 export type PartialUpdateObjectsOptions = Pick<
   ChunkedBatchOptions,
-  'indexName' | 'objects' | 'waitForTasks'
+  'indexName' | 'objects' | 'waitForTasks' | 'batchSize'
 > & {
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
@@ -151,7 +151,7 @@ export type PartialUpdateObjectsOptions = Pick<
 
 export type SaveObjectsOptions = Pick<
   ChunkedBatchOptions,
-  'indexName' | 'objects' | 'waitForTasks'
+  'indexName' | 'objects' | 'waitForTasks' | 'batchSize'
 >;
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
@@ -184,5 +184,28 @@ export type ReplaceAllObjectsOptions = {
 }
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
+{{#isCompositionClient}}
+export type WaitForCompositionTaskOptions = {
+  /**
+   * The maximum number of retries. 50 by default.
+   */
+  maxRetries?: number;
+
+  /**
+   * The function to decide how long to wait between retries.
+   */
+  timeout?: (retryCount: number) => number;
+
+  /**
+   * The `taskID` returned by the method response.
+   */
+
+  taskID: number;
+  /**
+   * The `compositionID` where the operation was performed.
+   */
+  compositionID: string;
+};
+{{/isCompositionClient}}
 
 {{/apiInfo.apis.0}}

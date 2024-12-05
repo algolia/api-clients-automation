@@ -39,25 +39,16 @@ const _$DictionaryEntryFieldMap = <String, String>{
   'type': 'type',
 };
 
-Map<String, dynamic> _$DictionaryEntryToJson(DictionaryEntry instance) {
-  final val = <String, dynamic>{
-    'objectID': instance.objectID,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('language', instance.language?.toJson());
-  writeNotNull('word', instance.word);
-  writeNotNull('words', instance.words);
-  writeNotNull('decomposition', instance.decomposition);
-  writeNotNull('state', instance.state?.toJson());
-  writeNotNull('type', instance.type?.toJson());
-  return val;
-}
+Map<String, dynamic> _$DictionaryEntryToJson(DictionaryEntry instance) =>
+    <String, dynamic>{
+      'objectID': instance.objectID,
+      if (instance.language?.toJson() case final value?) 'language': value,
+      if (instance.word case final value?) 'word': value,
+      if (instance.words case final value?) 'words': value,
+      if (instance.decomposition case final value?) 'decomposition': value,
+      if (instance.state?.toJson() case final value?) 'state': value,
+      if (instance.type?.toJson() case final value?) 'type': value,
+    };
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',

@@ -1,0 +1,8 @@
+title: getTaskResponse
+type: object
+additionalProperties: false
+properties:
+  status:
+    $ref: '../../../common/responses/common.yml#/taskStatus'
+required:
+  - status

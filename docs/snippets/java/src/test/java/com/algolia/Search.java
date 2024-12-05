@@ -661,7 +661,7 @@ class SnippetSearchClient {
             .setAroundRadius(AroundRadiusAll.ALL)
             .setMode(Mode.NEURAL_SEARCH)
             .setHitsPerPage(10)
-            .setOptionalWords(Arrays.asList("one", "two"))
+            .setOptionalWords(OptionalWords.of(Arrays.asList("one", "two")))
         )
     );
     // >LOG
@@ -1370,7 +1370,10 @@ class SnippetSearchClient {
     client.saveRule(
       "<YOUR_INDEX_NAME>",
       "id1",
-      new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+      new Rule()
+        .setObjectID("id1")
+        .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+        .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:xiaomi")))
     );
     // >LOG
     // SEPARATOR<
@@ -1390,10 +1393,12 @@ class SnippetSearchClient {
       Arrays.asList(
         new Rule()
           .setObjectID("a-rule-id")
-          .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
+          .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:apple"))),
         new Rule()
           .setObjectID("a-second-rule-id")
           .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:samsung")))
       ),
       false,
       true

@@ -1,3 +1,20 @@
+## [3.10.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.10.0...3.10.1)
+
+- [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
+- [996ba5036](https://github.com/algolia/api-clients-automation/commit/996ba5036) fix(specs): remove private beta endpoint from recommend ([#4110](https://github.com/algolia/api-clients-automation/pull/4110)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [3.10.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.9.0...3.10.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+- [4a6d17540](https://github.com/algolia/api-clients-automation/commit/4a6d17540) chore(deps): dependencies 2024-11-11 ([#4080](https://github.com/algolia/api-clients-automation/pull/4080)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [39ad05495](https://github.com/algolia/api-clients-automation/commit/39ad05495) feat(specs): update estimate response type ([#4101](https://github.com/algolia/api-clients-automation/pull/4101)) by [@cdhawke](https://github.com/cdhawke/)
+
+## [3.9.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.8.0...3.9.0)
+
+- [801241e12](https://github.com/algolia/api-clients-automation/commit/801241e12) fix(specs): add secrets payload for updates ([#4061](https://github.com/algolia/api-clients-automation/pull/4061)) by [@shortcuts](https://github.com/shortcuts/)
+- [b3804d7df](https://github.com/algolia/api-clients-automation/commit/b3804d7df) feat(kotlin): add browse helpers ([#4059](https://github.com/algolia/api-clients-automation/pull/4059)) by [@Fluf22](https://github.com/Fluf22/)
+- [ff2d23c14](https://github.com/algolia/api-clients-automation/commit/ff2d23c14) chore(deps): dependencies 2024-11-04 ([#4065](https://github.com/algolia/api-clients-automation/pull/4065)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [3.8.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.7.0...3.8.0)
 
 - [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)

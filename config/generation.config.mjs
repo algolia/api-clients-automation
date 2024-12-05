@@ -24,6 +24,8 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
 
+  '!docs/guides/csharp/src/program.cs',
+
   'tests/output/csharp/global.json',
 
   // Dart
@@ -48,6 +50,8 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/compression/*',
   '!clients/algoliasearch-client-go/algolia/debug/*',
   '!clients/algoliasearch-client-go/algolia/utils/*',
+
+  '!docs/guides/go/src/main.go',
 
   '!tests/output/go/go.*',
 
@@ -77,6 +81,7 @@ export const patterns = [
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/vitest.workspace.ts',
 
   'tests/output/javascript/package.json',
+  '!tests/output/javascript/yarn.lock',
 
   // Kotlin
   '!clients/algoliasearch-client-kotlin/**',

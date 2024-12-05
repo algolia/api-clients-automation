@@ -155,7 +155,6 @@ export 'src/model/typo_tolerance_enum.dart';
 export 'src/model/update_api_key_response.dart';
 export 'src/model/updated_at_response.dart';
 export 'src/model/updated_at_with_object_id_response.dart';
-export 'src/model/updated_rule_response.dart';
 export 'src/model/user_highlight_result.dart';
 export 'src/model/user_hit.dart';
 export 'src/model/user_id.dart';

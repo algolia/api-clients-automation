@@ -1,3 +1,21 @@
+## [4.9.2](https://github.com/algolia/algoliasearch-client-php/compare/4.9.1...4.9.2)
+
+- [f97e44ce0](https://github.com/algolia/api-clients-automation/commit/f97e44ce0) fix(cts): add tests for HTML error ([#4097](https://github.com/algolia/api-clients-automation/pull/4097)) by [@millotp](https://github.com/millotp/)
+
+## [4.9.1](https://github.com/algolia/algoliasearch-client-php/compare/4.9.0...4.9.1)
+
+- [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
+- [996ba5036](https://github.com/algolia/api-clients-automation/commit/996ba5036) fix(specs): remove private beta endpoint from recommend ([#4110](https://github.com/algolia/api-clients-automation/pull/4110)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.9.0](https://github.com/algolia/algoliasearch-client-php/compare/4.8.1...4.9.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+- [39ad05495](https://github.com/algolia/api-clients-automation/commit/39ad05495) feat(specs): update estimate response type ([#4101](https://github.com/algolia/api-clients-automation/pull/4101)) by [@cdhawke](https://github.com/cdhawke/)
+
+## [4.8.1](https://github.com/algolia/algoliasearch-client-php/compare/4.8.0...4.8.1)
+
+- [625421783](https://github.com/algolia/api-clients-automation/commit/625421783) fix(clients): update browse iterator ([#4058](https://github.com/algolia/api-clients-automation/pull/4058)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.8.0](https://github.com/algolia/algoliasearch-client-php/compare/4.7.0...4.8.0)
 
 - [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)

@@ -13,18 +13,17 @@ def main():
     client = SearchClientSync(
         environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY")
     )
+    client.add_user_agent("playground")
+    client.add_user_agent("bar", "baz")
+
+    print("user_agent", client._config._user_agent.get())
     print("client initialized", client)
 
     try:
-        resp = client.save_objects("foo", [{"foo": "bar"}])
+        resp = client.search_synonyms("foo")
         print(resp)
-
-        for r in resp:
-            client.wait_for_task(index_name="foo", task_id=r.task_id)
+        client.browse_synonyms("foo", lambda _resp: print(_resp))
     finally:
         client.close()
 
         print("client closed")
-
-
-main()

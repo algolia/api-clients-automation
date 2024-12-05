@@ -700,6 +700,37 @@ class AbtestingClientRequestsTests {
   }
 
   @Test
+  @DisplayName("estimate AB Test sample size")
+  void estimateABTestTest() {
+    assertDoesNotThrow(() -> {
+      client.estimateABTest(
+        new EstimateABTestRequest()
+          .setConfiguration(
+            new EstimateConfiguration()
+              .setEmptySearch(new EmptySearch().setExclude(true))
+              .setMinimumDetectableEffect(new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE))
+          )
+          .setVariants(
+            Arrays.asList(
+              new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+              new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/abtests/estimate", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"configuration\":{\"emptySearch\":{\"exclude\":true},\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"conversionRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getABTest")
   void getABTestTest() {
     assertDoesNotThrow(() -> {

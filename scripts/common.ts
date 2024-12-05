@@ -69,7 +69,13 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
 export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.language))];
 
-export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client)), 'crawler'];
+// `crawler` and `ai-personalization` are manually added so we can still bundled and validate the specs
+// the entry can be removed once at least one client is generated
+export const CLIENTS = [
+  ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
+  'crawler',
+  'ai-personalization',
+];
 
 export async function run(command: string, { errorMessage, cwd, language }: RunOptions = {}): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
@@ -268,6 +274,10 @@ export async function callGenerator(gen: Generator): Promise<void> {
     `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
     { language: 'java' },
   );
+}
+
+export function isWSL(): boolean {
+  return process.env.WSL_DISTRO_NAME !== undefined;
 }
 
 export async function setupAndGen(

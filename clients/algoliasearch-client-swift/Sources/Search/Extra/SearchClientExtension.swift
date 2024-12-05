@@ -243,9 +243,13 @@ public extension SearchClient {
         aggregator: @escaping (BrowseResponse<T>) -> Void,
         requestOptions: RequestOptions? = nil
     ) async throws -> BrowseResponse<T> {
-        try await createIterable(
+        var updatedBrowseParams = browseParams
+        if updatedBrowseParams.hitsPerPage == nil {
+            updatedBrowseParams.hitsPerPage = 1000
+        }
+
+        return try await createIterable(
             execute: { previousResponse in
-                var updatedBrowseParams = browseParams
                 if let previousResponse {
                     updatedBrowseParams.cursor = previousResponse.cursor
                 }
@@ -298,7 +302,7 @@ public extension SearchClient {
                 )
             },
             validate: validate ?? { response in
-                response.nbHits < hitsPerPage
+                response.hits.count < hitsPerPage
             },
             aggregator: aggregator
         )
@@ -341,7 +345,7 @@ public extension SearchClient {
                 )
             },
             validate: validate ?? { response in
-                response.nbHits < hitsPerPage
+                response.hits.count < hitsPerPage
             },
             aggregator: aggregator
         )
@@ -464,12 +468,14 @@ public extension SearchClient {
     /// - parameter indexName: The name of the index where to save the objects
     /// - parameter objects: The new objects
     /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
+    /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
     /// - returns: [BatchResponse]
     func saveObjects(
         indexName: String,
         objects: [some Encodable],
         waitForTasks: Bool = false,
+        batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
@@ -477,7 +483,7 @@ public extension SearchClient {
             objects: objects,
             action: .addObject,
             waitForTasks: waitForTasks,
-            batchSize: 1000,
+            batchSize: batchSize,
             requestOptions: requestOptions
         )
     }
@@ -487,12 +493,14 @@ public extension SearchClient {
     /// - parameter indexName: The name of the index to delete objectIDs from
     /// - parameter objectIDs: The objectIDs to delete
     /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
+    /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
     /// - returns: [BatchResponse]
     func deleteObjects(
         indexName: String,
         objectIDs: [String],
         waitForTasks: Bool = false,
+        batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
@@ -500,7 +508,7 @@ public extension SearchClient {
             objects: objectIDs.map { AnyCodable(["objectID": $0]) },
             action: .deleteObject,
             waitForTasks: waitForTasks,
-            batchSize: 1000,
+            batchSize: batchSize,
             requestOptions: requestOptions
         )
     }
@@ -512,6 +520,7 @@ public extension SearchClient {
     /// - parameter createIfNotExists: To be provided if non-existing objects are passed, otherwise, the call will
     /// fail..
     /// - parameter waitForTasks: If we should wait for the batch task to be finished before processing the next one
+    /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
     /// - returns: [BatchResponse]
     func partialUpdateObjects(
@@ -519,6 +528,7 @@ public extension SearchClient {
         objects: [some Encodable],
         createIfNotExists: Bool = false,
         waitForTasks: Bool = false,
+        batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> [BatchResponse] {
         try await self.chunkedBatch(
@@ -526,7 +536,7 @@ public extension SearchClient {
             objects: objects,
             action: createIfNotExists ? .partialUpdateObject : .partialUpdateObjectNoCreate,
             waitForTasks: waitForTasks,
-            batchSize: 1000,
+            batchSize: batchSize,
             requestOptions: requestOptions
         )
     }

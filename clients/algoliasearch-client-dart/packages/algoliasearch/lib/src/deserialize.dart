@@ -59,9 +59,6 @@ import 'package:algoliasearch/src/model/recommend_index_settings.dart';
 import 'package:algoliasearch/src/model/recommend_search_params.dart';
 import 'package:algoliasearch/src/model/recommendations_hits.dart';
 import 'package:algoliasearch/src/model/recommendations_results.dart';
-import 'package:algoliasearch/src/model/recommended_for_you.dart';
-import 'package:algoliasearch/src/model/recommended_for_you_model.dart';
-import 'package:algoliasearch/src/model/recommended_for_you_query.dart';
 import 'package:algoliasearch/src/model/redirect.dart';
 import 'package:algoliasearch/src/model/redirect_rule_index_data.dart';
 import 'package:algoliasearch/src/model/redirect_rule_index_metadata.dart';
@@ -278,14 +275,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'RecommendationsResults':
       return RecommendationsResults.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'RecommendedForYou':
-      return RecommendedForYou.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'RecommendedForYouModel':
-      return RecommendedForYouModel.fromJson(value) as ReturnType;
-    case 'RecommendedForYouQuery':
-      return RecommendedForYouQuery.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'Redirect':
       return Redirect.fromJson(value as Map<String, dynamic>) as ReturnType;

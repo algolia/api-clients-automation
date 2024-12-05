@@ -2564,7 +2564,8 @@ final class SearchClientRequestsTests: XCTestCase {
             objectID: "id1",
             rule: Rule(
                 objectID: "id1",
-                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:xiaomi"))
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -2574,7 +2575,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}"
+            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:xiaomi\"}}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2674,11 +2675,13 @@ final class SearchClientRequestsTests: XCTestCase {
             rules: [
                 Rule(
                     objectID: "a-rule-id",
-                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)]
+                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
                 ),
                 Rule(
                     objectID: "a-second-rule-id",
-                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:samsung"))
                 ),
             ],
             forwardToReplicas: false,
@@ -2691,7 +2694,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]"
+            "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:samsung\"}}}]"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -3257,10 +3260,10 @@ final class SearchClientRequestsTests: XCTestCase {
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
                 requests: [SearchQuery.searchForFacets(SearchForFacets(
                     query: "theQuery",
-                    maxFacetHits: 50,
                     facet: "theFacet",
                     indexName: "theIndexName",
                     facetQuery: "theFacetQuery",
+                    maxFacetHits: 50,
                     type: SearchTypeFacet.facet
                 ))],
                 strategy: SearchStrategy.stopIfEnoughMatches
@@ -3341,10 +3344,10 @@ final class SearchClientRequestsTests: XCTestCase {
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
                 requests: [SearchQuery.searchForFacets(SearchForFacets(
                     query: "theQuery",
-                    maxFacetHits: 50,
                     facet: "theFacet",
                     indexName: "theIndexName",
                     facetQuery: "theFacetQuery",
+                    maxFacetHits: 50,
                     type: SearchTypeFacet.facet
                 )), SearchQuery.searchForHits(SearchForHits(
                     query: "myQuery",
@@ -3537,7 +3540,10 @@ final class SearchClientRequestsTests: XCTestCase {
                         aroundRadius: SearchAroundRadius.searchAroundRadiusAll(SearchAroundRadiusAll.all),
                         aroundPrecision: SearchAroundPrecision.int(0),
                         minimumAroundRadius: 1,
-                        insideBoundingBox: [[47.3165, 4.9665, 47.3424, 5.0201], [40.9234, 2.1185, 38.643, 1.9916]],
+                        insideBoundingBox: SearchInsideBoundingBox.arrayOfArrayOfDouble([
+                            [47.3165, 4.9665, 47.3424, 5.0201],
+                            [40.9234, 2.1185, 38.643, 1.9916],
+                        ]),
                         insidePolygon: [
                             [47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9],
                             [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
@@ -3579,7 +3585,7 @@ final class SearchClientRequestsTests: XCTestCase {
                         queryType: SearchQueryType.prefixAll,
                         removeWordsIfNoResults: SearchRemoveWordsIfNoResults.allOptional,
                         advancedSyntax: true,
-                        optionalWords: [""],
+                        optionalWords: SearchOptionalWords.arrayOfString([""]),
                         disableExactOnAttributes: [""],
                         exactOnSingleWordQuery: SearchExactOnSingleWordQuery.attribute,
                         alternativesAsExact: [SearchAlternativesAsExact.multiWordsSynonym],
@@ -4480,6 +4486,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 userData: ["user": "data"],
                 customNormalization: ["algolia": ["aloglia": "aglolia"]],
                 attributeForDistinct: "test",
+                maxFacetHits: 20,
                 attributesToRetrieve: ["algolia"],
                 ranking: ["geo"],
                 customRanking: ["algolia"],
@@ -4508,7 +4515,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 mode: SearchMode.neuralSearch,
                 semanticSearch: SearchSemanticSearch(eventSources: ["foo"]),
                 advancedSyntax: true,
-                optionalWords: ["myspace"],
+                optionalWords: SearchOptionalWords.arrayOfString(["myspace"]),
                 disableExactOnAttributes: ["algolia"],
                 exactOnSingleWordQuery: SearchExactOnSingleWordQuery.attribute,
                 alternativesAsExact: [SearchAlternativesAsExact.singleWordSynonym],
@@ -4517,7 +4524,6 @@ final class SearchClientRequestsTests: XCTestCase {
                 replaceSynonymsInHighlight: true,
                 minProximity: 6,
                 responseFields: ["algolia"],
-                maxFacetHits: 20,
                 maxValuesPerFacet: 30,
                 sortFacetValuesBy: "date",
                 attributeCriteriaComputedByMinProximity: true,

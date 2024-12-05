@@ -31,17 +31,8 @@ Languages _$LanguagesFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$LanguagesToJson(Languages instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('plurals', instance.plurals?.toJson());
-  writeNotNull('stopwords', instance.stopwords?.toJson());
-  writeNotNull('compounds', instance.compounds?.toJson());
-  return val;
-}
+Map<String, dynamic> _$LanguagesToJson(Languages instance) => <String, dynamic>{
+      if (instance.plurals?.toJson() case final value?) 'plurals': value,
+      if (instance.stopwords?.toJson() case final value?) 'stopwords': value,
+      if (instance.compounds?.toJson() case final value?) 'compounds': value,
+    };

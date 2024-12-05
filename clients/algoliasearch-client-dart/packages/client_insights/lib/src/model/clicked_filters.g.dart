@@ -27,25 +27,17 @@ ClickedFilters _$ClickedFiltersFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$ClickedFiltersToJson(ClickedFilters instance) {
-  final val = <String, dynamic>{
-    'eventName': instance.eventName,
-    'eventType': instance.eventType.toJson(),
-    'index': instance.index,
-    'filters': instance.filters,
-    'userToken': instance.userToken,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
-  writeNotNull('timestamp', instance.timestamp);
-  return val;
-}
+Map<String, dynamic> _$ClickedFiltersToJson(ClickedFilters instance) =>
+    <String, dynamic>{
+      'eventName': instance.eventName,
+      'eventType': instance.eventType.toJson(),
+      'index': instance.index,
+      'filters': instance.filters,
+      'userToken': instance.userToken,
+      if (instance.authenticatedUserToken case final value?)
+        'authenticatedUserToken': value,
+      if (instance.timestamp case final value?) 'timestamp': value,
+    };
 
 const _$ClickEventEnumMap = {
   ClickEvent.click: 'click',

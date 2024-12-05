@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+import type { PushTaskRecords } from 'algoliasearch';
+
+{{> snippets/import}}
+
+// use the region matching your applicationID
+{{> snippets/init}}
+
+try {
+  // read local JSON file containing array of records
+  const records = JSON.parse(fs.readFileSync('records.json', 'utf8')) as PushTaskRecords[];
+
+  // push records to the API
+  const run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+
+  // use runID in the Observability debugger
+  console.log(run.runID);
+} catch (err) {
+  console.error(err);
+}

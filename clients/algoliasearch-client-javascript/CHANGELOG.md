@@ -1,3 +1,35 @@
+## [5.15.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.2...5.15.0)
+
+- [0787a3d2a](https://github.com/algolia/api-clients-automation/commit/0787a3d2a) chore(scripts): change dist folder and bump ([#4113](https://github.com/algolia/api-clients-automation/pull/4113)) by [@millotp](https://github.com/millotp/)
+- [f246995a7](https://github.com/algolia/api-clients-automation/commit/f246995a7) chore(deps): dependencies 2024-11-18 ([#4109](https://github.com/algolia/api-clients-automation/pull/4109)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [ff954678e](https://github.com/algolia/api-clients-automation/commit/ff954678e) fix(playground): add formatter for python ([#4125](https://github.com/algolia/api-clients-automation/pull/4125)) by [@millotp](https://github.com/millotp/)
+- [da4169e1b](https://github.com/algolia/api-clients-automation/commit/da4169e1b) fix(specs): do not cache searchCompositionRules ([#4127](https://github.com/algolia/api-clients-automation/pull/4127)) by [@e-krebs](https://github.com/e-krebs/)
+- [08669e2b3](https://github.com/algolia/api-clients-automation/commit/08669e2b3) feat(specs): default authMode to WithinHeaders for Composition Client ([#4129](https://github.com/algolia/api-clients-automation/pull/4129)) by [@e-krebs](https://github.com/e-krebs/)
+- [f97e44ce0](https://github.com/algolia/api-clients-automation/commit/f97e44ce0) fix(cts): add tests for HTML error ([#4097](https://github.com/algolia/api-clients-automation/pull/4097)) by [@millotp](https://github.com/millotp/)
+
+## [5.14.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.0...5.14.2)
+
+- [b97a88beb](https://github.com/algolia/api-clients-automation/commit/b97a88beb) fix(javascript): add support for private package publish ([#4106](https://github.com/algolia/api-clients-automation/pull/4106)) by [@shortcuts](https://github.com/shortcuts/)
+- [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
+- [996ba5036](https://github.com/algolia/api-clients-automation/commit/996ba5036) fix(specs): remove private beta endpoint from recommend ([#4110](https://github.com/algolia/api-clients-automation/pull/4110)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.13.0...5.14.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+- [4a6d17540](https://github.com/algolia/api-clients-automation/commit/4a6d17540) chore(deps): dependencies 2024-11-11 ([#4080](https://github.com/algolia/api-clients-automation/pull/4080)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [39ad05495](https://github.com/algolia/api-clients-automation/commit/39ad05495) feat(specs): update estimate response type ([#4101](https://github.com/algolia/api-clients-automation/pull/4101)) by [@cdhawke](https://github.com/cdhawke/)
+- [dd18afe8d](https://github.com/algolia/api-clients-automation/commit/dd18afe8d) fix(specs): rename composition run endpoint ([#4099](https://github.com/algolia/api-clients-automation/pull/4099)) by [@e-krebs](https://github.com/e-krebs/)
+- [66acf19b8](https://github.com/algolia/api-clients-automation/commit/66acf19b8) fix(scripts): dart and js releases ([#4104](https://github.com/algolia/api-clients-automation/pull/4104)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.12.0...5.13.0)
+
+- [f598e77b1](https://github.com/algolia/api-clients-automation/commit/f598e77b1) fix(javascript): allow import from dist ([#4060](https://github.com/algolia/api-clients-automation/pull/4060)) by [@shortcuts](https://github.com/shortcuts/)
+- [801241e12](https://github.com/algolia/api-clients-automation/commit/801241e12) fix(specs): add secrets payload for updates ([#4061](https://github.com/algolia/api-clients-automation/pull/4061)) by [@shortcuts](https://github.com/shortcuts/)
+- [625421783](https://github.com/algolia/api-clients-automation/commit/625421783) fix(clients): update browse iterator ([#4058](https://github.com/algolia/api-clients-automation/pull/4058)) by [@Fluf22](https://github.com/Fluf22/)
+- [ff2d23c14](https://github.com/algolia/api-clients-automation/commit/ff2d23c14) chore(deps): dependencies 2024-11-04 ([#4065](https://github.com/algolia/api-clients-automation/pull/4065)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [bf9173f47](https://github.com/algolia/api-clients-automation/commit/bf9173f47) feat(scripts): compute eligibility dates ([#4064](https://github.com/algolia/api-clients-automation/pull/4064)) by [@shortcuts](https://github.com/shortcuts/)
+- [a38ceecc8](https://github.com/algolia/api-clients-automation/commit/a38ceecc8) feat(specs): add composition API ([#4056](https://github.com/algolia/api-clients-automation/pull/4056)) by [@e-krebs](https://github.com/e-krebs/)
+
 ## [5.12.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.11.0...5.12.0)
 
 - [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)

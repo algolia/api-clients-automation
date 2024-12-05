@@ -25,23 +25,15 @@ SearchRulesParams _$SearchRulesParamsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SearchRulesParamsToJson(SearchRulesParams instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('query', instance.query);
-  writeNotNull('anchoring', instance.anchoring?.toJson());
-  writeNotNull('context', instance.context);
-  writeNotNull('page', instance.page);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
-  writeNotNull('enabled', instance.enabled);
-  return val;
-}
+Map<String, dynamic> _$SearchRulesParamsToJson(SearchRulesParams instance) =>
+    <String, dynamic>{
+      if (instance.query case final value?) 'query': value,
+      if (instance.anchoring?.toJson() case final value?) 'anchoring': value,
+      if (instance.context case final value?) 'context': value,
+      if (instance.page case final value?) 'page': value,
+      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
+      if (instance.enabled case final value?) 'enabled': value,
+    };
 
 const _$AnchoringEnumMap = {
   Anchoring.is_: 'is',

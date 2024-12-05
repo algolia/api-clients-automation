@@ -221,6 +221,9 @@ tags:
       order determined by your ranking.
 
       Records are schemaless JSON objects.
+
+      When adding or updating many records, check the [indexing rate
+      limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     externalDocs:
       url: >-
         https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/
@@ -2564,6 +2567,10 @@ paths:
 
         To add, update, or replace multiple records, use the [`batch`
         operation](#tag/Records/operation/batch).
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       summary: Add or replace a record
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -3524,16 +3531,29 @@ paths:
       operationId: deleteBy
       x-acl:
         - deleteIndex
-      summary: Delete records matching a query
+      summary: Delete records matching a filter
       description: >
-        This operation doesn't accept empty queries or filters.
+        This operation doesn't accept empty filters.
 
+
+        This operation is resource-intensive.
+
+        You should only use it if you can't get the object IDs of the records
+        you want to delete.
 
         It's more efficient to get a list of object IDs with the [`browse`
         operation](#tag/Search/operation/browse),
 
         and then delete the records using the [`batch`
         operation](#tag/Records/operation/batch).
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+      externalDocs:
+        url: >-
+          https://support.algolia.com/hc/en-us/articles/16385098766353-Should-I-use-the-deleteby-method-for-deleting-records-matching-a-query-
+        description: Should I use the deleteBy method for deleting records.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -3544,7 +3564,7 @@ paths:
               $ref: '#/components/schemas/deleteByParams'
       responses:
         '200':
-          $ref: '#/components/responses/DeletedAt'
+          $ref: '#/components/responses/UpdatedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -3804,7 +3824,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"aroundLatLng":"40.71,-74.01","aroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]]}'
+              --data '{"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"aroundLatLng":"40.71,-74.01","aroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]]}'
   /1/indexes/{indexName}/clear:
     post:
       tags:
@@ -3813,9 +3833,12 @@ paths:
       x-acl:
         - deleteIndex
       summary: Delete all records from an index
-      description: >-
+      description: >
         Deletes only the records from an index while keeping settings, synonyms,
         and rules.
+
+        This operation is resource-intensive and subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -4076,11 +4099,13 @@ paths:
         - If the index doesn't exist yet, this method creates a new index.
 
         - You can use any first-level attribute but not nested attributes.
-          If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+          If you specify a nested attribute, this operation replaces its first-level ancestor.
 
         To update an attribute without pushing the entire record, you can use
-        these built-in operations. These operations can be helpful if you don't
-        have access to your initial data.
+        these built-in operations.
+
+        These operations can be helpful if you don't have access to your initial
+        data.
 
 
         - Increment: increment a numeric attribute
@@ -4120,6 +4145,10 @@ paths:
 
         - value: the right-hand side argument to the operation, for example,
         increment or decrement step, value to add or remove.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectID'
@@ -4426,6 +4455,10 @@ paths:
 
         - Actions are equivalent to the individual API requests of the same
         name.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       x-codegen-request-body-name: batchWriteParams
@@ -4853,6 +4886,10 @@ paths:
 
         - Actions are equivalent to the individual API requests of the same
         name.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       summary: Batch indexing operations on multiple indices
       requestBody:
         required: true
@@ -6583,9 +6620,14 @@ paths:
       x-acl:
         - editSettings
       summary: Create or replace synonyms
-      description: |
+      description: >
         If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
+
         Otherwise, existing synonyms are replaced.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ForwardToReplicas'
@@ -8989,11 +9031,7 @@ paths:
               $ref: '#/components/schemas/rule'
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/updatedRuleResponse'
+          $ref: '#/components/responses/UpdatedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -9044,6 +9082,10 @@ paths:
         new one.
 
         Otherwise, existing rules are replaced.
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       x-codegen-request-body-name: rules
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -9092,6 +9134,10 @@ paths:
                   {
                     new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains") },
                   },
+                  Consequence = new Consequence
+                  {
+                    Params = new ConsequenceParams { Filters = "brand:apple" },
+                  },
                 },
                 new Rule
                 {
@@ -9099,6 +9145,10 @@ paths:
                   Conditions = new List<Condition>
                   {
                     new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
+                  },
+                  Consequence = new Consequence
+                  {
+                    Params = new ConsequenceParams { Filters = "brand:samsung" },
                   },
                 },
               },
@@ -9126,6 +9176,11 @@ paths:
                       anchoring: Anchoring.fromJson("contains"),
                     ),
                   ],
+                  consequence: Consequence(
+                    params: ConsequenceParams(
+                      filters: "brand:apple",
+                    ),
+                  ),
                 ),
                 Rule(
                   objectID: "a-second-rule-id",
@@ -9135,6 +9190,11 @@ paths:
                       anchoring: Anchoring.fromJson("contains"),
                     ),
                   ],
+                  consequence: Consequence(
+                    params: ConsequenceParams(
+                      filters: "brand:samsung",
+                    ),
+                  ),
                 ),
               ],
               forwardToReplicas: false,
@@ -9160,8 +9220,12 @@ paths:
             response, err := client.SaveRules(client.NewApiSaveRulesRequest(
               "<YOUR_INDEX_NAME>",
               []search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))})},
+                []search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                search.NewEmptyConsequence().SetParams(
+                  search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
+                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                search.NewEmptyConsequence().SetParams(
+                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
             ).WithForwardToReplicas(false).WithClearExistingRules(true))
 
             if err != nil {
@@ -9191,10 +9255,12 @@ paths:
               Arrays.asList(
                 new Rule()
                   .setObjectID("a-rule-id")
-                  .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
+                  .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS)))
+                  .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:apple"))),
                 new Rule()
                   .setObjectID("a-second-rule-id")
                   .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+                  .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:samsung")))
               ),
               false,
               true
@@ -9217,8 +9283,16 @@ paths:
             const response = await client.saveRules({
               indexName: '<YOUR_INDEX_NAME>',
               rules: [
-                { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
-                { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
+                {
+                  objectID: 'a-rule-id',
+                  conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+                  consequence: { params: { filters: 'brand:apple' } },
+                },
+                {
+                  objectID: 'a-second-rule-id',
+                  conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+                  consequence: { params: { filters: 'brand:samsung' } },
+                },
               ],
               forwardToReplicas: false,
               clearExistingRules: true,
@@ -9252,6 +9326,11 @@ paths:
                       anchoring = Anchoring.entries.first { it.value == "contains" },
                     ),
                   ),
+                  consequence = Consequence(
+                    params = ConsequenceParams(
+                      filters = "brand:apple",
+                    ),
+                  ),
                 ),
                 Rule(
                   objectID = "a-second-rule-id",
@@ -9259,6 +9338,11 @@ paths:
                     Condition(
                       pattern = "apple",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
+                    ),
+                  ),
+                  consequence = Consequence(
+                    params = ConsequenceParams(
+                      filters = "brand:samsung",
                     ),
                   ),
                 ),
@@ -9293,6 +9377,9 @@ paths:
                                 'anchoring' => 'contains',
                             ],
                         ],
+                        'consequence' => ['params' => ['filters' => 'brand:apple',
+                        ],
+                        ],
                     ],
 
                     ['objectID' => 'a-second-rule-id',
@@ -9300,6 +9387,9 @@ paths:
                             ['pattern' => 'apple',
                                 'anchoring' => 'contains',
                             ],
+                        ],
+                        'consequence' => ['params' => ['filters' => 'brand:samsung',
+                        ],
                         ],
                     ],
                 ],
@@ -9338,6 +9428,11 @@ paths:
                                 "anchoring": "contains",
                             },
                         ],
+                        "consequence": {
+                            "params": {
+                                "filters": "brand:apple",
+                            },
+                        },
                     },
                     {
                         "objectID": "a-second-rule-id",
@@ -9347,6 +9442,11 @@ paths:
                                 "anchoring": "contains",
                             },
                         ],
+                        "consequence": {
+                            "params": {
+                                "filters": "brand:samsung",
+                            },
+                        },
                     },
                 ],
                 forward_to_replicas=False,
@@ -9375,11 +9475,17 @@ paths:
               [
                 Algolia::Search::Rule.new(
                   object_id: "a-rule-id",
-                  conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")]
+                  conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
+                  consequence: Algolia::Search::Consequence.new(
+                    params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
+                  )
                 ),
                 Algolia::Search::Rule.new(
                   object_id: "a-second-rule-id",
-                  conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+                  conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+                  consequence: Algolia::Search::Consequence.new(
+                    params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
+                  )
                 )
               ],
               false,
@@ -9420,6 +9526,13 @@ paths:
                         anchoring = Some(Anchoring.withName("contains"))
                       )
                     )
+                  ),
+                  consequence = Consequence(
+                    params = Some(
+                      ConsequenceParams(
+                        filters = Some("brand:apple")
+                      )
+                    )
                   )
                 ),
                 Rule(
@@ -9429,6 +9542,13 @@ paths:
                       Condition(
                         pattern = Some("apple"),
                         anchoring = Some(Anchoring.withName("contains"))
+                      )
+                    )
+                  ),
+                  consequence = Consequence(
+                    params = Some(
+                      ConsequenceParams(
+                        filters = Some("brand:samsung")
                       )
                     )
                   )
@@ -9460,11 +9580,13 @@ paths:
                 rules: [
                     Rule(
                         objectID: "a-rule-id",
-                        conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)]
+                        conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
+                        consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
                     ),
                     Rule(
                         objectID: "a-second-rule-id",
-                        conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                        conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                        consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:samsung"))
                     ),
                 ],
                 forwardToReplicas: false,
@@ -9481,7 +9603,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '[{"objectID":"lorem","conditions":[{"pattern":"{facet:genre}","anchoring":"is","alternatives":false,"context":"mobile","filters":"genre:comedy"}],"consequence":{"params":{"similarQuery":"comedy drama crime Macy Buscemi","filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"sumOrFiltersScores":false,"restrictSearchableAttributes":["title","author"],"facets":["*"],"facetingAfterDistinct":false,"page":0,"offset":42,"length":0,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"naturalLanguages":[],"ruleContexts":["mobile"],"personalizationImpact":100,"userToken":"test-user-123","getRankingInfo":false,"synonyms":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"percentileComputation":true,"enableABTest":true,"attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"customRanking":["desc(popularity)","asc(price)"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"keepDiacriticsOnCharacters":"øé","queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","mode":"keywordSearch","semanticSearch":{"eventSources":["lorem"]},"advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"enableReRanking":true,"reRankingApplyFilter":[[]],"query":{"remove":["lorem"],"edits":[{"type":"remove","delete":"lorem","insert":"lorem"}]},"automaticFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}],"automaticOptionalFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}]},"promote":[{"objectIDs":["test-record-123"],"position":0}],"filterPromotes":false,"hide":[{"objectID":"test-record-123"}],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}]'
+              --data '[{"objectID":"lorem","conditions":[{"pattern":"{facet:genre}","anchoring":"is","alternatives":false,"context":"mobile","filters":"genre:comedy"}],"consequence":{"params":{"similarQuery":"comedy drama crime Macy Buscemi","filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"sumOrFiltersScores":false,"restrictSearchableAttributes":["title","author"],"facets":["*"],"facetingAfterDistinct":false,"page":0,"offset":42,"length":0,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"naturalLanguages":[],"ruleContexts":["mobile"],"personalizationImpact":100,"userToken":"test-user-123","getRankingInfo":false,"synonyms":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"percentileComputation":true,"enableABTest":true,"attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"customRanking":["desc(popularity)","asc(price)"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"keepDiacriticsOnCharacters":"øé","queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","mode":"keywordSearch","semanticSearch":{"eventSources":["lorem"]},"advancedSyntax":false,"optionalWords":"lorem","disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"enableReRanking":true,"reRankingApplyFilter":[[]],"query":{"remove":["lorem"],"edits":[{"type":"remove","delete":"lorem","insert":"lorem"}]},"automaticFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}],"automaticOptionalFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}]},"promote":[{"objectIDs":["test-record-123"],"position":0}],"filterPromotes":false,"hide":[{"objectID":"test-record-123"}],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}]'
   /1/indexes/{indexName}/rules/clear:
     post:
       tags:
@@ -15295,7 +15417,6 @@ paths:
                         - ip
                         - query_headers
                         - sha1
-                        - nb_api_calls
                         - processing_time_ms
         '400':
           $ref: '#/components/responses/BadRequest'
@@ -16060,6 +16181,8 @@ paths:
 
         - If the destination index doesn't exist yet, it'll be created.
 
+        - This operation is resource-intensive.
+
 
         **Copy**
 
@@ -16095,6 +16218,10 @@ paths:
 
         - Related guide: [Move
         indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+
+
+        This operation is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -17022,7 +17149,7 @@ components:
         - $ref: '#/components/schemas/aroundPrecisionFromValue'
       x-categories:
         - Geo-Search
-    insideBoundingBox:
+    insideBoundingBoxArray:
       type: array
       items:
         type: array
@@ -17057,6 +17184,11 @@ components:
           - 1.9916
       x-categories:
         - Geo-Search
+    insideBoundingBox:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/insideBoundingBoxArray'
     insidePolygon:
       type: array
       items:
@@ -17626,6 +17758,58 @@ components:
               items:
                 type: string
             - type: 'null'
+    optionalWordsArray:
+      type: array
+      items:
+        type: string
+      example:
+        - blue
+        - iphone case
+      description: >
+        Words that should be considered optional when found in the query.
+
+
+        By default, records must match all words in the search query to be
+        included in the search results.
+
+        Adding optional words can help to increase the number of search results
+        by running an additional search query that doesn't include the optional
+        words.
+
+        For example, if the search query is "action video" and "video" is an
+        optional word,
+
+        the search engine runs two queries. One for "action video" and one for
+        "action".
+
+        Records that match all words are ranked higher.
+
+
+        For a search query with 4 or more words **and** all its words are
+        optional,
+
+        the number of matched words required for a record to be included in the
+        search results increases for every 1,000 records:
+
+
+        - If `optionalWords` has less than 10 words, the required number of
+        matched words increases by 1:
+          results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
+        - If `optionalWords` has 10 or more words, the number of required
+        matched words increases by the number of optional words divided by 5
+        (rounded down).
+          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+
+        For more information, see [Optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/optionalWordsArray'
     exactOnSingleWordQuery:
       type: string
       enum:
@@ -17707,15 +17891,6 @@ components:
           minimum: 0
           maximum: 4
           default: 0
-      x-categories:
-        - Advanced
-    maxFacetHits:
-      type: integer
-      description: >-
-        Maximum number of facet values to return when [searching for facet
-        values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-      maximum: 100
-      default: 10
       x-categories:
         - Advanced
     order:
@@ -18268,52 +18443,7 @@ components:
           x-categories:
             - Query strategy
         optionalWords:
-          type: array
-          items:
-            type: string
-          example:
-            - blue
-            - iphone case
-          description: >
-            Words that should be considered optional when found in the query.
-
-
-            By default, records must match all words in the search query to be
-            included in the search results.
-
-            Adding optional words can help to increase the number of search
-            results by running an additional search query that doesn't include
-            the optional words.
-
-            For example, if the search query is "action video" and "video" is an
-            optional word,
-
-            the search engine runs two queries. One for "action video" and one
-            for "action".
-
-            Records that match all words are ranked higher.
-
-
-            For a search query with 4 or more words **and** all its words are
-            optional,
-
-            the number of matched words required for a record to be included in
-            the search results increases for every 1,000 records:
-
-
-            - If `optionalWords` has less than 10 words, the required number of
-            matched words increases by 1:
-              results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-            - If `optionalWords` has 10 or more words, the number of required
-            matched words increases by the number of optional words divided by 5
-            (rounded down).
-              For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
-
-            For more information, see [Optional
-            words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-          default: []
-          x-categories:
-            - Query strategy
+          $ref: '#/components/schemas/optionalWords'
         disableExactOnAttributes:
           type: array
           items:
@@ -18475,8 +18605,6 @@ components:
             - '*'
           x-categories:
             - Advanced
-        maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
         maxValuesPerFacet:
           type: integer
           description: Maximum number of facet values to return for each facet.
@@ -18863,6 +18991,7 @@ components:
     highlightResultMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
+      x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
         $ref: '#/components/schemas/highlightResult'
@@ -18893,6 +19022,7 @@ components:
     snippetResultMap:
       type: object
       description: Snippets that show the context around a matching search query.
+      x-is-free-form: false
       additionalProperties:
         x-additionalPropertiesName: attribute
         $ref: '#/components/schemas/snippetResult'
@@ -19087,6 +19217,15 @@ components:
       description: Text to search inside the facet's values.
       example: george
       default: ''
+    maxFacetHits:
+      type: integer
+      description: >-
+        Maximum number of facet values to return when [searching for facet
+        values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+      maximum: 100
+      default: 10
+      x-categories:
+        - Advanced
     searchTypeFacet:
       type: string
       enum:
@@ -19754,6 +19893,8 @@ components:
             accurate facet counts.
           example: url
           type: string
+        maxFacetHits:
+          $ref: '#/components/schemas/maxFacetHits'
     indexSettings:
       description: Index settings.
       allOf:
@@ -20402,20 +20543,7 @@ components:
             $ref: '#/components/schemas/timeRange'
       required:
         - objectID
-    updatedRuleResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        objectID:
-          $ref: '#/components/schemas/ruleID'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        taskID:
-          $ref: '#/components/schemas/taskID'
-      required:
-        - objectID
-        - updatedAt
-        - taskID
+        - consequence
     parameters_query:
       type: string
       description: Search query for rules.

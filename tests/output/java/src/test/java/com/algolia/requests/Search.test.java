@@ -1952,7 +1952,10 @@ class SearchClientRequestsTests {
       client.saveRule(
         "indexName",
         "id1",
-        new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+        new Rule()
+          .setObjectID("id1")
+          .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:xiaomi")))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1960,7 +1963,7 @@ class SearchClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}",
+        "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:xiaomi\"}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2053,10 +2056,12 @@ class SearchClientRequestsTests {
         Arrays.asList(
           new Rule()
             .setObjectID("a-rule-id")
-            .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
+            .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS)))
+            .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:apple"))),
           new Rule()
             .setObjectID("a-second-rule-id")
             .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+            .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:samsung")))
         ),
         false,
         true
@@ -2067,7 +2072,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]",
+        "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:samsung\"}}}]",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2781,7 +2786,9 @@ class SearchClientRequestsTests {
                 .setIgnorePlurals(IgnorePlurals.of(false))
                 .setIndexName("theIndexName")
                 .setInsideBoundingBox(
-                  Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
+                  InsideBoundingBox.of(
+                    Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
+                  )
                 )
                 .setInsidePolygon(
                   Arrays.asList(
@@ -2800,7 +2807,7 @@ class SearchClientRequestsTests {
                 .setNumericFilters(NumericFilters.of(Arrays.asList(NumericFilters.of(""))))
                 .setOffset(0)
                 .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of(""))))
-                .setOptionalWords(Arrays.asList(""))
+                .setOptionalWords(OptionalWords.of(Arrays.asList("")))
                 .setPage(0)
                 .setPercentileComputation(true)
                 .setPersonalizationImpact(0)
@@ -3461,7 +3468,7 @@ class SearchClientRequestsTests {
           .setMinWordSizefor2Typos(11)
           .setMode(Mode.NEURAL_SEARCH)
           .setNumericAttributesForFiltering(Arrays.asList("algolia"))
-          .setOptionalWords(Arrays.asList("myspace"))
+          .setOptionalWords(OptionalWords.of(Arrays.asList("myspace")))
           .setPaginationLimitedTo(0)
           .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
           .setQueryType(QueryType.PREFIX_LAST)

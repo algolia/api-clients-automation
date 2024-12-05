@@ -140,7 +140,7 @@ class SearchTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.8.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.10.1\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -238,7 +238,7 @@ class SearchTest {
               aroundRadius = AroundRadiusAll.entries.first { it.value == "all" },
               mode = Mode.entries.first { it.value == "neuralSearch" },
               hitsPerPage = 10,
-              optionalWords = listOf("one", "two"),
+              optionalWords = OptionalWords.of(listOf("one", "two")),
             ),
           ),
         )

@@ -290,7 +290,7 @@ open class SearchClient {
 
     // Adds, updates, or deletes records in one index with a single API request.  Batching index updates reduces latency
     // and increases data integrity.  - Actions are applied in the order they're specified. - Actions are equivalent to
-    // the individual API requests of the same name.
+    // the individual API requests of the same name.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     //
     //
     // - parameter indexName: (path) Name of the index on which to perform the operation.
@@ -536,7 +536,8 @@ open class SearchClient {
         return body
     }
 
-    // Deletes only the records from an index while keeping settings, synonyms, and rules.
+    // Deletes only the records from an index while keeping settings, synonyms, and rules. This operation is
+    // resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     // Required API Key ACLs:
     //  - deleteIndex
     //
@@ -1027,14 +1028,14 @@ open class SearchClient {
 
     /// - parameter indexName: (path) Name of the index on which to perform the operation.
     /// - parameter deleteByParams: (body)
-    /// - returns: SearchDeletedAtResponse
+    /// - returns: UpdatedAtResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func deleteBy(
         indexName: String,
         deleteByParams: DeleteByParams,
         requestOptions: RequestOptions? = nil
-    ) async throws -> SearchDeletedAtResponse {
-        let response: Response<SearchDeletedAtResponse> = try await deleteByWithHTTPInfo(
+    ) async throws -> UpdatedAtResponse {
+        let response: Response<UpdatedAtResponse> = try await deleteByWithHTTPInfo(
             indexName: indexName,
             deleteByParams: deleteByParams,
             requestOptions: requestOptions
@@ -1047,22 +1048,23 @@ open class SearchClient {
         return body
     }
 
-    // This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the
-    // [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
-    // operation](#tag/Records/operation/batch).
+    // This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you
+    // can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with
+    // the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
+    // operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     // Required API Key ACLs:
     //  - deleteIndex
     //
     // - parameter indexName: (path) Name of the index on which to perform the operation.
     //
     // - parameter deleteByParams: (body)
-    // - returns: RequestBuilder<SearchDeletedAtResponse>
+    // - returns: RequestBuilder<UpdatedAtResponse>
 
     open func deleteByWithHTTPInfo(
         indexName: String,
         deleteByParams: DeleteByParams,
         requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<SearchDeletedAtResponse> {
+    ) async throws -> Response<UpdatedAtResponse> {
         guard !indexName.isEmpty else {
             throw AlgoliaError.invalidArgument("indexName", "deleteBy")
         }
@@ -2538,7 +2540,8 @@ open class SearchClient {
     }
 
     // Adds, updates, or deletes records in multiple indices with a single API request.  - Actions are applied in the
-    // order they are specified. - Actions are equivalent to the individual API requests of the same name.
+    // order they are specified. - Actions are equivalent to the individual API requests of the same name.  This
+    // operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     //
     //
     // - parameter batchParams: (body)
@@ -2587,11 +2590,11 @@ open class SearchClient {
     }
 
     // Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are
-    // overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. 
-    // **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. -
-    // The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the
-    // `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has
-    // replicas. - Be aware of the [size
+    // overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. -
+    // This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index
+    // with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the
+    // destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
+    // destination index that already has replicas. - Be aware of the [size
     // limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
     // -
     // Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -2599,7 +2602,7 @@ open class SearchClient {
     // index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.  
     // To access the original analytics in the dashboard, create an index with the original name. - If the destination
     // index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related
-    // guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+    // guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     // Required API Key ACLs:
     //  - addObject
     //
@@ -2674,27 +2677,25 @@ open class SearchClient {
     // Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't
     // exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet,
     // this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you
-    // specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an
-    // attribute without pushing the entire record, you can use these built-in operations. These operations can be
-    // helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement:
-    // decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all
-    // matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number
-    // or
-    // string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom:
-    // increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore
-    // the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-    // current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only
-    // creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if
-    // the provided value is greater than the current value, and otherwise ignore the whole object update. For example,
-    // if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
-    // the
+    // specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without
+    // pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't
+    // have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric
+    // attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or
+    // string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to
+    // an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a
+    // numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole
+    // object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current
+    // value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates
+    // it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the
+    // provided value is greater than the current value, and otherwise ignore the whole object update. For example, if
+    // you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the
     // engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
     // IncrementSet
     // value greater than 0.  You can specify an operation by providing an object with the attribute to update as the
     // key
     // and its value being an object with the following properties:  - _operation: the operation to apply on the
     // attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value
-    // to add or remove.
+    // to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     // Required API Key ACLs:
     //  - addObject
     //
@@ -2947,7 +2948,8 @@ open class SearchClient {
     // index.
     // - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of
     // a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace
-    // multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    // multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to
+    // [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     // Required API Key ACLs:
     //  - addObject
     //
@@ -2995,7 +2997,7 @@ open class SearchClient {
     /// - parameter objectID: (path) Unique identifier of a rule object.
     /// - parameter rule: (body)
     /// - parameter forwardToReplicas: (query) Whether changes are applied to replica indices. (optional)
-    /// - returns: UpdatedRuleResponse
+    /// - returns: UpdatedAtResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func saveRule(
         indexName: String,
@@ -3003,8 +3005,8 @@ open class SearchClient {
         rule: Rule,
         forwardToReplicas: Bool? = nil,
         requestOptions: RequestOptions? = nil
-    ) async throws -> UpdatedRuleResponse {
-        let response: Response<UpdatedRuleResponse> = try await saveRuleWithHTTPInfo(
+    ) async throws -> UpdatedAtResponse {
+        let response: Response<UpdatedAtResponse> = try await saveRuleWithHTTPInfo(
             indexName: indexName,
             objectID: objectID,
             rule: rule,
@@ -3031,7 +3033,7 @@ open class SearchClient {
     // - parameter rule: (body)
     //
     // - parameter forwardToReplicas: (query) Whether changes are applied to replica indices. (optional)
-    // - returns: RequestBuilder<UpdatedRuleResponse>
+    // - returns: RequestBuilder<UpdatedAtResponse>
 
     open func saveRuleWithHTTPInfo(
         indexName: String,
@@ -3039,7 +3041,7 @@ open class SearchClient {
         rule: Rule,
         forwardToReplicas: Bool? = nil,
         requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<UpdatedRuleResponse> {
+    ) async throws -> Response<UpdatedAtResponse> {
         guard !indexName.isEmpty else {
             throw AlgoliaError.invalidArgument("indexName", "saveRule")
         }
@@ -3114,7 +3116,7 @@ open class SearchClient {
     }
 
     // Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new
-    // one. Otherwise, existing rules are replaced.
+    // one. Otherwise, existing rules are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     // Required API Key ACLs:
     //  - editSettings
     //
@@ -3291,7 +3293,7 @@ open class SearchClient {
     }
 
     // If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are
-    // replaced.
+    // replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     // Required API Key ACLs:
     //  - editSettings
     //

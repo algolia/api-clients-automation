@@ -49,7 +49,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.8.0';
+    public const VERSION = '4.9.2';
 
     /**
      * @var ApiWrapperInterface
@@ -311,7 +311,7 @@ class SearchClient
     }
 
     /**
-     * Adds, updates, or deletes records in one index with a single API request.  Batching index updates reduces latency and increases data integrity.  - Actions are applied in the order they're specified. - Actions are equivalent to the individual API requests of the same name.
+     * Adds, updates, or deletes records in one index with a single API request.  Batching index updates reduces latency and increases data integrity.  - Actions are applied in the order they're specified. - Actions are equivalent to the individual API requests of the same name.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * @param string $indexName        Name of the index on which to perform the operation. (required)
      * @param array  $batchWriteParams batchWriteParams (required)
@@ -488,7 +488,7 @@ class SearchClient
     }
 
     /**
-     * Deletes only the records from an index while keeping settings, synonyms, and rules.
+     * Deletes only the records from an index while keeping settings, synonyms, and rules. This operation is resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - deleteIndex
@@ -804,7 +804,7 @@ class SearchClient
     }
 
     /**
-     * This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
+     * This operation doesn't accept empty filters.  This operation is resource-intensive. You should only use it if you can't get the object IDs of the records you want to delete. It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - deleteIndex
@@ -817,14 +817,14 @@ class SearchClient
      *                               - $deleteByParams['tagFilters'] => (array)
      *                               - $deleteByParams['aroundLatLng'] => (string) Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within a circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
      *                               - $deleteByParams['aroundRadius'] => (array)
-     *                               - $deleteByParams['insideBoundingBox'] => (array) Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
+     *                               - $deleteByParams['insideBoundingBox'] => (array)
      *                               - $deleteByParams['insidePolygon'] => (array) Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
      *
      * @see DeleteByParams
      *
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse|array<string, mixed>
+     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|array<string, mixed>
      */
     public function deleteBy($indexName, $deleteByParams, $requestOptions = [])
     {
@@ -1741,7 +1741,7 @@ class SearchClient
     }
 
     /**
-     * Adds, updates, or deletes records in multiple indices with a single API request.  - Actions are applied in the order they are specified. - Actions are equivalent to the individual API requests of the same name.
+     * Adds, updates, or deletes records in multiple indices with a single API request.  - Actions are applied in the order they are specified. - Actions are equivalent to the individual API requests of the same name.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * @param array $batchParams batchParams (required)
      *                           - $batchParams['requests'] => (array)  (required)
@@ -1770,7 +1770,7 @@ class SearchClient
     }
 
     /**
-     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1820,7 +1820,7 @@ class SearchClient
     }
 
     /**
-     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+     * Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1987,7 +1987,7 @@ class SearchClient
     }
 
     /**
-     * Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+     * Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2041,7 +2041,7 @@ class SearchClient
      * @param array  $rule      rule (required)
      *                          - $rule['objectID'] => (string) Unique identifier of a rule object. (required)
      *                          - $rule['conditions'] => (array) Conditions that trigger a rule.  Some consequences require specific conditions or don't require any condition. For more information, see [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
-     *                          - $rule['consequence'] => (array)
+     *                          - $rule['consequence'] => (array)  (required)
      *                          - $rule['description'] => (string) Description of the rule's purpose to help you distinguish between different rules.
      *                          - $rule['enabled'] => (bool) Whether the rule is active.
      *                          - $rule['validity'] => (array) Time periods when the rule is active.
@@ -2051,7 +2051,7 @@ class SearchClient
      * @param bool  $forwardToReplicas Whether changes are applied to replica indices. (optional)
      * @param array $requestOptions    the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedRuleResponse|array<string, mixed>
+     * @return \Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse|array<string, mixed>
      */
     public function saveRule($indexName, $objectID, $rule, $forwardToReplicas = null, $requestOptions = [])
     {
@@ -2105,7 +2105,7 @@ class SearchClient
     }
 
     /**
-     * Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
+     * Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - editSettings
@@ -2235,7 +2235,7 @@ class SearchClient
     }
 
     /**
-     * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are replaced.
+     * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing synonyms are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - editSettings
@@ -2945,12 +2945,13 @@ class SearchClient
      *
      * @param string $indexName      the `indexName` to replace `objects` in
      * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
+     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions Request options
      * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      */
-    public function saveObjects($indexName, $objects, $requestOptions = [], $waitForTasks = false)
+    public function saveObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [], $waitForTasks = false)
     {
-        return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
     }
 
     /**
@@ -2958,10 +2959,11 @@ class SearchClient
      *
      * @param string $indexName      the `indexName` to delete `objectIDs` from
      * @param array  $objectIDs      the `objectIDs` to delete
+     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions Request options
      * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      */
-    public function deleteObjects($indexName, $objectIDs, $requestOptions = [], $waitForTasks = false)
+    public function deleteObjects($indexName, $objectIDs, $batchSize = 1000, $requestOptions = [], $waitForTasks = false)
     {
         $objects = [];
 
@@ -2969,7 +2971,7 @@ class SearchClient
             $objects[] = ['objectID' => $id];
         }
 
-        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, $batchSize, $requestOptions);
     }
 
     /**
@@ -2978,12 +2980,13 @@ class SearchClient
      * @param string $indexName         the `indexName` to replace `objects` in
      * @param array  $objects           the array of `objects` to store in the given Algolia `indexName`
      * @param bool   $createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail..
+     * @param array  $batchSize         The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions    Request options
      * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      */
-    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $requestOptions = [], $waitForTasks = false)
+    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $batchSize = 1000, $requestOptions = [], $waitForTasks = false)
     {
-        return $this->chunkedBatch($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions);
     }
 
     /**

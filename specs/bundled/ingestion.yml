@@ -1111,6 +1111,7 @@ paths:
         - $ref: '#/components/parameters/action'
         - $ref: '#/components/parameters/enabled'
         - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/sourceType'
         - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
         - $ref: '#/components/parameters/taskParameters_sort'
@@ -1989,6 +1990,18 @@ components:
       description: Unique identifier of a task.
       schema:
         $ref: '#/components/schemas/taskID'
+    sourceType:
+      name: sourceType
+      in: query
+      description: Filters the tasks with the specified source type.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/SourceType'
+        example: json,commercetools
     transformationParameters_sort:
       name: sort
       in: query
@@ -2238,6 +2251,11 @@ components:
           description: |
             Algolia API key with the ACL: `search`.
             This field is `null` in the API response.
+    AuthSecrets:
+      type: object
+      description: A key:value authentication for your transformations.
+      additionalProperties:
+        type: string
     AuthInputPartial:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
@@ -2246,6 +2264,7 @@ components:
         - $ref: '#/components/schemas/AuthOAuthPartial'
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
+        - $ref: '#/components/schemas/AuthSecrets'
     createdAt:
       type: string
       description: Date of creation in RFC 3339 format.
@@ -2412,11 +2431,6 @@ components:
       required:
         - appID
         - apiKey
-    AuthSecrets:
-      type: object
-      description: A key:value authentication for your transformations.
-      additionalProperties:
-        type: string
     AuthInput:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccount'
@@ -2696,7 +2710,6 @@ components:
         - ga4BigqueryExport
         - json
         - shopify
-        - sfcc
         - push
     sourceSortKeys:
       type: string
@@ -3630,7 +3643,6 @@ components:
         - destinationID
         - trigger
         - enabled
-        - action
         - createdAt
     OnDemandTriggerInput:
       type: object
@@ -3802,7 +3814,6 @@ components:
         - sourceID
         - destinationID
         - enabled
-        - action
         - createdAt
     TaskCreate:
       type: object

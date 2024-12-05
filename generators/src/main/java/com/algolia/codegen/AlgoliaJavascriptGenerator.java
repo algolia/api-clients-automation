@@ -18,6 +18,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
   private boolean isAlgoliasearchClient;
+  private boolean isAlgoliaCompositionClient;
 
   @Override
   public String getName() {
@@ -30,6 +31,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     CLIENT = Helpers.camelize((String) additionalProperties.get("client"));
     isAlgoliasearchClient = CLIENT.equals("algoliasearch");
+    isAlgoliaCompositionClient = CLIENT.equals("composition");
 
     // generator specific options
     setSupportsES6(true);
@@ -152,8 +154,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("apiName", CLIENT);
     additionalProperties.put("clientName", clientName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
+    additionalProperties.put("is" + Helpers.capitalize(CLIENT) + "Client", true);
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
-    additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
@@ -169,10 +171,16 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
           continue;
         }
 
+        String version = Helpers.getPackageJsonVersion(name);
+
+        if (version.contains("alpha") || version.contains("beta")) {
+          continue;
+        }
+
         var dependency = new HashMap<String, Object>();
         dependency.put("dependencyName", Helpers.createClientName((String) pkg.get("name"), "javascript"));
         dependency.put("dependencyPackage", "@algolia/" + name);
-        dependency.put("dependencyVersion", Helpers.getPackageJsonVersion(name));
+        dependency.put("dependencyVersion", version);
         dependency.put("withInitMethod", !name.contains("search"));
         dependency.put(
           "dependencyHasRegionalHosts",

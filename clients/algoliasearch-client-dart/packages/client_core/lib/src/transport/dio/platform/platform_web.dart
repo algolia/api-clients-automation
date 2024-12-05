@@ -13,5 +13,5 @@ Iterable<AgentSegment> platformAgentSegments() => [
 
 /// [AlgoliaAgent] for web platforms as query param.
 void platformAlgoliaAgent(dio.RequestOptions options, String agent) {
-  options.queryParameters["X-Algolia-Agent"] = agent;
+  options.queryParameters["x-algolia-agent"] = agent;
 }

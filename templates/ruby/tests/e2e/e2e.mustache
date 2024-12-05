@@ -9,7 +9,7 @@ Dotenv.load('../../.env')
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E < Test::Unit::TestCase
   def setup
     @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
-      ENV.fetch('ALGOLIA_APPLICATION_ID', nil),
+      ENV.fetch('{{e2eAppID}}', nil),
       ENV.fetch('{{e2eApiKey}}', nil){{#hasRegionalHost}},
       '{{{defaultRegion}}}'{{/hasRegionalHost}}
     )

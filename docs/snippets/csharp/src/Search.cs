@@ -767,7 +767,7 @@ public class SnippetSearchClient
           AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
           Mode = Enum.Parse<Mode>("NeuralSearch"),
           HitsPerPage = 10,
-          OptionalWords = new List<string> { "one", "two" },
+          OptionalWords = new OptionalWords(new List<string> { "one", "two" }),
         },
       }
     );
@@ -1523,6 +1523,10 @@ public class SnippetSearchClient
         {
           new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
         },
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { Filters = "brand:xiaomi" },
+        },
       }
     );
     // >LOG
@@ -1552,6 +1556,10 @@ public class SnippetSearchClient
           {
             new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains") },
           },
+          Consequence = new Consequence
+          {
+            Params = new ConsequenceParams { Filters = "brand:apple" },
+          },
         },
         new Rule
         {
@@ -1559,6 +1567,10 @@ public class SnippetSearchClient
           Conditions = new List<Condition>
           {
             new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
+          },
+          Consequence = new Consequence
+          {
+            Params = new ConsequenceParams { Filters = "brand:samsung" },
           },
         },
       },

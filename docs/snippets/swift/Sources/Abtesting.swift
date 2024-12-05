@@ -98,6 +98,32 @@ final class AbtestingClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the estimateABTest method.
+    ///
+    /// estimate AB Test sample size
+    func snippetForEstimateABTest() async throws {
+        // >SEPARATOR estimateABTest default
+        // Initialize the client
+        let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.estimateABTest(estimateABTestRequest: EstimateABTestRequest(
+            configuration: EstimateConfiguration(
+                emptySearch: EmptySearch(exclude: true),
+                minimumDetectableEffect: MinimumDetectableEffect(
+                    size: 0.03,
+                    metric: EffectMetric.conversionRate
+                )
+            ),
+            variants: [
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 50)),
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+            ]
+        ))
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the getABTest method.
     ///
     /// getABTest
