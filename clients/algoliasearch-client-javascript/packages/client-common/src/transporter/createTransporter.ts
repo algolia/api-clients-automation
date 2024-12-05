@@ -142,8 +142,6 @@ export function createTransporter({
         responseTimeout: getTimeout(timeoutsCount, isRead ? timeout.read : timeout.write),
       };
 
-      console.log(payload);
-
       /**
        * The stackFrame is pushed to the stackTrace so we
        * can have information about onRetry and onFailure
