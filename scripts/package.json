@@ -41,7 +41,7 @@
     "dotenv": "16.4.7",
     "esbuild": "0.24.0",
     "execa": "9.5.1",
-    "express": "4.21.1",
+    "express": "4.21.2",
     "folder-hash": "4.0.4",
     "fs-extra": "11.2.0",
     "httpsnippet": "3.0.9",
