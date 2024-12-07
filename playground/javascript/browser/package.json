@@ -17,11 +17,11 @@
     "react-instantsearch": "^7.13.8"
   },
   "devDependencies": {
-    "@eslint/js": "9.15.0",
+    "@eslint/js": "9.16.0",
     "@types/react": "18.3.14",
     "@types/react-dom": "18.3.2",
     "@vitejs/plugin-react-swc": "3.7.2",
-    "eslint": "9.15.0",
+    "eslint": "9.16.0",
     "eslint-plugin-react-hooks": "5.1.0",
     "eslint-plugin-react-refresh": "0.4.16",
     "globals": "15.13.0",
