@@ -41,7 +41,7 @@
     "publint": "0.2.12",
     "tsup": "8.3.5",
     "typescript": "5.7.2",
-    "vitest": "2.1.6",
+    "vitest": "2.1.8",
     "xhr-mock": "2.5.1"
   },
   "engines": {
