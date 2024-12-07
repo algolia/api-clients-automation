@@ -65,7 +65,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.0"
     "@types/node": "npm:22.10.1"
     publint: "npm:0.2.12"
-    rollup: "npm:4.28.0"
+    rollup: "npm:4.28.1"
     tsup: "npm:8.3.5"
     typescript: "npm:5.7.2"
   languageName: unknown
@@ -2269,7 +2269,7 @@ __metadata:
     bundlewatch: "npm:0.4.0"
     execa: "npm:9.5.1"
     lerna: "npm:8.1.9"
-    rollup: "npm:4.28.0"
+    rollup: "npm:4.28.1"
     typescript: "npm:5.7.2"
   languageName: unknown
   linkType: soft
@@ -7088,7 +7088,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.20.0":
+"rollup@npm:4.28.1, rollup@npm:^4.20.0":
   version: 4.28.1
   resolution: "rollup@npm:4.28.1"
   dependencies:
