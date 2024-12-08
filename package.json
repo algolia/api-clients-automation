@@ -41,7 +41,7 @@
     "lint-staged": "15.2.10",
     "oxlint": "0.11.1",
     "pinst": "3.0.0",
-    "prettier": "3.4.1",
+    "prettier": "3.4.2",
     "prettier-plugin-java": "2.6.5",
     "prettier-plugin-organize-imports": "4.1.0",
     "renovate-config-algolia": "2.2.0",
