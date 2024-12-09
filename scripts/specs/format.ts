@@ -1,3 +1,4 @@
+import $RefParser from '@apidevtools/json-schema-ref-parser';
 import fsp from 'fs/promises';
 
 import oas2har from '@har-sdk/oas';
@@ -158,8 +159,13 @@ export async function transformBundle({
     }
   }
 
+  const dereferencedSpec = (await $RefParser.dereference(bundledSpec, {
+    mutateInputSchema: false,
+    dereference: { circular: 'ignore' },
+  })) as Spec;
+
   await fsp.writeFile(
     docs ? toAbsolutePath(`specs/bundled/${clientName}.doc.yml`) : bundledPath,
-    yaml.dump(bundledSpec, { noRefs: true }),
+    yaml.dump(dereferencedSpec, { noRefs: true }),
   );
 }
