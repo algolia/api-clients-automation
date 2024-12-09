@@ -1,7 +1,7 @@
 post:
   tags:
     - transformations
-  summary: Try a transformation
+  summary: Try a transformation before updating it
   description: Try a transformation before updating it.
   operationId: tryTransformationBeforeUpdate
   x-acl:
