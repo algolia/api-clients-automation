@@ -70,14 +70,13 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 {{/vars}}
 
     model_config = ConfigDict(
+        strict=False,
         use_enum_values=True, 
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
         alias_generator=_alias_generator,
-        {{#isAdditionalPropertiesTrue}}
         extra='allow',
-        {{/isAdditionalPropertiesTrue}}
     )
 
     def to_json(self) -> str:
