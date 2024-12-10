@@ -60,8 +60,11 @@
       "watch": true
     },
     "request": {
-      "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push?watch=true",
+      "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push",
       "method": "POST",
+      "queryParameters": {
+        "watch": "true"
+      },
       "body": {
         "action": "addObject",
         "records": [
