@@ -43,6 +43,7 @@ get:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
+
 put:
   tags:
     - Records
@@ -78,6 +79,7 @@ put:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
+
 delete:
   tags:
     - Records
@@ -90,6 +92,7 @@ delete:
 
     To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch).
     To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
