@@ -637,7 +637,7 @@ paths:
       x-acl:
         - addObject
       description: >
-        Adds a record to an index or replace it.
+        Adds a record to an index or replaces it.
 
 
         - If the record doesn't have an object ID, a new record with an
@@ -662,7 +662,7 @@ paths:
 
         This operation is subject to [indexing rate
         limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
-      summary: Add or replace a record
+      summary: Add a new record (with auto-generated object ID)
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -808,6 +808,9 @@ paths:
 
         Otherwise, a new record is added to the index.
 
+
+        If you want to use auto-generated object IDs, use the [`saveObject`
+        operation](#tag/Records/operation/saveObject).
 
         To update _some_ attributes of an existing record, use the [`partial`
         operation](#tag/Records/operation/partialUpdateObject) instead.
