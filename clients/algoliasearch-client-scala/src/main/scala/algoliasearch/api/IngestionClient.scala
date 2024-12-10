@@ -1199,10 +1199,16 @@ class IngestionClient(
     *   Unique identifier of a task.
     * @param pushTaskPayload
     *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+    * @param watch
+    *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
+    *   before responding.
     */
-  def pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[RunResponse] = Future {
+  def pushTask(
+      taskID: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
@@ -1211,6 +1217,7 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/push")
       .withBody(pushTaskPayload)
+      .withQueryParameter("watch", watch)
       .build()
     execute[RunResponse](request, requestOptions)
   }

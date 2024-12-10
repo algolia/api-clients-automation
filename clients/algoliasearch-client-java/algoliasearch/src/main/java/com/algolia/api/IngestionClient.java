@@ -3003,13 +3003,51 @@ public class IngestionClient extends ApiClient {
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
    *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse pushTask(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushTaskAsync(taskID, pushTaskPayload, watch, requestOptions));
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushTask(taskID, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(pushTaskAsync(taskID, pushTaskPayload, requestOptions));
+    return this.pushTask(taskID, pushTaskPayload, null, requestOptions);
   }
 
   /**
@@ -3022,7 +3060,55 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
-    return this.pushTask(taskID, pushTaskPayload, null);
+    return this.pushTask(taskID, pushTaskPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> pushTaskAsync(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks/{taskID}/push", taskID)
+      .setMethod("POST")
+      .setBody(pushTaskPayload)
+      .addQueryParameter("watch", watch)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushTaskAsync(taskID, pushTaskPayload, watch, null);
   }
 
   /**
@@ -3041,16 +3127,7 @@ public class IngestionClient extends ApiClient {
     @Nonnull PushTaskPayload pushTaskPayload,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
-
-    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
-
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/2/tasks/{taskID}/push", taskID)
-      .setMethod("POST")
-      .setBody(pushTaskPayload)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+    return this.pushTaskAsync(taskID, pushTaskPayload, null, requestOptions);
   }
 
   /**
@@ -3064,7 +3141,7 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)
     throws AlgoliaRuntimeException {
-    return this.pushTaskAsync(taskID, pushTaskPayload, null);
+    return this.pushTaskAsync(taskID, pushTaskPayload, null, null);
   }
 
   /**

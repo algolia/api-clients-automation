@@ -1353,6 +1353,47 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("allows for watch query parameter")
+  void pushTaskTest1() {
+    assertDoesNotThrow(() -> {
+      client.pushTask(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new PushTaskPayload()
+          .setAction(Action.ADD_OBJECT)
+          .setRecords(
+            Arrays.asList(
+              new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+              new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+            )
+          ),
+        true
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"watch\":\"true\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
   @DisplayName("runSource")
   void runSourceTest() {
     assertDoesNotThrow(() -> {

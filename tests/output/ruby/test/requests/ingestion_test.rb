@@ -940,6 +940,32 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
+  # allows for watch query parameter
+  def test_push_task1
+    req = @client.push_task_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      Algolia::Ingestion::PushTaskPayload.new(
+        action: "addObject",
+        records: [
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+        ]
+      ),
+      true
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", req.path)
+    assert_equal({:"watch" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # runSource
   def test_run_source
     req = @client.run_source_with_http_info(
