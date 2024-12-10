@@ -42,7 +42,6 @@
     "testName": "allows for watch query parameter",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "watch": true,
       "pushTaskPayload": {
         "action": "addObject",
         "records": [
@@ -57,7 +56,8 @@
             "objectID": "k"
           }
         ]
-      }
+      },
+      "watch": true
     },
     "request": {
       "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push?watch=true",
