@@ -43,7 +43,6 @@ get:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
-
 put:
   tags:
     - Records
@@ -55,6 +54,7 @@ put:
     If a record with the specified object ID exists, the existing record is replaced.
     Otherwise, a new record is added to the index.
 
+    If you want to use auto-generated object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject).
     To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.
     To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
   parameters:
@@ -78,7 +78,6 @@ put:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/IndexNotFound.yml'
-
 delete:
   tags:
     - Records
@@ -91,7 +90,6 @@ delete:
 
     To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch).
     To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
-
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
