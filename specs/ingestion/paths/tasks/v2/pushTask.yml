@@ -10,6 +10,12 @@ post:
     - editSettings
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
+    - name: watch
+      in: query
+      description: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+      required: false
+      schema:
+        type: boolean
   requestBody:
     description: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
     content:
