@@ -16,10 +16,10 @@ func pushSetup() async throws {
         // use the region matching your applicationID
         {{> snippets/init}}
 
-        let run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+        // setting `watch` to `true` will make the call synchronous
+        let resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
-        // use runID in the Observability debugger
-        dump(run)
+        dump(resp)
     } catch {
         print(error)
     }
