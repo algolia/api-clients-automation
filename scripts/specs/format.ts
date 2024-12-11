@@ -9,7 +9,7 @@ import { GENERATORS, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Spec } from '../types.js';
 
-import { bundleCodeSamplesForDoc, getCodeSampleLabel, transformGeneratedSnippetsToCodeSamples } from './snippets.js';
+import { getCodeSampleLabel, parseCodeSamples, transformGeneratedSnippetsToCodeSamples } from './snippets.js';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');
@@ -52,7 +52,7 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
   const tagsDefinitions = bundledSpec.tags;
   const codeSamples = await transformGeneratedSnippetsToCodeSamples(clientName);
 
-  await bundleCodeSamplesForDoc(JSON.parse(JSON.stringify(codeSamples)), clientName);
+  parseCodeSamples(JSON.parse(JSON.stringify(codeSamples)));
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {

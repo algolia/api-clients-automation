@@ -19,7 +19,7 @@ export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label
 }
 
 // Iterates over the result of `transformSnippetsToCodeSamples` in order to generate a JSON file for the doc to consume.
-export async function bundleCodeSamplesForDoc(codeSamples: CodeSamples, clientName: string): Promise<void> {
+export function parseCodeSamples(codeSamples: CodeSamples): CodeSamples {
   for (const [language, operationWithSamples] of Object.entries(codeSamples)) {
     for (const [operation, samples] of Object.entries(operationWithSamples)) {
       if (operation === 'import') {
@@ -48,7 +48,7 @@ export async function bundleCodeSamplesForDoc(codeSamples: CodeSamples, clientNa
     }
   }
 
-  await fsp.writeFile(toAbsolutePath(`docs/bundled/${clientName}-snippets.json`), JSON.stringify(codeSamples, null, 2));
+  return codeSamples;
 }
 
 // Reads the generated `docs/snippets/` file for every languages of the given `clientName` and builds an hashmap of snippets per operationId per language.
