@@ -75,11 +75,12 @@ async function buildSpec({
   const specBase = isLiteSpec ? 'search' : spec;
   const deps = isLiteSpec ? ['search', 'recommend'] : [spec];
   const logSuffix = docs ? 'doc spec' : 'spec';
+  const basePath = docs ? 'docs/' : 'specs/';
   const cache = new Cache({
-    folder: toAbsolutePath('specs/'),
-    generatedFiles: [docs ? `bundled/${spec}.doc.yml` : `bundled/${spec}.yml`],
+    folder: toAbsolutePath(basePath),
+    generatedFiles: [`${spec}.yml`],
     filesToCache: [...deps, 'common'],
-    cacheFile: toAbsolutePath(`specs/dist/${spec}.${docs ? 'doc.' : ''}cache`),
+    cacheFile: toAbsolutePath(`${basePath}/dist/${spec}.cache`),
   });
 
   const spinner = createSpinner(`starting '${spec}' ${logSuffix}`);
@@ -97,10 +98,10 @@ async function buildSpec({
 
   // First linting the base
   spinner.text = `linting '${spec}' ${logSuffix}`;
-  await run(`yarn specs:fix ${specBase}`);
+  await run(`yarn specs:fix specs/${specBase}`);
 
   // Then bundle the file
-  const bundledPath = toAbsolutePath(`specs/bundled/${spec}.${docs ? 'doc.' : ''}${outputFormat}`);
+  const bundledPath = toAbsolutePath(`${basePath}/bundled/${spec}.${outputFormat}`);
   await run(`yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`);
 
   if (!(await exists(bundledPath))) {
@@ -123,7 +124,7 @@ async function buildSpec({
   await run(`yarn openapi lint ${bundledPath}`);
 
   spinner.text = `linting '${spec}' ${logSuffix}`;
-  await run(`yarn specs:fix bundled/${spec}.${docs ? 'doc.' : ''}${outputFormat}`);
+  await run(`yarn specs:fix ${basePath}/bundled/${spec}.${outputFormat}`);
 
   if (useCache) {
     spinner.text = `storing '${spec}' ${logSuffix}`;

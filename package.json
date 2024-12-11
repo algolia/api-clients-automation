@@ -25,8 +25,8 @@
     "scripts:build": "yarn workspace scripts build",
     "scripts:lint": "yarn workspace scripts lint",
     "scripts:test": "yarn workspace scripts test",
-    "specs:fix": "eslint --ext=yml specs/$0 --fix",
-    "specs:lint": "eslint --ext=yml specs/$0",
+    "specs:fix": "eslint --ext=yml $0 --fix",
+    "specs:lint": "eslint --ext=yml $0",
     "website": "cd website && yarn start",
     "website:build": "bash scripts/website/build.sh"
   },
