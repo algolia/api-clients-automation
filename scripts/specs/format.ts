@@ -129,5 +129,5 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
     }
   }
 
-  await fsp.writeFile(toAbsolutePath(`specs/bundled/${clientName}.doc.yml`), yaml.dump(bundledSpec, { noRefs: true }));
+  await fsp.writeFile(toAbsolutePath(`docs/bundled/${clientName}.yml`), yaml.dump(bundledSpec, { noRefs: true }));
 }
