@@ -13,10 +13,10 @@ public class pushSetup {
     // use the region matching your applicationID
     {{> snippets/init}}
 
-    RunResponse run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
+    // setting `watch` to `true` will make the call synchronous
+    WatchResponse resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
 
-    // use runID in the Observability debugger
-    System.out.println(run.getRunID());
+    System.out.println(resp);
 
     client.close();
   }

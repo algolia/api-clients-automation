@@ -52,7 +52,6 @@ import algoliasearch.ingestion.SourceSortKeys._
 import algoliasearch.ingestion.SourceType._
 import algoliasearch.ingestion.SourceUpdate
 import algoliasearch.ingestion.SourceUpdateResponse
-import algoliasearch.ingestion.SourceWatchResponse
 import algoliasearch.ingestion.Task
 import algoliasearch.ingestion.TaskCreate
 import algoliasearch.ingestion.TaskCreateResponse
@@ -72,6 +71,7 @@ import algoliasearch.ingestion.TransformationTry
 import algoliasearch.ingestion.TransformationTryResponse
 import algoliasearch.ingestion.TransformationUpdateResponse
 import algoliasearch.ingestion.TriggerType._
+import algoliasearch.ingestion.WatchResponse
 import algoliasearch.ingestion._
 import algoliasearch.ApiClient
 import algoliasearch.api.IngestionClient.hosts
@@ -1208,7 +1208,7 @@ class IngestionClient(
       pushTaskPayload: PushTaskPayload,
       watch: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
+  )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
@@ -1219,7 +1219,7 @@ class IngestionClient(
       .withBody(pushTaskPayload)
       .withQueryParameter("watch", watch)
       .build()
-    execute[RunResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
   /** Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
@@ -1441,7 +1441,7 @@ class IngestionClient(
     */
   def triggerDockerSourceDiscover(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[SourceWatchResponse] = Future {
+  ): Future[WatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.")
 
     val request = HttpRequest
@@ -1449,7 +1449,7 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/discover")
       .build()
-    execute[SourceWatchResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
   /** Try a transformation before creating it.
@@ -1664,7 +1664,7 @@ class IngestionClient(
     */
   def validateSource(sourceCreate: Option[SourceCreate] = None, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[SourceWatchResponse] = Future {
+  ): Future[WatchResponse] = Future {
 
     val request = HttpRequest
       .builder()
@@ -1672,7 +1672,7 @@ class IngestionClient(
       .withPath(s"/1/sources/validate")
       .withBody(sourceCreate)
       .build()
-    execute[SourceWatchResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
   /** Validates an update of a source payload to ensure it can be created and that the data source can be reached by
@@ -1690,7 +1690,7 @@ class IngestionClient(
       sourceID: String,
       sourceUpdate: SourceUpdate,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[SourceWatchResponse] = Future {
+  )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
     requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.")
 
@@ -1700,7 +1700,7 @@ class IngestionClient(
       .withPath(s"/1/sources/${escape(sourceID)}/validate")
       .withBody(sourceUpdate)
       .build()
-    execute[SourceWatchResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
 }
