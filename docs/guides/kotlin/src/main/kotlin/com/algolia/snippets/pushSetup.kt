@@ -15,16 +15,17 @@ suspend fun main() {
   val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
   try {
-    val run = client.pushTask(
+    // setting `watch` to `true` will make the call synchronous
+    val resp = client.pushTask(
       taskID = "YOUR_TASK_ID",
       pushTaskPayload = PushTaskPayload(
         action = Action.entries.first { it.value == "addObject" },
         records = records,
       ),
+      watch = true,
     )
 
-    // use runID in the Observability debugger
-    println(run)
+    println(resp)
   } catch (e: Exception) {
     println(e.message)
   }

@@ -651,7 +651,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceWatchResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/sources/search:
@@ -782,7 +782,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceWatchResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/sources/{sourceID}/discover:
@@ -808,7 +808,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceWatchResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/sources/{sourceID}/run:
@@ -1331,7 +1331,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /2/tasks/{taskID}/enable:
@@ -3159,7 +3159,7 @@ components:
         - type
         - batchSize
         - publishedAt
-    SourceWatchResponse:
+    WatchResponse:
       type: object
       additionalProperties: false
       properties:
@@ -3168,8 +3168,8 @@ components:
         data:
           type: array
           description: >-
-            depending on the source type, the validation returns sampling data
-            of your source (JSON, CSV, BigQuery).
+            when used with discovering or validating sources, the sampled data
+            of your source is returned.
           items:
             type: object
         events:

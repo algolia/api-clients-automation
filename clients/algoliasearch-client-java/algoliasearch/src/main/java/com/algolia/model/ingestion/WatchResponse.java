@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** SourceWatchResponse */
-public class SourceWatchResponse {
+/** WatchResponse */
+public class WatchResponse {
 
   @JsonProperty("runID")
   private String runID;
@@ -24,7 +24,7 @@ public class SourceWatchResponse {
   @JsonProperty("message")
   private String message;
 
-  public SourceWatchResponse setRunID(String runID) {
+  public WatchResponse setRunID(String runID) {
     this.runID = runID;
     return this;
   }
@@ -35,12 +35,12 @@ public class SourceWatchResponse {
     return runID;
   }
 
-  public SourceWatchResponse setData(List<Object> data) {
+  public WatchResponse setData(List<Object> data) {
     this.data = data;
     return this;
   }
 
-  public SourceWatchResponse addData(Object dataItem) {
+  public WatchResponse addData(Object dataItem) {
     if (this.data == null) {
       this.data = new ArrayList<>();
     }
@@ -49,20 +49,19 @@ public class SourceWatchResponse {
   }
 
   /**
-   * depending on the source type, the validation returns sampling data of your source (JSON, CSV,
-   * BigQuery).
+   * when used with discovering or validating sources, the sampled data of your source is returned.
    */
   @javax.annotation.Nullable
   public List<Object> getData() {
     return data;
   }
 
-  public SourceWatchResponse setEvents(List<Event> events) {
+  public WatchResponse setEvents(List<Event> events) {
     this.events = events;
     return this;
   }
 
-  public SourceWatchResponse addEvents(Event eventsItem) {
+  public WatchResponse addEvents(Event eventsItem) {
     if (this.events == null) {
       this.events = new ArrayList<>();
     }
@@ -76,7 +75,7 @@ public class SourceWatchResponse {
     return events;
   }
 
-  public SourceWatchResponse setMessage(String message) {
+  public WatchResponse setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -95,12 +94,12 @@ public class SourceWatchResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SourceWatchResponse sourceWatchResponse = (SourceWatchResponse) o;
+    WatchResponse watchResponse = (WatchResponse) o;
     return (
-      Objects.equals(this.runID, sourceWatchResponse.runID) &&
-      Objects.equals(this.data, sourceWatchResponse.data) &&
-      Objects.equals(this.events, sourceWatchResponse.events) &&
-      Objects.equals(this.message, sourceWatchResponse.message)
+      Objects.equals(this.runID, watchResponse.runID) &&
+      Objects.equals(this.data, watchResponse.data) &&
+      Objects.equals(this.events, watchResponse.events) &&
+      Objects.equals(this.message, watchResponse.message)
     );
   }
 
@@ -112,7 +111,7 @@ public class SourceWatchResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SourceWatchResponse {\n");
+    sb.append("class WatchResponse {\n");
     sb.append("    runID: ").append(toIndentedString(runID)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    events: ").append(toIndentedString(events)).append("\n");
