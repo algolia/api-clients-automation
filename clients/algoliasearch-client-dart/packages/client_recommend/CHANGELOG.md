@@ -1,3 +1,7 @@
+## [1.28.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.0...1.28.1)
+
+- [866d859f8](https://github.com/algolia/api-clients-automation/commit/866d859f8) fix(specs): different summaries for saveObject/addOrUpdate methods ([#4223](https://github.com/algolia/api-clients-automation/pull/4223)) by [@kai687](https://github.com/kai687/)
+
 ## [1.28.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.27.3...1.28.0)
 
 - [068fdacb5](https://github.com/algolia/api-clients-automation/commit/068fdacb5) feat(specs): add info and link about indexing rate limits ([#4136](https://github.com/algolia/api-clients-automation/pull/4136)) by [@kai687](https://github.com/kai687/)
