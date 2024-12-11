@@ -14,7 +14,7 @@ public class pushSetup {
     {{> snippets/init}}
 
     // setting `watch` to `true` will make the call synchronous
-    PushTaskResponse resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
+    WatchResponse resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
 
     System.out.println(resp);
 
