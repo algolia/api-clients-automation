@@ -112,7 +112,7 @@ func TestIngestioncommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.9.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.10.0\).*`), echo.Header.Get("User-Agent"))
 }
 
 // uses the correct region
