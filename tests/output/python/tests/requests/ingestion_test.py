@@ -1150,6 +1150,38 @@ class TestIngestionClient:
             """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
         )
 
+    async def test_push_task_1(self):
+        """
+        allows for watch query parameter
+        """
+        _req = await self._client.push_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            push_task_payload={
+                "action": "addObject",
+                "records": [
+                    {
+                        "key": "bar",
+                        "foo": "1",
+                        "objectID": "o",
+                    },
+                    {
+                        "key": "baz",
+                        "foo": "2",
+                        "objectID": "k",
+                    },
+                ],
+            },
+            watch=True,
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"watch": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+        )
+
     async def test_run_source_(self):
         """
         runSource
@@ -2750,6 +2782,38 @@ class TestIngestionClientSync:
         assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+        )
+
+    def test_push_task_1(self):
+        """
+        allows for watch query parameter
+        """
+        _req = self._client.push_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            push_task_payload={
+                "action": "addObject",
+                "records": [
+                    {
+                        "key": "bar",
+                        "foo": "1",
+                        "objectID": "o",
+                    },
+                    {
+                        "key": "baz",
+                        "foo": "2",
+                        "objectID": "k",
+                    },
+                ],
+            },
+            watch=True,
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"watch": "true"}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""

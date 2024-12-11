@@ -37,6 +37,22 @@ describe('api', () => {
       expect((e as Error).message).toMatch('Too Many Requests');
     }
   }, 15000);
+
+  test('calls api with default read timeouts', async () => {
+    const client = createClient();
+
+    const result = (await client.customGet({ path: '1/test' })) as unknown as EchoResponse;
+
+    expect(result).toEqual(expect.objectContaining({ connectTimeout: 25000, responseTimeout: 25000 }));
+  }, 15000);
+
+  test('calls api with default write timeouts', async () => {
+    const client = createClient();
+
+    const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
+
+    expect(result).toEqual(expect.objectContaining({ connectTimeout: 25000, responseTimeout: 25000 }));
+  }, 15000);
 });
 
 describe('commonApi', () => {
@@ -55,23 +71,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.15.0\).*/);
-  }, 15000);
-
-  test('calls api with default read timeouts', async () => {
-    const client = createClient();
-
-    const result = (await client.customGet({ path: '1/test' })) as unknown as EchoResponse;
-
-    expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 }));
-  }, 15000);
-
-  test('calls api with default write timeouts', async () => {
-    const client = createClient();
-
-    const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
-
-    expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 }));
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.17.0\).*/);
   }, 15000);
 });
 

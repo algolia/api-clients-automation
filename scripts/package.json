@@ -31,17 +31,17 @@
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "22.9.0",
+    "@types/node": "22.10.1",
     "@types/semver": "7.5.8",
     "@types/spinnies": "0.5.3",
     "chai": "5.1.2",
     "chalk": "5.3.0",
     "commander": "12.1.0",
     "crc": "4.3.2",
-    "dotenv": "16.4.5",
+    "dotenv": "16.4.7",
     "esbuild": "0.24.0",
-    "execa": "9.5.1",
-    "express": "4.21.1",
+    "execa": "9.5.2",
+    "express": "4.21.2",
     "folder-hash": "4.0.4",
     "fs-extra": "11.2.0",
     "httpsnippet": "3.0.9",
@@ -50,7 +50,7 @@
     "micromatch": "4.0.8",
     "semver": "7.6.3",
     "spinnies": "0.5.1",
-    "typescript": "5.6.3",
-    "vitest": "2.1.5"
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
   }
 }

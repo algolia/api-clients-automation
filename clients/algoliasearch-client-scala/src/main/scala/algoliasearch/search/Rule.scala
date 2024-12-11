@@ -51,7 +51,7 @@ package algoliasearch.search
 case class Rule(
     objectID: String,
     conditions: Option[Seq[Condition]] = scala.None,
-    consequence: Option[Consequence] = scala.None,
+    consequence: Consequence,
     description: Option[String] = scala.None,
     enabled: Option[Boolean] = scala.None,
     validity: Option[Seq[TimeRange]] = scala.None

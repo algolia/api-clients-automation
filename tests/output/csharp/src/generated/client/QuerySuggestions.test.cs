@@ -53,37 +53,9 @@ public class QuerySuggestionsClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.9.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.11.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
-  }
-
-  [Fact(DisplayName = "calls api with default read timeouts")]
-  public async Task CommonApiTest2()
-  {
-    var client = new QuerySuggestionsClient(
-      new QuerySuggestionsConfig("appId", "apiKey", "us"),
-      _echo
-    );
-    await client.CustomGetAsync("1/test");
-    EchoResponse result = _echo.LastResponse;
-
-    Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
-    Assert.Equal(5000, result.ResponseTimeout.TotalMilliseconds);
-  }
-
-  [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task CommonApiTest3()
-  {
-    var client = new QuerySuggestionsClient(
-      new QuerySuggestionsConfig("appId", "apiKey", "us"),
-      _echo
-    );
-    await client.CustomPostAsync("1/test");
-    EchoResponse result = _echo.LastResponse;
-
-    Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
-    Assert.Equal(30000, result.ResponseTimeout.TotalMilliseconds);
   }
 
   [Fact(DisplayName = "throws when region is not given")]

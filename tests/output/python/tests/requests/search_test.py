@@ -1640,6 +1640,11 @@ class TestSearchClient:
                         "anchoring": "contains",
                     },
                 ],
+                "consequence": {
+                    "params": {
+                        "filters": "brand:xiaomi",
+                    },
+                },
             },
         )
 
@@ -1648,7 +1653,7 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}"""
+            """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}"""
         )
 
     async def test_save_rule_1(self):
@@ -1745,6 +1750,11 @@ class TestSearchClient:
                             "anchoring": "contains",
                         },
                     ],
+                    "consequence": {
+                        "params": {
+                            "filters": "brand:apple",
+                        },
+                    },
                 },
                 {
                     "objectID": "a-second-rule-id",
@@ -1754,6 +1764,11 @@ class TestSearchClient:
                             "anchoring": "contains",
                         },
                     ],
+                    "consequence": {
+                        "params": {
+                            "filters": "brand:samsung",
+                        },
+                    },
                 },
             ],
             forward_to_replicas=False,
@@ -1768,7 +1783,7 @@ class TestSearchClient:
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]"""
+            """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]"""
         )
 
     async def test_save_rules_1(self):
@@ -4851,6 +4866,11 @@ class TestSearchClientSync:
                         "anchoring": "contains",
                     },
                 ],
+                "consequence": {
+                    "params": {
+                        "filters": "brand:xiaomi",
+                    },
+                },
             },
         )
 
@@ -4859,7 +4879,7 @@ class TestSearchClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}"""
+            """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}"""
         )
 
     def test_save_rule_1(self):
@@ -4956,6 +4976,11 @@ class TestSearchClientSync:
                             "anchoring": "contains",
                         },
                     ],
+                    "consequence": {
+                        "params": {
+                            "filters": "brand:apple",
+                        },
+                    },
                 },
                 {
                     "objectID": "a-second-rule-id",
@@ -4965,6 +4990,11 @@ class TestSearchClientSync:
                             "anchoring": "contains",
                         },
                     ],
+                    "consequence": {
+                        "params": {
+                            "filters": "brand:samsung",
+                        },
+                    },
                 },
             ],
             forward_to_replicas=False,
@@ -4979,7 +5009,7 @@ class TestSearchClientSync:
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]"""
+            """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]"""
         )
 
     def test_save_rules_1(self):

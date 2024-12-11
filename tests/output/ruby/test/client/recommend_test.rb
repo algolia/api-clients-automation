@@ -54,33 +54,7 @@ class TestClientRecommendClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.8.2\).*/))
-  end
-
-  # calls api with default read timeouts
-  def test_common_api2
-    client = Algolia::RecommendClient.create(
-      "APP_ID",
-      "API_KEY",
-
-      {requester: Algolia::Transport::EchoRequester.new}
-    )
-    req = client.custom_get_with_http_info("1/test")
-    assert_equal(2000, req.connect_timeout)
-    assert_equal(5000, req.timeout)
-  end
-
-  # calls api with default write timeouts
-  def test_common_api3
-    client = Algolia::RecommendClient.create(
-      "APP_ID",
-      "API_KEY",
-
-      {requester: Algolia::Transport::EchoRequester.new}
-    )
-    req = client.custom_post_with_http_info("1/test")
-    assert_equal(2000, req.connect_timeout)
-    assert_equal(30000, req.timeout)
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.10.0\).*/))
   end
 
   # switch API key

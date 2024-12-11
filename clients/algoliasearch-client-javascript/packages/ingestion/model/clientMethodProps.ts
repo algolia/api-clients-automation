@@ -491,6 +491,10 @@ export type ListTasksProps = {
    */
   sourceID?: Array<string>;
   /**
+   * Filters the tasks with the specified source type.
+   */
+  sourceType?: Array<SourceType>;
+  /**
    * Destination IDs for filtering the list of tasks.
    */
   destinationID?: Array<string>;
@@ -584,6 +588,10 @@ export type PushTaskProps = {
    * Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
    */
   pushTaskPayload: PushTaskPayload;
+  /**
+   * When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+   */
+  watch?: boolean;
 };
 
 /**

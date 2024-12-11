@@ -95,7 +95,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::AddApiKeyResponse")
     end
 
-    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  If you want to use auto-generated object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -140,7 +140,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  If you want to use auto-generated object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2255,7 +2255,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::AddApiKeyResponse")
     end
 
-    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds a record to an index or replaces it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2292,7 +2292,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds a record to an index or replaces it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2360,10 +2360,10 @@ module Algolia
     # @param rule [Rule]  (required)
     # @param forward_to_replicas [Boolean] Whether changes are applied to replica indices.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [UpdatedRuleResponse]
+    # @return [UpdatedAtResponse]
     def save_rule(index_name, object_id, rule, forward_to_replicas = nil, request_options = {})
       response = save_rule_with_http_info(index_name, object_id, rule, forward_to_replicas, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedRuleResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
     # Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -3288,7 +3288,7 @@ module Algolia
     #
     # @return [String]
     #
-    def generate_secured_api_key(parent_api_key, restrictions = {})
+    def self.generate_secured_api_key(parent_api_key, restrictions = {})
       restrictions = restrictions.to_hash
       if restrictions.key?(:searchParams)
         # merge searchParams with the root of the restrictions
@@ -3310,13 +3310,24 @@ module Algolia
       Base64.encode64("#{hmac}#{url_encoded_restrictions}").gsub("\n", "")
     end
 
+    # Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
+    #
+    # @param parent_api_key [String] Parent API key used the generate the secured key
+    # @param restrictions [SecuredApiKeyRestrictions] Restrictions to apply on the secured key
+    #
+    # @return [String]
+    #
+    def generate_secured_api_key(parent_api_key, restrictions = {})
+      self.class.generate_secured_api_key(parent_api_key, restrictions)
+    end
+
     # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
     #
     # @param secured_api_key [String]
     #
     # @return [Integer]
     #
-    def get_secured_api_key_remaining_validity(secured_api_key)
+    def self.get_secured_api_key_remaining_validity(secured_api_key)
       now = Time.now.to_i
       decoded_key = Base64.decode64(secured_api_key)
       regex = "validUntil=(\\d+)"
@@ -3331,22 +3342,33 @@ module Algolia
       valid_until - now
     end
 
+    # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
+    #
+    # @param secured_api_key [String]
+    #
+    # @return [Integer]
+    #
+    def get_secured_api_key_remaining_validity(secured_api_key)
+      self.class.get_secured_api_key_remaining_validity(secured_api_key)
+    end
+
     # Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
     #
     # @param index_name [String]: The `index_name` to save `objects` in.
     # @param objects [Array]: The array of `objects` to store in the given Algolia `indexName`.
     # @param wait_for_tasks [Boolean]: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def save_objects(index_name, objects, wait_for_tasks = false, request_options = {})
+    def save_objects(index_name, objects, wait_for_tasks = false, batch_size = 1000, request_options = {})
       chunked_batch(
         index_name,
         objects,
         Search::Action::ADD_OBJECT,
         wait_for_tasks,
-        1000,
+        batch_size,
         request_options
       )
     end
@@ -3356,17 +3378,18 @@ module Algolia
     # @param index_name [String]: The `index_name` to delete `object_ids` from.
     # @param object_ids [Array]: The object_ids to delete.
     # @param wait_for_tasks [Boolean]: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def delete_objects(index_name, object_ids, wait_for_tasks = false, request_options = {})
+    def delete_objects(index_name, object_ids, wait_for_tasks = false, batch_size = 1000, request_options = {})
       chunked_batch(
         index_name,
         object_ids.map { |id| {"objectID" => id} },
         Search::Action::DELETE_OBJECT,
         wait_for_tasks,
-        1000,
+        batch_size,
         request_options
       )
     end
@@ -3377,17 +3400,25 @@ module Algolia
     # @param objects [Array]: The objects to partially update.
     # @param create_if_not_exists [Boolean]: To be provided if non-existing objects are passed, otherwise, the call will fail.
     # @param wait_for_tasks [Boolean] Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [BatchResponse]
     #
-    def partial_update_objects(index_name, objects, create_if_not_exists, wait_for_tasks = false, request_options = {})
+    def partial_update_objects(
+      index_name,
+      objects,
+      create_if_not_exists,
+      wait_for_tasks = false,
+      batch_size = 1000,
+      request_options = {}
+    )
       chunked_batch(
         index_name,
         objects,
         create_if_not_exists ? Search::Action::PARTIAL_UPDATE_OBJECT : Search::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE,
         wait_for_tasks,
-        1000,
+        batch_size,
         request_options
       )
     end

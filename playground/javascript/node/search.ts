@@ -17,14 +17,15 @@ console.log('version', apiClientVersion, 'requests', requests);
 
 async function testSearch() {
   try {
-    const res = await client.browseRules({
-      indexName: 'cts_e2e_search_facet',
-      aggregator: (resp: any) => {
-        console.log(resp);
-      },
+    const res = await client.search({
+      requests: 
+      [
+        { indexName: 'foo', hitsPerPage: 2 }
+      ]
     });
 
-    console.log(`[OK]`, res);
+    // @ts-ignore
+    console.log(`[OK]`, res.results[0].hits);
   } catch (e: any) {
     // Instance of
     if (e instanceof ApiError) {

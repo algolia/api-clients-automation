@@ -10,6 +10,7 @@ import com.algolia.utils.UseReadTransporter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,9 +35,9 @@ public final class HttpRequester implements Requester {
   /** Private constructor initialized using the builder pattern. */
   private HttpRequester(Builder builder, ClientConfig config) {
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-      .connectTimeout(config.getConnectTimeout())
-      .readTimeout(config.getReadTimeout())
-      .writeTimeout(config.getWriteTimeout())
+      .connectTimeout(config.getConnectTimeout() == Duration.ZERO ? builder.connectTimeout : config.getConnectTimeout())
+      .readTimeout(config.getReadTimeout() == Duration.ZERO ? builder.readTimeout : config.getReadTimeout())
+      .writeTimeout(config.getWriteTimeout() == Duration.ZERO ? builder.writeTimeout : config.getWriteTimeout())
       .addInterceptor(new HeaderInterceptor(config.getDefaultHeaders()))
       .addNetworkInterceptor(new LogInterceptor(config.getLogger(), config.getLogLevel()));
     builder.interceptors.forEach(clientBuilder::addInterceptor);
@@ -192,11 +193,11 @@ public final class HttpRequester implements Requester {
   public static class Builder {
 
     private final List<Interceptor> interceptors = new ArrayList<>();
-
     private final List<Interceptor> networkInterceptors = new ArrayList<>();
-
+    private Duration connectTimeout = Duration.ofSeconds(2);
+    private Duration writeTimeout = Duration.ofSeconds(30);
+    private Duration readTimeout = Duration.ofSeconds(5);
     private Consumer<OkHttpClient.Builder> clientConfig;
-
     private final JsonSerializer serializer;
 
     public Builder(JsonSerializer serializer) {
@@ -226,6 +227,21 @@ public final class HttpRequester implements Requester {
     /** Sets the configuration for the OkHttp client. */
     public Builder setHttpClientConfig(Consumer<OkHttpClient.Builder> config) {
       this.clientConfig = config;
+      return this;
+    }
+
+    public Builder setConnectTimeout(Duration connectTimeout) {
+      this.connectTimeout = connectTimeout;
+      return this;
+    }
+
+    public Builder setWriteTimeout(Duration writeTimeout) {
+      this.writeTimeout = writeTimeout;
+      return this;
+    }
+
+    public Builder setReadTimeout(Duration readTimeout) {
+      this.readTimeout = readTimeout;
       return this;
     }
 

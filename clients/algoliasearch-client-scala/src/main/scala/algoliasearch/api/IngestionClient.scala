@@ -75,15 +75,20 @@ import algoliasearch.ingestion.TriggerType._
 import algoliasearch.ingestion._
 import algoliasearch.ApiClient
 import algoliasearch.api.IngestionClient.hosts
+import algoliasearch.api.IngestionClient.readTimeout
+import algoliasearch.api.IngestionClient.writeTimeout
+import algoliasearch.api.IngestionClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object IngestionClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new IngestionClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -105,6 +110,18 @@ object IngestionClient {
     region = region,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
 
   private def hosts(region: String): Seq[Host] = {
     val allowedRegions = Seq("eu", "us")
@@ -128,6 +145,9 @@ class IngestionClient(
       apiKey = apiKey,
       clientName = "Ingestion",
       defaultHosts = hosts(region),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {
@@ -1032,6 +1052,8 @@ class IngestionClient(
     *   Whether to filter the list of tasks by the `enabled` status.
     * @param sourceID
     *   Source IDs for filtering the list of tasks.
+    * @param sourceType
+    *   Filters the tasks with the specified source type.
     * @param destinationID
     *   Destination IDs for filtering the list of tasks.
     * @param triggerType
@@ -1047,6 +1069,7 @@ class IngestionClient(
       action: Option[Seq[ActionType]] = None,
       enabled: Option[Boolean] = None,
       sourceID: Option[Seq[String]] = None,
+      sourceType: Option[Seq[SourceType]] = None,
       destinationID: Option[Seq[String]] = None,
       triggerType: Option[Seq[TriggerType]] = None,
       sort: Option[TaskSortKeys] = None,
@@ -1063,6 +1086,7 @@ class IngestionClient(
       .withQueryParameter("action", action)
       .withQueryParameter("enabled", enabled)
       .withQueryParameter("sourceID", sourceID)
+      .withQueryParameter("sourceType", sourceType)
       .withQueryParameter("destinationID", destinationID)
       .withQueryParameter("triggerType", triggerType)
       .withQueryParameter("sort", sort)
@@ -1175,10 +1199,16 @@ class IngestionClient(
     *   Unique identifier of a task.
     * @param pushTaskPayload
     *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+    * @param watch
+    *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
+    *   before responding.
     */
-  def pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[RunResponse] = Future {
+  def pushTask(
+      taskID: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
@@ -1187,6 +1217,7 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/push")
       .withBody(pushTaskPayload)
+      .withQueryParameter("watch", watch)
       .build()
     execute[RunResponse](request, requestOptions)
   }

@@ -16,7 +16,7 @@ func push() {
 		panic(err)
 	}
 
-	content, err := os.ReadFile("/my-raw-records.json")
+	content, err := os.ReadFile("records.json")
 	if err != nil {
 		panic(err)
 	}

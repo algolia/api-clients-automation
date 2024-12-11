@@ -2168,13 +2168,18 @@ void main() {
               anchoring: Anchoring.fromJson("contains"),
             ),
           ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              filters: "brand:xiaomi",
+            ),
+          ),
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/rules/id1');
         expect(request.method, 'put');
         expectBody(request.body,
-            """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}""");
+            """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}""");
       },
     ),
   );
@@ -2287,6 +2292,11 @@ void main() {
                 anchoring: Anchoring.fromJson("contains"),
               ),
             ],
+            consequence: Consequence(
+              params: ConsequenceParams(
+                filters: "brand:apple",
+              ),
+            ),
           ),
           Rule(
             objectID: "a-second-rule-id",
@@ -2296,6 +2306,11 @@ void main() {
                 anchoring: Anchoring.fromJson("contains"),
               ),
             ],
+            consequence: Consequence(
+              params: ConsequenceParams(
+                filters: "brand:samsung",
+              ),
+            ),
           ),
         ],
         forwardToReplicas: false,
@@ -2308,7 +2323,7 @@ void main() {
         expectParams(request.queryParameters,
             """{"forwardToReplicas":"false","clearExistingRules":"true"}""");
         expectBody(request.body,
-            """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]""");
+            """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]""");
       },
     ),
   );

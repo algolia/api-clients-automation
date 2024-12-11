@@ -2134,6 +2134,7 @@ open class IngestionClient {
     /// - parameter action: (query) Actions for filtering the list of tasks. (optional)
     /// - parameter enabled: (query) Whether to filter the list of tasks by the `enabled` status. (optional)
     /// - parameter sourceID: (query) Source IDs for filtering the list of tasks. (optional)
+    /// - parameter sourceType: (query) Filters the tasks with the specified source type. (optional)
     /// - parameter destinationID: (query) Destination IDs for filtering the list of tasks. (optional)
     /// - parameter triggerType: (query) Type of task trigger for filtering the list of tasks. (optional)
     /// - parameter sort: (query) Property by which to sort the list of tasks. (optional)
@@ -2146,6 +2147,7 @@ open class IngestionClient {
         action: [ActionType]? = nil,
         enabled: Bool? = nil,
         sourceID: [String]? = nil,
+        sourceType: [SourceType]? = nil,
         destinationID: [String]? = nil,
         triggerType: [TriggerType]? = nil,
         sort: TaskSortKeys? = nil,
@@ -2158,6 +2160,7 @@ open class IngestionClient {
             action: action,
             enabled: enabled,
             sourceID: sourceID,
+            sourceType: sourceType,
             destinationID: destinationID,
             triggerType: triggerType,
             sort: sort,
@@ -2188,6 +2191,8 @@ open class IngestionClient {
     //
     // - parameter sourceID: (query) Source IDs for filtering the list of tasks. (optional)
     //
+    // - parameter sourceType: (query) Filters the tasks with the specified source type. (optional)
+    //
     // - parameter destinationID: (query) Destination IDs for filtering the list of tasks. (optional)
     //
     // - parameter triggerType: (query) Type of task trigger for filtering the list of tasks. (optional)
@@ -2203,6 +2208,7 @@ open class IngestionClient {
         action: [ActionType]? = nil,
         enabled: Bool? = nil,
         sourceID: [String]? = nil,
+        sourceType: [SourceType]? = nil,
         destinationID: [String]? = nil,
         triggerType: [TriggerType]? = nil,
         sort: TaskSortKeys? = nil,
@@ -2217,6 +2223,7 @@ open class IngestionClient {
             "action": action?.encodeToJSON(),
             "enabled": enabled?.encodeToJSON(),
             "sourceID": sourceID?.encodeToJSON(),
+            "sourceType": sourceType?.encodeToJSON(),
             "destinationID": destinationID?.encodeToJSON(),
             "triggerType": triggerType?.encodeToJSON(),
             "sort": sort?.encodeToJSON(),
@@ -2415,16 +2422,20 @@ open class IngestionClient {
     /// - parameter taskID: (path) Unique identifier of a task.
     /// - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
     /// Connectors pipeline.
+    /// - parameter watch: (query) When provided, the push operation will be synchronous and the API will wait for the
+    /// ingestion to be finished before responding. (optional)
     /// - returns: RunResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func pushTask(
         taskID: String,
         pushTaskPayload: PushTaskPayload,
+        watch: Bool? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws -> RunResponse {
         let response: Response<RunResponse> = try await pushTaskWithHTTPInfo(
             taskID: taskID,
             pushTaskPayload: pushTaskPayload,
+            watch: watch,
             requestOptions: requestOptions
         )
 
@@ -2446,11 +2457,15 @@ open class IngestionClient {
     //
     // - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
     // Connectors pipeline.
+    //
+    // - parameter watch: (query) When provided, the push operation will be synchronous and the API will wait for the
+    // ingestion to be finished before responding. (optional)
     // - returns: RequestBuilder<RunResponse>
 
     open func pushTaskWithHTTPInfo(
         taskID: String,
         pushTaskPayload: PushTaskPayload,
+        watch: Bool? = nil,
         requestOptions userRequestOptions: RequestOptions? = nil
     ) async throws -> Response<RunResponse> {
         guard !taskID.isEmpty else {
@@ -2468,7 +2483,9 @@ open class IngestionClient {
             range: nil
         )
         let body = pushTaskPayload
-        let queryParameters: [String: Any?]? = nil
+        let queryParameters: [String: Any?] = [
+            "watch": watch?.encodeToJSON(),
+        ]
 
         let nillableHeaders: [String: Any?]? = nil
 

@@ -105,7 +105,6 @@ SourceType:
     - ga4BigqueryExport
     - json
     - shopify
-    - sfcc
     - push
 
 SourceCommercetools:

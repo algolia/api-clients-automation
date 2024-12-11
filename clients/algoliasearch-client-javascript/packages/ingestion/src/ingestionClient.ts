@@ -117,7 +117,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.15.0';
+export const apiClientVersion = '1.17.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -1484,6 +1484,7 @@ export function createIngestionClient({
      * @param listTasks.action - Actions for filtering the list of tasks.
      * @param listTasks.enabled - Whether to filter the list of tasks by the `enabled` status.
      * @param listTasks.sourceID - Source IDs for filtering the list of tasks.
+     * @param listTasks.sourceType - Filters the tasks with the specified source type.
      * @param listTasks.destinationID - Destination IDs for filtering the list of tasks.
      * @param listTasks.triggerType - Type of task trigger for filtering the list of tasks.
      * @param listTasks.sort - Property by which to sort the list of tasks.
@@ -1491,7 +1492,18 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listTasks(
-      { itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order }: ListTasksProps = {},
+      {
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        sourceID,
+        sourceType,
+        destinationID,
+        triggerType,
+        sort,
+        order,
+      }: ListTasksProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListTasksResponse> {
       const requestPath = '/2/tasks';
@@ -1516,6 +1528,10 @@ export function createIngestionClient({
 
       if (sourceID !== undefined) {
         queryParameters['sourceID'] = sourceID.toString();
+      }
+
+      if (sourceType !== undefined) {
+        queryParameters['sourceType'] = sourceType.toString();
       }
 
       if (destinationID !== undefined) {
@@ -1675,9 +1691,10 @@ export function createIngestionClient({
      * @param pushTask - The pushTask object.
      * @param pushTask.taskID - Unique identifier of a task.
      * @param pushTask.pushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+     * @param pushTask.watch - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    pushTask({ taskID, pushTaskPayload }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
+    pushTask({ taskID, pushTaskPayload, watch }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
       if (!taskID) {
         throw new Error('Parameter `taskID` is required when calling `pushTask`.');
       }
@@ -1696,6 +1713,10 @@ export function createIngestionClient({
       const requestPath = '/2/tasks/{taskID}/push'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
+      if (watch !== undefined) {
+        queryParameters['watch'] = watch.toString();
+      }
 
       const request: Request = {
         method: 'POST',

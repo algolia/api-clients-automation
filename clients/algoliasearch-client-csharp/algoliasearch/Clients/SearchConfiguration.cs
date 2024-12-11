@@ -27,10 +27,13 @@ public sealed class SearchConfig : AlgoliaConfig
   /// </summary>
   /// <param name="appId">Your application ID</param>
   /// <param name="apiKey">Your API Key</param>
-  public SearchConfig(string appId, string apiKey) : base(appId, apiKey, "Search", "7.9.2")
+  public SearchConfig(string appId, string apiKey) : base(appId, apiKey, "Search", "7.11.0")
   {
     DefaultHosts = GetDefaultHosts(appId);
     Compression = CompressionType.None;
+    ReadTimeout = TimeSpan.FromSeconds(5);
+    WriteTimeout = TimeSpan.FromSeconds(30);
+    ConnectTimeout = TimeSpan.FromSeconds(2);
   }
   private static List<StatefulHost> GetDefaultHosts(string appId)
   {

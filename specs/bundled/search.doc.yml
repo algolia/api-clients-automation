@@ -2546,7 +2546,7 @@ paths:
       x-acl:
         - addObject
       description: >
-        Adds a record to an index or replace it.
+        Adds a record to an index or replaces it.
 
 
         - If the record doesn't have an object ID, a new record with an
@@ -2571,7 +2571,7 @@ paths:
 
         This operation is subject to [indexing rate
         limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
-      summary: Add or replace a record
+      summary: Add a new record (with auto-generated object ID)
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -3465,6 +3465,9 @@ paths:
 
         Otherwise, a new record is added to the index.
 
+
+        If you want to use auto-generated object IDs, use the [`saveObject`
+        operation](#tag/Records/operation/saveObject).
 
         To update _some_ attributes of an existing record, use the [`partial`
         operation](#tag/Records/operation/partialUpdateObject) instead.
@@ -9031,11 +9034,7 @@ paths:
               $ref: '#/components/schemas/rule'
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/updatedRuleResponse'
+          $ref: '#/components/responses/UpdatedAt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -9138,6 +9137,10 @@ paths:
                   {
                     new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains") },
                   },
+                  Consequence = new Consequence
+                  {
+                    Params = new ConsequenceParams { Filters = "brand:apple" },
+                  },
                 },
                 new Rule
                 {
@@ -9145,6 +9148,10 @@ paths:
                   Conditions = new List<Condition>
                   {
                     new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
+                  },
+                  Consequence = new Consequence
+                  {
+                    Params = new ConsequenceParams { Filters = "brand:samsung" },
                   },
                 },
               },
@@ -9172,6 +9179,11 @@ paths:
                       anchoring: Anchoring.fromJson("contains"),
                     ),
                   ],
+                  consequence: Consequence(
+                    params: ConsequenceParams(
+                      filters: "brand:apple",
+                    ),
+                  ),
                 ),
                 Rule(
                   objectID: "a-second-rule-id",
@@ -9181,6 +9193,11 @@ paths:
                       anchoring: Anchoring.fromJson("contains"),
                     ),
                   ],
+                  consequence: Consequence(
+                    params: ConsequenceParams(
+                      filters: "brand:samsung",
+                    ),
+                  ),
                 ),
               ],
               forwardToReplicas: false,
@@ -9206,8 +9223,12 @@ paths:
             response, err := client.SaveRules(client.NewApiSaveRulesRequest(
               "<YOUR_INDEX_NAME>",
               []search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))})},
+                []search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                search.NewEmptyConsequence().SetParams(
+                  search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
+                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                search.NewEmptyConsequence().SetParams(
+                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
             ).WithForwardToReplicas(false).WithClearExistingRules(true))
 
             if err != nil {
@@ -9237,10 +9258,12 @@ paths:
               Arrays.asList(
                 new Rule()
                   .setObjectID("a-rule-id")
-                  .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
+                  .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS)))
+                  .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:apple"))),
                 new Rule()
                   .setObjectID("a-second-rule-id")
                   .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+                  .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:samsung")))
               ),
               false,
               true
@@ -9263,8 +9286,16 @@ paths:
             const response = await client.saveRules({
               indexName: '<YOUR_INDEX_NAME>',
               rules: [
-                { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
-                { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
+                {
+                  objectID: 'a-rule-id',
+                  conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
+                  consequence: { params: { filters: 'brand:apple' } },
+                },
+                {
+                  objectID: 'a-second-rule-id',
+                  conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+                  consequence: { params: { filters: 'brand:samsung' } },
+                },
               ],
               forwardToReplicas: false,
               clearExistingRules: true,
@@ -9298,6 +9329,11 @@ paths:
                       anchoring = Anchoring.entries.first { it.value == "contains" },
                     ),
                   ),
+                  consequence = Consequence(
+                    params = ConsequenceParams(
+                      filters = "brand:apple",
+                    ),
+                  ),
                 ),
                 Rule(
                   objectID = "a-second-rule-id",
@@ -9305,6 +9341,11 @@ paths:
                     Condition(
                       pattern = "apple",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
+                    ),
+                  ),
+                  consequence = Consequence(
+                    params = ConsequenceParams(
+                      filters = "brand:samsung",
                     ),
                   ),
                 ),
@@ -9339,6 +9380,9 @@ paths:
                                 'anchoring' => 'contains',
                             ],
                         ],
+                        'consequence' => ['params' => ['filters' => 'brand:apple',
+                        ],
+                        ],
                     ],
 
                     ['objectID' => 'a-second-rule-id',
@@ -9346,6 +9390,9 @@ paths:
                             ['pattern' => 'apple',
                                 'anchoring' => 'contains',
                             ],
+                        ],
+                        'consequence' => ['params' => ['filters' => 'brand:samsung',
+                        ],
                         ],
                     ],
                 ],
@@ -9384,6 +9431,11 @@ paths:
                                 "anchoring": "contains",
                             },
                         ],
+                        "consequence": {
+                            "params": {
+                                "filters": "brand:apple",
+                            },
+                        },
                     },
                     {
                         "objectID": "a-second-rule-id",
@@ -9393,6 +9445,11 @@ paths:
                                 "anchoring": "contains",
                             },
                         ],
+                        "consequence": {
+                            "params": {
+                                "filters": "brand:samsung",
+                            },
+                        },
                     },
                 ],
                 forward_to_replicas=False,
@@ -9421,11 +9478,17 @@ paths:
               [
                 Algolia::Search::Rule.new(
                   object_id: "a-rule-id",
-                  conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")]
+                  conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
+                  consequence: Algolia::Search::Consequence.new(
+                    params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
+                  )
                 ),
                 Algolia::Search::Rule.new(
                   object_id: "a-second-rule-id",
-                  conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+                  conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+                  consequence: Algolia::Search::Consequence.new(
+                    params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
+                  )
                 )
               ],
               false,
@@ -9466,6 +9529,13 @@ paths:
                         anchoring = Some(Anchoring.withName("contains"))
                       )
                     )
+                  ),
+                  consequence = Consequence(
+                    params = Some(
+                      ConsequenceParams(
+                        filters = Some("brand:apple")
+                      )
+                    )
                   )
                 ),
                 Rule(
@@ -9475,6 +9545,13 @@ paths:
                       Condition(
                         pattern = Some("apple"),
                         anchoring = Some(Anchoring.withName("contains"))
+                      )
+                    )
+                  ),
+                  consequence = Consequence(
+                    params = Some(
+                      ConsequenceParams(
+                        filters = Some("brand:samsung")
                       )
                     )
                   )
@@ -9506,11 +9583,13 @@ paths:
                 rules: [
                     Rule(
                         objectID: "a-rule-id",
-                        conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)]
+                        conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
+                        consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
                     ),
                     Rule(
                         objectID: "a-second-rule-id",
-                        conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                        conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                        consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:samsung"))
                     ),
                 ],
                 forwardToReplicas: false,
@@ -15341,7 +15420,6 @@ paths:
                         - ip
                         - query_headers
                         - sha1
-                        - nb_api_calls
                         - processing_time_ms
         '400':
           $ref: '#/components/responses/BadRequest'
@@ -20468,20 +20546,7 @@ components:
             $ref: '#/components/schemas/timeRange'
       required:
         - objectID
-    updatedRuleResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        objectID:
-          $ref: '#/components/schemas/ruleID'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        taskID:
-          $ref: '#/components/schemas/taskID'
-      required:
-        - objectID
-        - updatedAt
-        - taskID
+        - consequence
     parameters_query:
       type: string
       description: Search query for rules.

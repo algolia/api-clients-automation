@@ -1111,6 +1111,7 @@ paths:
         - $ref: '#/components/parameters/action'
         - $ref: '#/components/parameters/enabled'
         - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/sourceType'
         - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
         - $ref: '#/components/parameters/taskParameters_sort'
@@ -1289,6 +1290,14 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+        - name: watch
+          in: query
+          description: >-
+            When provided, the push operation will be synchronous and the API
+            will wait for the ingestion to be finished before responding.
+          required: false
+          schema:
+            type: boolean
       requestBody:
         description: >-
           Request body of a Search API `batch` request that will be pushed in
@@ -1433,7 +1442,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Try a transformation
+      summary: Try a transformation before creating it
       description: Try a transformation before creating it.
       operationId: tryTransformation
       x-acl:
@@ -1550,7 +1559,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Try a transformation
+      summary: Try a transformation before updating it
       description: Try a transformation before updating it.
       operationId: tryTransformationBeforeUpdate
       x-acl:
@@ -1989,6 +1998,18 @@ components:
       description: Unique identifier of a task.
       schema:
         $ref: '#/components/schemas/taskID'
+    sourceType:
+      name: sourceType
+      in: query
+      description: Filters the tasks with the specified source type.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/SourceType'
+        example: json,commercetools
     transformationParameters_sort:
       name: sort
       in: query
@@ -2697,7 +2718,6 @@ components:
         - ga4BigqueryExport
         - json
         - shopify
-        - sfcc
         - push
     sourceSortKeys:
       type: string
@@ -4165,3 +4185,12 @@ x-tagGroups:
       - sources
       - tasks
       - transformations
+x-timeouts:
+  browser:
+    connect: 25000
+    read: 25000
+    write: 25000
+  server:
+    connect: 25000
+    read: 25000
+    write: 25000

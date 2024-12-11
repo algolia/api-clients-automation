@@ -11,6 +11,7 @@ import com.algolia.internal.interceptors.UserAgentInterceptor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.Closeable;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -30,7 +31,16 @@ public abstract class ApiClient implements Closeable {
   private AuthInterceptor authInterceptor;
 
   /** Constructs a new instance of the {@link ApiClient}. */
-  protected ApiClient(String appId, String apiKey, String clientName, @Nullable ClientOptions options, List<Host> defaultHosts) {
+  protected ApiClient(
+    String appId,
+    String apiKey,
+    String clientName,
+    @Nullable ClientOptions options,
+    List<Host> defaultHosts,
+    Duration connectTimeout,
+    Duration readTimeout,
+    Duration writeTimeout
+  ) {
     if (appId == null || appId.isEmpty()) {
       throw new AlgoliaRuntimeException("`appId` is missing.");
     }
@@ -41,11 +51,20 @@ public abstract class ApiClient implements Closeable {
     this.executor = clientOptions.getExecutor();
     this.requester = clientOptions.getCustomRequester() != null
       ? clientOptions.getCustomRequester()
-      : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts);
+      : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts, connectTimeout, readTimeout, writeTimeout);
   }
 
   /** Creates a default {@link Requester} for executing API requests. */
-  private Requester defaultRequester(String appId, String apiKey, String clientName, ClientOptions options, List<Host> defaultHosts) {
+  private Requester defaultRequester(
+    String appId,
+    String apiKey,
+    String clientName,
+    ClientOptions options,
+    List<Host> defaultHosts,
+    Duration connectTimeout,
+    Duration readTimeout,
+    Duration writeTimeout
+  ) {
     AlgoliaAgent algoliaAgent = new AlgoliaAgent(BuildConfig.VERSION)
       .addSegment(new AlgoliaAgent.Segment(clientName, BuildConfig.VERSION))
       .addSegments(options.getAlgoliaAgentSegments());
@@ -58,7 +77,10 @@ public abstract class ApiClient implements Closeable {
     HttpRequester.Builder builder = new HttpRequester.Builder(serializer)
       .addInterceptor(authInterceptor)
       .addInterceptor(new UserAgentInterceptor(algoliaAgent))
-      .addInterceptor(new RetryStrategy(statefulHosts));
+      .addInterceptor(new RetryStrategy(statefulHosts))
+      .setConnectTimeout(connectTimeout)
+      .setReadTimeout(readTimeout)
+      .setWriteTimeout(writeTimeout);
     if (options.getRequesterConfig() != null) {
       options.getRequesterConfig().accept(builder);
     }

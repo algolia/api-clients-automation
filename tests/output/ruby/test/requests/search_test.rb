@@ -1270,7 +1270,10 @@ class TestSearchClient < Test::Unit::TestCase
       "id1",
       Algolia::Search::Rule.new(
         object_id: "id1",
-        conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+        conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(filters: "brand:xiaomi")
+        )
       )
     )
 
@@ -1279,7 +1282,9 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse("{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}"),
+      JSON.parse(
+        "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:xiaomi\"}}}"
+      ),
       JSON.parse(req.body)
     )
   end
@@ -1344,11 +1349,17 @@ class TestSearchClient < Test::Unit::TestCase
       [
         Algolia::Search::Rule.new(
           object_id: "a-rule-id",
-          conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")]
+          conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
+          consequence: Algolia::Search::Consequence.new(
+            params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
+          )
         ),
         Algolia::Search::Rule.new(
           object_id: "a-second-rule-id",
-          conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")]
+          conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+          consequence: Algolia::Search::Consequence.new(
+            params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
+          )
         )
       ],
       false,
@@ -1361,7 +1372,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]"
+        "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:samsung\"}}}]"
       ),
       JSON.parse(req.body)
     )

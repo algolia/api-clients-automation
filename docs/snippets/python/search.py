@@ -1854,6 +1854,11 @@ def snippet_for_save_rule():
                     "anchoring": "contains",
                 },
             ],
+            "consequence": {
+                "params": {
+                    "filters": "brand:xiaomi",
+                },
+            },
         },
     )
 
@@ -1886,6 +1891,11 @@ def snippet_for_save_rules():
                         "anchoring": "contains",
                     },
                 ],
+                "consequence": {
+                    "params": {
+                        "filters": "brand:apple",
+                    },
+                },
             },
             {
                 "objectID": "a-second-rule-id",
@@ -1895,6 +1905,11 @@ def snippet_for_save_rules():
                         "anchoring": "contains",
                     },
                 ],
+                "consequence": {
+                    "params": {
+                        "filters": "brand:samsung",
+                    },
+                },
             },
         ],
         forward_to_replicas=False,

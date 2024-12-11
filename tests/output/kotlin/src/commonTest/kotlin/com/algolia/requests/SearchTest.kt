@@ -1925,13 +1925,18 @@ class SearchTest {
                 anchoring = Anchoring.entries.first { it.value == "contains" },
               ),
             ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                filters = "brand:xiaomi",
+              ),
+            ),
           ),
         )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/id1".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}]}""", it.body)
+        assertJsonBody("""{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}""", it.body)
       },
     )
   }
@@ -2030,6 +2035,11 @@ class SearchTest {
                   anchoring = Anchoring.entries.first { it.value == "contains" },
                 ),
               ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  filters = "brand:apple",
+                ),
+              ),
             ),
             Rule(
               objectID = "a-second-rule-id",
@@ -2037,6 +2047,11 @@ class SearchTest {
                 Condition(
                   pattern = "apple",
                   anchoring = Anchoring.entries.first { it.value == "contains" },
+                ),
+              ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  filters = "brand:samsung",
                 ),
               ),
             ),
@@ -2049,7 +2064,7 @@ class SearchTest {
         assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"forwardToReplicas":"false","clearExistingRules":"true"}""", it.url.encodedParameters)
-        assertJsonBody("""[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]""", it.body)
+        assertJsonBody("""[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:apple"}}},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:samsung"}}}]""", it.body)
       },
     )
   }

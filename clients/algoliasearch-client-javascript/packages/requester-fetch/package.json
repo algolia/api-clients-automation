@@ -1,11 +1,12 @@
 {
   "name": "@algolia/requester-fetch",
-  "version": "5.15.0",
+  "version": "5.17.0",
   "description": "Promise-based request library using Fetch.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript#readme",
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
@@ -43,21 +44,21 @@
   "scripts": {
     "build": "yarn clean && yarn tsup",
     "clean": "rm -rf ./dist || true",
-    "test": "vitest --run",
+    "test": "tsc --noEmit && vitest --run",
     "test:bundle": "publint . && attw --pack ."
   },
   "dependencies": {
-    "@algolia/client-common": "5.15.0"
+    "@algolia/client-common": "5.17.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.17.0",
-    "@types/node": "22.9.0",
+    "@arethetypeswrong/cli": "0.17.1",
+    "@types/node": "22.10.1",
     "cross-fetch": "4.0.0",
     "nock": "13.5.6",
     "publint": "0.2.12",
     "tsup": "8.3.5",
-    "typescript": "5.6.3",
-    "vitest": "2.1.5"
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
   },
   "engines": {
     "node": ">= 14.0.0"

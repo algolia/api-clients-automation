@@ -68,20 +68,24 @@ import algoliasearch.search.SynonymHit
 import algoliasearch.search.UpdateApiKeyResponse
 import algoliasearch.search.UpdatedAtResponse
 import algoliasearch.search.UpdatedAtWithObjectIdResponse
-import algoliasearch.search.UpdatedRuleResponse
 import algoliasearch.search.UserId
 import algoliasearch.search._
 import algoliasearch.ApiClient
 import algoliasearch.api.SearchClient.hosts
+import algoliasearch.api.SearchClient.readTimeout
+import algoliasearch.api.SearchClient.writeTimeout
+import algoliasearch.api.SearchClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object SearchClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new SearchClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -100,6 +104,18 @@ object SearchClient {
     apiKey = apiKey,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(5, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(2, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(30, TimeUnit.SECONDS)
+  }
 
   private def hosts(appId: String): Seq[Host] = {
     val commonHosts = Random.shuffle(
@@ -125,6 +141,9 @@ class SearchClient(
       apiKey = apiKey,
       clientName = "Search",
       defaultHosts = hosts(appId),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {
@@ -149,9 +168,10 @@ class SearchClient(
   }
 
   /** If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added
-    * to the index. To update _some_ attributes of an existing record, use the [`partial`
-    * operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use
-    * the [`batch` operation](#tag/Records/operation/batch).
+    * to the index. If you want to use auto-generated object IDs, use the [`saveObject`
+    * operation](#tag/Records/operation/saveObject). To update _some_ attributes of an existing record, use the
+    * [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple
+    * records, use the [`batch` operation](#tag/Records/operation/batch).
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1312,7 +1332,7 @@ class SearchClient(
     execute[AddApiKeyResponse](request, requestOptions)
   }
 
-  /** Adds a record to an index or replace it. - If the record doesn't have an object ID, a new record with an
+  /** Adds a record to an index or replaces it. - If the record doesn't have an object ID, a new record with an
     * auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing
     * record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index.
     * \- If you add a record to an index that doesn't exist yet, a new index is created. To update _some_ attributes of
@@ -1363,7 +1383,7 @@ class SearchClient(
       rule: Rule,
       forwardToReplicas: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[UpdatedRuleResponse] = Future {
+  )(implicit ec: ExecutionContext): Future[UpdatedAtResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `saveRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `saveRule`.")
     requireNotNull(rule, "Parameter `rule` is required when calling `saveRule`.")
@@ -1375,7 +1395,7 @@ class SearchClient(
       .withBody(rule)
       .withQueryParameter("forwardToReplicas", forwardToReplicas)
       .build()
-    execute[UpdatedRuleResponse](request, requestOptions)
+    execute[UpdatedAtResponse](request, requestOptions)
   }
 
   /** Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia creates a new one.

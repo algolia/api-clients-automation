@@ -10,6 +10,7 @@ import com.algolia.exceptions.*;
 import com.algolia.model.ingestion.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -26,7 +27,16 @@ public class IngestionClient extends ApiClient {
   }
 
   public IngestionClient(String appId, String apiKey, String region, ClientOptions options) {
-    super(appId, apiKey, "Ingestion", options, getDefaultHosts(region));
+    super(
+      appId,
+      apiKey,
+      "Ingestion",
+      options,
+      getDefaultHosts(region),
+      Duration.ofMillis(25000L),
+      Duration.ofMillis(25000L),
+      Duration.ofMillis(25000L)
+    );
   }
 
   private static List<Host> getDefaultHosts(String region) throws AlgoliaRuntimeException {
@@ -2508,6 +2518,7 @@ public class IngestionClient extends ApiClient {
    * @param action Actions for filtering the list of tasks. (optional)
    * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
    * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
@@ -2522,6 +2533,7 @@ public class IngestionClient extends ApiClient {
     List<ActionType> action,
     Boolean enabled,
     List<String> sourceID,
+    List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
     TaskSortKeys sort,
@@ -2529,7 +2541,7 @@ public class IngestionClient extends ApiClient {
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
-      listTasksAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, requestOptions)
+      listTasksAsync(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, sort, order, requestOptions)
     );
   }
 
@@ -2541,6 +2553,7 @@ public class IngestionClient extends ApiClient {
    * @param action Actions for filtering the list of tasks. (optional)
    * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
    * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
@@ -2553,12 +2566,13 @@ public class IngestionClient extends ApiClient {
     List<ActionType> action,
     Boolean enabled,
     List<String> sourceID,
+    List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
     TaskSortKeys sort,
     OrderKeys order
   ) throws AlgoliaRuntimeException {
-    return this.listTasks(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+    return this.listTasks(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, sort, order, null);
   }
 
   /**
@@ -2569,7 +2583,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponse listTasks(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listTasks(null, null, null, null, null, null, null, null, null, requestOptions);
+    return this.listTasks(null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2578,7 +2592,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponse listTasks() throws AlgoliaRuntimeException {
-    return this.listTasks(null, null, null, null, null, null, null, null, null, null);
+    return this.listTasks(null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2589,6 +2603,7 @@ public class IngestionClient extends ApiClient {
    * @param action Actions for filtering the list of tasks. (optional)
    * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
    * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
@@ -2603,6 +2618,7 @@ public class IngestionClient extends ApiClient {
     List<ActionType> action,
     Boolean enabled,
     List<String> sourceID,
+    List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
     TaskSortKeys sort,
@@ -2617,6 +2633,7 @@ public class IngestionClient extends ApiClient {
       .addQueryParameter("action", action)
       .addQueryParameter("enabled", enabled)
       .addQueryParameter("sourceID", sourceID)
+      .addQueryParameter("sourceType", sourceType)
       .addQueryParameter("destinationID", destinationID)
       .addQueryParameter("triggerType", triggerType)
       .addQueryParameter("sort", sort)
@@ -2633,6 +2650,7 @@ public class IngestionClient extends ApiClient {
    * @param action Actions for filtering the list of tasks. (optional)
    * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
    * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
@@ -2645,12 +2663,13 @@ public class IngestionClient extends ApiClient {
     List<ActionType> action,
     Boolean enabled,
     List<String> sourceID,
+    List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
     TaskSortKeys sort,
     OrderKeys order
   ) throws AlgoliaRuntimeException {
-    return this.listTasksAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+    return this.listTasksAsync(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, sort, order, null);
   }
 
   /**
@@ -2661,7 +2680,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponse> listTasksAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, requestOptions);
+    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2670,7 +2689,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponse> listTasksAsync() throws AlgoliaRuntimeException {
-    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null);
+    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2984,13 +3003,51 @@ public class IngestionClient extends ApiClient {
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
    *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse pushTask(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushTaskAsync(taskID, pushTaskPayload, watch, requestOptions));
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushTask(taskID, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(pushTaskAsync(taskID, pushTaskPayload, requestOptions));
+    return this.pushTask(taskID, pushTaskPayload, null, requestOptions);
   }
 
   /**
@@ -3003,7 +3060,55 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
-    return this.pushTask(taskID, pushTaskPayload, null);
+    return this.pushTask(taskID, pushTaskPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> pushTaskAsync(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks/{taskID}/push", taskID)
+      .setMethod("POST")
+      .setBody(pushTaskPayload)
+      .addQueryParameter("watch", watch)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushTaskAsync(taskID, pushTaskPayload, watch, null);
   }
 
   /**
@@ -3022,16 +3127,7 @@ public class IngestionClient extends ApiClient {
     @Nonnull PushTaskPayload pushTaskPayload,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
-
-    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
-
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/2/tasks/{taskID}/push", taskID)
-      .setMethod("POST")
-      .setBody(pushTaskPayload)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+    return this.pushTaskAsync(taskID, pushTaskPayload, null, requestOptions);
   }
 
   /**
@@ -3045,7 +3141,7 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)
     throws AlgoliaRuntimeException {
-    return this.pushTaskAsync(taskID, pushTaskPayload, null);
+    return this.pushTaskAsync(taskID, pushTaskPayload, null, null);
   }
 
   /**

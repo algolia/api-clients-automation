@@ -203,6 +203,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override

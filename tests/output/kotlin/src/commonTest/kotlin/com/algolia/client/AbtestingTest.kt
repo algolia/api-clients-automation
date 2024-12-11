@@ -42,41 +42,9 @@ class AbtestingTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.10.1\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.12.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
-      },
-    )
-  }
-
-  @Test
-  fun `calls api with default read timeouts`() = runTest {
-    val client = AbtestingClient(appId = "appId", apiKey = "apiKey", region = "us")
-    client.runTest(
-      call = {
-        customGet(
-          path = "1/test",
-        )
-      },
-      intercept = {
-        assertEquals(2000, it.connectTimeout)
-        assertEquals(5000, it.socketTimeout)
-      },
-    )
-  }
-
-  @Test
-  fun `calls api with default write timeouts`() = runTest {
-    val client = AbtestingClient(appId = "appId", apiKey = "apiKey", region = "us")
-    client.runTest(
-      call = {
-        customPost(
-          path = "1/test",
-        )
-      },
-      intercept = {
-        assertEquals(2000, it.connectTimeout)
-        assertEquals(30000, it.socketTimeout)
       },
     )
   }

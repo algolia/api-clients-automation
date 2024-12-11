@@ -2564,7 +2564,8 @@ final class SearchClientRequestsTests: XCTestCase {
             objectID: "id1",
             rule: Rule(
                 objectID: "id1",
-                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:xiaomi"))
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -2574,7 +2575,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}"
+            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:xiaomi\"}}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2674,11 +2675,13 @@ final class SearchClientRequestsTests: XCTestCase {
             rules: [
                 Rule(
                     objectID: "a-rule-id",
-                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)]
+                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
                 ),
                 Rule(
                     objectID: "a-second-rule-id",
-                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:samsung"))
                 ),
             ],
             forwardToReplicas: false,
@@ -2691,7 +2694,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]"
+            "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:samsung\"}}}]"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

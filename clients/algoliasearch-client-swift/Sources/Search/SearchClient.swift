@@ -103,9 +103,10 @@ open class SearchClient {
     }
 
     // If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is
-    // added to the index.  To update _some_ attributes of an existing record, use the [`partial`
-    // operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use
-    // the [`batch` operation](#tag/Records/operation/batch).
+    // added to the index.  If you want to use auto-generated object IDs, use the [`saveObject`
+    // operation](#tag/Records/operation/saveObject). To update _some_ attributes of an existing record, use the
+    // [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple
+    // records, use the [`batch` operation](#tag/Records/operation/batch).
     // Required API Key ACLs:
     //  - addObject
     //
@@ -2942,7 +2943,7 @@ open class SearchClient {
         return body
     }
 
-    // Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an
+    // Adds a record to an index or replaces it.  - If the record doesn't have an object ID, a new record with an
     // auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing
     // record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your
     // index.
@@ -2997,7 +2998,7 @@ open class SearchClient {
     /// - parameter objectID: (path) Unique identifier of a rule object.
     /// - parameter rule: (body)
     /// - parameter forwardToReplicas: (query) Whether changes are applied to replica indices. (optional)
-    /// - returns: UpdatedRuleResponse
+    /// - returns: UpdatedAtResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func saveRule(
         indexName: String,
@@ -3005,8 +3006,8 @@ open class SearchClient {
         rule: Rule,
         forwardToReplicas: Bool? = nil,
         requestOptions: RequestOptions? = nil
-    ) async throws -> UpdatedRuleResponse {
-        let response: Response<UpdatedRuleResponse> = try await saveRuleWithHTTPInfo(
+    ) async throws -> UpdatedAtResponse {
+        let response: Response<UpdatedAtResponse> = try await saveRuleWithHTTPInfo(
             indexName: indexName,
             objectID: objectID,
             rule: rule,
@@ -3033,7 +3034,7 @@ open class SearchClient {
     // - parameter rule: (body)
     //
     // - parameter forwardToReplicas: (query) Whether changes are applied to replica indices. (optional)
-    // - returns: RequestBuilder<UpdatedRuleResponse>
+    // - returns: RequestBuilder<UpdatedAtResponse>
 
     open func saveRuleWithHTTPInfo(
         indexName: String,
@@ -3041,7 +3042,7 @@ open class SearchClient {
         rule: Rule,
         forwardToReplicas: Bool? = nil,
         requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<UpdatedRuleResponse> {
+    ) async throws -> Response<UpdatedAtResponse> {
         guard !indexName.isEmpty else {
             throw AlgoliaError.invalidArgument("indexName", "saveRule")
         }
