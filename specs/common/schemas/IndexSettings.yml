@@ -866,7 +866,7 @@ exactOnSingleWordQuery:
 
 alternativesAsExact:
   type: string
-  enum: [ignorePlurals, singleWordSynonym, multiWordsSynonym]
+  enum: [ignorePlurals, singleWordSynonym, multiWordsSynonym, ignoreConjugations]
   x-categories:
     - Query strategy
 
