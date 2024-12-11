@@ -73,12 +73,12 @@ async function buildSpec({
 
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isLiteSpec ? 'search' : spec;
-  const deps = isLiteSpec ? ['search', 'recommend'] : [spec];
   const logSuffix = docs ? 'doc spec' : 'spec';
   const basePath = docs ? 'docs/' : 'specs/';
+  const deps = isLiteSpec ? ['search', 'recommend'] : [spec];
   const cache = new Cache({
     folder: toAbsolutePath(basePath),
-    generatedFiles: [`${spec}.yml`],
+    generatedFiles: [`bundled/${spec}.yml`],
     filesToCache: [...deps, 'common'],
     cacheFile: toAbsolutePath(`${basePath}/dist/${spec}.cache`),
   });
