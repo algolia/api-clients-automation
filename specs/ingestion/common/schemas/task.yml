@@ -553,3 +553,6 @@ ShopifyMarket:
     - countries
     - currencies
     - locales
+
+PushTaskResponse:
+  $ref: './source.yml#/SourceWatchResponse'
