@@ -40,7 +40,7 @@ jobs:
   publish_clients:
     needs: 
       - check
-      - publish_core
+      - wait_for_core
     strategy:
       matrix:
         package:
