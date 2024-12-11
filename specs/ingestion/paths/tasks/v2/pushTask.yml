@@ -47,6 +47,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/source.yml#/SourceWatchResponse'
+            $ref: '../../../common/schemas/task.yml#/PushTaskResponse'
     '400':
       $ref: '../../../../common/responses/BadRequest.yml'
