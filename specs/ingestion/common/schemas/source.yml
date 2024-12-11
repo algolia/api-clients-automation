@@ -476,28 +476,6 @@ sourceShopifyBase:
   x-discriminator-fields:
     - shopURL
 
-SourceWatchResponse:
-  type: object
-  additionalProperties: false
-  properties:
-    runID:
-      $ref: './common.yml#/runID'
-    data:
-      type: array
-      description: depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
-      items:
-        type: object
-    events:
-      description: in case of error, observability events will be added to the response, if any.
-      type: array
-      items:
-        $ref: '../../common/schemas/event.yml#/Event'
-    message:
-      description: a message describing the outcome of a validate run.
-      type: string
-  required:
-    - message
-
 RunSourcePayload:
   type: object
   additionalProperties: false

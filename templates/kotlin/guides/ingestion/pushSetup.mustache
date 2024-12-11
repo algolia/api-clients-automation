@@ -18,10 +18,10 @@ suspend fun main() {
     {{> snippets/init}}
 
     try {
-        val run = client.{{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+        // setting `watch` to `true` will make the call synchronous
+        val resp = client.{{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
-        // use runID in the Observability debugger
-        println(run)
+        println(resp)
     } catch(e: Exception) {
         println(e.message)
     }
