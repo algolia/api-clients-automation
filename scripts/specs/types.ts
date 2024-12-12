@@ -6,10 +6,10 @@ export type BaseBuildSpecsOptions = {
   useCache: boolean;
 };
 
-export type SnippetForMethod = Record<string, string>;
-export type SnippetSamples = Record<Language, Record<string, SnippetForMethod>>;
+export type SampleForOperation = Record<string, string>;
+export type CodeSamples = Record<Language, Record<string, SampleForOperation>>;
 
-export type CodeSamples = {
+export type OpenAPICodeSample = {
   lang:
     | 'c'
     | 'c++'
