@@ -4469,6 +4469,7 @@ components:
         - ignorePlurals
         - singleWordSynonym
         - multiWordsSynonym
+        - ignoreConjugations
       x-categories:
         - Query strategy
     properties-alternativesAsExact:

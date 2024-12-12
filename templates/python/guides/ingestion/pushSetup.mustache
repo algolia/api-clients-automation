@@ -10,9 +10,9 @@ async def main():
     with open("records.json") as f:
         records = json.load(f)
 
-        run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+        # setting `watch` to `true` will make the call synchronous
+        resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
-        # use runID in the Observability debugger
-        print(run.run_id)
+        print(resp)
 
 asyncio.run(main())
