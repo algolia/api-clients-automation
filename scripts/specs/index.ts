@@ -77,10 +77,10 @@ async function buildSpec({
   const basePath = docs ? 'docs/' : 'specs/';
   const deps = isLiteSpec ? ['search', 'recommend'] : [spec];
   const cache = new Cache({
-    folder: toAbsolutePath(basePath),
+    folder: toAbsolutePath('specs/'),
     generatedFiles: [`bundled/${spec}.yml`],
-    filesToCache: [...deps, 'common'],
-    cacheFile: toAbsolutePath(`${basePath}/dist/${spec}.cache`),
+    filesToCache: deps,
+    cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
   });
 
   const spinner = createSpinner(`starting '${spec}' ${logSuffix}`);
