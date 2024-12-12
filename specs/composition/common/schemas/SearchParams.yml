@@ -657,8 +657,8 @@ mainInjectionQueryParameters:
       x-categories:
         - Filtering
 
-InsetsQueryParameters:
-  title: Composition Insets Query parameters as object
+injectedItemsQueryParameters:
+  title: Composition injectedItems Query parameters as object
   type: object
   additionalProperties: false
   properties:
