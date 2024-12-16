@@ -25,7 +25,6 @@ jobs:
 
       - name: Close PR
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           gh pr close "${PR_NUMBER}" -d -c "Thanks for contributing to our API clients! Sorry to close your PR, but this repository is fully generated, you can port your changes to [the API Clients Automation repository](https://github.com/algolia/api-clients-automation). If you need some guidance, feel free to [open an issue](https://github.com/algolia/api-clients-automation/issues) or [read our contribution guide](https://api-clients-automation.netlify.app/docs/introduction)."
