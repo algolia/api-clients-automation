@@ -17,6 +17,7 @@ async function testComposition() {
           action: 'upsert',
           body: {
             objectID: 'id1',
+            name: 'my first composition',
             description: 'the first ever composition from the client',
             behavior: {
               injection: {
