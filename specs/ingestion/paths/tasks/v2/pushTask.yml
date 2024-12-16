@@ -8,6 +8,10 @@ post:
     - addObject
     - deleteIndex
     - editSettings
+  x-timeouts:
+    connect: 300000
+    read: 300000
+    write: 300000
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
     - name: watch
