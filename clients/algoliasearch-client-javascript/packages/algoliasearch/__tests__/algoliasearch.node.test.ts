@@ -18,8 +18,8 @@ test('forwards node search helpers', () => {
   const client = algoliasearch('APP_ID', 'API_KEY');
   expect(client.generateSecuredApiKey).not.toBeUndefined();
   expect(client.getSecuredApiKeyRemainingValidity).not.toBeUndefined();
-  expect(async () => {
-    const resp = await client.generateSecuredApiKey({ parentApiKey: 'foo', restrictions: { validUntil: 200 } });
+  expect(() => {
+    const resp = client.generateSecuredApiKey({ parentApiKey: 'foo', restrictions: { validUntil: 200 } });
     client.getSecuredApiKeyRemainingValidity({ securedApiKey: resp });
   }).not.toThrow();
 });

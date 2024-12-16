@@ -32,5 +32,5 @@ generateSecuredApiKey: async ({
     );
 
   const queryParameters = serializeQueryParameters(mergedRestrictions);
-  return generateBase64Hmac(parentApiKey, queryParameters);
+  return await generateBase64Hmac(parentApiKey, queryParameters);
 },
