@@ -8,13 +8,6 @@ on:
       - reopen
     branches:
       - 'main'
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopen
-    branches:
-      - 'main'
 
 jobs:
   auto_close_pr:
