@@ -6,10 +6,10 @@
  * @param generateSecuredApiKey.parentApiKey - The base API key from which to generate the new secured one.
  * @param generateSecuredApiKey.restrictions - A set of properties defining the restrictions of the secured API key.
  */
-generateSecuredApiKey: ({
+generateSecuredApiKey: async ({
   parentApiKey,
   restrictions = {},
-}: GenerateSecuredApiKeyOptions): string => {
+}: GenerateSecuredApiKeyOptions): Promise<string> => {
   let mergedRestrictions = restrictions;
   if (restrictions.searchParams) {
     // merge searchParams with the root restrictions
@@ -32,5 +32,5 @@ generateSecuredApiKey: ({
     );
 
   const queryParameters = serializeQueryParameters(mergedRestrictions);
-  return Buffer.from(createHmac('sha256', parentApiKey).update(queryParameters).digest('hex') + queryParameters,).toString('base64');
+  return generateBase64Hmac(parentApiKey, queryParameters);
 },
