@@ -142,7 +142,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.15.0';
+export const apiClientVersion = '5.17.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -550,14 +550,18 @@ export function createSearchClient({
      * @param saveObjects - The `saveObjects` object.
      * @param saveObjects.indexName - The `indexName` to save `objects` in.
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
+     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async saveObjects(
-      { indexName, objects, waitForTasks }: SaveObjectsOptions,
+      { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
-      return await this.chunkedBatch({ indexName, objects, action: 'addObject', waitForTasks }, requestOptions);
+      return await this.chunkedBatch(
+        { indexName, objects, action: 'addObject', waitForTasks, batchSize },
+        requestOptions,
+      );
     },
 
     /**
@@ -567,11 +571,12 @@ export function createSearchClient({
      * @param deleteObjects - The `deleteObjects` object.
      * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
      * @param deleteObjects.objectIDs - The objectIDs to delete.
+     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async deleteObjects(
-      { indexName, objectIDs, waitForTasks }: DeleteObjectsOptions,
+      { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -580,6 +585,7 @@ export function createSearchClient({
           objects: objectIDs.map((objectID) => ({ objectID })),
           action: 'deleteObject',
           waitForTasks,
+          batchSize,
         },
         requestOptions,
       );
@@ -593,11 +599,12 @@ export function createSearchClient({
      * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
      * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
+     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async partialUpdateObjects(
-      { indexName, objects, createIfNotExists, waitForTasks }: PartialUpdateObjectsOptions,
+      { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -605,6 +612,7 @@ export function createSearchClient({
           indexName,
           objects,
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
+          batchSize,
           waitForTasks,
         },
         requestOptions,
@@ -759,7 +767,7 @@ export function createSearchClient({
     },
 
     /**
-     * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+     * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  If you want to use auto-generated object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2281,7 +2289,7 @@ export function createSearchClient({
     },
 
     /**
-     * Adds a record to an index or replace it.  - If the record doesn\'t have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn\'t exist, a new record is added to your index. - If you add a record to an index that doesn\'t exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+     * Adds a record to an index or replaces it.  - If the record doesn\'t have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn\'t exist, a new record is added to your index. - If you add a record to an index that doesn\'t exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
      *
      * Required API Key ACLs:
      *  - addObject

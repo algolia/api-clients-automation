@@ -8,16 +8,16 @@ const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIn
 
 try {
   // read local JSON file containing array of records
-  const records = JSON.parse(fs.readFileSync('/my-raw-records.json', 'utf8')) as PushTaskRecords[];
+  const records = JSON.parse(fs.readFileSync('records.json', 'utf8')) as PushTaskRecords[];
 
-  // push records to the API
-  const run = await client.pushTask({
+  // setting `watch` to `true` will make the call synchronous
+  const resp = await client.pushTask({
     taskID: 'YOUR_TASK_ID',
     pushTaskPayload: { action: 'addObject', records: records },
+    watch: true,
   });
 
-  // use runID in the Observability debugger
-  console.log(run.runID);
+  console.log(resp);
 } catch (err) {
   console.error(err);
 }

@@ -1,5 +1,3 @@
-const remarkSmartypants = require('remark-smartypants');
-
 /** @type {import('@docusaurus/types').Config} */
 (
   module.exports = {
@@ -24,7 +22,6 @@ const remarkSmartypants = require('remark-smartypants');
             editUrl: 'https://github.com/algolia/api-clients-automation/edit/main/website/',
             showLastUpdateAuthor: true,
             showLastUpdateTime: true,
-            remarkPlugins: [[remarkSmartypants, { dashes: 'oldschool' }]],
           },
           blog: false,
           theme: {

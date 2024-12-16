@@ -53,6 +53,42 @@ class IngestionTest extends TestCase implements HttpClientInterface
         }
     }
 
+    #[TestDox('calls api with default read timeouts')]
+    public function test1api(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->customGet(
+            '1/test',
+        );
+        $this->assertEquals(
+            25000,
+            $this->recordedRequest['connectTimeout']
+        );
+
+        $this->assertEquals(
+            25000,
+            $this->recordedRequest['responseTimeout']
+        );
+    }
+
+    #[TestDox('calls api with default write timeouts')]
+    public function test2api(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->customPost(
+            '1/test',
+        );
+        $this->assertEquals(
+            25000,
+            $this->recordedRequest['connectTimeout']
+        );
+
+        $this->assertEquals(
+            25000,
+            $this->recordedRequest['responseTimeout']
+        );
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
@@ -77,45 +113,9 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.9.2\).*/',
+                '/^Algolia for PHP \(4.11.1\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
-        );
-    }
-
-    #[TestDox('calls api with default read timeouts')]
-    public function test2commonApi(): void
-    {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customGet(
-            '1/test',
-        );
-        $this->assertEquals(
-            2000,
-            $this->recordedRequest['connectTimeout']
-        );
-
-        $this->assertEquals(
-            5000,
-            $this->recordedRequest['responseTimeout']
-        );
-    }
-
-    #[TestDox('calls api with default write timeouts')]
-    public function test3commonApi(): void
-    {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertEquals(
-            2000,
-            $this->recordedRequest['connectTimeout']
-        );
-
-        $this->assertEquals(
-            30000,
-            $this->recordedRequest['responseTimeout']
         );
     }
 

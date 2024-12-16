@@ -8,13 +8,12 @@ import type { PushTaskRecords } from 'algoliasearch';
 
 try {
   // read local JSON file containing array of records
-  const records = JSON.parse(fs.readFileSync('/my-raw-records.json', 'utf8')) as PushTaskRecords[];
+  const records = JSON.parse(fs.readFileSync('records.json', 'utf8')) as PushTaskRecords[];
 
-  // push records to the API
-  const run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+  // setting `watch` to `true` will make the call synchronous
+  const resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
-  // use runID in the Observability debugger
-  console.log(run.runID);
+  console.log(resp);
 } catch (err) {
   console.error(err);
 }

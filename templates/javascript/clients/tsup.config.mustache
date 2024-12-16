@@ -34,6 +34,14 @@ const nodeConfigs: Options[] = [
     external: getDependencies(pkg, 'fetch'),
     entry: ['builds/fetch.ts', 'src/*.ts'],
   },
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: `worker ${pkg.name} esm`,
+    dts: { entry: { 'worker': 'builds/worker.ts' } },
+    external: getDependencies(pkg, 'worker'),
+    entry: ['builds/worker.ts', 'src/*.ts'],
+  },
   {{/isAlgoliasearchClient}}
   {{#isAlgoliasearchClient}}
   {
@@ -60,6 +68,15 @@ const nodeConfigs: Options[] = [
     entry: ['builds/fetch.ts'],
     outDir: 'dist',
     external: getDependencies(pkg, 'fetch'),
+  },
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: 'worker algoliasearch esm',
+    dts: { entry: { 'worker': 'builds/worker.ts' } },
+    entry: ['builds/worker.ts'],
+    outDir: 'dist',
+    external: getDependencies(pkg, 'worker'),
   },
   {{/isAlgoliasearchClient}}
 ];

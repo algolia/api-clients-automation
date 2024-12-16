@@ -1272,6 +1272,38 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('allows for watch query parameter')]
+    public function testPushTask1(): void
+    {
+        $client = $this->getClient();
+        $client->pushTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+            true,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push',
+                'method' => 'POST',
+                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
+                'queryParameters' => json_decode('{"watch":"true"}', true),
+            ],
+        ]);
+    }
+
     #[TestDox('runSource')]
     public function testRunSource(): void
     {

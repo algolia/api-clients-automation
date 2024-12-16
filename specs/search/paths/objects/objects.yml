@@ -5,7 +5,7 @@ post:
   x-acl:
     - addObject
   description: |
-    Adds a record to an index or replace it.
+    Adds a record to an index or replaces it.
 
     - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index.
     - If a record with the specified object ID exists, the existing record is replaced.
@@ -16,7 +16,7 @@ post:
     To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
 
     This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
-  summary: Add or replace a record
+  summary: Add a new record (with auto-generated object ID)
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

@@ -16,7 +16,7 @@ func push() {
 		panic(err)
 	}
 
-	content, err := os.ReadFile("/my-raw-records.json")
+	content, err := os.ReadFile("records.json")
 	if err != nil {
 		panic(err)
 	}
@@ -28,14 +28,14 @@ func push() {
 		panic(err)
 	}
 
-	run, err := client.PushTask(client.NewApiPushTaskRequest(
+	// setting `watch` to `true` will make the call synchronous
+	resp, err := client.PushTask(client.NewApiPushTaskRequest(
 		"YOUR_TASK_ID",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(records),
-	))
+	).WithWatch(true))
 	if err != nil {
 		panic(err)
 	}
 
-	// use runID in the Observability debugger
-	fmt.Println("run", run.RunID)
+	fmt.Printf("%#v\n", resp)
 }

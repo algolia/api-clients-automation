@@ -29,10 +29,18 @@ jobs:
     with:
       working-directory: packages/client_core
 
+  wait_for_core:
+    needs: publish_core
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for core package to be published
+        shell: bash
+        run: sleep 300
+
   publish_clients:
     needs: 
       - check
-      - publish_core
+      - wait_for_core
     strategy:
       matrix:
         package:

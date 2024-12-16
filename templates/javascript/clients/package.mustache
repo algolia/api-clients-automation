@@ -4,6 +4,7 @@
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript/packages/{{packageName}}#readme",
   "type": "module",
   "license": "MIT",
   "author": "Algolia",
@@ -31,8 +32,8 @@
         "require": "./dist/builds/node.cjs"
       },
       "worker": {
-        "types": "./dist/fetch.d.ts",
-        "default": "./dist/builds/fetch.js"
+        "types": "./dist/worker.d.ts",
+        "default": "./dist/builds/worker.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -74,8 +75,8 @@
         "require": "./dist/node.cjs"
       },
       "worker": {
-        "types": "./dist/fetch.d.ts",
-        "default": "./dist/fetch.js"
+        "types": "./dist/worker.d.ts",
+        "default": "./dist/worker.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -133,12 +134,12 @@
     "@algolia/requester-testing": "{{utilsPackageVersion}}",
     "vitest-environment-miniflare": "2.14.4",
     "jsdom": "25.0.1",
-    "vitest": "2.1.5",
+    "vitest": "2.1.8",
     {{/isAlgoliasearchClient}}
-    "@arethetypeswrong/cli": "0.17.0",
-    "@types/node": "22.9.3",
+    "@arethetypeswrong/cli": "0.17.1",
+    "@types/node": "22.10.2",
     "publint": "0.2.12",
-    "rollup": "4.27.4",
+    "rollup": "4.28.1",
     "tsup": "8.3.5",
     "typescript": "5.7.2"
   },

@@ -40,7 +40,16 @@ public class SearchClient extends ApiClient {
   }
 
   public SearchClient(String appId, String apiKey, ClientOptions options) {
-    super(appId, apiKey, "Search", options, getDefaultHosts(appId));
+    super(
+      appId,
+      apiKey,
+      "Search",
+      options,
+      getDefaultHosts(appId),
+      Duration.ofMillis(2000L),
+      Duration.ofMillis(5000L),
+      Duration.ofMillis(30000L)
+    );
   }
 
   private static List<Host> getDefaultHosts(String appId) {
@@ -109,9 +118,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
-   * new record is added to the index. To update _some_ attributes of an existing record, use the
-   * [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * new record is added to the index. If you want to use auto-generated object IDs, use the
+   * [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an
+   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
+   * instead. To add, update, or replace multiple records, use the [`batch`
+   * operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -132,9 +143,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
-   * new record is added to the index. To update _some_ attributes of an existing record, use the
-   * [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * new record is added to the index. If you want to use auto-generated object IDs, use the
+   * [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an
+   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
+   * instead. To add, update, or replace multiple records, use the [`batch`
+   * operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -149,10 +162,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a record with the specified object ID exists, the existing record is
-   * replaced. Otherwise, a new record is added to the index. To update _some_ attributes of an
-   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
-   * instead. To add, update, or replace multiple records, use the [`batch`
-   * operation](#tag/Records/operation/batch).
+   * replaced. Otherwise, a new record is added to the index. If you want to use auto-generated
+   * object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update
+   * _some_ attributes of an existing record, use the [`partial`
+   * operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace
+   * multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -184,10 +198,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a record with the specified object ID exists, the existing record is
-   * replaced. Otherwise, a new record is added to the index. To update _some_ attributes of an
-   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
-   * instead. To add, update, or replace multiple records, use the [`batch`
-   * operation](#tag/Records/operation/batch).
+   * replaced. Otherwise, a new record is added to the index. If you want to use auto-generated
+   * object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update
+   * _some_ attributes of an existing record, use the [`partial`
+   * operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace
+   * multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4111,7 +4126,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds a record to an index or replace it. - If the record doesn't have an object ID, a new
+   * Adds a record to an index or replaces it. - If the record doesn't have an object ID, a new
    * record with an auto-generated object ID is added to your index. - If a record with the
    * specified object ID exists, the existing record is replaced. - If a record with the specified
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
@@ -4134,7 +4149,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds a record to an index or replace it. - If the record doesn't have an object ID, a new
+   * Adds a record to an index or replaces it. - If the record doesn't have an object ID, a new
    * record with an auto-generated object ID is added to your index. - If a record with the
    * specified object ID exists, the existing record is replaced. - If a record with the specified
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
@@ -4154,7 +4169,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds a record to an index or replace it. - If the record doesn't have an
+   * (asynchronously) Adds a record to an index or replaces it. - If the record doesn't have an
    * object ID, a new record with an auto-generated object ID is added to your index. - If a record
    * with the specified object ID exists, the existing record is replaced. - If a record with the
    * specified object ID doesn't exist, a new record is added to your index. - If you add a record
@@ -4185,7 +4200,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds a record to an index or replace it. - If the record doesn't have an
+   * (asynchronously) Adds a record to an index or replaces it. - If the record doesn't have an
    * object ID, a new record with an auto-generated object ID is added to your index. - If a record
    * with the specified object ID exists, the existing record is replaced. - If a record with the
    * specified object ID doesn't exist, a new record is added to your index. - If you add a record
@@ -6612,7 +6627,31 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
-    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, 1000, requestOptions);
+    return saveObjects(indexName, objects, false, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+   * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> saveObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, waitForTasks, batchSize, requestOptions);
   }
 
   /**
@@ -6652,6 +6691,30 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, boolean waitForTasks, RequestOptions requestOptions) {
+    return deleteObjects(indexName, objectIDs, false, 1000, null);
+  }
+
+  /**
+   * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+   * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public List<BatchResponse> deleteObjects(
+    String indexName,
+    List<String> objectIDs,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
     List<Map<String, String>> objects = new ArrayList<>();
 
     for (String id : objectIDs) {
@@ -6660,7 +6723,7 @@ public class SearchClient extends ApiClient {
       objects.add(obj);
     }
 
-    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, 1000, requestOptions);
+    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions);
   }
 
   /**
@@ -6721,12 +6784,40 @@ public class SearchClient extends ApiClient {
     boolean waitForTasks,
     RequestOptions requestOptions
   ) {
+    return partialUpdateObjects(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+  }
+
+  /**
+   * Helper: Replaces object content of all the given objects according to their respective
+   * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+   * requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> partialUpdateObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
     return chunkedBatch(
       indexName,
       objects,
       createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
       waitForTasks,
-      1000,
+      batchSize,
       requestOptions
     );
   }

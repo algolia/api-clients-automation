@@ -15,6 +15,11 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
     def __init__(self, app_id: Optional[str], api_key: Optional[str]{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}{{/hasRegionalHost}}) -> None:
         super().__init__(app_id, api_key)
 
+        # In milliseconds
+        self.read_timeout = {{x-timeouts.server.read}}
+        self.write_timeout = {{x-timeouts.server.write}}
+        self.connect_timeout = {{x-timeouts.server.connect}}
+
         self._user_agent = UserAgent()
         self.add_user_agent("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}", __version__)
 

@@ -1,3 +1,19 @@
+## [1.28.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.1...1.28.2)
+
+- [6fb57f9ba](https://github.com/algolia/api-clients-automation/commit/6fb57f9ba) fix(clients): lock version ([#4228](https://github.com/algolia/api-clients-automation/pull/4228)) by [@millotp](https://github.com/millotp/)
+- [baf7d6f4d](https://github.com/algolia/api-clients-automation/commit/baf7d6f4d) fix(specs): add `ignoreConjugations` to `AlternativesAsExact` ([#4230](https://github.com/algolia/api-clients-automation/pull/4230)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [1.28.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.0...1.28.1)
+
+- [866d859f8](https://github.com/algolia/api-clients-automation/commit/866d859f8) fix(specs): different summaries for saveObject/addOrUpdate methods ([#4223](https://github.com/algolia/api-clients-automation/pull/4223)) by [@kai687](https://github.com/kai687/)
+
+## [1.28.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.27.3...1.28.0)
+
+- [068fdacb5](https://github.com/algolia/api-clients-automation/commit/068fdacb5) feat(specs): add info and link about indexing rate limits ([#4136](https://github.com/algolia/api-clients-automation/pull/4136)) by [@kai687](https://github.com/kai687/)
+- [9e0235697](https://github.com/algolia/api-clients-automation/commit/9e0235697) fix(specs): `nb_api_calls` in `getLogs` response is optional ([#4142](https://github.com/algolia/api-clients-automation/pull/4142)) by [@shortcuts](https://github.com/shortcuts/)
+- [b728c5f25](https://github.com/algolia/api-clients-automation/commit/b728c5f25) fix(specs): `consequence` is required when saving rules ([#4146](https://github.com/algolia/api-clients-automation/pull/4146)) by [@shortcuts](https://github.com/shortcuts/)
+- [afd94fac8](https://github.com/algolia/api-clients-automation/commit/afd94fac8) fix(specs): `saveRule` response type ([#4170](https://github.com/algolia/api-clients-automation/pull/4170)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.27.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.27.2...1.27.3)
 
 - [ff954678e](https://github.com/algolia/api-clients-automation/commit/ff954678e) fix(playground): add formatter for python ([#4125](https://github.com/algolia/api-clients-automation/pull/4125)) by [@millotp](https://github.com/millotp/)

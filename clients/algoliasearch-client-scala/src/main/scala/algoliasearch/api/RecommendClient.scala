@@ -16,15 +16,20 @@ import algoliasearch.recommend.SearchRecommendRulesResponse
 import algoliasearch.recommend._
 import algoliasearch.ApiClient
 import algoliasearch.api.RecommendClient.hosts
+import algoliasearch.api.RecommendClient.readTimeout
+import algoliasearch.api.RecommendClient.writeTimeout
+import algoliasearch.api.RecommendClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object RecommendClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new RecommendClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -43,6 +48,18 @@ object RecommendClient {
     apiKey = apiKey,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(5, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(2, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(30, TimeUnit.SECONDS)
+  }
 
   private def hosts(appId: String): Seq[Host] = {
     val commonHosts = Random.shuffle(
@@ -68,6 +85,9 @@ class RecommendClient(
       apiKey = apiKey,
       clientName = "Recommend",
       defaultHosts = hosts(appId),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {
