@@ -173,9 +173,6 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             _data = {{paramName}}
         {{/bodyParam}}
 
-        {{#vendorExtensions.x-timeouts}}
-        {{/vendorExtensions.x-timeouts}}
-
         return {{^isSyncClient}}await {{/isSyncClient}}self._transporter.request(
             verb=Verb.{{httpMethod}},
             path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
