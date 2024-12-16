@@ -9,19 +9,20 @@ async def main():
         "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
     )
 
-    with open("/my-raw-records.json") as f:
+    with open("records.json") as f:
         records = json.load(f)
 
-        run = _client.push_task(
+        # setting `watch` to `true` will make the call synchronous
+        resp = _client.push_task(
             task_id="YOUR_TASK_ID",
             push_task_payload={
                 "action": "addObject",
                 "records": records,
             },
+            watch=True,
         )
 
-        # use runID in the Observability debugger
-        print(run.run_id)
+        print(resp)
 
 
 asyncio.run(main())

@@ -132,6 +132,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       String hostForKotlin = host.replaceAll("\\{([^}]+)}", "\\$$1");
       additionalProperties.put("hostForKotlin", hostForKotlin);
     }
+
+    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override

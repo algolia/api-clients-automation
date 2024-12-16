@@ -15,7 +15,7 @@ object PushSetup {
     implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
     implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
 
-    val result = Source.fromFile("/my-raw-records.json").getLines().mkString
+    val result = Source.fromFile("records.json").getLines().mkString
     val records = JsonMethods.parse(result).extract[Seq[algoliasearch.ingestion.PushTaskRecords]]
 
     // use the region matching your applicationID
@@ -26,19 +26,20 @@ object PushSetup {
     )
 
     try {
-      val run = Await.result(
+      // setting `watch` to `true` will make the call synchronous
+      val resp = Await.result(
         client.pushTask(
           taskID = "YOUR_TASK_ID",
           pushTaskPayload = PushTaskPayload(
             action = Action.withName("addObject"),
             records = records
-          )
+          ),
+          watch = Some(true)
         ),
         Duration(100, "sec")
       )
 
-      // use runID in the Observability debugger
-      println(run.runID)
+      println(resp)
     } catch {
       case e: Exception => println(e)
     }

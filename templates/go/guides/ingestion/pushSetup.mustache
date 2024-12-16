@@ -14,7 +14,7 @@ func push() {
   // use the region matching your applicationID
   {{> snippets/init}}
 
-  content, err := os.ReadFile("/my-raw-records.json")
+  content, err := os.ReadFile("records.json")
   if err != nil {
     panic(err)
   }
@@ -26,11 +26,11 @@ func push() {
     panic(err)
   }
 
-  run, err := {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+  // setting `watch` to `true` will make the call synchronous
+  resp, err := {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
   if err != nil {
     panic(err)
   }
 
-  // use runID in the Observability debugger
-  fmt.Println("run", run.RunID)
+  fmt.Printf("%#v\n", resp)
 }

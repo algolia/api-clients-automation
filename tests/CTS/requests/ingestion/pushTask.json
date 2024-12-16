@@ -37,5 +37,49 @@
         ]
       }
     }
+  },
+  {
+    "testName": "allows for watch query parameter",
+    "parameters": {
+      "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "pushTaskPayload": {
+        "action": "addObject",
+        "records": [
+          {
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
+          },
+          {
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
+          }
+        ]
+      },
+      "watch": true
+    },
+    "request": {
+      "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push",
+      "method": "POST",
+      "queryParameters": {
+        "watch": "true"
+      },
+      "body": {
+        "action": "addObject",
+        "records": [
+          {
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
+          },
+          {
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
+          }
+        ]
+      }
+    }
   }
 ]

@@ -1,4 +1,3 @@
-// @ts-nocheck this file is broken while the VersionsHistory is unclear
 import fsp from 'fs/promises';
 
 import semver from 'semver';
@@ -12,16 +11,22 @@ import type { Version, Versions } from './types.js';
 
 // the date of the generated api clients release
 const generatedReleaseDate = new Date('2024-08-14');
+const slaEndDate = new Date(generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + 2));
 
-// number of years of eligibility
-const eligibilityDuration = 2;
-const eligibilityEndDate = new Date(
-  generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + eligibilityDuration),
-);
+type Status = 'eligible' | 'not eligible' | 'replaced';
 
-type Eligibility = {
-  status: 'eligible' | 'not eligible' | 'replaced';
-  date?: string;
+type Release = {
+  releaseDate: string;
+};
+
+type Support = {
+  supportStatus: Status;
+  supportEndDate?: string;
+};
+
+type SLA = {
+  slaStatus: Status;
+  slaEndDate?: string;
 };
 
 export function isPreRelease(version: string): boolean {
@@ -35,22 +40,42 @@ export function isPreRelease(version: string): boolean {
   );
 }
 
-function getCurrentMajor(version: string): int {
-  return parseInt(version.match(/\d+/)[0]);
+function getCurrentMajor(version: string): number {
+  if (!version) {
+    return 0;
+  }
+
+  const matches = version.match(/\d+/);
+
+  if (!matches || matches.length === 0) {
+    return 0;
+  }
+
+  return parseInt(matches[0], 10);
 }
 
-function getEligibility(currentMajor: int, previousMajor: int, version: string, releaseDate: Date): Eligibility {
+function getEligibility(currentMajor: number, previousMajor: number, version: string): SLA & Support {
   const versionMajor = getCurrentMajor(version);
 
+  // for the current major we provide:
+  // - SLA on every versions
+  // - Support on the latest version (will be handled later in `generateLanguageVersionsHistory`)
   if (versionMajor == currentMajor) {
-    return { status: 'eligible' };
+    return { slaStatus: 'eligible', supportStatus: 'not eligible' };
   }
 
-  if (versionMajor == previousMajor && eligibilityEndDate >= new Date()) {
-    return { status: 'replaced', date: eligibilityEndDate.toISOString().split('T')[0] };
+  // for the previous major we provide:
+  // - SLA on every versions, with a `replaced` mention indicatin there's an other available version
+  // - Support on the latest version (will be handled later in `generateLanguageVersionsHistory`)
+  if (versionMajor == previousMajor && slaEndDate >= new Date()) {
+    return {
+      slaStatus: 'replaced',
+      slaEndDate: slaEndDate.toISOString().split('T')[0],
+      supportStatus: 'not eligible',
+    };
   }
 
-  return { status: 'not eligible' };
+  return { slaStatus: 'not eligible', supportStatus: 'not eligible' };
 }
 
 // fetches the git tags on the given `lang` repository, throws if none.
@@ -85,14 +110,14 @@ async function getTags(lang: Language): Promise<string[]> {
  */
 export function generateLanguageVersionsHistory(
   tags: string[],
-  lang: Language,
   version: Version,
 ): Record<string, { releaseDate: string }> {
-  const versions: Record<string, { releaseDate: string } & Eligibility> = {};
+  const versions: Record<string, Release & SLA & Support> = {};
 
   const currentMajor = getCurrentMajor(version.current);
   const previousMajor = currentMajor - 1 || currentMajor;
-  let prevTagVersion = '';
+  let latestPreviousMajorVersion = '';
+  let previousTagVersion = '';
 
   for (const tag of tags) {
     let [tagVersion, tagReleaseDate] = tag.split(/(?<=^\S+)\s/);
@@ -107,22 +132,40 @@ export function generateLanguageVersionsHistory(
       continue;
     }
 
-    const eligibility = getEligibility(currentMajor, previousMajor, tagVersion, new Date(tagReleaseDate));
+    // we keep track of the latest encountered previous major version, so we can set the support policy when the iterator is done
+    if (getCurrentMajor(tagVersion) === previousMajor) {
+      latestPreviousMajorVersion = tagVersion;
+    }
+
+    previousTagVersion = tagVersion;
 
     versions[tagVersion] = {
+      ...getEligibility(currentMajor, previousMajor, tagVersion),
       releaseDate: new Date(tagReleaseDate).toISOString().split('T')[0],
-      eligibilityDate: eligibility.date,
-      eligibilityStatus: eligibility.status,
     };
+  }
 
-    prevTagVersion = tagVersion;
+  // only the latest previous major version and latest current version receives support
+  if (
+    latestPreviousMajorVersion &&
+    (previousMajor !== currentMajor || (version.next && previousMajor !== getCurrentMajor(version?.next)))
+  ) {
+    versions[latestPreviousMajorVersion] = {
+      ...versions[latestPreviousMajorVersion],
+      supportStatus: 'eligible',
+      supportEndDate: slaEndDate.toISOString().split('T')[0],
+    };
   }
 
   // if there's no release planned, just skip this language
-  if (version?.next && !isPreRelease(version?.next) && version?.next !== prevTagVersion) {
+  if (version?.next && !isPreRelease(version.next)) {
     versions[version.next] = {
-      releaseDate: new Date().toISOString().split('T')[0],
-      eligibilityStatus: 'eligible',
+      releaseDate:
+        version.next !== previousTagVersion
+          ? new Date().toISOString().split('T')[0]
+          : versions[version.next].releaseDate,
+      slaStatus: 'eligible',
+      supportStatus: 'eligible',
     };
   }
 
@@ -137,7 +180,9 @@ export async function generateVersionsHistory(versions: Versions): Promise<void>
 
       const tags = await getTags(lang);
 
-      versionsHistory[lang] = generateLanguageVersionsHistory(tags, lang, versions[lang]);
+      if (versions[lang]) {
+        versionsHistory[lang] = generateLanguageVersionsHistory(tags, versions[lang]);
+      }
     }),
   );
 
@@ -149,5 +194,8 @@ export async function generateVersionsHistory(versions: Versions): Promise<void>
       return acc;
     }, {});
 
-  await fsp.writeFile(toAbsolutePath('config/versions.history.json'), JSON.stringify(sortedVersionsHistory, null, 2));
+  await fsp.writeFile(
+    toAbsolutePath('docs/versions-history-with-sla-and-support-policy.json'),
+    JSON.stringify(sortedVersionsHistory, null, 2),
+  );
 }

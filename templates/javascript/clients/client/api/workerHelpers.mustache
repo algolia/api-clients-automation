@@ -1,0 +1,36 @@
+/**
+ * Helper: Generates a secured API key based on the given `parentApiKey` and given `restrictions`.
+ *
+ * @summary Helper: Generates a secured API key based on the given `parentApiKey` and given `restrictions`.
+ * @param generateSecuredApiKey - The `generateSecuredApiKey` object.
+ * @param generateSecuredApiKey.parentApiKey - The base API key from which to generate the new secured one.
+ * @param generateSecuredApiKey.restrictions - A set of properties defining the restrictions of the secured API key.
+ */
+generateSecuredApiKey: async ({
+  parentApiKey,
+  restrictions = {},
+}: GenerateSecuredApiKeyOptions): Promise<string> => {
+  let mergedRestrictions = restrictions;
+  if (restrictions.searchParams) {
+    // merge searchParams with the root restrictions
+    mergedRestrictions = {
+      ...restrictions,
+      ...restrictions.searchParams,
+    };
+
+    delete mergedRestrictions.searchParams;
+  }
+
+  mergedRestrictions = Object.keys(mergedRestrictions)
+    .sort()
+    .reduce(
+      (acc, key) => {
+        acc[key] = (mergedRestrictions as any)[key];
+        return acc;
+      },
+      {} as Record<string, unknown>
+    );
+
+  const queryParameters = serializeQueryParameters(mergedRestrictions);
+  return await generateBase64Hmac(parentApiKey, queryParameters);
+},

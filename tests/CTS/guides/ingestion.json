@@ -6,7 +6,8 @@
       "pushTaskPayload": {
         "action": "addObject",
         "records": "$var: records" 
-      }
+      },
+      "watch": true
     }
   }
 }

@@ -1,11 +1,12 @@
 {
   "name": "@algolia/logger-console",
-  "version": "5.15.0",
+  "version": "5.17.1",
   "description": "Promise-based log library using console log.",
   "repository": {
     "type": "git",
     "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript#readme",
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
@@ -34,17 +35,17 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.17.0",
-    "@types/node": "22.9.3",
+    "@arethetypeswrong/cli": "0.17.1",
+    "@types/node": "22.10.2",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
     "ts-node": "10.9.2",
     "tsup": "8.3.5",
     "typescript": "5.7.2",
-    "vitest": "2.1.5"
+    "vitest": "2.1.8"
   },
   "dependencies": {
-    "@algolia/client-common": "5.15.0"
+    "@algolia/client-common": "5.17.1"
   },
   "engines": {
     "node": ">= 14.0.0"

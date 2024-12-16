@@ -96,3 +96,25 @@ Window:
   required:
     - startDate
     - endDate
+
+WatchResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    runID:
+      $ref: './common.yml#/runID'
+    data:
+      type: array
+      description: when used with discovering or validating sources, the sampled data of your source is returned.
+      items:
+        type: object
+    events:
+      description: in case of error, observability events will be added to the response, if any.
+      type: array
+      items:
+        $ref: '../../common/schemas/event.yml#/Event'
+    message:
+      description: a message describing the outcome of a validate run.
+      type: string
+  required:
+    - message

@@ -38,5 +38,43 @@
         }
       }
     ]
+  },
+  {
+    "testName": "calls api with default read timeouts",
+    "steps": [
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test"
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 25000,
+            "responseTimeout": 25000
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "calls api with default write timeouts",
+    "steps": [
+      {
+        "type": "method",
+        "method": "customPost",
+        "parameters": {
+          "path": "1/test"
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 25000,
+            "responseTimeout": 25000
+          }
+        }
+      }
+    ]
   }
 ]

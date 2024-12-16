@@ -7,16 +7,16 @@ import java.util.Map;
 
 public class pushSetup {
   public static void main(String[] args) throws Exception {
-    JsonNode content = new ObjectMapper().readTree(new File("/my-raw-records.json"));
+    JsonNode content = new ObjectMapper().readTree(new File("records.json"));
     List<PushTaskRecords> records = new ObjectMapper().readerForListOf(Map.class).readValue(content);
 
     // use the region matching your applicationID
     {{> snippets/init}}
 
-    RunResponse run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
+    // setting `watch` to `true` will make the call synchronous
+    WatchResponse resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
 
-    // use runID in the Observability debugger
-    System.out.println(run.getRunID());
+    System.out.println(resp);
 
     client.close();
   }

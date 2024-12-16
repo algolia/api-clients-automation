@@ -6,6 +6,8 @@ import algoliasearch.internal.interceptor.{AuthInterceptor, RetryStrategy, UserA
 import algoliasearch.internal.{AlgoliaAgent, HttpRequester, StatefulHost}
 import org.json4s.Formats
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.util.Try
 
 /** Base class for all API clients. It provides a mechanism for request serialization and deserialization. It also
@@ -19,6 +21,12 @@ import scala.util.Try
   *   the name of the client
   * @param defaultHosts
   *   the default hosts
+  * @param defaultReadTimeout
+  *   the default read timeout
+  * @param defaultConnectTimeout
+  *   the default connect timeout
+  * @param defaultWriteTimeout
+  *   the default write timeout
   * @param formats
   *   the JSON formats
   * @param options
@@ -29,6 +37,9 @@ abstract class ApiClient(
     apiKey: String,
     clientName: String,
     defaultHosts: Seq[Host],
+    defaultReadTimeout: Duration,
+    defaultConnectTimeout: Duration,
+    defaultWriteTimeout: Duration,
     formats: Formats,
     options: ClientOptions = ClientOptions()
 ) extends AutoCloseable {
@@ -45,7 +56,16 @@ abstract class ApiClient(
   private val requester = options.customRequester match {
     case Some(customRequester) => customRequester
     case None =>
-      defaultRequester(appId, apiKey, clientName, options, defaultHosts)
+      defaultRequester(
+        appId,
+        apiKey,
+        clientName,
+        options,
+        defaultHosts,
+        defaultReadTimeout,
+        defaultConnectTimeout,
+        defaultWriteTimeout
+      )
   }
 
   private def defaultRequester(
@@ -53,24 +73,33 @@ abstract class ApiClient(
       apiKey: String,
       clientName: String,
       options: ClientOptions,
-      defaultHosts: Seq[Host]
+      defaultHosts: Seq[Host],
+      defaultReadTimeout: Duration,
+      defaultConnectTimeout: Duration,
+      defaultWriteTimeout: Duration
   ): Requester = {
+    val optionsWithDefaultTimeouts = options.copy(
+      readTimeout = defaultReadTimeout,
+      connectTimeout = defaultConnectTimeout,
+      writeTimeout = defaultWriteTimeout
+    )
+
     val algoliaAgent = AlgoliaAgent(BuildInfo.version)
       .addSegment(AgentSegment(clientName, Some(BuildInfo.version)))
-      .addSegments(options.agentSegments)
+      .addSegments(optionsWithDefaultTimeouts.agentSegments)
 
-    val hosts = if (options.hosts.isEmpty) defaultHosts else options.hosts
+    val hosts = if (optionsWithDefaultTimeouts.hosts.isEmpty) defaultHosts else optionsWithDefaultTimeouts.hosts
     val statefulHosts = hosts.map(host => StatefulHost(host)).toList
 
     val builder = HttpRequester
-      .builder(options.customFormats.getOrElse(formats))
+      .builder(optionsWithDefaultTimeouts.customFormats.getOrElse(formats))
       .withInterceptor(authInterceptor)
       .withInterceptor(new UserAgentInterceptor(algoliaAgent))
       .withInterceptor(new RetryStrategy(statefulHosts))
 
-    options.requesterConfig.foreach(_(builder))
+    optionsWithDefaultTimeouts.requesterConfig.foreach(_(builder))
 
-    builder.build(options)
+    builder.build(optionsWithDefaultTimeouts)
   }
 
   /** Executes the given request and returns the response.

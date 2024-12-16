@@ -8,6 +8,7 @@ import com.algolia.client.model.ingestion.*
 import com.algolia.client.transport.*
 import com.algolia.client.transport.internal.*
 import kotlinx.serialization.json.*
+import kotlin.time.Duration.Companion.milliseconds
 
 public class IngestionClient(
   override val appId: String,
@@ -21,7 +22,7 @@ public class IngestionClient(
     require(apiKey.isNotBlank()) { "`apiKey` is missing." }
   }
 
-  override val requester: Requester = requesterOf(clientName = "Ingestion", appId = appId, apiKey = apiKey, options = options) {
+  override val requester: Requester = requesterOf(clientName = "Ingestion", appId = appId, apiKey = apiKey, connectTimeout = 25000.milliseconds, readTimeout = 25000.milliseconds, writeTimeout = 25000.milliseconds, options = options) {
     val allowedRegions = listOf("eu", "us")
     require(region in allowedRegions) { "`region` is required and must be one of the following: ${allowedRegions.joinToString()}" }
     val url = "data.$region.algolia.com"
@@ -812,13 +813,14 @@ public class IngestionClient(
    * @param action Actions for filtering the list of tasks.
    * @param enabled Whether to filter the list of tasks by the `enabled` status.
    * @param sourceID Source IDs for filtering the list of tasks.
+   * @param sourceType Filters the tasks with the specified source type.
    * @param destinationID Destination IDs for filtering the list of tasks.
    * @param triggerType Type of task trigger for filtering the list of tasks.
    * @param sort Property by which to sort the list of tasks. (default to createdAt)
    * @param order Sort order of the response, ascending or descending. (default to desc)
    * @param requestOptions additional request configuration.
    */
-  public suspend fun listTasks(itemsPerPage: Int? = null, page: Int? = null, action: List<ActionType>? = null, enabled: Boolean? = null, sourceID: List<String>? = null, destinationID: List<String>? = null, triggerType: List<TriggerType>? = null, sort: TaskSortKeys? = null, order: OrderKeys? = null, requestOptions: RequestOptions? = null): ListTasksResponse {
+  public suspend fun listTasks(itemsPerPage: Int? = null, page: Int? = null, action: List<ActionType>? = null, enabled: Boolean? = null, sourceID: List<String>? = null, sourceType: List<SourceType>? = null, destinationID: List<String>? = null, triggerType: List<TriggerType>? = null, sort: TaskSortKeys? = null, order: OrderKeys? = null, requestOptions: RequestOptions? = null): ListTasksResponse {
     val requestConfig = RequestConfig(
       method = RequestMethod.GET,
       path = listOf("2", "tasks"),
@@ -828,6 +830,7 @@ public class IngestionClient(
         action?.let { put("action", it.joinToString(",")) }
         enabled?.let { put("enabled", it) }
         sourceID?.let { put("sourceID", it.joinToString(",")) }
+        sourceType?.let { put("sourceType", it.joinToString(",")) }
         destinationID?.let { put("destinationID", it.joinToString(",")) }
         triggerType?.let { put("triggerType", it.joinToString(",")) }
         sort?.let { put("sort", it) }
@@ -919,13 +922,17 @@ public class IngestionClient(
    *   - editSettings
    * @param taskID Unique identifier of a task.
    * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+   * @param watch When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
    * @param requestOptions additional request configuration.
    */
-  public suspend fun pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: RequestOptions? = null): RunResponse {
+  public suspend fun pushTask(taskID: String, pushTaskPayload: PushTaskPayload, watch: Boolean? = null, requestOptions: RequestOptions? = null): WatchResponse {
     require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `pushTask`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
       path = listOf("2", "tasks", "$taskID", "push"),
+      query = buildMap {
+        watch?.let { put("watch", it) }
+      },
       body = pushTaskPayload,
     )
     return requester.execute(
@@ -1144,7 +1151,7 @@ public class IngestionClient(
    * @param sourceID Unique identifier of a source.
    * @param requestOptions additional request configuration.
    */
-  public suspend fun triggerDockerSourceDiscover(sourceID: String, requestOptions: RequestOptions? = null): SourceWatchResponse {
+  public suspend fun triggerDockerSourceDiscover(sourceID: String, requestOptions: RequestOptions? = null): WatchResponse {
     require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
@@ -1341,7 +1348,7 @@ public class IngestionClient(
    * @param sourceCreate
    * @param requestOptions additional request configuration.
    */
-  public suspend fun validateSource(sourceCreate: SourceCreate? = null, requestOptions: RequestOptions? = null): SourceWatchResponse {
+  public suspend fun validateSource(sourceCreate: SourceCreate? = null, requestOptions: RequestOptions? = null): WatchResponse {
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
       path = listOf("1", "sources", "validate"),
@@ -1364,7 +1371,7 @@ public class IngestionClient(
    * @param sourceUpdate
    * @param requestOptions additional request configuration.
    */
-  public suspend fun validateSourceBeforeUpdate(sourceID: String, sourceUpdate: SourceUpdate, requestOptions: RequestOptions? = null): SourceWatchResponse {
+  public suspend fun validateSourceBeforeUpdate(sourceID: String, sourceUpdate: SourceUpdate, requestOptions: RequestOptions? = null): WatchResponse {
     require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,

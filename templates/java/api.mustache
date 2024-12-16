@@ -16,6 +16,7 @@ import {{invokerPackage}}.exceptions.*;
 import {{invokerPackage}}.config.*;
 import java.util.function.IntUnaryOperator;
 
+import java.time.Duration;
 import java.util.EnumSet;
 import java.util.Random;
 import java.util.Collections;
@@ -64,7 +65,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, String region, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts(region));
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts(region), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
     }
     
     {{/hasRegionalHost}}
@@ -74,7 +75,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}));
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
     }
     {{/hasRegionalHost}}
 

@@ -11,15 +11,20 @@ import algoliasearch.personalization.SetPersonalizationStrategyResponse
 import algoliasearch.personalization._
 import algoliasearch.ApiClient
 import algoliasearch.api.PersonalizationClient.hosts
+import algoliasearch.api.PersonalizationClient.readTimeout
+import algoliasearch.api.PersonalizationClient.writeTimeout
+import algoliasearch.api.PersonalizationClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object PersonalizationClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new PersonalizationClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -41,6 +46,18 @@ object PersonalizationClient {
     region = region,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(5, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(2, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(30, TimeUnit.SECONDS)
+  }
 
   private def hosts(region: String): Seq[Host] = {
     val allowedRegions = Seq("eu", "us")
@@ -64,6 +81,9 @@ class PersonalizationClient(
       apiKey = apiKey,
       clientName = "Personalization",
       defaultHosts = hosts(region),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {

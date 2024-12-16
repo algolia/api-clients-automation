@@ -10,7 +10,7 @@ class PushSetup
 {
   public static async Task Main(string[] args)
   {
-    string jsonContent = File.ReadAllText("/my-raw-records.json");
+    string jsonContent = File.ReadAllText("records.json");
 
     var records = JsonSerializer.Deserialize<List<PushTaskRecords>>(jsonContent);
 
@@ -21,11 +21,14 @@ class PushSetup
 
     try
     {
-      var run = await client.PushTaskAsync(
+      // setting `watch` to `true` will make the call synchronous
+      var resp = await client.PushTaskAsync(
         "YOUR_TASK_ID",
-        new PushTaskPayload { Action = Enum.Parse<Action>("AddObject"), Records = records }
+        new PushTaskPayload { Action = Enum.Parse<Action>("AddObject"), Records = records },
+        true
       );
-      Console.WriteLine(run.RunID);
+
+      Console.WriteLine(resp);
     }
     catch (Exception e)
     {
