@@ -1,0 +1,2975 @@
+openapi: 3.0.2
+info:
+  title: Insights API
+  description: >
+    The Insights API lets you collect events related to your search and
+    discovery experience.
+
+    Events represent user interactions with your app or website.
+
+    They unlock powerful features, such as recommendations, personalization,
+    smarter search results,
+
+    and analytics that help you optimize your user experience.
+
+
+    ## Client libraries
+
+
+    Use Algolia's API clients, libraries, and integrations to collect events
+    from your UI and send them to the Insights API.
+
+    See: [Algolia's
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/).
+
+
+    ## Base URLs
+
+
+    The base URLs for making requests to the Insights API are:
+
+
+    - `https://insights.us.algolia.io`
+
+    - `https://insights.de.algolia.io`
+
+    - `https//insights.algolia.io` (routes requests to the closest of the above
+    servers, based on your geographical location)
+
+
+    **All requests must use HTTPS.**
+
+
+    ## Authentication
+
+
+    To authenticate your API requests, add these headers:
+
+
+    - `x-algolia-application-id`. Your Algolia application ID.
+
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
+
+    You can find your application ID and API key in the [Algolia
+    dashboard](https://dashboard.algolia.com/account).
+
+
+    ## Request format
+
+
+    Request bodies must be JSON objects.
+
+
+    ## Response status and errors
+
+
+    Response bodies are JSON objects.
+
+    Deleting a user token returns an empty response body with rate-limiting
+    information as headers.
+
+
+    Successful responses return a `2xx` status. Client errors return a `4xx`
+    status. Server errors are indicated by a `5xx` status.
+
+    Error responses have a `message` property with more information.
+
+
+    The Insights API doesn't validate if the event parameters such as
+    `indexName`, `objectIDs`, or `userToken`,
+
+    correspond to anything in the Search API. It just checks if they're
+    formatted correctly.
+
+    Check the [Events](https://dashboard.algolia.com/events/health) health
+    section,
+
+    whether your events can be used for Algolia features such as Analytics, or
+    Dynamic Re-Ranking.
+
+
+    ## Version
+
+
+    The current version of the Insights API is version 1, as indicated by the
+    `/1/` in each endpoint's URL.
+  version: 1.0.0
+servers:
+  - url: https://insights.{region}.algolia.io
+    variables:
+      region:
+        enum:
+          - us
+          - de
+        default: us
+  - url: https://insights.algolia.io
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: events
+    x-displayName: Events
+    description: >-
+      Events represent user interactions with your website or app. They include
+      details like the event's name, type, a timestamp, or a user token.
+  - name: usertokens
+    x-displayName: User tokens
+    description: |
+      Delete events related to a specific user token.
+externalDocs:
+  url: https://www.algolia.com/doc/guides/sending-events/getting-started/
+  description: Events
+paths:
+  /{path}:
+    get:
+      operationId: customGet
+      summary: Send requests to the Algolia REST API
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customGet(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.ALGOLIA_APPLICATION_REGION
+
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customGet("test/minimal");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.customGet({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_get(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_get("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = client.customGet[JObject](
+              path = "test/minimal"
+            )
+
+            // >LOG
+            // Use the response
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
+    post:
+      operationId: customPost
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customPost(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.ALGOLIA_APPLICATION_REGION
+
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customPost("test/minimal");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.customPost({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_post(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_post("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = client.customPost[JObject](
+              path = "test/minimal"
+            )
+
+            // >LOG
+            // Use the response
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
+    put:
+      operationId: customPut
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customPut(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.ALGOLIA_APPLICATION_REGION
+
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customPut("test/minimal");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.customPut({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_put(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_put("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = client.customPut[JObject](
+              path = "test/minimal"
+            )
+
+            // >LOG
+            // Use the response
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
+    delete:
+      operationId: customDelete
+      summary: Send requests to the Algolia REST API
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customDelete(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.ALGOLIA_APPLICATION_REGION
+
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customDelete("test/minimal");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: 'test/minimal'
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_delete(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_delete("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = client.customDelete[JObject](
+              path = "test/minimal"
+            )
+
+            // >LOG
+            // Use the response
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
+  /1/events:
+    post:
+      tags:
+        - events
+      operationId: pushEvents
+      summary: Send events
+      description: |
+        Sends a list of events to the Insights API.
+
+        You can include up to 1,000 events in a single request,
+        but the request body must be smaller than 2&nbsp;MB.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: insightsEvents
+              type: object
+              additionalProperties: false
+              required:
+                - events
+              properties:
+                events:
+                  type: array
+                  description: >
+                    Click and conversion events.
+
+
+                    **All** events must be valid, otherwise the API returns an
+                    error.
+                  minItems: 1
+                  maxItems: 1000
+                  items:
+                    $ref: '#/components/schemas/EventsItems'
+            examples:
+              ClickObjectIDsAfterSearch:
+                summary: Click event after search requests
+                value:
+                  events:
+                    - eventName: Products Clicked
+                      eventType: click
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+                      positions:
+                        - 1
+                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
+              ConversionObjectIDsAfterSearch:
+                summary: Conversion event after search or browse requests
+                value:
+                  events:
+                    - eventName: Articles Liked
+                      eventType: conversion
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - article-1
+                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
+              AddedToCartAfterSearch:
+                summary: Add-to-cart event after search or browse requests
+                value:
+                  events:
+                    - eventName: Products Added To Cart
+                      eventType: conversion
+                      eventSubtype: addToCart
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                      objectData:
+                        - price: 50
+                          quantity: 1
+                      currency: USD
+                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
+              PurchasedAfterSearch:
+                summary: Purchase event after search or browse requests
+                value:
+                  events:
+                    - eventName: Products Purchased
+                      eventType: conversion
+                      eventSubtype: purchase
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                        - product-2
+                      objectData:
+                        - price: 49.99
+                          discount: 1.99
+                          quantity: 1
+                          queryID: 7dfe2ada7bca48bdd0629649df0bee07
+                        - price: 9.99
+                          discount: 0
+                          quantity: 2
+                          queryID: 54ed4c9d94050a25e4e5ccf5d256ca42
+                      value: 69.97
+                      currency: USD
+              ClickObjectIDs:
+                summary: Click event
+                value:
+                  events:
+                    - eventName: Products Clicked
+                      eventType: click
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+              ConversionObjectIDs:
+                summary: Conversion event
+                value:
+                  events:
+                    - eventName: Products Added To Cart
+                      eventType: conversion
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+              AddedToCart:
+                summary: Add-to-cart event
+                value:
+                  events:
+                    - eventName: Products Added To Cart
+                      eventType: conversion
+                      eventSubtype: addToCart
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                      objectData:
+                        - price: 19.99
+                          quantity: 1
+                      currency: EUR
+              Purchased:
+                summary: Purchase event
+                value:
+                  events:
+                    - eventName: Products Purchased
+                      eventType: conversion
+                      eventSubtype: purchase
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                        - product-2
+                      objectData:
+                        - price: 49.99
+                          quantity: 1
+                        - price: 9.99
+                          quantity: 2
+                      currency: USD
+                      value: 69.97
+              ClickFilter:
+                summary: Click event with filters
+                value:
+                  events:
+                    - eventName: Category Clicked
+                      eventType: click
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      filters:
+                        - category:books
+              ConversionFilter:
+                summary: Conversion event with filters
+                value:
+                  events:
+                    - eventName: Category Converted
+                      eventType: conversion
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      filters:
+                        - category:books
+              ViewObjectIDs:
+                summary: View event
+                value:
+                  events:
+                    - eventName: Products Viewed
+                      eventType: view
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+              ViewFilters:
+                summary: View event with filters
+                value:
+                  events:
+                    - eventName: Category Viewed
+                      eventType: view
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      filters:
+                        - category:books
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                Success:
+                  summary: Events successfully sent to the Insights API
+                  description: >-
+                    Success indicates that the Insights API received the events
+                    correctly, and that event properties are formatted
+                    correctly. Success doesn't imply that the event can be used
+                    by any Algolia feature. For example, the Insights API
+                    doesn't check if the index name you provided exists, or if
+                    the object IDs exist in your index.
+                  value:
+                    status: 200
+                    message: OK
+        '400':
+          description: Bad Request.
+          content:
+            text/html:
+              schema:
+                type: string
+                title: HTML
+              examples:
+                BadRequest:
+                  summary: Bad request
+                  description: This error doesn't return a JSON object, but HTML.
+                  value: >-
+                    Error: Bad Request. Your client has issued a malformed or
+                    illegal request.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                Unauthorized:
+                  summary: Invalid credentials
+                  description: >-
+                    You need to provide your application ID using the
+                    `X-Algolia-Application-ID` header and your (search) API key
+                    with the `X-Algolia-API-Key` header.
+                  value:
+                    status: 401
+                    message: Invalid credentials
+        '404':
+          description: Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                NotFound:
+                  summary: Unsupported operation
+                  description: Check that you're using the correct URL.
+                  value:
+                    status: 404
+                    message: >-
+                      Path not supported by Insights REST API. Please have a
+                      look at
+                      [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/)
+                      for the list of valid commands.
+        '405':
+          description: Method Not Allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                MethodNotAllowed:
+                  summary: Method not allowed
+                  description: Check, that you send events with the `POST` method.
+                  value:
+                    status: 405
+                    message: Method Not Allowed
+        '413':
+          description: Payload Too Large.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                PayloadTooLarge:
+                  summary: Request body larger than 2&nbspMB
+                  value:
+                    status: 413
+                    message: Request Entity Too Large
+        '422':
+          description: Unprocessable Entity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                InvalidPayload:
+                  summary: Incorrect event object
+                  value:
+                    status: 422
+                    message: Invalid payload
+                NoEvents:
+                  summary: No events
+                  description: >-
+                    This can happen if you're sending an empty `events` array,
+                    or if you try to send a single event object instead of the
+                    `events` array.
+                  value:
+                    status: 422
+                    message: No events to process
+                NoEventsField:
+                  summary: Missing events attribute
+                  description: >-
+                    This can happen if you try to send an array of events
+                    directly instead of using the `events` attribute.
+                  value:
+                    status: 422
+                    message: >-
+                      Invalid type for field : expected
+                      insights.PublicEventsBatch, got array
+                EventNameRequired:
+                  summary: Missing eventName attribute
+                  value:
+                    status: 422
+                    message: EventName is required
+                WrongEventName:
+                  summary: Event name too long or wrong characters
+                  value:
+                    status: 422
+                    message: >-
+                      EventName must contain only visible ASCII characters, and
+                      be between 1 and 64 characters long
+                EventTypeRequired:
+                  summary: Missing eventType attribute
+                  value:
+                    status: 422
+                    message: EventType is required
+                WrongEventType:
+                  summary: Wrong event type
+                  value:
+                    status: 422
+                    message: EventType must be one of "click", "conversion" or "view"
+                IndexRequired:
+                  summary: Missing index attribute
+                  value:
+                    status: 422
+                    message: The index field is required
+                UserTokenRequired:
+                  summary: Missing userToken attribute
+                  value:
+                    status: 422
+                    message: The userToken field is required
+                WrongUserToken:
+                  summary: Malformed user token
+                  value:
+                    status: 422
+                    message: >-
+                      UserToken must contain only alphanumeric, equal, plus,
+                      slash, hyphen, or underscore characters, and be between 1
+                      and 128 characters long
+                NoObjectIDsOrFilters:
+                  summary: Missing objectIDs or filters attribute
+                  description: >-
+                    Each event must include either the `objectIDs` or `filters`
+                    attribute.
+                  value:
+                    status: 422
+                    message: Event should specify either some ObjectIDs or some Filters
+                BothDefined:
+                  summary: Both objectIDs and filters attributes defined
+                  value:
+                    status: 422
+                    message: Event should specify ObjectIDs or Filters, but not both
+                PositionsOnWrongEventType:
+                  summary: Wrong combination of positions and eventType attributes
+                  value:
+                    status: 422
+                    message: >-
+                      Only event of type click should specify the positions
+                      attribute
+                PositionsWithoutQueryID:
+                  summary: Positions attribute without queryID
+                  description: >-
+                    Click events with the `positions` attribute require the
+                    `queryID` attribute.
+                  value:
+                    status: 422
+                    message: >-
+                      Event of type click with positions should specify a
+                      queryID
+                WrongPositionsValue:
+                  summary: Wrong value in positions array
+                  description: Any value in the `positions` array must be greater than 0.
+                  value:
+                    status: 422
+                    message: >-
+                      Event of type click may only have strictly positive
+                      positions
+                WrongPositionsItems:
+                  summary: Wrong number of items in positions array
+                  description: >-
+                    For click events with the `queryID` and `objectIDs`
+                    attributes, you must include the `positions` attribute with
+                    the same number of items as the `objectIDs` attribute.
+                  value:
+                    status: 422
+                    message: >-
+                      Event of type click should have the same number of
+                      ObjectIDs and Positions
+                WrongQueryID:
+                  summary: Malformed query ID
+                  value:
+                    status: 422
+                    message: >-
+                      Query ID must be a search query ID (32 characters
+                      hexadecimal string)
+                InvalidDataType:
+                  summary: Wrong data type
+                  description: >-
+                    This can happen if one or more attribute is a number instead
+                    of a string.
+                  value:
+                    status: 422
+                    message: 'Invalid type for field events: expected string, got number'
+                InvalidTimestamp:
+                  summary: Timestamp too old
+                  value:
+                    status: 422
+                    message: The timestamp must be at most 4 days in the past
+                TooManyEvents:
+                  summary: Too many events
+                  description: You can include up to 1,000 events in a single API request.
+                  value:
+                    status: 422
+                    message: Cannot process more than 1000 events in a batch
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.PushEventsAsync(
+              new InsightsEvents
+              {
+                Events = new List<EventsItems>
+                {
+                  new EventsItems(
+                    new ClickedObjectIDsAfterSearch
+                    {
+                      EventType = Enum.Parse<ClickEvent>("Click"),
+                      EventName = "Product Clicked",
+                      Index = "products",
+                      UserToken = "user-123456",
+                      AuthenticatedUserToken = "user-123456",
+                      Timestamp = 1641290601962L,
+                      ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
+                      QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                      Positions = new List<int> { 7, 6 },
+                    }
+                  ),
+                },
+              }
+            );
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.pushEvents(
+              insightsEvents: InsightsEvents(
+                events: [
+                  ClickedObjectIDsAfterSearch(
+                    eventType: ClickEvent.fromJson("click"),
+                    eventName: "Product Clicked",
+                    index: "products",
+                    userToken: "user-123456",
+                    authenticatedUserToken: "user-123456",
+                    timestamp: 1641290601962,
+                    objectIDs: [
+                      "9780545139700",
+                      "9780439784542",
+                    ],
+                    queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions: [
+                      7,
+                      6,
+                    ],
+                  ),
+                ],
+              ),
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.ALGOLIA_APPLICATION_REGION
+
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.PushEvents(client.NewApiPushEventsRequest(
+
+              insights.NewEmptyInsightsEvents().SetEvents(
+                []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
+                  insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent("click")).SetEventName("Product Clicked").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
+                    []string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7").SetPositions(
+                    []int32{7, 6}))}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.pushEvents(
+              new InsightsEvents()
+                .setEvents(
+                  Arrays.asList(
+                    new ClickedObjectIDsAfterSearch()
+                      .setEventType(ClickEvent.CLICK)
+                      .setEventName("Product Clicked")
+                      .setIndex("products")
+                      .setUserToken("user-123456")
+                      .setAuthenticatedUserToken("user-123456")
+                      .setTimestamp(1641290601962L)
+                      .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+                      .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+                      .setPositions(Arrays.asList(7, 6))
+                  )
+                )
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.pushEvents({
+              events: [
+                {
+                  eventType: 'click',
+                  eventName: 'Product Clicked',
+                  index: 'products',
+                  userToken: 'user-123456',
+                  authenticatedUserToken: 'user-123456',
+                  timestamp: 1641290601962,
+                  objectIDs: ['9780545139700', '9780439784542'],
+                  queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
+                  positions: [7, 6],
+                },
+              ],
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.pushEvents(
+              insightsEvents = InsightsEvents(
+                events = listOf(
+                  ClickedObjectIDsAfterSearch(
+                    eventType = ClickEvent.entries.first { it.value == "click" },
+                    eventName = "Product Clicked",
+                    index = "products",
+                    userToken = "user-123456",
+                    authenticatedUserToken = "user-123456",
+                    timestamp = 1641290601962L,
+                    objectIDs = listOf("9780545139700", "9780439784542"),
+                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions = listOf(7, 6),
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->pushEvents(
+                ['events' => [
+                    ['eventType' => 'click',
+                        'eventName' => 'Product Clicked',
+                        'index' => 'products',
+                        'userToken' => 'user-123456',
+                        'authenticatedUserToken' => 'user-123456',
+                        'timestamp' => 1641290601962,
+                        'objectIDs' => [
+                            '9780545139700',
+
+                            '9780439784542',
+                        ],
+                        'queryID' => '43b15df305339e827f0ac0bdc5ebcaa7',
+                        'positions' => [
+                            7,
+
+                            6,
+                        ],
+                    ],
+                ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.push_events(
+                insights_events={
+                    "events": [
+                        {
+                            "eventType": "click",
+                            "eventName": "Product Clicked",
+                            "index": "products",
+                            "userToken": "user-123456",
+                            "authenticatedUserToken": "user-123456",
+                            "timestamp": 1641290601962,
+                            "objectIDs": [
+                                "9780545139700",
+                                "9780439784542",
+                            ],
+                            "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
+                            "positions": [
+                                7,
+                                6,
+                            ],
+                        },
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.push_events(
+              Algolia::Insights::InsightsEvents.new(
+                events: [
+                  Algolia::Insights::ClickedObjectIDsAfterSearch.new(
+                    event_type: "click",
+                    event_name: "Product Clicked",
+                    index: "products",
+                    user_token: "user-123456",
+                    authenticated_user_token: "user-123456",
+                    timestamp: 1641290601962,
+                    object_ids: ["9780545139700", "9780439784542"],
+                    query_id: "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions: [7, 6]
+                  )
+                ]
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = client.pushEvents(
+              insightsEvents = InsightsEvents(
+                events = Seq(
+                  ClickedObjectIDsAfterSearch(
+                    eventType = ClickEvent.withName("click"),
+                    eventName = "Product Clicked",
+                    index = "products",
+                    userToken = "user-123456",
+                    authenticatedUserToken = Some("user-123456"),
+                    timestamp = Some(1641290601962L),
+                    objectIDs = Seq("9780545139700", "9780439784542"),
+                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions = Seq(7, 6)
+                  )
+                )
+              )
+            )
+
+            // >LOG
+            // Use the response
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client
+                .pushEvents(insightsEvents: InsightsEvents(events: [
+                    EventsItems
+                        .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
+                            eventName: "Product Clicked",
+                            eventType: ClickEvent.click,
+                            index: "products",
+                            objectIDs: ["9780545139700", "9780439784542"],
+                            positions: [7, 6],
+                            queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                            userToken: "user-123456",
+                            authenticatedUserToken: "user-123456",
+                            timestamp: Int64(1_641_290_601_962)
+                        )),
+                ]))
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://insights.us.algolia.io/1/events \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"events":[{"eventName":"Products Clicked","eventType":"click","index":"test-index","userToken":"anonymous-user-1","authenticatedUserToken":"user-1","objectIDs":["object-1"],"positions":[1],"queryID":"7dfe2ada7bca48bdd0629649df0bee07"}]}'
+  /1/usertokens/{userToken}:
+    delete:
+      tags:
+        - usertokens
+      operationId: deleteUserToken
+      summary: Delete user token
+      description: >
+        Deletes all events related to the specified user token from events
+        metrics and analytics.
+
+        The deletion is asynchronous, and processed within 48 hours.
+
+        To delete a personalization user profile, see `Delete a user profile` in
+        the Personalization API.
+      parameters:
+        - name: userToken
+          in: path
+          description: User token for which to delete all associated events.
+          required: true
+          schema:
+            $ref: '#/components/schemas/userToken'
+      responses:
+        '204':
+          description: No content.
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+        '422':
+          description: Unprocessable Entity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+        '429':
+          description: >
+            Too Many Requests. This operation is rate-limited. Check the
+            `x-ratelimit-limit` and `x-ratelimit-reset` headers of the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            await client.DeleteUserTokenAsync("test-user-1");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            await client.deleteUserToken(
+              userToken: "test-user-1",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.ALGOLIA_APPLICATION_REGION
+
+            client, err := insights.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
+              "test-user-1",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteUserToken("test-user-1");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initInsights({ region: 'us' });
+
+
+            // Call the API
+
+            await client.deleteUserToken({ userToken: 'test-user-1' });
+
+
+            // >LOG
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
+            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            client.deleteUserToken(
+              userToken = "test-user-1",
+            )
+
+
+            // >LOG
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = InsightsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $client->deleteUserToken(
+                'test-user-1',
+            );
+
+
+            // >LOG
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use InsightsClient instead,
+            which exposes the exact same methods.
+
+            client = InsightsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            client.delete_user_token(
+                user_token="test-user-1",
+            )
+
+
+            # >LOG
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            client.delete_user_token("test-user-1")
+
+            # >LOG
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = InsightsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            client.deleteUserToken(
+              userToken = "test-user-1"
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            try await client.deleteUserToken(userToken: "test-user-1")
+
+            // >LOG
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    eventName:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: '[\x20-\x7E]{1,64}'
+      description: >
+        Event name, up to 64 ASCII characters.
+
+
+        Consider naming events consistently—for example, by adopting Segment's
+
+        [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
+
+        framework.
+    ClickEvent:
+      type: string
+      enum:
+        - click
+    index:
+      type: string
+      description: Index name (case-sensitive) to which the event's items belong.
+      example: ALGOLIA_INDEX_NAME
+    objectIDs:
+      type: array
+      description: Object IDs of the records that are part of the event.
+      items:
+        type: string
+      minItems: 1
+      maxItems: 20
+      example:
+        - object-1
+        - object-2
+        - object-3
+    positions:
+      type: array
+      items:
+        type: integer
+      minimum: 1
+      minItems: 1
+      maxItems: 20
+      description: |
+        Position of the clicked item the search results.
+
+        You must provide 1 `position` for each `objectID`.
+      example:
+        - 1
+        - 2
+        - 5
+    queryID:
+      type: string
+      pattern: '[0-9a-f]{32}'
+      minLength: 32
+      maxLength: 32
+      description: >
+        Unique identifier for a search query.
+
+
+        The query ID is required for events related to search or browse
+        requests.
+
+        If you add `clickAnalytics: true` as a search request parameter, the
+        query ID is included in the API response.
+      example: 3e48cd0616e466948dd85abf5c3fbbe2
+    userToken:
+      type: string
+      minLength: 1
+      maxLength: 129
+      pattern: '[a-zA-Z0-9_=/+-]{1,129}'
+      description: >
+        Anonymous or pseudonymous user identifier.
+
+
+        Don't use personally identifiable information in user tokens.
+
+        For more information, see [User
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      example: test-user-1
+    authenticatedUserToken:
+      type: string
+      minLength: 1
+      maxLength: 129
+      pattern: '[a-zA-Z0-9_=/+-]{1,129}'
+      description: >
+        Identifier for authenticated users.
+
+
+        When the user signs in, you can get an identifier from your system and
+        send it as `authenticatedUserToken`.
+
+        This lets you keep using the `userToken` from before the user signed in,
+        while providing a reliable way to identify users across sessions.
+
+        Don't use personally identifiable information in user tokens.
+
+        For more information, see [User
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
+    timestamp:
+      type: integer
+      format: int64
+      description: >
+        Timestamp of the event, measured in milliseconds since the Unix epoch.
+
+        By default, the Insights API uses the time it receives an event as its
+        timestamp.
+      example: 1687193127
+    ClickedObjectIDsAfterSearch:
+      type: object
+      title: Clicked object IDs after search
+      description: |
+        Click event after an Algolia request.
+
+        Use this event to track when users click items in the search results.
+        If you're building your category pages with Algolia,
+        you'll also use this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ClickEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        positions:
+          $ref: '#/components/schemas/positions'
+        queryID:
+          $ref: '#/components/schemas/queryID'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - positions
+        - queryID
+        - userToken
+      x-discriminator-fields:
+        - positions
+        - queryID
+        - eventType
+    ConversionEvent:
+      type: string
+      enum:
+        - conversion
+    AddToCartEvent:
+      type: string
+      enum:
+        - addToCart
+    currency:
+      type: string
+      description: >-
+        Three-letter [currency
+        code](https://www.iso.org/iso-4217-currency-codes.html).
+      example: EUR
+    price:
+      description: >-
+        Total price of a product, including any discounts, in units of
+        `currency`.
+      oneOf:
+        - type: number
+          format: double
+          example: 9.99
+        - type: string
+          example: '9.99'
+    quantity:
+      type: integer
+      format: int32
+      example: 2
+      description: >
+        Quantity of a product that has been purchased or added to the cart.
+
+        The total purchase value is the sum of `quantity` multiplied with the
+        `price` for each purchased item.
+    discount:
+      description: Absolute value of the discount for this product, in units of `currency`.
+      oneOf:
+        - type: number
+          format: double
+          example: 20
+        - type: string
+          example: '20'
+    objectDataAfterSearch:
+      type: object
+      additionalProperties: false
+      properties:
+        queryID:
+          type: string
+          pattern: '[0-9a-f]{32}'
+          minLength: 32
+          maxLength: 32
+          description: >-
+            Unique identifier for a search query, used to track purchase events
+            with multiple records that originate from different searches.
+          example: 3e48cd0616e466948dd85abf5c3fbbe2
+        price:
+          $ref: '#/components/schemas/price'
+        quantity:
+          $ref: '#/components/schemas/quantity'
+        discount:
+          $ref: '#/components/schemas/discount'
+    objectDataAfterSearchList:
+      type: array
+      description: >
+        Extra information about the records involved in a purchase or
+        add-to-cart events.
+
+
+        If provided, it must be the same length as `objectIDs`.
+      items:
+        $ref: '#/components/schemas/objectDataAfterSearch'
+      minItems: 1
+      maxItems: 20
+    value:
+      description: Total monetary value of this event in units of `currency`.
+      oneOf:
+        - type: number
+          format: double
+          example: 1000
+        - type: string
+          example: '1000.00'
+    AddedToCartObjectIDsAfterSearch:
+      type: object
+      title: Added to cart object IDs after search
+      description: >
+        Use this event to track when users add items to their shopping cart
+        after a previous Algolia request.
+
+        If you're building your category pages with Algolia, you'll also use
+        this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/AddToCartEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        queryID:
+          $ref: '#/components/schemas/queryID'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataAfterSearchList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - queryID
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - queryID
+        - objectIDs
+    PurchaseEvent:
+      type: string
+      enum:
+        - purchase
+    PurchasedObjectIDsAfterSearch:
+      type: object
+      title: Purchased object IDs after search
+      description: >
+        Use this event to track when users make a purchase after a previous
+        Algolia request.
+
+        If you're building your category pages with Algolia, you'll also use
+        this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/PurchaseEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataAfterSearchList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - index
+        - objectIDs
+        - userToken
+        - objectData
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
+        - objectData
+    ConvertedObjectIDsAfterSearch:
+      type: object
+      title: Converted object IDs after search
+      description: >
+        Use this event to track when users convert after a previous Algolia
+        request.
+
+        For example, a user clicks on an item in the search results to view the
+        product detail page.
+
+        Then, the user adds the item to their shopping cart.
+
+
+        If you're building your category pages with Algolia,
+
+        you'll also use this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        queryID:
+          $ref: '#/components/schemas/queryID'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - queryID
+        - userToken
+      x-discriminator-fields:
+        - queryID
+        - eventType
+    ClickedObjectIDs:
+      type: object
+      title: Clicked object IDs
+      description: >
+        Use this event to track when users click items unrelated to a previous
+        Algolia request.
+
+        For example, if you don't use Algolia to build your category pages, use
+        this event.
+
+
+        To track click events related to Algolia requests, use the "Clicked
+        object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ClickEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
+    objectData:
+      type: object
+      additionalProperties: false
+      properties:
+        price:
+          $ref: '#/components/schemas/price'
+        quantity:
+          $ref: '#/components/schemas/quantity'
+        discount:
+          $ref: '#/components/schemas/discount'
+    objectDataList:
+      type: array
+      description: >
+        Extra information about the records involved in a purchase or
+        add-to-cart event.
+
+
+        If specified, it must have the same length as `objectIDs`.
+      items:
+        $ref: '#/components/schemas/objectData'
+      minItems: 1
+      maxItems: 20
+    PurchasedObjectIDs:
+      type: object
+      title: Purchased object IDs
+      description: >
+        Use this event to track when users make a purchase unrelated to a
+        previous Algolia request. For example, if you don't use Algolia to build
+        your category pages, use this event.
+
+
+        To track purchase events related to Algolia requests, use the "Purchased
+        object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/PurchaseEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
+    AddedToCartObjectIDs:
+      type: object
+      title: Added to cart object IDs
+      description: >
+        Use this event to track when users add items to their shopping cart
+        unrelated to a previous Algolia request. For example, if you don't use
+        Algolia to build your category pages, use this event.
+
+
+        To track add-to-cart events related to Algolia requests, use the "Added
+        to cart object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/AddToCartEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
+    ConvertedObjectIDs:
+      type: object
+      title: Converted object IDs
+      description: >
+        Use this event to track when users convert on items unrelated to a
+        previous Algolia request.
+
+        For example, if you don't use Algolia to build your category pages, use
+        this event.
+
+
+        To track conversion events related to Algolia requests, use the
+        "Converted object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
+    filters:
+      type: array
+      description: |
+        Applied facet filters.
+
+        Facet filters are `facet:value` pairs.
+        Facet values must be URL-encoded, such as, `discount:10%25`.
+      items:
+        type: string
+      minItems: 1
+      maxItems: 20
+      example:
+        - brand:apple
+    ClickedFilters:
+      type: object
+      title: Clicked filters
+      description: >-
+        Use this event to track when users click facet filters in your user
+        interface.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ClickEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        filters:
+          $ref: '#/components/schemas/filters'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - filters
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
+    ConvertedFilters:
+      type: object
+      title: Converted filters
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        filters:
+          $ref: '#/components/schemas/filters'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - filters
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
+    ViewEvent:
+      type: string
+      enum:
+        - view
+    ViewedObjectIDs:
+      type: object
+      title: Viewed object IDs
+      description: Use this event to track when users viewed items in the search results.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ViewEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
+    ViewedFilters:
+      type: object
+      title: Viewed filters
+      description: |
+        Use this method to capture active filters.
+        For example, when browsing a category page,
+        users see content filtered on that specific category.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ViewEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        filters:
+          $ref: '#/components/schemas/filters'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - filters
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
+    EventsItems:
+      oneOf:
+        - $ref: '#/components/schemas/ClickedObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/AddedToCartObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/PurchasedObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/ConvertedObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/ClickedObjectIDs'
+        - $ref: '#/components/schemas/PurchasedObjectIDs'
+        - $ref: '#/components/schemas/AddedToCartObjectIDs'
+        - $ref: '#/components/schemas/ConvertedObjectIDs'
+        - $ref: '#/components/schemas/ClickedFilters'
+        - $ref: '#/components/schemas/ConvertedFilters'
+        - $ref: '#/components/schemas/ViewedObjectIDs'
+        - $ref: '#/components/schemas/ViewedFilters'
+    EventsResponse:
+      type: object
+      description: The response of the Insights API.
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+          description: Details about the response, such as error messages.
+        status:
+          type: integer
+          description: The HTTP status code of the response.
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+  headers:
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
+    x-ratelimit-reset:
+      description: >-
+        Timstamp when the rate limit will reset, measured in seconds since the
+        Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
+x-tagGroups:
+  - name: General
+    tags:
+      - events
+      - usertokens
