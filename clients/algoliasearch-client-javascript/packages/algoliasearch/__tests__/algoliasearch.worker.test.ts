@@ -9,7 +9,7 @@ test('sets the ua', () => {
   const client = algoliasearch('APP_ID', 'API_KEY');
   expect(client.transporter.algoliaAgent).toEqual({
     add: expect.any(Function),
-    value: expect.stringContaining(`Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion}); Fetch`),
+    value: expect.stringContaining(`Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion}); Worker`),
   });
 });
 
