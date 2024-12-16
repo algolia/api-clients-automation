@@ -12,7 +12,7 @@ dependencies {
     implementation("com.algolia:algoliasearch-client-kotlin")
     implementation("io.ktor:ktor-client-okhttp:3.0.2")
     implementation("ch.qos.logback:logback-classic:1.5.12")
-    implementation("io.github.cdimascio:dotenv-kotlin:6.4.2")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.5.0")
 }
 
 tasks.test {
