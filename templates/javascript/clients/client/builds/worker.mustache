@@ -1,0 +1,58 @@
+// {{{generationBanner}}}
+
+{{#searchHelpers}}
+export type SearchClientWorkerHelpers = {
+  generateSecuredApiKey: (opts: GenerateSecuredApiKeyOptions) => Promise<string>;
+  getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
+}
+{{/searchHelpers}}
+
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#searchHelpers}} & SearchClientWorkerHelpers{{/searchHelpers}};
+
+{{> client/builds/definition}}
+  return {
+    ...create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
+      appId,
+      apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
+      timeouts: {
+        connect: {{x-timeouts.server.connect}},
+        read: {{x-timeouts.server.read}},
+        write: {{x-timeouts.server.write}},
+      },
+      logger: createNullLogger(),
+      requester: createFetchRequester(),
+      algoliaAgents: [{ segment: 'Worker' }],
+      responsesCache: createNullCache(),
+      requestsCache: createNullCache(),
+      hostsCache: createMemoryCache(),
+      ...options,
+    }),
+    {{#searchHelpers}}
+    {{> client/api/workerHelpers}}
+    {{> client/api/searchHelpers}}
+    {{/searchHelpers}}
+  }
+}
+
+{{#searchHelpers}}
+async function getCryptoKey(secret: string): Promise<CryptoKey> {
+  const secretBuf = new TextEncoder().encode(secret);
+  return await crypto.subtle.importKey('raw', secretBuf, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+}
+
+async function generateHmacHex(cryptoKey: CryptoKey, queryParameters: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const queryParametersUint8Array = encoder.encode(queryParameters);
+  const signature = await crypto.subtle.sign('HMAC', cryptoKey, queryParametersUint8Array);
+  return Array.from(new Uint8Array(signature))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+async function generateBase64Hmac(parentApiKey: string, queryParameters: string): Promise<string> {
+  const crypotKey = await getCryptoKey(parentApiKey);
+  const hmacHex = await generateHmacHex(crypotKey, queryParameters);
+  const combined = hmacHex + queryParameters;
+  return btoa(combined);
+}
+{{/searchHelpers}}
