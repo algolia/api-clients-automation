@@ -33,7 +33,7 @@ export default defineWorkspace([
     },
     test: {
       include: ['__tests__/algoliasearch.fetch.test.ts'],
-      name: 'miniflare',
+      name: 'miniflare fetch',
       environment: 'miniflare',
     },
   },
@@ -45,7 +45,7 @@ export default defineWorkspace([
     },
     test: {
       include: ['__tests__/algoliasearch.worker.test.ts'],
-      name: 'miniflare',
+      name: 'miniflare worker',
       environment: 'miniflare',
     },
   },
