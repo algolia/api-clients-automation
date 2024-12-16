@@ -31,7 +31,7 @@
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "22.10.1",
+    "@types/node": "22.10.2",
     "@types/semver": "7.5.8",
     "@types/spinnies": "0.5.3",
     "chai": "5.1.2",
