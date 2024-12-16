@@ -1,3 +1,8 @@
+## [1.28.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.1...1.28.2)
+
+- [6fb57f9ba](https://github.com/algolia/api-clients-automation/commit/6fb57f9ba) fix(clients): lock version ([#4228](https://github.com/algolia/api-clients-automation/pull/4228)) by [@millotp](https://github.com/millotp/)
+- [baf7d6f4d](https://github.com/algolia/api-clients-automation/commit/baf7d6f4d) fix(specs): add `ignoreConjugations` to `AlternativesAsExact` ([#4230](https://github.com/algolia/api-clients-automation/pull/4230)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.28.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.0...1.28.1)
 
 - [866d859f8](https://github.com/algolia/api-clients-automation/commit/866d859f8) fix(specs): different summaries for saveObject/addOrUpdate methods ([#4223](https://github.com/algolia/api-clients-automation/pull/4223)) by [@kai687](https://github.com/kai687/)
