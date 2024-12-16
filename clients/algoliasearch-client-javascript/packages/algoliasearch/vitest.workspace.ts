@@ -37,4 +37,16 @@ export default defineWorkspace([
       environment: 'miniflare',
     },
   },
+  {
+    resolve: {
+      alias: {
+        '@algolia/client-search': '../../client-search/builds/worker',
+      },
+    },
+    test: {
+      include: ['__tests__/algoliasearch.worker.test.ts'],
+      name: 'miniflare',
+      environment: 'miniflare',
+    },
+  },
 ]);
