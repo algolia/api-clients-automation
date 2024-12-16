@@ -527,7 +527,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1733788800000,
+                    'timestamp' => 1734307200000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -541,7 +541,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1733788800000,
+                    'timestamp' => 1734307200000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -556,7 +556,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/events',
                 'method' => 'POST',
-                'body' => json_decode('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1733788800000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1733788800000,"objectIDs":["9780545139700","9780439784542"]}]}'),
+                'body' => json_decode('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1734307200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1734307200000,"objectIDs":["9780545139700","9780439784542"]}]}'),
             ],
         ]);
     }
