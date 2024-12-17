@@ -10,9 +10,9 @@ post:
     - deleteIndex
     - editSettings
   x-timeouts:
-    connect: 300000
-    read: 300000
-    write: 300000
+    connect: 180000
+    read: 180000
+    write: 180000
   requestBody:
     description: ''
     content:
