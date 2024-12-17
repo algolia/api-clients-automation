@@ -3,9 +3,9 @@ import fsp from 'fs/promises';
 import { GENERATORS, capitalize, createClientName, exists, toAbsolutePath } from '../common.js';
 import type { Language } from '../types.js';
 
-import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.js';
+import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.js';
 
-export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
+export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label'] {
   switch (language) {
     case 'csharp':
       return 'C#';
@@ -14,14 +14,14 @@ export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
     case 'php':
       return 'PHP';
     default:
-      return capitalize(language) as CodeSamples['label'];
+      return capitalize(language) as OpenAPICodeSample['label'];
   }
 }
 
-// Iterates over the snippet samples and sanitize the data to only keep the method part in order to use it in the guides.
-export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSamples): string {
-  for (const [language, operationWithSample] of Object.entries(snippetSamples)) {
-    for (const [operation, samples] of Object.entries(operationWithSample)) {
+// Iterates over the result of `transformSnippetsToCodeSamples` in order to generate a JSON file for the doc to consume.
+export function parseCodeSamples(codeSamples: CodeSamples): CodeSamples {
+  for (const [language, operationWithSamples] of Object.entries(codeSamples)) {
+    for (const [operation, samples] of Object.entries(operationWithSamples)) {
       if (operation === 'import') {
         continue;
       }
@@ -37,25 +37,25 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
         const initLine = sampleMatch[1];
         const callLine = sampleMatch[3];
 
-        if (!('init' in snippetSamples[language])) {
-          snippetSamples[language].init = {
+        if (!('init' in codeSamples[language])) {
+          codeSamples[language].init = {
             default: initLine.trim(),
           };
         }
 
-        snippetSamples[language][operation][sampleName] = callLine.trim();
+        codeSamples[language][operation][sampleName] = callLine.trim();
       }
     }
   }
 
-  return JSON.stringify(snippetSamples, null, 2);
+  return codeSamples;
 }
 
-// For a given `clientName`, reads the matching snippet file for every available clients and builds an hashmap of snippets per operationId per language.
-export async function transformSnippetsToCodeSamples(clientName: string): Promise<SnippetSamples> {
-  const snippetSamples = Object.values(GENERATORS).reduce(
+// Reads the generated `docs/snippets/` file for every languages of the given `clientName` and builds an hashmap of snippets per operationId per language.
+export async function transformGeneratedSnippetsToCodeSamples(clientName: string): Promise<CodeSamples> {
+  const codeSamples = Object.values(GENERATORS).reduce<CodeSamples>(
     (prev, curr) => ({ ...prev, [curr.language]: {} }),
-    {} as SnippetSamples,
+    {} as CodeSamples,
   );
 
   for (const gen of Object.values(GENERATORS)) {
@@ -76,7 +76,7 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
 
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {
-      snippetSamples[gen.language].import = {
+      codeSamples[gen.language].import = {
         default: importMatch[1].trim(),
       };
     }
@@ -91,13 +91,13 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
       const operationId = match[1];
       const testName = match[2] || 'default';
 
-      if (!snippetSamples[gen.language][operationId]) {
-        snippetSamples[gen.language][operationId] = {};
+      if (!codeSamples[gen.language][operationId]) {
+        codeSamples[gen.language][operationId] = {};
       }
 
-      const snippetForMethod: SnippetForMethod = snippetSamples[gen.language][operationId];
+      const sampleForOperation: SampleForOperation = codeSamples[gen.language][operationId];
 
-      snippetForMethod[testName] = '';
+      sampleForOperation[testName] = '';
 
       const indent = lines[0].length - lines[0].trim().length;
       // skip first and last lines because they contain the SEPARATOR or operationId
@@ -105,10 +105,10 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
         // best effort to determine how far the snippet is indented so we
         // can have every snippets in the documentation on the far left
         // without impacting the formatting
-        snippetForMethod[testName] += `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
+        sampleForOperation[testName] += `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
       });
     }
   }
 
-  return snippetSamples;
+  return codeSamples;
 }
