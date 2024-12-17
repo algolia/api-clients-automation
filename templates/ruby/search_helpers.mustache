@@ -48,7 +48,9 @@ end
 # @param timeout [Proc] the function to decide how long to wait between retries.
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
 # @return [Http::Response] the last get_api_key response
-def wait_for_api_key(key, operation, api_key = {}, max_retries = 50, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+def wait_for_api_key(key, operation, api_key = Search::ApiKey.new, max_retries = 50, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+  api_key = api_client.object_to_hash(api_key)
+
   retries = 0
   if operation == 'update'
     raise ArgumentError, '`api_key` is required when waiting for an `update` operation.' if api_key.nil?
@@ -56,7 +58,7 @@ def wait_for_api_key(key, operation, api_key = {}, max_retries = 50, timeout = -
       updated_key = get_api_key(key, request_options)
       updated_key_hash = updated_key.to_hash
       equals = true
-      api_key.to_hash.each do |k, v|
+      api_key.each do |k, v|
         equals &&= updated_key_hash[k] == v
       end
 
