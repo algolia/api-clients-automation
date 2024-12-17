@@ -1,6 +1,10 @@
 // {{{generationBanner}}}
 
-export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#nodeSearchHelpers}} & SearchClientNodeHelpers{{/nodeSearchHelpers}};
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#searchHelpers}} & SearchClientNodeHelpers{{/searchHelpers}};
+
+{{#searchHelpers}}
+import { createHmac } from 'node:crypto';
+{{/searchHelpers}}
 
 {{> client/builds/definition}}
   return {
@@ -13,15 +17,16 @@ export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnTyp
         write: {{x-timeouts.server.write}},
       },
       logger: createNullLogger(),
-      algoliaAgents: [{ segment: 'Fetch' }],
       requester: createFetchRequester(),
+      algoliaAgents: [{ segment: 'Fetch' }],
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
       ...options,
     }),
-    {{#nodeSearchHelpers}}
+    {{#searchHelpers}}
     {{> client/api/nodeHelpers}}
-    {{/nodeSearchHelpers}}
+    {{> client/api/searchHelpers}}
+    {{/searchHelpers}}
   }
 }
