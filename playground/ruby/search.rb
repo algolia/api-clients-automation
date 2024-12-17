@@ -6,7 +6,7 @@ Dotenv.load('../.env')
 client = Algolia::SearchClient.create(ENV['ALGOLIA_APPLICATION_ID'], ENV['ALGOLIA_ADMIN_KEY'])
 # set a custom user agent
 client.add_user_agent_segment('Algolia for rails', "test")
-res = client.search_single_index('contacts', Algolia::Search::SearchParamsObject.new(query: 'Jimmie'))
+res = client.browse_objects('qigbuery-RECORDS')
 puts res
 
 =begin
