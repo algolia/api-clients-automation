@@ -138,7 +138,9 @@ module {{moduleName}}
       {{/headerParams}}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
       {{/vendorExtensions}}
-      request_options[:timeout] = request_options[:timeout] || {{#vendorExtensions.x-use-read-transporter}}{{vendorExtensions.x-timeouts.read}}{{/vendorExtensions.x-use-read-transporter}} {{^vendorExtensions.x-use-read-transporter}}{{vendorExtensions.x-timeouts.write}}{{/vendorExtensions.x-use-read-transporter}} 
+      {{#vendorExtensions.x-timeouts}}
+      request_options.timeout ||= {{#vendorExtensions.x-use-read-transporter}}{{vendorExtensions.x-timeouts.read}}{{/vendorExtensions.x-use-read-transporter}} {{^vendorExtensions.x-use-read-transporter}}{{vendorExtensions.x-timeouts.write}}{{/vendorExtensions.x-use-read-transporter}} 
+      {{/vendorExtensions.x-timeouts}}
 
       post_body = request_options[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{{paramName}}}){{/bodyParam}}
 
