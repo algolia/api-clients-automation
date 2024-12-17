@@ -20,7 +20,7 @@ def main():
     print("client initialized", client)
 
     try:
-        resp = client.browse_objects(index_name="qigbuery-RECORDS", aggregator=lambda resp: print(resp), browse_params={})
+        resp = client.search_synonyms("foo")
         print(resp)
         client.browse_synonyms("foo", lambda _resp: print(_resp))
     finally:
