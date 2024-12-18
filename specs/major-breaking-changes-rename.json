@@ -57,7 +57,6 @@
     "index.deleteObjects": "client.deleteObjects",
     "index.deleteRule": "client.deleteRule",
     "index.deleteSynonym": "client.deleteSynonym",
-    "index.exists": "client.indexExists",
     "index.findObject": "client.searchSingleIndex",
     "index.getObject": "client.getObject",
     "index.getObjects": "client.getObjects",
