@@ -1,3 +1,7 @@
+## [1.28.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.2...1.28.3)
+
+- [0481473fe0](https://github.com/algolia/api-clients-automation/commit/0481473fe0) chore: trigger auto close pr ([#4250](https://github.com/algolia/api-clients-automation/pull/4250)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.28.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.1...1.28.2)
 
 - [6fb57f9ba](https://github.com/algolia/api-clients-automation/commit/6fb57f9ba) fix(clients): lock version ([#4228](https://github.com/algolia/api-clients-automation/pull/4228)) by [@millotp](https://github.com/millotp/)
