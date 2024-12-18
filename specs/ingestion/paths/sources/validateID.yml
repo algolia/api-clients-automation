@@ -9,6 +9,10 @@ post:
     - addObject
     - deleteIndex
     - editSettings
+  x-timeouts:
+    connect: 180000
+    read: 180000
+    write: 180000
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   requestBody:
