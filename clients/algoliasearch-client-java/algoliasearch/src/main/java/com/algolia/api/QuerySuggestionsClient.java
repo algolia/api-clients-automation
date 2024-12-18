@@ -10,6 +10,7 @@ import com.algolia.exceptions.*;
 import com.algolia.model.querysuggestions.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -26,7 +27,16 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   public QuerySuggestionsClient(String appId, String apiKey, String region, ClientOptions options) {
-    super(appId, apiKey, "QuerySuggestions", options, getDefaultHosts(region));
+    super(
+      appId,
+      apiKey,
+      "QuerySuggestions",
+      options,
+      getDefaultHosts(region),
+      Duration.ofMillis(2000L),
+      Duration.ofMillis(5000L),
+      Duration.ofMillis(30000L)
+    );
   }
 
   private static List<Host> getDefaultHosts(String region) throws AlgoliaRuntimeException {

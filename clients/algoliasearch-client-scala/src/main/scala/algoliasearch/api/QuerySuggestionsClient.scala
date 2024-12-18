@@ -13,15 +13,20 @@ import algoliasearch.querysuggestions.LogFile
 import algoliasearch.querysuggestions._
 import algoliasearch.ApiClient
 import algoliasearch.api.QuerySuggestionsClient.hosts
+import algoliasearch.api.QuerySuggestionsClient.readTimeout
+import algoliasearch.api.QuerySuggestionsClient.writeTimeout
+import algoliasearch.api.QuerySuggestionsClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object QuerySuggestionsClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new QuerySuggestionsClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -43,6 +48,18 @@ object QuerySuggestionsClient {
     region = region,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(5, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(2, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(30, TimeUnit.SECONDS)
+  }
 
   private def hosts(region: String): Seq[Host] = {
     val allowedRegions = Seq("eu", "us")
@@ -66,6 +83,9 @@ class QuerySuggestionsClient(
       apiKey = apiKey,
       clientName = "QuerySuggestions",
       defaultHosts = hosts(region),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {

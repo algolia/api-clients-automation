@@ -10,6 +10,7 @@ import com.algolia.exceptions.*;
 import com.algolia.model.monitoring.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -24,7 +25,16 @@ public class MonitoringClient extends ApiClient {
   }
 
   public MonitoringClient(String appId, String apiKey, ClientOptions options) {
-    super(appId, apiKey, "Monitoring", options, getDefaultHosts());
+    super(
+      appId,
+      apiKey,
+      "Monitoring",
+      options,
+      getDefaultHosts(),
+      Duration.ofMillis(2000L),
+      Duration.ofMillis(5000L),
+      Duration.ofMillis(30000L)
+    );
   }
 
   private static List<Host> getDefaultHosts() {

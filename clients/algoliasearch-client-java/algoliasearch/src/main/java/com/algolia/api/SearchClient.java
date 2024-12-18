@@ -40,7 +40,16 @@ public class SearchClient extends ApiClient {
   }
 
   public SearchClient(String appId, String apiKey, ClientOptions options) {
-    super(appId, apiKey, "Search", options, getDefaultHosts(appId));
+    super(
+      appId,
+      apiKey,
+      "Search",
+      options,
+      getDefaultHosts(appId),
+      Duration.ofMillis(2000L),
+      Duration.ofMillis(5000L),
+      Duration.ofMillis(30000L)
+    );
   }
 
   private static List<Host> getDefaultHosts(String appId) {
@@ -109,9 +118,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
-   * new record is added to the index. To update _some_ attributes of an existing record, use the
-   * [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * new record is added to the index. If you want to use auto-generated object IDs, use the
+   * [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an
+   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
+   * instead. To add, update, or replace multiple records, use the [`batch`
+   * operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -132,9 +143,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
-   * new record is added to the index. To update _some_ attributes of an existing record, use the
-   * [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * new record is added to the index. If you want to use auto-generated object IDs, use the
+   * [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an
+   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
+   * instead. To add, update, or replace multiple records, use the [`batch`
+   * operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -149,10 +162,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a record with the specified object ID exists, the existing record is
-   * replaced. Otherwise, a new record is added to the index. To update _some_ attributes of an
-   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
-   * instead. To add, update, or replace multiple records, use the [`batch`
-   * operation](#tag/Records/operation/batch).
+   * replaced. Otherwise, a new record is added to the index. If you want to use auto-generated
+   * object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update
+   * _some_ attributes of an existing record, use the [`partial`
+   * operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace
+   * multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -184,10 +198,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) If a record with the specified object ID exists, the existing record is
-   * replaced. Otherwise, a new record is added to the index. To update _some_ attributes of an
-   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
-   * instead. To add, update, or replace multiple records, use the [`batch`
-   * operation](#tag/Records/operation/batch).
+   * replaced. Otherwise, a new record is added to the index. If you want to use auto-generated
+   * object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update
+   * _some_ attributes of an existing record, use the [`partial`
+   * operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace
+   * multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4111,7 +4126,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds a record to an index or replace it. - If the record doesn't have an object ID, a new
+   * Adds a record to an index or replaces it. - If the record doesn't have an object ID, a new
    * record with an auto-generated object ID is added to your index. - If a record with the
    * specified object ID exists, the existing record is replaced. - If a record with the specified
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
@@ -4134,7 +4149,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Adds a record to an index or replace it. - If the record doesn't have an object ID, a new
+   * Adds a record to an index or replaces it. - If the record doesn't have an object ID, a new
    * record with an auto-generated object ID is added to your index. - If a record with the
    * specified object ID exists, the existing record is replaced. - If a record with the specified
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
@@ -4154,7 +4169,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds a record to an index or replace it. - If the record doesn't have an
+   * (asynchronously) Adds a record to an index or replaces it. - If the record doesn't have an
    * object ID, a new record with an auto-generated object ID is added to your index. - If a record
    * with the specified object ID exists, the existing record is replaced. - If a record with the
    * specified object ID doesn't exist, a new record is added to your index. - If you add a record
@@ -4185,7 +4200,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Adds a record to an index or replace it. - If the record doesn't have an
+   * (asynchronously) Adds a record to an index or replaces it. - If the record doesn't have an
    * object ID, a new record with an auto-generated object ID is added to your index. - If a record
    * with the specified object ID exists, the existing record is replaced. - If a record with the
    * specified object ID doesn't exist, a new record is added to your index. - If you add a record

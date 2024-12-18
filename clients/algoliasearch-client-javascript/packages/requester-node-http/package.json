@@ -1,11 +1,12 @@
 {
   "name": "@algolia/requester-node-http",
-  "version": "5.15.0",
+  "version": "5.17.1",
   "description": "Promise-based request library for node using the native http module.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript#readme",
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
@@ -34,16 +35,16 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "dependencies": {
-    "@algolia/client-common": "5.15.0"
+    "@algolia/client-common": "5.17.1"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.17.0",
-    "@types/node": "22.10.1",
+    "@arethetypeswrong/cli": "0.17.1",
+    "@types/node": "22.10.2",
     "nock": "13.5.6",
     "publint": "0.2.12",
     "tsup": "8.3.5",
     "typescript": "5.7.2",
-    "vitest": "2.1.6"
+    "vitest": "2.1.8"
   },
   "engines": {
     "node": ">= 14.0.0"

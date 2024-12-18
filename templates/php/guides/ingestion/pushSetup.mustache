@@ -2,12 +2,12 @@
 require(__DIR__."/vendor/autoload.php");
 {{> snippets/import}}
 
-$records = json_decode(file_get_contents("/my-raw-records.json"), true);
+$records = json_decode(file_get_contents("records.json"), true);
 
 // use the region matching your applicationID
 {{> snippets/init}}
 
-$run = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
+// setting `watch` to `true` will make the call synchronous
+$resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}};
 
-// use runID in the Observability debugger
-print($run);
+print($resp);

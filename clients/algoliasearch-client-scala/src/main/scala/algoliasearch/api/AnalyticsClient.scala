@@ -29,15 +29,20 @@ import algoliasearch.analytics.OrderBy._
 import algoliasearch.analytics._
 import algoliasearch.ApiClient
 import algoliasearch.api.AnalyticsClient.hosts
+import algoliasearch.api.AnalyticsClient.readTimeout
+import algoliasearch.api.AnalyticsClient.writeTimeout
+import algoliasearch.api.AnalyticsClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object AnalyticsClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new AnalyticsClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -60,6 +65,18 @@ object AnalyticsClient {
     clientOptions = clientOptions
   )
 
+  private def readTimeout(): Duration = {
+    Duration(5, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(2, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(30, TimeUnit.SECONDS)
+  }
+
   private def hosts(region: Option[String] = None): Seq[Host] = {
     val allowedRegions = Seq("de", "us")
     if (region.isDefined && !allowedRegions.contains(region.get)) {
@@ -81,6 +98,9 @@ class AnalyticsClient(
       apiKey = apiKey,
       clientName = "Analytics",
       defaultHosts = hosts(region),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {

@@ -19,18 +19,18 @@
   */
 package algoliasearch.ingestion
 
-/** SourceWatchResponse
+/** WatchResponse
   *
   * @param runID
   *   Universally unique identifier (UUID) of a task run.
   * @param data
-  *   depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
+  *   when used with discovering or validating sources, the sampled data of your source is returned.
   * @param events
   *   in case of error, observability events will be added to the response, if any.
   * @param message
   *   a message describing the outcome of a validate run.
   */
-case class SourceWatchResponse(
+case class WatchResponse(
     runID: Option[String] = scala.None,
     data: Option[Seq[Any]] = scala.None,
     events: Option[Seq[Event]] = scala.None,

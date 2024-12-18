@@ -9,20 +9,21 @@ import Ingestion
 func pushSetup() async throws {
     do {
         let path = URL(string: #file)!.deletingLastPathComponent()
-            .appendingPathComponent("/my-raw-records.json")
+            .appendingPathComponent("records.json")
         let data = try Data(contentsOf: URL(fileURLWithPath: path.absoluteString))
         let records = try JSONDecoder().decode([PushTaskRecords].self, from: data)
 
         // use the region matching your applicationID
         let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
-        let run = try await client.pushTaskWithHTTPInfo(
+        // setting `watch` to `true` will make the call synchronous
+        let resp = try await client.pushTaskWithHTTPInfo(
             taskID: "YOUR_TASK_ID",
-            pushTaskPayload: PushTaskPayload(action: IngestionAction.addObject, records: records)
+            pushTaskPayload: PushTaskPayload(action: IngestionAction.addObject, records: records),
+            watch: true
         )
 
-        // use runID in the Observability debugger
-        dump(run)
+        dump(resp)
     } catch {
         print(error)
     }

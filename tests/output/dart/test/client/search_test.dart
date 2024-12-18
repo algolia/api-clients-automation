@@ -115,44 +115,6 @@ void main() {
     );
   });
 
-  test('calls api with correct user agent', () async {
-    final requester = RequestInterceptor();
-    final client = SearchClient(
-      appId: 'appId',
-      apiKey: 'apiKey',
-      options: ClientOptions(requester: requester),
-    );
-    requester.setOnRequest((request) {
-      TestHandle.current.markSkipped('User agent added using an interceptor');
-    });
-    try {
-      final res = await client.customPost(
-        path: "1/test",
-      );
-    } on InterceptionException catch (_) {
-      // Ignore InterceptionException
-    }
-  });
-
-  test('the user agent contains the latest version', () async {
-    final requester = RequestInterceptor();
-    final client = SearchClient(
-      appId: 'appId',
-      apiKey: 'apiKey',
-      options: ClientOptions(requester: requester),
-    );
-    requester.setOnRequest((request) {
-      TestHandle.current.markSkipped('User agent added using an interceptor');
-    });
-    try {
-      final res = await client.customPost(
-        path: "1/test",
-      );
-    } on InterceptionException catch (_) {
-      // Ignore InterceptionException
-    }
-  });
-
   test('calls api with default read timeouts', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(
@@ -181,6 +143,44 @@ void main() {
     );
     requester.setOnRequest((request) {
       expect(30000, request.timeout.inMilliseconds);
+    });
+    try {
+      final res = await client.customPost(
+        path: "1/test",
+      );
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('calls api with correct user agent', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+      appId: 'appId',
+      apiKey: 'apiKey',
+      options: ClientOptions(requester: requester),
+    );
+    requester.setOnRequest((request) {
+      TestHandle.current.markSkipped('User agent added using an interceptor');
+    });
+    try {
+      final res = await client.customPost(
+        path: "1/test",
+      );
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('the user agent contains the latest version', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+      appId: 'appId',
+      apiKey: 'apiKey',
+      options: ClientOptions(requester: requester),
+    );
+    requester.setOnRequest((request) {
+      TestHandle.current.markSkipped('User agent added using an interceptor');
     });
     try {
       final res = await client.customPost(

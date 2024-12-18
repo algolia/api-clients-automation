@@ -368,6 +368,7 @@ const _$AlternativesAsExactEnumMap = {
   AlternativesAsExact.ignorePlurals: 'ignorePlurals',
   AlternativesAsExact.singleWordSynonym: 'singleWordSynonym',
   AlternativesAsExact.multiWordsSynonym: 'multiWordsSynonym',
+  AlternativesAsExact.ignoreConjugations: 'ignoreConjugations',
 };
 
 const _$AdvancedSyntaxFeaturesEnumMap = {

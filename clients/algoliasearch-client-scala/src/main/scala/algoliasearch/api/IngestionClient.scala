@@ -52,7 +52,6 @@ import algoliasearch.ingestion.SourceSortKeys._
 import algoliasearch.ingestion.SourceType._
 import algoliasearch.ingestion.SourceUpdate
 import algoliasearch.ingestion.SourceUpdateResponse
-import algoliasearch.ingestion.SourceWatchResponse
 import algoliasearch.ingestion.Task
 import algoliasearch.ingestion.TaskCreate
 import algoliasearch.ingestion.TaskCreateResponse
@@ -72,18 +71,24 @@ import algoliasearch.ingestion.TransformationTry
 import algoliasearch.ingestion.TransformationTryResponse
 import algoliasearch.ingestion.TransformationUpdateResponse
 import algoliasearch.ingestion.TriggerType._
+import algoliasearch.ingestion.WatchResponse
 import algoliasearch.ingestion._
 import algoliasearch.ApiClient
 import algoliasearch.api.IngestionClient.hosts
+import algoliasearch.api.IngestionClient.readTimeout
+import algoliasearch.api.IngestionClient.writeTimeout
+import algoliasearch.api.IngestionClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object IngestionClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new IngestionClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -105,6 +110,18 @@ object IngestionClient {
     region = region,
     clientOptions = clientOptions
   )
+
+  private def readTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(25, TimeUnit.SECONDS)
+  }
 
   private def hosts(region: String): Seq[Host] = {
     val allowedRegions = Seq("eu", "us")
@@ -128,6 +145,9 @@ class IngestionClient(
       apiKey = apiKey,
       clientName = "Ingestion",
       defaultHosts = hosts(region),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {
@@ -1032,6 +1052,8 @@ class IngestionClient(
     *   Whether to filter the list of tasks by the `enabled` status.
     * @param sourceID
     *   Source IDs for filtering the list of tasks.
+    * @param sourceType
+    *   Filters the tasks with the specified source type.
     * @param destinationID
     *   Destination IDs for filtering the list of tasks.
     * @param triggerType
@@ -1047,6 +1069,7 @@ class IngestionClient(
       action: Option[Seq[ActionType]] = None,
       enabled: Option[Boolean] = None,
       sourceID: Option[Seq[String]] = None,
+      sourceType: Option[Seq[SourceType]] = None,
       destinationID: Option[Seq[String]] = None,
       triggerType: Option[Seq[TriggerType]] = None,
       sort: Option[TaskSortKeys] = None,
@@ -1063,6 +1086,7 @@ class IngestionClient(
       .withQueryParameter("action", action)
       .withQueryParameter("enabled", enabled)
       .withQueryParameter("sourceID", sourceID)
+      .withQueryParameter("sourceType", sourceType)
       .withQueryParameter("destinationID", destinationID)
       .withQueryParameter("triggerType", triggerType)
       .withQueryParameter("sort", sort)
@@ -1175,10 +1199,16 @@ class IngestionClient(
     *   Unique identifier of a task.
     * @param pushTaskPayload
     *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+    * @param watch
+    *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
+    *   before responding.
     */
-  def pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[RunResponse] = Future {
+  def pushTask(
+      taskID: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
     requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
@@ -1187,8 +1217,9 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/push")
       .withBody(pushTaskPayload)
+      .withQueryParameter("watch", watch)
       .build()
-    execute[RunResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
   /** Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
@@ -1410,7 +1441,7 @@ class IngestionClient(
     */
   def triggerDockerSourceDiscover(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[SourceWatchResponse] = Future {
+  ): Future[WatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.")
 
     val request = HttpRequest
@@ -1418,7 +1449,7 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/discover")
       .build()
-    execute[SourceWatchResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
   /** Try a transformation before creating it.
@@ -1633,7 +1664,7 @@ class IngestionClient(
     */
   def validateSource(sourceCreate: Option[SourceCreate] = None, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[SourceWatchResponse] = Future {
+  ): Future[WatchResponse] = Future {
 
     val request = HttpRequest
       .builder()
@@ -1641,7 +1672,7 @@ class IngestionClient(
       .withPath(s"/1/sources/validate")
       .withBody(sourceCreate)
       .build()
-    execute[SourceWatchResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
   /** Validates an update of a source payload to ensure it can be created and that the data source can be reached by
@@ -1659,7 +1690,7 @@ class IngestionClient(
       sourceID: String,
       sourceUpdate: SourceUpdate,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[SourceWatchResponse] = Future {
+  )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
     requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.")
 
@@ -1669,7 +1700,7 @@ class IngestionClient(
       .withPath(s"/1/sources/${escape(sourceID)}/validate")
       .withBody(sourceUpdate)
       .build()
-    execute[SourceWatchResponse](request, requestOptions)
+    execute[WatchResponse](request, requestOptions)
   }
 
 }

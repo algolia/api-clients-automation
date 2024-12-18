@@ -95,7 +95,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::AddApiKeyResponse")
     end
 
-    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  If you want to use auto-generated object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -140,7 +140,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    # If a record with the specified object ID exists, the existing record is replaced. Otherwise, a new record is added to the index.  If you want to use auto-generated object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2255,7 +2255,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::AddApiKeyResponse")
     end
 
-    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds a record to an index or replaces it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2292,7 +2292,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds a record to an index or replaces it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -3150,11 +3150,13 @@ module Algolia
     def wait_for_api_key(
       key,
       operation,
-      api_key = {},
+      api_key = Search::ApiKey.new,
       max_retries = 50,
       timeout = -> (retry_count) { [retry_count * 200, 5000].min },
       request_options = {}
     )
+      api_key = api_client.object_to_hash(api_key)
+
       retries = 0
       if operation == "update"
         raise ArgumentError, "`api_key` is required when waiting for an `update` operation." if api_key.nil?
@@ -3162,7 +3164,7 @@ module Algolia
           updated_key = get_api_key(key, request_options)
           updated_key_hash = updated_key.to_hash
           equals = true
-          api_key.to_hash.each do |k, v|
+          api_key.each do |k, v|
             equals &&= updated_key_hash[k] == v
           end
 
@@ -3201,7 +3203,9 @@ module Algolia
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
     # @param block [Proc] the block to execute on each object of the index.
     def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
-      browse_params[:hits_per_page] = browse_params[:hits_per_page] || 1000
+      browse_params = api_client.object_to_hash(browse_params)
+
+      browse_params[:hitsPerPage] = 1000 unless browse_params.key?(:hitsPerPage)
 
       hits = []
       loop do
@@ -3214,8 +3218,8 @@ module Algolia
           hits.concat(res.hits)
         end
 
-        browse_params.cursor = res.cursor
-        break if browse_params.cursor.nil?
+        browse_params[:cursor] = res.cursor
+        break if browse_params[:cursor].nil?
       end
 
       hits unless block_given?
@@ -3227,12 +3231,11 @@ module Algolia
     # @param search_rules_params [SearchRulesParams] the parameters to send along with the query, they will be forwarded to the `searchRules` method.
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchRules` method.
     # @param block [Proc] the block to execute on each rule of the index.
-    def browse_rules(
-      index_name,
-      search_rules_params = Search::SearchRulesParams.new(hits_per_page: 1000, page: 0),
-      request_options = {},
-      &block
-    )
+    def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new, request_options = {}, &block)
+      search_rules_params = api_client.object_to_hash(search_rules_params)
+
+      search_rules_params[:hitsPerPage] = 1000 unless search_rules_params.key?(:hitsPerPage)
+
       rules = []
       loop do
         res = search_rules(index_name, search_rules_params, request_options)
@@ -3244,8 +3247,8 @@ module Algolia
           rules.concat(res.hits)
         end
 
-        search_rules_params.page += 1
-        break if res.hits.length < search_rules_params.hits_per_page
+        search_rules_params[:page] += 1
+        break if res.hits.length < search_rules_params[:hitsPerPage]
       end
 
       rules unless block_given?
@@ -3259,10 +3262,14 @@ module Algolia
     # @param block [Proc] the block to execute on each synonym of the index.
     def browse_synonyms(
       index_name,
-      search_synonyms_params = Search::SearchSynonymsParams.new(hits_per_page: 1000, page: 0),
+      search_synonyms_params = Search::SearchSynonymsParams.new,
       request_options = {},
       &block
     )
+      search_synonyms_params = api_client.object_to_hash(search_synonyms_params)
+
+      search_synonyms_params[:hitsPerPage] = 1000 unless search_synonyms_params.key?(:hitsPerPage)
+
       synonyms = []
       loop do
         res = search_synonyms(index_name, search_synonyms_params, request_options)
@@ -3274,8 +3281,8 @@ module Algolia
           synonyms.concat(res.hits)
         end
 
-        search_synonyms_params.page += 1
-        break if res.hits.length < search_synonyms_params.hits_per_page
+        search_synonyms_params[:page] += 1
+        break if res.hits.length < search_synonyms_params[:hitsPerPage]
       end
 
       synonyms unless block_given?
@@ -3288,7 +3295,7 @@ module Algolia
     #
     # @return [String]
     #
-    def generate_secured_api_key(parent_api_key, restrictions = {})
+    def self.generate_secured_api_key(parent_api_key, restrictions = {})
       restrictions = restrictions.to_hash
       if restrictions.key?(:searchParams)
         # merge searchParams with the root of the restrictions
@@ -3310,13 +3317,24 @@ module Algolia
       Base64.encode64("#{hmac}#{url_encoded_restrictions}").gsub("\n", "")
     end
 
+    # Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
+    #
+    # @param parent_api_key [String] Parent API key used the generate the secured key
+    # @param restrictions [SecuredApiKeyRestrictions] Restrictions to apply on the secured key
+    #
+    # @return [String]
+    #
+    def generate_secured_api_key(parent_api_key, restrictions = {})
+      self.class.generate_secured_api_key(parent_api_key, restrictions)
+    end
+
     # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
     #
     # @param secured_api_key [String]
     #
     # @return [Integer]
     #
-    def get_secured_api_key_remaining_validity(secured_api_key)
+    def self.get_secured_api_key_remaining_validity(secured_api_key)
       now = Time.now.to_i
       decoded_key = Base64.decode64(secured_api_key)
       regex = "validUntil=(\\d+)"
@@ -3329,6 +3347,16 @@ module Algolia
       valid_until = matches[1].to_i
 
       valid_until - now
+    end
+
+    # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
+    #
+    # @param secured_api_key [String]
+    #
+    # @return [Integer]
+    #
+    def get_secured_api_key_remaining_validity(secured_api_key)
+      self.class.get_secured_api_key_remaining_validity(secured_api_key)
     end
 
     # Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -3512,10 +3540,12 @@ module Algolia
     def index_exists?(index_name)
       begin
         get_settings(index_name)
-      rescue AlgoliaHttpError => e
-        return false if e.code == 404
+      rescue Exception => e
+        if e.is_a?(AlgoliaHttpError)
+          return false if e.code == 404
 
-        raise e
+          raise e
+        end
       end
 
       true

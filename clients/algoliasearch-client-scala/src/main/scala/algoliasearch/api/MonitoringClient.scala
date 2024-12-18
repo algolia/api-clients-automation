@@ -18,15 +18,20 @@ import algoliasearch.monitoring.Unauthorized
 import algoliasearch.monitoring._
 import algoliasearch.ApiClient
 import algoliasearch.api.MonitoringClient.hosts
+import algoliasearch.api.MonitoringClient.readTimeout
+import algoliasearch.api.MonitoringClient.writeTimeout
+import algoliasearch.api.MonitoringClient.connectTimeout
 import algoliasearch.config._
 import algoliasearch.internal.util._
 
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object MonitoringClient {
 
-  /** Creates a new SearchApi instance using default hosts.
+  /** Creates a new MonitoringClient instance using default hosts.
     *
     * @param appId
     *   application ID
@@ -46,6 +51,18 @@ object MonitoringClient {
     clientOptions = clientOptions
   )
 
+  private def readTimeout(): Duration = {
+    Duration(5, TimeUnit.SECONDS)
+  }
+
+  private def connectTimeout(): Duration = {
+    Duration(2, TimeUnit.SECONDS)
+  }
+
+  private def writeTimeout(): Duration = {
+    Duration(30, TimeUnit.SECONDS)
+  }
+
   private def hosts(): Seq[Host] = {
     List(
       Host("status.algolia.com", Set(CallType.Read, CallType.Write))
@@ -62,6 +79,9 @@ class MonitoringClient(
       apiKey = apiKey,
       clientName = "Monitoring",
       defaultHosts = hosts(),
+      defaultReadTimeout = readTimeout(),
+      defaultWriteTimeout = writeTimeout(),
+      defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {

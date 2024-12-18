@@ -6,7 +6,8 @@ import 'package:json_annotation/json_annotation.dart';
 enum AlternativesAsExact {
   ignorePlurals(r'ignorePlurals'),
   singleWordSynonym(r'singleWordSynonym'),
-  multiWordsSynonym(r'multiWordsSynonym');
+  multiWordsSynonym(r'multiWordsSynonym'),
+  ignoreConjugations(r'ignoreConjugations');
 
   const AlternativesAsExact(this.raw);
   final dynamic raw;

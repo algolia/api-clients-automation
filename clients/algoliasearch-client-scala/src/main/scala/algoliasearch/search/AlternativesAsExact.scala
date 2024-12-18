@@ -49,7 +49,10 @@ object AlternativesAsExact {
   case object MultiWordsSynonym extends AlternativesAsExact {
     override def toString = "multiWordsSynonym"
   }
-  val values: Seq[AlternativesAsExact] = Seq(IgnorePlurals, SingleWordSynonym, MultiWordsSynonym)
+  case object IgnoreConjugations extends AlternativesAsExact {
+    override def toString = "ignoreConjugations"
+  }
+  val values: Seq[AlternativesAsExact] = Seq(IgnorePlurals, SingleWordSynonym, MultiWordsSynonym, IgnoreConjugations)
 
   def withName(name: String): AlternativesAsExact = AlternativesAsExact.values
     .find(_.toString == name)

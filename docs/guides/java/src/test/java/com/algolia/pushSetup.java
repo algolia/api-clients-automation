@@ -8,16 +8,16 @@ import java.util.Map;
 public class pushSetup {
 
   public static void main(String[] args) throws Exception {
-    JsonNode content = new ObjectMapper().readTree(new File("/my-raw-records.json"));
+    JsonNode content = new ObjectMapper().readTree(new File("records.json"));
     List<PushTaskRecords> records = new ObjectMapper().readerForListOf(Map.class).readValue(content);
 
     // use the region matching your applicationID
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
-    RunResponse run = client.pushTask("YOUR_TASK_ID", new PushTaskPayload().setAction(Action.ADD_OBJECT).setRecords(records));
+    // setting `watch` to `true` will make the call synchronous
+    WatchResponse resp = client.pushTask("YOUR_TASK_ID", new PushTaskPayload().setAction(Action.ADD_OBJECT).setRecords(records), true);
 
-    // use runID in the Observability debugger
-    System.out.println(run.getRunID());
+    System.out.println(resp);
 
     client.close();
   }
