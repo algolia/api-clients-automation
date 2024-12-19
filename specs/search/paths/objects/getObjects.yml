@@ -49,6 +49,10 @@ post:
                     type: string
                     description: Index from which to retrieve the records.
                     example: books
+                  myNewParam:
+                    type: string
+                    description: it does stuff I SWEAR.
+                    example: foo
           required:
             - requests
   responses:
