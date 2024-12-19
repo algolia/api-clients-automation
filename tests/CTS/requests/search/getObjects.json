@@ -8,7 +8,8 @@
             "attr2"
           ],
           "objectID": "uniqueID",
-          "indexName": "theIndexName"
+          "indexName": "theIndexName",
+          "myNewParam": "foo"
         }
       ]
     },
@@ -23,7 +24,8 @@
               "attr2"
             ],
             "objectID": "uniqueID",
-            "indexName": "theIndexName"
+            "indexName": "theIndexName",
+            "myNewParam": "foo"
           }
         ]
       }
