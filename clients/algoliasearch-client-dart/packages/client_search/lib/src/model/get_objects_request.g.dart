@@ -16,6 +16,7 @@ GetObjectsRequest _$GetObjectsRequestFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           objectID: $checkedConvert('objectID', (v) => v as String),
           indexName: $checkedConvert('indexName', (v) => v as String),
+          myNewParam: $checkedConvert('myNewParam', (v) => v as String?),
         );
         return val;
       },
@@ -27,4 +28,5 @@ Map<String, dynamic> _$GetObjectsRequestToJson(GetObjectsRequest instance) =>
         'attributesToRetrieve': value,
       'objectID': instance.objectID,
       'indexName': instance.indexName,
+      if (instance.myNewParam case final value?) 'myNewParam': value,
     };

@@ -12,6 +12,7 @@ final class GetObjectsRequest {
     this.attributesToRetrieve,
     required this.objectID,
     required this.indexName,
+    this.myNewParam,
   });
 
   /// Attributes to retrieve. If not specified, all retrievable attributes are returned.
@@ -26,17 +27,25 @@ final class GetObjectsRequest {
   @JsonKey(name: r'indexName')
   final String indexName;
 
+  /// it does stuff I SWEAR.
+  @JsonKey(name: r'myNewParam')
+  final String? myNewParam;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is GetObjectsRequest &&
           other.attributesToRetrieve == attributesToRetrieve &&
           other.objectID == objectID &&
-          other.indexName == indexName;
+          other.indexName == indexName &&
+          other.myNewParam == myNewParam;
 
   @override
   int get hashCode =>
-      attributesToRetrieve.hashCode + objectID.hashCode + indexName.hashCode;
+      attributesToRetrieve.hashCode +
+      objectID.hashCode +
+      indexName.hashCode +
+      myNewParam.hashCode;
 
   factory GetObjectsRequest.fromJson(Map<String, dynamic> json) =>
       _$GetObjectsRequestFromJson(json);

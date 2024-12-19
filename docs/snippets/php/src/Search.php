@@ -1043,6 +1043,7 @@ class SnippetSearchClient
                 ],
                     'objectID' => 'uniqueID',
                     'indexName' => '<YOUR_INDEX_NAME>',
+                    'myNewParam' => 'foo',
                 ],
             ],
             ],

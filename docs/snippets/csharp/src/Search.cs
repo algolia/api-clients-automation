@@ -903,6 +903,7 @@ public class SnippetSearchClient
             AttributesToRetrieve = new List<string> { "attr1", "attr2" },
             ObjectID = "uniqueID",
             IndexName = "<YOUR_INDEX_NAME>",
+            MyNewParam = "foo",
           },
         },
       }

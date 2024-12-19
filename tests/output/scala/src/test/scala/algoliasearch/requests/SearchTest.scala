@@ -1278,7 +1278,8 @@ class SearchTest extends AnyFunSuite {
           GetObjectsRequest(
             attributesToRetrieve = Some(Seq("attr1", "attr2")),
             objectID = "uniqueID",
-            indexName = "theIndexName"
+            indexName = "theIndexName",
+            myNewParam = Some("foo")
           )
         )
       )
@@ -1290,7 +1291,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/objects")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}"""
+      """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName","myNewParam":"foo"}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

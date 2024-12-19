@@ -689,7 +689,8 @@ final class SearchClientSnippet {
             .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
                 attributesToRetrieve: ["attr1", "attr2"],
                 objectID: "uniqueID",
-                indexName: "<YOUR_INDEX_NAME>"
+                indexName: "<YOUR_INDEX_NAME>",
+                myNewParam: "foo"
             )]))
         // >LOG
         // SEPARATOR<

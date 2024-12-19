@@ -1799,7 +1799,8 @@ final class SearchClientRequestsTests: XCTestCase {
             .getObjectsWithHTTPInfo(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
                 attributesToRetrieve: ["attr1", "attr2"],
                 objectID: "uniqueID",
-                indexName: "theIndexName"
+                indexName: "theIndexName",
+                myNewParam: "foo"
             )]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1808,7 +1809,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}"
+            "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\",\"myNewParam\":\"foo\"}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

@@ -18,4 +18,9 @@ export type GetObjectsRequest = {
    * Index from which to retrieve the records.
    */
   indexName: string;
+
+  /**
+   * it does stuff I SWEAR.
+   */
+  myNewParam?: string;
 };

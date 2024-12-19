@@ -1037,7 +1037,7 @@ func TestSearch_GetObjects(t *testing.T) {
 
 			search.NewEmptyGetObjectsParams().SetRequests(
 				[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-					[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("theIndexName")}),
+					[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("theIndexName").SetMyNewParam("foo")}),
 		))
 		require.NoError(t, err)
 
@@ -1045,7 +1045,7 @@ func TestSearch_GetObjects(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName","myNewParam":"foo"}]}`)
 	})
 }
 

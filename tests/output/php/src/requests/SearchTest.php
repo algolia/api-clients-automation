@@ -1262,6 +1262,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 ],
                     'objectID' => 'uniqueID',
                     'indexName' => 'theIndexName',
+                    'myNewParam' => 'foo',
                 ],
             ],
             ],
@@ -1271,7 +1272,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/objects',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}'),
+                'body' => json_decode('{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName","myNewParam":"foo"}]}'),
             ],
         ]);
     }

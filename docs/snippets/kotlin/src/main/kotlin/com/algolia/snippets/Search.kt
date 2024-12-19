@@ -920,6 +920,7 @@ class SnippetSearchClient {
             attributesToRetrieve = listOf("attr1", "attr2"),
             objectID = "uniqueID",
             indexName = "<YOUR_INDEX_NAME>",
+            myNewParam = "foo",
           ),
         ),
       ),

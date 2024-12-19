@@ -5350,6 +5350,10 @@ paths:
                         type: string
                         description: Index from which to retrieve the records.
                         example: books
+                      myNewParam:
+                        type: string
+                        description: it does stuff I SWEAR.
+                        example: foo
               required:
                 - requests
       responses:
@@ -5405,6 +5409,7 @@ paths:
                     AttributesToRetrieve = new List<string> { "attr1", "attr2" },
                     ObjectID = "uniqueID",
                     IndexName = "<YOUR_INDEX_NAME>",
+                    MyNewParam = "foo",
                   },
                 },
               }
@@ -5429,6 +5434,7 @@ paths:
                     ],
                     objectID: "uniqueID",
                     indexName: "<YOUR_INDEX_NAME>",
+                    myNewParam: "foo",
                   ),
                 ],
               ),
@@ -5454,7 +5460,7 @@ paths:
 
               search.NewEmptyGetObjectsParams().SetRequests(
                 []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
+                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>").SetMyNewParam("foo")}),
             ))
 
             if err != nil {
@@ -5487,6 +5493,7 @@ paths:
                       .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
                       .setObjectID("uniqueID")
                       .setIndexName("<YOUR_INDEX_NAME>")
+                      .setMyNewParam("foo")
                   )
                 ),
               Hit.class
@@ -5507,7 +5514,9 @@ paths:
             // Call the API
 
             const response = await client.getObjects({
-              requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
+              requests: [
+                { attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName', myNewParam: 'foo' },
+              ],
             });
 
 
@@ -5534,6 +5543,7 @@ paths:
                     attributesToRetrieve = listOf("attr1", "attr2"),
                     objectID = "uniqueID",
                     indexName = "<YOUR_INDEX_NAME>",
+                    myNewParam = "foo",
                   ),
                 ),
               ),
@@ -5565,6 +5575,7 @@ paths:
                     ],
                         'objectID' => 'uniqueID',
                         'indexName' => '<YOUR_INDEX_NAME>',
+                        'myNewParam' => 'foo',
                     ],
                 ],
                 ],
@@ -5600,6 +5611,7 @@ paths:
                             ],
                             "objectID": "uniqueID",
                             "indexName": "<YOUR_INDEX_NAME>",
+                            "myNewParam": "foo",
                         },
                     ],
                 },
@@ -5628,7 +5640,8 @@ paths:
                   Algolia::Search::GetObjectsRequest.new(
                     attributes_to_retrieve: ["attr1", "attr2"],
                     object_id: "uniqueID",
-                    index_name: "<YOUR_INDEX_NAME>"
+                    index_name: "<YOUR_INDEX_NAME>",
+                    my_new_param: "foo"
                   )
                 ]
               )
@@ -5662,7 +5675,8 @@ paths:
                   GetObjectsRequest(
                     attributesToRetrieve = Some(Seq("attr1", "attr2")),
                     objectID = "uniqueID",
-                    indexName = "<YOUR_INDEX_NAME>"
+                    indexName = "<YOUR_INDEX_NAME>",
+                    myNewParam = Some("foo")
                   )
                 )
               )
@@ -5689,7 +5703,8 @@ paths:
                 .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
                     attributesToRetrieve: ["attr1", "attr2"],
                     objectID: "uniqueID",
-                    indexName: "<YOUR_INDEX_NAME>"
+                    indexName: "<YOUR_INDEX_NAME>",
+                    myNewParam: "foo"
                 )]))
             // >LOG
         - lang: cURL
@@ -5701,7 +5716,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"attributesToRetrieve":["author","title","content"],"objectID":"product-1","indexName":"books"}]}'
+              --data '{"requests":[{"attributesToRetrieve":["author","title","content"],"objectID":"product-1","indexName":"books","myNewParam":"foo"}]}'
   /1/indexes/{indexName}/settings:
     get:
       tags:

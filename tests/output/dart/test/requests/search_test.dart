@@ -1509,6 +1509,7 @@ void main() {
               ],
               objectID: "uniqueID",
               indexName: "theIndexName",
+              myNewParam: "foo",
             ),
           ],
         ),
@@ -1517,7 +1518,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/objects');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}""");
+            """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName","myNewParam":"foo"}]}""");
       },
     ),
   );

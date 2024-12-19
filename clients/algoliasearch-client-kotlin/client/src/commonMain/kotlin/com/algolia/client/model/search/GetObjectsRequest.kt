@@ -10,6 +10,7 @@ import kotlinx.serialization.json.*
  * @param objectID Object ID for the record to retrieve.
  * @param indexName Index from which to retrieve the records.
  * @param attributesToRetrieve Attributes to retrieve. If not specified, all retrievable attributes are returned.
+ * @param myNewParam it does stuff I SWEAR.
  */
 @Serializable
 public data class GetObjectsRequest(
@@ -22,4 +23,7 @@ public data class GetObjectsRequest(
 
   /** Attributes to retrieve. If not specified, all retrievable attributes are returned.  */
   @SerialName(value = "attributesToRetrieve") val attributesToRetrieve: List<String>? = null,
+
+  /** it does stuff I SWEAR. */
+  @SerialName(value = "myNewParam") val myNewParam: String? = null,
 )

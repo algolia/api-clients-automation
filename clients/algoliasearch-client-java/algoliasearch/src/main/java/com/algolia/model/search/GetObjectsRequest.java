@@ -21,6 +21,9 @@ public class GetObjectsRequest {
   @JsonProperty("indexName")
   private String indexName;
 
+  @JsonProperty("myNewParam")
+  private String myNewParam;
+
   public GetObjectsRequest setAttributesToRetrieve(List<String> attributesToRetrieve) {
     this.attributesToRetrieve = attributesToRetrieve;
     return this;
@@ -62,6 +65,17 @@ public class GetObjectsRequest {
     return indexName;
   }
 
+  public GetObjectsRequest setMyNewParam(String myNewParam) {
+    this.myNewParam = myNewParam;
+    return this;
+  }
+
+  /** it does stuff I SWEAR. */
+  @javax.annotation.Nullable
+  public String getMyNewParam() {
+    return myNewParam;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -74,13 +88,14 @@ public class GetObjectsRequest {
     return (
       Objects.equals(this.attributesToRetrieve, getObjectsRequest.attributesToRetrieve) &&
       Objects.equals(this.objectID, getObjectsRequest.objectID) &&
-      Objects.equals(this.indexName, getObjectsRequest.indexName)
+      Objects.equals(this.indexName, getObjectsRequest.indexName) &&
+      Objects.equals(this.myNewParam, getObjectsRequest.myNewParam)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(attributesToRetrieve, objectID, indexName);
+    return Objects.hash(attributesToRetrieve, objectID, indexName, myNewParam);
   }
 
   @Override
@@ -90,6 +105,7 @@ public class GetObjectsRequest {
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
+    sb.append("    myNewParam: ").append(toIndentedString(myNewParam)).append("\n");
     sb.append("}");
     return sb.toString();
   }

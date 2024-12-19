@@ -1449,6 +1449,7 @@ class SearchClientRequestsTests {
                 .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
                 .setObjectID("uniqueID")
                 .setIndexName("theIndexName")
+                .setMyNewParam("foo")
             )
           ),
         Hit.class
@@ -1459,7 +1460,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}",
+        "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\",\"myNewParam\":\"foo\"}]}",
         req.body,
         JSONCompareMode.STRICT
       )

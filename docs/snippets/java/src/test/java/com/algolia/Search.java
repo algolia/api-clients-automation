@@ -769,6 +769,7 @@ class SnippetSearchClient {
               .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
               .setObjectID("uniqueID")
               .setIndexName("<YOUR_INDEX_NAME>")
+              .setMyNewParam("foo")
           )
         ),
       Hit.class

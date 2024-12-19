@@ -1191,7 +1191,7 @@ func SnippetForGetObjectsOfSearch() {
 
 		search.NewEmptyGetObjectsParams().SetRequests(
 			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-				[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
+				[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>").SetMyNewParam("foo")}),
 	))
 	if err != nil {
 		// handle the eventual error

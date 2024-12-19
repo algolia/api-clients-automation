@@ -22,6 +22,7 @@ _ALIASES = {
     "attributes_to_retrieve": "attributesToRetrieve",
     "object_id": "objectID",
     "index_name": "indexName",
+    "my_new_param": "myNewParam",
 }
 
 
@@ -40,6 +41,8 @@ class GetObjectsRequest(BaseModel):
     """ Object ID for the record to retrieve. """
     index_name: str
     """ Index from which to retrieve the records. """
+    my_new_param: Optional[str] = None
+    """ it does stuff I SWEAR. """
 
     model_config = ConfigDict(
         strict=False,

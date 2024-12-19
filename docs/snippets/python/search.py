@@ -1069,6 +1069,7 @@ def snippet_for_get_objects():
                     ],
                     "objectID": "uniqueID",
                     "indexName": "<YOUR_INDEX_NAME>",
+                    "myNewParam": "foo",
                 },
             ],
         },

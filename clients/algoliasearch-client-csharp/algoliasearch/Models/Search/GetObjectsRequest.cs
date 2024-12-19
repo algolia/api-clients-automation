@@ -54,6 +54,13 @@ public partial class GetObjectsRequest
   public string IndexName { get; set; }
 
   /// <summary>
+  /// it does stuff I SWEAR.
+  /// </summary>
+  /// <value>it does stuff I SWEAR.</value>
+  [JsonPropertyName("myNewParam")]
+  public string MyNewParam { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -64,6 +71,7 @@ public partial class GetObjectsRequest
     sb.Append("  AttributesToRetrieve: ").Append(AttributesToRetrieve).Append("\n");
     sb.Append("  ObjectID: ").Append(ObjectID).Append("\n");
     sb.Append("  IndexName: ").Append(IndexName).Append("\n");
+    sb.Append("  MyNewParam: ").Append(MyNewParam).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -92,7 +100,8 @@ public partial class GetObjectsRequest
     return
         (AttributesToRetrieve == input.AttributesToRetrieve || AttributesToRetrieve != null && input.AttributesToRetrieve != null && AttributesToRetrieve.SequenceEqual(input.AttributesToRetrieve)) &&
         (ObjectID == input.ObjectID || (ObjectID != null && ObjectID.Equals(input.ObjectID))) &&
-        (IndexName == input.IndexName || (IndexName != null && IndexName.Equals(input.IndexName)));
+        (IndexName == input.IndexName || (IndexName != null && IndexName.Equals(input.IndexName))) &&
+        (MyNewParam == input.MyNewParam || (MyNewParam != null && MyNewParam.Equals(input.MyNewParam)));
   }
 
   /// <summary>
@@ -115,6 +124,10 @@ public partial class GetObjectsRequest
       if (IndexName != null)
       {
         hashCode = (hashCode * 59) + IndexName.GetHashCode();
+      }
+      if (MyNewParam != null)
+      {
+        hashCode = (hashCode * 59) + MyNewParam.GetHashCode();
       }
       return hashCode;
     }

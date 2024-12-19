@@ -877,7 +877,8 @@ class TestSearchClient < Test::Unit::TestCase
           Algolia::Search::GetObjectsRequest.new(
             attributes_to_retrieve: ["attr1", "attr2"],
             object_id: "uniqueID",
-            index_name: "theIndexName"
+            index_name: "theIndexName",
+            my_new_param: "foo"
           )
         ]
       )
@@ -889,7 +890,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}"
+        "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\",\"myNewParam\":\"foo\"}]}"
       ),
       JSON.parse(req.body)
     )

@@ -16,12 +16,16 @@ module Algolia
       # Index from which to retrieve the records.
       attr_accessor :index_name
 
+      # it does stuff I SWEAR.
+      attr_accessor :my_new_param
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :attributes_to_retrieve => :attributesToRetrieve,
           :object_id => :objectID,
-          :index_name => :indexName
+          :index_name => :indexName,
+          :my_new_param => :myNewParam
         }
       end
 
@@ -35,7 +39,8 @@ module Algolia
         {
           :attributes_to_retrieve => :"Array<String>",
           :object_id => :"String",
-          :index_name => :"String"
+          :index_name => :"String",
+          :my_new_param => :"String"
         }
       end
 
@@ -86,6 +91,10 @@ module Algolia
         else
           self.index_name = nil
         end
+
+        if attributes.key?(:my_new_param)
+          self.my_new_param = attributes[:my_new_param]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -95,7 +104,8 @@ module Algolia
         self.class == other.class &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
           object_id == other.object_id &&
-          index_name == other.index_name
+          index_name == other.index_name &&
+          my_new_param == other.my_new_param
       end
 
       # @see the `==` method
@@ -107,7 +117,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [attributes_to_retrieve, object_id, index_name].hash
+        [attributes_to_retrieve, object_id, index_name, my_new_param].hash
       end
 
       # Builds the object from hash

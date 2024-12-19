@@ -25,6 +25,7 @@ class GetObjectsRequest extends AbstractModel implements ModelInterface, \ArrayA
         'attributesToRetrieve' => 'string[]',
         'objectID' => 'string',
         'indexName' => 'string',
+        'myNewParam' => 'string',
     ];
 
     /**
@@ -36,6 +37,7 @@ class GetObjectsRequest extends AbstractModel implements ModelInterface, \ArrayA
         'attributesToRetrieve' => null,
         'objectID' => null,
         'indexName' => null,
+        'myNewParam' => null,
     ];
 
     /**
@@ -48,6 +50,7 @@ class GetObjectsRequest extends AbstractModel implements ModelInterface, \ArrayA
         'attributesToRetrieve' => 'attributesToRetrieve',
         'objectID' => 'objectID',
         'indexName' => 'indexName',
+        'myNewParam' => 'myNewParam',
     ];
 
     /**
@@ -59,6 +62,7 @@ class GetObjectsRequest extends AbstractModel implements ModelInterface, \ArrayA
         'attributesToRetrieve' => 'setAttributesToRetrieve',
         'objectID' => 'setObjectID',
         'indexName' => 'setIndexName',
+        'myNewParam' => 'setMyNewParam',
     ];
 
     /**
@@ -70,6 +74,7 @@ class GetObjectsRequest extends AbstractModel implements ModelInterface, \ArrayA
         'attributesToRetrieve' => 'getAttributesToRetrieve',
         'objectID' => 'getObjectID',
         'indexName' => 'getIndexName',
+        'myNewParam' => 'getMyNewParam',
     ];
 
     /**
@@ -94,6 +99,9 @@ class GetObjectsRequest extends AbstractModel implements ModelInterface, \ArrayA
         }
         if (isset($data['indexName'])) {
             $this->container['indexName'] = $data['indexName'];
+        }
+        if (isset($data['myNewParam'])) {
+            $this->container['myNewParam'] = $data['myNewParam'];
         }
     }
 
@@ -246,6 +254,30 @@ class GetObjectsRequest extends AbstractModel implements ModelInterface, \ArrayA
     public function setIndexName($indexName)
     {
         $this->container['indexName'] = $indexName;
+
+        return $this;
+    }
+
+    /**
+     * Gets myNewParam.
+     *
+     * @return null|string
+     */
+    public function getMyNewParam()
+    {
+        return $this->container['myNewParam'] ?? null;
+    }
+
+    /**
+     * Sets myNewParam.
+     *
+     * @param null|string $myNewParam it does stuff I SWEAR
+     *
+     * @return self
+     */
+    public function setMyNewParam($myNewParam)
+    {
+        $this->container['myNewParam'] = $myNewParam;
 
         return $this;
     }

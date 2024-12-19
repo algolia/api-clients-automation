@@ -1155,6 +1155,7 @@ class TestSearchClient:
                         ],
                         "objectID": "uniqueID",
                         "indexName": "theIndexName",
+                        "myNewParam": "foo",
                     },
                 ],
             },
@@ -1165,7 +1166,7 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}"""
+            """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName","myNewParam":"foo"}]}"""
         )
 
     async def test_get_rule_(self):
@@ -4381,6 +4382,7 @@ class TestSearchClientSync:
                         ],
                         "objectID": "uniqueID",
                         "indexName": "theIndexName",
+                        "myNewParam": "foo",
                     },
                 ],
             },
@@ -4391,7 +4393,7 @@ class TestSearchClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}"""
+            """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName","myNewParam":"foo"}]}"""
         )
 
     def test_get_rule_(self):

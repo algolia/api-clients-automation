@@ -1261,6 +1261,7 @@ public class SearchClientRequestTests
             AttributesToRetrieve = new List<string> { "attr1", "attr2" },
             ObjectID = "uniqueID",
             IndexName = "theIndexName",
+            MyNewParam = "foo",
           },
         },
       }
@@ -1270,7 +1271,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/*/objects", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}",
+      "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\",\"myNewParam\":\"foo\"}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

@@ -876,7 +876,8 @@ class SnippetSearchClient {
           GetObjectsRequest(
             attributesToRetrieve = Some(Seq("attr1", "attr2")),
             objectID = "uniqueID",
-            indexName = "<YOUR_INDEX_NAME>"
+            indexName = "<YOUR_INDEX_NAME>",
+            myNewParam = Some("foo")
           )
         )
       )

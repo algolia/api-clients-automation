@@ -812,7 +812,9 @@ export async function snippetForGetObjects(): Promise<void> {
 
   // Call the API
   const response = await client.getObjects({
-    requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
+    requests: [
+      { attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName', myNewParam: 'foo' },
+    ],
   });
 
   // >LOG

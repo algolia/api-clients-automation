@@ -783,13 +783,27 @@ describe('getObject', () => {
 describe('getObjects', () => {
   test('getObjects', async () => {
     const req = (await client.getObjects({
-      requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
+      requests: [
+        {
+          attributesToRetrieve: ['attr1', 'attr2'],
+          objectID: 'uniqueID',
+          indexName: 'theIndexName',
+          myNewParam: 'foo',
+        },
+      ],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/objects');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
+      requests: [
+        {
+          attributesToRetrieve: ['attr1', 'attr2'],
+          objectID: 'uniqueID',
+          indexName: 'theIndexName',
+          myNewParam: 'foo',
+        },
+      ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });

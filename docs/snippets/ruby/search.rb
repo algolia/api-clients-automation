@@ -907,7 +907,8 @@ def snippet_for_get_objects
         Algolia::Search::GetObjectsRequest.new(
           attributes_to_retrieve: ["attr1", "attr2"],
           object_id: "uniqueID",
-          index_name: "<YOUR_INDEX_NAME>"
+          index_name: "<YOUR_INDEX_NAME>",
+          my_new_param: "foo"
         )
       ]
     )

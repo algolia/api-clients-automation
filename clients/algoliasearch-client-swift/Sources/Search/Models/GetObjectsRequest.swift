@@ -14,17 +14,21 @@ public struct GetObjectsRequest: Codable, JSONEncodable {
     public var objectID: String
     /// Index from which to retrieve the records.
     public var indexName: String
+    /// it does stuff I SWEAR.
+    public var myNewParam: String?
 
-    public init(attributesToRetrieve: [String]? = nil, objectID: String, indexName: String) {
+    public init(attributesToRetrieve: [String]? = nil, objectID: String, indexName: String, myNewParam: String? = nil) {
         self.attributesToRetrieve = attributesToRetrieve
         self.objectID = objectID
         self.indexName = indexName
+        self.myNewParam = myNewParam
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case attributesToRetrieve
         case objectID
         case indexName
+        case myNewParam
     }
 
     // Encodable protocol methods
@@ -34,6 +38,7 @@ public struct GetObjectsRequest: Codable, JSONEncodable {
         try container.encodeIfPresent(self.attributesToRetrieve, forKey: .attributesToRetrieve)
         try container.encode(self.objectID, forKey: .objectID)
         try container.encode(self.indexName, forKey: .indexName)
+        try container.encodeIfPresent(self.myNewParam, forKey: .myNewParam)
     }
 }
 
@@ -41,7 +46,8 @@ extension GetObjectsRequest: Equatable {
     public static func ==(lhs: GetObjectsRequest, rhs: GetObjectsRequest) -> Bool {
         lhs.attributesToRetrieve == rhs.attributesToRetrieve &&
             lhs.objectID == rhs.objectID &&
-            lhs.indexName == rhs.indexName
+            lhs.indexName == rhs.indexName &&
+            lhs.myNewParam == rhs.myNewParam
     }
 }
 
@@ -50,5 +56,6 @@ extension GetObjectsRequest: Hashable {
         hasher.combine(self.attributesToRetrieve?.hashValue)
         hasher.combine(self.objectID.hashValue)
         hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.myNewParam?.hashValue)
     }
 }

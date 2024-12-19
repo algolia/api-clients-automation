@@ -1328,6 +1328,7 @@ class SearchTest {
                 attributesToRetrieve = listOf("attr1", "attr2"),
                 objectID = "uniqueID",
                 indexName = "theIndexName",
+                myNewParam = "foo",
               ),
             ),
           ),
@@ -1336,7 +1337,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/*/objects".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}""", it.body)
+        assertJsonBody("""{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName","myNewParam":"foo"}]}""", it.body)
       },
     )
   }

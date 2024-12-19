@@ -41,9 +41,12 @@ package algoliasearch.search
   *   Object ID for the record to retrieve.
   * @param indexName
   *   Index from which to retrieve the records.
+  * @param myNewParam
+  *   it does stuff I SWEAR.
   */
 case class GetObjectsRequest(
     attributesToRetrieve: Option[Seq[String]] = scala.None,
     objectID: String,
-    indexName: String
+    indexName: String,
+    myNewParam: Option[String] = scala.None
 )

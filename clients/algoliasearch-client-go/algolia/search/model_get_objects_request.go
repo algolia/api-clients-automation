@@ -14,6 +14,8 @@ type GetObjectsRequest struct {
 	ObjectID string `json:"objectID"`
 	// Index from which to retrieve the records.
 	IndexName string `json:"indexName"`
+	// it does stuff I SWEAR.
+	MyNewParam *string `json:"myNewParam,omitempty"`
 }
 
 type GetObjectsRequestOption func(f *GetObjectsRequest)
@@ -21,6 +23,12 @@ type GetObjectsRequestOption func(f *GetObjectsRequest)
 func WithGetObjectsRequestAttributesToRetrieve(val []string) GetObjectsRequestOption {
 	return func(f *GetObjectsRequest) {
 		f.AttributesToRetrieve = val
+	}
+}
+
+func WithGetObjectsRequestMyNewParam(val string) GetObjectsRequestOption {
+	return func(f *GetObjectsRequest) {
+		f.MyNewParam = &val
 	}
 }
 
@@ -126,6 +134,39 @@ func (o *GetObjectsRequest) SetIndexName(v string) *GetObjectsRequest {
 	return o
 }
 
+// GetMyNewParam returns the MyNewParam field value if set, zero value otherwise.
+func (o *GetObjectsRequest) GetMyNewParam() string {
+	if o == nil || o.MyNewParam == nil {
+		var ret string
+		return ret
+	}
+	return *o.MyNewParam
+}
+
+// GetMyNewParamOk returns a tuple with the MyNewParam field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetObjectsRequest) GetMyNewParamOk() (*string, bool) {
+	if o == nil || o.MyNewParam == nil {
+		return nil, false
+	}
+	return o.MyNewParam, true
+}
+
+// HasMyNewParam returns a boolean if a field has been set.
+func (o *GetObjectsRequest) HasMyNewParam() bool {
+	if o != nil && o.MyNewParam != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMyNewParam gets a reference to the given string and assigns it to the MyNewParam field.
+func (o *GetObjectsRequest) SetMyNewParam(v string) *GetObjectsRequest {
+	o.MyNewParam = &v
+	return o
+}
+
 func (o GetObjectsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if o.AttributesToRetrieve != nil {
@@ -136,6 +177,9 @@ func (o GetObjectsRequest) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["indexName"] = o.IndexName
+	}
+	if o.MyNewParam != nil {
+		toSerialize["myNewParam"] = o.MyNewParam
 	}
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
@@ -150,5 +194,6 @@ func (o GetObjectsRequest) String() string {
 	out += fmt.Sprintf("  attributesToRetrieve=%v\n", o.AttributesToRetrieve)
 	out += fmt.Sprintf("  objectID=%v\n", o.ObjectID)
 	out += fmt.Sprintf("  indexName=%v\n", o.IndexName)
+	out += fmt.Sprintf("  myNewParam=%v\n", o.MyNewParam)
 	return fmt.Sprintf("GetObjectsRequest {\n%s}", out)
 }

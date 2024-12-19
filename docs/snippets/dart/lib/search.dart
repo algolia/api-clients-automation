@@ -871,6 +871,7 @@ void snippetForgetObjects() async {
           ],
           objectID: "uniqueID",
           indexName: "<YOUR_INDEX_NAME>",
+          myNewParam: "foo",
         ),
       ],
     ),
