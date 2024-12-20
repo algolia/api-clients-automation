@@ -246,7 +246,7 @@ func TestSearchcommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.10.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.10.2\).*`), echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error

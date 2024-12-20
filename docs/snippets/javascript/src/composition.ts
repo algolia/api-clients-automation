@@ -164,7 +164,8 @@ export async function snippetForMultipleBatch(): Promise<void> {
         action: 'upsert',
         body: {
           objectID: 'foo',
-          behavior: { injection: { main: { source: { search: { index: 'bar' } } }, insets: [] } },
+          name: 'my first composition',
+          behavior: { injection: { main: { source: { search: { index: 'bar' } } }, injectedItems: [] } },
         },
       },
       { action: 'delete', body: { objectID: 'baz' } },

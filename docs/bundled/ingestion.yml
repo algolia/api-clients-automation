@@ -3853,6 +3853,10 @@ paths:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       requestBody:
         description: ''
         content:
@@ -4764,6 +4768,10 @@ paths:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       requestBody:
@@ -5025,6 +5033,10 @@ paths:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       responses:
@@ -8734,6 +8746,10 @@ paths:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
         - name: watch

@@ -313,7 +313,8 @@ describe('multipleBatch', () => {
           action: 'upsert',
           body: {
             objectID: 'foo',
-            behavior: { injection: { main: { source: { search: { index: 'bar' } } }, insets: [] } },
+            name: 'my first composition',
+            behavior: { injection: { main: { source: { search: { index: 'bar' } } }, injectedItems: [] } },
           },
         },
         { action: 'delete', body: { objectID: 'baz' } },
@@ -327,7 +328,8 @@ describe('multipleBatch', () => {
         {
           action: 'upsert',
           body: {
-            behavior: { injection: { insets: [], main: { source: { search: { index: 'bar' } } } } },
+            behavior: { injection: { injectedItems: [], main: { source: { search: { index: 'bar' } } } } },
+            name: 'my first composition',
             objectID: 'foo',
           },
         },

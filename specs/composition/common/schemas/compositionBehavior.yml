@@ -34,32 +34,32 @@ compositionBehavior:
                 - search
           required:
             - source
-        insets:
+        injectedItems:
           type: array
-          description: list of insets of the current Composition.
+          description: list of injected items of the current Composition.
           minItems: 0
           maxItems: 2
           items:
-            $ref: '#/compositionInset'
+            $ref: '#/injectedItem'
       required:
         - main
   required:
     - injection
 
-compositionInset:
+injectedItem:
   type: object
   additionalProperties: false
   properties:
-    name:
+    key:
       type: string
-      description: Inset name.
+      description: injected Item unique identifier.
     source:
-      title: compositionInsetSource
+      title: injectedItemSource
       type: object
       additionalProperties: false
       properties:
         search:
-          title: compositionInsetSourceSearch
+          title: injectedItemSourceSearch
           type: object
           additionalProperties: false
           properties:
@@ -68,7 +68,7 @@ compositionInset:
               description: Composition Main Index name.
               example: Products
             params:
-              $ref: './SearchParams.yml#/InsetsQueryParameters'
+              $ref: './SearchParams.yml#/injectedItemsQueryParameters'
           required:
             - index
       required:
@@ -82,7 +82,7 @@ compositionInset:
       minimum: 0
       maximum: 20
   required:
-    - name
+    - key
     - source
     - position
     - length
