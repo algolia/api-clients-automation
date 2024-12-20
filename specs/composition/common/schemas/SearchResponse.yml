@@ -1,7 +1,7 @@
 searchResponse:
   additionalProperties: true
   allOf:
-    - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '#/compositionBaseSearchResponse'
     - $ref: '#/searchResults'
 
 searchResults:
@@ -16,8 +16,10 @@ searchResults:
 
 searchResultsItem:
   allOf:
-    - $ref: '#/searchHits'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
     - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'
+    - $ref: '#/searchHits'
+    - $ref: '#/resultsCompositionsResponse'
 
 searchHits:
   type: object
@@ -33,3 +35,82 @@ searchHits:
         $ref: 'Hit.yml#/hit'
   required:
     - hits
+
+resultsCompositionsResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    compositions:
+      title: resultsCompositionsInfoResponse
+      type: object
+      additionalProperties:
+        title: resultsCompositionInfoResponse
+        type: object
+        properties:
+          injectedItems:
+            type: array
+            items:
+              $ref: '#/resultsInjectedItemInfoResponse'
+        required:
+          - injectedItems
+  required:
+    - compositions
+
+resultsInjectedItemInfoResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    key:
+      type: string
+    appliedRules:
+      type: array
+      items:
+        title: resultsInjectedItemAppliedRulesInfoResponse
+        type: object
+        properties:
+          objectID:
+            $ref: '../../../common/parameters.yml#/objectID'
+        required:
+          - objectID
+  required:
+    - key
+
+# copy of specs/common/schemas/SearchResponse.yml/#baseSearchResponse without appliedRules
+compositionBaseSearchResponse:
+  type: object
+  additionalProperties: true
+  required:
+    - processingTimeMS
+  properties:
+    compositions:
+      $ref: '#/compositionsSearchResponse'
+
+compositionsSearchResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    run:
+      type: array
+      items:
+        $ref: '#/compositionRunSearchResponse'
+  required:
+    - run
+
+compositionRunSearchResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+    appliedRules:
+      type: array
+      items:
+        title: compositionRunAppliedRules
+        type: object
+        properties:
+          objectID:
+            $ref: '../../../common/parameters.yml#/objectID'
+        required:
+          - objectID
+  required:
+    - objectID

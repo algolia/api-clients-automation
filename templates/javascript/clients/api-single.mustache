@@ -159,6 +159,17 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
         {{/vendorExtensions}}
       };
 
+      {{#vendorExtensions.x-timeouts}}
+      requestOptions = {
+        timeouts: {
+          connect: {{connect}},
+          read: {{read}},
+          write: {{write}},
+          ...requestOptions?.timeouts,
+        }
+      }
+      {{/vendorExtensions.x-timeouts}}
+
       return transporter.request(request, requestOptions);
     },
 
