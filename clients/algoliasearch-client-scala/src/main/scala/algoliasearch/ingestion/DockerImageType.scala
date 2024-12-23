@@ -26,16 +26,13 @@ sealed trait DockerImageType
 /** Image type.
   */
 object DockerImageType {
-  case object Singer extends DockerImageType {
-    override def toString = "singer"
-  }
   case object Custom extends DockerImageType {
     override def toString = "custom"
   }
   case object Airbyte extends DockerImageType {
     override def toString = "airbyte"
   }
-  val values: Seq[DockerImageType] = Seq(Singer, Custom, Airbyte)
+  val values: Seq[DockerImageType] = Seq(Custom, Airbyte)
 
   def withName(name: String): DockerImageType = DockerImageType.values
     .find(_.toString == name)

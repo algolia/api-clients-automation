@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.annotation.*;
 
 /** Image type. */
 public enum DockerImageType {
-  SINGER("singer"),
-
   CUSTOM("custom"),
 
   AIRBYTE("airbyte");
