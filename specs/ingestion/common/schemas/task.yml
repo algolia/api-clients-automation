@@ -461,7 +461,7 @@ StreamingInput:
     - mapping
 
 DockerStreamsInput:
-  description: The selected streams of a singer or airbyte connector.
+  description: The selected streams of an airbyte connector.
   type: object
   properties:
     streams:
