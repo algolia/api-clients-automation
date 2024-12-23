@@ -1,3 +1,14 @@
+## [4.11.2](https://github.com/algolia/algoliasearch-client-python/compare/4.11.1...4.11.2)
+
+- [0481473fe0](https://github.com/algolia/api-clients-automation/commit/0481473fe0) chore: trigger auto close pr ([#4250](https://github.com/algolia/api-clients-automation/pull/4250)) by [@shortcuts](https://github.com/shortcuts/)
+- [bc8939f542](https://github.com/algolia/api-clients-automation/commit/bc8939f542) fix(clients): support dict in helpers ([#4254](https://github.com/algolia/api-clients-automation/pull/4254)) by [@shortcuts](https://github.com/shortcuts/)
+- [679a8cdb60](https://github.com/algolia/api-clients-automation/commit/679a8cdb60) fix(specs): endpoint level timeout for ingestion ([#4251](https://github.com/algolia/api-clients-automation/pull/4251)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.11.1](https://github.com/algolia/algoliasearch-client-python/compare/4.11.0...4.11.1)
+
+- [cd59f445e](https://github.com/algolia/api-clients-automation/commit/cd59f445e) fix(specs): enable watcher for push ([#4229](https://github.com/algolia/api-clients-automation/pull/4229)) by [@shortcuts](https://github.com/shortcuts/)
+- [baf7d6f4d](https://github.com/algolia/api-clients-automation/commit/baf7d6f4d) fix(specs): add `ignoreConjugations` to `AlternativesAsExact` ([#4230](https://github.com/algolia/api-clients-automation/pull/4230)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.11.0](https://github.com/algolia/algoliasearch-client-python/compare/4.10.0...4.11.0)
 
 - [866d859f8](https://github.com/algolia/api-clients-automation/commit/866d859f8) fix(specs): different summaries for saveObject/addOrUpdate methods ([#4223](https://github.com/algolia/api-clients-automation/pull/4223)) by [@kai687](https://github.com/kai687/)

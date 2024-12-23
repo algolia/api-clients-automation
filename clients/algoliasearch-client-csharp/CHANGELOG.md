@@ -1,3 +1,12 @@
+## [7.11.2](https://github.com/algolia/algoliasearch-client-csharp/compare/7.11.1...7.11.2)
+
+- [0481473fe0](https://github.com/algolia/api-clients-automation/commit/0481473fe0) chore: trigger auto close pr ([#4250](https://github.com/algolia/api-clients-automation/pull/4250)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [7.11.1](https://github.com/algolia/algoliasearch-client-csharp/compare/7.11.0...7.11.1)
+
+- [cd59f445e](https://github.com/algolia/api-clients-automation/commit/cd59f445e) fix(specs): enable watcher for push ([#4229](https://github.com/algolia/api-clients-automation/pull/4229)) by [@shortcuts](https://github.com/shortcuts/)
+- [baf7d6f4d](https://github.com/algolia/api-clients-automation/commit/baf7d6f4d) fix(specs): add `ignoreConjugations` to `AlternativesAsExact` ([#4230](https://github.com/algolia/api-clients-automation/pull/4230)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [7.11.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.10.0...7.11.0)
 
 - [866d859f8](https://github.com/algolia/api-clients-automation/commit/866d859f8) fix(specs): different summaries for saveObject/addOrUpdate methods ([#4223](https://github.com/algolia/api-clients-automation/pull/4223)) by [@kai687](https://github.com/kai687/)

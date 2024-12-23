@@ -30,10 +30,6 @@ export * from '../model';
 import type { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions, SearchClientNodeHelpers } from '../model';
 {{/isSearchClient}}
 
-{{#nodeSearchHelpers}}
-import {createHmac} from 'node:crypto';
-{{/nodeSearchHelpers}}
-
 export function {{clientName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}

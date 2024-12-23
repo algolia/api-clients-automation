@@ -2,6 +2,8 @@
 
 export type SearchClient = ReturnType<typeof createSearchClient> & SearchClientNodeHelpers;
 
+import { createHmac } from 'node:crypto';
+
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import { createMemoryCache, createNullCache, createNullLogger, serializeQueryParameters } from '@algolia/client-common';
@@ -19,8 +21,6 @@ import type {
   GetSecuredApiKeyRemainingValidityOptions,
   SearchClientNodeHelpers,
 } from '../model';
-
-import { createHmac } from 'node:crypto';
 
 export function searchClient(appId: string, apiKey: string, options?: ClientOptions): SearchClient {
   if (!appId || typeof appId !== 'string') {
@@ -83,7 +83,6 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
         createHmac('sha256', parentApiKey).update(queryParameters).digest('hex') + queryParameters,
       ).toString('base64');
     },
-
     /**
      * Helper: Retrieves the remaining validity of the previous generated `securedApiKey`, the `ValidUntil` parameter must have been provided.
      *
@@ -92,7 +91,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
      * @param getSecuredApiKeyRemainingValidity.securedApiKey - The secured API key generated with the `generateSecuredApiKey` method.
      */
     getSecuredApiKeyRemainingValidity: ({ securedApiKey }: GetSecuredApiKeyRemainingValidityOptions): number => {
-      const decodedString = Buffer.from(securedApiKey, 'base64').toString('ascii');
+      const decodedString = atob(securedApiKey);
       const regex = /validUntil=(\d+)/;
       const match = decodedString.match(regex);
 

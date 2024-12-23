@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-common",
-  "version": "5.17.0",
+  "version": "5.18.0",
   "description": "Common package for the Algolia JavaScript API client.",
   "repository": {
     "type": "git",
@@ -35,8 +35,8 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.17.1",
-    "@types/node": "22.10.1",
+    "@arethetypeswrong/cli": "0.17.2",
+    "@types/node": "22.10.2",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
     "ts-node": "10.9.2",

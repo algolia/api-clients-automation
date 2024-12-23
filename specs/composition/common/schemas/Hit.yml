@@ -32,12 +32,14 @@ compositionRankingInfo:
     composed:
       title: composedRankingInfo
       type: object
-      additionalProperties: false
-      properties:
-        index:
-          type: string
-        inset:
-          type: string
-      required:
-        - index
-        - inset
+      additionalProperties:
+        title: compositionIdRankingInfo
+        type: object
+        properties:
+          index:
+            type: string
+          injectedItemKey:
+            type: string
+        required:
+          - index
+          - injectedItemKey

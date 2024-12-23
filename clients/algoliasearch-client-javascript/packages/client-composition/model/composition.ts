@@ -11,6 +11,11 @@ export type Composition = {
   /**
    * Composition name.
    */
+  name: string;
+
+  /**
+   * Composition description.
+   */
   description?: string;
 
   behavior: CompositionBehavior;

@@ -1,5 +1,5 @@
 {
-  "version": "5.17.0",
+  "version": "5.18.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -29,8 +29,8 @@
         "require": "./dist/node.cjs"
       },
       "worker": {
-        "types": "./dist/fetch.d.ts",
-        "default": "./dist/fetch.js"
+        "types": "./dist/worker.d.ts",
+        "default": "./dist/worker.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -74,27 +74,27 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-abtesting": "5.17.0",
-    "@algolia/client-analytics": "5.17.0",
-    "@algolia/client-common": "5.17.0",
-    "@algolia/client-insights": "5.17.0",
-    "@algolia/client-personalization": "5.17.0",
-    "@algolia/client-query-suggestions": "5.17.0",
-    "@algolia/client-search": "5.17.0",
-    "@algolia/ingestion": "1.17.0",
-    "@algolia/monitoring": "1.17.0",
-    "@algolia/recommend": "5.17.0",
-    "@algolia/requester-browser-xhr": "5.17.0",
-    "@algolia/requester-fetch": "5.17.0",
-    "@algolia/requester-node-http": "5.17.0"
+    "@algolia/client-abtesting": "5.18.0",
+    "@algolia/client-analytics": "5.18.0",
+    "@algolia/client-common": "5.18.0",
+    "@algolia/client-insights": "5.18.0",
+    "@algolia/client-personalization": "5.18.0",
+    "@algolia/client-query-suggestions": "5.18.0",
+    "@algolia/client-search": "5.18.0",
+    "@algolia/ingestion": "1.18.0",
+    "@algolia/monitoring": "1.18.0",
+    "@algolia/recommend": "5.18.0",
+    "@algolia/requester-browser-xhr": "5.18.0",
+    "@algolia/requester-fetch": "5.18.0",
+    "@algolia/requester-node-http": "5.18.0"
   },
   "devDependencies": {
-    "@algolia/requester-testing": "5.17.0",
-    "@arethetypeswrong/cli": "0.17.1",
-    "@types/node": "22.10.1",
+    "@algolia/requester-testing": "5.18.0",
+    "@arethetypeswrong/cli": "0.17.2",
+    "@types/node": "22.10.2",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
-    "rollup": "4.28.1",
+    "rollup": "4.29.1",
     "tsup": "8.3.5",
     "typescript": "5.7.2",
     "vitest": "2.1.8",

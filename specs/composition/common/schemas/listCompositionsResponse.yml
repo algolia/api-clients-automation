@@ -21,12 +21,17 @@ composition:
   properties:
     objectID:
       $ref: '../../../common/parameters.yml#/objectID'
-    description:
+    name:
       type: string
       description: Composition name.
       example: 'my lovely crafted composition'
+    description:
+      type: string
+      description: Composition description.
+      example: 'my lovely crafted composition that is used for X purpose'
     behavior:
       $ref: './compositionBehavior.yml#/compositionBehavior'
   required:
     - objectID
     - behavior
+    - name
