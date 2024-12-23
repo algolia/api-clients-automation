@@ -4,7 +4,7 @@ post:
   summary: Trigger a stream-listing request
   description: |
     Triggers a stream-listing request for a source.
-    Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+    Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
   operationId: triggerDockerSourceDiscover
   x-acl:
     - addObject

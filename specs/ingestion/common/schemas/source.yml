@@ -400,7 +400,7 @@ DockerRegistry:
 
 DockerImageType:
   type: string
-  enum: [singer, custom, airbyte]
+  enum: [custom, airbyte]
   description: Image type.
 
 SourceInput:
