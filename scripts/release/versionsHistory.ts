@@ -13,7 +13,7 @@ import type { Version, Versions } from './types.js';
 const generatedReleaseDate = new Date('2024-08-14');
 const slaEndDate = new Date(generatedReleaseDate.setFullYear(generatedReleaseDate.getFullYear() + 2));
 
-type Status = 'eligible' | 'not eligible' | 'replaced';
+type Status = 'eligible' | 'not eligible';
 
 type Release = {
   releaseDate: string;
@@ -38,44 +38,6 @@ export function isPreRelease(version: string): boolean {
     version.startsWith('0') ||
     isNaN(parseInt(version.charAt(0), 10))
   );
-}
-
-function getCurrentMajor(version: string): number {
-  if (!version) {
-    return 0;
-  }
-
-  const matches = version.match(/\d+/);
-
-  if (!matches || matches.length === 0) {
-    return 0;
-  }
-
-  return parseInt(matches[0], 10);
-}
-
-function getEligibility(currentMajor: number, previousMajor: number, version: string): SLA & Support {
-  const versionMajor = getCurrentMajor(version);
-
-  // for the current major we provide:
-  // - SLA on every versions
-  // - Support on the latest version (will be handled later in `generateLanguageVersionsHistory`)
-  if (versionMajor == currentMajor) {
-    return { slaStatus: 'eligible', supportStatus: 'not eligible' };
-  }
-
-  // for the previous major we provide:
-  // - SLA on every versions, with a `replaced` mention indicatin there's an other available version
-  // - Support on the latest version (will be handled later in `generateLanguageVersionsHistory`)
-  if (versionMajor == previousMajor && slaEndDate >= new Date()) {
-    return {
-      slaStatus: 'replaced',
-      slaEndDate: slaEndDate.toISOString().split('T')[0],
-      supportStatus: 'not eligible',
-    };
-  }
-
-  return { slaStatus: 'not eligible', supportStatus: 'not eligible' };
 }
 
 // fetches the git tags on the given `lang` repository, throws if none.
@@ -112,13 +74,14 @@ export function generateLanguageVersionsHistory(
   tags: string[],
   version: Version,
 ): Record<string, { releaseDate: string }> {
-  const versions: Record<string, Release & SLA & Support> = {};
+  const versionsHistory: Record<string, Release & SLA & Support> = {};
 
-  const currentMajor = getCurrentMajor(version.current);
-  const previousMajor = currentMajor - 1 || currentMajor;
-  let latestPreviousMajorVersion = '';
-  let previousTagVersion = '';
+  let currentMajor = semver.major(version.current);
+  let currentMajorMinor = semver.minor(version.current);
+  let previousMajor = currentMajor > 1 ? currentMajor - 1 : undefined;
+  let previousMajorMinor = 0;
 
+  // first we go through every tags to build the version history and save the current major.minor and previous major.minor
   for (const tag of tags) {
     let [tagVersion, tagReleaseDate] = tag.split(/(?<=^\S+)\s/);
 
@@ -132,44 +95,73 @@ export function generateLanguageVersionsHistory(
       continue;
     }
 
-    // we keep track of the latest encountered previous major version, so we can set the support policy when the iterator is done
-    if (getCurrentMajor(tagVersion) === previousMajor) {
-      latestPreviousMajorVersion = tagVersion;
+    // find the latest minor of the previous major
+    if (semver.major(tagVersion) === previousMajor && semver.minor(tagVersion) > previousMajorMinor) {
+      previousMajorMinor = semver.minor(tagVersion);
     }
 
-    previousTagVersion = tagVersion;
-
-    versions[tagVersion] = {
-      ...getEligibility(currentMajor, previousMajor, tagVersion),
+    // default everything to non eligible
+    versionsHistory[tagVersion] = {
+      slaStatus: 'not eligible',
+      supportStatus: 'not eligible',
       releaseDate: new Date(tagReleaseDate).toISOString().split('T')[0],
     };
   }
 
-  // only the latest previous major version and latest current version receives support
-  if (
-    latestPreviousMajorVersion &&
-    (previousMajor !== currentMajor || (version.next && previousMajor !== getCurrentMajor(version?.next)))
-  ) {
-    versions[latestPreviousMajorVersion] = {
-      ...versions[latestPreviousMajorVersion],
-      supportStatus: 'eligible',
-      supportEndDate: slaEndDate.toISOString().split('T')[0],
-    };
-  }
-
-  // if there's no release planned, just skip this language
-  if (version?.next && !isPreRelease(version.next)) {
-    versions[version.next] = {
-      releaseDate:
-        version.next !== previousTagVersion
-          ? new Date().toISOString().split('T')[0]
-          : versions[version.next].releaseDate,
+  // then re-compute the current/previous major.minor based on the current release
+  if (version?.next && !isPreRelease(version.next) && version.next !== version.current) {
+    versionsHistory[version.next] = {
+      releaseDate: new Date().toISOString().split('T')[0],
       slaStatus: 'eligible',
       supportStatus: 'eligible',
     };
+
+    switch (version.releaseType) {
+      // major shift left: previous=current, current=next
+      case 'major':
+        previousMajor = semver.major(version.current);
+        previousMajorMinor = semver.minor(version.current);
+
+        currentMajor = semver.major(version.next);
+        currentMajorMinor = semver.minor(version.next);
+        break;
+      // minor overrides the current major.minor
+      case 'minor':
+        currentMajorMinor = semver.minor(version.next);
+        break;
+      // nothing changes for the rest
+      default:
+        break;
+    }
   }
 
-  return versions;
+  // now we can compute the support and SLA policies:
+  // previous major:
+  // - SLA:     every versions with a 2 year deadline
+  // - Support: every versions of the latest minor with a 2 year deadline
+  // current major:
+  // - SLA:     every versions
+  // - Support: every versions of the latest minor
+  Object.keys(versionsHistory).forEach((versionHistory) => {
+    switch (semver.major(versionHistory)) {
+      case previousMajor:
+        versionsHistory[versionHistory].slaStatus = 'eligible';
+        versionsHistory[versionHistory].slaEndDate = slaEndDate.toISOString().split('T')[0];
+
+        if (semver.minor(versionHistory) === previousMajorMinor) {
+          versionsHistory[versionHistory].supportStatus = 'eligible';
+          versionsHistory[versionHistory].supportEndDate = slaEndDate.toISOString().split('T')[0];
+        }
+      case currentMajor:
+        versionsHistory[versionHistory].slaStatus = 'eligible';
+
+        if (semver.minor(versionHistory) === currentMajorMinor) {
+          versionsHistory[versionHistory].supportStatus = 'eligible';
+        }
+    }
+  });
+
+  return versionsHistory;
 }
 
 export async function generateVersionsHistory(versions: Versions): Promise<void> {
