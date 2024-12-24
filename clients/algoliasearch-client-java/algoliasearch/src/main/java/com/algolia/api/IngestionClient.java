@@ -3671,7 +3671,7 @@ public class IngestionClient extends ApiClient {
 
   /**
    * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
-   * with sources with `type: docker` and `imageType: singer`.
+   * with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3684,7 +3684,7 @@ public class IngestionClient extends ApiClient {
 
   /**
    * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
-   * with sources with `type: docker` and `imageType: singer`.
+   * with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3695,7 +3695,7 @@ public class IngestionClient extends ApiClient {
 
   /**
    * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
-   * requests only works with sources with `type: docker` and `imageType: singer`.
+   * requests only works with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3712,7 +3712,7 @@ public class IngestionClient extends ApiClient {
 
   /**
    * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
-   * requests only works with sources with `type: docker` and `imageType: singer`.
+   * requests only works with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

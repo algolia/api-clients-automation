@@ -802,7 +802,7 @@ paths:
         Triggers a stream-listing request for a source.
 
         Triggering stream-listing requests only works with sources with `type:
-        docker` and `imageType: singer`.
+        docker` and `imageType: airbyte`.
       operationId: triggerDockerSourceDiscover
       x-acl:
         - addObject
@@ -2990,7 +2990,6 @@ components:
     DockerImageType:
       type: string
       enum:
-        - singer
         - custom
         - airbyte
       description: Image type.
@@ -3550,7 +3549,7 @@ components:
         - name
         - syncMode
     DockerStreamsInput:
-      description: The selected streams of a singer or airbyte connector.
+      description: The selected streams of an airbyte connector.
       type: object
       properties:
         streams:
