@@ -38,6 +38,42 @@ describe('no new releases', () => {
     });
   });
 
+  it('skips invalid versions', () => {
+    const versions = generateLanguageVersionsHistory(
+      [
+        '1.2.4 Thu Dec 28 15:48:25 2023 +0000',
+        '1.1 Thu Dec 28 15:48:25 2023 +0000',
+        '1.2.5 Tue Jan 2 14:17:11 2024 +0000',
+        '1.2.6 Tue Jan 2 15:26:06 2024 +0000',
+        '1.2.7 Thu Jan 4 15:09:11 2024 +0000',
+      ],
+      { current: '1.2.7', next: '1.2.7' },
+    );
+
+    expect(versions).toEqual({
+      '1.2.4': {
+        releaseDate: '2023-12-28',
+        slaStatus: 'eligible',
+        supportStatus: 'eligible',
+      },
+      '1.2.5': {
+        releaseDate: '2024-01-02',
+        slaStatus: 'eligible',
+        supportStatus: 'eligible',
+      },
+      '1.2.6': {
+        releaseDate: '2024-01-02',
+        slaStatus: 'eligible',
+        supportStatus: 'eligible',
+      },
+      '1.2.7': {
+        releaseDate: '2024-01-04',
+        slaStatus: 'eligible',
+        supportStatus: 'eligible',
+      },
+    });
+  });
+
   it('parses version of different minor', () => {
     const versions = generateLanguageVersionsHistory(
       [
