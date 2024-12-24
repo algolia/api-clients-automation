@@ -1,3 +1,7 @@
+## [4.10.3](https://github.com/algolia/algoliasearch-client-go/compare/4.10.2...4.10.3)
+
+- [b569646304](https://github.com/algolia/api-clients-automation/commit/b569646304) fix(specs): drop singer from ingestion specs ([#4281](https://github.com/algolia/api-clients-automation/pull/4281)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.10.2](https://github.com/algolia/algoliasearch-client-go/compare/4.10.1...4.10.2)
 
 - [0481473fe0](https://github.com/algolia/api-clients-automation/commit/0481473fe0) chore: trigger auto close pr ([#4250](https://github.com/algolia/api-clients-automation/pull/4250)) by [@shortcuts](https://github.com/shortcuts/)

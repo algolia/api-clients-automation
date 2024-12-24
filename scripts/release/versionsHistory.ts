@@ -91,7 +91,7 @@ export function generateLanguageVersionsHistory(
     }
 
     // we skip any form of pre-releases because they are not part of the VersionsHistory
-    if (isPreRelease(tagVersion)) {
+    if (isPreRelease(tagVersion) || !semver.valid(tagVersion)) {
       continue;
     }
 

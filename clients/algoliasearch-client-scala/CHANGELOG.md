@@ -1,3 +1,7 @@
+## [2.11.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.11.2...2.11.3)
+
+- [b569646304](https://github.com/algolia/api-clients-automation/commit/b569646304) fix(specs): drop singer from ingestion specs ([#4281](https://github.com/algolia/api-clients-automation/pull/4281)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [2.11.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.11.1...2.11.2)
 
 - [966fe05ae6](https://github.com/algolia/api-clients-automation/commit/966fe05ae6) chore(deps): dependencies 2024-12-16 ([#4235](https://github.com/algolia/api-clients-automation/pull/4235)) by [@algolia-bot](https://github.com/algolia-bot/)
