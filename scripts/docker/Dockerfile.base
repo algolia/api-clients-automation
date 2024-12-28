@@ -15,21 +15,21 @@ SHELL ["/bin/bash", "--login", "-c"]
 
 # Global dependencies
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git curl zip unzip libexpat1-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+  && apt-get install -y --no-install-recommends git curl zip unzip libexpat1-dev \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY .nvmrc .nvmrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && source ~/.profile \
-    && nvm install \
-    && npm install -g yarn
+  && nvm install \
+  && npm install -g yarn
 
 # SDKMAN
 ARG JAVA_VERSION
 RUN curl -s "https://get.sdkman.io" | bash
 RUN source "/root/.sdkman/bin/sdkman-init.sh" \
-    && sdk install java ${JAVA_VERSION}-tem \
-    && sdk install sbt
+  && sdk install java ${JAVA_VERSION}-tem \
+  && sdk install sbt
 
 # Java formatter
 ADD https://github.com/google/google-java-format/releases/download/v1.25.2/google-java-format-1.25.2-all-deps.jar /tmp/java-formatter.jar
@@ -39,9 +39,9 @@ ADD https://github.com/google/google-java-format/releases/download/v1.25.2/googl
 COPY --from=python-builder /usr/local/bin/ /usr/local/bin/
 COPY --from=python-builder /usr/local/lib/ /usr/local/lib/
 RUN echo "export PATH=$PATH:/usr/local/bin/python" >> ~/.profile \
-    && echo "export PATH=$PATH:/usr/local/bin/pip" >> ~/.profile \
-    && pip install --upgrade pip pipx && pipx ensurepath \
-    && pipx install poetry==2
+  && echo "export PATH=$PATH:/usr/local/bin/pip" >> ~/.profile \
+  && pip install --upgrade pip pipx && pipx ensurepath \
+  && pipx install poetry==2
 ENV VIRTUAL_ENV=/opt/env
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
@@ -49,14 +49,14 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
-    && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3 \
-    && go install golang.org/x/tools/cmd/goimports@v0.22.0
+  && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3 \
+  && go install golang.org/x/tools/cmd/goimports@v0.22.0
 
 
 # Dart
 COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
 RUN echo "export PATH=/usr/lib/dart/bin:/root/.pub-cache/bin:$PATH" >> ~/.profile && source ~/.profile \
-    && dart pub global activate melos
+  && dart pub global activate melos
 
 # PHP
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
