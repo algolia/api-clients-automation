@@ -59,7 +59,7 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
 
   // 404 handler
   app.use((req, res) => {
-    console.error('endpoint not implemented for', req.method, req.url);
+    console.error(`[PORT ${port}] endpoint not implemented for`, req.method, req.url);
     res.status(404).json({ message: 'not found' });
   });
 

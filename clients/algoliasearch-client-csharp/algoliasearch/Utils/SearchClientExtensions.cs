@@ -498,7 +498,7 @@ public partial class SearchClient : ISearchClient
     {
       var copyResponse = await OperationIndexAsync(indexName,
           new OperationIndexParams(OperationType.Copy, tmpIndexName)
-            { Scope = [ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms] }, options, cancellationToken)
+          { Scope = [ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms] }, options, cancellationToken)
         .ConfigureAwait(false);
 
       var batchResponse = await ChunkedBatchAsync(tmpIndexName, objects, Action.AddObject, true, batchSize,
@@ -509,7 +509,7 @@ public partial class SearchClient : ISearchClient
 
       copyResponse = await OperationIndexAsync(indexName,
           new OperationIndexParams(OperationType.Copy, tmpIndexName)
-            { Scope = [ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms] }, options, cancellationToken)
+          { Scope = [ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms] }, options, cancellationToken)
         .ConfigureAwait(false);
       await WaitForTaskAsync(tmpIndexName, copyResponse.TaskID, requestOptions: options, ct: cancellationToken)
         .ConfigureAwait(false);
