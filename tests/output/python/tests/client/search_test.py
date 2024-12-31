@@ -129,6 +129,30 @@ class TestSearchClient:
         except (ValueError, Exception) as e:
             assert str(e) == "Unreachable hosts"
 
+    async def test_api_6(self):
+        """
+        calls api with default read timeouts
+        """
+        _client = self.create_client()
+
+        _req = await _client.custom_get_with_http_info(
+            path="1/test",
+        )
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 5000
+
+    async def test_api_7(self):
+        """
+        calls api with default write timeouts
+        """
+        _client = self.create_client()
+
+        _req = await _client.custom_post_with_http_info(
+            path="1/test",
+        )
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 30000
+
     async def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -152,32 +176,8 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.9.2\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.11.2\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
-
-    async def test_common_api_2(self):
-        """
-        calls api with default read timeouts
-        """
-        _client = self.create_client()
-
-        _req = await _client.custom_get_with_http_info(
-            path="1/test",
-        )
-        assert _req.timeouts.get("connect") == 2000
-        assert _req.timeouts.get("response") == 5000
-
-    async def test_common_api_3(self):
-        """
-        calls api with default write timeouts
-        """
-        _client = self.create_client()
-
-        _req = await _client.custom_post_with_http_info(
-            path="1/test",
-        )
-        assert _req.timeouts.get("connect") == 2000
-        assert _req.timeouts.get("response") == 30000
 
     async def test_delete_objects_0(self):
         """
@@ -984,6 +984,30 @@ class TestSearchClientSync:
         except (ValueError, Exception) as e:
             assert str(e) == "Unreachable hosts"
 
+    def test_api_6(self):
+        """
+        calls api with default read timeouts
+        """
+        _client = self.create_client()
+
+        _req = _client.custom_get_with_http_info(
+            path="1/test",
+        )
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 5000
+
+    def test_api_7(self):
+        """
+        calls api with default write timeouts
+        """
+        _client = self.create_client()
+
+        _req = _client.custom_post_with_http_info(
+            path="1/test",
+        )
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 30000
+
     def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -1007,32 +1031,8 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.9.2\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.11.2\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
-
-    def test_common_api_2(self):
-        """
-        calls api with default read timeouts
-        """
-        _client = self.create_client()
-
-        _req = _client.custom_get_with_http_info(
-            path="1/test",
-        )
-        assert _req.timeouts.get("connect") == 2000
-        assert _req.timeouts.get("response") == 5000
-
-    def test_common_api_3(self):
-        """
-        calls api with default write timeouts
-        """
-        _client = self.create_client()
-
-        _req = _client.custom_post_with_http_info(
-            path="1/test",
-        )
-        assert _req.timeouts.get("connect") == 2000
-        assert _req.timeouts.get("response") == 30000
 
     def test_delete_objects_0(self):
         """

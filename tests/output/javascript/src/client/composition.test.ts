@@ -51,23 +51,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(0.0.1-alpha.4\).*/);
-  }, 15000);
-
-  test('calls api with default read timeouts', async () => {
-    const client = createClient();
-
-    const result = (await client.customGet({ path: '1/test' })) as unknown as EchoResponse;
-
-    expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 }));
-  }, 15000);
-
-  test('calls api with default write timeouts', async () => {
-    const client = createClient();
-
-    const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
-
-    expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 }));
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(0.0.1-alpha.8\).*/);
   }, 15000);
 });
 

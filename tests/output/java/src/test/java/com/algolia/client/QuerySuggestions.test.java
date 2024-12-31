@@ -76,34 +76,12 @@ class QuerySuggestionsClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.8.2\\).*";
+      String regexp = "^Algolia for Java \\(4.10.2\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
       );
     }
-  }
-
-  @Test
-  @DisplayName("calls api with default read timeouts")
-  void commonApiTest2() {
-    QuerySuggestionsClient client = createClient();
-
-    client.customGet("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(5000, result.responseTimeout);
-  }
-
-  @Test
-  @DisplayName("calls api with default write timeouts")
-  void commonApiTest3() {
-    QuerySuggestionsClient client = createClient();
-
-    client.customPost("1/test");
-    EchoResponse result = echo.getLastResponse();
-    assertEquals(2000, result.connectTimeout);
-    assertEquals(30000, result.responseTimeout);
   }
 
   @Test

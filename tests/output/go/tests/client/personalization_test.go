@@ -56,37 +56,7 @@ func TestPersonalizationcommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.8.2\).*`), echo.Header.Get("User-Agent"))
-}
-
-// calls api with default read timeouts
-func TestPersonalizationcommonApi2(t *testing.T) {
-	var err error
-	var res any
-	_ = res
-	client, echo := createPersonalizationClient(t)
-	_ = echo
-	res, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test",
-	))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
-}
-
-// calls api with default write timeouts
-func TestPersonalizationcommonApi3(t *testing.T) {
-	var err error
-	var res any
-	_ = res
-	client, echo := createPersonalizationClient(t)
-	_ = echo
-	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.10.2\).*`), echo.Header.Get("User-Agent"))
 }
 
 // throws when region is not given

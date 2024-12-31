@@ -180,6 +180,13 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
                 {{#queryParams.0}}query_parameters=_query_parameters,{{/queryParams.0}}
                 {{#headerParams.0}}headers=_headers,{{/headerParams.0}}
                 {{#bodyParam}}data=dumps(body_serializer(_data)),{{/bodyParam}}
+                {{#vendorExtensions.x-timeouts}}
+                timeouts={
+                  "read": {{read}},
+                  "write": {{write}},
+                  "connect": {{connect}},
+                },
+                {{/vendorExtensions.x-timeouts}}
                 user_request_options=request_options,
             ),
             {{#vendorExtensions}}

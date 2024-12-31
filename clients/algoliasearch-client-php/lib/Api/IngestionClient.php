@@ -38,7 +38,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.9.2';
+    public const VERSION = '4.11.2';
 
     /**
      * @var ApiWrapperInterface
@@ -1756,11 +1756,12 @@ class IngestionClient
      *
      * @see PushTaskPayload
      *
+     * @param bool  $watch          When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding. (optional)
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\RunResponse|array<string, mixed>
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\WatchResponse|array<string, mixed>
      */
-    public function pushTask($taskID, $pushTaskPayload, $requestOptions = [])
+    public function pushTask($taskID, $pushTaskPayload, $watch = null, $requestOptions = [])
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
@@ -1779,6 +1780,10 @@ class IngestionClient
         $queryParameters = [];
         $headers = [];
         $httpBody = $pushTaskPayload;
+
+        if (null !== $watch) {
+            $queryParameters['watch'] = $watch;
+        }
 
         // path params
         if (null !== $taskID) {
@@ -2122,7 +2127,7 @@ class IngestionClient
     }
 
     /**
-     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2132,7 +2137,7 @@ class IngestionClient
      * @param string $sourceID       Unique identifier of a source. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\SourceWatchResponse|array<string, mixed>
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\WatchResponse|array<string, mixed>
      */
     public function triggerDockerSourceDiscover($sourceID, $requestOptions = [])
     {
@@ -2571,7 +2576,7 @@ class IngestionClient
      *
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\SourceWatchResponse|array<string, mixed>
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\WatchResponse|array<string, mixed>
      */
     public function validateSource($sourceCreate = null, $requestOptions = [])
     {
@@ -2601,7 +2606,7 @@ class IngestionClient
      *
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\SourceWatchResponse|array<string, mixed>
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\WatchResponse|array<string, mixed>
      */
     public function validateSourceBeforeUpdate($sourceID, $sourceUpdate, $requestOptions = [])
     {

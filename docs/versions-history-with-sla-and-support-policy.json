@@ -621,7 +621,22 @@
       "releaseDate": "2024-11-19"
     },
     "7.10.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "7.11.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "7.11.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "7.11.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -883,7 +898,22 @@
       "releaseDate": "2024-11-19"
     },
     "1.28.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "1.28.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "1.28.2": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "1.28.3": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -1611,7 +1641,22 @@
       "releaseDate": "2024-11-19"
     },
     "4.9.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "4.10.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "4.10.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "4.10.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -2260,7 +2305,22 @@
       "releaseDate": "2024-11-19"
     },
     "4.9.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "4.10.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "4.10.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "4.10.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -3560,7 +3620,22 @@
       "releaseDate": "2024-11-19"
     },
     "5.16.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "5.17.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "5.17.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "5.18.0": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -3939,7 +4014,22 @@
       "releaseDate": "2024-11-15"
     },
     "3.11.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "3.12.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "3.12.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "3.12.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -4622,7 +4712,22 @@
       "releaseDate": "2024-11-19"
     },
     "4.10.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "4.11.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "4.11.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "4.11.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -5206,7 +5311,22 @@
       "releaseDate": "2024-11-19"
     },
     "4.10.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "4.11.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "4.11.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "4.11.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -5851,8 +5971,13 @@
       "supportStatus": "not eligible",
       "releaseDate": "2024-11-19"
     },
-    "3.9.0": {
-      "releaseDate": "2024-12-02",
+    "3.10.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "3.10.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -6406,7 +6531,22 @@
       "releaseDate": "2024-11-19"
     },
     "2.10.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "2.11.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "2.11.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "2.11.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -7156,7 +7296,22 @@
       "releaseDate": "2024-11-19"
     },
     "9.11.0": {
-      "releaseDate": "2024-12-02",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-09"
+    },
+    "9.12.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-11"
+    },
+    "9.12.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2024-12-12"
+    },
+    "9.12.2": {
+      "releaseDate": "2024-12-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }

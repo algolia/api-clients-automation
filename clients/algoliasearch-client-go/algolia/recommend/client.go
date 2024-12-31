@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 
@@ -56,6 +57,15 @@ func NewClientWithConfig(cfg RecommendConfiguration) (*APIClient, error) {
 	if cfg.UserAgent == "" {
 		cfg.UserAgent = getUserAgent()
 	}
+	if cfg.ReadTimeout == 0 {
+		cfg.ReadTimeout = 5000 * time.Millisecond
+	}
+	if cfg.ConnectTimeout == 0 {
+		cfg.ConnectTimeout = 2000 * time.Millisecond
+	}
+	if cfg.WriteTimeout == 0 {
+		cfg.WriteTimeout = 30000 * time.Millisecond
+	}
 
 	return &APIClient{
 		appID: cfg.AppID,
@@ -82,7 +92,7 @@ func getDefaultHosts(appID string) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.8.2); Go (%s); Recommend (4.8.2)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.10.2); Go (%s); Recommend (4.10.2)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.

@@ -8,6 +8,7 @@ import com.algolia.client.model.ingestion.*
 import com.algolia.client.transport.*
 import com.algolia.client.transport.internal.*
 import kotlinx.serialization.json.*
+import kotlin.time.Duration.Companion.milliseconds
 
 public class IngestionClient(
   override val appId: String,
@@ -21,7 +22,7 @@ public class IngestionClient(
     require(apiKey.isNotBlank()) { "`apiKey` is missing." }
   }
 
-  override val requester: Requester = requesterOf(clientName = "Ingestion", appId = appId, apiKey = apiKey, options = options) {
+  override val requester: Requester = requesterOf(clientName = "Ingestion", appId = appId, apiKey = apiKey, connectTimeout = 25000.milliseconds, readTimeout = 25000.milliseconds, writeTimeout = 25000.milliseconds, options = options) {
     val allowedRegions = listOf("eu", "us")
     require(region in allowedRegions) { "`region` is required and must be one of the following: ${allowedRegions.joinToString()}" }
     val url = "data.$region.algolia.com"
@@ -921,13 +922,17 @@ public class IngestionClient(
    *   - editSettings
    * @param taskID Unique identifier of a task.
    * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+   * @param watch When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
    * @param requestOptions additional request configuration.
    */
-  public suspend fun pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: RequestOptions? = null): RunResponse {
+  public suspend fun pushTask(taskID: String, pushTaskPayload: PushTaskPayload, watch: Boolean? = null, requestOptions: RequestOptions? = null): WatchResponse {
     require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `pushTask`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
       path = listOf("2", "tasks", "$taskID", "push"),
+      query = buildMap {
+        watch?.let { put("watch", it) }
+      },
       body = pushTaskPayload,
     )
     return requester.execute(
@@ -1137,7 +1142,7 @@ public class IngestionClient(
   }
 
   /**
-   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
    *
    * Required API Key ACLs:
    *   - addObject
@@ -1146,7 +1151,7 @@ public class IngestionClient(
    * @param sourceID Unique identifier of a source.
    * @param requestOptions additional request configuration.
    */
-  public suspend fun triggerDockerSourceDiscover(sourceID: String, requestOptions: RequestOptions? = null): SourceWatchResponse {
+  public suspend fun triggerDockerSourceDiscover(sourceID: String, requestOptions: RequestOptions? = null): WatchResponse {
     require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
@@ -1343,7 +1348,7 @@ public class IngestionClient(
    * @param sourceCreate
    * @param requestOptions additional request configuration.
    */
-  public suspend fun validateSource(sourceCreate: SourceCreate? = null, requestOptions: RequestOptions? = null): SourceWatchResponse {
+  public suspend fun validateSource(sourceCreate: SourceCreate? = null, requestOptions: RequestOptions? = null): WatchResponse {
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
       path = listOf("1", "sources", "validate"),
@@ -1366,7 +1371,7 @@ public class IngestionClient(
    * @param sourceUpdate
    * @param requestOptions additional request configuration.
    */
-  public suspend fun validateSourceBeforeUpdate(sourceID: String, sourceUpdate: SourceUpdate, requestOptions: RequestOptions? = null): SourceWatchResponse {
+  public suspend fun validateSourceBeforeUpdate(sourceID: String, sourceUpdate: SourceUpdate, requestOptions: RequestOptions? = null): WatchResponse {
     require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,

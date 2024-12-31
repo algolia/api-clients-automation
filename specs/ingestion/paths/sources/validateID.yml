@@ -9,6 +9,10 @@ post:
     - addObject
     - deleteIndex
     - editSettings
+  x-timeouts:
+    connect: 180000
+    read: 180000
+    write: 180000
   parameters:
     - $ref: '../../common/parameters.yml#/pathSourceID'
   requestBody:
@@ -23,6 +27,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/source.yml#/SourceWatchResponse'
+            $ref: '../../common/schemas/common.yml#/WatchResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'

@@ -191,6 +191,36 @@ func TestSearchapi5(t *testing.T) {
 	require.JSONEq(t, `{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}`, string(rawBody))
 }
 
+// calls api with default read timeouts
+func TestSearchapi6(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
+	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
+}
+
+// calls api with default write timeouts
+func TestSearchapi7(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
+	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
+}
+
 // calls api with correct user agent
 func TestSearchcommonApi0(t *testing.T) {
 	var err error
@@ -216,37 +246,7 @@ func TestSearchcommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.8.2\).*`), echo.Header.Get("User-Agent"))
-}
-
-// calls api with default read timeouts
-func TestSearchcommonApi2(t *testing.T) {
-	var err error
-	var res any
-	_ = res
-	client, echo := createSearchClient(t)
-	_ = echo
-	res, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test",
-	))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
-}
-
-// calls api with default write timeouts
-func TestSearchcommonApi3(t *testing.T) {
-	var err error
-	var res any
-	_ = res
-	client, echo := createSearchClient(t)
-	_ = echo
-	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
-	require.NoError(t, err)
-	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
-	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.10.2\).*`), echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error

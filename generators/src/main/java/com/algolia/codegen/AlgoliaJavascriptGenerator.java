@@ -77,6 +77,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("client/builds/node.mustache", "builds", "node.ts"));
       supportingFiles.add(new SupportingFile("client/builds/fetch.mustache", "builds", "fetch.ts"));
+      supportingFiles.add(new SupportingFile("client/builds/worker.mustache", "builds", "worker.ts"));
     }
     // `algoliasearch` related files
     else {
@@ -86,6 +87,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "node.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "fetch.ts"));
+      supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "worker.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/models.mustache", "builds", "models.ts"));
 
       // `lite` builds
@@ -160,7 +162,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
     additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);
-    additionalProperties.put("nodeSearchHelpers", CLIENT.equals("search") || isAlgoliasearchClient);
+    additionalProperties.put("searchHelpers", CLIENT.equals("search"));
 
     if (isAlgoliasearchClient) {
       var dependencies = new ArrayList<Map<String, Object>>();
@@ -203,6 +205,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
+    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override

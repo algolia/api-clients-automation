@@ -8,6 +8,7 @@ import {{modelPackage}}.*
 import {{packageName}}.transport.*
 import {{packageName}}.transport.internal.*
 import kotlinx.serialization.json.*
+import kotlin.time.Duration.Companion.milliseconds
 
 {{#operations}}
 public class {{classname}}(
@@ -24,7 +25,7 @@ public class {{classname}}(
       require(apiKey.isNotBlank()) { "`apiKey` is missing." }
   }
 
-  override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, options = options) {
+  override val requester: Requester = requesterOf(clientName = "{{{baseName}}}", appId = appId, apiKey = apiKey, connectTimeout = {{x-timeouts.server.connect}}.milliseconds, readTimeout = {{x-timeouts.server.read}}.milliseconds, writeTimeout = {{x-timeouts.server.write}}.milliseconds, options = options) {
   {{#hostWithAppID}}
     listOf(
       Host("$appId-dsn.algolia.net", CallType.Read),

@@ -1290,6 +1290,45 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("allows for watch query parameter1") {
+    val (client, echo) = testClient()
+    val future = client.pushTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      ),
+      watch = Some(true)
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"watch":"true"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("runSource") {
     val (client, echo) = testClient()
     val future = client.runSource(

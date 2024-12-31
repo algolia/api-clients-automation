@@ -39,37 +39,11 @@ final class MonitoringClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.10.2\\).*"
+        let pattern = "^Algolia for Swift \\(9.12.2\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
         )
-    }
-
-    /// calls api with default read timeouts
-    func testCommonApiTest2() async throws {
-        let configuration = try MonitoringClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = MonitoringClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.customGetWithHTTPInfo(path: "1/test")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertEqual(TimeInterval(5000 / 1000), echoResponse.timeout)
-    }
-
-    /// calls api with default write timeouts
-    func testCommonApiTest3() async throws {
-        let configuration = try MonitoringClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = MonitoringClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.customPostWithHTTPInfo(path: "1/test")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertEqual(TimeInterval(30000 / 1000), echoResponse.timeout)
     }
 
     /// use the correct host

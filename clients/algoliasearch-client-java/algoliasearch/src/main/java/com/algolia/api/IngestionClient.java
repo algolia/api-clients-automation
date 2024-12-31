@@ -10,6 +10,7 @@ import com.algolia.exceptions.*;
 import com.algolia.model.ingestion.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -26,7 +27,16 @@ public class IngestionClient extends ApiClient {
   }
 
   public IngestionClient(String appId, String apiKey, String region, ClientOptions options) {
-    super(appId, apiKey, "Ingestion", options, getDefaultHosts(region));
+    super(
+      appId,
+      apiKey,
+      "Ingestion",
+      options,
+      getDefaultHosts(region),
+      Duration.ofMillis(25000L),
+      Duration.ofMillis(25000L),
+      Duration.ofMillis(25000L)
+    );
   }
 
   private static List<Host> getDefaultHosts(String region) throws AlgoliaRuntimeException {
@@ -2993,13 +3003,51 @@ public class IngestionClient extends ApiClient {
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
    *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, RequestOptions requestOptions)
+  public WatchResponse pushTask(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushTaskAsync(taskID, pushTaskPayload, watch, requestOptions));
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
     throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(pushTaskAsync(taskID, pushTaskPayload, requestOptions));
+    return this.pushTask(taskID, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.pushTask(taskID, pushTaskPayload, null, requestOptions);
   }
 
   /**
@@ -3011,8 +3059,56 @@ public class IngestionClient extends ApiClient {
    *     Connectors pipeline. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
-    return this.pushTask(taskID, pushTaskPayload, null);
+  public WatchResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
+    return this.pushTask(taskID, pushTaskPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushTaskAsync(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks/{taskID}/push", taskID)
+      .setMethod("POST")
+      .setBody(pushTaskPayload)
+      .addQueryParameter("watch", watch)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<WatchResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushTaskAsync(taskID, pushTaskPayload, watch, null);
   }
 
   /**
@@ -3026,21 +3122,12 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<RunResponse> pushTaskAsync(
+  public CompletableFuture<WatchResponse> pushTaskAsync(
     @Nonnull String taskID,
     @Nonnull PushTaskPayload pushTaskPayload,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
-
-    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
-
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/2/tasks/{taskID}/push", taskID)
-      .setMethod("POST")
-      .setBody(pushTaskPayload)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+    return this.pushTaskAsync(taskID, pushTaskPayload, null, requestOptions);
   }
 
   /**
@@ -3052,9 +3139,9 @@ public class IngestionClient extends ApiClient {
    *     Connectors pipeline. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)
+  public CompletableFuture<WatchResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)
     throws AlgoliaRuntimeException {
-    return this.pushTaskAsync(taskID, pushTaskPayload, null);
+    return this.pushTaskAsync(taskID, pushTaskPayload, null, null);
   }
 
   /**
@@ -3584,54 +3671,53 @@ public class IngestionClient extends ApiClient {
 
   /**
    * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
-   * with sources with `type: docker` and `imageType: singer`.
+   * with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse triggerDockerSourceDiscover(@Nonnull String sourceID, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public WatchResponse triggerDockerSourceDiscover(@Nonnull String sourceID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(triggerDockerSourceDiscoverAsync(sourceID, requestOptions));
   }
 
   /**
    * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
-   * with sources with `type: docker` and `imageType: singer`.
+   * with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse triggerDockerSourceDiscover(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+  public WatchResponse triggerDockerSourceDiscover(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.triggerDockerSourceDiscover(sourceID, null);
   }
 
   /**
    * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
-   * requests only works with sources with `type: docker` and `imageType: singer`.
+   * requests only works with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID, RequestOptions requestOptions)
+  public CompletableFuture<WatchResponse> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("POST").build();
-    return executeAsync(request, requestOptions, new TypeReference<SourceWatchResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<WatchResponse>() {});
   }
 
   /**
    * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
-   * requests only works with sources with `type: docker` and `imageType: singer`.
+   * requests only works with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+  public CompletableFuture<WatchResponse> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.triggerDockerSourceDiscoverAsync(sourceID, null);
   }
 
@@ -4157,7 +4243,7 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse validateSource(SourceCreate sourceCreate, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public WatchResponse validateSource(SourceCreate sourceCreate, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(validateSourceAsync(sourceCreate, requestOptions));
   }
 
@@ -4168,7 +4254,7 @@ public class IngestionClient extends ApiClient {
    * @param sourceCreate (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse validateSource(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+  public WatchResponse validateSource(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
     return this.validateSource(sourceCreate, null);
   }
 
@@ -4180,7 +4266,7 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse validateSource(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public WatchResponse validateSource(RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return this.validateSource(null, requestOptions);
   }
 
@@ -4190,7 +4276,7 @@ public class IngestionClient extends ApiClient {
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse validateSource() throws AlgoliaRuntimeException {
+  public WatchResponse validateSource() throws AlgoliaRuntimeException {
     return this.validateSource(null, null);
   }
 
@@ -4203,10 +4289,10 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> validateSourceAsync(SourceCreate sourceCreate, RequestOptions requestOptions)
+  public CompletableFuture<WatchResponse> validateSourceAsync(SourceCreate sourceCreate, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/validate").setMethod("POST").setBody(sourceCreate).build();
-    return executeAsync(request, requestOptions, new TypeReference<SourceWatchResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<WatchResponse>() {});
   }
 
   /**
@@ -4216,7 +4302,7 @@ public class IngestionClient extends ApiClient {
    * @param sourceCreate (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> validateSourceAsync(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+  public CompletableFuture<WatchResponse> validateSourceAsync(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
     return this.validateSourceAsync(sourceCreate, null);
   }
 
@@ -4228,7 +4314,7 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> validateSourceAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public CompletableFuture<WatchResponse> validateSourceAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return this.validateSourceAsync(null, requestOptions);
   }
 
@@ -4238,7 +4324,7 @@ public class IngestionClient extends ApiClient {
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> validateSourceAsync() throws AlgoliaRuntimeException {
+  public CompletableFuture<WatchResponse> validateSourceAsync() throws AlgoliaRuntimeException {
     return this.validateSourceAsync(null, null);
   }
 
@@ -4252,7 +4338,7 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse validateSourceBeforeUpdate(
+  public WatchResponse validateSourceBeforeUpdate(
     @Nonnull String sourceID,
     @Nonnull SourceUpdate sourceUpdate,
     RequestOptions requestOptions
@@ -4268,7 +4354,7 @@ public class IngestionClient extends ApiClient {
    * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SourceWatchResponse validateSourceBeforeUpdate(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
+  public WatchResponse validateSourceBeforeUpdate(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
     throws AlgoliaRuntimeException {
     return this.validateSourceBeforeUpdate(sourceID, sourceUpdate, null);
   }
@@ -4283,7 +4369,7 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> validateSourceBeforeUpdateAsync(
+  public CompletableFuture<WatchResponse> validateSourceBeforeUpdateAsync(
     @Nonnull String sourceID,
     @Nonnull SourceUpdate sourceUpdate,
     RequestOptions requestOptions
@@ -4297,7 +4383,7 @@ public class IngestionClient extends ApiClient {
       .setMethod("POST")
       .setBody(sourceUpdate)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<SourceWatchResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<WatchResponse>() {});
   }
 
   /**
@@ -4308,10 +4394,8 @@ public class IngestionClient extends ApiClient {
    * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SourceWatchResponse> validateSourceBeforeUpdateAsync(
-    @Nonnull String sourceID,
-    @Nonnull SourceUpdate sourceUpdate
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<WatchResponse> validateSourceBeforeUpdateAsync(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
+    throws AlgoliaRuntimeException {
     return this.validateSourceBeforeUpdateAsync(sourceID, sourceUpdate, null);
   }
 }

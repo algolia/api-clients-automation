@@ -15,11 +15,11 @@
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
-    "@types/node": "22.10.1",
+    "@types/node": "22.10.2",
     "bundlewatch": "0.4.0",
-    "execa": "9.5.1",
+    "execa": "9.5.2",
     "lerna": "8.1.9",
-    "rollup": "4.28.0",
+    "rollup": "4.29.1",
     "typescript": "5.7.2"
   },
   "bundlewatch": {
@@ -58,11 +58,11 @@
       },
       {
         "path": "packages/client-search/dist/builds/browser.umd.js",
-        "maxSize": "7.25KB"
+        "maxSize": "7.30KB"
       },
       {
         "path": "packages/ingestion/dist/builds/browser.umd.js",
-        "maxSize": "5.90KB"
+        "maxSize": "6.05KB"
       },
       {
         "path": "packages/monitoring/dist/builds/browser.umd.js",

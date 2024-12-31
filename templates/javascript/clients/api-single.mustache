@@ -48,6 +48,11 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     appId: appIdOption,
 
     /**
+      * The `apiKey` currently in use.
+      */
+    apiKey: apiKeyOption,
+
+    /**
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {
@@ -158,6 +163,17 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
           {{/x-cacheable}}
         {{/vendorExtensions}}
       };
+
+      {{#vendorExtensions.x-timeouts}}
+      requestOptions = {
+        timeouts: {
+          connect: {{connect}},
+          read: {{read}},
+          write: {{write}},
+          ...requestOptions?.timeouts,
+        }
+      }
+      {{/vendorExtensions.x-timeouts}}
 
       return transporter.request(request, requestOptions);
     },

@@ -3853,6 +3853,10 @@ paths:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       requestBody:
         description: ''
         content:
@@ -3865,7 +3869,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceWatchResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -4764,6 +4768,10 @@ paths:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       requestBody:
@@ -4778,7 +4786,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceWatchResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -5019,12 +5027,16 @@ paths:
         Triggers a stream-listing request for a source.
 
         Triggering stream-listing requests only works with sources with `type:
-        docker` and `imageType: singer`.
+        docker` and `imageType: airbyte`.
       operationId: triggerDockerSourceDiscover
       x-acl:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
       responses:
@@ -5033,7 +5045,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceWatchResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -8734,8 +8746,20 @@ paths:
         - addObject
         - deleteIndex
         - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+        - name: watch
+          in: query
+          description: >-
+            When provided, the push operation will be synchronous and the API
+            will wait for the ingestion to be finished before responding.
+          required: false
+          schema:
+            type: boolean
       requestBody:
         description: >-
           Request body of a Search API `batch` request that will be pushed in
@@ -8769,7 +8793,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunResponse'
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -10087,7 +10111,7 @@ paths:
     post:
       tags:
         - transformations
-      summary: Try a transformation
+      summary: Try a transformation before creating it
       description: Try a transformation before creating it.
       operationId: tryTransformation
       x-acl:
@@ -10947,7 +10971,7 @@ paths:
     post:
       tags:
         - transformations
-      summary: Try a transformation
+      summary: Try a transformation before updating it
       description: Try a transformation before updating it.
       operationId: tryTransformationBeforeUpdate
       x-acl:
@@ -13438,7 +13462,6 @@ components:
     DockerImageType:
       type: string
       enum:
-        - singer
         - custom
         - airbyte
       description: Image type.
@@ -13623,7 +13646,7 @@ components:
         - type
         - batchSize
         - publishedAt
-    SourceWatchResponse:
+    WatchResponse:
       type: object
       additionalProperties: false
       properties:
@@ -13632,8 +13655,8 @@ components:
         data:
           type: array
           description: >-
-            depending on the source type, the validation returns sampling data
-            of your source (JSON, CSV, BigQuery).
+            when used with discovering or validating sources, the sampled data
+            of your source is returned.
           items:
             type: object
         events:
@@ -13998,7 +14021,7 @@ components:
         - name
         - syncMode
     DockerStreamsInput:
-      description: The selected streams of a singer or airbyte connector.
+      description: The selected streams of an airbyte connector.
       type: object
       properties:
         streams:
@@ -14649,3 +14672,12 @@ x-tagGroups:
       - sources
       - tasks
       - transformations
+x-timeouts:
+  browser:
+    connect: 25000
+    read: 25000
+    write: 25000
+  server:
+    connect: 25000
+    read: 25000
+    write: 25000

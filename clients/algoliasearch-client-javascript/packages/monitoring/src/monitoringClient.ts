@@ -31,7 +31,7 @@ import type {
   GetReachabilityProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.15.0';
+export const apiClientVersion = '1.18.0';
 
 function getDefaultHosts(): Host[] {
   return [{ url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' }];
@@ -71,6 +71,11 @@ export function createMonitoringClient({
      * The `appId` currently in use.
      */
     appId: appIdOption,
+
+    /**
+     * The `apiKey` currently in use.
+     */
+    apiKey: apiKeyOption,
 
     /**
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.

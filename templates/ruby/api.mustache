@@ -28,6 +28,18 @@ module {{moduleName}}
         region = nil
       end
 
+      if opts.nil? || opts[:connect_timeout].nil?
+        opts[:connect_timeout] = {{x-timeouts.server.connect}}
+      end
+
+      if opts.nil? || opts[:read_timeout].nil?
+        opts[:read_timeout] = {{x-timeouts.server.read}}
+      end
+
+      if opts.nil? || opts[:write_timeout].nil?
+        opts[:write_timeout] = {{x-timeouts.server.write}}
+      end
+
       {{^fallbackToAliasHost}}
       raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || !region.is_a?(String) || !regions.include?(region)
       {{/fallbackToAliasHost}}
@@ -126,6 +138,9 @@ module {{moduleName}}
       {{/headerParams}}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
       {{/vendorExtensions}}
+      {{#vendorExtensions.x-timeouts}}
+      request_options[:timeout] ||= {{#vendorExtensions.x-use-read-transporter}}{{vendorExtensions.x-timeouts.read}}{{/vendorExtensions.x-use-read-transporter}} {{^vendorExtensions.x-use-read-transporter}}{{vendorExtensions.x-timeouts.write}}{{/vendorExtensions.x-use-read-transporter}} 
+      {{/vendorExtensions.x-timeouts}}
 
       post_body = request_options[:debug_body]{{#bodyParam}} || @api_client.object_to_http_body({{{paramName}}}){{/bodyParam}}
 

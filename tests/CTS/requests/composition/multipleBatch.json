@@ -6,6 +6,7 @@
           "action": "upsert",
           "body": {
             "objectID": "foo",
+            "name": "my first composition",
             "behavior": {
               "injection": {
                 "main": {
@@ -15,7 +16,7 @@
                     }
                   }
                 },
-                "insets": []
+                "injectedItems": []
               }
             }
           }
@@ -38,7 +39,7 @@
             "body": {
               "behavior": {
                 "injection": {
-                  "insets": [],
+                  "injectedItems": [],
                   "main": {
                     "source": {
                       "search": {
@@ -48,6 +49,7 @@
                   }
                 }
               },
+              "name": "my first composition",
               "objectID": "foo"
             }
           },

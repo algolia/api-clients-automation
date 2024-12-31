@@ -1321,6 +1321,43 @@ class IngestionTest {
     )
   }
 
+  @Test
+  fun `allows for watch query parameter1`() = runTest {
+    client.runTest(
+      call = {
+        pushTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          pushTaskPayload = PushTaskPayload(
+            action = Action.entries.first { it.value == "addObject" },
+            records = listOf(
+              PushTaskRecords(
+                objectID = "o",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("bar"),
+                  "foo" to JsonPrimitive("1"),
+                ),
+              ),
+              PushTaskRecords(
+                objectID = "k",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("baz"),
+                  "foo" to JsonPrimitive("2"),
+                ),
+              ),
+            ),
+          ),
+          watch = true,
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"watch":"true"}""", it.url.encodedParameters)
+        assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
+      },
+    )
+  }
+
   // runSource
 
   @Test

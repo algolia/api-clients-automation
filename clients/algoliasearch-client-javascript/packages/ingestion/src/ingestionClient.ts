@@ -46,7 +46,6 @@ import type { SourceCreateResponse } from '../model/sourceCreateResponse';
 import type { SourceSearch } from '../model/sourceSearch';
 
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
-import type { SourceWatchResponse } from '../model/sourceWatchResponse';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
@@ -64,6 +63,8 @@ import type { TransformationSearch } from '../model/transformationSearch';
 import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationTryResponse } from '../model/transformationTryResponse';
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
+
+import type { WatchResponse } from '../model/watchResponse';
 
 import type {
   CustomDeleteProps,
@@ -117,7 +118,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.15.0';
+export const apiClientVersion = '1.18.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -194,6 +195,11 @@ export function createIngestionClient({
      * The `appId` currently in use.
      */
     appId: appIdOption,
+
+    /**
+     * The `apiKey` currently in use.
+     */
+    apiKey: apiKeyOption,
 
     /**
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
@@ -1691,9 +1697,13 @@ export function createIngestionClient({
      * @param pushTask - The pushTask object.
      * @param pushTask.taskID - Unique identifier of a task.
      * @param pushTask.pushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+     * @param pushTask.watch - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    pushTask({ taskID, pushTaskPayload }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
+    pushTask(
+      { taskID, pushTaskPayload, watch }: PushTaskProps,
+      requestOptions?: RequestOptions,
+    ): Promise<WatchResponse> {
       if (!taskID) {
         throw new Error('Parameter `taskID` is required when calling `pushTask`.');
       }
@@ -1713,12 +1723,25 @@ export function createIngestionClient({
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
+      if (watch !== undefined) {
+        queryParameters['watch'] = watch.toString();
+      }
+
       const request: Request = {
         method: 'POST',
         path: requestPath,
         queryParameters,
         headers,
         data: pushTaskPayload,
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
       };
 
       return transporter.request(request, requestOptions);
@@ -2037,7 +2060,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2050,7 +2073,7 @@ export function createIngestionClient({
     triggerDockerSourceDiscover(
       { sourceID }: TriggerDockerSourceDiscoverProps,
       requestOptions?: RequestOptions,
-    ): Promise<SourceWatchResponse> {
+    ): Promise<WatchResponse> {
       if (!sourceID) {
         throw new Error('Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.');
       }
@@ -2064,6 +2087,15 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
       };
 
       return transporter.request(request, requestOptions);
@@ -2405,7 +2437,7 @@ export function createIngestionClient({
     validateSource(
       sourceCreate: SourceCreate,
       requestOptions: RequestOptions | undefined = undefined,
-    ): Promise<SourceWatchResponse> {
+    ): Promise<WatchResponse> {
       const requestPath = '/1/sources/validate';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2416,6 +2448,15 @@ export function createIngestionClient({
         queryParameters,
         headers,
         data: sourceCreate ? sourceCreate : {},
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
       };
 
       return transporter.request(request, requestOptions);
@@ -2436,7 +2477,7 @@ export function createIngestionClient({
     validateSourceBeforeUpdate(
       { sourceID, sourceUpdate }: ValidateSourceBeforeUpdateProps,
       requestOptions?: RequestOptions,
-    ): Promise<SourceWatchResponse> {
+    ): Promise<WatchResponse> {
       if (!sourceID) {
         throw new Error('Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.');
       }
@@ -2455,6 +2496,15 @@ export function createIngestionClient({
         queryParameters,
         headers,
         data: sourceUpdate,
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
       };
 
       return transporter.request(request, requestOptions);

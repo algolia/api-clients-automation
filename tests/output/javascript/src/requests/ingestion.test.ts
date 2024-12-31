@@ -875,6 +875,31 @@ describe('pushTask', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('allows for watch query parameter', async () => {
+    const req = (await client.pushTask({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
+        ],
+      },
+      watch: true,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual({ watch: 'true' });
+  });
 });
 
 describe('runSource', () => {

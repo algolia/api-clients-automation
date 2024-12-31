@@ -512,7 +512,8 @@ paths:
                   action: 'upsert',
                   body: {
                     objectID: 'foo',
-                    behavior: { injection: { main: { source: { search: { index: 'bar' } } }, insets: [] } },
+                    name: 'my first composition',
+                    behavior: { injection: { main: { source: { search: { index: 'bar' } } }, injectedItems: [] } },
                   },
                 },
                 { action: 'delete', body: { objectID: 'baz' } },
@@ -534,7 +535,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"test-record-123","description":"my lovely crafted composition","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"sumOrFiltersScores":false,"facets":["*"],"maxValuesPerFacet":100,"facetingAfterDistinct":false,"sortFacetValuesBy":"count","attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"length":0,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}}},"insets":[{"name":"lorem","source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":"lorem","disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}},"position":0,"length":0}]}}}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"test-record-123","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"sumOrFiltersScores":false,"facets":["*"],"maxValuesPerFacet":100,"facetingAfterDistinct":false,"sortFacetValuesBy":"count","attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"length":0,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":"lorem","disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}},"position":0,"length":0}]}}}}]}'
   /1/compositions/{compositionID}/rules/{objectID}:
     get:
       tags:
@@ -1594,6 +1595,46 @@ components:
           default: true
           x-categories:
             - Filtering
+    objectID:
+      type: string
+      description: Unique record identifier.
+      example: test-record-123
+    compositionRunSearchResponse:
+      type: object
+      additionalProperties: true
+      properties:
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        appliedRules:
+          type: array
+          items:
+            title: compositionRunAppliedRules
+            type: object
+            properties:
+              objectID:
+                $ref: '#/components/schemas/objectID'
+            required:
+              - objectID
+      required:
+        - objectID
+    compositionsSearchResponse:
+      type: object
+      additionalProperties: true
+      properties:
+        run:
+          type: array
+          items:
+            $ref: '#/components/schemas/compositionRunSearchResponse'
+      required:
+        - run
+    compositionBaseSearchResponse:
+      type: object
+      additionalProperties: true
+      required:
+        - processingTimeMS
+      properties:
+        compositions:
+          $ref: '#/components/schemas/compositionsSearchResponse'
     processingTimeMS:
       type: integer
       description: Time the server took to process the request, in milliseconds.
@@ -1980,10 +2021,26 @@ components:
         _automaticInsights:
           type: boolean
           description: Whether automatic events collection is enabled for the application.
-    objectID:
-      type: string
-      description: Unique record identifier.
-      example: test-record-123
+    nbHits:
+      type: integer
+      description: Number of results (hits).
+      example: 20
+    nbPages:
+      type: integer
+      description: Number of pages of results.
+      example: 1
+    SearchPagination:
+      type: object
+      additionalProperties: false
+      properties:
+        page:
+          $ref: '#/components/schemas/page'
+        nbHits:
+          $ref: '#/components/schemas/nbHits'
+        nbPages:
+          $ref: '#/components/schemas/nbPages'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -2169,15 +2226,17 @@ components:
         composed:
           title: composedRankingInfo
           type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-            inset:
-              type: string
-          required:
-            - index
-            - inset
+          additionalProperties:
+            title: compositionIdRankingInfo
+            type: object
+            properties:
+              index:
+                type: string
+              injectedItemKey:
+                type: string
+            required:
+              - index
+              - injectedItemKey
     Hit_rankingInfo:
       allOf:
         - $ref: '#/components/schemas/rankingInfo'
@@ -2223,30 +2282,49 @@ components:
             $ref: '#/components/schemas/hit'
       required:
         - hits
-    nbHits:
-      type: integer
-      description: Number of results (hits).
-      example: 20
-    nbPages:
-      type: integer
-      description: Number of pages of results.
-      example: 1
-    SearchPagination:
+    resultsInjectedItemInfoResponse:
       type: object
-      additionalProperties: false
+      additionalProperties: true
       properties:
-        page:
-          $ref: '#/components/schemas/page'
-        nbHits:
-          $ref: '#/components/schemas/nbHits'
-        nbPages:
-          $ref: '#/components/schemas/nbPages'
-        hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
+        key:
+          type: string
+        appliedRules:
+          type: array
+          items:
+            title: resultsInjectedItemAppliedRulesInfoResponse
+            type: object
+            properties:
+              objectID:
+                $ref: '#/components/schemas/objectID'
+            required:
+              - objectID
+      required:
+        - key
+    resultsCompositionsResponse:
+      type: object
+      additionalProperties: true
+      properties:
+        compositions:
+          title: resultsCompositionsInfoResponse
+          type: object
+          additionalProperties:
+            title: resultsCompositionInfoResponse
+            type: object
+            properties:
+              injectedItems:
+                type: array
+                items:
+                  $ref: '#/components/schemas/resultsInjectedItemInfoResponse'
+            required:
+              - injectedItems
+      required:
+        - compositions
     searchResultsItem:
       allOf:
-        - $ref: '#/components/schemas/searchHits'
+        - $ref: '#/components/schemas/baseSearchResponse'
         - $ref: '#/components/schemas/SearchPagination'
+        - $ref: '#/components/schemas/searchHits'
+        - $ref: '#/components/schemas/resultsCompositionsResponse'
     searchResults:
       type: object
       additionalProperties: false
@@ -2259,7 +2337,7 @@ components:
     searchResponse:
       additionalProperties: true
       allOf:
-        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/compositionBaseSearchResponse'
         - $ref: '#/components/schemas/searchResults'
     maxFacetHits:
       type: integer
@@ -2510,6 +2588,7 @@ components:
         - ignorePlurals
         - singleWordSynonym
         - multiWordsSynonym
+        - ignoreConjugations
       x-categories:
         - Query strategy
     advancedSyntaxFeatures:
@@ -3342,8 +3421,8 @@ components:
         - type: string
         - type: 'null'
         - $ref: '#/components/schemas/optionalWordsArray'
-    InsetsQueryParameters:
-      title: Composition Insets Query parameters as object
+    injectedItemsQueryParameters:
+      title: Composition injectedItems Query parameters as object
       type: object
       additionalProperties: false
       properties:
@@ -3939,20 +4018,20 @@ components:
           default: true
           x-categories:
             - Filtering
-    compositionInset:
+    injectedItem:
       type: object
       additionalProperties: false
       properties:
-        name:
+        key:
           type: string
-          description: Inset name.
+          description: injected Item unique identifier.
         source:
-          title: compositionInsetSource
+          title: injectedItemSource
           type: object
           additionalProperties: false
           properties:
             search:
-              title: compositionInsetSourceSearch
+              title: injectedItemSourceSearch
               type: object
               additionalProperties: false
               properties:
@@ -3961,7 +4040,7 @@ components:
                   description: Composition Main Index name.
                   example: Products
                 params:
-                  $ref: '#/components/schemas/InsetsQueryParameters'
+                  $ref: '#/components/schemas/injectedItemsQueryParameters'
               required:
                 - index
           required:
@@ -3975,7 +4054,7 @@ components:
           minimum: 0
           maximum: 20
       required:
-        - name
+        - key
         - source
         - position
         - length
@@ -4015,13 +4094,13 @@ components:
                     - search
               required:
                 - source
-            insets:
+            injectedItems:
               type: array
-              description: list of insets of the current Composition.
+              description: list of injected items of the current Composition.
               minItems: 0
               maxItems: 2
               items:
-                $ref: '#/components/schemas/compositionInset'
+                $ref: '#/components/schemas/injectedItem'
           required:
             - main
       required:
@@ -4032,15 +4111,20 @@ components:
       properties:
         objectID:
           $ref: '#/components/schemas/objectID'
-        description:
+        name:
           type: string
           description: Composition name.
           example: my lovely crafted composition
+        description:
+          type: string
+          description: Composition description.
+          example: my lovely crafted composition that is used for X purpose
         behavior:
           $ref: '#/components/schemas/compositionBehavior'
       required:
         - objectID
         - behavior
+        - name
     action:
       type: string
       enum:

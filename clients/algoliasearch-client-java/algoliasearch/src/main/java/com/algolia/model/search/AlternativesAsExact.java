@@ -12,7 +12,9 @@ public enum AlternativesAsExact {
 
   SINGLE_WORD_SYNONYM("singleWordSynonym"),
 
-  MULTI_WORDS_SYNONYM("multiWordsSynonym");
+  MULTI_WORDS_SYNONYM("multiWordsSynonym"),
+
+  IGNORE_CONJUGATIONS("ignoreConjugations");
 
   private final String value;
 

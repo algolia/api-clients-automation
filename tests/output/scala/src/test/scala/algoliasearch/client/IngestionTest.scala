@@ -70,6 +70,32 @@ class IngestionTest extends AnyFunSuite {
     }
   }
 
+  test("calls api with default read timeouts") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customGet[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.connectTimeout == 25000)
+    assert(echo.lastResponse.get.responseTimeout == 25000)
+  }
+
+  test("calls api with default write timeouts") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customPost[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.connectTimeout == 25000)
+    assert(echo.lastResponse.get.responseTimeout == 25000)
+  }
+
   test("calls api with correct user agent") {
     val (client, echo) = testClient()
 
@@ -94,35 +120,9 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.9.2\).*""".r
+    val regexp = """^Algolia for Scala \(2.11.2\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
-  }
-
-  test("calls api with default read timeouts") {
-    val (client, echo) = testClient()
-
-    Await.ready(
-      client.customGet[JObject](
-        path = "1/test"
-      ),
-      Duration.Inf
-    )
-    assert(echo.lastResponse.get.connectTimeout == 2000)
-    assert(echo.lastResponse.get.responseTimeout == 5000)
-  }
-
-  test("calls api with default write timeouts") {
-    val (client, echo) = testClient()
-
-    Await.ready(
-      client.customPost[JObject](
-        path = "1/test"
-      ),
-      Duration.Inf
-    )
-    assert(echo.lastResponse.get.connectTimeout == 2000)
-    assert(echo.lastResponse.get.responseTimeout == 30000)
   }
 
   test("uses the correct region") {

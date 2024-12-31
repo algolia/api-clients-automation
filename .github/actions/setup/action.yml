@@ -19,7 +19,7 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@v4.5.0
+      uses: actions/setup-java@v4.6.0
       with:
         distribution: zulu
         java-version-file: config/.java-version
@@ -34,7 +34,7 @@ runs:
     - name: Download Java formatter
       if: inputs.type != 'minimal'
       shell: bash
-      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.25.0/google-java-format-1.25.0-all-deps.jar" > /tmp/java-formatter.jar
+      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.25.2/google-java-format-1.25.2-all-deps.jar" > /tmp/java-formatter.jar
 
     # JavaScript for monorepo and tooling
     - name: Install Node
