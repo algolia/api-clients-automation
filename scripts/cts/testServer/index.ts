@@ -6,11 +6,13 @@ import express from 'express';
 import { createSpinner } from '../../spinners.js';
 import type { CTSType } from '../runCts.js';
 
+import { expect } from 'chai';
 import { apiKeyServer } from './apiKey.js';
 import { benchmarkServer } from './benchmark.js';
 import { chunkWrapperServer } from './chunkWrapper.js';
 import { gzipServer } from './gzip.js';
 import { replaceAllObjectsServer } from './replaceAllObjects.js';
+import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.js';
 import { timeoutServer } from './timeout.js';
 import { timeoutServerBis } from './timeoutBis.js';
 import { waitForApiKeyServer } from './waitFor.js';
@@ -23,6 +25,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       gzipServer(),
       timeoutServerBis(),
       replaceAllObjectsServer(),
+      replaceAllObjectsServerFailed(),
       chunkWrapperServer(),
       waitForApiKeyServer(),
       apiKeyServer(),
@@ -57,14 +60,14 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
 
   // 404 handler
   app.use((req, res) => {
-    console.error('endpoint not implemented for', req.method, req.url);
-    res.status(404).json({ message: 'not found' });
+    console.error(`[PORT ${port}] endpoint not implemented for`, req.method, req.url);
+    expect.fail('endpoint not implemented');
   });
 
   // catch all error handler
   app.use((err, _req, res, _) => {
     console.error(err.message);
-    res.status(500).send({ message: err.message });
+    expect.fail(err.message);
   });
 
   const server = await new Promise<Server>((resolve) => {

@@ -67,6 +67,6 @@ fun assertEmptyBody(body: Any) {
 fun assertError(throwable: Throwable, message: String) {
   when (throwable) {
     is SkipException -> println("Test skipped because of non-nullable")
-    else -> assertEquals(message, throwable.message)
+    else -> assertTrue(throwable.message!!.matches(message.toRegex()), "Expected error: $message, but got: ${throwable.message}")
   }
 }

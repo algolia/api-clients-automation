@@ -137,7 +137,7 @@
             "go": "failed to do request: all hosts have been contacted unsuccessfully, it can either be a server or a network error or wrong appID/key credentials were used. You can use 'ExposeIntermediateNetworkErrors: true' in the config to investigate.",
             "java": "Error(s) while processing the retry strategy\\nCaused by: java.net.SocketTimeoutException: timeout",
             "javascript": "Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.",
-            "kotlin": "Error(s) while processing the retry strategy",
+            "kotlin": "Error\\\\(s\\\\) while processing the retry strategy",
             "php": "Impossible to connect, please check your Algolia Application Id.",
             "python": "Unreachable hosts",
             "ruby": "Unreachable hosts. Last error for %localhost%: Net::ReadTimeout with #<TCPSocket:(closed)>",
