@@ -606,12 +606,12 @@ public extension SearchClient {
                 moveOperationResponse: moveOperationResponse
             )
         } catch {
-            _ = try? await deleteIndex(indexName: tmpIndexName)
+            _ = try? await self.deleteIndex(indexName: tmpIndexName)
 
             throw error
         }
 
-        _ = try? await deleteIndex(indexName: tmpIndexName)
+        _ = try? await self.deleteIndex(indexName: tmpIndexName)
     }
 
     /// Generate a secured API key
