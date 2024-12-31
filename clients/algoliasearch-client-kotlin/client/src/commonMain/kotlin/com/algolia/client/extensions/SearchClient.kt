@@ -513,8 +513,10 @@ public suspend fun SearchClient.replaceAllObjects(
     waitForTask(indexName = tmpIndexName, taskID = move.taskID)
 
     return ReplaceAllObjectsResponse(copy, batchResponses, move)
-  } finally {
+  } catch (e: Exception) {
     deleteIndex(tmpIndexName)
+
+    throw e
   }
 }
 

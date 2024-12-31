@@ -411,8 +411,12 @@ package object extension {
           batchResponses = batchResponses,
           moveOperationResponse = move
         )
-      } finally {
-        client.deleteIndex(tmpIndexName)
+      } catch {
+        case e : Throwable => {
+          client.deleteIndex(tmpIndexName)
+
+          throw e
+        }
       }
     }
 

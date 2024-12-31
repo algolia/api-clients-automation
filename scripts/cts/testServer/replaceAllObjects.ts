@@ -14,7 +14,6 @@ const raoState: Record<
     waitTaskCount: number;
     tmpIndexName: string;
     waitingForFinalWaitTask: boolean;
-    tmpIndexDeleted: boolean;
     successful: boolean;
   }
 > = {};
@@ -23,7 +22,6 @@ export function assertValidReplaceAllObjects(expectedCount: number): void {
   expect(Object.keys(raoState)).to.have.length(expectedCount);
   for (const lang in raoState) {
     expect(raoState[lang].successful).to.equal(true);
-    expect(raoState[lang].tmpIndexDeleted).to.equal(true);
   }
 }
 
@@ -52,7 +50,6 @@ function addRoutes(app: Express): void {
             waitTaskCount: 0,
             tmpIndexName: req.body.destination,
             waitingForFinalWaitTask: false,
-            tmpIndexDeleted: false,
             successful: false,
           };
         } else {
@@ -71,7 +68,6 @@ function addRoutes(app: Express): void {
           waitTaskCount: 6,
           tmpIndexName: req.params.indexName,
           waitingForFinalWaitTask: false,
-          tmpIndexDeleted: false,
           successful: false,
         });
 
@@ -116,16 +112,6 @@ function addRoutes(app: Express): void {
     }
 
     res.json({ status: 'published', updatedAt: '2021-01-01T00:00:00.000Z' });
-  });
-
-  app.delete('/1/indexes/:indexName', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_replace_all_objects_(.*)_tmp_\d+$/)?.[1] as string;
-    expect(raoState).to.include.keys(lang);
-    expect(raoState[lang].tmpIndexName).to.equal(req.params.indexName);
-
-    raoState[lang].tmpIndexDeleted = true;
-
-    res.json({ taskID: 456, deletedAt: '2021-01-01T00:00:00.000Z' });
   });
 }
 

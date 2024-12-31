@@ -978,8 +978,10 @@ public <T> ReplaceAllObjectsResponse replaceAllObjects(
       .setCopyOperationResponse(copyOperationResponse)
       .setBatchResponses(batchResponses)
       .setMoveOperationResponse(moveOperationResponse);
-  } finally {
+  } catch (Exception e) {
     deleteIndex(tmpIndexName);
+
+    throw e;
   }
 }
 

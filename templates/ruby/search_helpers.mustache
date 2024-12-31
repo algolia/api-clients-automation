@@ -405,8 +405,10 @@ def replace_all_objects(index_name, objects, batch_size = 1000, request_options 
       batch_responses: batch_responses,
       move_operation_response: move_operation_response
     )
-  ensure
+  rescue Exception => e 
     delete_index(tmp_index_name)
+
+    raise e
   end
 end
 

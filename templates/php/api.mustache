@@ -481,8 +481,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             'batchResponses' => $batchResponses,
             'moveOperationResponse' => $moveOperationResponse,
           ];
-        } finally {
+        } catch (\Throwable $e) {
           $this->deleteIndex($tmpIndexName);
+
+          throw $e;
         }
     }
 
@@ -636,7 +638,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $this->getSettings($indexName);
         } catch (NotFoundException $e) {
             return false;
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
 

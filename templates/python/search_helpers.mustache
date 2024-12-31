@@ -417,8 +417,10 @@
               batch_responses=batch_responses,
               move_operation_response=move_operation_response,
           )
-        finally:
+        except Exception as e:
           {{^isSyncClient}}await {{/isSyncClient}}self.delete_index(tmp_index_name)
+
+          raise e
 
     {{^isSyncClient}}async {{/isSyncClient}}def index_exists(self, index_name: str) -> bool:
         """

@@ -528,9 +528,11 @@ public partial class SearchClient : ISearchClient
         BatchResponses = batchResponse
       };
     }
-    finally
+    catch (Exception ex)
     {
       await DeleteIndexAsync(tmpIndexName, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+      throw ex;
     }
   }
 

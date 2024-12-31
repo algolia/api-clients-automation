@@ -17,6 +17,7 @@ const raoState: Record<
 export function assertValidReplaceAllObjectsFailed(expectedCount: number): void {
   const count = Object.values(raoState).filter((s) => s.successful).length;
   if (count !== expectedCount) {
+    console.log(JSON.stringify(raoState, null, 2));
     throw new Error(`Expected ${expectedCount} call to replaceAllObjectsFailed, got ${count} instead.`);
   }
 }
@@ -44,7 +45,7 @@ function addRoutes(app: Express): void {
   });
 
   app.delete('/1/indexes/:indexName', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_replace_all_objects_too_big_(.*)_tmp/)?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_replace_all_objects_too_big_(.*)_tmp_\d+/)?.[1] as string;
     expect(raoState[lang].tmpIndexName).to.equal(req.params.indexName);
     raoState[lang].successful = true;
 

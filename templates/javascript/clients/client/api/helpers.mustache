@@ -459,8 +459,10 @@ async replaceAllObjects(
     });
 
     return { copyOperationResponse, batchResponses, moveOperationResponse };
-  } finally {
+  } catch (error) {
     await this.deleteIndex({ indexName: tmpIndexName });
+
+    throw error;
   }
 },
 

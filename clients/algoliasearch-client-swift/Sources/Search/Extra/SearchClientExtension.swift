@@ -610,8 +610,6 @@ public extension SearchClient {
 
             throw error
         }
-
-        _ = try? await self.deleteIndex(indexName: tmpIndexName)
     }
 
     /// Generate a secured API key
