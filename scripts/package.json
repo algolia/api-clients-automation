@@ -36,7 +36,7 @@
     "@types/spinnies": "0.5.3",
     "chai": "5.1.2",
     "chalk": "5.4.1",
-    "commander": "12.1.0",
+    "commander": "13.0.0",
     "crc": "4.3.2",
     "dotenv": "16.4.7",
     "esbuild": "0.24.2",
