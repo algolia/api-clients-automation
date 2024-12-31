@@ -13,6 +13,7 @@ import { chunkWrapperServer } from './chunkWrapper.js';
 import { gzipServer } from './gzip.js';
 import { replaceAllObjectsServer } from './replaceAllObjects.js';
 import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.js';
+import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.js';
 import { timeoutServer } from './timeout.js';
 import { timeoutServerBis } from './timeoutBis.js';
 import { waitForApiKeyServer } from './waitFor.js';
@@ -26,6 +27,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       timeoutServerBis(),
       replaceAllObjectsServer(),
       replaceAllObjectsServerFailed(),
+      replaceAllObjectsScopesServer(),
       chunkWrapperServer(),
       waitForApiKeyServer(),
       apiKeyServer(),
