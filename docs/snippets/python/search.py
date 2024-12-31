@@ -1633,7 +1633,7 @@ def snippet_for_replace_all_objects():
 
     call replaceAllObjects without error
     """
-    # >SEPARATOR replaceAllObjects default
+    # >SEPARATOR replaceAllObjects call replaceAllObjects without error
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1684,6 +1684,38 @@ def snippet_for_replace_all_objects():
             },
         ],
         batch_size=3,
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_replace_all_objects1():
+    """
+    Snippet for the replaceAllObjects method.
+
+    replaceAllObjects should cleanup on failure
+    """
+    # >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.replace_all_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "fine",
+                "body": "small obj",
+            },
+            {
+                "objectID": "toolarge",
+                "body": "something bigger than 10KB",
+            },
+        ],
     )
 
     # >LOG

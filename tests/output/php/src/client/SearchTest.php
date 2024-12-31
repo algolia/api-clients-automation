@@ -495,6 +495,30 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('replaceAllObjects should cleanup on failure')]
+    public function test1replaceAllObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6684']));
+
+        try {
+            $res = $client->replaceAllObjects(
+                'cts_e2e_replace_all_objects_too_big_php',
+                [
+                    ['objectID' => 'fine',
+                        'body' => 'small obj',
+                    ],
+
+                    ['objectID' => 'toolarge',
+                        'body' => 'something bigger than 10KB',
+                    ],
+                ],
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Record is too big');
+        }
+    }
+
     #[TestDox('call saveObjects without error')]
     public function test0saveObjects(): void
     {

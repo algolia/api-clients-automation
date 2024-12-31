@@ -472,6 +472,34 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// replaceAllObjects should cleanup on failure
+    func testReplaceAllObjectsTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6684"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.replaceAllObjects(
+                indexName: "cts_e2e_replace_all_objects_too_big_swift",
+                objects: [
+                    ["objectID": "fine", "body": "small obj"],
+                    ["objectID": "toolarge", "body": "something bigger than 10KB"],
+                ]
+            )
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "HTTP error: Status code: 400 Message: Record is too big")
+        }
+    }
+
     /// call saveObjects without error
     func testSaveObjectsTest0() async throws {
         let configuration = try SearchClientConfiguration(

@@ -1268,7 +1268,7 @@ export async function snippetForRemoveUserId(): Promise<void> {
 //
 // call replaceAllObjects without error
 export async function snippetForReplaceAllObjects(): Promise<void> {
-  // >SEPARATOR replaceAllObjects default
+  // >SEPARATOR replaceAllObjects call replaceAllObjects without error
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -1289,6 +1289,30 @@ export async function snippetForReplaceAllObjects(): Promise<void> {
       { objectID: '10', name: 'Julia' },
     ],
     batchSize: 3,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// replaceAllObjects should cleanup on failure
+export async function snippetForReplaceAllObjects1(): Promise<void> {
+  // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.replaceAllObjects({
+    indexName: 'cts_e2e_replace_all_objects_too_big_javascript',
+    objects: [
+      { objectID: 'fine', body: 'small obj' },
+      { objectID: 'toolarge', body: 'something bigger than 10KB' },
+    ],
   });
 
   // >LOG

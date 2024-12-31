@@ -1368,7 +1368,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientReplaceAllObjects()
   {
-    // >SEPARATOR replaceAllObjects default
+    // >SEPARATOR replaceAllObjects call replaceAllObjects without error
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -1389,6 +1389,34 @@ public class SnippetSearchClient
         new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } },
       },
       3
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceAllObjects method.
+  ///
+  /// replaceAllObjects should cleanup on failure
+  /// </summary>
+  public async Task SnippetForSearchClientReplaceAllObjects1()
+  {
+    // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.ReplaceAllObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "fine" }, { "body", "small obj" } },
+        new Dictionary<string, string>
+        {
+          { "objectID", "toolarge" },
+          { "body", "something bigger than 10KB" },
+        },
+      }
     );
     // >LOG
     // SEPARATOR<

@@ -653,6 +653,48 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("replaceAllObjects should cleanup on failure")
+  void replaceAllObjectsTest1() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6684
+          )
+        ),
+        false
+      )
+    );
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        ReplaceAllObjectsResponse res = client.replaceAllObjects(
+          "cts_e2e_replace_all_objects_too_big_java",
+          Arrays.asList(
+            new HashMap() {
+              {
+                put("objectID", "fine");
+                put("body", "small obj");
+              }
+            },
+            new HashMap() {
+              {
+                put("objectID", "toolarge");
+                put("body", "something bigger than 10KB");
+              }
+            }
+          )
+        );
+      });
+      assertEquals("Status Code: 400 - {\"message\":\"Record is too big\",\"status\":400}", exception.getMessage());
+    }
+  }
+
+  @Test
   @DisplayName("call saveObjects without error")
   void saveObjectsTest0() {
     SearchClient client = new SearchClient(

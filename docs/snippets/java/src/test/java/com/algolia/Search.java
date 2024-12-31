@@ -1173,7 +1173,7 @@ class SnippetSearchClient {
   //
   // call replaceAllObjects without error
   void snippetForReplaceAllObjects() throws Exception {
-    // >SEPARATOR replaceAllObjects default
+    // >SEPARATOR replaceAllObjects call replaceAllObjects without error
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
@@ -1243,6 +1243,36 @@ class SnippetSearchClient {
         }
       ),
       3
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the replaceAllObjects method.
+  //
+  // replaceAllObjects should cleanup on failure
+  void snippetForReplaceAllObjects1() throws Exception {
+    // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.replaceAllObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "fine");
+            put("body", "small obj");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "toolarge");
+            put("body", "something bigger than 10KB");
+          }
+        }
+      )
     );
     // >LOG
     // SEPARATOR<

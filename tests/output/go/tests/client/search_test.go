@@ -565,6 +565,32 @@ func TestSearchreplaceAllObjects0(t *testing.T) {
 	}
 }
 
+// replaceAllObjects should cleanup on failure
+func TestSearchreplaceAllObjects1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6684", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.ReplaceAllObjects(
+		"cts_e2e_replace_all_objects_too_big_go",
+		[]map[string]any{map[string]any{"objectID": "fine", "body": "small obj"}, map[string]any{"objectID": "toolarge", "body": "something bigger than 10KB"}},
+	)
+	require.EqualError(t, err, "API error [400] Record is too big")
+}
+
 // call saveObjects without error
 func TestSearchsaveObjects0(t *testing.T) {
 	var err error

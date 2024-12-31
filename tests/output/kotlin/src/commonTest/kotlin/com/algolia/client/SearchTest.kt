@@ -86,7 +86,7 @@ class SearchTest {
       client.customGet(
         path = "1/test/hang/kotlin",
       )
-    }.let { error -> assertError(error, "Error(s) while processing the retry strategy".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+    }.let { error -> assertError(error, "Error\\(s\\) while processing the retry strategy".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
@@ -292,7 +292,7 @@ class SearchTest {
       client.indexExists(
         indexName = "indexExistsERROR",
       )
-    }.let { error -> assertError(error, "Client request(GET http://%localhost%:6681/1/indexes/indexExistsERROR/settings) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid API key\"}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+    }.let { error -> assertError(error, "Client request\\(GET http://%localhost%:6681/1/indexes/indexExistsERROR/settings\\) invalid: 403 Forbidden. Text: \"\\{\"message\":\"Invalid API key\"\\}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
@@ -550,6 +550,38 @@ class SearchTest {
   }
 
   @Test
+  fun `replaceAllObjects should cleanup on failure`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6684))))
+    assertFails {
+      client.replaceAllObjects(
+        indexName = "cts_e2e_replace_all_objects_too_big_kotlin",
+        objects = listOf(
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("fine"),
+            )
+            put(
+              "body",
+              JsonPrimitive("small obj"),
+            )
+          },
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("toolarge"),
+            )
+            put(
+              "body",
+              JsonPrimitive("something bigger than 10KB"),
+            )
+          },
+        ),
+      )
+    }.let { error -> assertError(error, "Client request\\(POST http://%localhost%:6684/1/indexes/cts_e2e_replace_all_objects_too_big_kotlin_tmp_\\d+/batch\\) invalid: 400 Bad Request. Text: \"\\{\"message\":\"Record is too big\",\"status\":400\\}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+  }
+
+  @Test
   fun `call saveObjects without error`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6680))))
     client.runTest(
@@ -618,7 +650,7 @@ class SearchTest {
           },
         ),
       )
-    }.let { error -> assertError(error, "Client request(POST http://%localhost%:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid Application-ID or API key\",\"status\":403}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+    }.let { error -> assertError(error, "Client request\\(POST http://%localhost%:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch\\) invalid: 403 Forbidden. Text: \"\\{\"message\":\"Invalid Application-ID or API key\",\"status\":403\\}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test

@@ -627,6 +627,50 @@ public class SearchClientTests
     }
   }
 
+  [Fact(DisplayName = "replaceAllObjects should cleanup on failure")]
+  public async Task ReplaceAllObjectsTest1()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6684,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.ReplaceAllObjectsAsync(
+        "cts_e2e_replace_all_objects_too_big_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "fine" }, { "body", "small obj" } },
+          new Dictionary<string, string>
+          {
+            { "objectID", "toolarge" },
+            { "body", "something bigger than 10KB" },
+          },
+        }
+      );
+    });
+    Assert.Equal(
+      "{\"message\":\"Record is too big\",\"status\":400}".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
   [Fact(DisplayName = "call saveObjects without error")]
   public async Task SaveObjectsTest0()
   {

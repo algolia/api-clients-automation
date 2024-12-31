@@ -582,6 +582,42 @@ class TestSearchClient:
             """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
         )
 
+    async def test_replace_all_objects_1(self):
+        """
+        replaceAllObjects should cleanup on failure
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6684,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        try:
+            await _client.replace_all_objects(
+                index_name="cts_e2e_replace_all_objects_too_big_python",
+                objects=[
+                    {
+                        "objectID": "fine",
+                        "body": "small obj",
+                    },
+                    {
+                        "objectID": "toolarge",
+                        "body": "something bigger than 10KB",
+                    },
+                ],
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Record is too big"
+
     async def test_save_objects_0(self):
         """
         call saveObjects without error
@@ -1436,6 +1472,42 @@ class TestSearchClientSync:
         ) == loads(
             """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
         )
+
+    def test_replace_all_objects_1(self):
+        """
+        replaceAllObjects should cleanup on failure
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6684,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.replace_all_objects(
+                index_name="cts_e2e_replace_all_objects_too_big_python",
+                objects=[
+                    {
+                        "objectID": "fine",
+                        "body": "small obj",
+                    },
+                    {
+                        "objectID": "toolarge",
+                        "body": "something bigger than 10KB",
+                    },
+                ],
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Record is too big"
 
     def test_save_objects_0(self):
         """

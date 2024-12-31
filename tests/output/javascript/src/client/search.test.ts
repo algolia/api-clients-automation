@@ -440,6 +440,33 @@ describe('replaceAllObjects', () => {
       });
     }
   }, 15000);
+
+  test('replaceAllObjects should cleanup on failure', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6684,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    try {
+      // @ts-ignore
+      const result = await client.replaceAllObjects({
+        indexName: 'cts_e2e_replace_all_objects_too_big_javascript',
+        objects: [
+          { objectID: 'fine', body: 'small obj' },
+          { objectID: 'toolarge', body: 'something bigger than 10KB' },
+        ],
+      });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Record is too big');
+    }
+  }, 15000);
 });
 
 describe('saveObjects', () => {

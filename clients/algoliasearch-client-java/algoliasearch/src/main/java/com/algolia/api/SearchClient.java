@@ -6573,24 +6573,6 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
-   * untouched. Replace all records in an index without any downtime. See
-   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
-   * details.
-   *
-   * @param indexName The `indexName` to replace `objects` in.
-   * @param objects The array of `objects` to store in the given Algolia `indexName`.
-   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
-   *     to `length(objects) / batchSize`.
-   * @throws AlgoliaRetryException When the retry has failed on all hosts
-   * @throws AlgoliaApiException When the API sends an http error code
-   * @throws AlgoliaRuntimeException When an error occurred during the serialization
-   */
-  public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize) {
-    return replaceAllObjects(indexName, objects, batchSize, null);
-  }
-
-  /**
    * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
    * under the hood, which creates a `batch` requests with at most 1000 objects in it.
    *
@@ -6830,6 +6812,40 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects) {
+    return replaceAllObjects(indexName, objects, -1);
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
+   * details.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize) {
+    return replaceAllObjects(indexName, objects, batchSize, null);
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
+   * details.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
    * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
    *     to `length(objects) / batchSize`.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -6847,47 +6863,57 @@ public class SearchClient extends ApiClient {
     Random rnd = new Random();
     String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
 
-    // Copy settings, synonyms and rules
-    UpdatedAtResponse copyOperationResponse = operationIndex(
-      indexName,
-      new OperationIndexParams()
-        .setOperation(OperationType.COPY)
-        .setDestination(tmpIndexName)
-        .addScope(ScopeType.SETTINGS)
-        .addScope(ScopeType.RULES)
-        .addScope(ScopeType.SYNONYMS),
-      requestOptions
-    );
+    if (batchSize == -1) {
+      batchSize = 1000;
+    }
 
-    // Save new objects
-    List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+    try {
+      // Copy settings, synonyms and rules
+      UpdatedAtResponse copyOperationResponse = operationIndex(
+        indexName,
+        new OperationIndexParams()
+          .setOperation(OperationType.COPY)
+          .setDestination(tmpIndexName)
+          .addScope(ScopeType.SETTINGS)
+          .addScope(ScopeType.RULES)
+          .addScope(ScopeType.SYNONYMS),
+        requestOptions
+      );
 
-    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+      // Save new objects
+      List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
 
-    copyOperationResponse = operationIndex(
-      indexName,
-      new OperationIndexParams()
-        .setOperation(OperationType.COPY)
-        .setDestination(tmpIndexName)
-        .addScope(ScopeType.SETTINGS)
-        .addScope(ScopeType.RULES)
-        .addScope(ScopeType.SYNONYMS),
-      requestOptions
-    );
-    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-    // Move temporary index to source index
-    UpdatedAtResponse moveOperationResponse = operationIndex(
-      tmpIndexName,
-      new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
-      requestOptions
-    );
-    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+      copyOperationResponse = operationIndex(
+        indexName,
+        new OperationIndexParams()
+          .setOperation(OperationType.COPY)
+          .setDestination(tmpIndexName)
+          .addScope(ScopeType.SETTINGS)
+          .addScope(ScopeType.RULES)
+          .addScope(ScopeType.SYNONYMS),
+        requestOptions
+      );
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-    return new ReplaceAllObjectsResponse()
-      .setCopyOperationResponse(copyOperationResponse)
-      .setBatchResponses(batchResponses)
-      .setMoveOperationResponse(moveOperationResponse);
+      // Move temporary index to source index
+      UpdatedAtResponse moveOperationResponse = operationIndex(
+        tmpIndexName,
+        new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
+        requestOptions
+      );
+      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+
+      return new ReplaceAllObjectsResponse()
+        .setCopyOperationResponse(copyOperationResponse)
+        .setBatchResponses(batchResponses)
+        .setMoveOperationResponse(moveOperationResponse);
+    } catch (Exception e) {
+      deleteIndex(tmpIndexName);
+
+      throw e;
+    }
   }
 
   /**

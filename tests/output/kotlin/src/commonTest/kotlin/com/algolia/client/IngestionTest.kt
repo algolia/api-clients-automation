@@ -22,7 +22,7 @@ class IngestionTest {
       client.customGet(
         path = "1/html-error",
       )
-    }.let { error -> assertError(error, "Client request(GET http://%localhost%:6676/1/html-error) invalid: 429 Too Many Requests. Text: \"<html><body>429 Too Many Requests</body></html>\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+    }.let { error -> assertError(error, "Client request\\(GET http://%localhost%:6676/1/html-error\\) invalid: 429 Too Many Requests. Text: \"<html><body>429 Too Many Requests</body></html>\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test

@@ -412,7 +412,7 @@ package object extension {
           moveOperationResponse = move
         )
       } catch {
-        case e : Throwable => {
+        case e: Throwable => {
           client.deleteIndex(tmpIndexName)
 
           throw e

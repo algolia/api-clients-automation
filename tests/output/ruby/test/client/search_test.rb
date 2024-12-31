@@ -548,6 +548,40 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
+  # replaceAllObjects should cleanup on failure
+  def test_replace_all_objects1
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6684,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    begin
+      client.replace_all_objects(
+        "cts_e2e_replace_all_objects_too_big_ruby",
+        [{objectID: "fine", body: "small obj"}, {objectID: "toolarge", body: "something bigger than 10KB"}]
+      )
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "400: Record is too big".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
+  end
+
   # call saveObjects without error
   def test_save_objects0
     client = Algolia::SearchClient.create_with_config(
