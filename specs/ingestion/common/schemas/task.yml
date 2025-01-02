@@ -45,7 +45,7 @@ TaskV1:
   type: object
   additionalProperties: false
   deprecated: true
-  description: The V1 task object, please use methods and types that doesn't contain the V1 suffix.
+  description: The V1 task object, please use methods and types that don't contain the V1 suffix.
   properties:
     taskID:
       $ref: './common.yml#/taskID'
