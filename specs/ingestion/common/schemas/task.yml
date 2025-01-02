@@ -28,6 +28,8 @@ Task:
       $ref: './common.yml#/cursor'
     notifications:
       $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -67,6 +69,8 @@ TaskV1:
       $ref: './common.yml#/cursor'
     notifications:
       $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -111,6 +115,8 @@ TaskCreate:
       $ref: './common.yml#/cursor'
     notifications:
       $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
   required:
     - sourceID
     - destinationID
@@ -183,6 +189,8 @@ TaskUpdate:
       $ref: '#/failureThreshold'
     notifications:
       $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
 
 TaskUpdateV1:
   type: object
@@ -575,10 +583,16 @@ Notifications:
         enabled:
           description: Whether to send email notifications, note that this doesn't prevent the task from being blocked.
           type: boolean
-        criticalThreshold:
-          description: The number of critical failures in a row before blocking the task and sending a notification.
-          type: integer
-          minimum: 1
-          maximum: 10
   required:
     - email
+
+Policies:
+  type: object
+  additionalProperties: false
+  description: Set of rules for a task.
+  properties:
+    criticalThreshold:
+      description: The number of critical failures in a row before blocking the task and sending a notification.
+      type: integer
+      minimum: 1
+      maximum: 10
