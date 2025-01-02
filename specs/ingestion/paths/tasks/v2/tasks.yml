@@ -17,6 +17,7 @@ get:
     - $ref: '../../../common/taskParameters.yml#/sourceType'
     - $ref: '../../../common/taskParameters.yml#/destinationID'
     - $ref: '../../../common/taskParameters.yml#/triggerType'
+    - $ref: '../../../common/taskParameters.yml#/withNotifications'
     - $ref: '../../../common/taskParameters.yml#/sort'
     - $ref: '../../../common/parameters.yml#/order'
   responses:

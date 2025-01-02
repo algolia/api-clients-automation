@@ -70,6 +70,14 @@ triggerType:
       $ref: './schemas/task.yml#/TriggerType'
     example: onDemand,schedule,subscription,streaming
 
+withNotifications:
+  name: withNotifications
+  in: query
+  description: If specified, the response only includes tasks with notifications.email.enabled set to this value.
+  required: false
+  schema:
+    type: boolean
+
 sort:
   name: sort
   in: query
