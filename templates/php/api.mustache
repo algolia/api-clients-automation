@@ -434,7 +434,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
     */
-    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [])
+    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [])
     {
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
@@ -444,7 +444,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             [
               'operation' => 'copy',
               'destination' => $tmpIndexName,
-              'scope' => ['settings', 'rules', 'synonyms'],
+              'scope' => $scopes,
             ],
             $requestOptions
           );
@@ -458,7 +458,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             [
               'operation' => 'copy',
               'destination' => $tmpIndexName,
-              'scope' => ['settings', 'rules', 'synonyms'],
+              'scope' => $scopes,
             ],
             $requestOptions
           );
