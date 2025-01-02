@@ -25,9 +25,11 @@
       "action": "replace",
       "notifications": {
         "email": {
-          "enabled": true,
-          "criticalThreshold": 8
+          "enabled": true
         }
+      },
+      "policies": {
+        "criticalThreshold": 8
       }
     },
     "request": {
@@ -40,9 +42,11 @@
         "action": "replace",
         "notifications": {
           "email": {
-            "enabled": true,
-            "criticalThreshold": 8
+            "enabled": true
           }
+        },
+        "policies": {
+          "criticalThreshold": 8
         }
       }
     }
