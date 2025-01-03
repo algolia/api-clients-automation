@@ -2,26 +2,26 @@ personalizationStrategyParams:
   type: object
   additionalProperties: false
   required:
-    - eventScoring
-    - facetScoring
+    - eventsScoring
+    - facetsScoring
     - personalizationImpact
   properties:
-    eventScoring:
+    eventsScoring:
       type: array
       description: |
         Scores associated with each event.
 
         The higher the scores, the higher the impact of those events on the personalization of search results.
       items:
-        $ref: 'eventScoring.yml#/eventScoring'
-    facetScoring:
+        $ref: 'eventsScoring.yml#/eventsScoring'
+    facetsScoring:
       type: array
       description: |
         Scores associated with each facet.
 
         The higher the scores, the higher the impact of those events on the personalization of search results.
       items:
-        $ref: 'facetScoring.yml#/facetScoring'
+        $ref: 'facetsScoring.yml#/facetsScoring'
     personalizationImpact:
       type: integer
       minimum: 0
