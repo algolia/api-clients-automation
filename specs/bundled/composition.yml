@@ -1763,6 +1763,11 @@ components:
           $ref: '#/components/schemas/nbPages'
         hitsPerPage:
           $ref: '#/components/schemas/hitsPerPage'
+      required:
+        - page
+        - nbHits
+        - nbPages
+        - hitsPerPage
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -2002,8 +2007,16 @@ components:
             augmented with additional attributes, such as, for highlighting.
           items:
             $ref: '#/components/schemas/hit'
+        query:
+          $ref: '#/components/schemas/query'
+        params:
+          type: string
+          description: URL-encoded string of all search parameters.
+          example: query=a&hitsPerPage=20
       required:
         - hits
+        - query
+        - params
     resultsInjectedItemInfoResponse:
       type: object
       additionalProperties: true
@@ -2056,6 +2069,8 @@ components:
           description: Search results.
           items:
             $ref: '#/components/schemas/searchResultsItem'
+      required:
+        - results
     searchResponse:
       additionalProperties: true
       allOf:
