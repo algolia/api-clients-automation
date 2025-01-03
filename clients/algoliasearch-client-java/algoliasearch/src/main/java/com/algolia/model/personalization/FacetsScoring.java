@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** FacetScoring */
-public class FacetScoring {
+/** FacetsScoring */
+public class FacetsScoring {
 
   @JsonProperty("score")
   private Integer score;
@@ -16,7 +16,7 @@ public class FacetScoring {
   @JsonProperty("facetName")
   private String facetName;
 
-  public FacetScoring setScore(Integer score) {
+  public FacetsScoring setScore(Integer score) {
     this.score = score;
     return this;
   }
@@ -27,7 +27,7 @@ public class FacetScoring {
     return score;
   }
 
-  public FacetScoring setFacetName(String facetName) {
+  public FacetsScoring setFacetName(String facetName) {
     this.facetName = facetName;
     return this;
   }
@@ -46,8 +46,8 @@ public class FacetScoring {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FacetScoring facetScoring = (FacetScoring) o;
-    return Objects.equals(this.score, facetScoring.score) && Objects.equals(this.facetName, facetScoring.facetName);
+    FacetsScoring facetsScoring = (FacetsScoring) o;
+    return Objects.equals(this.score, facetsScoring.score) && Objects.equals(this.facetName, facetsScoring.facetName);
   }
 
   @Override
@@ -58,7 +58,7 @@ public class FacetScoring {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FacetScoring {\n");
+    sb.append("class FacetsScoring {\n");
     sb.append("    score: ").append(toIndentedString(score)).append("\n");
     sb.append("    facetName: ").append(toIndentedString(facetName)).append("\n");
     sb.append("}");

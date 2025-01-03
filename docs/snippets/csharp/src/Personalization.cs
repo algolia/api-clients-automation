@@ -212,18 +212,18 @@ public class SnippetPersonalizationClient
     var response = await client.SetPersonalizationStrategyAsync(
       new PersonalizationStrategyParams
       {
-        EventScoring = new List<EventScoring>
+        EventsScoring = new List<EventsScoring>
         {
-          new EventScoring
+          new EventsScoring
           {
             Score = 42,
             EventName = "Algolia",
             EventType = Enum.Parse<EventType>("Click"),
           },
         },
-        FacetScoring = new List<FacetScoring>
+        FacetsScoring = new List<FacetsScoring>
         {
-          new FacetScoring { Score = 42, FacetName = "Event" },
+          new FacetsScoring { Score = 42, FacetName = "Event" },
         },
         PersonalizationImpact = 42,
       }

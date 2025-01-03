@@ -1798,18 +1798,18 @@ paths:
             var response = await client.SetPersonalizationStrategyAsync(
               new PersonalizationStrategyParams
               {
-                EventScoring = new List<EventScoring>
+                EventsScoring = new List<EventsScoring>
                 {
-                  new EventScoring
+                  new EventsScoring
                   {
                     Score = 42,
                     EventName = "Algolia",
                     EventType = Enum.Parse<EventType>("Click"),
                   },
                 },
-                FacetScoring = new List<FacetScoring>
+                FacetsScoring = new List<FacetsScoring>
                 {
-                  new FacetScoring { Score = 42, FacetName = "Event" },
+                  new FacetsScoring { Score = 42, FacetName = "Event" },
                 },
                 PersonalizationImpact = 42,
               }
@@ -1835,9 +1835,9 @@ paths:
             response, err :=
             client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
 
-              personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(
-                []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetScoring(
-                []personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
+              personalization.NewEmptyPersonalizationStrategyParams().SetEventsScoring(
+                []personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetsScoring(
+                []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
             ))
 
             if err != nil {
@@ -1865,8 +1865,8 @@ paths:
 
             client.setPersonalizationStrategy(
               new PersonalizationStrategyParams()
-                .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
-                .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName("Event")))
+                .setEventsScoring(Arrays.asList(new EventsScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
+                .setFacetsScoring(Arrays.asList(new FacetsScoring().setScore(42).setFacetName("Event")))
                 .setPersonalizationImpact(42)
             );
 
@@ -1885,8 +1885,8 @@ paths:
             // Call the API
 
             const response = await client.setPersonalizationStrategy({
-              eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
-              facetScoring: [{ score: 42, facetName: 'Event' }],
+              eventsScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
+              facetsScoring: [{ score: 42, facetName: 'Event' }],
               personalizationImpact: 42,
             });
 
@@ -1909,15 +1909,15 @@ paths:
 
             var response = client.setPersonalizationStrategy(
               personalizationStrategyParams = PersonalizationStrategyParams(
-                eventScoring = listOf(
-                  EventScoring(
+                eventsScoring = listOf(
+                  EventsScoring(
                     score = 42,
                     eventName = "Algolia",
                     eventType = EventType.entries.first { it.value == "click" },
                   ),
                 ),
-                facetScoring = listOf(
-                  FacetScoring(
+                facetsScoring = listOf(
+                  FacetsScoring(
                     score = 42,
                     facetName = "Event",
                   ),
@@ -1944,13 +1944,13 @@ paths:
             // Call the API
 
             $response = $client->setPersonalizationStrategy(
-                ['eventScoring' => [
+                ['eventsScoring' => [
                     ['score' => 42,
                         'eventName' => 'Algolia',
                         'eventType' => 'click',
                     ],
                 ],
-                    'facetScoring' => [
+                    'facetsScoring' => [
                         ['score' => 42,
                             'facetName' => 'Event',
                         ],
@@ -1982,14 +1982,14 @@ paths:
 
             response = client.set_personalization_strategy(
                 personalization_strategy_params={
-                    "eventScoring": [
+                    "eventsScoring": [
                         {
                             "score": 42,
                             "eventName": "Algolia",
                             "eventType": "click",
                         },
                     ],
-                    "facetScoring": [
+                    "facetsScoring": [
                         {
                             "score": 42,
                             "facetName": "Event",
@@ -2018,8 +2018,10 @@ paths:
             # Call the API
             response = client.set_personalization_strategy(
               Algolia::Personalization::PersonalizationStrategyParams.new(
-                event_scoring: [Algolia::Personalization::EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
-                facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: "Event")],
+                events_scoring: [
+                  Algolia::Personalization::EventsScoring.new(score: 42, event_name: "Algolia", event_type: "click")
+                ],
+                facets_scoring: [Algolia::Personalization::FacetsScoring.new(score: 42, facet_name: "Event")],
                 personalization_impact: 42
               )
             )
@@ -2043,15 +2045,15 @@ paths:
             // Call the API
             val response = client.setPersonalizationStrategy(
               personalizationStrategyParams = PersonalizationStrategyParams(
-                eventScoring = Seq(
-                  EventScoring(
+                eventsScoring = Seq(
+                  EventsScoring(
                     score = 42,
                     eventName = "Algolia",
                     eventType = EventType.withName("click")
                   )
                 ),
-                facetScoring = Seq(
-                  FacetScoring(
+                facetsScoring = Seq(
+                  FacetsScoring(
                     score = 42,
                     facetName = "Event"
                   )
@@ -2076,12 +2078,12 @@ paths:
 
             let response = try await client
                 .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(
-                    eventScoring: [EventScoring(
+                    eventsScoring: [EventsScoring(
                         score: 42,
                         eventName: "Algolia",
                         eventType: PersonalizationEventType.click
                     )],
-                    facetScoring: [FacetScoring(score: 42, facetName: "Event")],
+                    facetsScoring: [FacetsScoring(score: 42, facetName: "Event")],
                     personalizationImpact: 42
                 ))
             // >LOG
@@ -2171,7 +2173,7 @@ components:
         - click
         - conversion
         - view
-    eventScoring:
+    eventsScoring:
       type: object
       additionalProperties: false
       required:
@@ -2186,7 +2188,7 @@ components:
           description: Event name.
         eventType:
           $ref: '#/components/schemas/EventType'
-    facetScoring:
+    facetsScoring:
       type: object
       additionalProperties: false
       required:
@@ -2202,11 +2204,11 @@ components:
       type: object
       additionalProperties: false
       required:
-        - eventScoring
-        - facetScoring
+        - eventsScoring
+        - facetsScoring
         - personalizationImpact
       properties:
-        eventScoring:
+        eventsScoring:
           type: array
           description: >
             Scores associated with each event.
@@ -2215,8 +2217,8 @@ components:
             The higher the scores, the higher the impact of those events on the
             personalization of search results.
           items:
-            $ref: '#/components/schemas/eventScoring'
-        facetScoring:
+            $ref: '#/components/schemas/eventsScoring'
+        facetsScoring:
           type: array
           description: >
             Scores associated with each facet.
@@ -2225,7 +2227,7 @@ components:
             The higher the scores, the higher the impact of those events on the
             personalization of search results.
           items:
-            $ref: '#/components/schemas/facetScoring'
+            $ref: '#/components/schemas/facetsScoring'
         personalizationImpact:
           type: integer
           minimum: 0

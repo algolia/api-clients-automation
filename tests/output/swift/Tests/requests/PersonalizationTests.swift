@@ -778,10 +778,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
         let response = try await client
             .setPersonalizationStrategyWithHTTPInfo(personalizationStrategyParams: PersonalizationStrategyParams(
-                eventScoring: [
-                    EventScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click),
+                eventsScoring: [
+                    EventsScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click),
                 ],
-                facetScoring: [FacetScoring(score: 42, facetName: "Event")],
+                facetsScoring: [FacetsScoring(score: 42, facetName: "Event")],
                 personalizationImpact: 42
             ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -791,7 +791,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
+            "{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

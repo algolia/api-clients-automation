@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** EventScoring */
-public class EventScoring {
+/** EventsScoring */
+public class EventsScoring {
 
   @JsonProperty("score")
   private Integer score;
@@ -19,7 +19,7 @@ public class EventScoring {
   @JsonProperty("eventType")
   private EventType eventType;
 
-  public EventScoring setScore(Integer score) {
+  public EventsScoring setScore(Integer score) {
     this.score = score;
     return this;
   }
@@ -30,7 +30,7 @@ public class EventScoring {
     return score;
   }
 
-  public EventScoring setEventName(String eventName) {
+  public EventsScoring setEventName(String eventName) {
     this.eventName = eventName;
     return this;
   }
@@ -41,7 +41,7 @@ public class EventScoring {
     return eventName;
   }
 
-  public EventScoring setEventType(EventType eventType) {
+  public EventsScoring setEventType(EventType eventType) {
     this.eventType = eventType;
     return this;
   }
@@ -60,11 +60,11 @@ public class EventScoring {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    EventScoring eventScoring = (EventScoring) o;
+    EventsScoring eventsScoring = (EventsScoring) o;
     return (
-      Objects.equals(this.score, eventScoring.score) &&
-      Objects.equals(this.eventName, eventScoring.eventName) &&
-      Objects.equals(this.eventType, eventScoring.eventType)
+      Objects.equals(this.score, eventsScoring.score) &&
+      Objects.equals(this.eventName, eventsScoring.eventName) &&
+      Objects.equals(this.eventType, eventsScoring.eventType)
     );
   }
 
@@ -76,7 +76,7 @@ public class EventScoring {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class EventScoring {\n");
+    sb.append("class EventsScoring {\n");
     sb.append("    score: ").append(toIndentedString(score)).append("\n");
     sb.append("    eventName: ").append(toIndentedString(eventName)).append("\n");
     sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");

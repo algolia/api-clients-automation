@@ -21,17 +21,17 @@ package algoliasearch.personalization
 
 /** PersonalizationStrategyParams
   *
-  * @param eventScoring
+  * @param eventsScoring
   *   Scores associated with each event. The higher the scores, the higher the impact of those events on the
   *   personalization of search results.
-  * @param facetScoring
+  * @param facetsScoring
   *   Scores associated with each facet. The higher the scores, the higher the impact of those events on the
   *   personalization of search results.
   * @param personalizationImpact
   *   Impact of personalization on the search results. If set to 0, personalization has no impact on the search results.
   */
 case class PersonalizationStrategyParams(
-    eventScoring: Seq[EventScoring],
-    facetScoring: Seq[FacetScoring],
+    eventsScoring: Seq[EventsScoring],
+    facetsScoring: Seq[FacetsScoring],
     personalizationImpact: Int
 )

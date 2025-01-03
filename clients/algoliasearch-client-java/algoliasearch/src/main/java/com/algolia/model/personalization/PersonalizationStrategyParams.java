@@ -12,22 +12,22 @@ import java.util.Objects;
 /** PersonalizationStrategyParams */
 public class PersonalizationStrategyParams {
 
-  @JsonProperty("eventScoring")
-  private List<EventScoring> eventScoring = new ArrayList<>();
+  @JsonProperty("eventsScoring")
+  private List<EventsScoring> eventsScoring = new ArrayList<>();
 
-  @JsonProperty("facetScoring")
-  private List<FacetScoring> facetScoring = new ArrayList<>();
+  @JsonProperty("facetsScoring")
+  private List<FacetsScoring> facetsScoring = new ArrayList<>();
 
   @JsonProperty("personalizationImpact")
   private Integer personalizationImpact;
 
-  public PersonalizationStrategyParams setEventScoring(List<EventScoring> eventScoring) {
-    this.eventScoring = eventScoring;
+  public PersonalizationStrategyParams setEventsScoring(List<EventsScoring> eventsScoring) {
+    this.eventsScoring = eventsScoring;
     return this;
   }
 
-  public PersonalizationStrategyParams addEventScoring(EventScoring eventScoringItem) {
-    this.eventScoring.add(eventScoringItem);
+  public PersonalizationStrategyParams addEventsScoring(EventsScoring eventsScoringItem) {
+    this.eventsScoring.add(eventsScoringItem);
     return this;
   }
 
@@ -36,17 +36,17 @@ public class PersonalizationStrategyParams {
    * on the personalization of search results.
    */
   @javax.annotation.Nonnull
-  public List<EventScoring> getEventScoring() {
-    return eventScoring;
+  public List<EventsScoring> getEventsScoring() {
+    return eventsScoring;
   }
 
-  public PersonalizationStrategyParams setFacetScoring(List<FacetScoring> facetScoring) {
-    this.facetScoring = facetScoring;
+  public PersonalizationStrategyParams setFacetsScoring(List<FacetsScoring> facetsScoring) {
+    this.facetsScoring = facetsScoring;
     return this;
   }
 
-  public PersonalizationStrategyParams addFacetScoring(FacetScoring facetScoringItem) {
-    this.facetScoring.add(facetScoringItem);
+  public PersonalizationStrategyParams addFacetsScoring(FacetsScoring facetsScoringItem) {
+    this.facetsScoring.add(facetsScoringItem);
     return this;
   }
 
@@ -55,8 +55,8 @@ public class PersonalizationStrategyParams {
    * on the personalization of search results.
    */
   @javax.annotation.Nonnull
-  public List<FacetScoring> getFacetScoring() {
-    return facetScoring;
+  public List<FacetsScoring> getFacetsScoring() {
+    return facetsScoring;
   }
 
   public PersonalizationStrategyParams setPersonalizationImpact(Integer personalizationImpact) {
@@ -83,23 +83,23 @@ public class PersonalizationStrategyParams {
     }
     PersonalizationStrategyParams personalizationStrategyParams = (PersonalizationStrategyParams) o;
     return (
-      Objects.equals(this.eventScoring, personalizationStrategyParams.eventScoring) &&
-      Objects.equals(this.facetScoring, personalizationStrategyParams.facetScoring) &&
+      Objects.equals(this.eventsScoring, personalizationStrategyParams.eventsScoring) &&
+      Objects.equals(this.facetsScoring, personalizationStrategyParams.facetsScoring) &&
       Objects.equals(this.personalizationImpact, personalizationStrategyParams.personalizationImpact)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(eventScoring, facetScoring, personalizationImpact);
+    return Objects.hash(eventsScoring, facetsScoring, personalizationImpact);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PersonalizationStrategyParams {\n");
-    sb.append("    eventScoring: ").append(toIndentedString(eventScoring)).append("\n");
-    sb.append("    facetScoring: ").append(toIndentedString(facetScoring)).append("\n");
+    sb.append("    eventsScoring: ").append(toIndentedString(eventsScoring)).append("\n");
+    sb.append("    facetsScoring: ").append(toIndentedString(facetsScoring)).append("\n");
     sb.append("    personalizationImpact: ").append(toIndentedString(personalizationImpact)).append("\n");
     sb.append("}");
     return sb.toString();

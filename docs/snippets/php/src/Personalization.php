@@ -196,13 +196,13 @@ class SnippetPersonalizationClient
 
         // Call the API
         $response = $client->setPersonalizationStrategy(
-            ['eventScoring' => [
+            ['eventsScoring' => [
                 ['score' => 42,
                     'eventName' => 'Algolia',
                     'eventType' => 'click',
                 ],
             ],
-                'facetScoring' => [
+                'facetsScoring' => [
                     ['score' => 42,
                         'facetName' => 'Event',
                     ],

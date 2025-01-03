@@ -289,16 +289,16 @@ describe('getUserTokenProfile', () => {
 describe('setPersonalizationStrategy', () => {
   test('set setPersonalizationStrategy', async () => {
     const req = (await client.setPersonalizationStrategy({
-      eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
-      facetScoring: [{ score: 42, facetName: 'Event' }],
+      eventsScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
+      facetsScoring: [{ score: 42, facetName: 'Event' }],
       personalizationImpact: 42,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/strategies/personalization');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
-      facetScoring: [{ score: 42, facetName: 'Event' }],
+      eventsScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
+      facetsScoring: [{ score: 42, facetName: 'Event' }],
       personalizationImpact: 42,
     });
     expect(req.searchParams).toStrictEqual(undefined);

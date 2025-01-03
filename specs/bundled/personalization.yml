@@ -466,7 +466,7 @@ components:
         - click
         - conversion
         - view
-    eventScoring:
+    eventsScoring:
       type: object
       additionalProperties: false
       required:
@@ -481,7 +481,7 @@ components:
           description: Event name.
         eventType:
           $ref: '#/components/schemas/EventType'
-    facetScoring:
+    facetsScoring:
       type: object
       additionalProperties: false
       required:
@@ -497,11 +497,11 @@ components:
       type: object
       additionalProperties: false
       required:
-        - eventScoring
-        - facetScoring
+        - eventsScoring
+        - facetsScoring
         - personalizationImpact
       properties:
-        eventScoring:
+        eventsScoring:
           type: array
           description: >
             Scores associated with each event.
@@ -510,8 +510,8 @@ components:
             The higher the scores, the higher the impact of those events on the
             personalization of search results.
           items:
-            $ref: '#/components/schemas/eventScoring'
-        facetScoring:
+            $ref: '#/components/schemas/eventsScoring'
+        facetsScoring:
           type: array
           description: >
             Scores associated with each facet.
@@ -520,7 +520,7 @@ components:
             The higher the scores, the higher the impact of those events on the
             personalization of search results.
           items:
-            $ref: '#/components/schemas/facetScoring'
+            $ref: '#/components/schemas/facetsScoring'
         personalizationImpact:
           type: integer
           minimum: 0

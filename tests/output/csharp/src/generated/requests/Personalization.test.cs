@@ -556,18 +556,18 @@ public class PersonalizationClientRequestTests
     await client.SetPersonalizationStrategyAsync(
       new PersonalizationStrategyParams
       {
-        EventScoring = new List<EventScoring>
+        EventsScoring = new List<EventsScoring>
         {
-          new EventScoring
+          new EventsScoring
           {
             Score = 42,
             EventName = "Algolia",
             EventType = Enum.Parse<EventType>("Click"),
           },
         },
-        FacetScoring = new List<FacetScoring>
+        FacetsScoring = new List<FacetsScoring>
         {
-          new FacetScoring { Score = 42, FacetName = "Event" },
+          new FacetsScoring { Score = 42, FacetName = "Event" },
         },
         PersonalizationImpact = 42,
       }
@@ -577,7 +577,7 @@ public class PersonalizationClientRequestTests
     Assert.Equal("/1/strategies/personalization", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}",
+      "{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}",
       req.Body,
       new JsonDiffConfig(false)
     );

@@ -200,15 +200,15 @@ class SnippetPersonalizationClient {
     // Call the API
     val response = client.setPersonalizationStrategy(
       personalizationStrategyParams = PersonalizationStrategyParams(
-        eventScoring = Seq(
-          EventScoring(
+        eventsScoring = Seq(
+          EventsScoring(
             score = 42,
             eventName = "Algolia",
             eventType = EventType.withName("click")
           )
         ),
-        facetScoring = Seq(
-          FacetScoring(
+        facetsScoring = Seq(
+          FacetsScoring(
             score = 42,
             facetName = "Event"
           )

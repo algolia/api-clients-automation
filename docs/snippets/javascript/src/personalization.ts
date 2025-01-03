@@ -157,8 +157,8 @@ export async function snippetForSetPersonalizationStrategy(): Promise<void> {
 
   // Call the API
   const response = await client.setPersonalizationStrategy({
-    eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
-    facetScoring: [{ score: 42, facetName: 'Event' }],
+    eventsScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
+    facetsScoring: [{ score: 42, facetName: 'Event' }],
     personalizationImpact: 42,
   });
 
