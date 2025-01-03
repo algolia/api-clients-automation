@@ -13,13 +13,33 @@ searchResults:
       description: Search results.
       items:
         $ref: '#/searchResultsItem'
+  required:
+    - results
 
 searchResultsItem:
   allOf:
     - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
-    - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'
+    - $ref: '#/SearchPagination'
     - $ref: '#/searchHits'
     - $ref: '#/resultsCompositionsResponse'
+
+SearchPagination:
+  type: object
+  additionalProperties: false
+  properties:
+    page:
+      $ref: '../../../common/schemas/SearchParams.yml#/page'
+    nbHits:
+      $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
+    nbPages:
+      $ref: '../../../common/schemas/SearchResponse.yml#/nbPages'
+    hitsPerPage:
+      $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
+  required:
+    - page
+    - nbHits
+    - nbPages
+    - hitsPerPage
 
 searchHits:
   type: object
@@ -33,8 +53,16 @@ searchHits:
         Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
       items:
         $ref: 'Hit.yml#/hit'
+    query:
+      $ref: '../../../common/schemas/SearchParams.yml#/query'
+    params:
+      type: string
+      description: URL-encoded string of all search parameters.
+      example: query=a&hitsPerPage=20
   required:
     - hits
+    - query
+    - params
 
 resultsCompositionsResponse:
   type: object
