@@ -3667,7 +3667,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.7":
+"debug@npm:4, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.3.7":
   version: 4.3.7
   resolution: "debug@npm:4.3.7"
   dependencies:
@@ -3679,7 +3679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:~4.4.0":
+"debug@npm:4.4.0, debug@npm:~4.4.0":
   version: 4.4.0
   resolution: "debug@npm:4.4.0"
   dependencies:
@@ -4884,15 +4884,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"folder-hash@npm:4.0.4":
-  version: 4.0.4
-  resolution: "folder-hash@npm:4.0.4"
+"folder-hash@npm:4.1.0":
+  version: 4.1.0
+  resolution: "folder-hash@npm:4.1.0"
   dependencies:
-    debug: "npm:^4.3.3"
-    minimatch: "npm:~5.1.2"
+    debug: "npm:4.4.0"
+    minimatch: "npm:10.0.1"
   bin:
     folder-hash: bin/folder-hash
-  checksum: 10/960db1ce6cc96eccf23bb598588bf3c6429776fdd440cf7882e09adebbb54cb20ace787772bb8ae72bac07f2bf2a95938edb5ca08d28b243cafe68d531198434
+  checksum: 10/e4db25c4d8bf76d954c2de0daf4042580d9efac0a4145546180c5d5c081bf1ea6310ee37f69b67bf1ff39cf11fd64803155539eeb111924648002e7610bc8a39
   languageName: node
   linkType: hard
 
@@ -6551,6 +6551,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:10.0.1":
+  version: 10.0.1
+  resolution: "minimatch@npm:10.0.1"
+  dependencies:
+    brace-expansion: "npm:^2.0.1"
+  checksum: 10/082e7ccbc090d5f8c4e4e029255d5a1d1e3af37bda837da2b8b0085b1503a1210c91ac90d9ebfe741d8a5f286ece820a1abb4f61dc1f82ce602a055d461d93f3
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -6560,7 +6569,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0, minimatch@npm:~5.1.2":
+"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
   version: 5.1.6
   resolution: "minimatch@npm:5.1.6"
   dependencies:
@@ -8258,7 +8267,7 @@ __metadata:
     esbuild: "npm:0.24.2"
     execa: "npm:9.5.2"
     express: "npm:4.21.2"
-    folder-hash: "npm:4.0.4"
+    folder-hash: "npm:4.1.0"
     fs-extra: "npm:11.2.0"
     httpsnippet: "npm:3.0.9"
     js-yaml: "npm:4.1.0"
