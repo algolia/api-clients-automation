@@ -25,6 +25,12 @@ public class TaskUpdate {
   @JsonProperty("failureThreshold")
   private Integer failureThreshold;
 
+  @JsonProperty("notifications")
+  private Notifications notifications;
+
+  @JsonProperty("policies")
+  private Policies policies;
+
   public TaskUpdate setDestinationID(String destinationID) {
     this.destinationID = destinationID;
     return this;
@@ -83,6 +89,28 @@ public class TaskUpdate {
     return failureThreshold;
   }
 
+  public TaskUpdate setNotifications(Notifications notifications) {
+    this.notifications = notifications;
+    return this;
+  }
+
+  /** Get notifications */
+  @javax.annotation.Nullable
+  public Notifications getNotifications() {
+    return notifications;
+  }
+
+  public TaskUpdate setPolicies(Policies policies) {
+    this.policies = policies;
+    return this;
+  }
+
+  /** Get policies */
+  @javax.annotation.Nullable
+  public Policies getPolicies() {
+    return policies;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -97,13 +125,15 @@ public class TaskUpdate {
       Objects.equals(this.cron, taskUpdate.cron) &&
       Objects.equals(this.input, taskUpdate.input) &&
       Objects.equals(this.enabled, taskUpdate.enabled) &&
-      Objects.equals(this.failureThreshold, taskUpdate.failureThreshold)
+      Objects.equals(this.failureThreshold, taskUpdate.failureThreshold) &&
+      Objects.equals(this.notifications, taskUpdate.notifications) &&
+      Objects.equals(this.policies, taskUpdate.policies)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(destinationID, cron, input, enabled, failureThreshold);
+    return Objects.hash(destinationID, cron, input, enabled, failureThreshold, notifications, policies);
   }
 
   @Override
@@ -115,6 +145,8 @@ public class TaskUpdate {
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
+    sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
+    sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("}");
     return sb.toString();
   }

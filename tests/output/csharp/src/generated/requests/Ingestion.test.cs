@@ -205,6 +205,8 @@ public class IngestionClientRequestTests
         DestinationID = "destinationName",
         Cron = "* * * * *",
         Action = Enum.Parse<ActionType>("Replace"),
+        Notifications = new Notifications { Email = new EmailNotifications { Enabled = true } },
+        Policies = new Policies { CriticalThreshold = 8 },
       }
     );
 
@@ -212,7 +214,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/2/tasks", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}",
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
       req.Body,
       new JsonDiffConfig(false)
     );

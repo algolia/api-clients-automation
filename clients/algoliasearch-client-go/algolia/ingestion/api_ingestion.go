@@ -4717,6 +4717,15 @@ func (r *ApiListTasksRequest) UnmarshalJSON(b []byte) error {
 			}
 		}
 	}
+	if v, ok := req["withNotifications"]; ok {
+		err = json.Unmarshal(v, &r.withNotifications)
+		if err != nil {
+			err = json.Unmarshal(b, &r.withNotifications)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal withNotifications: %w", err)
+			}
+		}
+	}
 	if v, ok := req["sort"]; ok {
 		err = json.Unmarshal(v, &r.sort)
 		if err != nil {
@@ -4741,16 +4750,17 @@ func (r *ApiListTasksRequest) UnmarshalJSON(b []byte) error {
 
 // ApiListTasksRequest represents the request with all the parameters for the API call.
 type ApiListTasksRequest struct {
-	itemsPerPage  *int32
-	page          *int32
-	action        []ActionType
-	enabled       *bool
-	sourceID      []string
-	sourceType    []SourceType
-	destinationID []string
-	triggerType   []TriggerType
-	sort          TaskSortKeys
-	order         OrderKeys
+	itemsPerPage      *int32
+	page              *int32
+	action            []ActionType
+	enabled           *bool
+	sourceID          []string
+	sourceType        []SourceType
+	destinationID     []string
+	triggerType       []TriggerType
+	withNotifications *bool
+	sort              TaskSortKeys
+	order             OrderKeys
 }
 
 // NewApiListTasksRequest creates an instance of the ApiListTasksRequest to be used for the API call.
@@ -4806,6 +4816,12 @@ func (r ApiListTasksRequest) WithTriggerType(triggerType []TriggerType) ApiListT
 	return r
 }
 
+// WithWithNotifications adds the withNotifications to the ApiListTasksRequest and returns the request for chaining.
+func (r ApiListTasksRequest) WithWithNotifications(withNotifications bool) ApiListTasksRequest {
+	r.withNotifications = &withNotifications
+	return r
+}
+
 // WithSort adds the sort to the ApiListTasksRequest and returns the request for chaining.
 func (r ApiListTasksRequest) WithSort(sort TaskSortKeys) ApiListTasksRequest {
 	r.sort = sort
@@ -4837,6 +4853,7 @@ ListTasks calls the API and returns the raw response from it.
 	  @param sourceType []SourceType - Filters the tasks with the specified source type.
 	  @param destinationID []string - Destination IDs for filtering the list of tasks.
 	  @param triggerType []TriggerType - Type of task trigger for filtering the list of tasks.
+	  @param withNotifications bool - If specified, the response only includes tasks with notifications.email.enabled set to this value.
 	  @param sort TaskSortKeys - Property by which to sort the list of tasks.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	@param opts ...RequestOption - Optional parameters for the API call
@@ -4876,6 +4893,9 @@ func (c *APIClient) ListTasksWithHTTPInfo(r ApiListTasksRequest, opts ...Request
 	}
 	if !utils.IsNilOrEmpty(r.triggerType) {
 		conf.queryParams.Set("triggerType", utils.QueryParameterToString(r.triggerType))
+	}
+	if !utils.IsNilOrEmpty(r.withNotifications) {
+		conf.queryParams.Set("withNotifications", utils.QueryParameterToString(*r.withNotifications))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
 		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
@@ -4919,6 +4939,7 @@ Request can be constructed by NewApiListTasksRequest with parameters below.
 	@param sourceType []SourceType - Filters the tasks with the specified source type.
 	@param destinationID []string - Destination IDs for filtering the list of tasks.
 	@param triggerType []TriggerType - Type of task trigger for filtering the list of tasks.
+	@param withNotifications bool - If specified, the response only includes tasks with notifications.email.enabled set to this value.
 	@param sort TaskSortKeys - Property by which to sort the list of tasks.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListTasksResponse

@@ -187,6 +187,14 @@ class TestIngestionClient:
                 "destinationID": "destinationName",
                 "cron": "* * * * *",
                 "action": "replace",
+                "notifications": {
+                    "email": {
+                        "enabled": True,
+                    },
+                },
+                "policies": {
+                    "criticalThreshold": 8,
+                },
             },
         )
 
@@ -195,7 +203,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}"""
+            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
         )
 
     async def test_create_task_2(self):
@@ -1824,6 +1832,14 @@ class TestIngestionClientSync:
                 "destinationID": "destinationName",
                 "cron": "* * * * *",
                 "action": "replace",
+                "notifications": {
+                    "email": {
+                        "enabled": True,
+                    },
+                },
+                "policies": {
+                    "criticalThreshold": 8,
+                },
             },
         )
 
@@ -1832,7 +1848,7 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}"""
+            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
         )
 
     def test_create_task_2(self):

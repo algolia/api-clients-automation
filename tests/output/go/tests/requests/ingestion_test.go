@@ -156,7 +156,10 @@ func TestIngestion_CreateTask(t *testing.T) {
 	t.Run("task with cron", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")),
+			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
+				ingestion.NewEmptyNotifications().SetEmail(
+					ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
+				ingestion.NewEmptyPolicies().SetCriticalThreshold(8)),
 		))
 		require.NoError(t, err)
 
@@ -164,7 +167,7 @@ func TestIngestion_CreateTask(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}`)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`)
 	})
 	t.Run("task shopify", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(

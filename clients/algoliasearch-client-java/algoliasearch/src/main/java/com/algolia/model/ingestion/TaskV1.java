@@ -42,6 +42,12 @@ public class TaskV1 {
   @JsonProperty("cursor")
   private String cursor;
 
+  @JsonProperty("notifications")
+  private Notifications notifications;
+
+  @JsonProperty("policies")
+  private Policies policies;
+
   @JsonProperty("createdAt")
   private String createdAt;
 
@@ -150,6 +156,28 @@ public class TaskV1 {
     return cursor;
   }
 
+  public TaskV1 setNotifications(Notifications notifications) {
+    this.notifications = notifications;
+    return this;
+  }
+
+  /** Get notifications */
+  @javax.annotation.Nullable
+  public Notifications getNotifications() {
+    return notifications;
+  }
+
+  public TaskV1 setPolicies(Policies policies) {
+    this.policies = policies;
+    return this;
+  }
+
+  /** Get policies */
+  @javax.annotation.Nullable
+  public Policies getPolicies() {
+    return policies;
+  }
+
   public TaskV1 setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
@@ -191,6 +219,8 @@ public class TaskV1 {
       Objects.equals(this.failureThreshold, taskV1.failureThreshold) &&
       Objects.equals(this.action, taskV1.action) &&
       Objects.equals(this.cursor, taskV1.cursor) &&
+      Objects.equals(this.notifications, taskV1.notifications) &&
+      Objects.equals(this.policies, taskV1.policies) &&
       Objects.equals(this.createdAt, taskV1.createdAt) &&
       Objects.equals(this.updatedAt, taskV1.updatedAt)
     );
@@ -198,7 +228,21 @@ public class TaskV1 {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskID, sourceID, destinationID, trigger, input, enabled, failureThreshold, action, cursor, createdAt, updatedAt);
+    return Objects.hash(
+      taskID,
+      sourceID,
+      destinationID,
+      trigger,
+      input,
+      enabled,
+      failureThreshold,
+      action,
+      cursor,
+      notifications,
+      policies,
+      createdAt,
+      updatedAt
+    );
   }
 
   @Override
@@ -214,6 +258,8 @@ public class TaskV1 {
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
+    sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
+    sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");

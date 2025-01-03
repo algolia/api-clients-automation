@@ -44,5 +44,7 @@ case class TaskCreate(
     enabled: Option[Boolean] = scala.None,
     failureThreshold: Option[Int] = scala.None,
     input: Option[TaskInput] = scala.None,
-    cursor: Option[String] = scala.None
+    cursor: Option[String] = scala.None,
+    notifications: Option[Notifications] = scala.None,
+    policies: Option[Policies] = scala.None
 )

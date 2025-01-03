@@ -166,7 +166,11 @@ class TestIngestionClient < Test::Unit::TestCase
         source_id: "search",
         destination_id: "destinationName",
         cron: "* * * * *",
-        action: "replace"
+        action: "replace",
+        notifications: Algolia::Ingestion::Notifications.new(
+          email: Algolia::Ingestion::EmailNotifications.new(enabled: true)
+        ),
+        policies: Algolia::Ingestion::Policies.new(critical_threshold: 8)
       )
     )
 
@@ -176,7 +180,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}"
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
       ),
       JSON.parse(req.body)
     )
