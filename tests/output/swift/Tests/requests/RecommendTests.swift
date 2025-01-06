@@ -827,8 +827,49 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// get recommendations for recommend model with all parameters
+    /// get recommendations with e2e to check oneOf model
     func testGetRecommendationsTest1() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client
+            .getRecommendationsWithHTTPInfo(
+                getRecommendationsParams: GetRecommendationsParams(requests: [
+                    RecommendationsRequest
+                        .relatedQuery(RelatedQuery(
+                            indexName: "cts_e2e_browse",
+                            threshold: 20.0,
+                            maxRecommendations: 2,
+                            model: RelatedModel.relatedProducts,
+                            objectID: "Æon Flux"
+                        )),
+                ])
+            )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"objectID\":\"Æon Flux\",\"model\":\"related-products\",\"threshold\":20.0,\"maxRecommendations\":2}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/recommendations")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// get recommendations for recommend model with all parameters
+    func testGetRecommendationsTest2() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -879,7 +920,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// get recommendations for trending model with minimal parameters
-    func testGetRecommendationsTest2() async throws {
+    func testGetRecommendationsTest3() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -920,7 +961,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// get recommendations for trending model with all parameters
-    func testGetRecommendationsTest3() async throws {
+    func testGetRecommendationsTest4() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -972,7 +1013,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// get multiple recommendations with minimal parameters
-    func testGetRecommendationsTest4() async throws {
+    func testGetRecommendationsTest5() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -1015,7 +1056,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// get multiple recommendations with all parameters
-    func testGetRecommendationsTest5() async throws {
+    func testGetRecommendationsTest6() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -1080,7 +1121,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// get frequently bought together recommendations
-    func testGetRecommendationsTest6() async throws {
+    func testGetRecommendationsTest7() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY

@@ -26,6 +26,10 @@ Task:
       $ref: '#/ActionType'
     cursor:
       $ref: './common.yml#/cursor'
+    notifications:
+      $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -63,6 +67,10 @@ TaskV1:
       $ref: '#/ActionType'
     cursor:
       $ref: './common.yml#/cursor'
+    notifications:
+      $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -105,6 +113,10 @@ TaskCreate:
       $ref: '#/TaskInput'
     cursor:
       $ref: './common.yml#/cursor'
+    notifications:
+      $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
   required:
     - sourceID
     - destinationID
@@ -175,6 +187,10 @@ TaskUpdate:
       description: Whether the task is enabled.
     failureThreshold:
       $ref: '#/failureThreshold'
+    notifications:
+      $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
 
 TaskUpdateV1:
   type: object
@@ -553,3 +569,30 @@ ShopifyMarket:
     - countries
     - currencies
     - locales
+
+Notifications:
+  type: object
+  additionalProperties: false
+  description: Notifications settings for a task.
+  properties:
+    email:
+      title: emailNotifications
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          description: Whether to send email notifications, note that this doesn't prevent the task from being blocked.
+          type: boolean
+  required:
+    - email
+
+Policies:
+  type: object
+  additionalProperties: false
+  description: Set of rules for a task.
+  properties:
+    criticalThreshold:
+      description: The number of critical failures in a row before blocking the task and sending a notification.
+      type: integer
+      minimum: 1
+      maximum: 10

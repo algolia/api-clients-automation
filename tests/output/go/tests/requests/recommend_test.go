@@ -477,6 +477,21 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}`)
 	})
+	t.Run("get recommendations with e2e to check oneOf model", func(t *testing.T) {
+		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+			recommend.NewEmptyGetRecommendationsParams().SetRequests(
+				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}`)
+	})
 	t.Run("get recommendations for recommend model with all parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 

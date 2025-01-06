@@ -18,6 +18,8 @@ else:
     from typing_extensions import Self
 
 
+from algoliasearch.ingestion.models.notifications import Notifications
+from algoliasearch.ingestion.models.policies import Policies
 from algoliasearch.ingestion.models.task_input import TaskInput
 
 _ALIASES = {
@@ -26,6 +28,8 @@ _ALIASES = {
     "input": "input",
     "enabled": "enabled",
     "failure_threshold": "failureThreshold",
+    "notifications": "notifications",
+    "policies": "policies",
 }
 
 
@@ -47,6 +51,8 @@ class TaskUpdate(BaseModel):
     """ Whether the task is enabled. """
     failure_threshold: Optional[int] = None
     """ Maximum accepted percentage of failures for a task run to finish successfully. """
+    notifications: Optional[Notifications] = None
+    policies: Optional[Policies] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -85,6 +91,16 @@ class TaskUpdate(BaseModel):
 
         obj["input"] = (
             TaskInput.from_dict(obj["input"]) if obj.get("input") is not None else None
+        )
+        obj["notifications"] = (
+            Notifications.from_dict(obj["notifications"])
+            if obj.get("notifications") is not None
+            else None
+        )
+        obj["policies"] = (
+            Policies.from_dict(obj["policies"])
+            if obj.get("policies") is not None
+            else None
         )
 
         return cls.model_validate(obj)

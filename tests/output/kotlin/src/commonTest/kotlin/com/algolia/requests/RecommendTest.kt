@@ -572,7 +572,33 @@ class RecommendTest {
   }
 
   @Test
-  fun `get recommendations for recommend model with all parameters1`() = runTest {
+  fun `get recommendations with e2e to check oneOf model1`() = runTest {
+    client.runTest(
+      call = {
+        getRecommendations(
+          getRecommendationsParams = GetRecommendationsParams(
+            requests = listOf(
+              RelatedQuery(
+                indexName = "cts_e2e_browse",
+                objectID = "Æon Flux",
+                model = RelatedModel.entries.first { it.value == "related-products" },
+                threshold = 20.0,
+                maxRecommendations = 2,
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get recommendations for recommend model with all parameters2`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -606,7 +632,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get recommendations for trending model with minimal parameters2`() = runTest {
+  fun `get recommendations for trending model with minimal parameters3`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -632,7 +658,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get recommendations for trending model with all parameters3`() = runTest {
+  fun `get recommendations for trending model with all parameters4`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -667,7 +693,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get multiple recommendations with minimal parameters4`() = runTest {
+  fun `get multiple recommendations with minimal parameters5`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -698,7 +724,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get multiple recommendations with all parameters5`() = runTest {
+  fun `get multiple recommendations with all parameters6`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -747,7 +773,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get frequently bought together recommendations6`() = runTest {
+  fun `get frequently bought together recommendations7`() = runTest {
     client.runTest(
       call = {
         getRecommendations(

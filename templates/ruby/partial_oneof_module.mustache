@@ -16,49 +16,10 @@
 
       {{/-last}}
       {{/oneOf}}
-      {{#discriminator}}
-      {{#propertyName}}
-      # Discriminator's property name (OpenAPI v3)
-      def openapi_discriminator_name
-        :'{{{.}}}'
-      end
-
-      {{/propertyName}}
-      {{#mappedModels}}
-      {{#-first}}
-      # Discriminator's mapping (OpenAPI v3)
-      def openapi_discriminator_mapping
-        {
-      {{/-first}}
-          :{{{mappingName}}} => :'{{{modelName}}}'{{^-last}},{{/-last}}
-      {{#-last}}
-        }
-      end
-
-      {{/-last}}
-      {{/mappedModels}}
-      {{/discriminator}}
       # Builds the object
       # @param [Mixed] Data to be matched against the list of oneOf items
       # @return [Object] Returns the model or the data itself
       def build(data)
-      {{#discriminator}}
-        discriminator_value = data[openapi_discriminator_name]
-        return nil if discriminator_value.nil?
-      {{#mappedModels}}
-      {{#-first}}
-
-        klass = openapi_discriminator_mapping[discriminator_value.to_s.to_sym]
-        return nil unless klass
-
-        {{moduleName}}::{{modelModule}}.const_get(klass).build_from_hash(data)
-      {{/-first}}
-      {{/mappedModels}}
-      {{^mappedModels}}
-        {{moduleName}}::{{modelModule}}.const_get(discriminator_value).build_from_hash(data)
-      {{/mappedModels}}
-      {{/discriminator}}
-      {{^discriminator}}
         # Go through the list of oneOf items and attempt to identify the appropriate one.
         # Note:
         # - We do not attempt to check whether exactly one item matches.
@@ -76,15 +37,12 @@
         end
 
         openapi_one_of.include?(:AnyType) ? data : nil
-      {{/discriminator}}
       end
-      {{^discriminator}}
 
       private
 
       SchemaMismatchError = Class.new(StandardError)
 
-      # Note: 'File' is missing here because in the regular case we get the data _after_ a call to JSON.parse.
       def find_and_cast_into_type(klass, data)
         return if data.nil?
 
@@ -119,12 +77,12 @@
             if const.respond_to?(:openapi_one_of)
             # nested oneOf model
               model = const.build(data)
-            elsif const.respond_to?(:acceptable_attributes)
-              # raise if data contains keys that are not known to the model
-              raise unless (data.keys - const.acceptable_attributes).empty?
-              model = const.build_from_hash(data)
+            elsif const.respond_to?(:discriminator_attributes)
+              if const.discriminator_attributes().all? { |attr| data.key?(attr) }
+                model = const.build_from_hash(data)
+              end
             else
-              # maybe it's an enum
+              # maybe it's an enum, or doens't have discriminators
               model = const.build_from_hash(data)
             end
 
@@ -136,6 +94,5 @@
       rescue
         raise SchemaMismatchError, "#{data} doesn't match the #{klass} type"
       end
-      {{/discriminator}}
     end
   end

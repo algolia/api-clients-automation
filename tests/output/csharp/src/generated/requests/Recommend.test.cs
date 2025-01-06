@@ -607,8 +607,40 @@ public class RecommendClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "get recommendations for recommend model with all parameters")]
+  [Fact(DisplayName = "get recommendations with e2e to check oneOf model")]
   public async Task GetRecommendationsTest1()
+  {
+    await client.GetRecommendationsAsync(
+      new GetRecommendationsParams
+      {
+        Requests = new List<RecommendationsRequest>
+        {
+          new RecommendationsRequest(
+            new RelatedQuery
+            {
+              IndexName = "cts_e2e_browse",
+              ObjectID = "Æon Flux",
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 20.0,
+              MaxRecommendations = 2,
+            }
+          ),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/recommendations", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"objectID\":\"Æon Flux\",\"model\":\"related-products\",\"threshold\":20.0,\"maxRecommendations\":2}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "get recommendations for recommend model with all parameters")]
+  public async Task GetRecommendationsTest2()
   {
     await client.GetRecommendationsAsync(
       new GetRecommendationsParams
@@ -654,7 +686,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "get recommendations for trending model with minimal parameters")]
-  public async Task GetRecommendationsTest2()
+  public async Task GetRecommendationsTest3()
   {
     await client.GetRecommendationsAsync(
       new GetRecommendationsParams
@@ -686,7 +718,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "get recommendations for trending model with all parameters")]
-  public async Task GetRecommendationsTest3()
+  public async Task GetRecommendationsTest4()
   {
     await client.GetRecommendationsAsync(
       new GetRecommendationsParams
@@ -733,7 +765,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "get multiple recommendations with minimal parameters")]
-  public async Task GetRecommendationsTest4()
+  public async Task GetRecommendationsTest5()
   {
     await client.GetRecommendationsAsync(
       new GetRecommendationsParams
@@ -773,7 +805,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "get multiple recommendations with all parameters")]
-  public async Task GetRecommendationsTest5()
+  public async Task GetRecommendationsTest6()
   {
     await client.GetRecommendationsAsync(
       new GetRecommendationsParams
@@ -843,7 +875,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "get frequently bought together recommendations")]
-  public async Task GetRecommendationsTest6()
+  public async Task GetRecommendationsTest7()
   {
     await client.GetRecommendationsAsync(
       new GetRecommendationsParams

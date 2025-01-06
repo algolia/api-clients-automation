@@ -34,6 +34,12 @@ public class TaskCreate {
   @JsonProperty("cursor")
   private String cursor;
 
+  @JsonProperty("notifications")
+  private Notifications notifications;
+
+  @JsonProperty("policies")
+  private Policies policies;
+
   public TaskCreate setSourceID(String sourceID) {
     this.sourceID = sourceID;
     return this;
@@ -125,6 +131,28 @@ public class TaskCreate {
     return cursor;
   }
 
+  public TaskCreate setNotifications(Notifications notifications) {
+    this.notifications = notifications;
+    return this;
+  }
+
+  /** Get notifications */
+  @javax.annotation.Nullable
+  public Notifications getNotifications() {
+    return notifications;
+  }
+
+  public TaskCreate setPolicies(Policies policies) {
+    this.policies = policies;
+    return this;
+  }
+
+  /** Get policies */
+  @javax.annotation.Nullable
+  public Policies getPolicies() {
+    return policies;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -142,13 +170,15 @@ public class TaskCreate {
       Objects.equals(this.enabled, taskCreate.enabled) &&
       Objects.equals(this.failureThreshold, taskCreate.failureThreshold) &&
       Objects.equals(this.input, taskCreate.input) &&
-      Objects.equals(this.cursor, taskCreate.cursor)
+      Objects.equals(this.cursor, taskCreate.cursor) &&
+      Objects.equals(this.notifications, taskCreate.notifications) &&
+      Objects.equals(this.policies, taskCreate.policies)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sourceID, destinationID, action, cron, enabled, failureThreshold, input, cursor);
+    return Objects.hash(sourceID, destinationID, action, cron, enabled, failureThreshold, input, cursor, notifications, policies);
   }
 
   @Override
@@ -163,6 +193,8 @@ public class TaskCreate {
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
+    sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
+    sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -200,7 +200,13 @@ class IngestionClientRequestsTests {
   void createTaskTest1() {
     assertDoesNotThrow(() -> {
       client.createTask(
-        new TaskCreate().setSourceID("search").setDestinationID("destinationName").setCron("* * * * *").setAction(ActionType.REPLACE)
+        new TaskCreate()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setCron("* * * * *")
+          .setAction(ActionType.REPLACE)
+          .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))
+          .setPolicies(new Policies().setCriticalThreshold(8))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -208,7 +214,8 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" + " *\",\"action\":\"replace\"}",
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" +
+        " *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
         req.body,
         JSONCompareMode.STRICT
       )

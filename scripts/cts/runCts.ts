@@ -93,13 +93,10 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       );
       break;
     case 'python':
-      await run(
-        `poetry lock --no-update && poetry install --sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`,
-        {
-          cwd,
-          language,
-        },
-      );
+      await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
+        cwd,
+        language,
+      });
       break;
     case 'ruby':
       await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {

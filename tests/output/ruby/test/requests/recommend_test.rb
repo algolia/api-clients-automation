@@ -356,8 +356,36 @@ class TestRecommendClient < Test::Unit::TestCase
     )
   end
 
-  # get recommendations for recommend model with all parameters
+  # get recommendations with e2e to check oneOf model
   def test_get_recommendations1
+    req = @client.get_recommendations_with_http_info(
+      Algolia::Recommend::GetRecommendationsParams.new(
+        requests: [
+          Algolia::Recommend::RelatedQuery.new(
+            index_name: "cts_e2e_browse",
+            object_id: "Æon Flux",
+            model: "related-products",
+            threshold: 20.0,
+            max_recommendations: 2
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/*/recommendations", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"objectID\":\"\u00C6on Flux\",\"model\":\"related-products\",\"threshold\":20.0,\"maxRecommendations\":2}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # get recommendations for recommend model with all parameters
+  def test_get_recommendations2
     req = @client.get_recommendations_with_http_info(
       Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
@@ -387,7 +415,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # get recommendations for trending model with minimal parameters
-  def test_get_recommendations2
+  def test_get_recommendations3
     req = @client.get_recommendations_with_http_info(
       Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
@@ -415,7 +443,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # get recommendations for trending model with all parameters
-  def test_get_recommendations3
+  def test_get_recommendations4
     req = @client.get_recommendations_with_http_info(
       Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
@@ -446,7 +474,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # get multiple recommendations with minimal parameters
-  def test_get_recommendations4
+  def test_get_recommendations5
     req = @client.get_recommendations_with_http_info(
       Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
@@ -479,7 +507,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # get multiple recommendations with all parameters
-  def test_get_recommendations5
+  def test_get_recommendations6
     req = @client.get_recommendations_with_http_info(
       Algolia::Recommend::GetRecommendationsParams.new(
         requests: [
@@ -518,7 +546,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # get frequently bought together recommendations
-  def test_get_recommendations6
+  def test_get_recommendations7
     req = @client.get_recommendations_with_http_info(
       Algolia::Recommend::GetRecommendationsParams.new(
         requests: [

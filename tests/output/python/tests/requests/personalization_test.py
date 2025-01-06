@@ -446,14 +446,14 @@ class TestPersonalizationClient:
         """
         _req = await self._client.set_personalization_strategy_with_http_info(
             personalization_strategy_params={
-                "eventScoring": [
+                "eventsScoring": [
                     {
                         "score": 42,
                         "eventName": "Algolia",
                         "eventType": "click",
                     },
                 ],
-                "facetScoring": [
+                "facetsScoring": [
                     {
                         "score": 42,
                         "facetName": "Event",
@@ -468,7 +468,7 @@ class TestPersonalizationClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
+            """{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
         )
 
 
@@ -911,14 +911,14 @@ class TestPersonalizationClientSync:
         """
         _req = self._client.set_personalization_strategy_with_http_info(
             personalization_strategy_params={
-                "eventScoring": [
+                "eventsScoring": [
                     {
                         "score": 42,
                         "eventName": "Algolia",
                         "eventType": "click",
                     },
                 ],
-                "facetScoring": [
+                "facetsScoring": [
                     {
                         "score": 42,
                         "facetName": "Event",
@@ -933,5 +933,5 @@ class TestPersonalizationClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
+            """{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
         )

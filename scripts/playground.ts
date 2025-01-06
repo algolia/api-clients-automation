@@ -34,7 +34,7 @@ export async function playground({ language, client }: { language: AllLanguage; 
       await run(`php ${client}.php`, { cwd: 'playground/php/src', language });
       break;
     case 'python':
-      await run(`poetry lock --no-update && poetry install --sync && poetry run ${client}`, {
+      await run(`poetry lock && poetry sync && poetry run ${client}`, {
         cwd: 'playground/python',
         language,
       });

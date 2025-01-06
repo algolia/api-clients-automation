@@ -54,6 +54,7 @@ object RecommendationsHitSerializer extends Serializer[RecommendationsHit] {
       json match {
         case value: JObject if value.obj.exists(_._1 == "facetName") && value.obj.exists(_._1 == "facetValue") =>
           Extraction.extract[TrendingFacetHit](value)
+        case value: JObject if value.obj.exists(_._1 == "objectID") => Extraction.extract[RecommendHit](value)
         case _ => throw new MappingException("Can't convert " + json + " to RecommendationsHit")
       }
   }
