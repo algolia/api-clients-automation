@@ -39,6 +39,9 @@ type config struct {
   // -- Partial update options
   createIfNotExists bool
 
+  // -- ReplaceAllObjects options
+  scopes []ScopeType
+
 	// -- Iterable options
 	maxRetries    int
 	timeout       func(int) time.Duration
@@ -113,7 +116,7 @@ func WithBatchSize(batchSize int) chunkedBatchOption {
 	})
 }
 
-// --------- ChunkedBatch options ---------
+// --------- PartialUpdateObjects options ---------
 
 type PartialUpdateObjectsOption interface {
 	ChunkedBatchOption
@@ -143,6 +146,39 @@ func (r requestOption) partialUpdateObjects() {}
 func WithCreateIfNotExists(createIfNotExists bool) partialUpdateObjectsOption {
 	return partialUpdateObjectsOption(func(c *config) {
 		c.createIfNotExists = createIfNotExists
+	})
+}
+
+// --------- ReplaceAllObjects options ---------
+
+type ReplaceAllObjectsOption interface {
+	ChunkedBatchOption
+	replaceAllObjects()
+}
+
+type replaceAllObjectsOption func(*config)
+
+var (
+	_ ReplaceAllObjectsOption = (*replaceAllObjectsOption)(nil)
+  _ ReplaceAllObjectsOption = (*chunkedBatchOption)(nil)
+	_ ReplaceAllObjectsOption = (*requestOption)(nil)
+)
+
+func (p replaceAllObjectsOption) apply(c *config) {
+	p(c)
+}
+
+func (p replaceAllObjectsOption) replaceAllObjects() {}
+
+func (p replaceAllObjectsOption) chunkedBatch() {}
+
+func (c chunkedBatchOption) replaceAllObjects() {}
+
+func (r requestOption) replaceAllObjects() {}
+
+func WithScopes(scopes []ScopeType) replaceAllObjectsOption {
+	return replaceAllObjectsOption(func(c *config) {
+		c.scopes = scopes
 	})
 }
 
@@ -243,7 +279,7 @@ func toIterableOptions(opts []ChunkedBatchOption) []IterableOption {
 	return iterableOpts
 }
 
-func toIterableOptionsWaitFor(opts []WaitForApiKeyOption) []IterableOption {
+func waitForApiKeyToIterableOptions(opts []WaitForApiKeyOption) []IterableOption {
 	iterableOpts := make([]IterableOption, 0, len(opts))
 
 	for _, opt := range opts {
@@ -255,7 +291,19 @@ func toIterableOptionsWaitFor(opts []WaitForApiKeyOption) []IterableOption {
 	return iterableOpts
 }
 
-func toChunkedBatchOptions(opts []PartialUpdateObjectsOption) []ChunkedBatchOption {
+func replaceAllObjectsToIterableOptions(opts []ReplaceAllObjectsOption) []IterableOption {
+	iterableOpts := make([]IterableOption, 0, len(opts))
+
+	for _, opt := range opts {
+		if opt, ok := opt.(IterableOption); ok {
+			iterableOpts = append(iterableOpts, opt)
+		}
+	}
+
+	return iterableOpts
+}
+
+func partialUpdateObjectsToChunkedBatchOptions(opts []PartialUpdateObjectsOption) []ChunkedBatchOption {
 	chunkedBatchOpts := make([]ChunkedBatchOption, 0, len(opts))
 
 	for _, opt := range opts {
@@ -265,6 +313,18 @@ func toChunkedBatchOptions(opts []PartialUpdateObjectsOption) []ChunkedBatchOpti
 	}
 
 	return chunkedBatchOpts
+}
+
+func replaceAllObjectsToChunkBactchOptions(opts []ReplaceAllObjectsOption) []ChunkedBatchOption {
+  chunkedBatchOpts := make([]ChunkedBatchOption, 0, len(opts))
+
+  for _, opt := range opts {
+    if opt, ok := opt.(ChunkedBatchOption); ok {
+      chunkedBatchOpts = append(chunkedBatchOpts, opt)
+    }
+  }
+
+  return chunkedBatchOpts
 }
 {{/isSearchClient}}
 
