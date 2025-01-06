@@ -74,13 +74,6 @@
               {
                 "objectID": "The Transformers: The Movie",
                 "_highlightResult": {
-                  "cast": [
-                    {
-                      "matchLevel": "none",
-                      "matchedWords": [],
-                      "value": "Judd Nelson"
-                    }
-                  ],
                   "genres": [
                     {
                       "matchLevel": "none",
