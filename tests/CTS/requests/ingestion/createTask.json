@@ -22,7 +22,15 @@
       "sourceID": "search",
       "destinationID": "destinationName",
       "cron": "* * * * *",
-      "action": "replace"
+      "action": "replace",
+      "notifications": {
+        "email": {
+          "enabled": true
+        }
+      },
+      "policies": {
+        "criticalThreshold": 8
+      }
     },
     "request": {
       "path": "/2/tasks",
@@ -31,7 +39,15 @@
         "sourceID": "search",
         "destinationID": "destinationName",
         "cron": "* * * * *",
-        "action": "replace"
+        "action": "replace",
+        "notifications": {
+          "email": {
+            "enabled": true
+          }
+        },
+        "policies": {
+          "criticalThreshold": 8
+        }
       }
     }
   },
