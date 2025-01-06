@@ -91,6 +91,13 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         {{#isModel}}
         case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.exists(_._1 == "{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
         {{/isModel}}
+        {{^isModel}}
+        {{^isEnumRef}}
+        {{#vendorExtensions.x-discriminator-fields.size}}
+        case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.exists(_._1 == "{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/vendorExtensions.x-discriminator-fields.size}}
+        {{/isEnumRef}}
+        {{/isModel}}
         {{#isMap}}
         case value: JObject => {{classname}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
         {{/isMap}}

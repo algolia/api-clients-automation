@@ -9,6 +9,7 @@ import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.RubyClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
+import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaRubyGenerator extends RubyClientCodegen {
@@ -78,6 +79,15 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
+  }
+
+  @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    GenericPropagator.propagateGenericsToModels(models);
+    OneOf.updateModelsOneOf(models, modelPackage);
+    OneOf.addOneOfMetadata(models);
+    return models;
   }
 
   @Override
