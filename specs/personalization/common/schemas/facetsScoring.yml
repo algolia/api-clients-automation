@@ -1,4 +1,4 @@
-facetScoring:
+facetsScoring:
   type: object
   additionalProperties: false
   required:
