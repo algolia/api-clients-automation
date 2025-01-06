@@ -1,3 +1,9 @@
+## [2.12.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.11.2...2.12.0)
+
+- [b569646304](https://github.com/algolia/api-clients-automation/commit/b569646304) fix(specs): drop singer from ingestion specs ([#4281](https://github.com/algolia/api-clients-automation/pull/4281)) by [@shortcuts](https://github.com/shortcuts/)
+- [37223c9779](https://github.com/algolia/api-clients-automation/commit/37223c9779) feat(clients): cleanup after replaceAllObjects failure ([#3824](https://github.com/algolia/api-clients-automation/pull/3824)) by [@millotp](https://github.com/millotp/)
+- [47b567fd0d](https://github.com/algolia/api-clients-automation/commit/47b567fd0d) chore(deps): dependencies 2025-01-06 ([#4299](https://github.com/algolia/api-clients-automation/pull/4299)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [2.11.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.11.1...2.11.2)
 
 - [966fe05ae6](https://github.com/algolia/api-clients-automation/commit/966fe05ae6) chore(deps): dependencies 2024-12-16 ([#4235](https://github.com/algolia/api-clients-automation/pull/4235)) by [@algolia-bot](https://github.com/algolia-bot/)

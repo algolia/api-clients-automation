@@ -1,3 +1,10 @@
+## [4.11.0](https://github.com/algolia/algoliasearch-client-java/compare/4.10.2...4.11.0)
+
+- [f9d890bbc4](https://github.com/algolia/api-clients-automation/commit/f9d890bbc4) chore(deps): dependencies 2024-12-23 ([#4258](https://github.com/algolia/api-clients-automation/pull/4258)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [b569646304](https://github.com/algolia/api-clients-automation/commit/b569646304) fix(specs): drop singer from ingestion specs ([#4281](https://github.com/algolia/api-clients-automation/pull/4281)) by [@shortcuts](https://github.com/shortcuts/)
+- [37223c9779](https://github.com/algolia/api-clients-automation/commit/37223c9779) feat(clients): cleanup after replaceAllObjects failure ([#3824](https://github.com/algolia/api-clients-automation/pull/3824)) by [@millotp](https://github.com/millotp/)
+- [47b567fd0d](https://github.com/algolia/api-clients-automation/commit/47b567fd0d) chore(deps): dependencies 2025-01-06 ([#4299](https://github.com/algolia/api-clients-automation/pull/4299)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.10.2](https://github.com/algolia/algoliasearch-client-java/compare/4.10.1...4.10.2)
 
 - [0481473fe0](https://github.com/algolia/api-clients-automation/commit/0481473fe0) chore: trigger auto close pr ([#4250](https://github.com/algolia/api-clients-automation/pull/4250)) by [@shortcuts](https://github.com/shortcuts/)
