@@ -608,7 +608,35 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get recommendations for recommend model with all parameters1") {
+  test("get recommendations with e2e to check oneOf model1") {
+    val (client, echo) = testClient()
+    val future = client.getRecommendations(
+      getRecommendationsParams = GetRecommendationsParams(
+        requests = Seq(
+          RelatedQuery(
+            indexName = "cts_e2e_browse",
+            objectID = "Æon Flux",
+            model = RelatedModel.withName("related-products"),
+            threshold = 20.0,
+            maxRecommendations = Some(2)
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/recommendations")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("get recommendations for recommend model with all parameters2") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -648,7 +676,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get recommendations for trending model with minimal parameters2") {
+  test("get recommendations for trending model with minimal parameters3") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -676,7 +704,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get recommendations for trending model with all parameters3") {
+  test("get recommendations for trending model with all parameters4") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -717,7 +745,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get multiple recommendations with minimal parameters4") {
+  test("get multiple recommendations with minimal parameters5") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -750,7 +778,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get multiple recommendations with all parameters5") {
+  test("get multiple recommendations with all parameters6") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -809,7 +837,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get frequently bought together recommendations6") {
+  test("get frequently bought together recommendations7") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(

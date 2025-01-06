@@ -561,8 +561,33 @@ class RecommendTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('get recommendations for recommend model with all parameters')]
+    #[TestDox('get recommendations with e2e to check oneOf model')]
     public function testGetRecommendations1(): void
+    {
+        $client = $this->getClient();
+        $client->getRecommendations(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_browse',
+                    'objectID' => 'Æon Flux',
+                    'model' => 'related-products',
+                    'threshold' => 20.0,
+                    'maxRecommendations' => 2,
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/recommendations',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('get recommendations for recommend model with all parameters')]
+    public function testGetRecommendations2(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -597,7 +622,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get recommendations for trending model with minimal parameters')]
-    public function testGetRecommendations2(): void
+    public function testGetRecommendations3(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -622,7 +647,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get recommendations for trending model with all parameters')]
-    public function testGetRecommendations3(): void
+    public function testGetRecommendations4(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -658,7 +683,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get multiple recommendations with minimal parameters')]
-    public function testGetRecommendations4(): void
+    public function testGetRecommendations5(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -688,7 +713,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get multiple recommendations with all parameters')]
-    public function testGetRecommendations5(): void
+    public function testGetRecommendations6(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -740,7 +765,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get frequently bought together recommendations')]
-    public function testGetRecommendations6(): void
+    public function testGetRecommendations7(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -795,7 +820,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
             if (isset($request['body'])) {
                 $this->assertEquals(
-                    json_encode($request['body']),
+                    json_encode($request['body'], JSON_UNESCAPED_UNICODE),
                     $recordedRequest->getBody()->getContents()
                 );
             }

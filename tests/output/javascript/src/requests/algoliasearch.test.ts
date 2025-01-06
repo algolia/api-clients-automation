@@ -177,6 +177,35 @@ describe('getRecommendations', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('get recommendations with e2e to check oneOf model', async () => {
+    const req = (await client.getRecommendations({
+      requests: [
+        {
+          indexName: 'cts_e2e_browse',
+          objectID: 'Æon Flux',
+          model: 'related-products',
+          threshold: 20.0,
+          maxRecommendations: 2,
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: 'cts_e2e_browse',
+          objectID: 'Æon Flux',
+          model: 'related-products',
+          threshold: 20.0,
+          maxRecommendations: 2,
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('get recommendations for recommend model with all parameters', async () => {
     const req = (await client.getRecommendations({
       requests: [

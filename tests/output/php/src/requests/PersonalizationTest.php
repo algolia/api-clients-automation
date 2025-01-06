@@ -554,7 +554,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
 
             if (isset($request['body'])) {
                 $this->assertEquals(
-                    json_encode($request['body']),
+                    json_encode($request['body'], JSON_UNESCAPED_UNICODE),
                     $recordedRequest->getBody()->getContents()
                 );
             }
