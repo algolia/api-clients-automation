@@ -35,5 +35,7 @@ case class TaskUpdate(
     cron: Option[String] = scala.None,
     input: Option[TaskInput] = scala.None,
     enabled: Option[Boolean] = scala.None,
-    failureThreshold: Option[Int] = scala.None
+    failureThreshold: Option[Int] = scala.None,
+    notifications: Option[Notifications] = scala.None,
+    policies: Option[Policies] = scala.None
 )

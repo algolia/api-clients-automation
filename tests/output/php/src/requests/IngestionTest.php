@@ -199,6 +199,11 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'destinationID' => 'destinationName',
                 'cron' => '* * * * *',
                 'action' => 'replace',
+                'notifications' => ['email' => ['enabled' => true,
+                ],
+                ],
+                'policies' => ['criticalThreshold' => 8,
+                ],
             ],
         );
 
@@ -206,7 +211,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks',
                 'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}'),
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}'),
             ],
         ]);
     }

@@ -2521,6 +2521,8 @@ public class IngestionClient extends ApiClient {
    * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2536,12 +2538,26 @@ public class IngestionClient extends ApiClient {
     List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
     TaskSortKeys sort,
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
-      listTasksAsync(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, sort, order, requestOptions)
+      listTasksAsync(
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        sourceID,
+        sourceType,
+        destinationID,
+        triggerType,
+        withEmailNotifications,
+        sort,
+        order,
+        requestOptions
+      )
     );
   }
 
@@ -2556,6 +2572,8 @@ public class IngestionClient extends ApiClient {
    * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2569,10 +2587,24 @@ public class IngestionClient extends ApiClient {
     List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
     TaskSortKeys sort,
     OrderKeys order
   ) throws AlgoliaRuntimeException {
-    return this.listTasks(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, sort, order, null);
+    return this.listTasks(
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        sourceID,
+        sourceType,
+        destinationID,
+        triggerType,
+        withEmailNotifications,
+        sort,
+        order,
+        null
+      );
   }
 
   /**
@@ -2583,7 +2615,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponse listTasks(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listTasks(null, null, null, null, null, null, null, null, null, null, requestOptions);
+    return this.listTasks(null, null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2592,7 +2624,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponse listTasks() throws AlgoliaRuntimeException {
-    return this.listTasks(null, null, null, null, null, null, null, null, null, null, null);
+    return this.listTasks(null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2606,6 +2638,8 @@ public class IngestionClient extends ApiClient {
    * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2621,6 +2655,7 @@ public class IngestionClient extends ApiClient {
     List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
     TaskSortKeys sort,
     OrderKeys order,
     RequestOptions requestOptions
@@ -2636,6 +2671,7 @@ public class IngestionClient extends ApiClient {
       .addQueryParameter("sourceType", sourceType)
       .addQueryParameter("destinationID", destinationID)
       .addQueryParameter("triggerType", triggerType)
+      .addQueryParameter("withEmailNotifications", withEmailNotifications)
       .addQueryParameter("sort", sort)
       .addQueryParameter("order", order)
       .build();
@@ -2653,6 +2689,8 @@ public class IngestionClient extends ApiClient {
    * @param sourceType Filters the tasks with the specified source type. (optional)
    * @param destinationID Destination IDs for filtering the list of tasks. (optional)
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2666,10 +2704,24 @@ public class IngestionClient extends ApiClient {
     List<SourceType> sourceType,
     List<String> destinationID,
     List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
     TaskSortKeys sort,
     OrderKeys order
   ) throws AlgoliaRuntimeException {
-    return this.listTasksAsync(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, sort, order, null);
+    return this.listTasksAsync(
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        sourceID,
+        sourceType,
+        destinationID,
+        triggerType,
+        withEmailNotifications,
+        sort,
+        order,
+        null
+      );
   }
 
   /**
@@ -2680,7 +2732,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponse> listTasksAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null, requestOptions);
+    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2689,7 +2741,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponse> listTasksAsync() throws AlgoliaRuntimeException {
-    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null, null);
+    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**

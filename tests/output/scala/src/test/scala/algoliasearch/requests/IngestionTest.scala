@@ -209,7 +209,19 @@ class IngestionTest extends AnyFunSuite {
         sourceID = "search",
         destinationID = "destinationName",
         cron = Some("* * * * *"),
-        action = ActionType.withName("replace")
+        action = ActionType.withName("replace"),
+        notifications = Some(
+          Notifications(
+            email = EmailNotifications(
+              enabled = Some(true)
+            )
+          )
+        ),
+        policies = Some(
+          Policies(
+            criticalThreshold = Some(8)
+          )
+        )
       )
     )
 
@@ -218,8 +230,9 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/2/tasks")
     assert(res.method == "POST")
-    val expectedBody =
-      parse("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}""")
+    val expectedBody = parse(
+      """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

@@ -58,6 +58,8 @@ case class Task(
     failureThreshold: Option[Int] = scala.None,
     action: Option[ActionType] = scala.None,
     cursor: Option[String] = scala.None,
+    notifications: Option[Notifications] = scala.None,
+    policies: Option[Policies] = scala.None,
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )
