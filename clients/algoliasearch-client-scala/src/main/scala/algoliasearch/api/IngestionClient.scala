@@ -1058,6 +1058,8 @@ class IngestionClient(
     *   Destination IDs for filtering the list of tasks.
     * @param triggerType
     *   Type of task trigger for filtering the list of tasks.
+    * @param withEmailNotifications
+    *   If specified, the response only includes tasks with notifications.email.enabled set to this value.
     * @param sort
     *   Property by which to sort the list of tasks.
     * @param order
@@ -1072,6 +1074,7 @@ class IngestionClient(
       sourceType: Option[Seq[SourceType]] = None,
       destinationID: Option[Seq[String]] = None,
       triggerType: Option[Seq[TriggerType]] = None,
+      withEmailNotifications: Option[Boolean] = None,
       sort: Option[TaskSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -1089,6 +1092,7 @@ class IngestionClient(
       .withQueryParameter("sourceType", sourceType)
       .withQueryParameter("destinationID", destinationID)
       .withQueryParameter("triggerType", triggerType)
+      .withQueryParameter("withEmailNotifications", withEmailNotifications)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()

@@ -138,6 +138,8 @@ describe('createTask', () => {
       destinationID: 'destinationName',
       cron: '* * * * *',
       action: 'replace',
+      notifications: { email: { enabled: true } },
+      policies: { criticalThreshold: 8 },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/2/tasks');
@@ -147,6 +149,8 @@ describe('createTask', () => {
       destinationID: 'destinationName',
       cron: '* * * * *',
       action: 'replace',
+      notifications: { email: { enabled: true } },
+      policies: { criticalThreshold: 8 },
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });

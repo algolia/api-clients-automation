@@ -7434,6 +7434,7 @@ paths:
         - $ref: '#/components/parameters/sourceType'
         - $ref: '#/components/parameters/destinationID'
         - $ref: '#/components/parameters/triggerType'
+        - $ref: '#/components/parameters/withEmailNotifications'
         - $ref: '#/components/parameters/taskParameters_sort'
         - $ref: '#/components/parameters/order'
       responses:
@@ -7656,7 +7657,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&sort=createdAt&order=desc' \
+              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&withEmailNotifications=true&sort=createdAt&order=desc' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -7920,7 +7921,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&sort=createdAt&order=desc' \
+              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&withEmailNotifications=true&sort=createdAt&order=desc' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -12498,6 +12499,15 @@ components:
         items:
           $ref: '#/components/schemas/SourceType'
         example: json,commercetools
+    withEmailNotifications:
+      name: withEmailNotifications
+      in: query
+      description: >-
+        If specified, the response only includes tasks with
+        notifications.email.enabled set to this value.
+      required: false
+      schema:
+        type: boolean
     transformationParameters_sort:
       name: sort
       in: query
@@ -14100,6 +14110,35 @@ components:
     cursor:
       type: string
       description: Date of the last cursor in RFC 3339 format.
+    Notifications:
+      type: object
+      additionalProperties: false
+      description: Notifications settings for a task.
+      properties:
+        email:
+          title: emailNotifications
+          type: object
+          additionalProperties: false
+          properties:
+            enabled:
+              description: >-
+                Whether to send email notifications, note that this doesn't
+                prevent the task from being blocked.
+              type: boolean
+      required:
+        - email
+    Policies:
+      type: object
+      additionalProperties: false
+      description: Set of rules for a task.
+      properties:
+        criticalThreshold:
+          description: >-
+            The number of critical failures in a row before blocking the task
+            and sending a notification.
+          type: integer
+          minimum: 1
+          maximum: 10
     TaskV1:
       type: object
       additionalProperties: false
@@ -14128,6 +14167,10 @@ components:
           $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+        policies:
+          $ref: '#/components/schemas/Policies'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -14300,6 +14343,10 @@ components:
           $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+        policies:
+          $ref: '#/components/schemas/Policies'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -14332,6 +14379,10 @@ components:
           $ref: '#/components/schemas/TaskInput'
         cursor:
           $ref: '#/components/schemas/cursor'
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+        policies:
+          $ref: '#/components/schemas/Policies'
       required:
         - sourceID
         - destinationID
@@ -14352,6 +14403,10 @@ components:
           description: Whether the task is enabled.
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+        policies:
+          $ref: '#/components/schemas/Policies'
     action:
       type: string
       enum:

@@ -43,6 +43,12 @@ public class Task {
   @JsonProperty("cursor")
   private String cursor;
 
+  @JsonProperty("notifications")
+  private Notifications notifications;
+
+  @JsonProperty("policies")
+  private Policies policies;
+
   @JsonProperty("createdAt")
   private String createdAt;
 
@@ -173,6 +179,28 @@ public class Task {
     return cursor;
   }
 
+  public Task setNotifications(Notifications notifications) {
+    this.notifications = notifications;
+    return this;
+  }
+
+  /** Get notifications */
+  @javax.annotation.Nullable
+  public Notifications getNotifications() {
+    return notifications;
+  }
+
+  public Task setPolicies(Policies policies) {
+    this.policies = policies;
+    return this;
+  }
+
+  /** Get policies */
+  @javax.annotation.Nullable
+  public Policies getPolicies() {
+    return policies;
+  }
+
   public Task setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
@@ -216,6 +244,8 @@ public class Task {
       Objects.equals(this.failureThreshold, task.failureThreshold) &&
       Objects.equals(this.action, task.action) &&
       Objects.equals(this.cursor, task.cursor) &&
+      Objects.equals(this.notifications, task.notifications) &&
+      Objects.equals(this.policies, task.policies) &&
       Objects.equals(this.createdAt, task.createdAt) &&
       Objects.equals(this.updatedAt, task.updatedAt)
     );
@@ -235,6 +265,8 @@ public class Task {
       failureThreshold,
       action,
       cursor,
+      notifications,
+      policies,
       createdAt,
       updatedAt
     );
@@ -255,6 +287,8 @@ public class Task {
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
+    sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
+    sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");
