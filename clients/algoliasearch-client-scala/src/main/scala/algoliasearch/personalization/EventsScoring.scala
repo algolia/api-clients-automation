@@ -19,14 +19,17 @@
   */
 package algoliasearch.personalization
 
-/** FacetScoring
+import algoliasearch.personalization.EventType._
+
+/** EventsScoring
   *
   * @param score
   *   Event score.
-  * @param facetName
-  *   Facet attribute name.
+  * @param eventName
+  *   Event name.
   */
-case class FacetScoring(
+case class EventsScoring(
     score: Int,
-    facetName: String
+    eventName: String,
+    eventType: EventType
 )

@@ -158,15 +158,15 @@ class SnippetPersonalizationClient {
     // Call the API
     var response = client.setPersonalizationStrategy(
       personalizationStrategyParams = PersonalizationStrategyParams(
-        eventScoring = listOf(
-          EventScoring(
+        eventsScoring = listOf(
+          EventsScoring(
             score = 42,
             eventName = "Algolia",
             eventType = EventType.entries.first { it.value == "click" },
           ),
         ),
-        facetScoring = listOf(
-          FacetScoring(
+        facetsScoring = listOf(
+          FacetsScoring(
             score = 42,
             facetName = "Event",
           ),

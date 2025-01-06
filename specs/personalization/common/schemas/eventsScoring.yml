@@ -1,4 +1,4 @@
-eventScoring:
+eventsScoring:
   type: object
   additionalProperties: false
   required:

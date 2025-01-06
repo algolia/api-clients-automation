@@ -322,10 +322,10 @@ class TestPersonalizationClient < Test::Unit::TestCase
   def test_set_personalization_strategy
     req = @client.set_personalization_strategy_with_http_info(
       Algolia::Personalization::PersonalizationStrategyParams.new(
-        event_scoring: [
-          Algolia::Personalization::EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")
+        events_scoring: [
+          Algolia::Personalization::EventsScoring.new(score: 42, event_name: "Algolia", event_type: "click")
         ],
-        facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: "Event")],
+        facets_scoring: [Algolia::Personalization::FacetsScoring.new(score: 42, facet_name: "Event")],
         personalization_impact: 42
       )
     )
@@ -336,7 +336,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
+        "{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
       ),
       JSON.parse(req.body)
     )
