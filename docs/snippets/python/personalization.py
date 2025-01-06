@@ -208,14 +208,14 @@ def snippet_for_set_personalization_strategy():
     # Call the API
     response = client.set_personalization_strategy(
         personalization_strategy_params={
-            "eventScoring": [
+            "eventsScoring": [
                 {
                     "score": 42,
                     "eventName": "Algolia",
                     "eventType": "click",
                 },
             ],
-            "facetScoring": [
+            "facetsScoring": [
                 {
                     "score": 42,
                     "facetName": "Event",

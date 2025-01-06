@@ -516,13 +516,13 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->setPersonalizationStrategy(
-            ['eventScoring' => [
+            ['eventsScoring' => [
                 ['score' => 42,
                     'eventName' => 'Algolia',
                     'eventType' => 'click',
                 ],
             ],
-                'facetScoring' => [
+                'facetsScoring' => [
                     ['score' => 42,
                         'facetName' => 'Event',
                     ],
@@ -535,7 +535,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/strategies/personalization',
                 'method' => 'POST',
-                'body' => json_decode('{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'),
+                'body' => json_decode('{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'),
             ],
         ]);
     }

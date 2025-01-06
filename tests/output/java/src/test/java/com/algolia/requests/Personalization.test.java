@@ -701,8 +701,8 @@ class PersonalizationClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.setPersonalizationStrategy(
         new PersonalizationStrategyParams()
-          .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
-          .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName("Event")))
+          .setEventsScoring(Arrays.asList(new EventsScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
+          .setFacetsScoring(Arrays.asList(new FacetsScoring().setScore(42).setFacetName("Event")))
           .setPersonalizationImpact(42)
       );
     });
@@ -711,7 +711,7 @@ class PersonalizationClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}",
+        "{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}",
         req.body,
         JSONCompareMode.STRICT
       )
