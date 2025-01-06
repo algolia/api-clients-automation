@@ -54,7 +54,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'python':
       await run(
-        'poetry lock && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix --unsafe-fixes && poetry run ruff format',
+        'poetry lock && poetry sync --no-root && pip freeze > requirements.txt && poetry run ruff check --fix --unsafe-fixes && poetry run ruff format',
         { cwd, language },
       );
       if (!cwd.includes('tests')) {

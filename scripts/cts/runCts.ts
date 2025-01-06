@@ -92,7 +92,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       );
       break;
     case 'python':
-      await run(`poetry lock && poetry install --sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
+      await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
         cwd,
         language,
       });
