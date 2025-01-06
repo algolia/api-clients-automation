@@ -2,14 +2,14 @@
   {
     "testName": "set setPersonalizationStrategy",
     "parameters": {
-      "eventScoring": [
+      "eventsScoring": [
         {
           "score": 42,
           "eventName": "Algolia",
           "eventType": "click"
         }
       ],
-      "facetScoring": [
+      "facetsScoring": [
         {
           "score": 42,
           "facetName": "Event"
@@ -21,14 +21,14 @@
       "path": "/1/strategies/personalization",
       "method": "POST",
       "body": {
-        "eventScoring": [
+        "eventsScoring": [
           {
             "score": 42,
             "eventName": "Algolia",
             "eventType": "click"
           }
         ],
-        "facetScoring": [
+        "facetsScoring": [
           {
             "score": 42,
             "facetName": "Event"
