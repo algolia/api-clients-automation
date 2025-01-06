@@ -33,16 +33,17 @@ async def main():
                     RecommendationsRequest(
                         RelatedQuery(
                             index_name="cts_e2e_browse",
-                            object_id="Batman Dracula",
+                            object_id="Æon Flux",
                             model=RelatedModel.RELATED_PRODUCTS,
-                            threshold=2,
+                            threshold=30,
+                            max_recommendations=2,
                         )
                     )
                 ]
             )
         )
 
-        print(response)
+        print(len(response.results[0].hits), "recommendations found")
     finally:
         await client.close()
 
