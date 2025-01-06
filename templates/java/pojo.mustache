@@ -27,7 +27,7 @@ public class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorE
       private {{> generic_type}} {{name}}{{#required}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/required}};
   {{/isContainer}}
   {{^isContainer}}
-  {{#isDiscriminator}}protected{{/isDiscriminator}}{{^isDiscriminator}}private{{/isDiscriminator}} {{{datatypeWithEnum}}} {{name}};
+  private {{{datatypeWithEnum}}} {{name}};
   {{/isContainer}}
 
   {{/vars}}
