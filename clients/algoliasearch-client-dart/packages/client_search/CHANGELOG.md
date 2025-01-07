@@ -1,3 +1,8 @@
+## [1.29.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.3...1.29.0)
+
+- [37223c9779](https://github.com/algolia/api-clients-automation/commit/37223c9779) feat(clients): cleanup after replaceAllObjects failure ([#3824](https://github.com/algolia/api-clients-automation/pull/3824)) by [@millotp](https://github.com/millotp/)
+- [47193ad3d1](https://github.com/algolia/api-clients-automation/commit/47193ad3d1) chore: revert release ([#4314](https://github.com/algolia/api-clients-automation/pull/4314)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.28.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.28.2...1.28.3)
 
 - [0481473fe0](https://github.com/algolia/api-clients-automation/commit/0481473fe0) chore: trigger auto close pr ([#4250](https://github.com/algolia/api-clients-automation/pull/4250)) by [@shortcuts](https://github.com/shortcuts/)
