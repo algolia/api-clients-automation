@@ -353,6 +353,8 @@ package object extension {
       *   The list of objects to replace.
       * @param batchSize
       *   The size of the batch. Default is 1000.
+      * @param scopes
+      *   The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -362,6 +364,7 @@ package object extension {
         indexName: String,
         objects: Seq[Any],
         batchSize: Int = 1000,
+        scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
@@ -373,7 +376,7 @@ package object extension {
             operationIndexParams = OperationIndexParams(
               operation = OperationType.Copy,
               destination = tmpIndexName,
-              scope = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms))
+              scope = scopes
             ),
             requestOptions = requestOptions
           )
@@ -394,7 +397,7 @@ package object extension {
             operationIndexParams = OperationIndexParams(
               operation = OperationType.Copy,
               destination = tmpIndexName,
-              scope = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms))
+              scope = scopes
             ),
             requestOptions = requestOptions
           )

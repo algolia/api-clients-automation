@@ -113,6 +113,68 @@
     ]
   },
   {
+    "testName": "call replaceAllObjects with partial scopes",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6685
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "replaceAllObjects",
+        "parameters": {
+          "indexName": "cts_e2e_replace_all_objects_scopes_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ],
+          "batchSize": 77,
+          "scopes": [
+            "settings",
+            "synonyms"
+          ]
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "copyOperationResponse": {
+              "taskID": 125,
+              "updatedAt": "2021-01-01T00:00:00.000Z"
+            },
+            "batchResponses": [
+              {
+                "taskID": 126,
+                "objectIDs": [
+                  "1",
+                  "2"
+                ]
+              }
+            ],
+            "moveOperationResponse": {
+              "taskID": 777,
+              "updatedAt": "2021-01-01T00:00:00.000Z"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
     "testName": "replaceAllObjects should cleanup on failure",
     "autoCreateClient": false,
     "steps": [

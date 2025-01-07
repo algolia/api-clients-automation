@@ -10,6 +10,7 @@ import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
 import { startTestServer } from './testServer/index.js';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidReplaceAllObjectsFailed } from './testServer/replaceAllObjectsFailed.js';
+import { assertValidReplaceAllObjectsScopes } from './testServer/replaceAllObjectsScopes.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
 import { assertValidWaitForApiKey } from './testServer/waitFor.js';
 
@@ -151,6 +152,7 @@ export async function runCts(
     assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
     assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart') - skip('scala'));
+    assertValidReplaceAllObjectsScopes(languages.length - skip('dart') - skip('scala'));
     assertValidWaitForApiKey(languages.length - skip('dart') - skip('scala'));
   }
   if (withBenchmarkServer) {

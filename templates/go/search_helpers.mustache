@@ -286,7 +286,7 @@ func (c *APIClient) WaitForApiKey(
 			return c.GetApiKey(c.NewApiGetApiKeyRequest(key), toRequestOptions(opts)...)
 		},
 		validateFunc,
-		toIterableOptionsWaitFor(opts)...,
+		waitForApiKeyToIterableOptions(opts)...,
 	)
 }
 
@@ -587,7 +587,7 @@ func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]
     action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
   }
 
-  return c.ChunkedBatch(indexName, objects, action, toChunkedBatchOptions(opts)...)
+  return c.ChunkedBatch(indexName, objects, action, partialUpdateObjectsToChunkedBatchOptions(opts)...)
 }
 
 /*
@@ -645,42 +645,50 @@ See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers
 
   @param indexName string - the index name to replace objects into.
   @param objects []map[string]any - List of objects to replace.
-  @param opts ...ChunkedBatchOption - Optional parameters for the request.
+  @param opts ...ReplaceAllObjectsOption - Optional parameters for the request.
   @return *ReplaceAllObjectsResponse - The response of the replace all objects operation.
   @return error - Error if any.
 */
-func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) (*ReplaceAllObjectsResponse, error) {
+func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ReplaceAllObjectsOption) (*ReplaceAllObjectsResponse, error) {
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
-	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS}))), toRequestOptions(opts)...)
+  conf := config{
+    scopes: []ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS},
+  }
+
+  for _, opt := range opts {
+    opt.apply(&conf)
+  }
+
+  opts = append(opts, WithWaitForTasks(true))
+
+	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	opts = append(opts, WithWaitForTasks(true))
-
-	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, opts...)
-	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
-
-		return nil, err
-	}
-
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, toIterableOptions(opts)...)
-	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
-
-		return nil, err
-	}
-
-	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS}))), toRequestOptions(opts)...)
+	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBactchOptions(opts)...)
 	if err != nil {
 		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
 
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, toIterableOptions(opts)...)
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
+		return nil, err
+	}
+
+	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
+	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
+		return nil, err
+	}
+
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
 		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
 
@@ -694,7 +702,7 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, toIterableOptions(opts)...)
+	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
 		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
 
