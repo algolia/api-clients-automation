@@ -548,8 +548,41 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
-  # replaceAllObjects should cleanup on failure
+  # call replaceAllObjects with partial scopes
   def test_replace_all_objects1
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6685,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.replace_all_objects(
+      "cts_e2e_replace_all_objects_scopes_ruby",
+      [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+      77,
+      ["settings", "synonyms"]
+    )
+    assert_equal(
+      {
+        :"copyOperationResponse" => {:"taskID" => 125, :"updatedAt" => "2021-01-01T00:00:00.000Z"},
+        :"batchResponses" => [{:"taskID" => 126, :"objectIDs" => ["1", "2"]}],
+        :"moveOperationResponse" => {:"taskID" => 777, :"updatedAt" => "2021-01-01T00:00:00.000Z"}
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # replaceAllObjects should cleanup on failure
+  def test_replace_all_objects2
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",

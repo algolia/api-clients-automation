@@ -47,6 +47,7 @@ import algoliasearch.search.ReplaceSourceResponse
 import algoliasearch.search.Rule
 import algoliasearch.search.SaveObjectResponse
 import algoliasearch.search.SaveSynonymResponse
+import algoliasearch.search.ScopeType._
 import algoliasearch.search.SearchDictionaryEntriesParams
 import algoliasearch.search.SearchDictionaryEntriesResponse
 import algoliasearch.search.SearchForFacetValuesRequest

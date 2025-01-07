@@ -627,8 +627,51 @@ public class SearchClientTests
     }
   }
 
-  [Fact(DisplayName = "replaceAllObjects should cleanup on failure")]
+  [Fact(DisplayName = "call replaceAllObjects with partial scopes")]
   public async Task ReplaceAllObjectsTest1()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6685,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    {
+      var res = await client.ReplaceAllObjectsAsync(
+        "cts_e2e_replace_all_objects_scopes_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        },
+        77,
+        new List<ScopeType> { Enum.Parse<ScopeType>("Settings"), Enum.Parse<ScopeType>("Synonyms") }
+      );
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":126,\"objectIDs\":[\"1\",\"2\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+  }
+
+  [Fact(DisplayName = "replaceAllObjects should cleanup on failure")]
+  public async Task ReplaceAllObjectsTest2()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {

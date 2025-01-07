@@ -1696,6 +1696,43 @@ def snippet_for_replace_all_objects1():
     """
     Snippet for the replaceAllObjects method.
 
+    call replaceAllObjects with partial scopes
+    """
+    # >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.replace_all_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+        batch_size=77,
+        scopes=[
+            "settings",
+            "synonyms",
+        ],
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_replace_all_objects2():
+    """
+    Snippet for the replaceAllObjects method.
+
     replaceAllObjects should cleanup on failure
     """
     # >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure

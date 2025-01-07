@@ -1660,9 +1660,46 @@ class SnippetSearchClient
     /**
      * Snippet for the ReplaceAllObjects method.
      *
-     * replaceAllObjects should cleanup on failure
+     * call replaceAllObjects with partial scopes
      */
     public function snippetForReplaceAllObjects1(): void
+    {
+        // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->replaceAllObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            77,
+            [
+                'settings',
+
+                'synonyms',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ReplaceAllObjects method.
+     *
+     * replaceAllObjects should cleanup on failure
+     */
+    public function snippetForReplaceAllObjects2(): void
     {
         // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
         // Initialize the client

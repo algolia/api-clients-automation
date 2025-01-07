@@ -1083,8 +1083,27 @@ final class SearchClientSnippet {
 
     /// Snippet for the replaceAllObjects method.
     ///
-    /// replaceAllObjects should cleanup on failure
+    /// call replaceAllObjects with partial scopes
     func snippetForReplaceAllObjects1() async throws {
+        // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.replaceAllObjects(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+            batchSize: 77,
+            scopes: [ScopeType.settings, ScopeType.synonyms]
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the replaceAllObjects method.
+    ///
+    /// replaceAllObjects should cleanup on failure
+    func snippetForReplaceAllObjects2() async throws {
         // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")

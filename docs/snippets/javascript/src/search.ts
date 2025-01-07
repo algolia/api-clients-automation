@@ -1299,8 +1299,34 @@ export async function snippetForReplaceAllObjects(): Promise<void> {
 
 // Snippet for the replaceAllObjects method.
 //
-// replaceAllObjects should cleanup on failure
+// call replaceAllObjects with partial scopes
 export async function snippetForReplaceAllObjects1(): Promise<void> {
+  // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.replaceAllObjects({
+    indexName: 'cts_e2e_replace_all_objects_scopes_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+    batchSize: 77,
+    scopes: ['settings', 'synonyms'],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// replaceAllObjects should cleanup on failure
+export async function snippetForReplaceAllObjects2(): Promise<void> {
   // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
   // Initialize the client
   //

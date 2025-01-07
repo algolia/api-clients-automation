@@ -550,6 +550,48 @@ class SearchTest {
   }
 
   @Test
+  fun `call replaceAllObjects with partial scopes`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6685))))
+    client.runTest(
+      call = {
+        replaceAllObjects(
+          indexName = "cts_e2e_replace_all_objects_scopes_kotlin",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Adam"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("2"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Benoit"),
+              )
+            },
+          ),
+          batchSize = 77,
+          scopes = listOf(ScopeType.entries.first { it.value == "settings" }, ScopeType.entries.first { it.value == "synonyms" }),
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+
+    )
+  }
+
+  @Test
   fun `replaceAllObjects should cleanup on failure`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6684))))
     assertFails {

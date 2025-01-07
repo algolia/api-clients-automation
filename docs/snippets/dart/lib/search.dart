@@ -1373,8 +1373,40 @@ void snippetForreplaceAllObjects() async {
 
 // Snippet for the replaceAllObjects method.
 //
-// replaceAllObjects should cleanup on failure
+// call replaceAllObjects with partial scopes
 void snippetForreplaceAllObjects1() async {
+  // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.replaceAllObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
+    batchSize: 77,
+    scopes: [
+      ScopeType.fromJson("settings"),
+      ScopeType.fromJson("synonyms"),
+    ],
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// replaceAllObjects should cleanup on failure
+void snippetForreplaceAllObjects2() async {
   // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
   // Initialize the client
   final client =

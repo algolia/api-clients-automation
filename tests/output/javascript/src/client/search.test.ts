@@ -441,6 +441,37 @@ describe('replaceAllObjects', () => {
     }
   }, 15000);
 
+  test('call replaceAllObjects with partial scopes', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6685,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.replaceAllObjects({
+        indexName: 'cts_e2e_replace_all_objects_scopes_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+        batchSize: 77,
+        scopes: ['settings', 'synonyms'],
+      });
+
+      expect(result).toEqual({
+        copyOperationResponse: { taskID: 125, updatedAt: '2021-01-01T00:00:00.000Z' },
+        batchResponses: [{ taskID: 126, objectIDs: ['1', '2'] }],
+        moveOperationResponse: { taskID: 777, updatedAt: '2021-01-01T00:00:00.000Z' },
+      });
+    }
+  }, 15000);
+
   test('replaceAllObjects should cleanup on failure', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [

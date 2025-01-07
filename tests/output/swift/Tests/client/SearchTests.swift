@@ -472,8 +472,38 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
-    /// replaceAllObjects should cleanup on failure
+    /// call replaceAllObjects with partial scopes
     func testReplaceAllObjectsTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6685"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.replaceAllObjects(
+                indexName: "cts_e2e_replace_all_objects_scopes_swift",
+                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+                batchSize: 77,
+                scopes: [ScopeType.settings, ScopeType.synonyms]
+            )
+
+            let comparableData =
+                try XCTUnwrap(
+                    "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":126,\"objectIDs\":[\"1\",\"2\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+                        .data(using: .utf8)
+                )
+            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+        }
+    }
+
+    /// replaceAllObjects should cleanup on failure
+    func testReplaceAllObjectsTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",

@@ -6835,7 +6835,7 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaRuntimeException When an error occurred during the serialization
    */
   public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize) {
-    return replaceAllObjects(indexName, objects, batchSize, null);
+    return replaceAllObjects(indexName, objects, batchSize, null, null);
   }
 
   /**
@@ -6848,6 +6848,28 @@ public class SearchClient extends ApiClient {
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
    * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
    *     to `length(objects) / batchSize`.
+   * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules',
+   *     'synonyms'].
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize, List<ScopeType> scopes) {
+    return replaceAllObjects(indexName, objects, batchSize, scopes, null);
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
+   * details.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules',
+   *     'synonyms'].
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    * @throws AlgoliaRetryException When the retry has failed on all hosts
@@ -6858,6 +6880,7 @@ public class SearchClient extends ApiClient {
     String indexName,
     Iterable<T> objects,
     int batchSize,
+    List<ScopeType> scopes,
     RequestOptions requestOptions
   ) {
     Random rnd = new Random();
@@ -6867,16 +6890,21 @@ public class SearchClient extends ApiClient {
       batchSize = 1000;
     }
 
+    if (scopes == null) {
+      scopes = new ArrayList<ScopeType>() {
+        {
+          add(ScopeType.SETTINGS);
+          add(ScopeType.RULES);
+          add(ScopeType.SYNONYMS);
+        }
+      };
+    }
+
     try {
       // Copy settings, synonyms and rules
       UpdatedAtResponse copyOperationResponse = operationIndex(
         indexName,
-        new OperationIndexParams()
-          .setOperation(OperationType.COPY)
-          .setDestination(tmpIndexName)
-          .addScope(ScopeType.SETTINGS)
-          .addScope(ScopeType.RULES)
-          .addScope(ScopeType.SYNONYMS),
+        new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
         requestOptions
       );
 
@@ -6887,12 +6915,7 @@ public class SearchClient extends ApiClient {
 
       copyOperationResponse = operationIndex(
         indexName,
-        new OperationIndexParams()
-          .setOperation(OperationType.COPY)
-          .setDestination(tmpIndexName)
-          .addScope(ScopeType.SETTINGS)
-          .addScope(ScopeType.RULES)
-          .addScope(ScopeType.SYNONYMS),
+        new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
         requestOptions
       );
       waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);

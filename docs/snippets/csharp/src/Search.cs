@@ -1397,9 +1397,35 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the ReplaceAllObjects method.
   ///
-  /// replaceAllObjects should cleanup on failure
+  /// call replaceAllObjects with partial scopes
   /// </summary>
   public async Task SnippetForSearchClientReplaceAllObjects1()
+  {
+    // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.ReplaceAllObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+      },
+      77,
+      new List<ScopeType> { Enum.Parse<ScopeType>("Settings"), Enum.Parse<ScopeType>("Synonyms") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceAllObjects method.
+  ///
+  /// replaceAllObjects should cleanup on failure
+  /// </summary>
+  public async Task SnippetForSearchClientReplaceAllObjects2()
   {
     // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
     // Initialize the client

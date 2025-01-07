@@ -495,8 +495,37 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('replaceAllObjects should cleanup on failure')]
+    #[TestDox('call replaceAllObjects with partial scopes')]
     public function test1replaceAllObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6685']));
+
+        $res = $client->replaceAllObjects(
+            'cts_e2e_replace_all_objects_scopes_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            77,
+            [
+                'settings',
+
+                'synonyms',
+            ],
+        );
+        $this->assertEquals(
+            '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('replaceAllObjects should cleanup on failure')]
+    public function test2replaceAllObjects(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6684']));
 

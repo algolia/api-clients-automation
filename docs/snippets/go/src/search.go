@@ -1898,6 +1898,37 @@ func SnippetForReplaceAllObjectsOfSearch1() {
 	/*
 	   Snippet for the replaceAllObjects method.
 
+	   call replaceAllObjects with partial scopes
+	*/
+
+	// >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceAllObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+		search.WithBatchSize(77), search.WithScopes(
+			[]search.ScopeType{search.ScopeType("settings"), search.ScopeType("synonyms")}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForReplaceAllObjectsOfSearch2() {
+	/*
+	   Snippet for the replaceAllObjects method.
+
 	   replaceAllObjects should cleanup on failure
 	*/
 

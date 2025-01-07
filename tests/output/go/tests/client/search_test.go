@@ -565,8 +565,40 @@ func TestSearchreplaceAllObjects0(t *testing.T) {
 	}
 }
 
-// replaceAllObjects should cleanup on failure
+// call replaceAllObjects with partial scopes
 func TestSearchreplaceAllObjects1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6685", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.ReplaceAllObjects(
+			"cts_e2e_replace_all_objects_scopes_go",
+			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+			search.WithBatchSize(77), search.WithScopes(
+				[]search.ScopeType{search.ScopeType("settings"), search.ScopeType("synonyms")}))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`, string(rawBody))
+	}
+}
+
+// replaceAllObjects should cleanup on failure
+func TestSearchreplaceAllObjects2(t *testing.T) {
 	var err error
 	var res any
 	_ = res

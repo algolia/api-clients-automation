@@ -1250,8 +1250,40 @@ class SnippetSearchClient {
 
   // Snippet for the replaceAllObjects method.
   //
-  // replaceAllObjects should cleanup on failure
+  // call replaceAllObjects with partial scopes
   void snippetForReplaceAllObjects1() throws Exception {
+    // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.replaceAllObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        }
+      ),
+      77,
+      Arrays.asList(ScopeType.SETTINGS, ScopeType.SYNONYMS)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the replaceAllObjects method.
+  //
+  // replaceAllObjects should cleanup on failure
+  void snippetForReplaceAllObjects2() throws Exception {
     // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");

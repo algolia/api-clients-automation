@@ -3467,6 +3467,16 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scopes
+          description: >-
+            List of scopes to kepp in the index. Defaults to `settings`,
+            `synonyms`, and `rules`.
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/scopeType'
       responses:
         '200':
           description: OK

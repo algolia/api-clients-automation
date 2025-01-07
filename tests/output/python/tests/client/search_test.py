@@ -584,6 +584,52 @@ class TestSearchClient:
 
     async def test_replace_all_objects_1(self):
         """
+        call replaceAllObjects with partial scopes
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6685,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.replace_all_objects(
+            index_name="cts_e2e_replace_all_objects_scopes_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+            ],
+            batch_size=77,
+            scopes=[
+                "settings",
+                "synonyms",
+            ],
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
+        )
+
+    async def test_replace_all_objects_2(self):
+        """
         replaceAllObjects should cleanup on failure
         """
 
@@ -1474,6 +1520,52 @@ class TestSearchClientSync:
         )
 
     def test_replace_all_objects_1(self):
+        """
+        call replaceAllObjects with partial scopes
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6685,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.replace_all_objects(
+            index_name="cts_e2e_replace_all_objects_scopes_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+            ],
+            batch_size=77,
+            scopes=[
+                "settings",
+                "synonyms",
+            ],
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
+        )
+
+    def test_replace_all_objects_2(self):
         """
         replaceAllObjects should cleanup on failure
         """

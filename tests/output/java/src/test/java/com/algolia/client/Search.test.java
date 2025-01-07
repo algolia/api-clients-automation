@@ -653,8 +653,57 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("replaceAllObjects should cleanup on failure")
+  @DisplayName("call replaceAllObjects with partial scopes")
   void replaceAllObjectsTest1() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6685
+          )
+        ),
+        false
+      )
+    );
+    assertDoesNotThrow(() -> {
+      ReplaceAllObjectsResponse res = client.replaceAllObjects(
+        "cts_e2e_replace_all_objects_scopes_java",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "Adam");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "Benoit");
+            }
+          }
+        ),
+        77,
+        Arrays.asList(ScopeType.SETTINGS, ScopeType.SYNONYMS)
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":126,\"objectIDs\":[\"1\",\"2\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("replaceAllObjects should cleanup on failure")
+  void replaceAllObjectsTest2() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
