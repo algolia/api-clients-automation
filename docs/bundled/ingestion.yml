@@ -13469,47 +13469,22 @@ components:
         - projectID
         - datasetID
         - tablePrefix
-    DockerImageType:
-      type: string
-      enum:
-        - custom
-        - airbyte
-      description: Image type.
-    DockerRegistry:
-      type: string
-      description: Container registry name from where to pull the image.
-      enum:
-        - dockerhub
-        - ghcr
     SourceDocker:
       type: object
       additionalProperties: false
       properties:
-        imageType:
-          $ref: '#/components/schemas/DockerImageType'
-        registry:
-          $ref: '#/components/schemas/DockerRegistry'
         image:
           type: string
-          description: Docker image name.
-          example: algolia/zendesk
-        version:
-          type: string
-          description: Docker image version.
-          default: latest
-          example: v2.1.0
+          description: Shortname of the image, as returned by the referential.
+          example: zendesk
         configuration:
           type: object
           description: Configuration of the spec.
       required:
-        - registry
         - image
-        - imageType
         - configuration
       x-discriminator-fields:
-        - registry
         - image
-        - imageType
         - configuration
     SourceUpdateShopify:
       type: object
@@ -13723,17 +13698,6 @@ components:
       type: object
       additionalProperties: false
       properties:
-        registry:
-          $ref: '#/components/schemas/DockerRegistry'
-        image:
-          type: string
-          description: Docker image name.
-          example: algolia/zendesk
-        version:
-          type: string
-          description: Docker image version.
-          default: latest
-          example: v2.1.0
         configuration:
           type: object
           description: Configuration of the spec.

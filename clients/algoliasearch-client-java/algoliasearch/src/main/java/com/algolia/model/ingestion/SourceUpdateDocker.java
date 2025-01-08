@@ -11,50 +11,8 @@ import java.util.Objects;
 @JsonDeserialize(as = SourceUpdateDocker.class)
 public class SourceUpdateDocker implements SourceUpdateInput {
 
-  @JsonProperty("registry")
-  private DockerRegistry registry;
-
-  @JsonProperty("image")
-  private String image;
-
-  @JsonProperty("version")
-  private String version;
-
   @JsonProperty("configuration")
   private Object configuration;
-
-  public SourceUpdateDocker setRegistry(DockerRegistry registry) {
-    this.registry = registry;
-    return this;
-  }
-
-  /** Get registry */
-  @javax.annotation.Nullable
-  public DockerRegistry getRegistry() {
-    return registry;
-  }
-
-  public SourceUpdateDocker setImage(String image) {
-    this.image = image;
-    return this;
-  }
-
-  /** Docker image name. */
-  @javax.annotation.Nullable
-  public String getImage() {
-    return image;
-  }
-
-  public SourceUpdateDocker setVersion(String version) {
-    this.version = version;
-    return this;
-  }
-
-  /** Docker image version. */
-  @javax.annotation.Nullable
-  public String getVersion() {
-    return version;
-  }
 
   public SourceUpdateDocker setConfiguration(Object configuration) {
     this.configuration = configuration;
@@ -76,26 +34,18 @@ public class SourceUpdateDocker implements SourceUpdateInput {
       return false;
     }
     SourceUpdateDocker sourceUpdateDocker = (SourceUpdateDocker) o;
-    return (
-      Objects.equals(this.registry, sourceUpdateDocker.registry) &&
-      Objects.equals(this.image, sourceUpdateDocker.image) &&
-      Objects.equals(this.version, sourceUpdateDocker.version) &&
-      Objects.equals(this.configuration, sourceUpdateDocker.configuration)
-    );
+    return Objects.equals(this.configuration, sourceUpdateDocker.configuration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(registry, image, version, configuration);
+    return Objects.hash(configuration);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SourceUpdateDocker {\n");
-    sb.append("    registry: ").append(toIndentedString(registry)).append("\n");
-    sb.append("    image: ").append(toIndentedString(image)).append("\n");
-    sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");
     sb.append("}");
     return sb.toString();

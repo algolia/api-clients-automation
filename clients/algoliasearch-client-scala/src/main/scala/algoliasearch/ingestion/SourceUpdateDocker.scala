@@ -19,20 +19,11 @@
   */
 package algoliasearch.ingestion
 
-import algoliasearch.ingestion.DockerRegistry._
-
 /** SourceUpdateDocker
   *
-  * @param image
-  *   Docker image name.
-  * @param version
-  *   Docker image version.
   * @param configuration
   *   Configuration of the spec.
   */
 case class SourceUpdateDocker(
-    registry: Option[DockerRegistry] = scala.None,
-    image: Option[String] = scala.None,
-    version: Option[String] = scala.None,
     configuration: Any
 ) extends SourceUpdateInputTrait
