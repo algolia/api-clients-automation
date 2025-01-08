@@ -143,7 +143,12 @@ import Foundation
           method: "{{httpMethod}}",
           path: resourcePath,
           data: body{{#bodyParam}}{{^required}} ?? AnyCodable(){{/required}}{{/bodyParam}},
-          requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions{{#vendorExtensions.x-use-read-transporter}},
+          requestOptions: RequestOptions(
+            headers: headers,
+            queryParameters: queryParameters{{#vendorExtensions.x-timeouts}},
+            readTimeout: {{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}},
+            writeTimeout: {{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}}{{/vendorExtensions.x-timeouts}}
+          ) + userRequestOptions{{#vendorExtensions.x-use-read-transporter}},
           useReadTransporter: true{{/vendorExtensions.x-use-read-transporter}}
         )
     }{{/vendorExtensions}}

@@ -4,7 +4,9 @@ import static org.openapitools.codegen.utils.CamelizeOption.LOWERCASE_FIRST_LETT
 import static org.openapitools.codegen.utils.StringUtils.camelize;
 
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
+import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -285,6 +287,11 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     }
 
     return name;
+  }
+
+  @Override
+  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
+    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
   }
 
   @Override
