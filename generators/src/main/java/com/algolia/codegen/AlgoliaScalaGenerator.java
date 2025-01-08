@@ -1,7 +1,9 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.GeneratorException;
+import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
+import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -89,6 +91,11 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
       logger.severe(e.getMessage());
       System.exit(1);
     }
+  }
+
+  @Override
+  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
+    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
   }
 
   /** Convert a Seq type to a valid class name. */

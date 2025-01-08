@@ -151,7 +151,7 @@ class {{classname}}(
       {{#vendorExtensions.x-use-read-transporter}}.withRead(true){{/vendorExtensions.x-use-read-transporter}}
       {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.withQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.withQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
       .build()
-    execute[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}](request, requestOptions)
+    execute[{{#vendorExtensions}}{{#x-is-custom-request}}T{{/x-is-custom-request}}{{^x-is-custom-request}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/x-is-custom-request}}{{/vendorExtensions}}](request, {{#vendorExtensions.x-timeouts}}Some(RequestOptions(writeTimeout = Some(Duration({{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}}, TimeUnit.SECONDS)), readTimeout = Some(Duration({{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}}, TimeUnit.SECONDS)), connectTimeout = Some(Duration({{#lambda.toSeconds}}{{{connect}}}{{/lambda.toSeconds}}, TimeUnit.SECONDS))) + {{/vendorExtensions.x-timeouts}}requestOptions{{#vendorExtensions.x-timeouts}}){{/vendorExtensions.x-timeouts}})
   }
 
 {{/operation}}
