@@ -701,17 +701,12 @@ components:
       type: string
       enum:
         - basic
-        - predictive
       description: >
         The type of user profiles to generate.
 
 
         Basic profiles are based on past behaviors, ensuring search results
         align with previous interests.
-
-        Predictive profiles are AI-powered profiles that predict and adapt to
-        users' interests, ensuring search results align with evolving
-        preferences.
     status:
       title: status
       type: string
