@@ -109,7 +109,11 @@ public class {{classname}}(
       )
       return requester.execute(
         requestConfig = requestConfig,
-        requestOptions = requestOptions,
+        requestOptions = {{#vendorExtensions.x-timeouts}}RequestOptions(
+          readTimeout = {{{read}}}.milliseconds,
+          writeTimeout = {{{write}}}.milliseconds,
+          connectTimeout = {{{connect}}}.milliseconds,
+        ) + {{/vendorExtensions.x-timeouts}}requestOptions,
       )
   }
   {{/operation}}
