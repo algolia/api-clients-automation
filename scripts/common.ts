@@ -69,12 +69,12 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
 export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.language))];
 
-// `crawler` and `ai-personalization` are manually added so we can still bundled and validate the specs
+// `crawler` and `advanced-personalization` are manually added so we can still bundled and validate the specs
 // the entry can be removed once at least one client is generated
 export const CLIENTS = [
   ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
   'crawler',
-  'ai-personalization',
+  'advanced-personalization',
 ];
 
 export async function run(command: string, { errorMessage, cwd, language }: RunOptions = {}): Promise<string> {
