@@ -21,15 +21,6 @@ public interface SourceInput {
     @Override
     public SourceInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize SourceDocker
-      if (tree.isObject() && tree.has("registry") && tree.has("image") && tree.has("imageType") && tree.has("configuration")) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceDocker.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SourceDocker (error: " + e.getMessage() + ") (type: SourceDocker)");
-        }
-      }
       // deserialize SourceGA4BigQueryExport
       if (tree.isObject() && tree.has("projectID") && tree.has("datasetID") && tree.has("tablePrefix")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -39,6 +30,15 @@ public interface SourceInput {
           LOGGER.finest(
             "Failed to deserialize oneOf SourceGA4BigQueryExport (error: " + e.getMessage() + ") (type: SourceGA4BigQueryExport)"
           );
+        }
+      }
+      // deserialize SourceDocker
+      if (tree.isObject() && tree.has("image") && tree.has("configuration")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceDocker.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceDocker (error: " + e.getMessage() + ") (type: SourceDocker)");
         }
       }
       // deserialize SourceCommercetools

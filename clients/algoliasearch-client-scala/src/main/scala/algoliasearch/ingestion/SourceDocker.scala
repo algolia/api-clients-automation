@@ -19,22 +19,14 @@
   */
 package algoliasearch.ingestion
 
-import algoliasearch.ingestion.DockerImageType._
-import algoliasearch.ingestion.DockerRegistry._
-
 /** SourceDocker
   *
   * @param image
-  *   Docker image name.
-  * @param version
-  *   Docker image version.
+  *   Shortname of the image, as returned by the referential.
   * @param configuration
   *   Configuration of the spec.
   */
 case class SourceDocker(
-    imageType: DockerImageType,
-    registry: DockerRegistry,
     image: String,
-    version: Option[String] = scala.None,
     configuration: Any
 ) extends SourceInputTrait

@@ -20,8 +20,6 @@
 package algoliasearch.ingestion
 
 import algoliasearch.ingestion.BigQueryDataType._
-import algoliasearch.ingestion.DockerImageType._
-import algoliasearch.ingestion.DockerRegistry._
 import algoliasearch.ingestion.MappingTypeCSV._
 import algoliasearch.ingestion.MethodType._
 
@@ -41,14 +39,11 @@ object SourceInputSerializer extends Serializer[SourceInput] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[SourceInput] =>
       json match {
         case value: JObject
-            if value.obj.exists(_._1 == "registry") && value.obj.exists(_._1 == "image") && value.obj.exists(
-              _._1 == "imageType"
-            ) && value.obj.exists(_._1 == "configuration") =>
-          Extraction.extract[SourceDocker](value)
-        case value: JObject
             if value.obj.exists(_._1 == "projectID") && value.obj
               .exists(_._1 == "datasetID") && value.obj.exists(_._1 == "tablePrefix") =>
           Extraction.extract[SourceGA4BigQueryExport](value)
+        case value: JObject if value.obj.exists(_._1 == "image") && value.obj.exists(_._1 == "configuration") =>
+          Extraction.extract[SourceDocker](value)
         case value: JObject if value.obj.exists(_._1 == "projectKey") => Extraction.extract[SourceCommercetools](value)
         case value: JObject if value.obj.exists(_._1 == "storeHash")  => Extraction.extract[SourceBigCommerce](value)
         case value: JObject if value.obj.exists(_._1 == "projectID")  => Extraction.extract[SourceBigQuery](value)
@@ -61,8 +56,8 @@ object SourceInputSerializer extends Serializer[SourceInput] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SourceInput =>
     value match {
-      case value: SourceDocker            => Extraction.decompose(value)(format - this)
       case value: SourceGA4BigQueryExport => Extraction.decompose(value)(format - this)
+      case value: SourceDocker            => Extraction.decompose(value)(format - this)
       case value: SourceCommercetools     => Extraction.decompose(value)(format - this)
       case value: SourceBigCommerce       => Extraction.decompose(value)(format - this)
       case value: SourceBigQuery          => Extraction.decompose(value)(format - this)
