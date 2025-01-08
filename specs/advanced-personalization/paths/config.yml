@@ -34,7 +34,7 @@ put:
   description: |
     Updates the configuration.
 
-    The configuration is a list of configuration objects for each index. To configure AI Personalization for an index, create a new configuration object for the index.
+    The configuration is a list of configuration objects for each index. To configure Advanced Personalization for an index, create a new configuration object for the index.
   requestBody:
     required: true
     content:
