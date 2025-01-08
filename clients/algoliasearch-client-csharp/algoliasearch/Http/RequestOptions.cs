@@ -22,7 +22,17 @@ public class RequestOptions
   /// <summary>
   /// Request timeout in seconds
   /// </summary>
-  public TimeSpan? Timeout { get; set; }
+  public TimeSpan? ReadTimeout { get; set; }
+
+  /// <summary>
+  /// Request timeout in seconds
+  /// </summary>
+  public TimeSpan? WriteTimeout { get; set; }
+
+  /// <summary>
+  /// Request timeout in seconds
+  /// </summary>
+  public TimeSpan? ConnectTimeout { get; set; }
 
   /// <summary>
   /// Constructs a new instance of <see cref="RequestOptions"/>
@@ -32,4 +42,7 @@ public class RequestOptions
     QueryParameters = new Dictionary<string, object>();
     Headers = new Dictionary<string, string>();
   }
+
+  // overload + operator
+
 }
