@@ -1,7 +1,7 @@
-import { ReleaseType } from 'semver';
-import { run } from '../common.js';
-import { getLanguageFolder } from '../config.js';
-import { isPreRelease } from './versionsHistory.js';
+import type { ReleaseType } from 'semver';
+import { run } from '../common.ts';
+import { getLanguageFolder } from '../config.ts';
+import { isPreRelease } from './versionsHistory.ts';
 
 export async function updateJavaScriptPackages(releaseType: ReleaseType) {
   const cwd = getLanguageFolder('javascript');

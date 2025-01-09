@@ -1,12 +1,12 @@
 import fsp from 'fs/promises';
-import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common.js';
-import { isPreRelease } from '../../release/versionsHistory.js';
-import type { Language } from '../../types.js';
-import { cloneRepository } from '../utils.js';
+import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common.ts';
+import { isPreRelease } from '../../release/versionsHistory.ts';
+import type { Language } from '../../types.ts';
+import { cloneRepository } from '../utils.ts';
 
 import { resolve } from 'path';
-import { stripCommitMessage } from '../../release/common.js';
-import { commitStartRelease } from './text.js';
+import { stripCommitMessage } from '../../release/common.ts';
+import { commitStartRelease } from './text.ts';
 
 async function createGitHubRelease(lang: Language): Promise<void> {
   // **Full Changelog**:

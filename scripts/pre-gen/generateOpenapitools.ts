@@ -1,8 +1,8 @@
 import { writeFile } from 'fs/promises';
 
-import { toAbsolutePath } from '../common.js';
-import { getClientsConfigField } from '../config.js';
-import type { Generator, GeneratorMode } from '../types.js';
+import { toAbsolutePath } from '../common.ts';
+import { getClientsConfigField } from '../config.ts';
+import type { Generator, GeneratorMode } from '../types.ts';
 
 /**
  * Create an on the fly openapitools.json file with default options for all generators.

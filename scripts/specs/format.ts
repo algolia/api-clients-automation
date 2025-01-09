@@ -1,15 +1,16 @@
 import fsp from 'fs/promises';
 
 import oas2har from '@har-sdk/oas';
-import { HarRequest, HTTPSnippet } from 'httpsnippet';
+import type { HarRequest } from 'httpsnippet';
+import { HTTPSnippet } from 'httpsnippet';
 import yaml from 'js-yaml';
 
-import { Cache } from '../cache.js';
-import { GENERATORS, run, toAbsolutePath } from '../common.js';
-import { createSpinner } from '../spinners.js';
-import type { Spec } from '../types.js';
+import { Cache } from '../cache.ts';
+import { GENERATORS, run, toAbsolutePath } from '../common.ts';
+import { createSpinner } from '../spinners.ts';
+import type { Spec } from '../types.ts';
 
-import { getCodeSampleLabel, parseCodeSamples, transformGeneratedSnippetsToCodeSamples } from './snippets.js';
+import { getCodeSampleLabel, parseCodeSamples, transformGeneratedSnippetsToCodeSamples } from './snippets.ts';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');

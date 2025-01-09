@@ -2,12 +2,12 @@ import fsp from 'fs/promises';
 
 import semver from 'semver';
 
-import { cloneRepository } from '../ci/utils.js';
-import { ensureGitHubToken, LANGUAGES, run, toAbsolutePath } from '../common.js';
-import type { Language } from '../types.js';
+import { cloneRepository } from '../ci/utils.ts';
+import { ensureGitHubToken, LANGUAGES, run, toAbsolutePath } from '../common.ts';
+import type { Language } from '../types.ts';
 
-import { preReleaseRegExp } from './createReleasePR.js';
-import type { Version, Versions } from './types.js';
+import { preReleaseRegExp } from './createReleasePR.ts';
+import type { Version, Versions } from './types.ts';
 
 // the date of the generated api clients release
 const generatedReleaseDate = new Date('2024-08-14');

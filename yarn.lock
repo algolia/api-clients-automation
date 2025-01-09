@@ -87,7 +87,6 @@ __metadata:
     husky: "npm:9.1.7"
     lint-staged: "npm:15.3.0"
     oxlint: "npm:0.11.1"
-    pinst: "npm:3.0.0"
     prettier: "npm:3.4.2"
     prettier-plugin-java: "npm:2.6.5"
     prettier-plugin-organize-imports: "npm:4.1.0"
@@ -7391,15 +7390,6 @@ __metadata:
   bin:
     pidtree: bin/pidtree.js
   checksum: 10/ea67fb3159e170fd069020e0108ba7712df9f0fd13c8db9b2286762856ddce414fb33932e08df4bfe36e91fe860b51852aee49a6f56eb4714b69634343add5df
-  languageName: node
-  linkType: hard
-
-"pinst@npm:3.0.0":
-  version: 3.0.0
-  resolution: "pinst@npm:3.0.0"
-  bin:
-    pinst: bin.js
-  checksum: 10/a75e4f7b5eeb9c76e7fd1b2d9854fcd38c304a3b1f9b563946a0f4357772c742222094e851f4c23d0bbdc4151af2d7875bb919c9ef8a9c4af77a02a73e8f72f0
   languageName: node
   linkType: hard
 
