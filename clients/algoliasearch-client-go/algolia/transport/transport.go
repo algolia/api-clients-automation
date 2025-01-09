@@ -44,7 +44,7 @@ func New(cfg Configuration) *Transport {
 	return transport
 }
 
-func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind) (*http.Response, []byte, error) {
+func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind, c *RequestConfiguration) (*http.Response, []byte, error) {
 	var intermediateNetworkErrors []error
 
 	// Add Content-Encoding header, if needed
@@ -59,9 +59,28 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind)
 		// before the early returns, but when we do so, we do it **after**
 		// reading the body content of the response. Otherwise, a `context
 		// cancelled` error may happen when the body is read.
-		perRequestCtx, cancel := context.WithTimeout(ctx, h.timeout)
+		var (
+			ctxTimeout     time.Duration
+			connectTimeout time.Duration
+		)
+
+		if c != nil && k == call.Read && c.ReadTimeout != nil { //nolint:gocritic
+			ctxTimeout = *c.ReadTimeout
+		} else if c != nil && k == call.Write && c.WriteTimeout != nil {
+			ctxTimeout = *c.WriteTimeout
+		} else {
+			ctxTimeout = h.timeout
+		}
+
+		if c != nil && c.ConnectTimeout != nil {
+			connectTimeout = *c.ConnectTimeout
+		} else {
+			connectTimeout = t.connectTimeout
+		}
+
+		perRequestCtx, cancel := context.WithTimeout(ctx, ctxTimeout)
 		req = req.WithContext(perRequestCtx)
-		res, err := t.request(req, h, h.timeout, t.connectTimeout)
+		res, err := t.request(req, h, ctxTimeout, connectTimeout)
 
 		code := 0
 		if res != nil {
