@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 
-import config from '../../config/release.config.json' assert { type: 'json' };
-import { run } from '../common.js';
+import config from '../../config/release.config.json' with { type: 'json' };
+import { run } from '../common.ts';
 
 export function getLastReleasedTag(): Promise<string> {
   return run(`git describe --abbrev=0 --tags --match "${config.releasedTag}*"`);

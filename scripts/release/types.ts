@@ -1,6 +1,6 @@
 import type { ReleaseType } from 'semver';
 
-import type { Language } from '../types.js';
+import type { Language } from '../types.ts';
 
 export type Version = {
   current: string;

@@ -3,20 +3,20 @@ import type { Server } from 'http';
 import type { Express } from 'express';
 import express from 'express';
 
-import { createSpinner } from '../../spinners.js';
-import type { CTSType } from '../runCts.js';
+import { createSpinner } from '../../spinners.ts';
+import type { CTSType } from '../runCts.ts';
 
 import { expect } from 'chai';
-import { apiKeyServer } from './apiKey.js';
-import { benchmarkServer } from './benchmark.js';
-import { chunkWrapperServer } from './chunkWrapper.js';
-import { gzipServer } from './gzip.js';
-import { replaceAllObjectsServer } from './replaceAllObjects.js';
-import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.js';
-import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.js';
-import { timeoutServer } from './timeout.js';
-import { timeoutServerBis } from './timeoutBis.js';
-import { waitForApiKeyServer } from './waitFor.js';
+import { apiKeyServer } from './apiKey.ts';
+import { benchmarkServer } from './benchmark.ts';
+import { chunkWrapperServer } from './chunkWrapper.ts';
+import { gzipServer } from './gzip.ts';
+import { replaceAllObjectsServer } from './replaceAllObjects.ts';
+import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.ts';
+import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.ts';
+import { timeoutServer } from './timeout.ts';
+import { timeoutServerBis } from './timeoutBis.ts';
+import { waitForApiKeyServer } from './waitFor.ts';
 
 export async function startTestServer(suites: Record<CTSType, boolean>): Promise<() => Promise<void>> {
   const toStart: Array<Promise<Server>> = [];
