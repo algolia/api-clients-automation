@@ -30,6 +30,7 @@ const buildTestCommit = (
 
 // Mock `getOctokit` to bypass the API call and credential requirements
 vi.mock('../../common.ts', async (importOriginal) => {
+  // eslint-disable-next-line
   const mod = await importOriginal<typeof import('../../common.ts')>();
   return {
     ...mod,
@@ -48,6 +49,7 @@ vi.mock('../../common.ts', async (importOriginal) => {
 });
 
 vi.mock('../../ci/utils.ts', async (importOriginal) => {
+  // eslint-disable-next-line
   const mod = await importOriginal<typeof import('../../ci/utils.ts')>();
   return {
     ...mod,
@@ -56,6 +58,7 @@ vi.mock('../../ci/utils.ts', async (importOriginal) => {
 });
 
 vi.mock('../common.ts', async (importOriginal) => {
+  // eslint-disable-next-line
   const mod = await importOriginal<typeof import('../common.ts')>();
   const getFileChangesMockFn = vi.fn();
 
@@ -68,6 +71,7 @@ vi.mock('../common.ts', async (importOriginal) => {
 });
 
 vi.mock('../../config.ts', async (importOriginal) => {
+  // eslint-disable-next-line
   const mod = await importOriginal<typeof import('../../config.ts')>();
   return {
     ...mod,

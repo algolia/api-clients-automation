@@ -15,7 +15,8 @@ import {
   toAbsolutePath,
 } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
-import { GuidesToPush, pushToRepositoryConfiguration, RepositoryConfiguration, SpecsToPush } from './types.ts';
+import type { GuidesToPush, RepositoryConfiguration, SpecsToPush } from './types.ts';
+import { pushToRepositoryConfiguration } from './types.ts';
 
 import { getClientsConfigField } from '../../config.ts';
 import { commitStartRelease } from './text.ts';

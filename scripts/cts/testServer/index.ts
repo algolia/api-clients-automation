@@ -61,13 +61,13 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
   addRoutes(app);
 
   // 404 handler
-  app.use((req, res) => {
+  app.use((req, _) => {
     console.error(`[PORT ${port}] endpoint not implemented for`, req.method, req.url);
     expect.fail('endpoint not implemented');
   });
 
   // catch all error handler
-  app.use((err, _req, res, _) => {
+  app.use((err, _req, _res, _) => {
     console.error(err.message);
     expect.fail(err.message);
   });

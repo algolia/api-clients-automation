@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { parseCodeSamples } from '../snippets.ts';
-import { CodeSamples } from '../types.ts';
+import type { CodeSamples } from '../types.ts';
 
 describe('init', () => {
   it('parses a multi line import', () => {
