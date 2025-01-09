@@ -57,11 +57,13 @@ IndexSettings _$IndexSettingsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('attributeForDistinct', (v) => v as String?),
           maxFacetHits:
               $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
+          keepDiacriticsOnCharacters: $checkedConvert(
+              'keepDiacriticsOnCharacters', (v) => v as String?),
+          customRanking: $checkedConvert('customRanking',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          customRanking: $checkedConvert('customRanking',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           relevancyStrictness: $checkedConvert(
               'relevancyStrictness', (v) => (v as num?)?.toInt()),
@@ -91,8 +93,6 @@ IndexSettings _$IndexSettingsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ignorePlurals: $checkedConvert('ignorePlurals', (v) => v),
           removeStopWords: $checkedConvert('removeStopWords', (v) => v),
-          keepDiacriticsOnCharacters: $checkedConvert(
-              'keepDiacriticsOnCharacters', (v) => v as String?),
           queryLanguages: $checkedConvert(
               'queryLanguages',
               (v) => (v as List<dynamic>?)
@@ -193,10 +193,12 @@ Map<String, dynamic> _$IndexSettingsToJson(IndexSettings instance) =>
       if (instance.attributeForDistinct case final value?)
         'attributeForDistinct': value,
       if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
+      if (instance.keepDiacriticsOnCharacters case final value?)
+        'keepDiacriticsOnCharacters': value,
+      if (instance.customRanking case final value?) 'customRanking': value,
       if (instance.attributesToRetrieve case final value?)
         'attributesToRetrieve': value,
       if (instance.ranking case final value?) 'ranking': value,
-      if (instance.customRanking case final value?) 'customRanking': value,
       if (instance.relevancyStrictness case final value?)
         'relevancyStrictness': value,
       if (instance.attributesToHighlight case final value?)
@@ -222,8 +224,6 @@ Map<String, dynamic> _$IndexSettingsToJson(IndexSettings instance) =>
         'disableTypoToleranceOnAttributes': value,
       if (instance.ignorePlurals case final value?) 'ignorePlurals': value,
       if (instance.removeStopWords case final value?) 'removeStopWords': value,
-      if (instance.keepDiacriticsOnCharacters case final value?)
-        'keepDiacriticsOnCharacters': value,
       if (instance.queryLanguages?.map((e) => e.toJson()).toList()
           case final value?)
         'queryLanguages': value,

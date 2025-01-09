@@ -34,6 +34,8 @@ final class RecommendIndexSettings {
     this.customNormalization,
     this.attributeForDistinct,
     this.maxFacetHits,
+    this.keepDiacriticsOnCharacters,
+    this.customRanking,
     this.attributesToRetrieve,
     this.ranking,
     this.relevancyStrictness,
@@ -147,6 +149,14 @@ final class RecommendIndexSettings {
   // maximum: 100
   @JsonKey(name: r'maxFacetHits')
   final int? maxFacetHits;
+
+  /// Characters for which diacritics should be preserved.  By default, Algolia removes diacritics from letters. For example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their diacritics.
+  @JsonKey(name: r'keepDiacriticsOnCharacters')
+  final String? keepDiacriticsOnCharacters;
+
+  /// Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are case-sensitive.  The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes, or the other attributes will never be applied.
+  @JsonKey(name: r'customRanking')
+  final List<String>? customRanking;
 
   /// Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
   @JsonKey(name: r'attributesToRetrieve')
@@ -337,6 +347,8 @@ final class RecommendIndexSettings {
           other.customNormalization == customNormalization &&
           other.attributeForDistinct == attributeForDistinct &&
           other.maxFacetHits == maxFacetHits &&
+          other.keepDiacriticsOnCharacters == keepDiacriticsOnCharacters &&
+          other.customRanking == customRanking &&
           other.attributesToRetrieve == attributesToRetrieve &&
           other.ranking == ranking &&
           other.relevancyStrictness == relevancyStrictness &&
@@ -399,6 +411,8 @@ final class RecommendIndexSettings {
       customNormalization.hashCode +
       attributeForDistinct.hashCode +
       maxFacetHits.hashCode +
+      keepDiacriticsOnCharacters.hashCode +
+      customRanking.hashCode +
       attributesToRetrieve.hashCode +
       ranking.hashCode +
       relevancyStrictness.hashCode +

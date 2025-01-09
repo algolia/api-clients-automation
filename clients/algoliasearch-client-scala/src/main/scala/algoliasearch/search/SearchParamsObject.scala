@@ -150,16 +150,6 @@ import algoliasearch.search.SupportedLanguage._
   *   values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute,
   *   in descending order. Before you modify the default setting, you should test your changes in the dashboard, and by
   *   [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
-  * @param customRanking
-  *   Attributes to use as [custom
-  *   ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are
-  *   case-sensitive. The custom ranking attributes decide which items are shown first if the other ranking criteria are
-  *   equal. Records with missing values for your selected custom ranking attributes are always sorted last. Boolean
-  *   attributes are sorted based on their alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by
-  *   the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an
-  *   attribute, in descending order. If you use two or more custom ranking attributes, [reduce the
-  *   precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
-  *   of your first attributes, or the other attributes will never be applied.
   * @param relevancyStrictness
   *   Relevancy threshold below which less relevant results aren't included in the results. You can only set
   *   `relevancyStrictness` on [virtual replica
@@ -205,10 +195,6 @@ import algoliasearch.search.SupportedLanguage._
   *   \- Reducing the number of matches when you have too many. This can happen with attributes that are long blocks of
   *   text, such as product descriptions. Consider alternatives such as `disableTypoToleranceOnWords` or adding synonyms
   *   if your attributes have intentional unusual spellings that might look like typos.
-  * @param keepDiacriticsOnCharacters
-  *   Characters for which diacritics should be preserved. By default, Algolia removes diacritics from letters. For
-  *   example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their
-  *   diacritics.
   * @param queryLanguages
   *   Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection
   *   dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
@@ -325,7 +311,6 @@ case class SearchParamsObject(
     enableABTest: Option[Boolean] = scala.None,
     attributesToRetrieve: Option[Seq[String]] = scala.None,
     ranking: Option[Seq[String]] = scala.None,
-    customRanking: Option[Seq[String]] = scala.None,
     relevancyStrictness: Option[Int] = scala.None,
     attributesToHighlight: Option[Seq[String]] = scala.None,
     attributesToSnippet: Option[Seq[String]] = scala.None,
@@ -341,7 +326,6 @@ case class SearchParamsObject(
     disableTypoToleranceOnAttributes: Option[Seq[String]] = scala.None,
     ignorePlurals: Option[IgnorePlurals] = scala.None,
     removeStopWords: Option[RemoveStopWords] = scala.None,
-    keepDiacriticsOnCharacters: Option[String] = scala.None,
     queryLanguages: Option[Seq[SupportedLanguage]] = scala.None,
     decompoundQuery: Option[Boolean] = scala.None,
     enableRules: Option[Boolean] = scala.None,
