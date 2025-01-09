@@ -824,9 +824,6 @@
             ""
           ],
           "clickAnalytics": true,
-          "customRanking": [
-            ""
-          ],
           "decompoundQuery": true,
           "disableExactOnAttributes": [
             ""
@@ -886,7 +883,6 @@
               2.0104
             ]
           ],
-          "keepDiacriticsOnCharacters": "",
           "length": 1,
           "maxValuesPerFacet": 0,
           "minProximity": 1,
@@ -999,9 +995,6 @@
               ""
             ],
             "clickAnalytics": true,
-            "customRanking": [
-              ""
-            ],
             "decompoundQuery": true,
             "disableExactOnAttributes": [
               ""
@@ -1061,7 +1054,6 @@
                 2.0104
               ]
             ],
-            "keepDiacriticsOnCharacters": "",
             "length": 1,
             "maxValuesPerFacet": 0,
             "minProximity": 1,

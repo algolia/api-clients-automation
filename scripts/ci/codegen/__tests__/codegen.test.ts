@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { pushGeneratedCode } from '../pushGeneratedCode.ts';
 
 vi.mock('../../../common.ts', async (importOriginal) => {
+  // eslint-disable-next-line
   const mod = await importOriginal<typeof import('../../../common.ts')>();
   return {
     ...mod,
