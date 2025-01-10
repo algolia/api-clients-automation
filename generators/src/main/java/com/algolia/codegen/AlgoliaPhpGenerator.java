@@ -5,6 +5,7 @@ import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -70,7 +71,11 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
   @Override
   protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
+    ImmutableMap.Builder<String, Lambda> lambdas = super.addMustacheLambdas();
+
+    lambdas.put("toSeconds", new ToSecondsLambda());
+
+    return lambdas;
   }
 
   @Override

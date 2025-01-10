@@ -1,7 +1,6 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
-import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache;
@@ -177,7 +176,6 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     Builder<String, Lambda> lambdas = super.addMustacheLambdas();
 
     lambdas.put("type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
-    lambdas.put("toSeconds", new ToSecondsLambda());
 
     return lambdas;
   }
