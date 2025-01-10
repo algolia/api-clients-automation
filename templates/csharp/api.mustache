@@ -227,9 +227,9 @@ namespace Algolia.Search.Clients;
           requestOptions.UseReadTransporter = true;
           {{/x-use-read-transporter}}
           {{#vendorExtensions.x-timeouts}}
-          requestOptions.ReadTimeout ??= TimeSpan.FromSeconds({{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}});
-          requestOptions.WriteTimeout ??= TimeSpan.FromSeconds({{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}});
-          requestOptions.ConnectTimeout ??= TimeSpan.FromSeconds({{#lambda.toSeconds}}{{{connect}}}{{/lambda.toSeconds}});
+          requestOptions.ReadTimeout ??= TimeSpan.FromMilliseconds({{read}});
+          requestOptions.WriteTimeout ??= TimeSpan.FromMilliseconds({{write}});
+          requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds({{connect}});
           {{/vendorExtensions.x-timeouts}}
           {{/vendorExtensions}}
           {{#returnType}}return {{/returnType}}await _transport.ExecuteRequestAsync{{#returnType}}<{{> return_type}}>{{/returnType}}(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
