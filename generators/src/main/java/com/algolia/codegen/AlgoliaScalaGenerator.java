@@ -1,7 +1,6 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.GeneratorException;
-import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
@@ -9,7 +8,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -95,7 +93,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   @Override
   protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
+    return super.addMustacheLambdas();
   }
 
   /** Convert a Seq type to a valid class name. */
@@ -107,7 +105,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
-    Timeouts.enrichBundle(openAPI, additionalProperties, ChronoUnit.SECONDS);
+    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override

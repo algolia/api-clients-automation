@@ -2,7 +2,6 @@ package com.algolia.codegen;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
-import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
@@ -114,7 +113,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
   @Override
   protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
+    return super.addMustacheLambdas();
   }
 
   @Override

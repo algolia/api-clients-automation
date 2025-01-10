@@ -4,7 +4,7 @@ import com.algolia.utils.StringUtils;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * Request options are used to pass extra parameters, headers, timeout to the request. Parameters

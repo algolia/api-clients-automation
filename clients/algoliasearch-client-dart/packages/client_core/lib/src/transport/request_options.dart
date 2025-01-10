@@ -1,12 +1,12 @@
 /// Represents options for configuring a request to an endpoint.
 final class RequestOptions {
-  ///  The write timeout for the request in milliseconds.
+  ///  The write timeout for the request.
   final Duration? writeTimeout;
 
-  /// The read timeout for the request in milliseconds.
+  /// The read timeout for the request.
   final Duration? readTimeout;
 
-  /// The connect timeout for the request in milliseconds.
+  /// The connect timeout for the request.
   final Duration? connectTimeout;
 
   /// Header names to their respective values to be sent with the request.

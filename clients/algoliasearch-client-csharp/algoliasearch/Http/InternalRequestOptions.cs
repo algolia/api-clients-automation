@@ -78,17 +78,17 @@ internal class InternalRequestOptions
   public object Data { get; set; }
 
   /// <summary>
-  /// Request read timeout in seconds
+  /// Request read timeout
   /// </summary>
   public TimeSpan? ReadTimeout { get; set; }
 
   /// <summary>
-  /// Request write timeout in seconds
+  /// Request write timeout
   /// </summary>
   public TimeSpan? WriteTimeout { get; set; }
 
   /// <summary>
-  /// Request connect timeout in seconds
+  /// Request connect timeout
   /// </summary>
   public TimeSpan? ConnectTimeout { get; set; }
 

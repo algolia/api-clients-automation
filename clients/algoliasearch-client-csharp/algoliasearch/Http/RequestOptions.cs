@@ -20,17 +20,17 @@ public class RequestOptions
   public IDictionary<string, object> QueryParameters { get; set; }
 
   /// <summary>
-  /// Request timeout in seconds
+  /// Request timeout
   /// </summary>
   public TimeSpan? ReadTimeout { get; set; }
 
   /// <summary>
-  /// Request timeout in seconds
+  /// Request timeout
   /// </summary>
   public TimeSpan? WriteTimeout { get; set; }
 
   /// <summary>
-  /// Request timeout in seconds
+  /// Request timeout
   /// </summary>
   public TimeSpan? ConnectTimeout { get; set; }
 
@@ -42,7 +42,4 @@ public class RequestOptions
     QueryParameters = new Dictionary<string, object>();
     Headers = new Dictionary<string, string>();
   }
-
-  // overload + operator
-
 }

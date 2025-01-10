@@ -2,7 +2,6 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.lambda.ScreamingSnakeCaseLambda;
-import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
@@ -70,7 +69,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     ImmutableMap.Builder<String, Mustache.Lambda> lambdas = super.addMustacheLambdas();
 
     lambdas.put("screamingSnakeCase", new ScreamingSnakeCaseLambda());
-    lambdas.put("toSeconds", new ToSecondsLambda());
 
     return lambdas;
   }
