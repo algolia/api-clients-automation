@@ -5,4 +5,13 @@ client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}
   {{#requestOptions.headers.parametersWithDataType}}
     .addExtraHeader("{{{key}}}", "{{{value}}}")
   {{/requestOptions.headers.parametersWithDataType}}
+  {{#requestOptions.readTimeout}}
+    .setReadTimeout(Duration.ofMillis({{requestOptions.readTimeout}}L))
+  {{/requestOptions.readTimeout}}
+  {{#requestOptions.connectTimeout}}
+    .setConnectTimeout(Duration.ofMillis({{requestOptions.connectTimeout}}L))
+  {{/requestOptions.connectTimeout}}
+  {{#requestOptions.writeTimeout}}
+    .setWriteTimeout(Duration.ofMillis({{requestOptions.writeTimeout}}L))
+  {{/requestOptions.writeTimeout}}
 {{/hasRequestOptions}})
