@@ -152,6 +152,13 @@ public class TestsClient extends TestsGenerator {
                   paramsType.enhanceParameters(new HashMap<String, Object>(step.requestOptions.headers), headers);
                   requestOptions.put("headers", headers);
                 }
+                if (
+                  step.requestOptions.readTimeout != null ||
+                  step.requestOptions.writeTimeout != null ||
+                  step.requestOptions.connectTimeout != null
+                ) {
+                  stepOut.put("hasTimeouts", true);
+                }
                 requestOptions.put("readTimeout", step.requestOptions.readTimeout);
                 requestOptions.put("writeTimeout", step.requestOptions.writeTimeout);
                 requestOptions.put("connectTimeout", step.requestOptions.connectTimeout);

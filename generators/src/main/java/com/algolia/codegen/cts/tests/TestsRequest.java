@@ -170,6 +170,11 @@ public class TestsRequest extends TestsGenerator {
               paramsType.enhanceParameters(new HashMap<String, Object>(req.requestOptions.headers), headers);
               requestOptions.put("headers", headers);
             }
+            if (
+              req.requestOptions.readTimeout != null || req.requestOptions.writeTimeout != null || req.requestOptions.connectTimeout != null
+            ) {
+              test.put("hasTimeouts", true);
+            }
             requestOptions.put("readTimeout", req.requestOptions.readTimeout);
             requestOptions.put("writeTimeout", req.requestOptions.writeTimeout);
             requestOptions.put("connectTimeout", req.requestOptions.connectTimeout);
