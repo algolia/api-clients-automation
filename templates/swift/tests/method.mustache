@@ -1,5 +1,14 @@
-try {{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}{{^isHelper}}WithHTTPInfo{{/isHelper}}({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}, requestOptions: RequestOptions({{#requestOptions.headers}}
-  headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.headers}}
-  {{#requestOptions.headers}}{{#requestOptions.queryParameters}},{{/requestOptions.queryParameters}}{{/requestOptions.headers}}{{#requestOptions.queryParameters}}
-  queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.queryParameters}}
-){{/hasRequestOptions}})
+try {{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}{{^isHelper}}WithHTTPInfo{{/isHelper}}({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}{{#requestOptions}}, requestOptions: RequestOptions(
+  {{#headers}}
+  headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{#queryParameters}},{{/queryParameters}}
+  {{/headers}}
+  {{#queryParameters}}
+  queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]
+  {{/queryParameters}}
+  {{#timeouts.read}}
+  readTimeout: {{.}} / 1000
+  {{/timeouts.read}}
+  {{#timeouts.write}}
+  writeTimeout: {{.}} / 1000
+  {{/timeouts.write}}
+){{/requestOptions}}{{/hasRequestOptions}})
