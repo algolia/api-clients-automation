@@ -44,7 +44,7 @@ func New(cfg Configuration) *Transport {
 	return transport
 }
 
-func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind, c *RequestConfiguration) (*http.Response, []byte, error) {
+func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind, c RequestConfiguration) (*http.Response, []byte, error) {
 	var intermediateNetworkErrors []error
 
 	// Add Content-Encoding header, if needed
@@ -65,15 +65,15 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 		)
 
 		switch {
-		case c != nil && k == call.Read && c.ReadTimeout != nil:
+		case k == call.Read && c.ReadTimeout != nil:
 			ctxTimeout = *c.ReadTimeout
-		case c != nil && k == call.Write && c.WriteTimeout != nil:
+		case k == call.Write && c.WriteTimeout != nil:
 			ctxTimeout = *c.WriteTimeout
 		default:
 			ctxTimeout = h.timeout
 		}
 
-		if c != nil && c.ConnectTimeout != nil {
+		if c.ConnectTimeout != nil {
 			connectTimeout = *c.ConnectTimeout
 		} else {
 			connectTimeout = t.connectTimeout
