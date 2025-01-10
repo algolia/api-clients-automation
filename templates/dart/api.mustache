@@ -165,7 +165,11 @@ final class {{classname}} implements ApiClient {
     );  
     {{#returnType}}final response = {{/returnType}}await _retryStrategy.execute(
       request: request,
-      options: requestOptions,
+      options: {{#vendorExtensions.x-timeouts}}new RequestOptions(
+          writeTimeout: Duration(seconds: {{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}}),
+          readTimeout: Duration(seconds: {{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}}),
+          connectTimeout: Duration(seconds: {{#lambda.toSeconds}}{{{connect}}}{{/lambda.toSeconds}}),
+      ) + {{/vendorExtensions.x-timeouts}}requestOptions,
     );
     {{#returnType}}
     return deserialize<{{{.}}}, {{{returnBaseType}}}>(response, '{{{.}}}', growable: true,);

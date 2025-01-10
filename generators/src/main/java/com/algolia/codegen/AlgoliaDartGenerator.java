@@ -2,7 +2,10 @@ package com.algolia.codegen;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
+import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
+import com.google.common.collect.ImmutableMap;
+import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -107,6 +110,11 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));
     additionalProperties.put("packageVersion", version);
+  }
+
+  @Override
+  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
+    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
   }
 
   @Override

@@ -6,6 +6,9 @@ final class RequestOptions {
   /// The read timeout for the request in milliseconds.
   final Duration? readTimeout;
 
+  /// The connect timeout for the request in milliseconds.
+  final Duration? connectTimeout;
+
   /// Header names to their respective values to be sent with the request.
   final Map<String, dynamic> headers;
 
@@ -18,10 +21,26 @@ final class RequestOptions {
   const RequestOptions({
     this.writeTimeout,
     this.readTimeout,
+    this.connectTimeout,
     this.headers = const {},
     this.urlParameters = const {},
     this.body,
   });
+
+  RequestOptions operator +(RequestOptions? other) {
+    if (other == null) {
+      return this;
+    }
+
+    return RequestOptions(
+      writeTimeout: other.writeTimeout ?? writeTimeout,
+      readTimeout: other.readTimeout ?? readTimeout,
+      connectTimeout: other.connectTimeout ?? connectTimeout,
+      headers: {...headers, ...other.headers},
+      urlParameters: {...urlParameters, ...other.urlParameters},
+      body: other.body ?? body,
+    );
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -30,6 +49,7 @@ final class RequestOptions {
           runtimeType == other.runtimeType &&
           writeTimeout == other.writeTimeout &&
           readTimeout == other.readTimeout &&
+          connectTimeout == other.connectTimeout &&
           headers == other.headers &&
           urlParameters == other.urlParameters &&
           body == other.body;
@@ -38,12 +58,13 @@ final class RequestOptions {
   int get hashCode =>
       writeTimeout.hashCode ^
       readTimeout.hashCode ^
+      connectTimeout.hashCode ^
       headers.hashCode ^
       urlParameters.hashCode ^
       body.hashCode;
 
   @override
   String toString() {
-    return 'RequestOptions{writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, urlParameters: $urlParameters, body: $body}';
+    return 'RequestOptions{writeTimeout: $writeTimeout, readTimeout: $readTimeout, connectTimeout: $connectTimeout, headers: $headers, urlParameters: $urlParameters, body: $body}';
   }
 }
