@@ -6,12 +6,12 @@ client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}
     .addExtraHeader("{{{key}}}", "{{{value}}}")
   {{/requestOptions.headers.parametersWithDataType}}
   {{#requestOptions.timeouts.read}}
-    .setReadTimeout(Duration.ofMillis({{requestOptions.timeouts.read}}L))
+    .setReadTimeout(Duration.ofMillis({{.}}L))
   {{/requestOptions.timeouts.read}}
   {{#requestOptions.timeouts.connect}}
-    .setConnectTimeout(Duration.ofMillis({{requestOptions.timeouts.connect}}L))
+    .setConnectTimeout(Duration.ofMillis({{.}}L))
   {{/requestOptions.timeouts.connect}}
   {{#requestOptions.timeouts.write}}
-    .setWriteTimeout(Duration.ofMillis({{requestOptions.timeouts.write}}L))
+    .setWriteTimeout(Duration.ofMillis({{.}}L))
   {{/requestOptions.timeouts.write}}
 {{/hasRequestOptions}})
