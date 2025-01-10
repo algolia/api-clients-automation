@@ -510,7 +510,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{
 	return c.callAPI(
     req,
     {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}},{{/vendorExtensions}}
-    {{#vendorExtensions.x-timeouts}}utils.ToPtr(transport.RequestConfiguration{ReadTimeout: utils.ToPtr({{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}} * time.Second), WriteTimeout: utils.ToPtr({{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}} * time.Second), ConnectTimeout: utils.ToPtr({{#lambda.toSeconds}}{{{connect}}}{{/lambda.toSeconds}} * time.Second)}){{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}nil{{/vendorExtensions.x-timeouts}},
+    {{#vendorExtensions.x-timeouts}}&transport.RequestConfiguration{ReadTimeout: utils.ToPtr({{read}} * time.Millisecond), WriteTimeout: utils.ToPtr({{write}} * time.Millisecond), ConnectTimeout: utils.ToPtr({{connect}} * time.Millisecond)}{{/vendorExtensions.x-timeouts}}{{^vendorExtensions.x-timeouts}}nil{{/vendorExtensions.x-timeouts}},
   )
 }
 
