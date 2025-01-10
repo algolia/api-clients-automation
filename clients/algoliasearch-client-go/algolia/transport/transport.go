@@ -64,7 +64,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 			connectTimeout time.Duration
 		)
 
-		if c != nil && k == call.Read && c.ReadTimeout != nil { //nolint:gocritic
+		if c != nil && k == call.Read && c.ReadTimeout != nil {
 			ctxTimeout = *c.ReadTimeout
 		} else if c != nil && k == call.Write && c.WriteTimeout != nil {
 			ctxTimeout = *c.WriteTimeout

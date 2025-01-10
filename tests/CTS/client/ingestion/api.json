@@ -112,13 +112,14 @@
           }
         },
         "requestOptions": {
-          "connectTimeout": 1234
+          "connectTimeout": 1234,
+          "writeTimeout": 3456
         },
         "expected": {
           "type": "timeouts",
           "match": {
             "connectTimeout": 1234,
-            "responseTimeout": 180000
+            "responseTimeout": 3456
           }
         }
       }
