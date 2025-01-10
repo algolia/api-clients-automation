@@ -5,14 +5,14 @@
 {{#requestOptions.headers.parametersWithDataType}}
     .AddExtraHeader("{{{key}}}", "{{{value}}}")
 {{/requestOptions.headers.parametersWithDataType}}
-{{#requestOptions.connectTimeout}}
-    .SetConnectTimeout(TimeSpan.FromMilliseconds({{requestOptions.connectTimeout}}))
-{{/requestOptions.connectTimeout}}
-{{#requestOptions.readTimeout}}
-    .SetReadTimeout(TimeSpan.FromMilliseconds({{requestOptions.readTimeout}}))
-{{/requestOptions.readTimeout}}
-{{#requestOptions.writeTimeout}}
-    .SetWriteTimeout(TimeSpan.FromMilliseconds({{requestOptions.writeTimeout}}))
-{{/requestOptions.writeTimeout}}
+{{#requestOptions.timeouts.connect}}
+    .SetConnectTimeout(TimeSpan.FromMilliseconds({{requestOptions.timeouts.connect}}))
+{{/requestOptions.timeouts.connect}}
+{{#requestOptions.timeouts.read}}
+    .SetReadTimeout(TimeSpan.FromMilliseconds({{requestOptions.timeouts.read}}))
+{{/requestOptions.timeouts.read}}
+{{#requestOptions.timeouts.write}}
+    .SetWriteTimeout(TimeSpan.FromMilliseconds({{requestOptions.timeouts.write}}))
+{{/requestOptions.timeouts.write}}
     .Build()
 {{/hasRequestOptions}})

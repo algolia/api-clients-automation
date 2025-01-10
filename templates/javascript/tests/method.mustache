@@ -5,19 +5,9 @@
   {{#requestOptions.headers.parameters}}
     headers: {{{.}}},
   {{/requestOptions.headers.parameters}}
-  {{#hasTimeouts}}
-  timeouts: {
-  {{#requestOptions.connectTimeout}}
-    connect: {{{.}}},
-  {{/requestOptions.connectTimeout}}
-  {{#requestOptions.readTimeout}}
-    read: {{{.}}},
-  {{/requestOptions.readTimeout}}
-  {{#requestOptions.writeTimeout}}
-    write: {{{.}}},
-  {{/requestOptions.writeTimeout}}
-  }
-  {{/hasTimeouts}}
+  {{#requestOptions.timeouts.parameters}}
+  timeouts: {{{.}}}
+  {{/requestOptions.timeouts.parameters}}
   }
   {{/hasRequestOptions}}
 )

@@ -138,32 +138,7 @@ public class TestsClient extends TestsGenerator {
               // default to true because most api calls are asynchronous
               testOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
 
-              if (step.requestOptions != null) {
-                stepOut.put("hasRequestOptions", true);
-                Map<String, Object> requestOptions = new HashMap<>();
-                if (step.requestOptions.queryParameters != null) {
-                  Map<String, Object> queryParameters = new HashMap<>();
-                  paramsType.enhanceParameters(step.requestOptions.queryParameters, queryParameters);
-                  requestOptions.put("queryParameters", queryParameters);
-                }
-                if (step.requestOptions.headers != null) {
-                  Map<String, Object> headers = new HashMap<>();
-                  // convert the headers to an acceptable type
-                  paramsType.enhanceParameters(new HashMap<String, Object>(step.requestOptions.headers), headers);
-                  requestOptions.put("headers", headers);
-                }
-                if (
-                  step.requestOptions.readTimeout != null ||
-                  step.requestOptions.writeTimeout != null ||
-                  step.requestOptions.connectTimeout != null
-                ) {
-                  stepOut.put("hasTimeouts", true);
-                }
-                requestOptions.put("readTimeout", step.requestOptions.readTimeout);
-                requestOptions.put("writeTimeout", step.requestOptions.writeTimeout);
-                requestOptions.put("connectTimeout", step.requestOptions.connectTimeout);
-                stepOut.put("requestOptions", requestOptions);
-              }
+              addRequestOptions(paramsType, step.requestOptions, stepOut);
 
               methodCount++;
             }
