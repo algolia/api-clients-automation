@@ -88,7 +88,7 @@ __metadata:
     lint-staged: "npm:15.3.0"
     oxlint: "npm:0.11.1"
     prettier: "npm:3.4.2"
-    prettier-plugin-java: "npm:2.6.5"
+    prettier-plugin-java: "npm:2.6.6"
     prettier-plugin-organize-imports: "npm:4.1.0"
     renovate-config-algolia: "npm:2.2.0"
     typescript: "npm:5.7.2"
@@ -6011,14 +6011,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"java-parser@npm:2.3.2":
-  version: 2.3.2
-  resolution: "java-parser@npm:2.3.2"
+"java-parser@npm:2.3.3":
+  version: 2.3.3
+  resolution: "java-parser@npm:2.3.3"
   dependencies:
     chevrotain: "npm:11.0.3"
     chevrotain-allstar: "npm:0.3.1"
     lodash: "npm:4.17.21"
-  checksum: 10/bb927c3171b5daccde391bfa4bebc51ab7fc0c6b72b2ad3d9fe48b52f9f975a56763ffd216e0e6da852cc3d23b56db0a31e2478997bb7aeb471bd7ea68bba7ae
+  checksum: 10/6383937f3448ab1d6790e13bab5a721a6fe189b3993648b11ec34cdb5582097ef8d7d4dab867f2bae873a1374ab02f257b8eb4081429f3f3b5aa4d3e01dd4845
   languageName: node
   linkType: hard
 
@@ -7459,14 +7459,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:2.6.5":
-  version: 2.6.5
-  resolution: "prettier-plugin-java@npm:2.6.5"
+"prettier-plugin-java@npm:2.6.6":
+  version: 2.6.6
+  resolution: "prettier-plugin-java@npm:2.6.6"
   dependencies:
-    java-parser: "npm:2.3.2"
+    java-parser: "npm:2.3.3"
     lodash: "npm:4.17.21"
-    prettier: "npm:3.2.5"
-  checksum: 10/ce960aa9e968dcbbbf4ac03ba15cbd1ec2d932d96a9eb28e871b3662602db288ca3228240f70484714df7d03cf509f4c7bc4c221997eceb4c8694540167db382
+  peerDependencies:
+    prettier: ^3.0.0
+  checksum: 10/523c5af91fb26e3643d178b6e44933afae32edb7fba0413ac2cd5aeec95e61c715b8c7cb5e9bc5a0227b78d05624f3439145b09cfc7c7394201b2525feae6575
   languageName: node
   linkType: hard
 
@@ -7481,15 +7482,6 @@ __metadata:
     vue-tsc:
       optional: true
   checksum: 10/8223af6d42d06f6a5140a2724a6c6c2cef4a2e149721ceb25b945af71f4de7499bc63e47ea003b9eee84e6b94728b59d91b4275d3c53b718a747e273fb30cee2
-  languageName: node
-  linkType: hard
-
-"prettier@npm:3.2.5":
-  version: 3.2.5
-  resolution: "prettier@npm:3.2.5"
-  bin:
-    prettier: bin/prettier.cjs
-  checksum: 10/d509f9da0b70e8cacc561a1911c0d99ec75117faed27b95cc8534cb2349667dee6351b0ca83fa9d5703f14127faa52b798de40f5705f02d843da133fc3aa416a
   languageName: node
   linkType: hard
 
