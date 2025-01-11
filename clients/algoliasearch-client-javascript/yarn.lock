@@ -49,7 +49,7 @@ __metadata:
     publint: "npm:0.2.12"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.3.5"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:2.1.8"
   languageName: unknown
   linkType: soft
@@ -67,7 +67,7 @@ __metadata:
     publint: "npm:0.2.12"
     rollup: "npm:4.29.1"
     tsup: "npm:8.3.5"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -167,7 +167,7 @@ __metadata:
     publint: "npm:0.2.12"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.3.5"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:2.1.8"
   languageName: unknown
   linkType: soft
@@ -216,7 +216,7 @@ __metadata:
     jsdom: "npm:25.0.1"
     publint: "npm:0.2.12"
     tsup: "npm:8.3.5"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:2.1.8"
     xhr-mock: "npm:2.5.1"
   languageName: unknown
@@ -233,7 +233,7 @@ __metadata:
     nock: "npm:13.5.6"
     publint: "npm:0.2.12"
     tsup: "npm:8.3.5"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:2.1.8"
   languageName: unknown
   linkType: soft
@@ -248,7 +248,7 @@ __metadata:
     nock: "npm:13.5.6"
     publint: "npm:0.2.12"
     tsup: "npm:8.3.5"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:2.1.8"
   languageName: unknown
   linkType: soft
@@ -265,7 +265,7 @@ __metadata:
     "@types/node": "npm:22.10.5"
     publint: "npm:0.2.12"
     tsup: "npm:8.3.5"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -2331,7 +2331,7 @@ __metadata:
     execa: "npm:9.5.2"
     lerna: "npm:8.1.9"
     rollup: "npm:4.29.1"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -8218,6 +8218,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.7.3":
+  version: 5.7.3
+  resolution: "typescript@npm:5.7.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/6a7e556de91db3d34dc51cd2600e8e91f4c312acd8e52792f243c7818dfadb27bae677175fad6947f9c81efb6c57eb6b2d0c736f196a6ee2f1f7d57b74fc92fa
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@npm%3A5.6.1-rc#optional!builtin<compat/typescript>":
   version: 5.6.1-rc
   resolution: "typescript@patch:typescript@npm%3A5.6.1-rc#optional!builtin<compat/typescript>::version=5.6.1-rc&hash=8c6c40"
@@ -8235,6 +8245,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/d75ca10141afc64fd3474b41a8b082b640555bed388d237558aed64e5827ddadb48f90932c7f4205883f18f5bcab8b6a739a2cfac95855604b0dfeb34bc2f3eb
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>":
+  version: 5.7.3
+  resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/dc58d777eb4c01973f7fbf1fd808aad49a0efdf545528dab9b07d94fdcb65b8751742804c3057e9619a4627f2d9cc85547fdd49d9f4326992ad0181b49e61d81
   languageName: node
   linkType: hard
 
