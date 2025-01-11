@@ -4,6 +4,7 @@ post:
   summary: Search for tasks
   description: Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
   operationId: searchTasksV1
+  deprecated: true
   x-acl:
     - addObject
     - deleteIndex
