@@ -4883,15 +4883,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"folder-hash@npm:4.1.0":
-  version: 4.1.0
-  resolution: "folder-hash@npm:4.1.0"
+"folder-hash@npm:4.1.1":
+  version: 4.1.1
+  resolution: "folder-hash@npm:4.1.1"
   dependencies:
     debug: "npm:4.4.0"
-    minimatch: "npm:10.0.1"
+    minimatch: "npm:7.4.6"
   bin:
     folder-hash: bin/folder-hash
-  checksum: 10/e4db25c4d8bf76d954c2de0daf4042580d9efac0a4145546180c5d5c081bf1ea6310ee37f69b67bf1ff39cf11fd64803155539eeb111924648002e7610bc8a39
+  checksum: 10/85b7e9bc9ddc887ba247b81946adccf8ae654507fa1a81d7fc3f07d94181327f6d62e746efb09ec318de7dcc330655939660deb4f445cd7893b3c45cab94a98a
   languageName: node
   linkType: hard
 
@@ -6550,12 +6550,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:10.0.1":
-  version: 10.0.1
-  resolution: "minimatch@npm:10.0.1"
+"minimatch@npm:7.4.6":
+  version: 7.4.6
+  resolution: "minimatch@npm:7.4.6"
   dependencies:
     brace-expansion: "npm:^2.0.1"
-  checksum: 10/082e7ccbc090d5f8c4e4e029255d5a1d1e3af37bda837da2b8b0085b1503a1210c91ac90d9ebfe741d8a5f286ece820a1abb4f61dc1f82ce602a055d461d93f3
+  checksum: 10/0046ba1161ac6414bde1b07c440792ebcdb2ed93e6714c85c73974332b709b7e692801550bc9da22028a8613407b3f13861e17dd0dd44f4babdeacd44950430b
   languageName: node
   linkType: hard
 
@@ -8257,7 +8257,7 @@ __metadata:
     esbuild: "npm:0.24.2"
     execa: "npm:9.5.2"
     express: "npm:4.21.2"
-    folder-hash: "npm:4.1.0"
+    folder-hash: "npm:4.1.1"
     fs-extra: "npm:11.2.0"
     httpsnippet: "npm:3.0.9"
     js-yaml: "npm:4.1.0"
