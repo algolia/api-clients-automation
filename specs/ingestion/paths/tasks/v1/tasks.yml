@@ -1,7 +1,7 @@
 get:
   tags:
     - tasks
-  summary: List tasks
+  summary: List tasks V1
   description: Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
   operationId: listTasksV1
   deprecated: true
@@ -45,7 +45,7 @@ get:
 post:
   tags:
     - tasks
-  summary: Create a task
+  summary: Create a task V1
   description: Creates a new task using the v1 endpoint, please use `createTask` instead.
   operationId: createTaskV1
   deprecated: true
