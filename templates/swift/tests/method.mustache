@@ -6,9 +6,9 @@ try {{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}{{^isHelper}}With
   queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]
   {{/queryParameters}}
   {{#timeouts.read}}
-  readTimeout: {{.}} / 1000
+  readTimeout: TimeInterval({{.}}) / 1000
   {{/timeouts.read}}
   {{#timeouts.write}}
-  writeTimeout: {{.}} / 1000
+  writeTimeout: TimeInterval({{.}}) / 1000
   {{/timeouts.write}}
 ){{/requestOptions}}{{/hasRequestOptions}})
