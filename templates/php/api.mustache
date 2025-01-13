@@ -269,6 +269,18 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
         {{/servers.0}}
 
+        {{#vendorExtensions.x-timeouts}}
+        if (!isset($requestOptions['readTimeout'])) {
+          $requestOptions['readTimeout'] = {{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}};
+        }
+        if (!isset($requestOptions['writeTimeout'])) {
+            $requestOptions['writeTimeout'] = {{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}};
+        }
+        if (!isset($requestOptions['connectTimeout'])) {
+            $requestOptions['connectTimeout'] = {{#lambda.toSeconds}}{{{connect}}}{{/lambda.toSeconds}};
+        }
+        {{/vendorExtensions.x-timeouts}}
+
         return $this->sendRequest('{{httpMethod}}', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, {{#vendorExtensions.x-use-read-transporter}}true{{/vendorExtensions.x-use-read-transporter}});
     }
 

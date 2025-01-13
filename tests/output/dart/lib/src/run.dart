@@ -25,6 +25,7 @@ Future<void> runTest<T extends ApiClient>({
 /// Uses provided function to intercept HTTP requests.
 class RequestInterceptor extends Requester {
   String apiKey = "fake";
+  Duration connectTimeout = Duration(seconds: 30);
 
   Function(HttpRequest) onRequest = (_) {};
 
@@ -45,6 +46,11 @@ class RequestInterceptor extends Requester {
   @override
   void setClientApiKey(String apiKey) {
     this.apiKey = apiKey;
+  }
+
+  @override
+  void setConnectTimeout(Duration connectTimeout) {
+    this.connectTimeout = connectTimeout;
   }
 }
 

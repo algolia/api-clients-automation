@@ -61,9 +61,9 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
             'apiKey' => '',
             'hosts' => null,
             'hasFullHosts' => false,
-            'readTimeout' => {{x-timeouts.server.read}},
-            'writeTimeout' => {{x-timeouts.server.write}},
-            'connectTimeout' => {{x-timeouts.server.connect}},
+            'readTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.read}}{{/lambda.toSeconds}},
+            'writeTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.write}}{{/lambda.toSeconds}},
+            'connectTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.connect}}{{/lambda.toSeconds}},
             'defaultHeaders' => [],
             {{#isSearchClient}}
             'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,

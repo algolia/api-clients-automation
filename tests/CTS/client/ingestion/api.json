@@ -76,5 +76,52 @@
         }
       }
     ]
+  },
+  {
+    "testName": "endpoint level timeout",
+    "steps": [
+      {
+        "type": "method",
+        "method": "validateSourceBeforeUpdate",
+        "parameters": {
+          "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "sourceUpdate": {
+            "name": "newName"
+          }
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 180000,
+            "responseTimeout": 180000
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "can override endpoint level timeout",
+    "steps": [
+      {
+        "type": "method",
+        "method": "validateSourceBeforeUpdate",
+        "parameters": {
+          "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "sourceUpdate": {
+            "name": "newName"
+          }
+        },
+        "requestOptions": {
+          "writeTimeout": 3456
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 180000,
+            "responseTimeout": 3456
+          }
+        }
+      }
+    ]
   }
 ]

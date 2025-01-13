@@ -66,7 +66,11 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
 
   @Override
   protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas().put("screamingSnakeCase", new ScreamingSnakeCaseLambda());
+    ImmutableMap.Builder<String, Mustache.Lambda> lambdas = super.addMustacheLambdas();
+
+    lambdas.put("screamingSnakeCase", new ScreamingSnakeCaseLambda());
+
+    return lambdas;
   }
 
   @Override

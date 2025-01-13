@@ -1,11 +1,13 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
+import com.google.common.collect.ImmutableMap;
+import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
@@ -66,10 +68,15 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   }
 
   @Override
+  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
+    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
+  }
+
+  @Override
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
-    Timeouts.enrichBundle(openAPI, additionalProperties, ChronoUnit.SECONDS);
+    Timeouts.enrichBundle(openAPI, additionalProperties);
   }
 
   @Override

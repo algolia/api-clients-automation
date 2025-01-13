@@ -3,6 +3,8 @@ package com.algolia.codegen.cts.tests;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.nio.file.Files;
@@ -97,5 +99,34 @@ public abstract class TestsGenerator {
       .replace("${{languageVersion}}", ctsManager.getVersion())
       .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
       .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
+  }
+
+  protected void addRequestOptions(ParametersWithDataType paramsType, RequestOptions req, Map<String, Object> output)
+    throws JsonMappingException, JsonProcessingException {
+    if (req != null) {
+      output.put("hasRequestOptions", true);
+      Map<String, Object> requestOptions = new HashMap<>();
+      if (req.queryParameters != null) {
+        Map<String, Object> queryParameters = new HashMap<>();
+        paramsType.enhanceParameters(req.queryParameters, queryParameters);
+        requestOptions.put("queryParameters", queryParameters);
+      }
+      if (req.headers != null) {
+        Map<String, Object> headers = new HashMap<>();
+        // convert the headers to an acceptable type
+        paramsType.enhanceParameters(new HashMap<String, Object>(req.headers), headers);
+        requestOptions.put("headers", headers);
+      }
+      Map<String, Object> timeouts = null;
+      if (req.readTimeout != null || req.writeTimeout != null || req.connectTimeout != null) {
+        timeouts = new HashMap<>();
+        if (req.readTimeout != null) timeouts.put("read", req.readTimeout);
+        if (req.writeTimeout != null) timeouts.put("write", req.writeTimeout);
+        if (req.connectTimeout != null) timeouts.put("connect", req.connectTimeout);
+        paramsType.enhanceParameters(timeouts, timeouts);
+      }
+      requestOptions.put("timeouts", timeouts);
+      output.put("requestOptions", requestOptions);
+    }
   }
 }
