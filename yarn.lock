@@ -4357,12 +4357,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-refresh@npm:0.4.16":
-  version: 0.4.16
-  resolution: "eslint-plugin-react-refresh@npm:0.4.16"
+"eslint-plugin-react-refresh@npm:0.4.18":
+  version: 0.4.18
+  resolution: "eslint-plugin-react-refresh@npm:0.4.18"
   peerDependencies:
     eslint: ">=8.40"
-  checksum: 10/72f022097978a4efe161cd07fd30b65f441e102c3139dd58cb132ecbc756c7d8b2739b78408556bcfb2d38c0f703eeac7eaef756818d887230e2cb93925af5a5
+  checksum: 10/5374e01f4a41c0cfe66a50162ab8c63aa919cc4f287942093a0f2beecae21f5b5ccab5442a5a29b6f4d8dd653582eabca40222c494904216dbf8d3b9fa97a190
   languageName: node
   linkType: hard
 
@@ -6077,7 +6077,7 @@ __metadata:
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     eslint: "npm:9.17.0"
     eslint-plugin-react-hooks: "npm:5.1.0"
-    eslint-plugin-react-refresh: "npm:0.4.16"
+    eslint-plugin-react-refresh: "npm:0.4.18"
     globals: "npm:15.14.0"
     instantsearch.css: "npm:^8.5.1"
     react: "npm:^18.3.1"
