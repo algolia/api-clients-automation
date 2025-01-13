@@ -2,22 +2,26 @@ searchParams:
   oneOf:
     - $ref: '#/searchParamsString'
     - $ref: '#/searchParamsObject'
+
 searchParamsObject:
   title: Search parameters as object
   description: Each parameter value, including the `query` must not be larger than 512 bytes.
   allOf:
     - $ref: '#/baseSearchParams'
     - $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+
 baseSearchParams:
   allOf:
     - $ref: '#/searchParamsQuery'
     - $ref: '#/baseSearchParamsWithoutQuery'
+
 searchParamsQuery:
   type: object
   additionalProperties: false
   properties:
     query:
       $ref: '#/query'
+
 baseSearchParamsWithoutQuery:
   type: object
   additionalProperties: false
@@ -214,6 +218,7 @@ baseSearchParamsWithoutQuery:
       default: true
       x-categories:
         - Advanced
+
 searchParamsString:
   type: object
   title: Search parameters as query string.
@@ -224,11 +229,13 @@ searchParamsString:
   properties:
     params:
       $ref: '#/paramsAsString'
+
 paramsAsString:
   description: Search parameters as a URL-encoded query string.
   example: 'hitsPerPage=2&getRankingInfo=1'
   type: string
   default: ''
+
 userToken:
   type: string
   description: |
@@ -239,12 +246,14 @@ userToken:
   example: test-user-123
   x-categories:
     - Personalization
+
 query:
   type: string
   description: Search query.
   default: ''
   x-categories:
     - Search
+
 page:
   type: integer
   description: Page of search results to retrieve.
@@ -252,6 +261,7 @@ page:
   minimum: 0
   x-categories:
     - Pagination
+
 aroundRadius:
   description: |
     Maximum radius for a search around a central location.
@@ -266,6 +276,7 @@ aroundRadius:
     - $ref: '#/aroundRadiusAll'
   x-categories:
     - Geo-Search
+
 aroundPrecision:
   description: |
     Precision of a coordinate-based search in meters to group results with similar distances.
@@ -282,6 +293,7 @@ aroundPrecision:
     - $ref: '#/aroundPrecisionFromValue'
   x-categories:
     - Geo-Search
+
 aroundPrecisionFromValue:
   title: range objects
   type: array
@@ -297,11 +309,13 @@ aroundPrecisionFromValue:
       value:
         type: integer
         description: Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
+
 aroundRadiusAll:
   title: all
   type: string
   description: Return all records with a valid `_geoloc` attribute. Don't filter by distance.
   enum: [all]
+
 aroundLatLng:
   type: string
   description: |
@@ -314,17 +328,20 @@ aroundLatLng:
   default: ''
   x-categories:
     - Geo-Search
+
 aroundLatLngViaIP:
   type: boolean
   description: Whether to obtain the coordinates from the request's IP address.
   default: false
   x-categories:
     - Geo-Search
+
 insideBoundingBox:
   oneOf:
     - type: string
     - type: 'null'
     - $ref: '#/insideBoundingBoxArray'
+
 insideBoundingBoxArray:
   type: array
   items:
@@ -346,6 +363,7 @@ insideBoundingBoxArray:
     - [40.9234, 2.1185, 38.6430, 1.9916]
   x-categories:
     - Geo-Search
+
 insidePolygon:
   type: array
   items:
@@ -367,6 +385,7 @@ insidePolygon:
     - [40.9234, 2.1185, 38.6430, 1.9916, 39.2587, 2.0104]
   x-categories:
     - Geo-Search
+
 filters:
   type: string
   description: |
@@ -396,6 +415,7 @@ filters:
   example: '(category:Book OR category:Ebook) AND _tags:published'
   x-categories:
     - Filtering
+
 facetFilters:
   description: |
     Filter the search by facet values, so that only records with the same facet values are retrieved.
@@ -416,6 +436,7 @@ facetFilters:
     - type: string
   x-categories:
     - Filtering
+
 tagFilters:
   description: |
     Filter the search by values of the special `_tags` attribute.
@@ -433,6 +454,7 @@ tagFilters:
     - type: string
   x-categories:
     - Filtering
+
 numericFilters:
   description: |
     Filter by numeric facets.
@@ -451,6 +473,7 @@ numericFilters:
     - type: string
   x-categories:
     - Filtering
+
 optionalFilters:
   description: |
     Filters to promote or demote records in the search results.
@@ -463,6 +486,7 @@ optionalFilters:
     - Optional filters are applied _after_ sort-by attributes.
     - Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)).
     - Optional filters don't work with numeric attributes.
+
   example: ['category:Book', 'author:John Doe']
   oneOf:
     - type: array
