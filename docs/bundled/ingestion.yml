@@ -14600,6 +14600,9 @@ components:
               type: integer
             receivedNbOfEvents:
               type: integer
+          required:
+            - expectedNbOfEvents
+            - receivedNbOfEvents
         outcome:
           $ref: '#/components/schemas/RunOutcome'
         failureThreshold:
