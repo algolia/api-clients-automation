@@ -49,6 +49,9 @@ Run:
           type: integer
         receivedNbOfEvents:
           type: integer
+      required:
+        - expectedNbOfEvents
+        - receivedNbOfEvents
     outcome:
       $ref: '#/RunOutcome'
     failureThreshold:
