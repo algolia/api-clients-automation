@@ -156,22 +156,7 @@ public class TestsRequest extends TestsGenerator {
           test.put("hasParams", ope.hasParams);
           test.put("isHelper", isHelper);
 
-          if (req.requestOptions != null) {
-            test.put("hasRequestOptions", true);
-            Map<String, Object> requestOptions = new HashMap<>();
-            if (req.requestOptions.queryParameters != null) {
-              Map<String, Object> queryParameters = new HashMap<>();
-              paramsType.enhanceParameters(req.requestOptions.queryParameters, queryParameters);
-              requestOptions.put("queryParameters", queryParameters);
-            }
-            if (req.requestOptions.headers != null) {
-              Map<String, Object> headers = new HashMap<>();
-              // convert the headers to an acceptable type
-              paramsType.enhanceParameters(new HashMap<String, Object>(req.requestOptions.headers), headers);
-              requestOptions.put("headers", headers);
-            }
-            test.put("requestOptions", requestOptions);
-          }
+          addRequestOptions(paramsType, req.requestOptions, test);
 
           // Determines whether the endpoint is expected to return a response payload deserialized
           // and therefore a variable to store it into.

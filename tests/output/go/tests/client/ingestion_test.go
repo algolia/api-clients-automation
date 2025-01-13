@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"regexp"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 
@@ -85,6 +86,41 @@ func TestIngestionapi2(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, int64(25000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(25000), echo.Timeout.Milliseconds())
+}
+
+// endpoint level timeout
+func TestIngestionapi3(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createIngestionClient(t)
+	_ = echo
+	res, err = client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptySourceUpdate().SetName("newName"),
+	))
+	require.NoError(t, err)
+	require.Equal(t, int64(180000), echo.ConnectTimeout.Milliseconds())
+	require.Equal(t, int64(180000), echo.Timeout.Milliseconds())
+}
+
+// can override endpoint level timeout
+func TestIngestionapi4(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createIngestionClient(t)
+	_ = echo
+	res, err = client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptySourceUpdate().SetName("newName"),
+	),
+
+		ingestion.WithWriteTimeout(3456*time.Millisecond),
+	)
+	require.NoError(t, err)
+	require.Equal(t, int64(180000), echo.ConnectTimeout.Milliseconds())
+	require.Equal(t, int64(3456), echo.Timeout.Milliseconds())
 }
 
 // calls api with correct user agent

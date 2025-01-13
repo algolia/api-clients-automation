@@ -3,23 +3,13 @@ package com.algolia.codegen.utils;
 import com.algolia.codegen.exceptions.*;
 import com.fasterxml.jackson.databind.*;
 import io.swagger.v3.oas.models.OpenAPI;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 class TimeoutsValues {
 
-  private ChronoUnit unit = ChronoUnit.MILLIS;
   public long connect;
   public long read;
   public long write;
-
-  void toUnit(ChronoUnit unit) {
-    if (this.unit == ChronoUnit.MILLIS && unit == ChronoUnit.SECONDS) {
-      connect /= 1000;
-      read /= 1000;
-      write /= 1000;
-    }
-  }
 }
 
 class TimeoutsBundle {
@@ -30,15 +20,8 @@ class TimeoutsBundle {
 
 public class Timeouts {
 
+  /** Inject timeouts in miliseconds into the given bundle, under the x-timeouts property * */
   public static void enrichBundle(OpenAPI spec, Map<String, Object> bundle) throws ConfigException {
-    enrichBundle(spec, bundle, ChronoUnit.MILLIS);
-  }
-
-  /**
-   * Inject timeouts (in miliseconds / divider) into the given bundle, under the x-timeouts property
-   * *
-   */
-  public static void enrichBundle(OpenAPI spec, Map<String, Object> bundle, ChronoUnit unit) throws ConfigException {
     TimeoutsBundle defaults = new TimeoutsBundle();
     // the default below are what the search API expect, which was previously used for any client
     defaults.browser.connect = 1000;
@@ -61,9 +44,6 @@ public class Timeouts {
     if (specTimeouts.server == null) {
       specTimeouts.server = defaults.server;
     }
-
-    specTimeouts.browser.toUnit(unit);
-    specTimeouts.server.toUnit(unit);
 
     bundle.put("x-timeouts", specTimeouts);
   }

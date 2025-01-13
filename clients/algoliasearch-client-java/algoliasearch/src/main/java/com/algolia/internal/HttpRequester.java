@@ -172,6 +172,9 @@ public final class HttpRequester implements Requester {
     if (requestOptions.getWriteTimeout() != null) {
       builder.writeTimeout(requestOptions.getWriteTimeout());
     }
+    if (requestOptions.getConnectTimeout() != null) {
+      builder.connectTimeout(requestOptions.getConnectTimeout());
+    }
     return builder.build();
   }
 

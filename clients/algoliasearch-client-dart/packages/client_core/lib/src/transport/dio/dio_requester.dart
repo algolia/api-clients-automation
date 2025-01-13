@@ -121,4 +121,12 @@ class DioRequester implements Requester {
   void setClientApiKey(String apiKey) {
     _authInterceptor.apiKey = apiKey;
   }
+
+  @override
+  get connectTimeout => _client.options.connectTimeout;
+
+  @override
+  void setConnectTimeout(Duration connectTimeout) {
+    _client.options.connectTimeout = connectTimeout;
+  }
 }

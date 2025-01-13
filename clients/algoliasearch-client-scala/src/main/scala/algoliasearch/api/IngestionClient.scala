@@ -112,15 +112,15 @@ object IngestionClient {
   )
 
   private def readTimeout(): Duration = {
-    Duration(25, TimeUnit.SECONDS)
+    Duration(25000, TimeUnit.MILLISECONDS)
   }
 
   private def connectTimeout(): Duration = {
-    Duration(25, TimeUnit.SECONDS)
+    Duration(25000, TimeUnit.MILLISECONDS)
   }
 
   private def writeTimeout(): Duration = {
-    Duration(25, TimeUnit.SECONDS)
+    Duration(25000, TimeUnit.MILLISECONDS)
   }
 
   private def hosts(region: String): Seq[Host] = {
@@ -1223,7 +1223,16 @@ class IngestionClient(
       .withBody(pushTaskPayload)
       .withQueryParameter("watch", watch)
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
   /** Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
@@ -1453,7 +1462,16 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/discover")
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
   /** Try a transformation before creating it.
@@ -1676,7 +1694,16 @@ class IngestionClient(
       .withPath(s"/1/sources/validate")
       .withBody(sourceCreate)
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
   /** Validates an update of a source payload to ensure it can be created and that the data source can be reached by
@@ -1704,7 +1731,16 @@ class IngestionClient(
       .withPath(s"/1/sources/${escape(sourceID)}/validate")
       .withBody(sourceUpdate)
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
 }

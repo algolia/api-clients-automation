@@ -19,8 +19,8 @@ import (
   "errors"
   "slices"
   "sort"
-  "time"
   {{/isSearchClient}}
+  "time"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
@@ -30,6 +30,7 @@ type config struct {
 	context      context.Context
 	queryParams  url.Values
 	headerParams map[string]string
+  timeouts transport.RequestConfiguration
 
   {{#isSearchClient}}
   // -- ChunkedBatch options
@@ -78,6 +79,24 @@ func WithQueryParam(key string, value any) requestOption {
 	return requestOption(func(c *config) {
 		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
 	})
+}
+
+func WithReadTimeout(timeout time.Duration) requestOption {
+  return requestOption(func(c *config) {
+    c.timeouts.ReadTimeout = &timeout
+  })
+}
+
+func WithWriteTimeout(timeout time.Duration) requestOption {
+  return requestOption(func(c *config) {
+    c.timeouts.WriteTimeout = &timeout
+  })
+}
+
+func WithConnectTimeout(timeout time.Duration) requestOption {
+  return requestOption(func(c *config) {
+    c.timeouts.ConnectTimeout = &timeout
+  })
 }
 
 {{#isSearchClient}}
@@ -453,6 +472,13 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{
     context:      context.Background(),
     queryParams:  url.Values{},
     headerParams: map[string]string{},
+    {{#vendorExtensions.x-timeouts}}
+    timeouts: transport.RequestConfiguration{
+      ReadTimeout:  utils.ToPtr({{read}} * time.Millisecond),
+      WriteTimeout: utils.ToPtr({{write}} * time.Millisecond),
+      ConnectTimeout: utils.ToPtr({{connect}} * time.Millisecond),
+    },
+    {{/vendorExtensions.x-timeouts}}
   }
 
   {{#vendorExtensions.x-is-custom-request}}
@@ -507,7 +533,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}}{{/vendorExtensions}})
+	return c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}},{{/vendorExtensions}}conf.timeouts)
 }
 
 /*

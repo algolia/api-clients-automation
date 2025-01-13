@@ -148,7 +148,7 @@ final class SearchClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual(TimeInterval(5000 / 1000), echoResponse.timeout)
+        XCTAssertEqual(TimeInterval(5000) / 1000, echoResponse.timeout)
     }
 
     /// calls api with default write timeouts
@@ -161,7 +161,7 @@ final class SearchClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual(TimeInterval(30000 / 1000), echoResponse.timeout)
+        XCTAssertEqual(TimeInterval(30000) / 1000, echoResponse.timeout)
     }
 
     /// calls api with correct user agent

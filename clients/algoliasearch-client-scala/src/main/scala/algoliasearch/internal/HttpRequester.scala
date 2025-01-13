@@ -115,6 +115,7 @@ private[algoliasearch] class HttpRequester private (
     requestOptions.foreach(options => {
       options.readTimeout.foreach(timeout => builder.readTimeout(timeout.toMillis, TimeUnit.MILLISECONDS))
       options.writeTimeout.foreach(timeout => builder.writeTimeout(timeout.toMillis, TimeUnit.MILLISECONDS))
+      options.connectTimeout.foreach(timeout => builder.connectTimeout(timeout.toMillis, TimeUnit.MILLISECONDS))
     })
     builder.build
   }
