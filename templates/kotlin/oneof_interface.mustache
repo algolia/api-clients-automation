@@ -58,9 +58,8 @@ public sealed interface {{classname}} {
 
     {{^vendorExtensions.x-is-multi-array}}{{^vendorExtensions.x-is-multi-map}}
     {{#composedSchemas.oneOf}}
-    public fun of(value: {{{datatypeWithEnum}}}): {{classname}} {
-        return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
-    }
+    public fun of(value: {{{datatypeWithEnum}}}): {{classname}} = {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value)
+
     {{/composedSchemas.oneOf}}
     {{/vendorExtensions.x-is-multi-map}}{{/vendorExtensions.x-is-multi-array}}
     }
