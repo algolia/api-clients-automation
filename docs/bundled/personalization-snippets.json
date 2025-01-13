@@ -28,7 +28,7 @@
       "default": "client.SetClientApiKey(\"updated-api-key\");"
     },
     "setPersonalizationStrategy": {
-      "default": "var response = await client.SetPersonalizationStrategyAsync(\n  new PersonalizationStrategyParams\n  {\n    EventScoring = new List<EventScoring>\n    {\n      new EventScoring\n      {\n        Score = 42,\n        EventName = \"Algolia\",\n        EventType = Enum.Parse<EventType>(\"Click\"),\n      },\n    },\n    FacetScoring = new List<FacetScoring>\n    {\n      new FacetScoring { Score = 42, FacetName = \"Event\" },\n    },\n    PersonalizationImpact = 42,\n  }\n);"
+      "default": "var response = await client.SetPersonalizationStrategyAsync(\n  new PersonalizationStrategyParams\n  {\n    EventsScoring = new List<EventsScoring>\n    {\n      new EventsScoring\n      {\n        Score = 42,\n        EventName = \"Algolia\",\n        EventType = Enum.Parse<EventType>(\"Click\"),\n      },\n    },\n    FacetsScoring = new List<FacetsScoring>\n    {\n      new FacetsScoring { Score = 42, FacetName = \"Event\" },\n    },\n    PersonalizationImpact = 42,\n  }\n);"
     },
     "init": {
       "default": "var client = new PersonalizationClient(\n  new PersonalizationConfig(\n    \"ALGOLIA_APPLICATION_ID\",\n    \"ALGOLIA_API_KEY\",\n    \"ALGOLIA_APPLICATION_REGION\"\n  )\n);"
@@ -64,7 +64,7 @@
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setPersonalizationStrategy": {
-      "default": "response, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(\n\n  personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(\n    []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName(\"Algolia\").SetEventType(personalization.EventType(\"click\"))}).SetFacetScoring(\n    []personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName(\"Event\")}).SetPersonalizationImpact(42),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(\n\n  personalization.NewEmptyPersonalizationStrategyParams().SetEventsScoring(\n    []personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName(\"Algolia\").SetEventType(personalization.EventType(\"click\"))}).SetFacetsScoring(\n    []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName(\"Event\")}).SetPersonalizationImpact(42),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := personalization.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
@@ -99,7 +99,7 @@
       "default": "client.setClientApiKey(\"updated-api-key\");"
     },
     "setPersonalizationStrategy": {
-      "default": "client.setPersonalizationStrategy(\n  new PersonalizationStrategyParams()\n    .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName(\"Algolia\").setEventType(EventType.CLICK)))\n    .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName(\"Event\")))\n    .setPersonalizationImpact(42)\n);"
+      "default": "client.setPersonalizationStrategy(\n  new PersonalizationStrategyParams()\n    .setEventsScoring(Arrays.asList(new EventsScoring().setScore(42).setEventName(\"Algolia\").setEventType(EventType.CLICK)))\n    .setFacetsScoring(Arrays.asList(new FacetsScoring().setScore(42).setFacetName(\"Event\")))\n    .setPersonalizationImpact(42)\n);"
     },
     "init": {
       "default": "PersonalizationClient client = new PersonalizationClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
@@ -134,7 +134,7 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "setPersonalizationStrategy": {
-      "default": "const response = await client.setPersonalizationStrategy({\n  eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],\n  facetScoring: [{ score: 42, facetName: 'Event' }],\n  personalizationImpact: 42,\n});"
+      "default": "const response = await client.setPersonalizationStrategy({\n  eventsScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],\n  facetsScoring: [{ score: 42, facetName: 'Event' }],\n  personalizationImpact: 42,\n});"
     },
     "init": {
       "default": "// Replace 'us' with your Algolia Application Region\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initPersonalization({ region: 'us' });"
@@ -169,7 +169,7 @@
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
     },
     "setPersonalizationStrategy": {
-      "default": "var response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = listOf(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.entries.first { it.value == \"click\" },\n      ),\n    ),\n    facetScoring = listOf(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\",\n      ),\n    ),\n    personalizationImpact = 42,\n  ),\n)"
+      "default": "var response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventsScoring = listOf(\n      EventsScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.entries.first { it.value == \"click\" },\n      ),\n    ),\n    facetsScoring = listOf(\n      FacetsScoring(\n        score = 42,\n        facetName = \"Event\",\n      ),\n    ),\n    personalizationImpact = 42,\n  ),\n)"
     },
     "init": {
       "default": "val client = PersonalizationClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
@@ -204,7 +204,7 @@
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
     },
     "setPersonalizationStrategy": {
-      "default": "$response = $client->setPersonalizationStrategy(\n    ['eventScoring' => [\n        ['score' => 42,\n            'eventName' => 'Algolia',\n            'eventType' => 'click',\n        ],\n    ],\n        'facetScoring' => [\n            ['score' => 42,\n                'facetName' => 'Event',\n            ],\n        ],\n        'personalizationImpact' => 42,\n    ],\n);"
+      "default": "$response = $client->setPersonalizationStrategy(\n    ['eventsScoring' => [\n        ['score' => 42,\n            'eventName' => 'Algolia',\n            'eventType' => 'click',\n        ],\n    ],\n        'facetsScoring' => [\n            ['score' => 42,\n                'facetName' => 'Event',\n            ],\n        ],\n        'personalizationImpact' => 42,\n    ],\n);"
     },
     "init": {
       "default": "$client = PersonalizationClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
@@ -239,7 +239,7 @@
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "setPersonalizationStrategy": {
-      "default": "response = client.set_personalization_strategy(\n    personalization_strategy_params={\n        \"eventScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)"
+      "default": "response = client.set_personalization_strategy(\n    personalization_strategy_params={\n        \"eventsScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetsScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)"
     },
     "init": {
       "default": "# In an asynchronous context, you can use PersonalizationClient instead, which exposes the exact same methods.\nclient = PersonalizationClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
@@ -274,7 +274,7 @@
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "setPersonalizationStrategy": {
-      "default": "response = client.set_personalization_strategy(\n  Algolia::Personalization::PersonalizationStrategyParams.new(\n    event_scoring: [Algolia::Personalization::EventScoring.new(score: 42, event_name: \"Algolia\", event_type: \"click\")],\n    facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: \"Event\")],\n    personalization_impact: 42\n  )\n)"
+      "default": "response = client.set_personalization_strategy(\n  Algolia::Personalization::PersonalizationStrategyParams.new(\n    events_scoring: [\n      Algolia::Personalization::EventsScoring.new(score: 42, event_name: \"Algolia\", event_type: \"click\")\n    ],\n    facets_scoring: [Algolia::Personalization::FacetsScoring.new(score: 42, facet_name: \"Event\")],\n    personalization_impact: 42\n  )\n)"
     },
     "init": {
       "default": "client = Algolia::PersonalizationClient.create(\n  \"ALGOLIA_APPLICATION_ID\",\n  \"ALGOLIA_API_KEY\",\n  \"ALGOLIA_APPLICATION_REGION\"\n)"
@@ -306,7 +306,7 @@
       "default": "val response = client.getUserTokenProfile(\n  userToken = \"UserToken\"\n)"
     },
     "setPersonalizationStrategy": {
-      "default": "val response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = Seq(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.withName(\"click\")\n      )\n    ),\n    facetScoring = Seq(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\"\n      )\n    ),\n    personalizationImpact = 42\n  )\n)"
+      "default": "val response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventsScoring = Seq(\n      EventsScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.withName(\"click\")\n      )\n    ),\n    facetsScoring = Seq(\n      FacetsScoring(\n        score = 42,\n        facetName = \"Event\"\n      )\n    ),\n    personalizationImpact = 42\n  )\n)"
     },
     "init": {
       "default": "val client = PersonalizationClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = \"ALGOLIA_APPLICATION_REGION\"\n)"
@@ -341,7 +341,7 @@
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
     },
     "setPersonalizationStrategy": {
-      "default": "let response = try await client\n    .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(\n        eventScoring: [EventScoring(\n            score: 42,\n            eventName: \"Algolia\",\n            eventType: PersonalizationEventType.click\n        )],\n        facetScoring: [FacetScoring(score: 42, facetName: \"Event\")],\n        personalizationImpact: 42\n    ))"
+      "default": "let response = try await client\n    .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(\n        eventsScoring: [EventsScoring(\n            score: 42,\n            eventName: \"Algolia\",\n            eventType: PersonalizationEventType.click\n        )],\n        facetsScoring: [FacetsScoring(score: 42, facetName: \"Event\")],\n        personalizationImpact: 42\n    ))"
     },
     "init": {
       "default": "let client = try PersonalizationClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
