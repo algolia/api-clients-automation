@@ -86,7 +86,7 @@ __metadata:
     eslint-plugin-yml: "npm:1.16.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:15.3.0"
-    oxlint: "npm:0.11.1"
+    oxlint: "npm:0.15.6"
     prettier: "npm:3.4.2"
     prettier-plugin-java: "npm:2.6.6"
     prettier-plugin-organize-imports: "npm:4.1.0"
@@ -1103,6 +1103,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nodelib/fs.scandir@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@nodelib/fs.scandir@npm:4.0.1"
+  dependencies:
+    "@nodelib/fs.stat": "npm:4.0.0"
+    run-parallel: "npm:^1.2.0"
+  checksum: 10/44b2b2b34e48ca88ee004413f5033db31cd6d5ecf8c7bbef0e33b6672d603f3e23b57d5fbb1bd5f83f8992df58381be6600006d92a903f085e698a37bdfe3c89
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.stat@npm:2.0.5, @nodelib/fs.stat@npm:^2.0.2":
   version: 2.0.5
   resolution: "@nodelib/fs.stat@npm:2.0.5"
@@ -1110,7 +1120,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nodelib/fs.walk@npm:1.2.8, @nodelib/fs.walk@npm:^1.2.3, @nodelib/fs.walk@npm:^1.2.8":
+"@nodelib/fs.stat@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@nodelib/fs.stat@npm:4.0.0"
+  checksum: 10/1f87199fdab938d2ed6f5e10debc006f7965081e2cd147ed3d2333049a030cad1949bd76556a5f5364f062c3e1edcc3d0981189b065336fc92c503ead463f4e1
+  languageName: node
+  linkType: hard
+
+"@nodelib/fs.walk@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@nodelib/fs.walk@npm:3.0.1"
+  dependencies:
+    "@nodelib/fs.scandir": "npm:4.0.1"
+    fastq: "npm:^1.15.0"
+  checksum: 10/7b76a0139dec52e3f2a3a0bb4f13dbf72a6b79d8076ec4b5deea9e75bd1b79d7abda53776f93b5aefda9a5e40f0e31f49f6e35bf5460a402f0aee7bcf3b26d85
+  languageName: node
+  linkType: hard
+
+"@nodelib/fs.walk@npm:^1.2.3, @nodelib/fs.walk@npm:^1.2.8":
   version: 1.2.8
   resolution: "@nodelib/fs.walk@npm:1.2.8"
   dependencies:
@@ -1472,58 +1499,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-arm64@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/darwin-arm64@npm:0.11.1"
+"@oxlint/darwin-arm64@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/darwin-arm64@npm:0.15.6"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-x64@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/darwin-x64@npm:0.11.1"
+"@oxlint/darwin-x64@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/darwin-x64@npm:0.15.6"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-gnu@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/linux-arm64-gnu@npm:0.11.1"
+"@oxlint/linux-arm64-gnu@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/linux-arm64-gnu@npm:0.15.6"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-musl@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/linux-arm64-musl@npm:0.11.1"
+"@oxlint/linux-arm64-musl@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/linux-arm64-musl@npm:0.15.6"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-gnu@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/linux-x64-gnu@npm:0.11.1"
+"@oxlint/linux-x64-gnu@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/linux-x64-gnu@npm:0.15.6"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-musl@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/linux-x64-musl@npm:0.11.1"
+"@oxlint/linux-x64-musl@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/linux-x64-musl@npm:0.15.6"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/win32-arm64@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/win32-arm64@npm:0.11.1"
+"@oxlint/win32-arm64@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/win32-arm64@npm:0.15.6"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/win32-x64@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@oxlint/win32-x64@npm:0.11.1"
+"@oxlint/win32-x64@npm:0.15.6":
+  version: 0.15.6
+  resolution: "@oxlint/win32-x64@npm:0.15.6"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3884,13 +3911,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.17.1":
-  version: 5.17.1
-  resolution: "enhanced-resolve@npm:5.17.1"
+"enhanced-resolve@npm:^5.18.0":
+  version: 5.18.0
+  resolution: "enhanced-resolve@npm:5.18.0"
   dependencies:
     graceful-fs: "npm:^4.2.4"
     tapable: "npm:^2.2.0"
-  checksum: 10/e8e03cb7a4bf3c0250a89afbd29e5ec20e90ba5fcd026066232a0754864d7d0a393fa6fc0e5379314a6529165a1834b36731147080714459d98924520410d8f5
+  checksum: 10/e88463ef97b68d40d0da0cd0c572e23f43dba0be622d6d44eae5cafed05f0c5dac43e463a83a86c4f70186d029357f82b56d9e1e47e8fc91dce3d6602f8bd6ce
   languageName: node
   linkType: hard
 
@@ -4717,6 +4744,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-glob@npm:^3.3.3":
+  version: 3.3.3
+  resolution: "fast-glob@npm:3.3.3"
+  dependencies:
+    "@nodelib/fs.stat": "npm:^2.0.2"
+    "@nodelib/fs.walk": "npm:^1.2.3"
+    glob-parent: "npm:^5.1.2"
+    merge2: "npm:^1.3.0"
+    micromatch: "npm:^4.0.8"
+  checksum: 10/dcc6432b269762dd47381d8b8358bf964d8f4f60286ac6aa41c01ade70bda459ff2001b516690b96d5365f68a49242966112b5d5cc9cd82395fa8f9d017c90ad
+  languageName: node
+  linkType: hard
+
 "fast-json-stable-stringify@npm:^2.0.0":
   version: 2.1.0
   resolution: "fast-json-stable-stringify@npm:2.1.0"
@@ -4746,6 +4786,15 @@ __metadata:
   bin:
     fxparser: src/cli/cli.js
   checksum: 10/dc9571c10e7b57b5be54bcd2d92f50c446eb42ea5df347d253e94dd14eb99b5300a6d172e840f151e0721933ca2406165a8d9b316a6d777bf0596dc4fe1df756
+  languageName: node
+  linkType: hard
+
+"fastq@npm:^1.15.0":
+  version: 1.18.0
+  resolution: "fastq@npm:1.18.0"
+  dependencies:
+    reusify: "npm:^1.0.4"
+  checksum: 10/c5b501333dc8f5d188d828ea162aad03ff5a81aed185b6d4a5078aaeae0a42babc34296d7af13ebce86401cccd93c9b7b3cbf61280821c5f20af233378b42fbb
   languageName: node
   linkType: hard
 
@@ -6002,7 +6051,7 @@ __metadata:
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -6057,16 +6106,16 @@ __metadata:
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
-    typescript: "npm:5.7.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
-"jiti@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "jiti@npm:2.4.0"
+"jiti@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "jiti@npm:2.4.2"
   bin:
     jiti: lib/jiti-cli.mjs
-  checksum: 10/10aa999a4f9bccc82b1dab9ebaf4484a8770450883c1bf7fafc07f8fca1e417fd8e7731e651337d1060c9e2ff3f97362dcdfd27e86d1f385db97f4adf7b5a21d
+  checksum: 10/e2b07eb2e3fbb245e29ad288dddecab31804967fc84d5e01d39858997d2743b5e248946defcecf99272275a00284ecaf7ec88b8c841331324f0c946d8274414b
   languageName: node
   linkType: hard
 
@@ -6182,22 +6231,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:5.37.1":
-  version: 5.37.1
-  resolution: "knip@npm:5.37.1"
+"knip@npm:5.42.0":
+  version: 5.42.0
+  resolution: "knip@npm:5.42.0"
   dependencies:
-    "@nodelib/fs.walk": "npm:1.2.8"
+    "@nodelib/fs.walk": "npm:3.0.1"
     "@snyk/github-codeowners": "npm:1.1.0"
     easy-table: "npm:1.2.0"
-    enhanced-resolve: "npm:^5.17.1"
-    fast-glob: "npm:^3.3.2"
-    jiti: "npm:^2.4.0"
+    enhanced-resolve: "npm:^5.18.0"
+    fast-glob: "npm:^3.3.3"
+    jiti: "npm:^2.4.2"
     js-yaml: "npm:^4.1.0"
     minimist: "npm:^1.2.8"
     picocolors: "npm:^1.1.0"
     picomatch: "npm:^4.0.1"
     pretty-ms: "npm:^9.0.0"
-    smol-toml: "npm:^1.3.0"
+    smol-toml: "npm:^1.3.1"
     strip-json-comments: "npm:5.0.1"
     summary: "npm:2.1.0"
     zod: "npm:^3.22.4"
@@ -6208,7 +6257,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/e73962f7daac5eb3d275654bbf719e91001aca8d03da9d0dc303cbe0cd47000114cf99d341b377b866f815e7d6821e3fdb1fca24e0a178e8204c1adaa2f2f41c
+  checksum: 10/e12b0d669a8659ed12cf2e8d9f5bbac5acbfe721549294ba5ecd81806040c5a71a20d3a724cacfa3f60e4b74d71418529b5b69aaf6d2233b31f4e5abf6835857
   languageName: node
   linkType: hard
 
@@ -6467,7 +6516,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:4.0.8, micromatch@npm:^4.0.4, micromatch@npm:~4.0.8":
+"micromatch@npm:4.0.8, micromatch@npm:^4.0.4, micromatch@npm:^4.0.8, micromatch@npm:~4.0.8":
   version: 4.0.8
   resolution: "micromatch@npm:4.0.8"
   dependencies:
@@ -7111,18 +7160,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oxlint@npm:0.11.1":
-  version: 0.11.1
-  resolution: "oxlint@npm:0.11.1"
+"oxlint@npm:0.15.6":
+  version: 0.15.6
+  resolution: "oxlint@npm:0.15.6"
   dependencies:
-    "@oxlint/darwin-arm64": "npm:0.11.1"
-    "@oxlint/darwin-x64": "npm:0.11.1"
-    "@oxlint/linux-arm64-gnu": "npm:0.11.1"
-    "@oxlint/linux-arm64-musl": "npm:0.11.1"
-    "@oxlint/linux-x64-gnu": "npm:0.11.1"
-    "@oxlint/linux-x64-musl": "npm:0.11.1"
-    "@oxlint/win32-arm64": "npm:0.11.1"
-    "@oxlint/win32-x64": "npm:0.11.1"
+    "@oxlint/darwin-arm64": "npm:0.15.6"
+    "@oxlint/darwin-x64": "npm:0.15.6"
+    "@oxlint/linux-arm64-gnu": "npm:0.15.6"
+    "@oxlint/linux-arm64-musl": "npm:0.15.6"
+    "@oxlint/linux-x64-gnu": "npm:0.15.6"
+    "@oxlint/linux-x64-musl": "npm:0.15.6"
+    "@oxlint/win32-arm64": "npm:0.15.6"
+    "@oxlint/win32-x64": "npm:0.15.6"
   dependenciesMeta:
     "@oxlint/darwin-arm64":
       optional: true
@@ -7143,7 +7192,7 @@ __metadata:
   bin:
     oxc_language_server: bin/oxc_language_server
     oxlint: bin/oxlint
-  checksum: 10/dba58dafbf82dec1816985f0f2b3a9ee95f21d68aefdfa3e154aa5c41547ce7211ae5b5d0910298153c02b81c0c94abfa474896cbb5fa0f76bc58c5ad0153fdc
+  checksum: 10/8f6e6b65ecc1384fd7faa8870a271768bd0ad4053298ba0378708723c1ddc054126a48c12c508fc7bc1ae0069fb7eae1bcb7fdff69150dcbf2d419bfd8d12278
   languageName: node
   linkType: hard
 
@@ -8117,7 +8166,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"run-parallel@npm:^1.1.9":
+"run-parallel@npm:^1.1.9, run-parallel@npm:^1.2.0":
   version: 1.2.0
   resolution: "run-parallel@npm:1.2.0"
   dependencies:
@@ -8226,7 +8275,7 @@ __metadata:
     fs-extra: "npm:11.2.0"
     httpsnippet: "npm:3.0.9"
     js-yaml: "npm:4.1.0"
-    knip: "npm:5.37.1"
+    knip: "npm:5.42.0"
     micromatch: "npm:4.0.8"
     semver: "npm:7.6.3"
     spinnies: "npm:0.5.1"
@@ -8476,7 +8525,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smol-toml@npm:^1.3.0":
+"smol-toml@npm:^1.3.1":
   version: 1.3.1
   resolution: "smol-toml@npm:1.3.1"
   checksum: 10/b999828ea46cf44ae90b6293884d6a139dfb4545ac6f86cbd1002568a943a43d8895ad82413855d095eec0c0bc21d23413c0a25a26c7fad6395c2ce42c2fdbd0
@@ -9177,16 +9226,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.7.2":
-  version: 5.7.2
-  resolution: "typescript@npm:5.7.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/4caa3904df69db9d4a8bedc31bafc1e19ffb7b24fbde2997a1633ae1398d0de5bdbf8daf602ccf3b23faddf1aeeb9b795223a2ed9c9a4fdcaf07bfde114a401a
-  languageName: node
-  linkType: hard
-
 "typescript@npm:5.7.3":
   version: 5.7.3
   resolution: "typescript@npm:5.7.3"
@@ -9204,16 +9243,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/f86a085eea24fdd665850c6be4dd69c7a71fe3d27ecc712be88cdc7a52d866f4f2416ad91c554df60f499dedcf288a24b3d8052e502833d8acc661a9d21bb98f
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>":
-  version: 5.7.2
-  resolution: "typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=5786d5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/d75ca10141afc64fd3474b41a8b082b640555bed388d237558aed64e5827ddadb48f90932c7f4205883f18f5bcab8b6a739a2cfac95855604b0dfeb34bc2f3eb
   languageName: node
   linkType: hard
 
