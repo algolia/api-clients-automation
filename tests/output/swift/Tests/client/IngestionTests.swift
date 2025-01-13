@@ -46,7 +46,7 @@ final class IngestionClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual(TimeInterval(25000 / 1000), echoResponse.timeout)
+        XCTAssertEqual(TimeInterval(25000) / 1000, echoResponse.timeout)
     }
 
     /// calls api with default write timeouts
@@ -59,7 +59,42 @@ final class IngestionClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual(TimeInterval(25000 / 1000), echoResponse.timeout)
+        XCTAssertEqual(TimeInterval(25000) / 1000, echoResponse.timeout)
+    }
+
+    /// endpoint level timeout
+    func testApiTest3() async throws {
+        let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.validateSourceBeforeUpdateWithHTTPInfo(
+            sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            sourceUpdate: SourceUpdate(name: "newName")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertEqual(TimeInterval(180_000) / 1000, echoResponse.timeout)
+    }
+
+    /// can override endpoint level timeout
+    func testApiTest4() async throws {
+        let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.validateSourceBeforeUpdateWithHTTPInfo(
+            sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            sourceUpdate: SourceUpdate(name: "newName"),
+            requestOptions: RequestOptions(
+                writeTimeout: TimeInterval(3456) / 1000
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertEqual(TimeInterval(3456) / 1000, echoResponse.timeout)
     }
 
     /// calls api with correct user agent

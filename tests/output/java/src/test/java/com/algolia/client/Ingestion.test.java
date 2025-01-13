@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import java.time.Duration;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -95,6 +96,32 @@ class IngestionClientClientTests {
     EchoResponse result = echo.getLastResponse();
     assertEquals(25000, result.connectTimeout);
     assertEquals(25000, result.responseTimeout);
+  }
+
+  @Test
+  @DisplayName("endpoint level timeout")
+  void apiTest3() {
+    IngestionClient client = createClient();
+
+    client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    EchoResponse result = echo.getLastResponse();
+    assertEquals(180000, result.connectTimeout);
+    assertEquals(180000, result.responseTimeout);
+  }
+
+  @Test
+  @DisplayName("can override endpoint level timeout")
+  void apiTest4() {
+    IngestionClient client = createClient();
+
+    client.validateSourceBeforeUpdate(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate().setName("newName"),
+      new RequestOptions().setWriteTimeout(Duration.ofMillis(3456L))
+    );
+    EchoResponse result = echo.getLastResponse();
+    assertEquals(180000, result.connectTimeout);
+    assertEquals(3456, result.responseTimeout);
   }
 
   @Test

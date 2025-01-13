@@ -60,6 +60,39 @@ class TestClientIngestionClient < Test::Unit::TestCase
     assert_equal(25000, req.timeout)
   end
 
+  # endpoint level timeout
+  def test_api3
+    client = Algolia::IngestionClient.create(
+      "APP_ID",
+      "API_KEY",
+      "us",
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.validate_source_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      Algolia::Ingestion::SourceUpdate.new(name: "newName")
+    )
+    assert_equal(180000, req.connect_timeout)
+    assert_equal(180000, req.timeout)
+  end
+
+  # can override endpoint level timeout
+  def test_api4
+    client = Algolia::IngestionClient.create(
+      "APP_ID",
+      "API_KEY",
+      "us",
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.validate_source_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      Algolia::Ingestion::SourceUpdate.new(name: "newName"),
+      {:timeout => 3456}
+    )
+    assert_equal(180000, req.connect_timeout)
+    assert_equal(3456, req.timeout)
+  end
+
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::IngestionClient.create(

@@ -157,7 +157,6 @@ final class RecommendClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("to be overriden")],
             requestOptions: RequestOptions(
                 headers: ["x-header-1": "spaces are left alone"],
-
                 queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
             )
         )

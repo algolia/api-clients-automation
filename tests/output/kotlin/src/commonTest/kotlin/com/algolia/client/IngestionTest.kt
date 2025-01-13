@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class IngestionTest {
 
@@ -53,6 +54,47 @@ class IngestionTest {
       intercept = {
         assertEquals(25000, it.connectTimeout)
         assertEquals(25000, it.socketTimeout)
+      },
+    )
+  }
+
+  @Test
+  fun `endpoint level timeout`() = runTest {
+    val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+    client.runTest(
+      call = {
+        validateSourceBeforeUpdate(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          sourceUpdate = SourceUpdate(
+            name = "newName",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals(180000, it.connectTimeout)
+        assertEquals(180000, it.socketTimeout)
+      },
+    )
+  }
+
+  @Test
+  fun `can override endpoint level timeout`() = runTest {
+    val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+    client.runTest(
+      call = {
+        validateSourceBeforeUpdate(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          sourceUpdate = SourceUpdate(
+            name = "newName",
+          ),
+          requestOptions = RequestOptions(
+            writeTimeout = 3456.milliseconds,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals(180000, it.connectTimeout)
+        assertEquals(3456, it.socketTimeout)
       },
     )
   }

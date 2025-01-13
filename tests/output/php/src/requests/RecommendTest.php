@@ -206,8 +206,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -233,8 +232,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -316,8 +314,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'isItWorking' => true,
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -343,8 +340,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'myParam' => 2,
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -371,8 +367,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -399,8 +394,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -427,8 +421,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
