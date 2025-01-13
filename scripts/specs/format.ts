@@ -10,7 +10,7 @@ import { GENERATORS, run, toAbsolutePath } from '../common.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Spec } from '../types.ts';
 
-import { getCodeSampleLabel, parseCodeSamples, transformGeneratedSnippetsToCodeSamples } from './snippets.ts';
+import { getCodeSampleLabel, transformGeneratedSnippetsToCodeSamples } from './snippets.ts';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');
@@ -52,8 +52,6 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
   const harRequests = await oas2har.oas2har(bundledSpec as any, { includeVendorExamples: true });
   const tagsDefinitions = bundledSpec.tags;
   const codeSamples = await transformGeneratedSnippetsToCodeSamples(clientName);
-
-  parseCodeSamples(JSON.parse(JSON.stringify(codeSamples)));
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
