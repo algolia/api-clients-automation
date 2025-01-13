@@ -216,6 +216,40 @@
     }
   },
   {
+    "testName": "neuralSearch",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "mode": "neuralSearch"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "mode": "neuralSearch"
+      }
+    }
+  },
+  {
+    "testName": "keywordSearch",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "mode": "keywordSearch"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "mode": "keywordSearch"
+      }
+    }
+  },
+  {
     "testName": "setSettings allow all `indexSettings`",
     "parameters": {
       "indexName": "theIndexName",
