@@ -47,6 +47,12 @@ x-tagGroups:
     tags:
       - Compositions
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /{path}:
+    $ref: '../common/paths/customRequest.yml'
+
   # ########################
   # ### Search Endpoints ###
   # ########################
