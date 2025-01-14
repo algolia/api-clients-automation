@@ -17,6 +17,7 @@ recommendationsHits:
     - hits
 
 recommendationsHit:
+  x-is-generic: true
   oneOf:
     - $ref: '#/recommendHit'
     - $ref: '#/trendingFacetHit'
@@ -24,6 +25,7 @@ recommendationsHit:
 recommendHit:
   type: object
   description: Recommend hit.
+  x-is-generic: true
   additionalProperties: true
   required:
     - objectID

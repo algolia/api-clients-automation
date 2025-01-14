@@ -46,12 +46,14 @@ public class GenericPropagator {
     if (property instanceof CodegenModel) {
       return (
         (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
+        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-has-child-generic", false) ||
+        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-is-generic", false)
       );
     } else if (property instanceof CodegenProperty) {
       return (
         (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
+        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-has-child-generic", false) ||
+        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-is-generic", false)
       );
     }
     return false;
@@ -78,16 +80,13 @@ public class GenericPropagator {
     }
     // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
-    if (
-      items != null &&
-      ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items, getVar, skipOneOf))
-    ) {
+    if (items != null && (hasGeneric(items) || markPropagatedGeneric(items, getVar, skipOneOf))) {
       setPropagatedGeneric(model);
       return true;
     }
     for (CodegenProperty variable : getVar.apply(model)) {
       // same thing for the variable, if it's not a generic, we recurse on it until we find one
-      if ((boolean) variable.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(variable, getVar, skipOneOf)) {
+      if (hasGeneric(items) || markPropagatedGeneric(variable, getVar, skipOneOf)) {
         setPropagatedGeneric(model);
         return true;
       }
@@ -122,12 +121,17 @@ public class GenericPropagator {
     return false;
   }
 
-  private static void setGenericToComposedSchema(Map<String, CodegenModel> models, List<CodegenProperty> composedSchemas) {
+  private static void setGenericToComposedSchema(
+    Map<String, CodegenModel> models,
+    CodegenModel model,
+    List<CodegenProperty> composedSchemas
+  ) {
     if (composedSchemas == null) {
       return;
     }
     for (CodegenProperty prop : composedSchemas) {
-      if (hasGeneric(propertyToModel(models, prop))) {
+      if (hasGeneric(prop) || hasGeneric(propertyToModel(models, prop))) {
+        setHasChildGeneric(model);
         setHasChildGeneric(prop);
       }
     }
@@ -138,9 +142,9 @@ public class GenericPropagator {
     if (composedSchemas == null) {
       return;
     }
-    setGenericToComposedSchema(models, composedSchemas.getOneOf());
-    setGenericToComposedSchema(models, composedSchemas.getAllOf());
-    setGenericToComposedSchema(models, composedSchemas.getAnyOf());
+    setGenericToComposedSchema(models, model, composedSchemas.getOneOf());
+    setGenericToComposedSchema(models, model, composedSchemas.getAllOf());
+    setGenericToComposedSchema(models, model, composedSchemas.getAnyOf());
   }
 
   private static Map<String, CodegenModel> convertToMap(Map<String, ModelsMap> models) {
@@ -172,18 +176,22 @@ public class GenericPropagator {
 
     Map<String, CodegenModel> models = convertToMap(modelsMap);
 
-    for (CodegenModel model : models.values()) {
-      markPropagatedGeneric(model, m -> m.getVars(), skipOneOf);
-      markPropagatedGeneric(model, m -> m.getRequiredVars(), skipOneOf);
-    }
+    // we don't know in which order the model will come, so we iterate multiple times to make sure
+    // models at any depth are propagated
+    for (int i = 0; i < 5; i++) {
+      for (CodegenModel model : models.values()) {
+        markPropagatedGeneric(model, m -> m.getVars(), skipOneOf);
+        markPropagatedGeneric(model, m -> m.getRequiredVars(), skipOneOf);
+      }
 
-    for (CodegenModel model : models.values()) {
-      propagateGenericRecursive(models, model, m -> m.getVars());
-      propagateGenericRecursive(models, model, m -> m.getRequiredVars());
-    }
+      for (CodegenModel model : models.values()) {
+        propagateGenericRecursive(models, model, m -> m.getVars());
+        propagateGenericRecursive(models, model, m -> m.getRequiredVars());
+      }
 
-    for (CodegenModel model : models.values()) {
-      propagateToComposedSchema(models, model);
+      for (CodegenModel model : models.values()) {
+        propagateToComposedSchema(models, model);
+      }
     }
   }
 
