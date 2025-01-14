@@ -189,7 +189,7 @@ export type ReplaceAllObjectsOptions = {
 }
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
-{{#isCompositionClient}}
+{{#isCompositionFullClient}}
 export type WaitForCompositionTaskOptions = {
   /**
    * The maximum number of retries. 50 by default.
@@ -211,6 +211,6 @@ export type WaitForCompositionTaskOptions = {
    */
   compositionID: string;
 };
-{{/isCompositionClient}}
+{{/isCompositionFullClient}}
 
 {{/apiInfo.apis.0}}
