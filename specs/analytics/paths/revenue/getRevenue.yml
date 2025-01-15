@@ -1,6 +1,6 @@
 get:
   tags:
-    - click
+    - revenue
   operationId: getRevenue
   x-acl:
     - analytics
@@ -10,6 +10,9 @@ get:
 
     To retrieve revenue-related metrics, sent purchase events.
     By default, the analyzed period includes the last eight days including the current day.
+
+    Revenue is based on purchase conversion events (an `eventSubtype` of `purchase`).
+    The revenue is `price` multiplied by `quantity` for each object in the event's `objectData` array.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

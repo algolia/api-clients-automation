@@ -8,9 +8,12 @@ get:
   description: |
     Retrieves the average click position of your search results, including a daily breakdown.
 
-    The average click position is the average of all clicked search results' positions.
+    The average click position is the average of all clicked search result positions.
     For example, if users only ever click on the first result for any search, the average click position is 1.
     By default, the analyzed period includes the last eight days including the current day.
+
+    An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+    The average is `null` until Algolia receives at least one click event.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -20,7 +23,7 @@ get:
     '200':
       description: OK
       headers:
-        x-ratelimit-limit:
+        x-ratelimit-limit:a
           $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
           $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-remaining'

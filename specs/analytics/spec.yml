@@ -30,7 +30,7 @@ info:
     - `x-algolia-api-key`. An API key with the necessary permissions to make the request.
       The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
-    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
+    Find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
 
     ## Rate limits
 
@@ -48,13 +48,25 @@ info:
     The Analytics API returns JSON responses.
     Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.
 
-    Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
+    - Successful responses return a `2xx` status
+    - Client errors return a `4xx` status
+    - Server errors are indicated by a `5xx` status.
+
     Error responses have a `message` property with more information.
 
     ## Version
 
     The current version of the Analytics API is version 2, as indicated by the `/2/` in each endpoint's URL.
 
+    ## Query aggregation
+
+    Algolia accepts queries on each keystroke.
+    To ensure you have relevant analytics data, however, the series of keystrokes is aggregated to keep only the latest (final) user query.
+    This is called “prefix” aggregation.
+
+    For more information, see [Query agggregation and processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation/).
+
+    See the analytics implementation overview for more information about query aggregation.
   version: 2.0.0
 components:
   securitySchemes:
@@ -79,13 +91,15 @@ tags:
     x-displayName: Clicks
     description: |
       Metrics related to click and conversion events,
-      such as click- and conversion rates for your search results.
+      such as click and conversion rates for your search results.
   - name: filter
     x-displayName: Filters
-    description: Metrics related to filters.
+    description: |
+      Metrics related to filters.
   - name: revenue
     x-displayName: Revenue
-    description: Metrics related to revenue.
+    description: |
+      Metrics related to revenue.
   - name: search
     x-displayName: Searches
     description: |
