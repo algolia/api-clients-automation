@@ -436,7 +436,7 @@ jobs:
       !contains(needs.*.result, 'failure')
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
-    name: client kotlin${{ needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' && format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) || '' }} macos
+    name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
     steps:
       - uses: actions/checkout@v4
 
@@ -486,7 +486,7 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
-    name: client swift${{ needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' && format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) || '' }} macos
+    name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} macos
     steps:
       - uses: actions/checkout@v4
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
