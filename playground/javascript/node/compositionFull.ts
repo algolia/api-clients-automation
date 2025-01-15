@@ -1,11 +1,11 @@
 import { ApiError } from '@algolia/client-common';
-import { compositionClient } from '@algolia/client-composition';
+import { compositionFullClient } from '@algolia/client-composition';
 
 const appId = process.env.METIS_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.METIS_API_KEY || '**** ADMIN_KEY *****';
 
 // Init client with appId and apiKey
-const client = compositionClient(appId, apiKey);
+const client = compositionFullClient(appId, apiKey);
 
 async function testComposition() {
   try {
