@@ -2,12 +2,7 @@
 /* eslint-disable eslint/no-unused-vars */
 import { describe, test, expect } from 'vitest';
 
-{{^isCompositionFullClient}}
 import { {{{clientName}}} } from '{{{importPackage}}}';
-{{/isCompositionFullClient}}
-{{#isCompositionFullClient}}
-import { compositionFullClient } from '@algolia/client-composition';
-{{/isCompositionFullClient}}
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
 
@@ -15,17 +10,18 @@ const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return {{^isCompositionFullClient}}{{{clientName}}}{{/isCompositionFullClient}}{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+  return {{{clientName}}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 }
 
 {{#blocksClient}}
 {{> tests/client/tests}}
 {{/blocksClient}}
 
+{{^isCompositionClient}}
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient =  {{^isCompositionFullClient}}{{{clientName}}}{{/isCompositionFullClient}}{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
-    const headerClient =  {{^isCompositionFullClient}}{{{clientName}}}{{/isCompositionFullClient}}{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+    const qpClient =  {{{clientName}}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+    const headerClient =  {{{clientName}}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',
@@ -46,3 +42,4 @@ describe('init', () => {
     });
   });
 });
+{{/isCompositionClient}}

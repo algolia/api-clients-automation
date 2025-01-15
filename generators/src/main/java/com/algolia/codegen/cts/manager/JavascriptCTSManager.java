@@ -46,7 +46,19 @@ public class JavascriptCTSManager implements CTSManager {
     bundle.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
     bundle.put("algoliasearchVersion", Helpers.getPackageJsonVersion("algoliasearch"));
     bundle.put("initMethod", "init" + Helpers.capitalize(Helpers.camelize(client)));
-    bundle.put("clientName", client.equals("algoliasearch") ? "liteClient" : "algoliasearch");
-    bundle.put("importPackage", client.equals("algoliasearch") ? "algoliasearch/lite" : "algoliasearch");
+    bundle.put(
+      "clientName",
+      client.equals("algoliasearch")
+        ? "liteClient"
+        : client.equals("composition") ? "compositionClient" : client.equals("composition-full") ? "compositionFullClient" : "algoliasearch"
+    );
+    bundle.put(
+      "importPackage",
+      client.equals("algoliasearch")
+        ? "algoliasearch/lite"
+        : client.equals("composition")
+          ? "@algolia/composition"
+          : client.equals("composition-full") ? "@algolia/client-composition" : "algoliasearch"
+    );
   }
 }

@@ -12,9 +12,10 @@
       },
       {
         "type": "method",
-        "method": "customGet",
+        "method": "search",
         "parameters": {
-          "path": "test"
+          "compositionID": "test-composition-id",
+          "requestBody": {}
         },
         "expected": {
           "type": "host",
@@ -36,9 +37,10 @@
       },
       {
         "type": "method",
-        "method": "customPost",
+        "method": "search",
         "parameters": {
-          "path": "test"
+          "compositionID": "test-composition-id",
+          "requestBody": {}
         },
         "expected": {
           "type": "host",
@@ -66,10 +68,13 @@
       },
       {
         "type": "method",
-        "method": "customPost",
+        "method": "search",
         "parameters": {
           "path": "1/test/gzip",
-          "parameters": {},
+          "parameters": {
+            "compositionID": "test-composition-id",
+            "requestBody": {}
+          },
           "body": {
             "message": "this is a compressed body"
           }

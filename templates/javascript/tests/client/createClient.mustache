@@ -1,4 +1,4 @@
-{{^autoCreateClient}}const client = {{/autoCreateClient}}{{^isCompositionFullClient}}{{{clientName}}}{{/isCompositionFullClient}}{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}(
+{{^autoCreateClient}}const client = {{/autoCreateClient}}{{{clientName}}}(
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}'
   {{#isStandaloneClient}},
