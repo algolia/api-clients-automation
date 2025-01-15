@@ -23,7 +23,7 @@ get:
     '200':
       description: OK
       headers:
-        x-ratelimit-limit:a
+        x-ratelimit-limit:
           $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
           $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-remaining'

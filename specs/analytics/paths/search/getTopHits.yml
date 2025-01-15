@@ -8,24 +8,24 @@ get:
   description: |
     Retrieves the object IDs of the 1,000 most frequent search results.
 
-    If you enable `clickAnalytics` (set it to `true`), you'll also see:
+    If you set the `clickAnalytics` query parameter to true, the response also includes:
 
-    - Tracked searches count. A search is tracked if it returns a queryID and `clickAnalytics` is `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+    - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
     - Click count
     - Click-through rate (CTR)
     - Conversion count
     - Conversion rate (CR)
-    - Average click position.
+    - Average click position
 
-    If you enable `revenueAnalytics` (set it to `true`), you'll also see:
+    If you set the `revenueAnalytics` parameter to `true`, the response also includes:
 
     - Add-to-cart count
     - Add-to-cart rate (ATCR)
     - Purchase count
     - Purchase rate
-    - Revenue details for each currency.
+    - Revenue details for each currency
 
-    **There's a difference between 0% rates and null rates when `clickAnalytics` is enabled:**
+    **There's a difference between 0% rates and null rates:**
 
     - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null.
     - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.

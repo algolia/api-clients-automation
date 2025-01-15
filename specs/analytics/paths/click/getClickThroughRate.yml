@@ -6,7 +6,7 @@ get:
     - analytics
   summary: Retrieve click-through rate
   description: |
-    Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown
+    Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown.
 
     By default, the analyzed period includes the last eight days including the current day.
 

@@ -30,7 +30,7 @@ info:
     - `x-algolia-api-key`. An API key with the necessary permissions to make the request.
       The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
-    Find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
+    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
 
     ## Rate limits
 
@@ -62,7 +62,7 @@ info:
 
     Algolia accepts queries on each keystroke.
     To ensure you have relevant analytics data, however, the series of keystrokes is aggregated to keep only the latest (final) user query.
-    This is called “prefix” aggregation.
+    This is called "prefix" aggregation.
 
     For more information, see [Query agggregation and processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation/).
 

@@ -11,7 +11,7 @@ get:
     By default, the analyzed period includes the last eight days including the current day.
 
     The rate is the number of purchase conversion events divided by the number of tracked searches.
-    A search is tracked if it returns a queryID and `clickAnalytics` is `true`.
+    A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
     This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
 
     **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**
