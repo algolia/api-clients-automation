@@ -43,20 +43,19 @@ public class GenericPropagator {
    *     x-has-child-generic
    */
   private static boolean hasGeneric(IJsonSchemaValidationProperties property) {
-    if (property instanceof CodegenModel) {
-      return (
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-has-child-generic", false) ||
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-is-generic", false)
-      );
-    } else if (property instanceof CodegenProperty) {
-      return (
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-has-child-generic", false) ||
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-is-generic", false)
-      );
+    Map<String, Object> vendorExtensions;
+    if (property instanceof CodegenModel model) {
+      vendorExtensions = model.vendorExtensions;
+    } else if (property instanceof CodegenProperty prop) {
+      vendorExtensions = prop.vendorExtensions;
+    } else {
+      return false;
     }
-    return false;
+    return (
+      (boolean) vendorExtensions.getOrDefault("x-propagated-generic", false) ||
+      (boolean) vendorExtensions.getOrDefault("x-has-child-generic", false) ||
+      (boolean) vendorExtensions.getOrDefault("x-is-generic", false)
+    );
   }
 
   private static CodegenModel propertyToModel(Map<String, CodegenModel> models, CodegenProperty prop) {
