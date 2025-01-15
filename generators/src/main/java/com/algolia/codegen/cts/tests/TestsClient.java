@@ -108,7 +108,10 @@ public class TestsClient extends TestsGenerator {
               ope = operations.get(step.method);
               if (ope == null) {
                 // some clients don't have custom methods
-                if (step.method.startsWith("custom") && client.equals("composition")) {
+                if (
+                  (step.method.startsWith("custom") || step.method.equals("commonAPI") || step.method.equals("setClientApiKey")) &&
+                  client.equals("composition")
+                ) {
                   continue skipTest;
                 }
 
