@@ -177,6 +177,7 @@ final class {{classname}} implements ApiClient {
   }  
   {{/operation}}
 
+{{^isCompositionClient}}
   @Deprecated('This operation has been deprecated, use `customPost` instead')
   Future<Object> post({
     required  String path,
@@ -214,6 +215,7 @@ final class {{classname}} implements ApiClient {
     return this.customDelete(path: path, parameters: parameters, requestOptions: requestOptions);
   }
   {{/isAlgoliasearchClient}}
+{{/isCompositionClient}}
 
   @override
   void dispose() => _retryStrategy.dispose(); 
