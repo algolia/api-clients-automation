@@ -30,7 +30,7 @@ public class GetRevenue {
     return this;
   }
 
-  /** Revenue associated with this search, broken-down by currencies. */
+  /** Revenue associated with this search: broken down by currency. */
   @javax.annotation.Nonnull
   public Map<String, CurrencyCode> getCurrencies() {
     return currencies;

@@ -28,9 +28,9 @@ public class DailyAddToCartRates {
   }
 
   /**
-   * Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event
-   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
-   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
+   * Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart
+   * event divided by the number of tracked searches. If null, Algolia didn't receive any search
+   * requests with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
   @javax.annotation.Nullable
   public Double getRate() {
