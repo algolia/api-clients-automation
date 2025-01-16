@@ -303,14 +303,12 @@ program
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
   .option('-vh, --versions-history', 'only generates the versions-history policy', false)
-  .option('-b --breaking', 'allow breaking change on the CI', false)
-  .action(async ({ verbose, releaseType, dryRun, versionsHistory, breaking }) => {
+  .action(async ({ verbose, releaseType, dryRun, versionsHistory }) => {
     setVerbose(Boolean(verbose));
 
     await createReleasePR({
       releaseType,
       dryRun,
-      breaking,
       versionsHistory,
     });
   });

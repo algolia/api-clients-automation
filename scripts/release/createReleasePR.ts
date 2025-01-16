@@ -341,12 +341,10 @@ async function prepareGitEnvironment(dryRun: boolean): Promise<void> {
 export async function createReleasePR({
   releaseType,
   dryRun,
-  breaking,
   versionsHistory,
 }: {
   releaseType?: semver.ReleaseType;
   dryRun?: boolean;
-  breaking?: boolean;
   versionsHistory?: boolean;
 }): Promise<void> {
   await prepareGitEnvironment(dryRun || versionsHistory || false);
@@ -418,7 +416,7 @@ export async function createReleasePR({
 
   setVerbose(true);
   console.log(`Pushing updated changes to: ${headBranch}`);
-  const commitMessage = `${generationCommitText.commitPrepareReleaseMessage}${breaking ? ' [skip-bc]' : ''}`;
+  const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .');
   await run(`CI=true git commit -m "${commitMessage}"`);
 
