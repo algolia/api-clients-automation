@@ -609,7 +609,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           message: |
-            ${{ steps.breakingChanges.outputs.BENCHMARK_SECTION }}
+            ${{ steps.breakingChanges.outputs.BREAKING_CHANGES_SECTION }}
             ### No code generated
 
             _If you believe code should've been generated, please, [report the issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=bug%2Ctriage&projects=&template=Bug_report.yml&title=%5Bbug%5D%3A+)._
@@ -622,7 +622,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           message: |
-            ${{ steps.breakingChanges.outputs.BENCHMARK_SECTION }}
+            ${{ steps.breakingChanges.outputs.BREAKING_CHANGES_SECTION }}
             ### ✔️ Code generated!
 
             |  Name | Link |
