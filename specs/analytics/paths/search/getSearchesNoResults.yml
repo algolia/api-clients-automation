@@ -5,7 +5,7 @@ get:
   x-acl:
     - analytics
   summary: Retrieves the most popular searches that didn't return any results.
-  description: 
+  description: Retrieves the 1,000 most frequent searches that produced zero results.
   
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
