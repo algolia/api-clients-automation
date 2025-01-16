@@ -10,7 +10,7 @@ import (
 
 func saveObjectsMovies() {
 	// read json file
-	url := "https://dashboard.algolia.com/sample_datasets/movie.json"
+	url := "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
 	response, err := http.Get(url)
 
 	if err != nil {
