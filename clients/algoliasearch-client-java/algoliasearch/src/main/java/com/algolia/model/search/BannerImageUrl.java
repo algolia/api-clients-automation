@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** url for a search banner image. */
+/** URL for an image to show inside a banner. */
 public class BannerImageUrl {
 
   @JsonProperty("url")

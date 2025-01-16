@@ -85,7 +85,7 @@ RunStatus:
 RunOutcome:
   type: string
   description: Task run outcome.
-  enum: [success, failure, processing]
+  enum: [success, failure]
 
 RunType:
   type: string
