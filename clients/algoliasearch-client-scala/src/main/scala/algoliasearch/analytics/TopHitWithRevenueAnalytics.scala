@@ -13,9 +13,14 @@
   * parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII
   * characters must be UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The
   * Analytics API returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of
-  * attributes in the API response. Successful responses return a `2xx` status. Client errors return a `4xx` status.
+  * attributes in the API response. - Successful responses return a `2xx` status - Client errors return a `4xx` status -
   * Server errors are indicated by a `5xx` status. Error responses have a `message` property with more information. ##
-  * Version The current version of the Analytics API is version 2, as indicated by the `/2/` in each endpoint's URL.
+  * Version The current version of the Analytics API is version 2, as indicated by the `/2/` in each endpoint's URL. ##
+  * Query aggregation Algolia accepts queries on each keystroke. To ensure you have relevant analytics data, however,
+  * the series of keystrokes is aggregated to keep only the latest (final) user query. This is called \"prefix\"
+  * aggregation. For more information, see [Query agggregation and
+  * processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation/). See the analytics
+  * implementation overview for more information about query aggregation.
   *
   * The version of the OpenAPI document: 2.0.0
   *
@@ -27,15 +32,15 @@ package algoliasearch.analytics
 /** TopHitWithRevenueAnalytics
   *
   * @param hit
-  *   Object ID of a record that's returned as a search result.
+  *   Object ID of a record returned as a search result.
   * @param count
   *   Number of occurrences.
   * @param clickThroughRate
-  *   Click-through rate, calculated as number of tracked searches with at least one click event divided by the number
-  *   of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  *   Click-through rate: calculated as the number of tracked searches with at least one click event divided by the
+  *   number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
   * @param conversionRate
-  *   Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number
-  *   of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  *   Conversion rate: calculated as the number of tracked searches with at least one conversion event divided by the
+  *   number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
   * @param trackedHitCount
   *   Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
   * @param clickCount
@@ -43,17 +48,17 @@ package algoliasearch.analytics
   * @param conversionCount
   *   Number of conversions from this search.
   * @param addToCartRate
-  *   Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the
+  *   Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the
   *   number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
   * @param addToCartCount
   *   Number of add-to-cart events from this search.
   * @param purchaseRate
-  *   Purchase rate, calculated as number of tracked searches with at least one purchase event divided by the number of
-  *   tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  *   Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number
+  *   of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
   * @param purchaseCount
   *   Number of purchase events from this search.
   * @param currencies
-  *   Revenue associated with this search, broken-down by currencies.
+  *   Revenue associated with this search: broken down by currency.
   */
 case class TopHitWithRevenueAnalytics(
     hit: String,
