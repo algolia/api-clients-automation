@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** widgets returned from any rules that are applied to the current search. */
+/** Widgets returned from any rules that are applied to the current search. */
 public class Widgets {
 
   @JsonProperty("banners")
@@ -28,7 +28,7 @@ public class Widgets {
     return this;
   }
 
-  /** banners defined in the merchandising studio for the given search. */
+  /** Banners defined in the Merchandising Studio for a given search. */
   @javax.annotation.Nullable
   public List<Banner> getBanners() {
     return banners;

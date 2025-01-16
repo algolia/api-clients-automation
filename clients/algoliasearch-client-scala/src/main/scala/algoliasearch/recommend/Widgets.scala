@@ -29,10 +29,10 @@
   */
 package algoliasearch.recommend
 
-/** widgets returned from any rules that are applied to the current search.
+/** Widgets returned from any rules that are applied to the current search.
   *
   * @param banners
-  *   banners defined in the merchandising studio for the given search.
+  *   Banners defined in the Merchandising Studio for a given search.
   */
 case class Widgets(
     banners: Option[Seq[Banner]] = scala.None

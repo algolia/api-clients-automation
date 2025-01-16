@@ -4830,14 +4830,14 @@ components:
         url:
           type: string
     bannerImageUrl:
-      description: url for a search banner image.
+      description: URL for an image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     bannerImage:
-      description: image of a search banner.
+      description: Image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
@@ -4848,14 +4848,14 @@ components:
         title:
           type: string
     bannerLink:
-      description: link for a banner defined in merchandising studio.
+      description: Link for a banner defined in the Merchandising Studio.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     banner:
-      description: a search banner with image and url.
+      description: Banner with image and link to redirect users.
       type: object
       additionalProperties: false
       properties:
@@ -4864,12 +4864,12 @@ components:
         link:
           $ref: '#/components/schemas/bannerLink'
     banners:
-      description: banners defined in the merchandising studio for the given search.
+      description: Banners defined in the Merchandising Studio for a given search.
       type: array
       items:
         $ref: '#/components/schemas/banner'
     widgets:
-      description: widgets returned from any rules that are applied to the current search.
+      description: Widgets returned from any rules that are applied to the current search.
       type: object
       additionalProperties: false
       properties:
