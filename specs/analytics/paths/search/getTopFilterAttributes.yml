@@ -6,7 +6,7 @@ get:
     - analytics
   summary: Retrieve top filters
   description: |
-    Retrieves the most frequently used filter attributes.
+    Retrieves the 1,000 most frequently used filter attributes.
 
     These are attributes of your records that you included in the `attributesForFaceting` setting.
   parameters:

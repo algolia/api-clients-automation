@@ -8,7 +8,9 @@ get:
   description: |
     Retrieves the time when the Analytics data for the specified index was last updated.
 
-    The Analytics data is updated every 5 minutes.
+    If the index has been recently created or no search has been performed yet the updated time is `null`.
+
+    The Analytics data is updated every 5&nbsp;minutes.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
   responses:
