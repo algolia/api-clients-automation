@@ -46,5 +46,9 @@ public class JavaCTSManager implements CTSManager {
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("packageVersion", getVersion());
     bundle.put("import", Helpers.camelize(this.client).toLowerCase());
+    bundle.put("defaultGeneric", "Hit.class");
+    if (this.client.equals("recommend")) {
+      bundle.put("defaultGeneric", "RecommendHit.class");
+    }
   }
 }
