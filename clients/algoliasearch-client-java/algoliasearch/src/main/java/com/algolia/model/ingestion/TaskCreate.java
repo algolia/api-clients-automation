@@ -19,6 +19,9 @@ public class TaskCreate {
   @JsonProperty("action")
   private ActionType action;
 
+  @JsonProperty("subscriptionAction")
+  private ActionType subscriptionAction;
+
   @JsonProperty("cron")
   private String cron;
 
@@ -71,6 +74,17 @@ public class TaskCreate {
   @javax.annotation.Nonnull
   public ActionType getAction() {
     return action;
+  }
+
+  public TaskCreate setSubscriptionAction(ActionType subscriptionAction) {
+    this.subscriptionAction = subscriptionAction;
+    return this;
+  }
+
+  /** Get subscriptionAction */
+  @javax.annotation.Nullable
+  public ActionType getSubscriptionAction() {
+    return subscriptionAction;
   }
 
   public TaskCreate setCron(String cron) {
@@ -166,6 +180,7 @@ public class TaskCreate {
       Objects.equals(this.sourceID, taskCreate.sourceID) &&
       Objects.equals(this.destinationID, taskCreate.destinationID) &&
       Objects.equals(this.action, taskCreate.action) &&
+      Objects.equals(this.subscriptionAction, taskCreate.subscriptionAction) &&
       Objects.equals(this.cron, taskCreate.cron) &&
       Objects.equals(this.enabled, taskCreate.enabled) &&
       Objects.equals(this.failureThreshold, taskCreate.failureThreshold) &&
@@ -178,7 +193,19 @@ public class TaskCreate {
 
   @Override
   public int hashCode() {
-    return Objects.hash(sourceID, destinationID, action, cron, enabled, failureThreshold, input, cursor, notifications, policies);
+    return Objects.hash(
+      sourceID,
+      destinationID,
+      action,
+      subscriptionAction,
+      cron,
+      enabled,
+      failureThreshold,
+      input,
+      cursor,
+      notifications,
+      policies
+    );
   }
 
   @Override
@@ -188,6 +215,7 @@ public class TaskCreate {
     sb.append("    sourceID: ").append(toIndentedString(sourceID)).append("\n");
     sb.append("    destinationID: ").append(toIndentedString(destinationID)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    subscriptionAction: ").append(toIndentedString(subscriptionAction)).append("\n");
     sb.append("    cron: ").append(toIndentedString(cron)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");

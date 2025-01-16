@@ -32,10 +32,7 @@ object RunOutcome {
   case object Failure extends RunOutcome {
     override def toString = "failure"
   }
-  case object Processing extends RunOutcome {
-    override def toString = "processing"
-  }
-  val values: Seq[RunOutcome] = Seq(Success, Failure, Processing)
+  val values: Seq[RunOutcome] = Seq(Success, Failure)
 
   def withName(name: String): RunOutcome = RunOutcome.values
     .find(_.toString == name)

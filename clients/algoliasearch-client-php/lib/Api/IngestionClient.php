@@ -245,6 +245,7 @@ class IngestionClient
      *                          - $taskCreate['sourceID'] => (string) Universally uniqud identifier (UUID) of a source. (required)
      *                          - $taskCreate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource. (required)
      *                          - $taskCreate['action'] => (array)  (required)
+     *                          - $taskCreate['subscriptionAction'] => (array)
      *                          - $taskCreate['cron'] => (string) Cron expression for the task's schedule.
      *                          - $taskCreate['enabled'] => (bool) Whether the task is enabled.
      *                          - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.

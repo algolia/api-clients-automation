@@ -7,16 +7,16 @@ import Foundation
 #endif
 
 public struct SearchBaseIndexSettings: Codable, JSONEncodable {
-    /// Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/). 
+    /// Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
     /// Facets are attributes that let you categorize search results. They can be used for filtering search results. By
     /// default, no attribute is used for faceting. Attribute names are case-sensitive.  **Modifiers**  -
     /// `filterOnly(\"ATTRIBUTE\")`.   Allows the attribute to be used as a filter but doesn't evaluate the facet
-    /// values.  - `searchable(\"ATTRIBUTE\")`.   Allows searching for facet values.  - `afterDistinct(\"ATTRIBUTE\")`. 
+    /// values.  - `searchable(\"ATTRIBUTE\")`.   Allows searching for facet values.  - `afterDistinct(\"ATTRIBUTE\")`.
     ///  Evaluates the facet count _after_ deduplication with `distinct`.   This ensures accurate facet counts.   You
     /// can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
     public var attributesForFaceting: [String]?
     /// Creates [replica
-    /// indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/). 
+    /// indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).
     /// Replicas are copies of a primary index with the same records but different settings, synonyms, or rules. If you
     /// want to offer a different ranking or sorting of your search results, you'll use replica indices. All index
     /// operations on a primary index are automatically forwarded to its replicas. To add a replica index, you must

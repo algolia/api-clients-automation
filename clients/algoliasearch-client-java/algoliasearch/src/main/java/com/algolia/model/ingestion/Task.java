@@ -40,6 +40,9 @@ public class Task {
   @JsonProperty("action")
   private ActionType action;
 
+  @JsonProperty("subscriptionAction")
+  private ActionType subscriptionAction;
+
   @JsonProperty("cursor")
   private String cursor;
 
@@ -168,6 +171,17 @@ public class Task {
     return action;
   }
 
+  public Task setSubscriptionAction(ActionType subscriptionAction) {
+    this.subscriptionAction = subscriptionAction;
+    return this;
+  }
+
+  /** Get subscriptionAction */
+  @javax.annotation.Nullable
+  public ActionType getSubscriptionAction() {
+    return subscriptionAction;
+  }
+
   public Task setCursor(String cursor) {
     this.cursor = cursor;
     return this;
@@ -243,6 +257,7 @@ public class Task {
       Objects.equals(this.enabled, task.enabled) &&
       Objects.equals(this.failureThreshold, task.failureThreshold) &&
       Objects.equals(this.action, task.action) &&
+      Objects.equals(this.subscriptionAction, task.subscriptionAction) &&
       Objects.equals(this.cursor, task.cursor) &&
       Objects.equals(this.notifications, task.notifications) &&
       Objects.equals(this.policies, task.policies) &&
@@ -264,6 +279,7 @@ public class Task {
       enabled,
       failureThreshold,
       action,
+      subscriptionAction,
       cursor,
       notifications,
       policies,
@@ -286,6 +302,7 @@ public class Task {
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    subscriptionAction: ").append(toIndentedString(subscriptionAction)).append("\n");
     sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
     sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
     sb.append("    policies: ").append(toIndentedString(policies)).append("\n");

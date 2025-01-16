@@ -15,6 +15,8 @@ module Algolia
 
       attr_accessor :action
 
+      attr_accessor :subscription_action
+
       # Cron expression for the task's schedule.
       attr_accessor :cron
 
@@ -39,6 +41,7 @@ module Algolia
           :source_id => :sourceID,
           :destination_id => :destinationID,
           :action => :action,
+          :subscription_action => :subscriptionAction,
           :cron => :cron,
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
@@ -55,6 +58,7 @@ module Algolia
           :source_id => :"String",
           :destination_id => :"String",
           :action => :"ActionType",
+          :subscription_action => :"ActionType",
           :cron => :"String",
           :enabled => :"Boolean",
           :failure_threshold => :"Integer",
@@ -113,6 +117,10 @@ module Algolia
           self.action = nil
         end
 
+        if attributes.key?(:subscription_action)
+          self.subscription_action = attributes[:subscription_action]
+        end
+
         if attributes.key?(:cron)
           self.cron = attributes[:cron]
         end
@@ -150,6 +158,7 @@ module Algolia
           source_id == other.source_id &&
           destination_id == other.destination_id &&
           action == other.action &&
+          subscription_action == other.subscription_action &&
           cron == other.cron &&
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
@@ -168,7 +177,19 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [source_id, destination_id, action, cron, enabled, failure_threshold, input, cursor, notifications, policies].hash
+        [
+          source_id,
+          destination_id,
+          action,
+          subscription_action,
+          cron,
+          enabled,
+          failure_threshold,
+          input,
+          cursor,
+          notifications,
+          policies
+        ].hash
       end
 
       # Builds the object from hash
