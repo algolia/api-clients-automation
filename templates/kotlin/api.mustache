@@ -10,6 +10,10 @@ import {{packageName}}.transport.internal.*
 import kotlinx.serialization.json.*
 import kotlin.time.Duration.Companion.milliseconds
 
+{{#isCompositionClient}}
+import {{modelPackage}}.RequestBody
+{{/isCompositionClient}}
+
 {{#operations}}
 public class {{classname}}(
   override val appId: String,
