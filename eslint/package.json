@@ -18,7 +18,7 @@
     "eslint-plugin-yml": "1.16.0",
     "eslint-vitest-rule-tester": "1.0.0",
     "typescript": "5.7.3",
-    "vitest": "2.1.8",
+    "vitest": "3.0.2",
     "yaml-eslint-parser": "1.2.3"
   }
 }
