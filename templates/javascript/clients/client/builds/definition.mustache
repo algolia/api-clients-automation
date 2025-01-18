@@ -27,7 +27,9 @@ export {
 export * from '../model';
 
 {{#isSearchClient}}
+{{^isAlgoliasearchClient}}
 import type { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions, SearchClientNodeHelpers } from '../model';
+{{/isAlgoliasearchClient}}
 {{/isSearchClient}}
 
 export function {{clientName}}(

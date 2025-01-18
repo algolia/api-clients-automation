@@ -1,14 +1,14 @@
 import fsp from 'fs/promises';
 
-import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
-import { CI, exists, setVerbose, toAbsolutePath } from '../common.js';
-import { getGitHubUrl, getLanguageFolder } from '../config.js';
-import type { Language } from '../types.js';
+import clientsConfig from '../../config/clients.config.json' with { type: 'json' };
+import { CI, exists, setVerbose, toAbsolutePath } from '../common.ts';
+import { getGitHubUrl, getLanguageFolder } from '../config.ts';
+import type { Language } from '../types.ts';
 
-import { writeJsonFile } from './common.js';
-import { updateDartPackages } from './dart.js';
-import { updateJavaScriptPackages } from './javascript.js';
-import type { Changelog, Versions } from './types.js';
+import { writeJsonFile } from './common.ts';
+import { updateDartPackages } from './dart.ts';
+import { updateJavaScriptPackages } from './javascript.ts';
+import type { Changelog, Versions } from './types.ts';
 
 async function updateConfigFiles(versionsToRelease: Versions): Promise<void> {
   // update the other versions in clients.config.json

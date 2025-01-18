@@ -1,7 +1,7 @@
 put:
   tags:
     - tasks
-  summary: Disable a task
+  summary: Disable a task V1
   description: Disables a task using the v1 endpoint, please use `disableTask` instead.
   operationId: disableTaskV1
   deprecated: true

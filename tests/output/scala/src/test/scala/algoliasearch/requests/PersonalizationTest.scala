@@ -9,6 +9,7 @@ import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
@@ -562,15 +563,15 @@ class PersonalizationTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.setPersonalizationStrategy(
       personalizationStrategyParams = PersonalizationStrategyParams(
-        eventScoring = Seq(
-          EventScoring(
+        eventsScoring = Seq(
+          EventsScoring(
             score = 42,
             eventName = "Algolia",
             eventType = EventType.withName("click")
           )
         ),
-        facetScoring = Seq(
-          FacetScoring(
+        facetsScoring = Seq(
+          FacetsScoring(
             score = 42,
             facetName = "Event"
           )
@@ -585,7 +586,7 @@ class PersonalizationTest extends AnyFunSuite {
     assert(res.path == "/1/strategies/personalization")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
+      """{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

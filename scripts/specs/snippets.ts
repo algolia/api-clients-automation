@@ -1,9 +1,9 @@
 import fsp from 'fs/promises';
 
-import { GENERATORS, capitalize, createClientName, exists, toAbsolutePath } from '../common.js';
-import type { Language } from '../types.js';
+import { GENERATORS, capitalize, createClientName, exists, toAbsolutePath } from '../common.ts';
+import type { Language } from '../types.ts';
 
-import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.js';
+import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.ts';
 
 export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label'] {
   switch (language) {
@@ -19,7 +19,7 @@ export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label
 }
 
 // Iterates over the result of `transformSnippetsToCodeSamples` in order to generate a JSON file for the doc to consume.
-export function parseCodeSamples(codeSamples: CodeSamples): CodeSamples {
+export function generateSnippetsJSON(codeSamples: CodeSamples): CodeSamples {
   for (const [language, operationWithSamples] of Object.entries(codeSamples)) {
     for (const [operation, samples] of Object.entries(operationWithSamples)) {
       if (operation === 'import') {
@@ -109,6 +109,12 @@ export async function transformGeneratedSnippetsToCodeSamples(clientName: string
       });
     }
   }
+
+  const jsonSnippets = generateSnippetsJSON(JSON.parse(JSON.stringify(codeSamples)));
+  await fsp.writeFile(
+    toAbsolutePath(`docs/bundled/${clientName}-snippets.json`),
+    JSON.stringify(jsonSnippets, null, 2),
+  );
 
   return codeSamples;
 }

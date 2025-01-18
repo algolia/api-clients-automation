@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class GetTopFiltersNoResultsResponse
-      # Filters for searches without any results. If null, the search term specified with the `search` parameter is not a search without results, or the `search` parameter is absent from the request.
+      # Filters for searches without any results. If null, the search term specified with the `search` parameter isn't a search without results, or the `search` parameter is absent from the request.
       attr_accessor :values
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -14,11 +14,6 @@ module Algolia
         {
           :values => :values
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

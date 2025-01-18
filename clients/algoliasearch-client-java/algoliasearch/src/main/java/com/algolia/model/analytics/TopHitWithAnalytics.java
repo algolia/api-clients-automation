@@ -36,7 +36,7 @@ public class TopHitWithAnalytics {
     return this;
   }
 
-  /** Object ID of a record that's returned as a search result. */
+  /** Object ID of a record returned as a search result. */
   @javax.annotation.Nonnull
   public String getHit() {
     return hit;
@@ -59,7 +59,7 @@ public class TopHitWithAnalytics {
   }
 
   /**
-   * Click-through rate, calculated as number of tracked searches with at least one click event
+   * Click-through rate: calculated as the number of tracked searches with at least one click event
    * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
    * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
@@ -74,9 +74,9 @@ public class TopHitWithAnalytics {
   }
 
   /**
-   * Conversion rate, calculated as number of tracked searches with at least one conversion event
-   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
-   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
+   * Conversion rate: calculated as the number of tracked searches with at least one conversion
+   * event divided by the number of tracked searches. If null, Algolia didn't receive any search
+   * requests with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
   @javax.annotation.Nullable
   public Double getConversionRate() {

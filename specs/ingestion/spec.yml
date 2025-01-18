@@ -144,18 +144,6 @@ paths:
     $ref: 'paths/sources/runSource.yml'
 
   # tasks API.
-  /1/tasks:
-    $ref: 'paths/tasks/v1/tasks.yml'
-  /1/tasks/search:
-    $ref: 'paths/tasks/v1/searchTasks.yml'
-  /1/tasks/{taskID}:
-    $ref: 'paths/tasks/v1/taskID.yml'
-  /1/tasks/{taskID}/run:
-    $ref: 'paths/tasks/v1/runTask.yml'
-  /1/tasks/{taskID}/enable:
-    $ref: 'paths/tasks/v1/enableTask.yml'
-  /1/tasks/{taskID}/disable:
-    $ref: 'paths/tasks/v1/disableTask.yml'
   /2/tasks:
     $ref: 'paths/tasks/v2/tasks.yml'
   /2/tasks/search:
@@ -170,6 +158,18 @@ paths:
     $ref: 'paths/tasks/v2/enableTask.yml'
   /2/tasks/{taskID}/disable:
     $ref: 'paths/tasks/v2/disableTask.yml'
+  /1/tasks:
+    $ref: 'paths/tasks/v1/tasks.yml'
+  /1/tasks/search:
+    $ref: 'paths/tasks/v1/searchTasks.yml'
+  /1/tasks/{taskID}:
+    $ref: 'paths/tasks/v1/taskID.yml'
+  /1/tasks/{taskID}/run:
+    $ref: 'paths/tasks/v1/runTask.yml'
+  /1/tasks/{taskID}/enable:
+    $ref: 'paths/tasks/v1/enableTask.yml'
+  /1/tasks/{taskID}/disable:
+    $ref: 'paths/tasks/v1/disableTask.yml'
 
   # transformations API.
   /1/transformations:

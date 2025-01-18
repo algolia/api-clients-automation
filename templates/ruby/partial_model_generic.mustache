@@ -22,15 +22,16 @@
       }
     end
 
-    # Returns all the JSON keys this model knows about{{#parent}}, including the ones defined in its parent(s){{/parent}}
-    def self.acceptable_attributes
-      {{^parent}}
-      attribute_map.values
-      {{/parent}}
-      {{#parent}}
-      attribute_map.values.concat(superclass.acceptable_attributes)
-      {{/parent}}
+    {{#vendorExtensions.x-discriminator-fields.size}}
+    # Returns the keys that uniquely identify this oneOf variant when present
+    def self.discriminator_attributes
+      [
+        {{#vendorExtensions.x-discriminator-fields}}
+        :{{.}}{{^-last}},{{/-last}}
+        {{/vendorExtensions.x-discriminator-fields}}
+      ]
     end
+    {{/vendorExtensions.x-discriminator-fields.size}}
 
     # Attribute type mapping.
     def self.types_mapping
@@ -78,15 +79,6 @@
 
     {{/-last}}
     {{/allOf}}
-    {{#discriminator}}
-    {{#propertyName}}
-    # discriminator's property name in OpenAPI v3
-    def self.openapi_discriminator_name
-      :'{{{.}}}'
-    end
-
-    {{/propertyName}}
-    {{/discriminator}}
     # Initializes the object
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})

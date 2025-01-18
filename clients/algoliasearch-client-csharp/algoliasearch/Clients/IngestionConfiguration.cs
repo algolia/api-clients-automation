@@ -28,13 +28,13 @@ public sealed class IngestionConfig : AlgoliaConfig
   /// <param name="appId">Your application ID</param>
   /// <param name="apiKey">Your API Key</param>
   /// <param name="region">Targeted region </param>
-  public IngestionConfig(string appId, string apiKey, string region) : base(appId, apiKey, "Ingestion", "7.11.2")
+  public IngestionConfig(string appId, string apiKey, string region) : base(appId, apiKey, "Ingestion", "7.12.0")
   {
     DefaultHosts = GetDefaultHosts(region);
     Compression = CompressionType.None;
-    ReadTimeout = TimeSpan.FromSeconds(25);
-    WriteTimeout = TimeSpan.FromSeconds(25);
-    ConnectTimeout = TimeSpan.FromSeconds(25);
+    ReadTimeout = TimeSpan.FromMilliseconds(25000);
+    WriteTimeout = TimeSpan.FromMilliseconds(25000);
+    ConnectTimeout = TimeSpan.FromMilliseconds(25000);
   }
   private static List<StatefulHost> GetDefaultHosts(string region)
   {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** The selected streams of a singer or airbyte connector. */
+/** The selected streams of an airbyte connector. */
 @JsonDeserialize(as = DockerStreamsInput.class)
 public class DockerStreamsInput implements TaskInput {
 

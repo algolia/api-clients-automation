@@ -353,6 +353,8 @@ package object extension {
       *   The list of objects to replace.
       * @param batchSize
       *   The size of the batch. Default is 1000.
+      * @param scopes
+      *   The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -362,54 +364,63 @@ package object extension {
         indexName: String,
         objects: Seq[Any],
         batchSize: Int = 1000,
+        scopes: Option[Seq[ScopeType]] = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms)),
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
-      for {
-        copy <- client.operationIndex(
-          indexName = indexName,
-          operationIndexParams = OperationIndexParams(
-            operation = OperationType.Copy,
-            destination = tmpIndexName,
-            scope = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms))
-          ),
-          requestOptions = requestOptions
-        )
+      try {
+        for {
+          copy <- client.operationIndex(
+            indexName = indexName,
+            operationIndexParams = OperationIndexParams(
+              operation = OperationType.Copy,
+              destination = tmpIndexName,
+              scope = scopes
+            ),
+            requestOptions = requestOptions
+          )
 
-        batchResponses <- chunkedBatch(
-          indexName = tmpIndexName,
-          objects = objects,
-          action = Action.AddObject,
-          waitForTasks = true,
-          batchSize = batchSize,
-          requestOptions = requestOptions
-        )
+          batchResponses <- chunkedBatch(
+            indexName = tmpIndexName,
+            objects = objects,
+            action = Action.AddObject,
+            waitForTasks = true,
+            batchSize = batchSize,
+            requestOptions = requestOptions
+          )
 
-        _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
 
-        copy <- client.operationIndex(
-          indexName = indexName,
-          operationIndexParams = OperationIndexParams(
-            operation = OperationType.Copy,
-            destination = tmpIndexName,
-            scope = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms))
-          ),
-          requestOptions = requestOptions
-        )
-        _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+          copy <- client.operationIndex(
+            indexName = indexName,
+            operationIndexParams = OperationIndexParams(
+              operation = OperationType.Copy,
+              destination = tmpIndexName,
+              scope = scopes
+            ),
+            requestOptions = requestOptions
+          )
+          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
 
-        move <- client.operationIndex(
-          indexName = tmpIndexName,
-          operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-          requestOptions = requestOptions
+          move <- client.operationIndex(
+            indexName = tmpIndexName,
+            operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+            requestOptions = requestOptions
+          )
+          _ <- client.waitTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+        } yield ReplaceAllObjectsResponse(
+          copyOperationResponse = copy,
+          batchResponses = batchResponses,
+          moveOperationResponse = move
         )
-        _ <- client.waitTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
-      } yield ReplaceAllObjectsResponse(
-        copyOperationResponse = copy,
-        batchResponses = batchResponses,
-        moveOperationResponse = move
-      )
+      } catch {
+        case e: Throwable => {
+          client.deleteIndex(tmpIndexName)
+
+          throw e
+        }
+      }
     }
 
     /** Check if an index exists.

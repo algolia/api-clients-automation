@@ -22,7 +22,7 @@ public class RunProgress {
   }
 
   /** Get expectedNbOfEvents */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getExpectedNbOfEvents() {
     return expectedNbOfEvents;
   }
@@ -33,7 +33,7 @@ public class RunProgress {
   }
 
   /** Get receivedNbOfEvents */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getReceivedNbOfEvents() {
     return receivedNbOfEvents;
   }

@@ -188,8 +188,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -215,8 +214,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -298,8 +296,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'isItWorking' => true,
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -325,8 +322,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'myParam' => 2,
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -353,8 +349,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -381,8 +376,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -409,8 +403,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -516,13 +509,13 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->setPersonalizationStrategy(
-            ['eventScoring' => [
+            ['eventsScoring' => [
                 ['score' => 42,
                     'eventName' => 'Algolia',
                     'eventType' => 'click',
                 ],
             ],
-                'facetScoring' => [
+                'facetsScoring' => [
                     ['score' => 42,
                         'facetName' => 'Event',
                     ],
@@ -535,7 +528,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/strategies/personalization',
                 'method' => 'POST',
-                'body' => json_decode('{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'),
+                'body' => json_decode('{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'),
             ],
         ]);
     }
@@ -554,7 +547,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
 
             if (isset($request['body'])) {
                 $this->assertEquals(
-                    json_encode($request['body']),
+                    json_encode($request['body'], JSON_UNESCAPED_UNICODE),
                     $recordedRequest->getBody()->getContents()
                 );
             }

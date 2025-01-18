@@ -155,6 +155,12 @@ public class FallbackParams {
   @JsonProperty("maxFacetHits")
   private Integer maxFacetHits;
 
+  @JsonProperty("keepDiacriticsOnCharacters")
+  private String keepDiacriticsOnCharacters;
+
+  @JsonProperty("customRanking")
+  private List<String> customRanking;
+
   @JsonProperty("attributesToRetrieve")
   private List<String> attributesToRetrieve;
 
@@ -1121,6 +1127,51 @@ public class FallbackParams {
     return maxFacetHits;
   }
 
+  public FallbackParams setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
+    this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
+    return this;
+  }
+
+  /**
+   * Characters for which diacritics should be preserved. By default, Algolia removes diacritics
+   * from letters. For example, `é` becomes `e`. If this causes issues in your search, you can
+   * specify characters that should keep their diacritics.
+   */
+  @javax.annotation.Nullable
+  public String getKeepDiacriticsOnCharacters() {
+    return keepDiacriticsOnCharacters;
+  }
+
+  public FallbackParams setCustomRanking(List<String> customRanking) {
+    this.customRanking = customRanking;
+    return this;
+  }
+
+  public FallbackParams addCustomRanking(String customRankingItem) {
+    if (this.customRanking == null) {
+      this.customRanking = new ArrayList<>();
+    }
+    this.customRanking.add(customRankingItem);
+    return this;
+  }
+
+  /**
+   * Attributes to use as [custom
+   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+   * Attribute names are case-sensitive. The custom ranking attributes decide which items are shown
+   * first if the other ranking criteria are equal. Records with missing values for your selected
+   * custom ranking attributes are always sorted last. Boolean attributes are sorted based on their
+   * alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the values of an
+   * attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an
+   * attribute, in descending order. If you use two or more custom ranking attributes, [reduce the
+   * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
+   * of your first attributes, or the other attributes will never be applied.
+   */
+  @javax.annotation.Nullable
+  public List<String> getCustomRanking() {
+    return customRanking;
+  }
+
   public FallbackParams setAttributesToRetrieve(List<String> attributesToRetrieve) {
     this.attributesToRetrieve = attributesToRetrieve;
     return this;
@@ -1821,6 +1872,8 @@ public class FallbackParams {
       Objects.equals(this.customNormalization, fallbackParams.customNormalization) &&
       Objects.equals(this.attributeForDistinct, fallbackParams.attributeForDistinct) &&
       Objects.equals(this.maxFacetHits, fallbackParams.maxFacetHits) &&
+      Objects.equals(this.keepDiacriticsOnCharacters, fallbackParams.keepDiacriticsOnCharacters) &&
+      Objects.equals(this.customRanking, fallbackParams.customRanking) &&
       Objects.equals(this.attributesToRetrieve, fallbackParams.attributesToRetrieve) &&
       Objects.equals(this.ranking, fallbackParams.ranking) &&
       Objects.equals(this.relevancyStrictness, fallbackParams.relevancyStrictness) &&
@@ -1912,6 +1965,8 @@ public class FallbackParams {
       customNormalization,
       attributeForDistinct,
       maxFacetHits,
+      keepDiacriticsOnCharacters,
+      customRanking,
       attributesToRetrieve,
       ranking,
       relevancyStrictness,
@@ -2004,6 +2059,8 @@ public class FallbackParams {
     sb.append("    customNormalization: ").append(toIndentedString(customNormalization)).append("\n");
     sb.append("    attributeForDistinct: ").append(toIndentedString(attributeForDistinct)).append("\n");
     sb.append("    maxFacetHits: ").append(toIndentedString(maxFacetHits)).append("\n");
+    sb.append("    keepDiacriticsOnCharacters: ").append(toIndentedString(keepDiacriticsOnCharacters)).append("\n");
+    sb.append("    customRanking: ").append(toIndentedString(customRanking)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    ranking: ").append(toIndentedString(ranking)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");

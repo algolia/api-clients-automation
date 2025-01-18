@@ -47,6 +47,7 @@ import algoliasearch.search.ReplaceSourceResponse
 import algoliasearch.search.Rule
 import algoliasearch.search.SaveObjectResponse
 import algoliasearch.search.SaveSynonymResponse
+import algoliasearch.search.ScopeType._
 import algoliasearch.search.SearchDictionaryEntriesParams
 import algoliasearch.search.SearchDictionaryEntriesResponse
 import algoliasearch.search.SearchForFacetValuesRequest
@@ -106,15 +107,15 @@ object SearchClient {
   )
 
   private def readTimeout(): Duration = {
-    Duration(5, TimeUnit.SECONDS)
+    Duration(5000, TimeUnit.MILLISECONDS)
   }
 
   private def connectTimeout(): Duration = {
-    Duration(2, TimeUnit.SECONDS)
+    Duration(2000, TimeUnit.MILLISECONDS)
   }
 
   private def writeTimeout(): Duration = {
-    Duration(30, TimeUnit.SECONDS)
+    Duration(30000, TimeUnit.MILLISECONDS)
   }
 
   private def hosts(appId: String): Seq[Host] = {

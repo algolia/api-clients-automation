@@ -6,9 +6,9 @@ import chalk from 'chalk';
 import type { Express } from 'express';
 import express from 'express';
 
-import { CI, toAbsolutePath } from '../../common.js';
+import { CI, toAbsolutePath } from '../../common.ts';
 
-import { setupServer } from './index.js';
+import { setupServer } from './index.ts';
 
 const benchmarkStatus: Record<
   string,

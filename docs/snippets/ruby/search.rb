@@ -1417,7 +1417,7 @@ end
 #
 # call replaceAllObjects without error
 def snippet_for_replace_all_objects
-  # >SEPARATOR replaceAllObjects default
+  # >SEPARATOR replaceAllObjects call replaceAllObjects without error
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -1437,6 +1437,54 @@ def snippet_for_replace_all_objects
       {objectID: "10", name: "Julia"}
     ],
     3
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceAllObjects method.
+#
+# call replaceAllObjects with partial scopes
+def snippet_for_replace_all_objects1
+  # >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.replace_all_objects(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+    77,
+    ["settings", "synonyms"]
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceAllObjects method.
+#
+# replaceAllObjects should cleanup on failure
+def snippet_for_replace_all_objects2
+  # >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.replace_all_objects(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "fine", body: "small obj"}, {objectID: "toolarge", body: "something bigger than 10KB"}]
   )
 
   # >LOG

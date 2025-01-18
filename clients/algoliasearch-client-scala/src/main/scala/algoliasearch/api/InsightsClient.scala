@@ -46,15 +46,15 @@ object InsightsClient {
   )
 
   private def readTimeout(): Duration = {
-    Duration(5, TimeUnit.SECONDS)
+    Duration(5000, TimeUnit.MILLISECONDS)
   }
 
   private def connectTimeout(): Duration = {
-    Duration(2, TimeUnit.SECONDS)
+    Duration(2000, TimeUnit.MILLISECONDS)
   }
 
   private def writeTimeout(): Duration = {
-    Duration(30, TimeUnit.SECONDS)
+    Duration(30000, TimeUnit.MILLISECONDS)
   }
 
   private def hosts(region: Option[String] = None): Seq[Host] = {

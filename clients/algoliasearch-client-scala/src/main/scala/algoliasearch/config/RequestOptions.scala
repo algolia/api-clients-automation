@@ -16,13 +16,27 @@ import scala.concurrent.duration.Duration
   *   HTTP read timeout
   * @param writeTimeout
   *   HTTP write timeout
+  * @param connectTimeout
+  *   HTTP connect timeout
   */
 case class RequestOptions(
     headers: Map[String, String] = Map.empty,
     queryParameters: Map[String, String] = Map.empty,
     readTimeout: Option[Duration] = None,
-    writeTimeout: Option[Duration] = None
-)
+    writeTimeout: Option[Duration] = None,
+    connectTimeout: Option[Duration] = None
+) {
+  def +(other: Option[RequestOptions]): RequestOptions = {
+    val some = other.getOrElse(return this)
+    new RequestOptions(
+      headers = this.headers ++ some.headers,
+      queryParameters = this.queryParameters ++ some.queryParameters,
+      readTimeout = some.readTimeout.orElse(this.readTimeout),
+      writeTimeout = some.writeTimeout.orElse(this.writeTimeout),
+      connectTimeout = some.connectTimeout.orElse(this.connectTimeout)
+    )
+  }
+}
 
 object RequestOptions {
 
@@ -33,6 +47,7 @@ object RequestOptions {
     private val queryParameters: mutable.Map[String, String] = mutable.Map()
     private var readTimeout: Option[Duration] = None
     private var writeTimeout: Option[Duration] = None
+    private var connectTimeout: Option[Duration] = None
 
     /** Adds a header to the request.
       */
@@ -62,6 +77,13 @@ object RequestOptions {
       this
     }
 
+    /** Sets the write timeout for the request.
+      */
+    def withConnectTimeout(connectTimeout: Option[Duration]): Builder = {
+      this.connectTimeout = connectTimeout
+      this
+    }
+
     /** Builds the [[RequestOptions]].
       */
     def build(): RequestOptions = {
@@ -69,7 +91,8 @@ object RequestOptions {
         headers = headers.toMap,
         queryParameters = queryParameters.toMap,
         readTimeout = readTimeout,
-        writeTimeout = writeTimeout
+        writeTimeout = writeTimeout,
+        connectTimeout = connectTimeout
       )
     }
   }

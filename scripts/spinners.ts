@@ -1,6 +1,6 @@
 import Spinnies from 'spinnies';
 
-import { CI, isVerbose } from './common.js';
+import { CI, isVerbose } from './common.ts';
 
 class SpinnerStatic {
   private maybeText(text?: string): void {

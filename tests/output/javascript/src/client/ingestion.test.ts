@@ -53,6 +53,30 @@ describe('api', () => {
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 25000, responseTimeout: 25000 }));
   }, 15000);
+
+  test('endpoint level timeout', async () => {
+    const client = createClient();
+
+    const result = (await client.validateSourceBeforeUpdate({
+      sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      sourceUpdate: { name: 'newName' },
+    })) as unknown as EchoResponse;
+
+    expect(result).toEqual(expect.objectContaining({ connectTimeout: 180000, responseTimeout: 180000 }));
+  }, 15000);
+
+  test('can override endpoint level timeout', async () => {
+    const client = createClient();
+
+    const result = (await client.validateSourceBeforeUpdate(
+      { sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f', sourceUpdate: { name: 'newName' } },
+      {
+        timeouts: { write: 3456 },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(result).toEqual(expect.objectContaining({ connectTimeout: 180000, responseTimeout: 3456 }));
+  }, 15000);
 });
 
 describe('commonApi', () => {
@@ -71,7 +95,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.18.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.19.0\).*/);
   }, 15000);
 });
 

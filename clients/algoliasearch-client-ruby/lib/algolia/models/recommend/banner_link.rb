@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Recommend
-    # link for a banner defined in merchandising studio.
+    # Link for a banner defined in the Merchandising Studio.
     class BannerLink
       attr_accessor :url
 
@@ -14,11 +14,6 @@ module Algolia
         {
           :url => :url
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

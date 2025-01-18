@@ -115,9 +115,6 @@ public class BrowseParamsObject implements BrowseParams {
   @JsonProperty("ranking")
   private List<String> ranking;
 
-  @JsonProperty("customRanking")
-  private List<String> customRanking;
-
   @JsonProperty("relevancyStrictness")
   private Integer relevancyStrictness;
 
@@ -162,9 +159,6 @@ public class BrowseParamsObject implements BrowseParams {
 
   @JsonProperty("removeStopWords")
   private RemoveStopWords removeStopWords;
-
-  @JsonProperty("keepDiacriticsOnCharacters")
-  private String keepDiacriticsOnCharacters;
 
   @JsonProperty("queryLanguages")
   private List<SupportedLanguage> queryLanguages;
@@ -780,36 +774,6 @@ public class BrowseParamsObject implements BrowseParams {
     return ranking;
   }
 
-  public BrowseParamsObject setCustomRanking(List<String> customRanking) {
-    this.customRanking = customRanking;
-    return this;
-  }
-
-  public BrowseParamsObject addCustomRanking(String customRankingItem) {
-    if (this.customRanking == null) {
-      this.customRanking = new ArrayList<>();
-    }
-    this.customRanking.add(customRankingItem);
-    return this;
-  }
-
-  /**
-   * Attributes to use as [custom
-   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
-   * Attribute names are case-sensitive. The custom ranking attributes decide which items are shown
-   * first if the other ranking criteria are equal. Records with missing values for your selected
-   * custom ranking attributes are always sorted last. Boolean attributes are sorted based on their
-   * alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the values of an
-   * attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an
-   * attribute, in descending order. If you use two or more custom ranking attributes, [reduce the
-   * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
-   * of your first attributes, or the other attributes will never be applied.
-   */
-  @javax.annotation.Nullable
-  public List<String> getCustomRanking() {
-    return customRanking;
-  }
-
   public BrowseParamsObject setRelevancyStrictness(Integer relevancyStrictness) {
     this.relevancyStrictness = relevancyStrictness;
     return this;
@@ -1040,21 +1004,6 @@ public class BrowseParamsObject implements BrowseParams {
   @javax.annotation.Nullable
   public RemoveStopWords getRemoveStopWords() {
     return removeStopWords;
-  }
-
-  public BrowseParamsObject setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
-    this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
-    return this;
-  }
-
-  /**
-   * Characters for which diacritics should be preserved. By default, Algolia removes diacritics
-   * from letters. For example, `é` becomes `e`. If this causes issues in your search, you can
-   * specify characters that should keep their diacritics.
-   */
-  @javax.annotation.Nullable
-  public String getKeepDiacriticsOnCharacters() {
-    return keepDiacriticsOnCharacters;
   }
 
   public BrowseParamsObject setQueryLanguages(List<SupportedLanguage> queryLanguages) {
@@ -1503,7 +1452,6 @@ public class BrowseParamsObject implements BrowseParams {
       Objects.equals(this.enableABTest, browseParamsObject.enableABTest) &&
       Objects.equals(this.attributesToRetrieve, browseParamsObject.attributesToRetrieve) &&
       Objects.equals(this.ranking, browseParamsObject.ranking) &&
-      Objects.equals(this.customRanking, browseParamsObject.customRanking) &&
       Objects.equals(this.relevancyStrictness, browseParamsObject.relevancyStrictness) &&
       Objects.equals(this.attributesToHighlight, browseParamsObject.attributesToHighlight) &&
       Objects.equals(this.attributesToSnippet, browseParamsObject.attributesToSnippet) &&
@@ -1519,7 +1467,6 @@ public class BrowseParamsObject implements BrowseParams {
       Objects.equals(this.disableTypoToleranceOnAttributes, browseParamsObject.disableTypoToleranceOnAttributes) &&
       Objects.equals(this.ignorePlurals, browseParamsObject.ignorePlurals) &&
       Objects.equals(this.removeStopWords, browseParamsObject.removeStopWords) &&
-      Objects.equals(this.keepDiacriticsOnCharacters, browseParamsObject.keepDiacriticsOnCharacters) &&
       Objects.equals(this.queryLanguages, browseParamsObject.queryLanguages) &&
       Objects.equals(this.decompoundQuery, browseParamsObject.decompoundQuery) &&
       Objects.equals(this.enableRules, browseParamsObject.enableRules) &&
@@ -1585,7 +1532,6 @@ public class BrowseParamsObject implements BrowseParams {
       enableABTest,
       attributesToRetrieve,
       ranking,
-      customRanking,
       relevancyStrictness,
       attributesToHighlight,
       attributesToSnippet,
@@ -1601,7 +1547,6 @@ public class BrowseParamsObject implements BrowseParams {
       disableTypoToleranceOnAttributes,
       ignorePlurals,
       removeStopWords,
-      keepDiacriticsOnCharacters,
       queryLanguages,
       decompoundQuery,
       enableRules,
@@ -1668,7 +1613,6 @@ public class BrowseParamsObject implements BrowseParams {
     sb.append("    enableABTest: ").append(toIndentedString(enableABTest)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    ranking: ").append(toIndentedString(ranking)).append("\n");
-    sb.append("    customRanking: ").append(toIndentedString(customRanking)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
     sb.append("    attributesToHighlight: ").append(toIndentedString(attributesToHighlight)).append("\n");
     sb.append("    attributesToSnippet: ").append(toIndentedString(attributesToSnippet)).append("\n");
@@ -1684,7 +1628,6 @@ public class BrowseParamsObject implements BrowseParams {
     sb.append("    disableTypoToleranceOnAttributes: ").append(toIndentedString(disableTypoToleranceOnAttributes)).append("\n");
     sb.append("    ignorePlurals: ").append(toIndentedString(ignorePlurals)).append("\n");
     sb.append("    removeStopWords: ").append(toIndentedString(removeStopWords)).append("\n");
-    sb.append("    keepDiacriticsOnCharacters: ").append(toIndentedString(keepDiacriticsOnCharacters)).append("\n");
     sb.append("    queryLanguages: ").append(toIndentedString(queryLanguages)).append("\n");
     sb.append("    decompoundQuery: ").append(toIndentedString(decompoundQuery)).append("\n");
     sb.append("    enableRules: ").append(toIndentedString(enableRules)).append("\n");

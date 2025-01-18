@@ -49,7 +49,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.11.2';
+    public const VERSION = '4.12.0';
 
     /**
      * @var ApiWrapperInterface
@@ -2891,53 +2891,60 @@ class SearchClient
      * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
      * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions Request options
+     * @param mixed  $scopes
      */
-    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [])
+    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $scopes = ['settings', 'rules', 'synonyms'], $requestOptions = [])
     {
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
-        $copyOperationResponse = $this->operationIndex(
-            $indexName,
-            [
-                'operation' => 'copy',
-                'destination' => $tmpIndexName,
-                'scope' => ['settings', 'rules', 'synonyms'],
-            ],
-            $requestOptions
-        );
+        try {
+            $copyOperationResponse = $this->operationIndex(
+                $indexName,
+                [
+                    'operation' => 'copy',
+                    'destination' => $tmpIndexName,
+                    'scope' => $scopes,
+                ],
+                $requestOptions
+            );
 
-        $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
+            $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
 
-        $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
 
-        $copyOperationResponse = $this->operationIndex(
-            $indexName,
-            [
-                'operation' => 'copy',
-                'destination' => $tmpIndexName,
-                'scope' => ['settings', 'rules', 'synonyms'],
-            ],
-            $requestOptions
-        );
+            $copyOperationResponse = $this->operationIndex(
+                $indexName,
+                [
+                    'operation' => 'copy',
+                    'destination' => $tmpIndexName,
+                    'scope' => $scopes,
+                ],
+                $requestOptions
+            );
 
-        $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
 
-        $moveOperationResponse = $this->operationIndex(
-            $tmpIndexName,
-            [
-                'operation' => 'move',
-                'destination' => $indexName,
-            ],
-            $requestOptions
-        );
+            $moveOperationResponse = $this->operationIndex(
+                $tmpIndexName,
+                [
+                    'operation' => 'move',
+                    'destination' => $indexName,
+                ],
+                $requestOptions
+            );
 
-        $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID']);
+            $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID']);
 
-        return [
-            'copyOperationResponse' => $copyOperationResponse,
-            'batchResponses' => $batchResponses,
-            'moveOperationResponse' => $moveOperationResponse,
-        ];
+            return [
+                'copyOperationResponse' => $copyOperationResponse,
+                'batchResponses' => $batchResponses,
+                'moveOperationResponse' => $moveOperationResponse,
+            ];
+        } catch (\Throwable $e) {
+            $this->deleteIndex($tmpIndexName);
+
+            throw $e;
+        }
     }
 
     /**
@@ -3092,7 +3099,7 @@ class SearchClient
             $this->getSettings($indexName);
         } catch (NotFoundException $e) {
             return false;
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             throw $e;
         }
 

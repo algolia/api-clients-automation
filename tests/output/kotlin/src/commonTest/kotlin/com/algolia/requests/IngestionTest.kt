@@ -195,13 +195,21 @@ class IngestionTest {
             destinationID = "destinationName",
             cron = "* * * * *",
             action = ActionType.entries.first { it.value == "replace" },
+            notifications = Notifications(
+              email = EmailNotifications(
+                enabled = true,
+              ),
+            ),
+            policies = Policies(
+              criticalThreshold = 8,
+            ),
           ),
         )
       },
       intercept = {
         assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}""", it.body)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}""", it.body)
       },
     )
   }

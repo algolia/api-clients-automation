@@ -89,6 +89,49 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('endpoint level timeout')]
+    public function test3api(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->validateSourceBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['name' => 'newName',
+            ],
+        );
+        $this->assertEquals(
+            180000,
+            $this->recordedRequest['connectTimeout']
+        );
+
+        $this->assertEquals(
+            180000,
+            $this->recordedRequest['responseTimeout']
+        );
+    }
+
+    #[TestDox('can override endpoint level timeout')]
+    public function test4api(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->validateSourceBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['name' => 'newName',
+            ],
+            [
+                'writeTimeout' => 3456 / 1000,
+            ]
+        );
+        $this->assertEquals(
+            180000,
+            $this->recordedRequest['connectTimeout']
+        );
+
+        $this->assertEquals(
+            3456,
+            $this->recordedRequest['responseTimeout']
+        );
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
@@ -113,7 +156,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.11.2\).*/',
+                '/^Algolia for PHP \(4.12.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

@@ -1,9 +1,10 @@
 get:
   tags:
     - tasks
-  summary: Retrieve a task
+  summary: Retrieve a task V1
   description: Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
   operationId: getTaskV1
+  deprecated: true
   x-acl:
     - addObject
     - deleteIndex
@@ -23,9 +24,10 @@ get:
 patch:
   tags:
     - tasks
-  summary: Update a task
+  summary: Update a task V1
   description: Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
   operationId: updateTaskV1
+  deprecated: true
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
   x-codegen-request-body-name: taskUpdate
@@ -51,6 +53,7 @@ delete:
   summary: Delete a task
   description: Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
   operationId: deleteTaskV1
+  deprecated: true
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
   responses:

@@ -61,8 +61,8 @@ public class DailyNoResultsRates {
   }
 
   /**
-   * No results rate, calculated as number of searches with zero results divided by the total number
-   * of searches. minimum: 0 maximum: 1
+   * No results rate: calculated as the number of searches with zero results divided by the total
+   * number of searches. minimum: 0 maximum: 1
    */
   @javax.annotation.Nonnull
   public Double getRate() {

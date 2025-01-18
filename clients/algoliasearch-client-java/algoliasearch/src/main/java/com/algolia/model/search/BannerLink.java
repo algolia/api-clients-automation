@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** link for a banner defined in merchandising studio. */
+/** Link for a banner defined in the Merchandising Studio. */
 public class BannerLink {
 
   @JsonProperty("url")

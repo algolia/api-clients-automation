@@ -18,6 +18,15 @@
                     {{/parametersWithDataType}}
                     },
                     {{/requestOptions.headers}}
+                    {{#requestOptions.timeouts.connect}}
+                      connectTimeout = {{.}}.milliseconds,
+                    {{/requestOptions.timeouts.connect}}
+                    {{#requestOptions.timeouts.read}}
+                      readTimeout = {{.}}.milliseconds,
+                    {{/requestOptions.timeouts.read}}
+                    {{#requestOptions.timeouts.write}}
+                      writeTimeout = {{.}}.milliseconds,
+                    {{/requestOptions.timeouts.write}}
                 )
                 {{/hasRequestOptions}}
             )

@@ -20,7 +20,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class PersonalizationClient
 {
-    public const VERSION = '4.11.2';
+    public const VERSION = '4.12.0';
 
     /**
      * @var ApiWrapperInterface
@@ -367,8 +367,8 @@ class PersonalizationClient
      *  - recommendation
      *
      * @param array $personalizationStrategyParams personalizationStrategyParams (required)
-     *                                             - $personalizationStrategyParams['eventScoring'] => (array) Scores associated with each event.  The higher the scores, the higher the impact of those events on the personalization of search results. (required)
-     *                                             - $personalizationStrategyParams['facetScoring'] => (array) Scores associated with each facet.  The higher the scores, the higher the impact of those events on the personalization of search results. (required)
+     *                                             - $personalizationStrategyParams['eventsScoring'] => (array) Scores associated with each event.  The higher the scores, the higher the impact of those events on the personalization of search results. (required)
+     *                                             - $personalizationStrategyParams['facetsScoring'] => (array) Scores associated with each facet.  The higher the scores, the higher the impact of those events on the personalization of search results. (required)
      *                                             - $personalizationStrategyParams['personalizationImpact'] => (int) Impact of personalization on the search results.  If set to 0, personalization has no impact on the search results. (required)
      *
      * @see PersonalizationStrategyParams

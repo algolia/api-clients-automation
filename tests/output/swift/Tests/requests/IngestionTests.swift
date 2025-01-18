@@ -268,7 +268,9 @@ final class IngestionClientRequestsTests: XCTestCase {
             sourceID: "search",
             destinationID: "destinationName",
             action: ActionType.replace,
-            cron: "* * * * *"
+            cron: "* * * * *",
+            notifications: Notifications(email: EmailNotifications(enabled: true)),
+            policies: Policies(criticalThreshold: 8)
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -277,7 +279,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}"
+            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -628,7 +630,6 @@ final class IngestionClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("to be overriden")],
             requestOptions: RequestOptions(
                 headers: ["x-header-1": "spaces are left alone"],
-
                 queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
             )
         )

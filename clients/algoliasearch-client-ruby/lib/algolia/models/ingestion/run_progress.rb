@@ -18,11 +18,6 @@ module Algolia
         }
       end
 
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
-      end
-
       # Attribute type mapping.
       def self.types_mapping
         {
@@ -63,10 +58,14 @@ module Algolia
 
         if attributes.key?(:expected_nb_of_events)
           self.expected_nb_of_events = attributes[:expected_nb_of_events]
+        else
+          self.expected_nb_of_events = nil
         end
 
         if attributes.key?(:received_nb_of_events)
           self.received_nb_of_events = attributes[:received_nb_of_events]
+        else
+          self.received_nb_of_events = nil
         end
       end
 

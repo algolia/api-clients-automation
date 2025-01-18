@@ -9,5 +9,15 @@ $client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{
       {{#requestOptions.headers.parametersWithDataType}}
         '{{{key}}}' => '{{{value}}}',
       {{/requestOptions.headers.parametersWithDataType}}
-    ]{{/requestOptions.headers.parameters}}
+    ],
+    {{/requestOptions.headers.parameters}}
+    {{#requestOptions.timeouts.connect}}
+    'connectTimeout' => {{.}} / 1000,
+    {{/requestOptions.timeouts.connect}}
+    {{#requestOptions.timeouts.read}}
+    'readTimeout' => {{.}} / 1000,
+    {{/requestOptions.timeouts.read}}
+    {{#requestOptions.timeouts.write}}
+    'writeTimeout' => {{.}} / 1000,
+    {{/requestOptions.timeouts.write}}
   ]{{/hasRequestOptions}}){{/hasParams}}

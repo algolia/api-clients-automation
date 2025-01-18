@@ -6,38 +6,26 @@ require "time"
 module Algolia
   module Ingestion
     class SourceUpdateDocker
-      attr_accessor :registry
-
-      # Docker image name.
-      attr_accessor :image
-
-      # Docker image version.
-      attr_accessor :version
-
       # Configuration of the spec.
       attr_accessor :configuration
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :registry => :registry,
-          :image => :image,
-          :version => :version,
           :configuration => :configuration
         }
       end
 
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :configuration
+        ]
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :registry => :"DockerRegistry",
-          :image => :"String",
-          :version => :"String",
           :configuration => :"Object"
         }
       end
@@ -72,18 +60,6 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:registry)
-          self.registry = attributes[:registry]
-        end
-
-        if attributes.key?(:image)
-          self.image = attributes[:image]
-        end
-
-        if attributes.key?(:version)
-          self.version = attributes[:version]
-        end
-
         if attributes.key?(:configuration)
           self.configuration = attributes[:configuration]
         else
@@ -96,9 +72,6 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          registry == other.registry &&
-          image == other.image &&
-          version == other.version &&
           configuration == other.configuration
       end
 
@@ -111,7 +84,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [registry, image, version, configuration].hash
+        [configuration].hash
       end
 
       # Builds the object from hash

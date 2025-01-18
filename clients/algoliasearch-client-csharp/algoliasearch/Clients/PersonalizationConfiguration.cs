@@ -28,13 +28,13 @@ public sealed class PersonalizationConfig : AlgoliaConfig
   /// <param name="appId">Your application ID</param>
   /// <param name="apiKey">Your API Key</param>
   /// <param name="region">Targeted region </param>
-  public PersonalizationConfig(string appId, string apiKey, string region) : base(appId, apiKey, "Personalization", "7.11.2")
+  public PersonalizationConfig(string appId, string apiKey, string region) : base(appId, apiKey, "Personalization", "7.12.0")
   {
     DefaultHosts = GetDefaultHosts(region);
     Compression = CompressionType.None;
-    ReadTimeout = TimeSpan.FromSeconds(5);
-    WriteTimeout = TimeSpan.FromSeconds(30);
-    ConnectTimeout = TimeSpan.FromSeconds(2);
+    ReadTimeout = TimeSpan.FromMilliseconds(5000);
+    WriteTimeout = TimeSpan.FromMilliseconds(30000);
+    ConnectTimeout = TimeSpan.FromMilliseconds(2000);
   }
   private static List<StatefulHost> GetDefaultHosts(string region)
   {

@@ -13,6 +13,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 

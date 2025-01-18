@@ -69,8 +69,6 @@ SearchParamsObject _$SearchParamsObjectFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          customRanking: $checkedConvert('customRanking',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           relevancyStrictness: $checkedConvert(
               'relevancyStrictness', (v) => (v as num?)?.toInt()),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
@@ -99,8 +97,6 @@ SearchParamsObject _$SearchParamsObjectFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ignorePlurals: $checkedConvert('ignorePlurals', (v) => v),
           removeStopWords: $checkedConvert('removeStopWords', (v) => v),
-          keepDiacriticsOnCharacters: $checkedConvert(
-              'keepDiacriticsOnCharacters', (v) => v as String?),
           queryLanguages: $checkedConvert(
               'queryLanguages',
               (v) => (v as List<dynamic>?)
@@ -212,7 +208,6 @@ Map<String, dynamic> _$SearchParamsObjectToJson(SearchParamsObject instance) =>
       if (instance.attributesToRetrieve case final value?)
         'attributesToRetrieve': value,
       if (instance.ranking case final value?) 'ranking': value,
-      if (instance.customRanking case final value?) 'customRanking': value,
       if (instance.relevancyStrictness case final value?)
         'relevancyStrictness': value,
       if (instance.attributesToHighlight case final value?)
@@ -238,8 +233,6 @@ Map<String, dynamic> _$SearchParamsObjectToJson(SearchParamsObject instance) =>
         'disableTypoToleranceOnAttributes': value,
       if (instance.ignorePlurals case final value?) 'ignorePlurals': value,
       if (instance.removeStopWords case final value?) 'removeStopWords': value,
-      if (instance.keepDiacriticsOnCharacters case final value?)
-        'keepDiacriticsOnCharacters': value,
       if (instance.queryLanguages?.map((e) => e.toJson()).toList()
           case final value?)
         'queryLanguages': value,

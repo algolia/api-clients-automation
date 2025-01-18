@@ -8,7 +8,9 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
@@ -17,6 +19,7 @@ type config struct {
 	context      context.Context
 	queryParams  url.Values
 	headerParams map[string]string
+	timeouts     transport.RequestConfiguration
 }
 
 type RequestOption interface {
@@ -44,6 +47,24 @@ func WithHeaderParam(key string, value any) requestOption {
 func WithQueryParam(key string, value any) requestOption {
 	return requestOption(func(c *config) {
 		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
+	})
+}
+
+func WithReadTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.ReadTimeout = &timeout
+	})
+}
+
+func WithWriteTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.WriteTimeout = &timeout
+	})
+}
+
+func WithConnectTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.ConnectTimeout = &timeout
 	})
 }
 
@@ -127,7 +148,7 @@ func (c *APIClient) CreateAuthenticationWithHTTPInfo(r ApiCreateAuthenticationRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -248,7 +269,7 @@ func (c *APIClient) CreateDestinationWithHTTPInfo(r ApiCreateDestinationRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -369,7 +390,7 @@ func (c *APIClient) CreateSourceWithHTTPInfo(r ApiCreateSourceRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -486,7 +507,7 @@ func (c *APIClient) CreateTaskWithHTTPInfo(r ApiCreateTaskRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -551,6 +572,7 @@ type ApiCreateTaskV1Request struct {
 	taskCreate *TaskCreateV1
 }
 
+// Deprecated
 // NewApiCreateTaskV1Request creates an instance of the ApiCreateTaskV1Request to be used for the API call.
 func (c *APIClient) NewApiCreateTaskV1Request(taskCreate *TaskCreateV1) ApiCreateTaskV1Request {
 	return ApiCreateTaskV1Request{
@@ -570,6 +592,8 @@ CreateTaskV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) CreateTaskV1WithHTTPInfo(r ApiCreateTaskV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks"
@@ -598,7 +622,7 @@ func (c *APIClient) CreateTaskV1WithHTTPInfo(r ApiCreateTaskV1Request, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -610,6 +634,8 @@ Request can be constructed by NewApiCreateTaskV1Request with parameters below.
 
 	@param taskCreate TaskCreateV1 - Request body for creating a task.
 	@return TaskCreateResponse
+
+Deprecated.
 */
 func (c *APIClient) CreateTaskV1(r ApiCreateTaskV1Request, opts ...RequestOption) (*TaskCreateResponse, error) {
 	var returnValue *TaskCreateResponse
@@ -710,7 +736,7 @@ func (c *APIClient) CreateTransformationWithHTTPInfo(r ApiCreateTransformationRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -839,7 +865,7 @@ func (c *APIClient) CustomDeleteWithHTTPInfo(r ApiCustomDeleteRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -969,7 +995,7 @@ func (c *APIClient) CustomGetWithHTTPInfo(r ApiCustomGetRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1122,7 +1148,7 @@ func (c *APIClient) CustomPostWithHTTPInfo(r ApiCustomPostRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1276,7 +1302,7 @@ func (c *APIClient) CustomPutWithHTTPInfo(r ApiCustomPutRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1388,7 +1414,7 @@ func (c *APIClient) DeleteAuthenticationWithHTTPInfo(r ApiDeleteAuthenticationRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1503,7 +1529,7 @@ func (c *APIClient) DeleteDestinationWithHTTPInfo(r ApiDeleteDestinationRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1618,7 +1644,7 @@ func (c *APIClient) DeleteSourceWithHTTPInfo(r ApiDeleteSourceRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1729,7 +1755,7 @@ func (c *APIClient) DeleteTaskWithHTTPInfo(r ApiDeleteTaskRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1789,6 +1815,7 @@ type ApiDeleteTaskV1Request struct {
 	taskID string
 }
 
+// Deprecated
 // NewApiDeleteTaskV1Request creates an instance of the ApiDeleteTaskV1Request to be used for the API call.
 func (c *APIClient) NewApiDeleteTaskV1Request(taskID string) ApiDeleteTaskV1Request {
 	return ApiDeleteTaskV1Request{
@@ -1808,6 +1835,8 @@ DeleteTaskV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) DeleteTaskV1WithHTTPInfo(r ApiDeleteTaskV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}"
@@ -1835,7 +1864,7 @@ func (c *APIClient) DeleteTaskV1WithHTTPInfo(r ApiDeleteTaskV1Request, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1847,6 +1876,8 @@ Request can be constructed by NewApiDeleteTaskV1Request with parameters below.
 
 	@param taskID string - Unique identifier of a task.
 	@return DeleteResponse
+
+Deprecated.
 */
 func (c *APIClient) DeleteTaskV1(r ApiDeleteTaskV1Request, opts ...RequestOption) (*DeleteResponse, error) {
 	var returnValue *DeleteResponse
@@ -1941,7 +1972,7 @@ func (c *APIClient) DeleteTransformationWithHTTPInfo(r ApiDeleteTransformationRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2051,7 +2082,7 @@ func (c *APIClient) DisableTaskWithHTTPInfo(r ApiDisableTaskRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2169,7 +2200,7 @@ func (c *APIClient) DisableTaskV1WithHTTPInfo(r ApiDisableTaskV1Request, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2286,7 +2317,7 @@ func (c *APIClient) EnableTaskWithHTTPInfo(r ApiEnableTaskRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2351,6 +2382,7 @@ type ApiEnableTaskV1Request struct {
 	taskID string
 }
 
+// Deprecated
 // NewApiEnableTaskV1Request creates an instance of the ApiEnableTaskV1Request to be used for the API call.
 func (c *APIClient) NewApiEnableTaskV1Request(taskID string) ApiEnableTaskV1Request {
 	return ApiEnableTaskV1Request{
@@ -2374,6 +2406,8 @@ EnableTaskV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) EnableTaskV1WithHTTPInfo(r ApiEnableTaskV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}/enable"
@@ -2401,7 +2435,7 @@ func (c *APIClient) EnableTaskV1WithHTTPInfo(r ApiEnableTaskV1Request, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2418,6 +2452,8 @@ Request can be constructed by NewApiEnableTaskV1Request with parameters below.
 
 	@param taskID string - Unique identifier of a task.
 	@return TaskUpdateResponse
+
+Deprecated.
 */
 func (c *APIClient) EnableTaskV1(r ApiEnableTaskV1Request, opts ...RequestOption) (*TaskUpdateResponse, error) {
 	var returnValue *TaskUpdateResponse
@@ -2516,7 +2552,7 @@ func (c *APIClient) GetAuthenticationWithHTTPInfo(r ApiGetAuthenticationRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2631,7 +2667,7 @@ func (c *APIClient) GetDestinationWithHTTPInfo(r ApiGetDestinationRequest, opts 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2762,7 +2798,7 @@ func (c *APIClient) GetEventWithHTTPInfo(r ApiGetEventRequest, opts ...RequestOp
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2878,7 +2914,7 @@ func (c *APIClient) GetRunWithHTTPInfo(r ApiGetRunRequest, opts ...RequestOption
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2993,7 +3029,7 @@ func (c *APIClient) GetSourceWithHTTPInfo(r ApiGetSourceRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3108,7 +3144,7 @@ func (c *APIClient) GetTaskWithHTTPInfo(r ApiGetTaskRequest, opts ...RequestOpti
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3173,6 +3209,7 @@ type ApiGetTaskV1Request struct {
 	taskID string
 }
 
+// Deprecated
 // NewApiGetTaskV1Request creates an instance of the ApiGetTaskV1Request to be used for the API call.
 func (c *APIClient) NewApiGetTaskV1Request(taskID string) ApiGetTaskV1Request {
 	return ApiGetTaskV1Request{
@@ -3196,6 +3233,8 @@ GetTaskV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) GetTaskV1WithHTTPInfo(r ApiGetTaskV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}"
@@ -3223,7 +3262,7 @@ func (c *APIClient) GetTaskV1WithHTTPInfo(r ApiGetTaskV1Request, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3240,6 +3279,8 @@ Request can be constructed by NewApiGetTaskV1Request with parameters below.
 
 	@param taskID string - Unique identifier of a task.
 	@return TaskV1
+
+Deprecated.
 */
 func (c *APIClient) GetTaskV1(r ApiGetTaskV1Request, opts ...RequestOption) (*TaskV1, error) {
 	var returnValue *TaskV1
@@ -3338,7 +3379,7 @@ func (c *APIClient) GetTransformationWithHTTPInfo(r ApiGetTransformationRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3556,7 +3597,7 @@ func (c *APIClient) ListAuthenticationsWithHTTPInfo(r ApiListAuthenticationsRequ
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3799,7 +3840,7 @@ func (c *APIClient) ListDestinationsWithHTTPInfo(r ApiListDestinationsRequest, o
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4081,7 +4122,7 @@ func (c *APIClient) ListEventsWithHTTPInfo(r ApiListEventsRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4367,7 +4408,7 @@ func (c *APIClient) ListRunsWithHTTPInfo(r ApiListRunsRequest, opts ...RequestOp
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4593,7 +4634,7 @@ func (c *APIClient) ListSourcesWithHTTPInfo(r ApiListSourcesRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4717,6 +4758,15 @@ func (r *ApiListTasksRequest) UnmarshalJSON(b []byte) error {
 			}
 		}
 	}
+	if v, ok := req["withEmailNotifications"]; ok {
+		err = json.Unmarshal(v, &r.withEmailNotifications)
+		if err != nil {
+			err = json.Unmarshal(b, &r.withEmailNotifications)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal withEmailNotifications: %w", err)
+			}
+		}
+	}
 	if v, ok := req["sort"]; ok {
 		err = json.Unmarshal(v, &r.sort)
 		if err != nil {
@@ -4741,16 +4791,17 @@ func (r *ApiListTasksRequest) UnmarshalJSON(b []byte) error {
 
 // ApiListTasksRequest represents the request with all the parameters for the API call.
 type ApiListTasksRequest struct {
-	itemsPerPage  *int32
-	page          *int32
-	action        []ActionType
-	enabled       *bool
-	sourceID      []string
-	sourceType    []SourceType
-	destinationID []string
-	triggerType   []TriggerType
-	sort          TaskSortKeys
-	order         OrderKeys
+	itemsPerPage           *int32
+	page                   *int32
+	action                 []ActionType
+	enabled                *bool
+	sourceID               []string
+	sourceType             []SourceType
+	destinationID          []string
+	triggerType            []TriggerType
+	withEmailNotifications *bool
+	sort                   TaskSortKeys
+	order                  OrderKeys
 }
 
 // NewApiListTasksRequest creates an instance of the ApiListTasksRequest to be used for the API call.
@@ -4806,6 +4857,12 @@ func (r ApiListTasksRequest) WithTriggerType(triggerType []TriggerType) ApiListT
 	return r
 }
 
+// WithWithEmailNotifications adds the withEmailNotifications to the ApiListTasksRequest and returns the request for chaining.
+func (r ApiListTasksRequest) WithWithEmailNotifications(withEmailNotifications bool) ApiListTasksRequest {
+	r.withEmailNotifications = &withEmailNotifications
+	return r
+}
+
 // WithSort adds the sort to the ApiListTasksRequest and returns the request for chaining.
 func (r ApiListTasksRequest) WithSort(sort TaskSortKeys) ApiListTasksRequest {
 	r.sort = sort
@@ -4837,6 +4894,7 @@ ListTasks calls the API and returns the raw response from it.
 	  @param sourceType []SourceType - Filters the tasks with the specified source type.
 	  @param destinationID []string - Destination IDs for filtering the list of tasks.
 	  @param triggerType []TriggerType - Type of task trigger for filtering the list of tasks.
+	  @param withEmailNotifications bool - If specified, the response only includes tasks with notifications.email.enabled set to this value.
 	  @param sort TaskSortKeys - Property by which to sort the list of tasks.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	@param opts ...RequestOption - Optional parameters for the API call
@@ -4877,6 +4935,9 @@ func (c *APIClient) ListTasksWithHTTPInfo(r ApiListTasksRequest, opts ...Request
 	if !utils.IsNilOrEmpty(r.triggerType) {
 		conf.queryParams.Set("triggerType", utils.QueryParameterToString(r.triggerType))
 	}
+	if !utils.IsNilOrEmpty(r.withEmailNotifications) {
+		conf.queryParams.Set("withEmailNotifications", utils.QueryParameterToString(*r.withEmailNotifications))
+	}
 	if !utils.IsNilOrEmpty(r.sort) {
 		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
@@ -4896,7 +4957,7 @@ func (c *APIClient) ListTasksWithHTTPInfo(r ApiListTasksRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4919,6 +4980,7 @@ Request can be constructed by NewApiListTasksRequest with parameters below.
 	@param sourceType []SourceType - Filters the tasks with the specified source type.
 	@param destinationID []string - Destination IDs for filtering the list of tasks.
 	@param triggerType []TriggerType - Type of task trigger for filtering the list of tasks.
+	@param withEmailNotifications bool - If specified, the response only includes tasks with notifications.email.enabled set to this value.
 	@param sort TaskSortKeys - Property by which to sort the list of tasks.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListTasksResponse
@@ -5050,6 +5112,7 @@ type ApiListTasksV1Request struct {
 	order         OrderKeys
 }
 
+// Deprecated
 // NewApiListTasksV1Request creates an instance of the ApiListTasksV1Request to be used for the API call.
 func (c *APIClient) NewApiListTasksV1Request() ApiListTasksV1Request {
 	return ApiListTasksV1Request{}
@@ -5133,6 +5196,8 @@ ListTasksV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) ListTasksV1WithHTTPInfo(r ApiListTasksV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks"
@@ -5183,7 +5248,7 @@ func (c *APIClient) ListTasksV1WithHTTPInfo(r ApiListTasksV1Request, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5208,6 +5273,8 @@ Request can be constructed by NewApiListTasksV1Request with parameters below.
 	@param sort TaskSortKeys - Property by which to sort the list of tasks.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListTasksResponseV1
+
+Deprecated.
 */
 func (c *APIClient) ListTasksV1(r ApiListTasksV1Request, opts ...RequestOption) (*ListTasksResponseV1, error) {
 	var returnValue *ListTasksResponseV1
@@ -5369,7 +5436,7 @@ func (c *APIClient) ListTransformationsWithHTTPInfo(r ApiListTransformationsRequ
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5511,6 +5578,11 @@ func (c *APIClient) PushTaskWithHTTPInfo(r ApiPushTaskRequest, opts ...RequestOp
 		context:      context.Background(),
 		queryParams:  url.Values{},
 		headerParams: map[string]string{},
+		timeouts: transport.RequestConfiguration{
+			ReadTimeout:    utils.ToPtr(180000 * time.Millisecond),
+			WriteTimeout:   utils.ToPtr(180000 * time.Millisecond),
+			ConnectTimeout: utils.ToPtr(180000 * time.Millisecond),
+		},
 	}
 
 	if !utils.IsNilOrEmpty(r.watch) {
@@ -5531,7 +5603,7 @@ func (c *APIClient) PushTaskWithHTTPInfo(r ApiPushTaskRequest, opts ...RequestOp
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5671,7 +5743,7 @@ func (c *APIClient) RunSourceWithHTTPInfo(r ApiRunSourceRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5787,7 +5859,7 @@ func (c *APIClient) RunTaskWithHTTPInfo(r ApiRunTaskRequest, opts ...RequestOpti
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5852,6 +5924,7 @@ type ApiRunTaskV1Request struct {
 	taskID string
 }
 
+// Deprecated
 // NewApiRunTaskV1Request creates an instance of the ApiRunTaskV1Request to be used for the API call.
 func (c *APIClient) NewApiRunTaskV1Request(taskID string) ApiRunTaskV1Request {
 	return ApiRunTaskV1Request{
@@ -5875,6 +5948,8 @@ RunTaskV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) RunTaskV1WithHTTPInfo(r ApiRunTaskV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}/run"
@@ -5902,7 +5977,7 @@ func (c *APIClient) RunTaskV1WithHTTPInfo(r ApiRunTaskV1Request, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5919,6 +5994,8 @@ Request can be constructed by NewApiRunTaskV1Request with parameters below.
 
 	@param taskID string - Unique identifier of a task.
 	@return RunResponse
+
+Deprecated.
 */
 func (c *APIClient) RunTaskV1(r ApiRunTaskV1Request, opts ...RequestOption) (*RunResponse, error) {
 	var returnValue *RunResponse
@@ -6023,7 +6100,7 @@ func (c *APIClient) SearchAuthenticationsWithHTTPInfo(r ApiSearchAuthentications
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6144,7 +6221,7 @@ func (c *APIClient) SearchDestinationsWithHTTPInfo(r ApiSearchDestinationsReques
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6265,7 +6342,7 @@ func (c *APIClient) SearchSourcesWithHTTPInfo(r ApiSearchSourcesRequest, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6386,7 +6463,7 @@ func (c *APIClient) SearchTasksWithHTTPInfo(r ApiSearchTasksRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6456,6 +6533,7 @@ type ApiSearchTasksV1Request struct {
 	taskSearch *TaskSearch
 }
 
+// Deprecated
 // NewApiSearchTasksV1Request creates an instance of the ApiSearchTasksV1Request to be used for the API call.
 func (c *APIClient) NewApiSearchTasksV1Request(taskSearch *TaskSearch) ApiSearchTasksV1Request {
 	return ApiSearchTasksV1Request{
@@ -6479,6 +6557,8 @@ SearchTasksV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) SearchTasksV1WithHTTPInfo(r ApiSearchTasksV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/search"
@@ -6507,7 +6587,7 @@ func (c *APIClient) SearchTasksV1WithHTTPInfo(r ApiSearchTasksV1Request, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6524,6 +6604,8 @@ Request can be constructed by NewApiSearchTasksV1Request with parameters below.
 
 	@param taskSearch TaskSearch
 	@return []TaskV1
+
+Deprecated.
 */
 func (c *APIClient) SearchTasksV1(r ApiSearchTasksV1Request, opts ...RequestOption) ([]TaskV1, error) {
 	var returnValue []TaskV1
@@ -6628,7 +6710,7 @@ func (c *APIClient) SearchTransformationsWithHTTPInfo(r ApiSearchTransformations
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6705,7 +6787,7 @@ TriggerDockerSourceDiscover calls the API and returns the raw response from it.
 
 	Triggers a stream-listing request for a source.
 
-Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
 
 	    Required API Key ACLs:
 	    - addObject
@@ -6731,6 +6813,11 @@ func (c *APIClient) TriggerDockerSourceDiscoverWithHTTPInfo(r ApiTriggerDockerSo
 		context:      context.Background(),
 		queryParams:  url.Values{},
 		headerParams: map[string]string{},
+		timeouts: transport.RequestConfiguration{
+			ReadTimeout:    utils.ToPtr(180000 * time.Millisecond),
+			WriteTimeout:   utils.ToPtr(180000 * time.Millisecond),
+			ConnectTimeout: utils.ToPtr(180000 * time.Millisecond),
+		},
 	}
 
 	// optional params if any
@@ -6745,14 +6832,14 @@ func (c *APIClient) TriggerDockerSourceDiscoverWithHTTPInfo(r ApiTriggerDockerSo
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 TriggerDockerSourceDiscover casts the HTTP response body to a defined struct.
 
 Triggers a stream-listing request for a source.
-Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
 
 Required API Key ACLs:
   - addObject
@@ -6867,7 +6954,7 @@ func (c *APIClient) TryTransformationWithHTTPInfo(r ApiTryTransformationRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7005,7 +7092,7 @@ func (c *APIClient) TryTransformationBeforeUpdateWithHTTPInfo(r ApiTryTransforma
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7144,7 +7231,7 @@ func (c *APIClient) UpdateAuthenticationWithHTTPInfo(r ApiUpdateAuthenticationRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7283,7 +7370,7 @@ func (c *APIClient) UpdateDestinationWithHTTPInfo(r ApiUpdateDestinationRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7422,7 +7509,7 @@ func (c *APIClient) UpdateSourceWithHTTPInfo(r ApiUpdateSourceRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7557,7 +7644,7 @@ func (c *APIClient) UpdateTaskWithHTTPInfo(r ApiUpdateTaskRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7633,6 +7720,7 @@ type ApiUpdateTaskV1Request struct {
 	taskUpdate *TaskUpdateV1
 }
 
+// Deprecated
 // NewApiUpdateTaskV1Request creates an instance of the ApiUpdateTaskV1Request to be used for the API call.
 func (c *APIClient) NewApiUpdateTaskV1Request(taskID string, taskUpdate *TaskUpdateV1) ApiUpdateTaskV1Request {
 	return ApiUpdateTaskV1Request{
@@ -7654,6 +7742,8 @@ UpdateTaskV1 calls the API and returns the raw response from it.
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
+
+	  Deprecated
 */
 func (c *APIClient) UpdateTaskV1WithHTTPInfo(r ApiUpdateTaskV1Request, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}"
@@ -7687,7 +7777,7 @@ func (c *APIClient) UpdateTaskV1WithHTTPInfo(r ApiUpdateTaskV1Request, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7700,6 +7790,8 @@ Request can be constructed by NewApiUpdateTaskV1Request with parameters below.
 	@param taskID string - Unique identifier of a task.
 	@param taskUpdate TaskUpdateV1
 	@return TaskUpdateResponse
+
+Deprecated.
 */
 func (c *APIClient) UpdateTaskV1(r ApiUpdateTaskV1Request, opts ...RequestOption) (*TaskUpdateResponse, error) {
 	var returnValue *TaskUpdateResponse
@@ -7817,7 +7909,7 @@ func (c *APIClient) UpdateTransformationWithHTTPInfo(r ApiUpdateTransformationRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7914,6 +8006,11 @@ func (c *APIClient) ValidateSourceWithHTTPInfo(r ApiValidateSourceRequest, opts 
 		context:      context.Background(),
 		queryParams:  url.Values{},
 		headerParams: map[string]string{},
+		timeouts: transport.RequestConfiguration{
+			ReadTimeout:    utils.ToPtr(180000 * time.Millisecond),
+			WriteTimeout:   utils.ToPtr(180000 * time.Millisecond),
+			ConnectTimeout: utils.ToPtr(180000 * time.Millisecond),
+		},
 	}
 
 	// optional params if any
@@ -7934,7 +8031,7 @@ func (c *APIClient) ValidateSourceWithHTTPInfo(r ApiValidateSourceRequest, opts 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -8057,6 +8154,11 @@ func (c *APIClient) ValidateSourceBeforeUpdateWithHTTPInfo(r ApiValidateSourceBe
 		context:      context.Background(),
 		queryParams:  url.Values{},
 		headerParams: map[string]string{},
+		timeouts: transport.RequestConfiguration{
+			ReadTimeout:    utils.ToPtr(180000 * time.Millisecond),
+			WriteTimeout:   utils.ToPtr(180000 * time.Millisecond),
+			ConnectTimeout: utils.ToPtr(180000 * time.Millisecond),
+		},
 	}
 
 	// optional params if any
@@ -8073,7 +8175,7 @@ func (c *APIClient) ValidateSourceBeforeUpdateWithHTTPInfo(r ApiValidateSourceBe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*

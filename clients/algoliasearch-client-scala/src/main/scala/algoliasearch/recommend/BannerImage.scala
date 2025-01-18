@@ -29,7 +29,7 @@
   */
 package algoliasearch.recommend
 
-/** image of a search banner.
+/** Image to show inside a banner.
   */
 case class BannerImage(
     urls: Option[Seq[BannerImageUrl]] = scala.None,

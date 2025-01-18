@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class DailyNoClickRates
-      # No click rate, calculated as number of tracked searches without any click divided by the number of tracked searches.
+      # No click rate: calculated as the number of tracked searches without clicks divided by the number of tracked searches.
       attr_accessor :rate
 
       # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
@@ -26,11 +26,6 @@ module Algolia
           :no_click_count => :noClickCount,
           :date => :date
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

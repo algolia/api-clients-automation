@@ -112,15 +112,15 @@ object IngestionClient {
   )
 
   private def readTimeout(): Duration = {
-    Duration(25, TimeUnit.SECONDS)
+    Duration(25000, TimeUnit.MILLISECONDS)
   }
 
   private def connectTimeout(): Duration = {
-    Duration(25, TimeUnit.SECONDS)
+    Duration(25000, TimeUnit.MILLISECONDS)
   }
 
   private def writeTimeout(): Duration = {
-    Duration(25, TimeUnit.SECONDS)
+    Duration(25000, TimeUnit.MILLISECONDS)
   }
 
   private def hosts(region: String): Seq[Host] = {
@@ -1058,6 +1058,8 @@ class IngestionClient(
     *   Destination IDs for filtering the list of tasks.
     * @param triggerType
     *   Type of task trigger for filtering the list of tasks.
+    * @param withEmailNotifications
+    *   If specified, the response only includes tasks with notifications.email.enabled set to this value.
     * @param sort
     *   Property by which to sort the list of tasks.
     * @param order
@@ -1072,6 +1074,7 @@ class IngestionClient(
       sourceType: Option[Seq[SourceType]] = None,
       destinationID: Option[Seq[String]] = None,
       triggerType: Option[Seq[TriggerType]] = None,
+      withEmailNotifications: Option[Boolean] = None,
       sort: Option[TaskSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -1089,6 +1092,7 @@ class IngestionClient(
       .withQueryParameter("sourceType", sourceType)
       .withQueryParameter("destinationID", destinationID)
       .withQueryParameter("triggerType", triggerType)
+      .withQueryParameter("withEmailNotifications", withEmailNotifications)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
@@ -1219,7 +1223,16 @@ class IngestionClient(
       .withBody(pushTaskPayload)
       .withQueryParameter("watch", watch)
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
   /** Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
@@ -1429,7 +1442,7 @@ class IngestionClient(
   }
 
   /** Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with
-    * `type: docker` and `imageType: singer`.
+    * `type: docker` and `imageType: airbyte`.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1449,7 +1462,16 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/discover")
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
   /** Try a transformation before creating it.
@@ -1672,7 +1694,16 @@ class IngestionClient(
       .withPath(s"/1/sources/validate")
       .withBody(sourceCreate)
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
   /** Validates an update of a source payload to ensure it can be created and that the data source can be reached by
@@ -1700,7 +1731,16 @@ class IngestionClient(
       .withPath(s"/1/sources/${escape(sourceID)}/validate")
       .withBody(sourceUpdate)
       .build()
-    execute[WatchResponse](request, requestOptions)
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
   }
 
 }

@@ -14,6 +14,10 @@ abstract class Requester {
   /// Allows to switch the API key used to authenticate requests.
   void setClientApiKey(String apiKey);
 
+  /// Allows to customise the connect timeout for the requester.
+  get connectTimeout => null;
+  void setConnectTimeout(Duration connectTimeout);
+
   /// Closes any underlying resources that the Requester might be using.
   ///
   /// By default, it does nothing (no-op), but it can be implemented to handle resource cleanup

@@ -205,8 +205,10 @@ def snippet_for_set_personalization_strategy
   # Call the API
   response = client.set_personalization_strategy(
     Algolia::Personalization::PersonalizationStrategyParams.new(
-      event_scoring: [Algolia::Personalization::EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
-      facet_scoring: [Algolia::Personalization::FacetScoring.new(score: 42, facet_name: "Event")],
+      events_scoring: [
+        Algolia::Personalization::EventsScoring.new(score: 42, event_name: "Algolia", event_type: "click")
+      ],
+      facets_scoring: [Algolia::Personalization::FacetsScoring.new(score: 42, facet_name: "Event")],
       personalization_impact: 42
     )
   )

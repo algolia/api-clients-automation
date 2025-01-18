@@ -41,36 +41,34 @@ public suspend fun SearchClient.waitForApiKey(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetApiKeyResponse? {
-  return when (operation) {
-    ApiKeyOperation.Add -> waitKeyCreation(
-      key = key,
-      maxRetries = maxRetries,
-      timeout = timeout,
-      initialDelay = initialDelay,
-      maxDelay = maxDelay,
-      requestOptions = requestOptions,
-    )
+): GetApiKeyResponse? = when (operation) {
+  ApiKeyOperation.Add -> waitKeyCreation(
+    key = key,
+    maxRetries = maxRetries,
+    timeout = timeout,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    requestOptions = requestOptions,
+  )
 
-    ApiKeyOperation.Delete -> waitKeyDelete(
-      key = key,
-      maxRetries = maxRetries,
-      timeout = timeout,
-      initialDelay = initialDelay,
-      maxDelay = maxDelay,
-      requestOptions = requestOptions,
-    )
+  ApiKeyOperation.Delete -> waitKeyDelete(
+    key = key,
+    maxRetries = maxRetries,
+    timeout = timeout,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    requestOptions = requestOptions,
+  )
 
-    ApiKeyOperation.Update -> waitKeyUpdate(
-      key = key,
-      apiKey = requireNotNull(apiKey) { "apiKey is required for update api key operation" },
-      timeout = timeout,
-      maxRetries = maxRetries,
-      initialDelay = initialDelay,
-      maxDelay = maxDelay,
-      requestOptions = requestOptions,
-    )
-  }
+  ApiKeyOperation.Update -> waitKeyUpdate(
+    key = key,
+    apiKey = requireNotNull(apiKey) { "apiKey is required for update api key operation" },
+    timeout = timeout,
+    maxRetries = maxRetries,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    requestOptions = requestOptions,
+  )
 }
 
 /**
@@ -83,8 +81,7 @@ public suspend fun SearchClient.waitForApiKey(
  * @param indexName The index in which to perform the request.
  * @param taskID The ID of the task to wait for.
  * @param timeout If specified, the method will throw a
- *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value in milliseconds is
- *   elapsed.
+ *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value is elapsed.
  * @param maxRetries maximum number of retry attempts.
  * @param requestOptions additional request configuration.
  */
@@ -96,16 +93,14 @@ public suspend fun SearchClient.waitForTask(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetTaskResponse {
-  return retryUntil(
-    timeout = timeout,
-    maxRetries = maxRetries,
-    initialDelay = initialDelay,
-    maxDelay = maxDelay,
-    retry = { getTask(indexName, taskID, requestOptions) },
-    until = { it.status == TaskStatus.Published },
-  )
-}
+): GetTaskResponse = retryUntil(
+  timeout = timeout,
+  maxRetries = maxRetries,
+  initialDelay = initialDelay,
+  maxDelay = maxDelay,
+  retry = { getTask(indexName, taskID, requestOptions) },
+  until = { it.status == TaskStatus.Published },
+)
 
 @Deprecated(
   "Please use waitForTask instead",
@@ -119,25 +114,22 @@ public suspend fun SearchClient.waitTask(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): TaskStatus {
-  return waitForTask(
-    indexName = indexName,
-    taskID = taskID,
-    maxRetries = maxRetries,
-    timeout = timeout,
-    initialDelay = initialDelay,
-    maxDelay = maxDelay,
-    requestOptions = requestOptions,
-  ).status
-}
+): TaskStatus = waitForTask(
+  indexName = indexName,
+  taskID = taskID,
+  maxRetries = maxRetries,
+  timeout = timeout,
+  initialDelay = initialDelay,
+  maxDelay = maxDelay,
+  requestOptions = requestOptions,
+).status
 
 /**
  * Wait for an application-level [taskID] to complete before executing the next line of code.
  *
  * @param taskID The ID of the task to wait for.
  * @param timeout If specified, the method will throw a
- *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value in milliseconds is
- *   elapsed.
+ *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value is elapsed.
  * @param maxRetries maximum number of retry attempts.
  * @param requestOptions additional request configuration.
  */
@@ -148,16 +140,14 @@ public suspend fun SearchClient.waitForAppTask(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetTaskResponse {
-  return retryUntil(
-    timeout = timeout,
-    maxRetries = maxRetries,
-    initialDelay = initialDelay,
-    maxDelay = maxDelay,
-    retry = { getAppTask(taskID, requestOptions) },
-    until = { it.status == TaskStatus.Published },
-  )
-}
+): GetTaskResponse = retryUntil(
+  timeout = timeout,
+  maxRetries = maxRetries,
+  initialDelay = initialDelay,
+  maxDelay = maxDelay,
+  retry = { getAppTask(taskID, requestOptions) },
+  until = { it.status == TaskStatus.Published },
+)
 
 @Deprecated(
   "Please use waitForAppTask instead",
@@ -170,16 +160,14 @@ public suspend fun SearchClient.waitAppTask(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): TaskStatus {
-  return waitForAppTask(
-    taskID = taskID,
-    maxRetries = maxRetries,
-    timeout = timeout,
-    initialDelay = initialDelay,
-    maxDelay = maxDelay,
-    requestOptions = requestOptions,
-  ).status
-}
+): TaskStatus = waitForAppTask(
+  taskID = taskID,
+  maxRetries = maxRetries,
+  timeout = timeout,
+  initialDelay = initialDelay,
+  maxDelay = maxDelay,
+  requestOptions = requestOptions,
+).status
 
 /**
  * Wait on an API key update operation.
@@ -188,8 +176,7 @@ public suspend fun SearchClient.waitAppTask(
  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
  *   the response with it.
  * @param timeout If specified, the method will throw a
- *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value in milliseconds is
- *   elapsed.
+ *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value is elapsed.
  * @param maxRetries Maximum number of retry attempts.
  * @param requestOptions Additional request configuration.
  */
@@ -201,35 +188,32 @@ public suspend fun SearchClient.waitKeyUpdate(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetApiKeyResponse {
-  return retryUntil(
-    timeout = timeout,
-    maxRetries = maxRetries,
-    initialDelay = initialDelay,
-    maxDelay = maxDelay,
-    retry = { getApiKey(key, requestOptions) },
-    until = {
-      apiKey ==
-        ApiKey(
-          acl = it.acl,
-          description = it.description,
-          indexes = it.indexes,
-          maxHitsPerQuery = it.maxHitsPerQuery,
-          maxQueriesPerIPPerHour = it.maxQueriesPerIPPerHour,
-          queryParameters = it.queryParameters,
-          referers = it.referers,
-          validity = it.validity,
-        )
-    },
-  )
-}
+): GetApiKeyResponse = retryUntil(
+  timeout = timeout,
+  maxRetries = maxRetries,
+  initialDelay = initialDelay,
+  maxDelay = maxDelay,
+  retry = { getApiKey(key, requestOptions) },
+  until = {
+    apiKey ==
+      ApiKey(
+        acl = it.acl,
+        description = it.description,
+        indexes = it.indexes,
+        maxHitsPerQuery = it.maxHitsPerQuery,
+        maxQueriesPerIPPerHour = it.maxQueriesPerIPPerHour,
+        queryParameters = it.queryParameters,
+        referers = it.referers,
+        validity = it.validity,
+      )
+  },
+)
 
 /**
  * Wait on an API key creation operation.
  *
  * @param timeout If specified, the method will throw a
- *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value in milliseconds is
- *   elapsed.
+ *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value is elapsed.
  * @param maxRetries Maximum number of retry attempts.
  * @param requestOptions Additional request configuration.
  */
@@ -240,31 +224,28 @@ public suspend fun SearchClient.waitKeyCreation(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-): GetApiKeyResponse {
-  return retryUntil(
-    timeout = timeout,
-    maxRetries = maxRetries,
-    initialDelay = initialDelay,
-    maxDelay = maxDelay,
-    retry = {
-      try {
-        val response = getApiKey(key, requestOptions)
-        Result.success(response)
-      } catch (e: AlgoliaApiException) {
-        Result.failure(e)
-      }
-    },
-    until = { it.isSuccess },
-  ).getOrThrow()
-}
+): GetApiKeyResponse = retryUntil(
+  timeout = timeout,
+  maxRetries = maxRetries,
+  initialDelay = initialDelay,
+  maxDelay = maxDelay,
+  retry = {
+    try {
+      val response = getApiKey(key, requestOptions)
+      Result.success(response)
+    } catch (e: AlgoliaApiException) {
+      Result.failure(e)
+    }
+  },
+  until = { it.isSuccess },
+).getOrThrow()
 
 /**
  * Wait on a delete API ket operation.
  *
  * @param maxRetries Maximum number of retry attempts.
  * @param timeout If specified, the method will throw a
- *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value in milliseconds is
- *   elapsed.
+ *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value is elapsed.
  * @param requestOptions Additional request configuration.
  */
 public suspend fun SearchClient.waitKeyDelete(
@@ -382,16 +363,14 @@ public suspend fun SearchClient.saveObjects(
   waitForTask: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-): List<BatchResponse> {
-  return this.chunkedBatch(
-    indexName = indexName,
-    objects = objects,
-    action = Action.AddObject,
-    waitForTask = waitForTask,
-    batchSize = batchSize,
-    requestOptions = requestOptions,
-  )
-}
+): List<BatchResponse> = this.chunkedBatch(
+  indexName = indexName,
+  objects = objects,
+  action = Action.AddObject,
+  waitForTask = waitForTask,
+  batchSize = batchSize,
+  requestOptions = requestOptions,
+)
 
 /**
  * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -410,16 +389,14 @@ public suspend fun SearchClient.deleteObjects(
   waitForTask: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-): List<BatchResponse> {
-  return this.chunkedBatch(
-    indexName = indexName,
-    objects = objectIDs.map { id -> JsonObject(mapOf("objectID" to Json.encodeToJsonElement(id))) },
-    action = Action.DeleteObject,
-    waitForTask = waitForTask,
-    batchSize = batchSize,
-    requestOptions = requestOptions,
-  )
-}
+): List<BatchResponse> = this.chunkedBatch(
+  indexName = indexName,
+  objects = objectIDs.map { id -> JsonObject(mapOf("objectID" to Json.encodeToJsonElement(id))) },
+  action = Action.DeleteObject,
+  waitForTask = waitForTask,
+  batchSize = batchSize,
+  requestOptions = requestOptions,
+)
 
 /**
  * Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
@@ -440,16 +417,14 @@ public suspend fun SearchClient.partialUpdateObjects(
   waitForTask: Boolean = false,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
-): List<BatchResponse> {
-  return this.chunkedBatch(
-    indexName = indexName,
-    objects = objects,
-    action = if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
-    waitForTask = waitForTask,
-    batchSize = batchSize,
-    requestOptions = requestOptions,
-  )
-}
+): List<BatchResponse> = this.chunkedBatch(
+  indexName = indexName,
+  objects = objects,
+  action = if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
+  waitForTask = waitForTask,
+  batchSize = batchSize,
+  requestOptions = requestOptions,
+)
 
 /**
  * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
@@ -462,56 +437,64 @@ public suspend fun SearchClient.partialUpdateObjects(
  * @param indexName The index in which to perform the request.
  * @param objects The list of objects to replace.
  * @param batchSize The size of the batch. Default is 1000.
+ * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
  * @return responses from the three-step operations: copy, batch, move.
  */
 public suspend fun SearchClient.replaceAllObjects(
   indexName: String,
   objects: List<JsonObject>,
   batchSize: Int = 1000,
+  scopes: List<ScopeType> = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
   requestOptions: RequestOptions? = null,
 ): ReplaceAllObjectsResponse {
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
-  var copy = operationIndex(
-    indexName = indexName,
-    operationIndexParams = OperationIndexParams(
-      operation = OperationType.Copy,
-      destination = tmpIndexName,
-      scope = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
-    ),
-    requestOptions = requestOptions,
-  )
+  try {
+    var copy = operationIndex(
+      indexName = indexName,
+      operationIndexParams = OperationIndexParams(
+        operation = OperationType.Copy,
+        destination = tmpIndexName,
+        scope = scopes,
+      ),
+      requestOptions = requestOptions,
+    )
 
-  val batchResponses = this.chunkedBatch(
-    indexName = tmpIndexName,
-    objects = objects,
-    action = Action.AddObject,
-    waitForTask = true,
-    batchSize = batchSize,
-    requestOptions = requestOptions,
-  )
+    val batchResponses = this.chunkedBatch(
+      indexName = tmpIndexName,
+      objects = objects,
+      action = Action.AddObject,
+      waitForTask = true,
+      batchSize = batchSize,
+      requestOptions = requestOptions,
+    )
 
-  waitForTask(indexName = tmpIndexName, taskID = copy.taskID)
+    waitForTask(indexName = tmpIndexName, taskID = copy.taskID)
 
-  copy = operationIndex(
-    indexName = indexName,
-    operationIndexParams = OperationIndexParams(
-      operation = OperationType.Copy,
-      destination = tmpIndexName,
-      scope = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
-    ),
-    requestOptions = requestOptions,
-  )
-  waitForTask(indexName = tmpIndexName, taskID = copy.taskID)
+    copy = operationIndex(
+      indexName = indexName,
+      operationIndexParams = OperationIndexParams(
+        operation = OperationType.Copy,
+        destination = tmpIndexName,
+        scope = scopes,
+      ),
+      requestOptions = requestOptions,
+    )
+    waitForTask(indexName = tmpIndexName, taskID = copy.taskID)
 
-  val move = operationIndex(
-    indexName = tmpIndexName,
-    operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-    requestOptions = requestOptions,
-  )
-  waitForTask(indexName = tmpIndexName, taskID = move.taskID)
+    val move = operationIndex(
+      indexName = tmpIndexName,
+      operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+      requestOptions = requestOptions,
+    )
+    waitForTask(indexName = tmpIndexName, taskID = move.taskID)
 
-  return ReplaceAllObjectsResponse(copy, batchResponses, move)
+    return ReplaceAllObjectsResponse(copy, batchResponses, move)
+  } catch (e: Exception) {
+    deleteIndex(tmpIndexName)
+
+    throw e
+  }
 }
 
 /**
@@ -542,6 +525,13 @@ public fun securedApiKeyRemainingValidity(apiKey: String): Duration {
   return validUntil - Clock.System.now()
 }
 
+/**
+ * Checks that an index exists.
+ *
+ * @param indexName The name of the index to check.
+ * @return true if the index exists, false otherwise.
+ * @throws AlgoliaApiException if an error occurs during the request.
+ */
 public suspend fun SearchClient.indexExists(indexName: String): Boolean {
   try {
     getSettings(indexName)
@@ -607,19 +597,17 @@ public suspend fun SearchClient.browseObjects(
   validate: (BrowseResponse) -> Boolean = { response -> response.cursor == null },
   aggregator: ((BrowseResponse) -> Unit),
   requestOptions: RequestOptions? = null,
-): BrowseResponse {
-  return createIterable(
-    execute = { previousResponse ->
-      browse(
-        indexName,
-        params.copy(hitsPerPage = params.hitsPerPage ?: 1000, cursor = previousResponse?.cursor),
-        requestOptions,
-      )
-    },
-    validate = validate,
-    aggregator = aggregator,
-  )
-}
+): BrowseResponse = createIterable(
+  execute = { previousResponse ->
+    browse(
+      indexName,
+      params.copy(hitsPerPage = params.hitsPerPage ?: 1000, cursor = previousResponse?.cursor),
+      requestOptions,
+    )
+  },
+  validate = validate,
+  aggregator = aggregator,
+)
 
 /**
  * Helper: Returns an iterator on top of the `browse` method.

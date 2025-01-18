@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import type { Express } from 'express';
 import express from 'express';
 
-import { setupServer } from './index.js';
+import { setupServer } from './index.ts';
 
 const raoState: Record<
   string,
@@ -19,9 +19,9 @@ const raoState: Record<
 > = {};
 
 export function assertValidReplaceAllObjects(expectedCount: number): void {
-  const count = Object.values(raoState).filter((s) => s.successful).length;
-  if (count !== expectedCount) {
-    throw new Error(`Expected ${expectedCount} call to replaceAllObjects, got ${count} instead.`);
+  expect(Object.keys(raoState)).to.have.length(expectedCount);
+  for (const lang in raoState) {
+    expect(raoState[lang].successful).to.equal(true);
   }
 }
 

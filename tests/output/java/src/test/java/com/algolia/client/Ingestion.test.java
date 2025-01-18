@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import java.time.Duration;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -98,6 +99,32 @@ class IngestionClientClientTests {
   }
 
   @Test
+  @DisplayName("endpoint level timeout")
+  void apiTest3() {
+    IngestionClient client = createClient();
+
+    client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    EchoResponse result = echo.getLastResponse();
+    assertEquals(180000, result.connectTimeout);
+    assertEquals(180000, result.responseTimeout);
+  }
+
+  @Test
+  @DisplayName("can override endpoint level timeout")
+  void apiTest4() {
+    IngestionClient client = createClient();
+
+    client.validateSourceBeforeUpdate(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate().setName("newName"),
+      new RequestOptions().setWriteTimeout(Duration.ofMillis(3456L))
+    );
+    EchoResponse result = echo.getLastResponse();
+    assertEquals(180000, result.connectTimeout);
+    assertEquals(3456, result.responseTimeout);
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     IngestionClient client = createClient();
@@ -125,7 +152,7 @@ class IngestionClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.10.2\\).*";
+      String regexp = "^Algolia for Java \\(4.11.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

@@ -1111,6 +1111,10 @@ components:
 
         - Optional filters are applied _after_ sort-by attributes.
 
+        - Optional filters are applied _before_ custom ranking attributes (in
+        the default
+        [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)).
+
         - Optional filters don't work with numeric attributes.
       example:
         - category:Book
@@ -1744,14 +1748,14 @@ components:
         url:
           type: string
     bannerImageUrl:
-      description: url for a search banner image.
+      description: URL for an image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     bannerImage:
-      description: image of a search banner.
+      description: Image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
@@ -1762,14 +1766,14 @@ components:
         title:
           type: string
     bannerLink:
-      description: link for a banner defined in merchandising studio.
+      description: Link for a banner defined in the Merchandising Studio.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     banner:
-      description: a search banner with image and url.
+      description: Banner with image and link to redirect users.
       type: object
       additionalProperties: false
       properties:
@@ -1778,12 +1782,12 @@ components:
         link:
           $ref: '#/components/schemas/bannerLink'
     banners:
-      description: banners defined in the merchandising studio for the given search.
+      description: Banners defined in the Merchandising Studio for a given search.
       type: array
       items:
         $ref: '#/components/schemas/banner'
     widgets:
-      description: widgets returned from any rules that are applied to the current search.
+      description: Widgets returned from any rules that are applied to the current search.
       type: object
       additionalProperties: false
       properties:
@@ -2041,6 +2045,11 @@ components:
           $ref: '#/components/schemas/nbPages'
         hitsPerPage:
           $ref: '#/components/schemas/hitsPerPage'
+      required:
+        - page
+        - nbHits
+        - nbPages
+        - hitsPerPage
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -2280,8 +2289,16 @@ components:
             augmented with additional attributes, such as, for highlighting.
           items:
             $ref: '#/components/schemas/hit'
+        query:
+          $ref: '#/components/schemas/query'
+        params:
+          type: string
+          description: URL-encoded string of all search parameters.
+          example: query=a&hitsPerPage=20
       required:
         - hits
+        - query
+        - params
     resultsInjectedItemInfoResponse:
       type: object
       additionalProperties: true
@@ -2334,6 +2351,8 @@ components:
           description: Search results.
           items:
             $ref: '#/components/schemas/searchResultsItem'
+      required:
+        - results
     searchResponse:
       additionalProperties: true
       allOf:

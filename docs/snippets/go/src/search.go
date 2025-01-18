@@ -1871,7 +1871,7 @@ func SnippetForReplaceAllObjectsOfSearch() {
 	   call replaceAllObjects without error
 	*/
 
-	// >SEPARATOR replaceAllObjects default
+	// >SEPARATOR replaceAllObjects call replaceAllObjects without error
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1884,6 +1884,67 @@ func SnippetForReplaceAllObjectsOfSearch() {
 		"<YOUR_INDEX_NAME>",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}},
 		search.WithBatchSize(3))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForReplaceAllObjectsOfSearch1() {
+	/*
+	   Snippet for the replaceAllObjects method.
+
+	   call replaceAllObjects with partial scopes
+	*/
+
+	// >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceAllObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+		search.WithBatchSize(77), search.WithScopes(
+			[]search.ScopeType{search.ScopeType("settings"), search.ScopeType("synonyms")}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForReplaceAllObjectsOfSearch2() {
+	/*
+	   Snippet for the replaceAllObjects method.
+
+	   replaceAllObjects should cleanup on failure
+	*/
+
+	// >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceAllObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "fine", "body": "small obj"}, map[string]any{"objectID": "toolarge", "body": "something bigger than 10KB"}},
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)

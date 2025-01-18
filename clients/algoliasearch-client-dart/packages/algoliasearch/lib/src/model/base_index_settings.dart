@@ -28,6 +28,8 @@ final class BaseIndexSettings {
     this.customNormalization,
     this.attributeForDistinct,
     this.maxFacetHits,
+    this.keepDiacriticsOnCharacters,
+    this.customRanking,
   });
 
   /// Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).  Facets are attributes that let you categorize search results. They can be used for filtering search results. By default, no attribute is used for faceting. Attribute names are case-sensitive.  **Modifiers**  - `filterOnly(\"ATTRIBUTE\")`.   Allows the attribute to be used as a filter but doesn't evaluate the facet values.  - `searchable(\"ATTRIBUTE\")`.   Allows searching for facet values.  - `afterDistinct(\"ATTRIBUTE\")`.   Evaluates the facet count _after_ deduplication with `distinct`.   This ensures accurate facet counts.   You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
@@ -104,6 +106,14 @@ final class BaseIndexSettings {
   @JsonKey(name: r'maxFacetHits')
   final int? maxFacetHits;
 
+  /// Characters for which diacritics should be preserved.  By default, Algolia removes diacritics from letters. For example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their diacritics.
+  @JsonKey(name: r'keepDiacriticsOnCharacters')
+  final String? keepDiacriticsOnCharacters;
+
+  /// Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are case-sensitive.  The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes, or the other attributes will never be applied.
+  @JsonKey(name: r'customRanking')
+  final List<String>? customRanking;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -127,7 +137,9 @@ final class BaseIndexSettings {
           other.userData == userData &&
           other.customNormalization == customNormalization &&
           other.attributeForDistinct == attributeForDistinct &&
-          other.maxFacetHits == maxFacetHits;
+          other.maxFacetHits == maxFacetHits &&
+          other.keepDiacriticsOnCharacters == keepDiacriticsOnCharacters &&
+          other.customRanking == customRanking;
 
   @override
   int get hashCode =>
@@ -148,7 +160,9 @@ final class BaseIndexSettings {
       userData.hashCode +
       customNormalization.hashCode +
       attributeForDistinct.hashCode +
-      maxFacetHits.hashCode;
+      maxFacetHits.hashCode +
+      keepDiacriticsOnCharacters.hashCode +
+      customRanking.hashCode;
 
   factory BaseIndexSettings.fromJson(Map<String, dynamic> json) =>
       _$BaseIndexSettingsFromJson(json);

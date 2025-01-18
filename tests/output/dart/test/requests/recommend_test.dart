@@ -658,6 +658,37 @@ void main() {
 
   // getRecommendations
   test(
+    'get recommendations with e2e to check oneOf model',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            RelatedQuery(
+              indexName: "cts_e2e_browse",
+              objectID: "Æon Flux",
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 20.0,
+              maxRecommendations: 2,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}""");
+      },
+    ),
+  );
+
+  // getRecommendations
+  test(
     'get recommendations for recommend model with all parameters',
     () => runTest(
       builder: (requester) => RecommendClient(

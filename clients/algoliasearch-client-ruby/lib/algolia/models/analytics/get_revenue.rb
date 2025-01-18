@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class GetRevenue
-      # Revenue associated with this search, broken-down by currencies.
+      # Revenue associated with this search: broken down by currency.
       attr_accessor :currencies
 
       # Daily revenue.
@@ -18,11 +18,6 @@ module Algolia
           :currencies => :currencies,
           :dates => :dates
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

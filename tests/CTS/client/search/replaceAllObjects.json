@@ -111,5 +111,115 @@
         }
       }
     ]
+  },
+  {
+    "testName": "call replaceAllObjects with partial scopes",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6685
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "replaceAllObjects",
+        "parameters": {
+          "indexName": "cts_e2e_replace_all_objects_scopes_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ],
+          "batchSize": 77,
+          "scopes": [
+            "settings",
+            "synonyms"
+          ]
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "copyOperationResponse": {
+              "taskID": 125,
+              "updatedAt": "2021-01-01T00:00:00.000Z"
+            },
+            "batchResponses": [
+              {
+                "taskID": 126,
+                "objectIDs": [
+                  "1",
+                  "2"
+                ]
+              }
+            ],
+            "moveOperationResponse": {
+              "taskID": 777,
+              "updatedAt": "2021-01-01T00:00:00.000Z"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "replaceAllObjects should cleanup on failure",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6684
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "replaceAllObjects",
+        "parameters": {
+          "indexName": "cts_e2e_replace_all_objects_too_big_${{language}}",
+          "objects": [
+            {
+              "objectID": "fine",
+              "body": "small obj"
+            },
+            {
+              "objectID": "toolarge",
+              "body": "something bigger than 10KB"
+            }
+          ]
+        },
+        "expected": {
+          "error": {
+            "csharp": "{\\\"message\\\":\\\"Record is too big\\\",\\\"status\\\":400}",
+            "go": "API error [400] Record is too big",
+            "java": "Status Code: 400 - {\\\"message\\\":\\\"Record is too big\\\",\\\"status\\\":400}",
+            "javascript": "Record is too big",
+            "kotlin": "Client request\\\\(POST http://%localhost%:6684/1/indexes/cts_e2e_replace_all_objects_too_big_${{language}}_tmp_\\\\d+/batch\\\\) invalid: 400 Bad Request. Text: \\\"\\\\{\\\"message\\\":\\\"Record is too big\\\",\\\"status\\\":400\\\\}\\\"",
+            "php": "Record is too big",
+            "python": "Record is too big",
+            "ruby": "400: Record is too big",
+            "swift": "HTTP error: Status code: 400 Message: Record is too big"
+          }
+        }
+      }
+    ]
   }
 ]
