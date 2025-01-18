@@ -319,6 +319,8 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    outputs:
+      hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
     steps:
       - uses: actions/checkout@v4
@@ -355,7 +357,8 @@ jobs:
         run: yarn cli build playground ${{ matrix.client.language }}
 
       - name: Run Java 'algoliasearch' public API validation
-        if: ${{ github.base_ref == 'main' && matrix.client.language == 'java' && matrix.client.isMainVersion && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-bc]') }}
+        id: breakingChanges
+        if: ${{ github.base_ref == 'main' && matrix.client.language == 'java' && matrix.client.isMainVersion }}
         run: |
           cd ${{ matrix.client.path }}
           exit_code=0
@@ -367,7 +370,9 @@ jobs:
             cat $FILE
           fi
 
-          exit $exit_code
+          if [[ $exit_code -ne 0 ]]; then
+            echo "hasBreakingChanges=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Remove previous CTS output
         run: rm -rf ${{ matrix.client.testsToDelete }} || true
@@ -431,7 +436,7 @@ jobs:
       !contains(needs.*.result, 'failure')
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
-    name: client kotlin${{ needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' && format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) || '' }} macos
+    name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
     steps:
       - uses: actions/checkout@v4
 
@@ -481,7 +486,7 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
-    name: client swift${{ needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' && format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) || '' }} macos
+    name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} macos
     steps:
       - uses: actions/checkout@v4
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
@@ -586,12 +591,25 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
 
+      - name: Check for breaking changes
+        id: breakingChanges
+        if: ${{ needs.client_gen.outputs.hasBreakingChanges == 'true' }}
+        run: |
+          {
+            echo 'BREAKING_CHANGES_SECTION<<EOF'
+            echo "# 💥 Breaking changes detected !!"
+            echo "Either this PR or a previous PR not released yet introduced breaking changes, be careful when merging."
+            echo "You can find the details in the 'client java@17' CI job."
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
       - name: update generation comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           message: |
+            ${{ steps.breakingChanges.outputs.BREAKING_CHANGES_SECTION }}
             ### No code generated
 
             _If you believe code should've been generated, please, [report the issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=bug%2Ctriage&projects=&template=Bug_report.yml&title=%5Bbug%5D%3A+)._
@@ -604,6 +622,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
           message: |
+            ${{ steps.breakingChanges.outputs.BREAKING_CHANGES_SECTION }}
             ### ✔️ Code generated!
 
             |  Name | Link |

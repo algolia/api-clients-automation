@@ -12,6 +12,7 @@ import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 import org.scalatest.funsuite.AnyFunSuite
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
@@ -96,6 +97,44 @@ class IngestionTest extends AnyFunSuite {
     assert(echo.lastResponse.get.responseTimeout == 25000)
   }
 
+  test("endpoint level timeout") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.validateSourceBeforeUpdate(
+        sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        sourceUpdate = SourceUpdate(
+          name = Some("newName")
+        )
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.connectTimeout == 180000)
+    assert(echo.lastResponse.get.responseTimeout == 180000)
+  }
+
+  test("can override endpoint level timeout") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.validateSourceBeforeUpdate(
+        sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        sourceUpdate = SourceUpdate(
+          name = Some("newName")
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withWriteTimeout(Some(Duration(3456, TimeUnit.MILLISECONDS)))
+            .build()
+        )
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.connectTimeout == 180000)
+    assert(echo.lastResponse.get.responseTimeout == 3456)
+  }
+
   test("calls api with correct user agent") {
     val (client, echo) = testClient()
 
@@ -120,7 +159,7 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.11.2\).*""".r
+    val regexp = """^Algolia for Scala \(2.12.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

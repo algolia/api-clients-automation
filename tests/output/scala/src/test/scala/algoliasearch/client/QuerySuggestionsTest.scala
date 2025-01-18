@@ -12,6 +12,7 @@ import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 import org.scalatest.funsuite.AnyFunSuite
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
@@ -63,7 +64,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.11.2\).*""".r
+    val regexp = """^Algolia for Scala \(2.12.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

@@ -87,7 +87,7 @@ public class TopSearchWithRevenueAnalytics {
   }
 
   /**
-   * Click-through rate, calculated as number of tracked searches with at least one click event
+   * Click-through rate: calculated as the number of tracked searches with at least one click event
    * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
    * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
@@ -132,9 +132,9 @@ public class TopSearchWithRevenueAnalytics {
   }
 
   /**
-   * Conversion rate, calculated as number of tracked searches with at least one conversion event
-   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
-   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
+   * Conversion rate: calculated as the number of tracked searches with at least one conversion
+   * event divided by the number of tracked searches. If null, Algolia didn't receive any search
+   * requests with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
   @javax.annotation.Nullable
   public Double getConversionRate() {
@@ -198,7 +198,7 @@ public class TopSearchWithRevenueAnalytics {
     return this;
   }
 
-  /** Revenue associated with this search, broken-down by currencies. */
+  /** Revenue associated with this search: broken down by currency. */
   @javax.annotation.Nonnull
   public Map<String, CurrencyCode> getCurrencies() {
     return currencies;
@@ -210,9 +210,9 @@ public class TopSearchWithRevenueAnalytics {
   }
 
   /**
-   * Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event
-   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
-   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
+   * Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart
+   * event divided by the number of tracked searches. If null, Algolia didn't receive any search
+   * requests with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
   @javax.annotation.Nullable
   public Double getAddToCartRate() {
@@ -236,7 +236,7 @@ public class TopSearchWithRevenueAnalytics {
   }
 
   /**
-   * Purchase rate, calculated as number of tracked searches with at least one purchase event
+   * Purchase rate: calculated as the number of tracked searches with at least one purchase event
    * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
    * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */

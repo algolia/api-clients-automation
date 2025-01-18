@@ -33,7 +33,7 @@
   */
 package algoliasearch.search
 
-/** link for a banner defined in merchandising studio.
+/** Link for a banner defined in the Merchandising Studio.
   */
 case class BannerLink(
     url: Option[String] = scala.None

@@ -57,6 +57,10 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('attributeForDistinct', (v) => v as String?),
           maxFacetHits:
               $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
+          keepDiacriticsOnCharacters: $checkedConvert(
+              'keepDiacriticsOnCharacters', (v) => v as String?),
+          customRanking: $checkedConvert('customRanking',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
         return val;
       },
@@ -98,6 +102,9 @@ Map<String, dynamic> _$BaseIndexSettingsToJson(BaseIndexSettings instance) =>
       if (instance.attributeForDistinct case final value?)
         'attributeForDistinct': value,
       if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
+      if (instance.keepDiacriticsOnCharacters case final value?)
+        'keepDiacriticsOnCharacters': value,
+      if (instance.customRanking case final value?) 'customRanking': value,
     };
 
 const _$SupportedLanguageEnumMap = {

@@ -131,8 +131,8 @@ class SnippetPersonalizationClient {
     // Call the API
     client.setPersonalizationStrategy(
       new PersonalizationStrategyParams()
-        .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
-        .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName("Event")))
+        .setEventsScoring(Arrays.asList(new EventsScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
+        .setFacetsScoring(Arrays.asList(new FacetsScoring().setScore(42).setFacetName("Event")))
         .setPersonalizationImpact(42)
     );
     // >LOG

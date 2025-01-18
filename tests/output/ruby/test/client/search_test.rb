@@ -182,7 +182,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.10.2\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.11.0\).*/))
   end
 
   # call deleteObjects without error
@@ -546,6 +546,73 @@ class TestClientSearchClient < Test::Unit::TestCase
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
+  end
+
+  # call replaceAllObjects with partial scopes
+  def test_replace_all_objects1
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6685,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.replace_all_objects(
+      "cts_e2e_replace_all_objects_scopes_ruby",
+      [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+      77,
+      ["settings", "synonyms"]
+    )
+    assert_equal(
+      {
+        :"copyOperationResponse" => {:"taskID" => 125, :"updatedAt" => "2021-01-01T00:00:00.000Z"},
+        :"batchResponses" => [{:"taskID" => 126, :"objectIDs" => ["1", "2"]}],
+        :"moveOperationResponse" => {:"taskID" => 777, :"updatedAt" => "2021-01-01T00:00:00.000Z"}
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # replaceAllObjects should cleanup on failure
+  def test_replace_all_objects2
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6684,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    begin
+      client.replace_all_objects(
+        "cts_e2e_replace_all_objects_too_big_ruby",
+        [{objectID: "fine", body: "small obj"}, {objectID: "toolarge", body: "something bigger than 10KB"}]
+      )
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "400: Record is too big".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
   end
 
   # call saveObjects without error

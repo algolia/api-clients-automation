@@ -27,13 +27,13 @@ public sealed class MonitoringConfig : AlgoliaConfig
   /// </summary>
   /// <param name="appId">Your application ID</param>
   /// <param name="apiKey">Your API Key</param>
-  public MonitoringConfig(string appId, string apiKey) : base(appId, apiKey, "Monitoring", "7.11.2")
+  public MonitoringConfig(string appId, string apiKey) : base(appId, apiKey, "Monitoring", "7.12.0")
   {
     DefaultHosts = GetDefaultHosts();
     Compression = CompressionType.None;
-    ReadTimeout = TimeSpan.FromSeconds(5);
-    WriteTimeout = TimeSpan.FromSeconds(30);
-    ConnectTimeout = TimeSpan.FromSeconds(2);
+    ReadTimeout = TimeSpan.FromMilliseconds(5000);
+    WriteTimeout = TimeSpan.FromMilliseconds(30000);
+    ConnectTimeout = TimeSpan.FromMilliseconds(2000);
   }
   private static List<StatefulHost> GetDefaultHosts()
   {

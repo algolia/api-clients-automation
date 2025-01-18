@@ -148,7 +148,7 @@ final class SearchClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual(TimeInterval(5000 / 1000), echoResponse.timeout)
+        XCTAssertEqual(TimeInterval(5000) / 1000, echoResponse.timeout)
     }
 
     /// calls api with default write timeouts
@@ -161,7 +161,7 @@ final class SearchClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual(TimeInterval(30000 / 1000), echoResponse.timeout)
+        XCTAssertEqual(TimeInterval(30000) / 1000, echoResponse.timeout)
     }
 
     /// calls api with correct user agent
@@ -192,7 +192,7 @@ final class SearchClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.12.2\\).*"
+        let pattern = "^Algolia for Swift \\(9.13.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -469,6 +469,64 @@ final class SearchClientClientTests: XCTestCase {
                         .data(using: .utf8)
                 )
             try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+        }
+    }
+
+    /// call replaceAllObjects with partial scopes
+    func testReplaceAllObjectsTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6685"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.replaceAllObjects(
+                indexName: "cts_e2e_replace_all_objects_scopes_swift",
+                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+                batchSize: 77,
+                scopes: [ScopeType.settings, ScopeType.synonyms]
+            )
+
+            let comparableData =
+                try XCTUnwrap(
+                    "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":126,\"objectIDs\":[\"1\",\"2\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+                        .data(using: .utf8)
+                )
+            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+        }
+    }
+
+    /// replaceAllObjects should cleanup on failure
+    func testReplaceAllObjectsTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6684"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.replaceAllObjects(
+                indexName: "cts_e2e_replace_all_objects_too_big_swift",
+                objects: [
+                    ["objectID": "fine", "body": "small obj"],
+                    ["objectID": "toolarge", "body": "something bigger than 10KB"],
+                ]
+            )
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "HTTP error: Status code: 400 Message: Record is too big")
         }
     }
 

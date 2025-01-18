@@ -25,7 +25,7 @@ import type {
   GetUserTokenProfileProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.18.0';
+export const apiClientVersion = '5.19.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -72,6 +72,11 @@ export function createPersonalizationClient({
      * The `appId` currently in use.
      */
     appId: appIdOption,
+
+    /**
+     * The `apiKey` currently in use.
+     */
+    apiKey: apiKeyOption,
 
     /**
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
@@ -333,14 +338,14 @@ export function createPersonalizationClient({
         );
       }
 
-      if (!personalizationStrategyParams.eventScoring) {
+      if (!personalizationStrategyParams.eventsScoring) {
         throw new Error(
-          'Parameter `personalizationStrategyParams.eventScoring` is required when calling `setPersonalizationStrategy`.',
+          'Parameter `personalizationStrategyParams.eventsScoring` is required when calling `setPersonalizationStrategy`.',
         );
       }
-      if (!personalizationStrategyParams.facetScoring) {
+      if (!personalizationStrategyParams.facetsScoring) {
         throw new Error(
-          'Parameter `personalizationStrategyParams.facetScoring` is required when calling `setPersonalizationStrategy`.',
+          'Parameter `personalizationStrategyParams.facetsScoring` is required when calling `setPersonalizationStrategy`.',
         );
       }
       if (!personalizationStrategyParams.personalizationImpact) {

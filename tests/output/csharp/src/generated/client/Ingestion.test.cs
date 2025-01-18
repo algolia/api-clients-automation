@@ -81,6 +81,35 @@ public class IngestionClientTests
     Assert.Equal(25000, result.ResponseTimeout.TotalMilliseconds);
   }
 
+  [Fact(DisplayName = "endpoint level timeout")]
+  public async Task ApiTest3()
+  {
+    var client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
+    await client.ValidateSourceBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate { Name = "newName" }
+    );
+    EchoResponse result = _echo.LastResponse;
+
+    Assert.Equal(180000, result.ConnectTimeout.TotalMilliseconds);
+    Assert.Equal(180000, result.ResponseTimeout.TotalMilliseconds);
+  }
+
+  [Fact(DisplayName = "can override endpoint level timeout")]
+  public async Task ApiTest4()
+  {
+    var client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
+    await client.ValidateSourceBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate { Name = "newName" },
+      new RequestOptionBuilder().SetWriteTimeout(TimeSpan.FromMilliseconds(3456)).Build()
+    );
+    EchoResponse result = _echo.LastResponse;
+
+    Assert.Equal(180000, result.ConnectTimeout.TotalMilliseconds);
+    Assert.Equal(3456, result.ResponseTimeout.TotalMilliseconds);
+  }
+
   [Fact(DisplayName = "calls api with correct user agent")]
   public async Task CommonApiTest0()
   {
@@ -102,7 +131,7 @@ public class IngestionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.11.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.12.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

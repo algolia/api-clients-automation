@@ -157,6 +157,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of TaskCreateResponse</returns>
+  [Obsolete]
   Task<TaskCreateResponse> CreateTaskV1Async(TaskCreateV1 taskCreate, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -169,6 +170,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>TaskCreateResponse</returns>
+  [Obsolete]
   TaskCreateResponse CreateTaskV1(TaskCreateV1 taskCreate, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -439,6 +441,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of DeleteResponse</returns>
+  [Obsolete]
   Task<DeleteResponse> DeleteTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -451,6 +454,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>DeleteResponse</returns>
+  [Obsolete]
   DeleteResponse DeleteTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -596,6 +600,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of TaskUpdateResponse</returns>
+  [Obsolete]
   Task<TaskUpdateResponse> EnableTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -613,6 +618,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>TaskUpdateResponse</returns>
+  [Obsolete]
   TaskUpdateResponse EnableTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -836,6 +842,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of TaskV1</returns>
+  [Obsolete]
   Task<TaskV1> GetTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -853,6 +860,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>TaskV1</returns>
+  [Obsolete]
   TaskV1 GetTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1139,6 +1147,7 @@ public interface IIngestionClient
   /// <param name="sourceType">Filters the tasks with the specified source type. (optional)</param>
   /// <param name="destinationID">Destination IDs for filtering the list of tasks. (optional)</param>
   /// <param name="triggerType">Type of task trigger for filtering the list of tasks. (optional)</param>
+  /// <param name="withEmailNotifications">If specified, the response only includes tasks with notifications.email.enabled set to this value. (optional)</param>
   /// <param name="sort">Property by which to sort the list of tasks. (optional)</param>
   /// <param name="order">Sort order of the response, ascending or descending. (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
@@ -1147,7 +1156,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of ListTasksResponse</returns>
-  Task<ListTasksResponse> ListTasksAsync(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default);
+  Task<ListTasksResponse> ListTasksAsync(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, bool? withEmailNotifications = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// Retrieves a list of tasks. (Synchronous version)
@@ -1165,6 +1174,7 @@ public interface IIngestionClient
   /// <param name="sourceType">Filters the tasks with the specified source type. (optional)</param>
   /// <param name="destinationID">Destination IDs for filtering the list of tasks. (optional)</param>
   /// <param name="triggerType">Type of task trigger for filtering the list of tasks. (optional)</param>
+  /// <param name="withEmailNotifications">If specified, the response only includes tasks with notifications.email.enabled set to this value. (optional)</param>
   /// <param name="sort">Property by which to sort the list of tasks. (optional)</param>
   /// <param name="order">Sort order of the response, ascending or descending. (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
@@ -1173,7 +1183,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>ListTasksResponse</returns>
-  ListTasksResponse ListTasks(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default);
+  ListTasksResponse ListTasks(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, bool? withEmailNotifications = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
@@ -1198,6 +1208,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of ListTasksResponseV1</returns>
+  [Obsolete]
   Task<ListTasksResponseV1> ListTasksV1Async(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1223,6 +1234,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>ListTasksResponseV1</returns>
+  [Obsolete]
   ListTasksResponseV1 ListTasksV1(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1388,6 +1400,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of RunResponse</returns>
+  [Obsolete]
   Task<RunResponse> RunTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1405,6 +1418,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>RunResponse</returns>
+  [Obsolete]
   RunResponse RunTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1558,6 +1572,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of List{TaskV1}</returns>
+  [Obsolete]
   Task<List<TaskV1>> SearchTasksV1Async(TaskSearch taskSearch, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1575,6 +1590,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>List{TaskV1}</returns>
+  [Obsolete]
   List<TaskV1> SearchTasksV1(TaskSearch taskSearch, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1612,7 +1628,7 @@ public interface IIngestionClient
   List<Transformation> SearchTransformations(TransformationSearch transformationSearch, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`. 
+  /// Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`. 
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1629,7 +1645,7 @@ public interface IIngestionClient
   Task<WatchResponse> TriggerDockerSourceDiscoverAsync(string sourceID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.  (Synchronous version)
+  /// Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1860,6 +1876,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of TaskUpdateResponse</returns>
+  [Obsolete]
   Task<TaskUpdateResponse> UpdateTaskV1Async(string taskID, TaskUpdateV1 taskUpdate, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1873,6 +1890,7 @@ public interface IIngestionClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>TaskUpdateResponse</returns>
+  [Obsolete]
   TaskUpdateResponse UpdateTaskV1(string taskID, TaskUpdateV1 taskUpdate, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -2131,6 +2149,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<TaskCreateResponse> CreateTaskV1Async(TaskCreateV1 taskCreate, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2146,6 +2165,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public TaskCreateResponse CreateTaskV1(TaskCreateV1 taskCreate, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => CreateTaskV1Async(taskCreate, options, cancellationToken));
 
@@ -2333,6 +2353,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<DeleteResponse> DeleteTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2348,6 +2369,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public DeleteResponse DeleteTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => DeleteTaskV1Async(taskID, options, cancellationToken));
 
@@ -2435,6 +2457,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<TaskUpdateResponse> EnableTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2450,6 +2473,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public TaskUpdateResponse EnableTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => EnableTaskV1Async(taskID, options, cancellationToken));
 
@@ -2580,6 +2604,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<TaskV1> GetTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2595,6 +2620,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public TaskV1 GetTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => GetTaskV1Async(taskID, options, cancellationToken));
 
@@ -2736,7 +2762,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
-  public async Task<ListTasksResponse> ListTasksAsync(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default)
+  public async Task<ListTasksResponse> ListTasksAsync(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, bool? withEmailNotifications = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
     var requestOptions = new InternalRequestOptions(options);
 
@@ -2749,6 +2775,7 @@ public partial class IngestionClient : IIngestionClient
     requestOptions.AddQueryParameter("sourceType", sourceType);
     requestOptions.AddQueryParameter("destinationID", destinationID);
     requestOptions.AddQueryParameter("triggerType", triggerType);
+    requestOptions.AddQueryParameter("withEmailNotifications", withEmailNotifications);
     requestOptions.AddQueryParameter("sort", sort);
     requestOptions.AddQueryParameter("order", order);
     return await _transport.ExecuteRequestAsync<ListTasksResponse>(new HttpMethod("GET"), "/2/tasks", requestOptions, cancellationToken).ConfigureAwait(false);
@@ -2756,11 +2783,12 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
-  public ListTasksResponse ListTasks(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
-    AsyncHelper.RunSync(() => ListTasksAsync(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, sort, order, options, cancellationToken));
+  public ListTasksResponse ListTasks(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<SourceType> sourceType = default, List<string> destinationID = default, List<TriggerType> triggerType = default, bool? withEmailNotifications = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
+    AsyncHelper.RunSync(() => ListTasksAsync(itemsPerPage, page, action, enabled, sourceID, sourceType, destinationID, triggerType, withEmailNotifications, sort, order, options, cancellationToken));
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<ListTasksResponseV1> ListTasksV1Async(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
     var requestOptions = new InternalRequestOptions(options);
@@ -2780,6 +2808,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public ListTasksResponseV1 ListTasksV1(int? itemsPerPage = default, int? page = default, List<ActionType> action = default, bool? enabled = default, List<string> sourceID = default, List<string> destinationID = default, List<TriggerType> triggerType = default, TaskSortKeys? sort = default, OrderKeys? order = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => ListTasksV1Async(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, options, cancellationToken));
 
@@ -2820,6 +2849,9 @@ public partial class IngestionClient : IIngestionClient
 
     requestOptions.AddQueryParameter("watch", watch);
     requestOptions.Data = pushTaskPayload;
+    requestOptions.ReadTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.WriteTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds(180000);
     return await _transport.ExecuteRequestAsync<WatchResponse>(new HttpMethod("POST"), "/2/tasks/{taskID}/push", requestOptions, cancellationToken).ConfigureAwait(false);
   }
 
@@ -2871,6 +2903,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<RunResponse> RunTaskV1Async(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2886,6 +2919,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public RunResponse RunTaskV1(string taskID, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => RunTaskV1Async(taskID, options, cancellationToken));
 
@@ -2971,6 +3005,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<List<TaskV1>> SearchTasksV1Async(TaskSearch taskSearch, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2986,6 +3021,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public List<TaskV1> SearchTasksV1(TaskSearch taskSearch, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => SearchTasksV1Async(taskSearch, options, cancellationToken));
 
@@ -3021,6 +3057,9 @@ public partial class IngestionClient : IIngestionClient
 
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
 
+    requestOptions.ReadTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.WriteTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds(180000);
     return await _transport.ExecuteRequestAsync<WatchResponse>(new HttpMethod("POST"), "/1/sources/{sourceID}/discover", requestOptions, cancellationToken).ConfigureAwait(false);
   }
 
@@ -3176,6 +3215,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<TaskUpdateResponse> UpdateTaskV1Async(string taskID, TaskUpdateV1 taskUpdate, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -3196,6 +3236,7 @@ public partial class IngestionClient : IIngestionClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public TaskUpdateResponse UpdateTaskV1(string taskID, TaskUpdateV1 taskUpdate, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => UpdateTaskV1Async(taskID, taskUpdate, options, cancellationToken));
 
@@ -3232,6 +3273,9 @@ public partial class IngestionClient : IIngestionClient
 
 
     requestOptions.Data = sourceCreate;
+    requestOptions.ReadTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.WriteTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds(180000);
     return await _transport.ExecuteRequestAsync<WatchResponse>(new HttpMethod("POST"), "/1/sources/validate", requestOptions, cancellationToken).ConfigureAwait(false);
   }
 
@@ -3257,6 +3301,9 @@ public partial class IngestionClient : IIngestionClient
     requestOptions.PathParameters.Add("sourceID", QueryStringHelper.ParameterToString(sourceID));
 
     requestOptions.Data = sourceUpdate;
+    requestOptions.ReadTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.WriteTimeout ??= TimeSpan.FromMilliseconds(180000);
+    requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds(180000);
     return await _transport.ExecuteRequestAsync<WatchResponse>(new HttpMethod("POST"), "/1/sources/{sourceID}/validate", requestOptions, cancellationToken).ConfigureAwait(false);
   }
 

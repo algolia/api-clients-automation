@@ -1,5 +1,5 @@
-import { run, runComposerInstall, toAbsolutePath } from './common.js';
-import { createSpinner } from './spinners.js';
+import { run, runComposerInstall, toAbsolutePath } from './common.ts';
+import { createSpinner } from './spinners.ts';
 
 export async function formatter(language: string, cwd: string): Promise<void> {
   const spinner = createSpinner(`running formatter for '${language}' in '${cwd}'`);
@@ -38,7 +38,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'javascript':
       await run(
-        `yarn oxlint -c ${toAbsolutePath('oxlintrc.json')} --fix --fix-suggestions --fix-dangerously --disable-react-plugin --promise-plugin --node-plugin --security-plugin --import-plugin ${cwd} && yarn prettier --write ${cwd} --ignore-path=${toAbsolutePath('.prettierignore')} && yarn eslint --ext=json ${cwd} --fix --no-error-on-unmatched-pattern`,
+        `yarn oxlint -c ${toAbsolutePath('oxlintrc.json')} --fix --fix-suggestions --fix-dangerously --disable-react-plugin --promise-plugin --node-plugin --import-plugin ${cwd} && yarn prettier --write ${cwd} --ignore-path=${toAbsolutePath('.prettierignore')} && yarn eslint --ext=json ${cwd} --fix --no-error-on-unmatched-pattern`,
         { language },
       );
       break;
@@ -54,7 +54,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'python':
       await run(
-        'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix --unsafe-fixes && poetry run ruff format',
+        'poetry lock && poetry sync --no-root && pip freeze > requirements.txt && poetry run ruff check --fix --unsafe-fixes && poetry run ruff format',
         { cwd, language },
       );
       if (!cwd.includes('tests')) {

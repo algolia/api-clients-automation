@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class TopHit
-      # Object ID of a record that's returned as a search result.
+      # Object ID of a record returned as a search result.
       attr_accessor :hit
 
       # Number of occurrences.
@@ -18,11 +18,6 @@ module Algolia
           :hit => :hit,
           :count => :count
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

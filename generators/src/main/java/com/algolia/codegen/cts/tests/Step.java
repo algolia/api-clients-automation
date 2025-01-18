@@ -8,6 +8,7 @@ public class Step {
   public String method;
   public int times;
   public Map<String, Object> parameters;
+  public RequestOptions requestOptions;
   public Expected expected;
 
   public String toString() {
@@ -17,6 +18,7 @@ public class Step {
     sb.append("    method: ").append(method).append("\n");
     sb.append("    times: ").append(times).append("\n");
     sb.append("    parameters: ").append(parameters).append("\n");
+    sb.append("    requestOptions: ").append(requestOptions).append("\n");
     sb.append("    expected: ").append(expected).append("\n");
     sb.append("}");
     return sb.toString();

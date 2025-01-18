@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Ingestion
-    # The selected streams of a singer or airbyte connector.
+    # The selected streams of an airbyte connector.
     class DockerStreamsInput
       attr_accessor :streams
 
@@ -16,9 +16,11 @@ module Algolia
         }
       end
 
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :streams
+        ]
       end
 
       # Attribute type mapping.

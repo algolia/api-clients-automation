@@ -4,6 +4,7 @@ import com.algolia.utils.StringUtils;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Nullable;
 
 /**
  * Request options are used to pass extra parameters, headers, timeout to the request. Parameters
@@ -15,6 +16,7 @@ public final class RequestOptions {
   private final Map<String, String> queryParameters = new HashMap<>();
   private Duration readTimeout;
   private Duration writeTimeout;
+  private Duration connectTimeout;
 
   public RequestOptions addExtraHeader(String key, Object value) {
     if (value == null) return this;
@@ -62,6 +64,32 @@ public final class RequestOptions {
     return this;
   }
 
+  public Duration getConnectTimeout() {
+    return connectTimeout;
+  }
+
+  public RequestOptions setConnectTimeout(Duration connectTimeout) {
+    this.connectTimeout = connectTimeout;
+    return this;
+  }
+
+  // `this` will be merged in `other`. Values in `other` will take precedence over `this`'s.
+  public RequestOptions mergeRight(@Nullable RequestOptions other) {
+    if (other == null) {
+      return this;
+    }
+
+    RequestOptions requestOptions = new RequestOptions();
+    requestOptions.headers.putAll(this.headers);
+    requestOptions.headers.putAll(other.headers);
+    requestOptions.queryParameters.putAll(this.queryParameters);
+    requestOptions.queryParameters.putAll(other.queryParameters);
+    requestOptions.readTimeout = other.readTimeout != null ? other.readTimeout : this.readTimeout;
+    requestOptions.writeTimeout = other.writeTimeout != null ? other.writeTimeout : this.writeTimeout;
+    requestOptions.connectTimeout = other.connectTimeout != null ? other.connectTimeout : this.connectTimeout;
+    return requestOptions;
+  }
+
   @Override
   public String toString() {
     return (
@@ -74,6 +102,8 @@ public final class RequestOptions {
       readTimeout +
       ", writeTimeout=" +
       writeTimeout +
+      ", connectTimeout=" +
+      connectTimeout +
       '}'
     );
   }

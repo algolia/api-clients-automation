@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { parseCodeSamples } from '../snippets.js';
-import { CodeSamples } from '../types.js';
+import { generateSnippetsJSON } from '../snippets.ts';
+import type { CodeSamples } from '../types.ts';
 
 describe('init', () => {
   it('parses a multi line import', () => {
     expect(
       JSON.stringify(
-        parseCodeSamples({
+        generateSnippetsJSON({
           foo: {
             default: `
           // Initialize the client
@@ -56,7 +56,7 @@ var response = await client.CreateConfigAsync(
   it('parses a single line import', () => {
     expect(
       JSON.stringify(
-        parseCodeSamples({
+        generateSnippetsJSON({
           foo: {
             default: `
           // Initialize the client
@@ -105,7 +105,7 @@ describe('initialize', () => {
   it("doesn't stop at `client`", () => {
     expect(
       JSON.stringify(
-        parseCodeSamples({
+        generateSnippetsJSON({
           foo: {
             default: `
           // Initialize the client foo bar BAAAAAAAAAAAAAAAAAAAAAZ

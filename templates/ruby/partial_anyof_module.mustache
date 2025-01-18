@@ -42,7 +42,6 @@
 
       SchemaMismatchError = Class.new(StandardError)
 
-      # Note: 'File' is missing here because in the regular case we get the data _after_ a call to JSON.parse.
       def find_and_cast_into_type(klass, data)
         return if data.nil?
 
@@ -77,12 +76,16 @@
             if const.respond_to?(:openapi_any_of) # nested anyOf model
               model = const.build(data)
               return model if model
+            elsif const.respond_to?(:discriminator_attributes)
+              if const.discriminator_attributes().all? { |attr| data.key?(attr) }
+                model = const.build_from_hash(data)
+              end
             else
-              # raise if data contains keys that are not known to the model
-              raise unless (data.keys - const.acceptable_attributes).empty?
+              # maybe it's an enum, or doens't have discriminators
               model = const.build_from_hash(data)
-              return model if model
             end
+
+            return model if model
           end
         end
 

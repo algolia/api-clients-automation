@@ -95,7 +95,6 @@ from algoliasearch.search.models.replace_source_response import ReplaceSourceRes
 from algoliasearch.search.models.rule import Rule
 from algoliasearch.search.models.save_object_response import SaveObjectResponse
 from algoliasearch.search.models.save_synonym_response import SaveSynonymResponse
-from algoliasearch.search.models.scope_type import ScopeType
 from algoliasearch.search.models.search_dictionary_entries_params import (
     SearchDictionaryEntriesParams,
 )
@@ -611,6 +610,7 @@ class SearchClient:
         index_name: str,
         objects: List[Dict[str, Any]],
         batch_size: int = 1000,
+        scopes=["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ReplaceAllObjectsResponse:
         """
@@ -620,57 +620,59 @@ class SearchClient:
         """
         tmp_index_name = self.create_temporary_name(index_name)
 
-        async def _copy() -> UpdatedAtResponse:
-            return await self.operation_index(
-                index_name=index_name,
-                operation_index_params=OperationIndexParams(
-                    operation=OperationType.COPY,
-                    destination=tmp_index_name,
-                    scope=[
-                        ScopeType("settings"),
-                        ScopeType("rules"),
-                        ScopeType("synonyms"),
-                    ],
-                ),
+        try:
+
+            async def _copy() -> UpdatedAtResponse:
+                return await self.operation_index(
+                    index_name=index_name,
+                    operation_index_params=OperationIndexParams(
+                        operation=OperationType.COPY,
+                        destination=tmp_index_name,
+                        scope=scopes,
+                    ),
+                    request_options=request_options,
+                )
+
+            copy_operation_response = await _copy()
+
+            batch_responses = await self.chunked_batch(
+                index_name=tmp_index_name,
+                objects=objects,
+                wait_for_tasks=True,
+                batch_size=batch_size,
                 request_options=request_options,
             )
 
-        copy_operation_response = await _copy()
+            await self.wait_for_task(
+                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+            )
 
-        batch_responses = await self.chunked_batch(
-            index_name=tmp_index_name,
-            objects=objects,
-            wait_for_tasks=True,
-            batch_size=batch_size,
-            request_options=request_options,
-        )
+            copy_operation_response = await _copy()
+            await self.wait_for_task(
+                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+            )
 
-        await self.wait_for_task(
-            index_name=tmp_index_name, task_id=copy_operation_response.task_id
-        )
+            move_operation_response = await self.operation_index(
+                index_name=tmp_index_name,
+                operation_index_params=OperationIndexParams(
+                    operation=OperationType.MOVE,
+                    destination=index_name,
+                ),
+                request_options=request_options,
+            )
+            await self.wait_for_task(
+                index_name=tmp_index_name, task_id=move_operation_response.task_id
+            )
 
-        copy_operation_response = await _copy()
-        await self.wait_for_task(
-            index_name=tmp_index_name, task_id=copy_operation_response.task_id
-        )
+            return ReplaceAllObjectsResponse(
+                copy_operation_response=copy_operation_response,
+                batch_responses=batch_responses,
+                move_operation_response=move_operation_response,
+            )
+        except Exception as e:
+            await self.delete_index(tmp_index_name)
 
-        move_operation_response = await self.operation_index(
-            index_name=tmp_index_name,
-            operation_index_params=OperationIndexParams(
-                operation=OperationType.MOVE,
-                destination=index_name,
-            ),
-            request_options=request_options,
-        )
-        await self.wait_for_task(
-            index_name=tmp_index_name, task_id=move_operation_response.task_id
-        )
-
-        return ReplaceAllObjectsResponse(
-            copy_operation_response=copy_operation_response,
-            batch_responses=batch_responses,
-            move_operation_response=move_operation_response,
-        )
+            raise e
 
     async def index_exists(self, index_name: str) -> bool:
         """
@@ -5649,6 +5651,7 @@ class SearchClientSync:
         index_name: str,
         objects: List[Dict[str, Any]],
         batch_size: int = 1000,
+        scopes=["settings", "rules", "synonyms"],
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ReplaceAllObjectsResponse:
         """
@@ -5658,57 +5661,59 @@ class SearchClientSync:
         """
         tmp_index_name = self.create_temporary_name(index_name)
 
-        def _copy() -> UpdatedAtResponse:
-            return self.operation_index(
-                index_name=index_name,
-                operation_index_params=OperationIndexParams(
-                    operation=OperationType.COPY,
-                    destination=tmp_index_name,
-                    scope=[
-                        ScopeType("settings"),
-                        ScopeType("rules"),
-                        ScopeType("synonyms"),
-                    ],
-                ),
+        try:
+
+            def _copy() -> UpdatedAtResponse:
+                return self.operation_index(
+                    index_name=index_name,
+                    operation_index_params=OperationIndexParams(
+                        operation=OperationType.COPY,
+                        destination=tmp_index_name,
+                        scope=scopes,
+                    ),
+                    request_options=request_options,
+                )
+
+            copy_operation_response = _copy()
+
+            batch_responses = self.chunked_batch(
+                index_name=tmp_index_name,
+                objects=objects,
+                wait_for_tasks=True,
+                batch_size=batch_size,
                 request_options=request_options,
             )
 
-        copy_operation_response = _copy()
+            self.wait_for_task(
+                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+            )
 
-        batch_responses = self.chunked_batch(
-            index_name=tmp_index_name,
-            objects=objects,
-            wait_for_tasks=True,
-            batch_size=batch_size,
-            request_options=request_options,
-        )
+            copy_operation_response = _copy()
+            self.wait_for_task(
+                index_name=tmp_index_name, task_id=copy_operation_response.task_id
+            )
 
-        self.wait_for_task(
-            index_name=tmp_index_name, task_id=copy_operation_response.task_id
-        )
+            move_operation_response = self.operation_index(
+                index_name=tmp_index_name,
+                operation_index_params=OperationIndexParams(
+                    operation=OperationType.MOVE,
+                    destination=index_name,
+                ),
+                request_options=request_options,
+            )
+            self.wait_for_task(
+                index_name=tmp_index_name, task_id=move_operation_response.task_id
+            )
 
-        copy_operation_response = _copy()
-        self.wait_for_task(
-            index_name=tmp_index_name, task_id=copy_operation_response.task_id
-        )
+            return ReplaceAllObjectsResponse(
+                copy_operation_response=copy_operation_response,
+                batch_responses=batch_responses,
+                move_operation_response=move_operation_response,
+            )
+        except Exception as e:
+            self.delete_index(tmp_index_name)
 
-        move_operation_response = self.operation_index(
-            index_name=tmp_index_name,
-            operation_index_params=OperationIndexParams(
-                operation=OperationType.MOVE,
-                destination=index_name,
-            ),
-            request_options=request_options,
-        )
-        self.wait_for_task(
-            index_name=tmp_index_name, task_id=move_operation_response.task_id
-        )
-
-        return ReplaceAllObjectsResponse(
-            copy_operation_response=copy_operation_response,
-            batch_responses=batch_responses,
-            move_operation_response=move_operation_response,
-        )
+            raise e
 
     def index_exists(self, index_name: str) -> bool:
         """

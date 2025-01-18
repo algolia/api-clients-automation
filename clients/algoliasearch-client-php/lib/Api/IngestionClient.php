@@ -38,7 +38,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.11.2';
+    public const VERSION = '4.12.0';
 
     /**
      * @var ApiWrapperInterface
@@ -250,6 +250,8 @@ class IngestionClient
      *                          - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
      *                          - $taskCreate['input'] => (array)
      *                          - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
+     *                          - $taskCreate['notifications'] => (array)
+     *                          - $taskCreate['policies'] => (array)
      *
      * @see TaskCreate
      *
@@ -292,6 +294,8 @@ class IngestionClient
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\TaskCreateResponse|array<string, mixed>
+     *
+     * @deprecated
      */
     public function createTaskV1($taskCreate, $requestOptions = [])
     {
@@ -658,6 +662,8 @@ class IngestionClient
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\DeleteResponse|array<string, mixed>
+     *
+     * @deprecated
      */
     public function deleteTaskV1($taskID, $requestOptions = [])
     {
@@ -850,6 +856,8 @@ class IngestionClient
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\TaskUpdateResponse|array<string, mixed>
+     *
+     * @deprecated
      */
     public function enableTaskV1($taskID, $requestOptions = [])
     {
@@ -1139,6 +1147,8 @@ class IngestionClient
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\TaskV1|array<string, mixed>
+     *
+     * @deprecated
      */
     public function getTaskV1($taskID, $requestOptions = [])
     {
@@ -1541,21 +1551,22 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param int   $itemsPerPage   Number of items per page. (optional, default to 10)
-     * @param int   $page           Page number of the paginated API response. (optional)
-     * @param array $action         Actions for filtering the list of tasks. (optional)
-     * @param bool  $enabled        Whether to filter the list of tasks by the `enabled` status. (optional)
-     * @param array $sourceID       Source IDs for filtering the list of tasks. (optional)
-     * @param array $sourceType     Filters the tasks with the specified source type. (optional)
-     * @param array $destinationID  Destination IDs for filtering the list of tasks. (optional)
-     * @param array $triggerType    Type of task trigger for filtering the list of tasks. (optional)
-     * @param array $sort           Property by which to sort the list of tasks. (optional)
-     * @param array $order          Sort order of the response, ascending or descending. (optional)
-     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     * @param int   $itemsPerPage           Number of items per page. (optional, default to 10)
+     * @param int   $page                   Page number of the paginated API response. (optional)
+     * @param array $action                 Actions for filtering the list of tasks. (optional)
+     * @param bool  $enabled                Whether to filter the list of tasks by the `enabled` status. (optional)
+     * @param array $sourceID               Source IDs for filtering the list of tasks. (optional)
+     * @param array $sourceType             Filters the tasks with the specified source type. (optional)
+     * @param array $destinationID          Destination IDs for filtering the list of tasks. (optional)
+     * @param array $triggerType            Type of task trigger for filtering the list of tasks. (optional)
+     * @param bool  $withEmailNotifications If specified, the response only includes tasks with notifications.email.enabled set to this value. (optional)
+     * @param array $sort                   Property by which to sort the list of tasks. (optional)
+     * @param array $order                  Sort order of the response, ascending or descending. (optional)
+     * @param array $requestOptions         the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\ListTasksResponse|array<string, mixed>
      */
-    public function listTasks($itemsPerPage = null, $page = null, $action = null, $enabled = null, $sourceID = null, $sourceType = null, $destinationID = null, $triggerType = null, $sort = null, $order = null, $requestOptions = [])
+    public function listTasks($itemsPerPage = null, $page = null, $action = null, $enabled = null, $sourceID = null, $sourceType = null, $destinationID = null, $triggerType = null, $withEmailNotifications = null, $sort = null, $order = null, $requestOptions = [])
     {
         $resourcePath = '/2/tasks';
         $queryParameters = [];
@@ -1609,6 +1620,10 @@ class IngestionClient
             $queryParameters['triggerType'] = $triggerType;
         }
 
+        if (null !== $withEmailNotifications) {
+            $queryParameters['withEmailNotifications'] = $withEmailNotifications;
+        }
+
         if (null !== $sort) {
             $queryParameters['sort'] = $sort;
         }
@@ -1640,6 +1655,8 @@ class IngestionClient
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\ListTasksResponseV1|array<string, mixed>
+     *
+     * @deprecated
      */
     public function listTasksV1($itemsPerPage = null, $page = null, $action = null, $enabled = null, $sourceID = null, $destinationID = null, $triggerType = null, $sort = null, $order = null, $requestOptions = [])
     {
@@ -1794,6 +1811,16 @@ class IngestionClient
             );
         }
 
+        if (!isset($requestOptions['readTimeout'])) {
+            $requestOptions['readTimeout'] = 180;
+        }
+        if (!isset($requestOptions['writeTimeout'])) {
+            $requestOptions['writeTimeout'] = 180;
+        }
+        if (!isset($requestOptions['connectTimeout'])) {
+            $requestOptions['connectTimeout'] = 180;
+        }
+
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
 
@@ -1895,6 +1922,8 @@ class IngestionClient
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\RunResponse|array<string, mixed>
+     *
+     * @deprecated
      */
     public function runTaskV1($taskID, $requestOptions = [])
     {
@@ -2074,6 +2103,8 @@ class IngestionClient
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\TaskV1[]|array<string, mixed>
+     *
+     * @deprecated
      */
     public function searchTasksV1($taskSearch, $requestOptions = [])
     {
@@ -2127,7 +2158,7 @@ class IngestionClient
     }
 
     /**
-     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2160,6 +2191,16 @@ class IngestionClient
                 ObjectSerializer::toPathValue($sourceID),
                 $resourcePath
             );
+        }
+
+        if (!isset($requestOptions['readTimeout'])) {
+            $requestOptions['readTimeout'] = 180;
+        }
+        if (!isset($requestOptions['writeTimeout'])) {
+            $requestOptions['writeTimeout'] = 180;
+        }
+        if (!isset($requestOptions['connectTimeout'])) {
+            $requestOptions['connectTimeout'] = 180;
         }
 
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
@@ -2422,6 +2463,8 @@ class IngestionClient
      *                           - $taskUpdate['input'] => (array)
      *                           - $taskUpdate['enabled'] => (bool) Whether the task is enabled.
      *                           - $taskUpdate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
+     *                           - $taskUpdate['notifications'] => (array)
+     *                           - $taskUpdate['policies'] => (array)
      *
      * @see TaskUpdate
      *
@@ -2477,6 +2520,8 @@ class IngestionClient
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\TaskUpdateResponse|array<string, mixed>
+     *
+     * @deprecated
      */
     public function updateTaskV1($taskID, $taskUpdate, $requestOptions = [])
     {
@@ -2585,6 +2630,16 @@ class IngestionClient
         $headers = [];
         $httpBody = isset($sourceCreate) ? $sourceCreate : [];
 
+        if (!isset($requestOptions['readTimeout'])) {
+            $requestOptions['readTimeout'] = 180;
+        }
+        if (!isset($requestOptions['writeTimeout'])) {
+            $requestOptions['writeTimeout'] = 180;
+        }
+        if (!isset($requestOptions['connectTimeout'])) {
+            $requestOptions['connectTimeout'] = 180;
+        }
+
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
 
@@ -2635,6 +2690,16 @@ class IngestionClient
                 ObjectSerializer::toPathValue($sourceID),
                 $resourcePath
             );
+        }
+
+        if (!isset($requestOptions['readTimeout'])) {
+            $requestOptions['readTimeout'] = 180;
+        }
+        if (!isset($requestOptions['writeTimeout'])) {
+            $requestOptions['writeTimeout'] = 180;
+        }
+        if (!isset($requestOptions['connectTimeout'])) {
+            $requestOptions['connectTimeout'] = 180;
         }
 
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);

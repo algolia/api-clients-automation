@@ -11,63 +11,21 @@ import java.util.Objects;
 @JsonDeserialize(as = SourceDocker.class)
 public class SourceDocker implements SourceInput {
 
-  @JsonProperty("imageType")
-  private DockerImageType imageType;
-
-  @JsonProperty("registry")
-  private DockerRegistry registry;
-
   @JsonProperty("image")
   private String image;
 
-  @JsonProperty("version")
-  private String version;
-
   @JsonProperty("configuration")
   private Object configuration;
-
-  public SourceDocker setImageType(DockerImageType imageType) {
-    this.imageType = imageType;
-    return this;
-  }
-
-  /** Get imageType */
-  @javax.annotation.Nonnull
-  public DockerImageType getImageType() {
-    return imageType;
-  }
-
-  public SourceDocker setRegistry(DockerRegistry registry) {
-    this.registry = registry;
-    return this;
-  }
-
-  /** Get registry */
-  @javax.annotation.Nonnull
-  public DockerRegistry getRegistry() {
-    return registry;
-  }
 
   public SourceDocker setImage(String image) {
     this.image = image;
     return this;
   }
 
-  /** Docker image name. */
+  /** Shortname of the image, as returned by the referential. */
   @javax.annotation.Nonnull
   public String getImage() {
     return image;
-  }
-
-  public SourceDocker setVersion(String version) {
-    this.version = version;
-    return this;
-  }
-
-  /** Docker image version. */
-  @javax.annotation.Nullable
-  public String getVersion() {
-    return version;
   }
 
   public SourceDocker setConfiguration(Object configuration) {
@@ -90,28 +48,19 @@ public class SourceDocker implements SourceInput {
       return false;
     }
     SourceDocker sourceDocker = (SourceDocker) o;
-    return (
-      Objects.equals(this.imageType, sourceDocker.imageType) &&
-      Objects.equals(this.registry, sourceDocker.registry) &&
-      Objects.equals(this.image, sourceDocker.image) &&
-      Objects.equals(this.version, sourceDocker.version) &&
-      Objects.equals(this.configuration, sourceDocker.configuration)
-    );
+    return Objects.equals(this.image, sourceDocker.image) && Objects.equals(this.configuration, sourceDocker.configuration);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(imageType, registry, image, version, configuration);
+    return Objects.hash(image, configuration);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SourceDocker {\n");
-    sb.append("    imageType: ").append(toIndentedString(imageType)).append("\n");
-    sb.append("    registry: ").append(toIndentedString(registry)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
-    sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");
     sb.append("}");
     return sb.toString();

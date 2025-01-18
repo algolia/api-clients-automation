@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Recommend
-    # a search banner with image and url.
+    # Banner with image and link to redirect users.
     class Banner
       attr_accessor :image
 
@@ -17,11 +17,6 @@ module Algolia
           :image => :image,
           :link => :link
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

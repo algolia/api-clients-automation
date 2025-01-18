@@ -53,11 +53,23 @@ jobs:
     with:
       working-directory: ${{ matrix.package }}
 
+  wait_for_dependencies:
+    needs: 
+      - check
+      - publish_core
+      - publish_clients
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for dependency package to be published
+        shell: bash
+        run: sleep 300
+
   publish_algoliasearch:
     needs: 
       - check
       - publish_core
       - publish_clients
+      - wait_for_dependencies
     permissions:
       id-token: write
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1

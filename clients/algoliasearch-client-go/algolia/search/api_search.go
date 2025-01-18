@@ -21,6 +21,7 @@ import (
 	"time"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
@@ -30,6 +31,7 @@ type config struct {
 	context      context.Context
 	queryParams  url.Values
 	headerParams map[string]string
+	timeouts     transport.RequestConfiguration
 
 	// -- ChunkedBatch options
 	waitForTasks bool
@@ -37,6 +39,9 @@ type config struct {
 
 	// -- Partial update options
 	createIfNotExists bool
+
+	// -- ReplaceAllObjects options
+	scopes []ScopeType
 
 	// -- Iterable options
 	maxRetries int
@@ -75,6 +80,24 @@ func WithQueryParam(key string, value any) requestOption {
 	})
 }
 
+func WithReadTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.ReadTimeout = &timeout
+	})
+}
+
+func WithWriteTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.WriteTimeout = &timeout
+	})
+}
+
+func WithConnectTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.ConnectTimeout = &timeout
+	})
+}
+
 // --------- ChunkedBatch options ---------
 
 type ChunkedBatchOption interface {
@@ -97,19 +120,21 @@ func (c chunkedBatchOption) chunkedBatch() {}
 
 func (r requestOption) chunkedBatch() {}
 
+// WithWaitForTasks whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
 func WithWaitForTasks(waitForTasks bool) chunkedBatchOption {
 	return chunkedBatchOption(func(c *config) {
 		c.waitForTasks = waitForTasks
 	})
 }
 
+// WithBatchSize the size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
 func WithBatchSize(batchSize int) chunkedBatchOption {
 	return chunkedBatchOption(func(c *config) {
 		c.batchSize = batchSize
 	})
 }
 
-// --------- ChunkedBatch options ---------
+// --------- PartialUpdateObjects options ---------
 
 type PartialUpdateObjectsOption interface {
 	ChunkedBatchOption
@@ -136,9 +161,44 @@ func (c chunkedBatchOption) partialUpdateObjects() {}
 
 func (r requestOption) partialUpdateObjects() {}
 
+// WithCreateIfNotExists to be provided if non-existing objects are passed, otherwise, the call will fail.
 func WithCreateIfNotExists(createIfNotExists bool) partialUpdateObjectsOption {
 	return partialUpdateObjectsOption(func(c *config) {
 		c.createIfNotExists = createIfNotExists
+	})
+}
+
+// --------- ReplaceAllObjects options ---------
+
+type ReplaceAllObjectsOption interface {
+	ChunkedBatchOption
+	replaceAllObjects()
+}
+
+type replaceAllObjectsOption func(*config)
+
+var (
+	_ ReplaceAllObjectsOption = (*replaceAllObjectsOption)(nil)
+	_ ReplaceAllObjectsOption = (*chunkedBatchOption)(nil)
+	_ ReplaceAllObjectsOption = (*requestOption)(nil)
+)
+
+func (p replaceAllObjectsOption) apply(c *config) {
+	p(c)
+}
+
+func (p replaceAllObjectsOption) replaceAllObjects() {}
+
+func (p replaceAllObjectsOption) chunkedBatch() {}
+
+func (c chunkedBatchOption) replaceAllObjects() {}
+
+func (r requestOption) replaceAllObjects() {}
+
+// WithScopes the `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+func WithScopes(scopes []ScopeType) replaceAllObjectsOption {
+	return replaceAllObjectsOption(func(c *config) {
+		c.scopes = scopes
 	})
 }
 
@@ -164,18 +224,21 @@ func (r requestOption) iterable() {}
 
 func (i iterableOption) iterable() {}
 
+// WithMaxRetries the maximum number of retry. Default to 50.
 func WithMaxRetries(maxRetries int) iterableOption {
 	return iterableOption(func(c *config) {
 		c.maxRetries = maxRetries
 	})
 }
 
+// WithTimeout he function to decide how long to wait between retries. Default to min(retryCount * 200, 5000).
 func WithTimeout(timeout func(int) time.Duration) iterableOption {
 	return iterableOption(func(c *config) {
 		c.timeout = timeout
 	})
 }
 
+// WithAggregator the function to aggregate the results of the iterable.
 func WithAggregator(aggregator func(any, error)) iterableOption {
 	return iterableOption(func(c *config) {
 		c.aggregator = aggregator
@@ -209,6 +272,7 @@ func (r requestOption) waitForApiKey() {}
 
 func (i iterableOption) waitForApiKey() {}
 
+// WithApiKey necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE).
 func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 	return waitForApiKeyOption(func(c *config) {
 		c.apiKey = apiKey
@@ -239,7 +303,7 @@ func toIterableOptions(opts []ChunkedBatchOption) []IterableOption {
 	return iterableOpts
 }
 
-func toIterableOptionsWaitFor(opts []WaitForApiKeyOption) []IterableOption {
+func waitForApiKeyToIterableOptions(opts []WaitForApiKeyOption) []IterableOption {
 	iterableOpts := make([]IterableOption, 0, len(opts))
 
 	for _, opt := range opts {
@@ -251,7 +315,31 @@ func toIterableOptionsWaitFor(opts []WaitForApiKeyOption) []IterableOption {
 	return iterableOpts
 }
 
-func toChunkedBatchOptions(opts []PartialUpdateObjectsOption) []ChunkedBatchOption {
+func replaceAllObjectsToIterableOptions(opts []ReplaceAllObjectsOption) []IterableOption {
+	iterableOpts := make([]IterableOption, 0, len(opts))
+
+	for _, opt := range opts {
+		if opt, ok := opt.(IterableOption); ok {
+			iterableOpts = append(iterableOpts, opt)
+		}
+	}
+
+	return iterableOpts
+}
+
+func partialUpdateObjectsToChunkedBatchOptions(opts []PartialUpdateObjectsOption) []ChunkedBatchOption {
+	chunkedBatchOpts := make([]ChunkedBatchOption, 0, len(opts))
+
+	for _, opt := range opts {
+		if opt, ok := opt.(ChunkedBatchOption); ok {
+			chunkedBatchOpts = append(chunkedBatchOpts, opt)
+		}
+	}
+
+	return chunkedBatchOpts
+}
+
+func replaceAllObjectsToChunkBactchOptions(opts []ReplaceAllObjectsOption) []ChunkedBatchOption {
 	chunkedBatchOpts := make([]ChunkedBatchOption, 0, len(opts))
 
 	for _, opt := range opts {
@@ -341,7 +429,7 @@ func (c *APIClient) AddApiKeyWithHTTPInfo(r ApiAddApiKeyRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -497,7 +585,7 @@ func (c *APIClient) AddOrUpdateObjectWithHTTPInfo(r ApiAddOrUpdateObjectRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -621,7 +709,7 @@ func (c *APIClient) AppendSourceWithHTTPInfo(r ApiAppendSourceRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -758,7 +846,7 @@ func (c *APIClient) AssignUserIdWithHTTPInfo(r ApiAssignUserIdRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -899,7 +987,7 @@ func (c *APIClient) BatchWithHTTPInfo(r ApiBatchRequest, opts ...RequestOption) 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1041,7 +1129,7 @@ func (c *APIClient) BatchAssignUserIdsWithHTTPInfo(r ApiBatchAssignUserIdsReques
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1174,7 +1262,7 @@ func (c *APIClient) BatchDictionaryEntriesWithHTTPInfo(r ApiBatchDictionaryEntri
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1333,7 +1421,7 @@ func (c *APIClient) BrowseWithHTTPInfo(r ApiBrowseRequest, opts ...RequestOption
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -1471,7 +1559,7 @@ func (c *APIClient) ClearObjectsWithHTTPInfo(r ApiClearObjectsRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1604,7 +1692,7 @@ func (c *APIClient) ClearRulesWithHTTPInfo(r ApiClearRulesRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1737,7 +1825,7 @@ func (c *APIClient) ClearSynonymsWithHTTPInfo(r ApiClearSynonymsRequest, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1870,7 +1958,7 @@ func (c *APIClient) CustomDeleteWithHTTPInfo(r ApiCustomDeleteRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2000,7 +2088,7 @@ func (c *APIClient) CustomGetWithHTTPInfo(r ApiCustomGetRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2153,7 +2241,7 @@ func (c *APIClient) CustomPostWithHTTPInfo(r ApiCustomPostRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2307,7 +2395,7 @@ func (c *APIClient) CustomPutWithHTTPInfo(r ApiCustomPutRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2417,7 +2505,7 @@ func (c *APIClient) DeleteApiKeyWithHTTPInfo(r ApiDeleteApiKeyRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2558,7 +2646,7 @@ func (c *APIClient) DeleteByWithHTTPInfo(r ApiDeleteByRequest, opts ...RequestOp
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2687,7 +2775,7 @@ func (c *APIClient) DeleteIndexWithHTTPInfo(r ApiDeleteIndexRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2823,7 +2911,7 @@ func (c *APIClient) DeleteObjectWithHTTPInfo(r ApiDeleteObjectRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2978,7 +3066,7 @@ func (c *APIClient) DeleteRuleWithHTTPInfo(r ApiDeleteRuleRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3093,7 +3181,7 @@ func (c *APIClient) DeleteSourceWithHTTPInfo(r ApiDeleteSourceRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3243,7 +3331,7 @@ func (c *APIClient) DeleteSynonymWithHTTPInfo(r ApiDeleteSynonymRequest, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3358,7 +3446,7 @@ func (c *APIClient) GetApiKeyWithHTTPInfo(r ApiGetApiKeyRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3467,7 +3555,7 @@ func (c *APIClient) GetAppTaskWithHTTPInfo(r ApiGetAppTaskRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3542,7 +3630,7 @@ func (c *APIClient) GetDictionaryLanguagesWithHTTPInfo(opts ...RequestOption) (*
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3615,7 +3703,7 @@ func (c *APIClient) GetDictionarySettingsWithHTTPInfo(opts ...RequestOption) (*h
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3792,7 +3880,7 @@ func (c *APIClient) GetLogsWithHTTPInfo(r ApiGetLogsRequest, opts ...RequestOpti
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -3949,7 +4037,7 @@ func (c *APIClient) GetObjectWithHTTPInfo(r ApiGetObjectRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4072,7 +4160,7 @@ func (c *APIClient) GetObjectsWithHTTPInfo(r ApiGetObjectsRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -4203,7 +4291,7 @@ func (c *APIClient) GetRuleWithHTTPInfo(r ApiGetRuleRequest, opts ...RequestOpti
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4316,7 +4404,7 @@ func (c *APIClient) GetSettingsWithHTTPInfo(r ApiGetSettingsRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4390,7 +4478,7 @@ func (c *APIClient) GetSourcesWithHTTPInfo(opts ...RequestOption) (*http.Respons
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4519,7 +4607,7 @@ func (c *APIClient) GetSynonymWithHTTPInfo(r ApiGetSynonymRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4652,7 +4740,7 @@ func (c *APIClient) GetTaskWithHTTPInfo(r ApiGetTaskRequest, opts ...RequestOpti
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4736,7 +4824,7 @@ func (c *APIClient) GetTopUserIdsWithHTTPInfo(opts ...RequestOption) (*http.Resp
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4852,7 +4940,7 @@ func (c *APIClient) GetUserIdWithHTTPInfo(r ApiGetUserIdRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4970,7 +5058,7 @@ func (c *APIClient) HasPendingMappingsWithHTTPInfo(r ApiHasPendingMappingsReques
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5044,7 +5132,7 @@ func (c *APIClient) ListApiKeysWithHTTPInfo(opts ...RequestOption) (*http.Respon
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5117,7 +5205,7 @@ func (c *APIClient) ListClustersWithHTTPInfo(opts ...RequestOption) (*http.Respo
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5252,7 +5340,7 @@ func (c *APIClient) ListIndicesWithHTTPInfo(r ApiListIndicesRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5392,7 +5480,7 @@ func (c *APIClient) ListUserIdsWithHTTPInfo(r ApiListUserIdsRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5515,7 +5603,7 @@ func (c *APIClient) MultipleBatchWithHTTPInfo(r ApiMultipleBatchRequest, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5674,7 +5762,7 @@ func (c *APIClient) OperationIndexWithHTTPInfo(r ApiOperationIndexRequest, opts 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -5893,7 +5981,7 @@ func (c *APIClient) PartialUpdateObjectWithHTTPInfo(r ApiPartialUpdateObjectRequ
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6031,7 +6119,7 @@ func (c *APIClient) RemoveUserIdWithHTTPInfo(r ApiRemoveUserIdRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6148,7 +6236,7 @@ func (c *APIClient) ReplaceSourcesWithHTTPInfo(r ApiReplaceSourcesRequest, opts 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6264,7 +6352,7 @@ func (c *APIClient) RestoreApiKeyWithHTTPInfo(r ApiRestoreApiKeyRequest, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6413,7 +6501,7 @@ func (c *APIClient) SaveObjectWithHTTPInfo(r ApiSaveObjectRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6599,7 +6687,7 @@ func (c *APIClient) SaveRuleWithHTTPInfo(r ApiSaveRuleRequest, opts ...RequestOp
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6785,7 +6873,7 @@ func (c *APIClient) SaveRulesWithHTTPInfo(r ApiSaveRulesRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -6967,7 +7055,7 @@ func (c *APIClient) SaveSynonymWithHTTPInfo(r ApiSaveSynonymRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7151,7 +7239,7 @@ func (c *APIClient) SaveSynonymsWithHTTPInfo(r ApiSaveSynonymsRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -7279,7 +7367,7 @@ func (c *APIClient) SearchWithHTTPInfo(r ApiSearchRequest, opts ...RequestOption
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -7414,7 +7502,7 @@ func (c *APIClient) SearchDictionaryEntriesWithHTTPInfo(r ApiSearchDictionaryEnt
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -7571,7 +7659,7 @@ func (c *APIClient) SearchForFacetValuesWithHTTPInfo(r ApiSearchForFacetValuesRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -7711,7 +7799,7 @@ func (c *APIClient) SearchRulesWithHTTPInfo(r ApiSearchRulesRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -7849,7 +7937,7 @@ func (c *APIClient) SearchSingleIndexWithHTTPInfo(r ApiSearchSingleIndexRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -7987,7 +8075,7 @@ func (c *APIClient) SearchSynonymsWithHTTPInfo(r ApiSearchSynonymsRequest, opts 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -8109,7 +8197,7 @@ func (c *APIClient) SearchUserIdsWithHTTPInfo(r ApiSearchUserIdsRequest, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, true)
+	return c.callAPI(req, true, conf.timeouts)
 }
 
 /*
@@ -8229,7 +8317,7 @@ func (c *APIClient) SetDictionarySettingsWithHTTPInfo(r ApiSetDictionarySettings
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -8389,7 +8477,7 @@ func (c *APIClient) SetSettingsWithHTTPInfo(r ApiSetSettingsRequest, opts ...Req
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -8532,7 +8620,7 @@ func (c *APIClient) UpdateApiKeyWithHTTPInfo(r ApiUpdateApiKeyRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -8861,7 +8949,7 @@ func (c *APIClient) WaitForApiKey(
 			return c.GetApiKey(c.NewApiGetApiKeyRequest(key), toRequestOptions(opts)...)
 		},
 		validateFunc,
-		toIterableOptionsWaitFor(opts)...,
+		waitForApiKeyToIterableOptions(opts)...,
 	)
 }
 
@@ -9160,7 +9248,7 @@ func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]
 		action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
 	}
 
-	return c.ChunkedBatch(indexName, objects, action, toChunkedBatchOptions(opts)...)
+	return c.ChunkedBatch(indexName, objects, action, partialUpdateObjectsToChunkedBatchOptions(opts)...)
 }
 
 /*
@@ -9218,47 +9306,67 @@ See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers
 
 	@param indexName string - the index name to replace objects into.
 	@param objects []map[string]any - List of objects to replace.
-	@param opts ...ChunkedBatchOption - Optional parameters for the request.
+	@param opts ...ReplaceAllObjectsOption - Optional parameters for the request.
 	@return *ReplaceAllObjectsResponse - The response of the replace all objects operation.
 	@return error - Error if any.
 */
-func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) (*ReplaceAllObjectsResponse, error) {
+func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ReplaceAllObjectsOption) (*ReplaceAllObjectsResponse, error) {
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
-	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS}))), toRequestOptions(opts)...)
-	if err != nil {
-		return nil, err
+	conf := config{
+		scopes: []ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS},
+	}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
 	}
 
 	opts = append(opts, WithWaitForTasks(true))
 
-	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, opts...)
+	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, toIterableOptions(opts)...)
+	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBactchOptions(opts)...)
 	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
 		return nil, err
 	}
 
-	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS}))), toRequestOptions(opts)...)
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, toIterableOptions(opts)...)
+	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
 	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
+		return nil, err
+	}
+
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
 		return nil, err
 	}
 
 	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)), toRequestOptions(opts)...)
 	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, toIterableOptions(opts)...)
+	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+
 		return nil, err
 	}
 

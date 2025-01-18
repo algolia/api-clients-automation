@@ -13,6 +13,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
@@ -49,7 +50,7 @@ class InsightsTestE2E extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1734307200000L),
+            timestamp = Some(1736899200000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -59,7 +60,7 @@ class InsightsTestE2E extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1734307200000L),
+            timestamp = Some(1736899200000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )

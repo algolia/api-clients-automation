@@ -343,48 +343,24 @@ SourceDocker:
   type: object
   additionalProperties: false
   properties:
-    imageType:
-      $ref: '#/DockerImageType'
-    registry:
-      $ref: '#/DockerRegistry'
     image:
       type: string
-      description: Docker image name.
-      example: algolia/zendesk
-    version:
-      type: string
-      description: Docker image version.
-      default: latest
-      example: v2.1.0
+      description: Shortname of the image, as returned by the referential.
+      example: zendesk
     configuration:
       type: object
       description: Configuration of the spec.
   required:
-    - registry
     - image
-    - imageType
     - configuration
   x-discriminator-fields:
-    - registry
     - image
-    - imageType
     - configuration
 
 SourceUpdateDocker:
   type: object
   additionalProperties: false
   properties:
-    registry:
-      $ref: '#/DockerRegistry'
-    image:
-      type: string
-      description: Docker image name.
-      example: algolia/zendesk
-    version:
-      type: string
-      description: Docker image version.
-      default: latest
-      example: v2.1.0
     configuration:
       type: object
       description: Configuration of the spec.
@@ -392,16 +368,6 @@ SourceUpdateDocker:
     - configuration
   x-discriminator-fields:
     - configuration
-
-DockerRegistry:
-  type: string
-  description: Container registry name from where to pull the image.
-  enum: [dockerhub, ghcr]
-
-DockerImageType:
-  type: string
-  enum: [singer, custom, airbyte]
-  description: Image type.
 
 SourceInput:
   oneOf:

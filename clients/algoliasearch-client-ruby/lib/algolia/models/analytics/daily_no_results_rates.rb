@@ -15,7 +15,7 @@ module Algolia
       # Number of searches.
       attr_accessor :count
 
-      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
+      # No results rate: calculated as the number of searches with zero results divided by the total number of searches.
       attr_accessor :rate
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -26,11 +26,6 @@ module Algolia
           :count => :count,
           :rate => :rate
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

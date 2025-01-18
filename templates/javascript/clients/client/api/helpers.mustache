@@ -398,66 +398,77 @@ async partialUpdateObjects(
  * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
  * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
  * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
+ * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
  */
 async replaceAllObjects(
-  { indexName, objects, batchSize }: ReplaceAllObjectsOptions,
+  { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
   requestOptions?: RequestOptions
 ): Promise<ReplaceAllObjectsResponse> {
   const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
   const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
-  let copyOperationResponse = await this.operationIndex(
-    {
-      indexName,
-      operationIndexParams: {
-        operation: 'copy',
-        destination: tmpIndexName,
-        scope: ['settings', 'rules', 'synonyms'],
+  if (scopes === undefined) {
+    scopes = ['settings', 'rules', 'synonyms'];
+  }
+
+  try {
+    let copyOperationResponse = await this.operationIndex(
+      {
+        indexName,
+        operationIndexParams: {
+          operation: 'copy',
+          destination: tmpIndexName,
+          scope: scopes,
+        },
       },
-    },
-    requestOptions
-  );
+      requestOptions
+    );
 
-  const batchResponses = await this.chunkedBatch(
-    { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
-    requestOptions
-  );
+    const batchResponses = await this.chunkedBatch(
+      { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+      requestOptions
+    );
 
-  await this.waitForTask({
-    indexName: tmpIndexName,
-    taskID: copyOperationResponse.taskID,
-  });
-
-  copyOperationResponse = await this.operationIndex(
-    {
-      indexName,
-      operationIndexParams: {
-        operation: 'copy',
-        destination: tmpIndexName,
-        scope: ['settings', 'rules', 'synonyms'],
-      },
-    },
-    requestOptions
-  );
-  await this.waitForTask({
-    indexName: tmpIndexName,
-    taskID: copyOperationResponse.taskID,
-  });
-
-  const moveOperationResponse = await this.operationIndex(
-    {
+    await this.waitForTask({
       indexName: tmpIndexName,
-      operationIndexParams: { operation: 'move', destination: indexName },
-    },
-    requestOptions
-  );
-  await this.waitForTask({
-    indexName: tmpIndexName,
-    taskID: moveOperationResponse.taskID,
-  });
+      taskID: copyOperationResponse.taskID,
+    });
 
-  return { copyOperationResponse, batchResponses, moveOperationResponse };
+    copyOperationResponse = await this.operationIndex(
+      {
+        indexName,
+        operationIndexParams: {
+          operation: 'copy',
+          destination: tmpIndexName,
+          scope: scopes,
+        },
+      },
+      requestOptions
+    );
+    await this.waitForTask({
+      indexName: tmpIndexName,
+      taskID: copyOperationResponse.taskID,
+    });
+
+    const moveOperationResponse = await this.operationIndex(
+      {
+        indexName: tmpIndexName,
+        operationIndexParams: { operation: 'move', destination: indexName },
+      },
+      requestOptions
+    );
+    await this.waitForTask({
+      indexName: tmpIndexName,
+      taskID: moveOperationResponse.taskID,
+    });
+
+    return { copyOperationResponse, batchResponses, moveOperationResponse };
+  } catch (error) {
+    await this.deleteIndex({ indexName: tmpIndexName });
+
+    throw error;
+  }
 },
 
 async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {

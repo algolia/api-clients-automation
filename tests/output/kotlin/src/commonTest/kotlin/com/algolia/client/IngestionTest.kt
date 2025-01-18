@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class IngestionTest {
 
@@ -22,7 +23,7 @@ class IngestionTest {
       client.customGet(
         path = "1/html-error",
       )
-    }.let { error -> assertError(error, "Client request(GET http://%localhost%:6676/1/html-error) invalid: 429 Too Many Requests. Text: \"<html><body>429 Too Many Requests</body></html>\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+    }.let { error -> assertError(error, "Client request\\(GET http://%localhost%:6676/1/html-error\\) invalid: 429 Too Many Requests. Text: \"<html><body>429 Too Many Requests</body></html>\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
@@ -58,6 +59,47 @@ class IngestionTest {
   }
 
   @Test
+  fun `endpoint level timeout`() = runTest {
+    val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+    client.runTest(
+      call = {
+        validateSourceBeforeUpdate(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          sourceUpdate = SourceUpdate(
+            name = "newName",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals(180000, it.connectTimeout)
+        assertEquals(180000, it.socketTimeout)
+      },
+    )
+  }
+
+  @Test
+  fun `can override endpoint level timeout`() = runTest {
+    val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+    client.runTest(
+      call = {
+        validateSourceBeforeUpdate(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          sourceUpdate = SourceUpdate(
+            name = "newName",
+          ),
+          requestOptions = RequestOptions(
+            writeTimeout = 3456.milliseconds,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals(180000, it.connectTimeout)
+        assertEquals(3456, it.socketTimeout)
+      },
+    )
+  }
+
+  @Test
   fun `calls api with correct user agent`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
@@ -84,7 +126,7 @@ class IngestionTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.12.2\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.13.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },

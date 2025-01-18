@@ -1,16 +1,18 @@
 import fsp from 'fs/promises';
 
-import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js';
-import { getTestOutputFolder } from '../config.js';
-import { createSpinner } from '../spinners.js';
-import type { Language } from '../types.js';
+import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.ts';
+import { getTestOutputFolder } from '../config.ts';
+import { createSpinner } from '../spinners.ts';
+import type { Language } from '../types.ts';
 
-import { printBenchmarkReport } from './testServer/benchmark.js';
-import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
-import { startTestServer } from './testServer/index.js';
-import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
-import { assertValidTimeouts } from './testServer/timeout.js';
-import { assertValidWaitForApiKey } from './testServer/waitFor.js';
+import { printBenchmarkReport } from './testServer/benchmark.ts';
+import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
+import { startTestServer } from './testServer/index.ts';
+import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts';
+import { assertValidReplaceAllObjectsFailed } from './testServer/replaceAllObjectsFailed.ts';
+import { assertValidReplaceAllObjectsScopes } from './testServer/replaceAllObjectsScopes.ts';
+import { assertValidTimeouts } from './testServer/timeout.ts';
+import { assertValidWaitForApiKey } from './testServer/waitFor.ts';
 
 export type CTSType = 'benchmark' | 'client' | 'e2e' | 'requests';
 
@@ -91,13 +93,10 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       );
       break;
     case 'python':
-      await run(
-        `poetry lock --no-update && poetry install --sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`,
-        {
-          cwd,
-          language,
-        },
-      );
+      await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
+        cwd,
+        language,
+      });
       break;
     case 'ruby':
       await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {
@@ -152,6 +151,8 @@ export async function runCts(
     assertValidTimeouts(languages.length);
     assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
     assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
+    assertValidReplaceAllObjectsFailed(languages.length - skip('dart') - skip('scala'));
+    assertValidReplaceAllObjectsScopes(languages.length - skip('dart') - skip('scala'));
     assertValidWaitForApiKey(languages.length - skip('dart') - skip('scala'));
   }
   if (withBenchmarkServer) {

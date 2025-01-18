@@ -8,7 +8,9 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
@@ -17,6 +19,7 @@ type config struct {
 	context      context.Context
 	queryParams  url.Values
 	headerParams map[string]string
+	timeouts     transport.RequestConfiguration
 }
 
 type RequestOption interface {
@@ -44,6 +47,24 @@ func WithHeaderParam(key string, value any) requestOption {
 func WithQueryParam(key string, value any) requestOption {
 	return requestOption(func(c *config) {
 		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
+	})
+}
+
+func WithReadTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.ReadTimeout = &timeout
+	})
+}
+
+func WithWriteTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.WriteTimeout = &timeout
+	})
+}
+
+func WithConnectTimeout(timeout time.Duration) requestOption {
+	return requestOption(func(c *config) {
+		c.timeouts.ConnectTimeout = &timeout
 	})
 }
 
@@ -140,7 +161,7 @@ func (c *APIClient) CustomDeleteWithHTTPInfo(r ApiCustomDeleteRequest, opts ...R
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -270,7 +291,7 @@ func (c *APIClient) CustomGetWithHTTPInfo(r ApiCustomGetRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -423,7 +444,7 @@ func (c *APIClient) CustomPostWithHTTPInfo(r ApiCustomPostRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -577,7 +598,7 @@ func (c *APIClient) CustomPutWithHTTPInfo(r ApiCustomPutRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -697,9 +718,18 @@ func (r ApiGetAddToCartRateRequest) WithTags(tags string) ApiGetAddToCartRateReq
 /*
 GetAddToCartRate calls the API and returns the raw response from it.
 
-	Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
+	Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+The rate is the number of add-to-cart conversion events divided by the number of tracked searches.
+A search is tracked if it returns a queryID (`clickAnalytics` is `true`).
+This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+
+**There's a difference between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null.
+- **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -750,15 +780,24 @@ func (c *APIClient) GetAddToCartRateWithHTTPInfo(r ApiGetAddToCartRateRequest, o
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetAddToCartRate casts the HTTP response body to a defined struct.
 
-Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
+Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+The rate is the number of add-to-cart conversion events divided by the number of tracked searches.
+A search is tracked if it returns a queryID (`clickAnalytics` is `true`).
+This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+
+**There's a difference between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null.
+- **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 Required API Key ACLs:
   - analytics
@@ -878,9 +917,12 @@ GetAverageClickPosition calls the API and returns the raw response from it.
 
 	Retrieves the average click position of your search results, including a daily breakdown.
 
-The average click position is the average of all clicked search results' positions.
+The average click position is the average of all clicked search result positions.
 For example, if users only ever click on the first result for any search, the average click position is 1.
 By default, the analyzed period includes the last eight days including the current day.
+
+An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+The average is `null` until Algolia receives at least one click event.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -931,7 +973,7 @@ func (c *APIClient) GetAverageClickPositionWithHTTPInfo(r ApiGetAverageClickPosi
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -939,9 +981,12 @@ GetAverageClickPosition casts the HTTP response body to a defined struct.
 
 Retrieves the average click position of your search results, including a daily breakdown.
 
-The average click position is the average of all clicked search results' positions.
+The average click position is the average of all clicked search result positions.
 For example, if users only ever click on the first result for any search, the average click position is 1.
 By default, the analyzed period includes the last eight days including the current day.
+
+An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+The average is `null` until Algolia receives at least one click event.
 
 Required API Key ACLs:
   - analytics
@@ -1063,6 +1108,8 @@ GetClickPositions calls the API and returns the raw response from it.
 
 This lets you check how many clicks the first, second, or tenth search results receive.
 
+An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+
 	    Required API Key ACLs:
 	    - analytics
 
@@ -1112,7 +1159,7 @@ func (c *APIClient) GetClickPositionsWithHTTPInfo(r ApiGetClickPositionsRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -1121,6 +1168,8 @@ GetClickPositions casts the HTTP response body to a defined struct.
 Retrieves the positions in the search results and their associated number of clicks.
 
 This lets you check how many clicks the first, second, or tenth search results receive.
+
+An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
 
 Required API Key ACLs:
   - analytics
@@ -1238,9 +1287,14 @@ func (r ApiGetClickThroughRateRequest) WithTags(tags string) ApiGetClickThroughR
 /*
 GetClickThroughRate calls the API and returns the raw response from it.
 
-	Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
+	Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+**There's a difference between a 0 and null CTR when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, CTR is null.
+- **0** mean there _were_ queries but no [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -1291,15 +1345,20 @@ func (c *APIClient) GetClickThroughRateWithHTTPInfo(r ApiGetClickThroughRateRequ
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetClickThroughRate casts the HTTP response body to a defined struct.
 
-# Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
+Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+**There's a difference between a 0 and null CTR when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, CTR is null.
+- **0** mean there _were_ queries but no [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 Required API Key ACLs:
   - analytics
@@ -1417,9 +1476,14 @@ func (r ApiGetConversionRateRequest) WithTags(tags string) ApiGetConversionRateR
 /*
 GetConversionRate calls the API and returns the raw response from it.
 
-	Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
+	Retrieves the conversion rate (CR) for all your searches with at least one conversion event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+**There's a difference between a 0 and null CR when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, CR is null.
+- **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -1470,15 +1534,20 @@ func (c *APIClient) GetConversionRateWithHTTPInfo(r ApiGetConversionRateRequest,
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetConversionRate casts the HTTP response body to a defined struct.
 
-Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
+Retrieves the conversion rate (CR) for all your searches with at least one conversion event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+**There's a difference between a 0 and null CR when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, CR is null.
+- **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 Required API Key ACLs:
   - analytics
@@ -1598,6 +1667,8 @@ GetNoClickRate calls the API and returns the raw response from it.
 
 	Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
 
+It also returns the number of tracked searches and tracked searches without clicks.
+
 By default, the analyzed period includes the last eight days including the current day.
 
 	    Required API Key ACLs:
@@ -1649,13 +1720,14 @@ func (c *APIClient) GetNoClickRateWithHTTPInfo(r ApiGetNoClickRateRequest, opts 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetNoClickRate casts the HTTP response body to a defined struct.
 
 Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
+It also returns the number of tracked searches and tracked searches without clicks.
 
 By default, the analyzed period includes the last eight days including the current day.
 
@@ -1777,6 +1849,8 @@ GetNoResultsRate calls the API and returns the raw response from it.
 
 	Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
 
+It also returns the count of searches and searches without results used to compute the rates.
+
 By default, the analyzed period includes the last eight days including the current day.
 
 	    Required API Key ACLs:
@@ -1828,13 +1902,14 @@ func (c *APIClient) GetNoResultsRateWithHTTPInfo(r ApiGetNoResultsRateRequest, o
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetNoResultsRate casts the HTTP response body to a defined struct.
 
 Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
+It also returns the count of searches and searches without results used to compute the rates.
 
 By default, the analyzed period includes the last eight days including the current day.
 
@@ -1954,9 +2029,18 @@ func (r ApiGetPurchaseRateRequest) WithTags(tags string) ApiGetPurchaseRateReque
 /*
 GetPurchaseRate calls the API and returns the raw response from it.
 
-	Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
+	Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+The rate is the number of purchase conversion events divided by the number of tracked searches.
+A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
+This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+
+**There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null.
+- **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -2007,15 +2091,24 @@ func (c *APIClient) GetPurchaseRateWithHTTPInfo(r ApiGetPurchaseRateRequest, opt
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetPurchaseRate casts the HTTP response body to a defined struct.
 
-Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
+Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
+
+The rate is the number of purchase conversion events divided by the number of tracked searches.
+A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
+This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+
+**There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null.
+- **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 Required API Key ACLs:
   - analytics
@@ -2135,8 +2228,11 @@ GetRevenue calls the API and returns the raw response from it.
 
 	Retrieves revenue-related metrics, such as the total revenue or the average order value.
 
-To retrieve revenue-related metrics, sent purchase events.
+To retrieve revenue-related metrics, send purchase events.
 By default, the analyzed period includes the last eight days including the current day.
+
+Revenue is based on purchase conversion events (a conversion event with an `eventSubtype` attribute of `purchase`).
+The revenue is the `price` attribute multiplied by the `quantity` attribute for each object in the event's `objectData` array.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -2187,7 +2283,7 @@ func (c *APIClient) GetRevenueWithHTTPInfo(r ApiGetRevenueRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2195,8 +2291,11 @@ GetRevenue casts the HTTP response body to a defined struct.
 
 Retrieves revenue-related metrics, such as the total revenue or the average order value.
 
-To retrieve revenue-related metrics, sent purchase events.
+To retrieve revenue-related metrics, send purchase events.
 By default, the analyzed period includes the last eight days including the current day.
+
+Revenue is based on purchase conversion events (a conversion event with an `eventSubtype` attribute of `purchase`).
+The revenue is the `price` attribute multiplied by the `quantity` attribute for each object in the event's `objectData` array.
 
 Required API Key ACLs:
   - analytics
@@ -2367,7 +2466,7 @@ func (c *APIClient) GetSearchesCountWithHTTPInfo(r ApiGetSearchesCountRequest, o
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2525,7 +2624,9 @@ func (r ApiGetSearchesNoClicksRequest) WithTags(tags string) ApiGetSearchesNoCli
 /*
 GetSearchesNoClicks calls the API and returns the raw response from it.
 
-	  Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
+	Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
+
+For each search, it also returns the number of displayed search results that remained unclicked.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -2584,13 +2685,15 @@ func (c *APIClient) GetSearchesNoClicksWithHTTPInfo(r ApiGetSearchesNoClicksRequ
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetSearchesNoClicks casts the HTTP response body to a defined struct.
 
 Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
+
+For each search, it also returns the number of displayed search results that remained unclicked.
 
 Required API Key ACLs:
   - analytics
@@ -2742,7 +2845,7 @@ func (r ApiGetSearchesNoResultsRequest) WithTags(tags string) ApiGetSearchesNoRe
 /*
 GetSearchesNoResults calls the API and returns the raw response from it.
 
-	  Retrieves the most popular searches that didn't return any results.
+	  Retrieves the 1,000 most frequent searches that produced zero results.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -2801,13 +2904,13 @@ func (c *APIClient) GetSearchesNoResultsWithHTTPInfo(r ApiGetSearchesNoResultsRe
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetSearchesNoResults casts the HTTP response body to a defined struct.
 
-Retrieves the most popular searches that didn't return any results.
+Retrieves the 1,000 most frequent searches that produced zero results.
 
 Required API Key ACLs:
   - analytics
@@ -2881,7 +2984,9 @@ GetStatus calls the API and returns the raw response from it.
 
 	Retrieves the time when the Analytics data for the specified index was last updated.
 
-The Analytics data is updated every 5 minutes.
+If the index has been recently created or no search has been performed yet the updated time is `null`.
+
+The Analytics data is updated every 5&nbsp;minutes.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -2920,7 +3025,7 @@ func (c *APIClient) GetStatusWithHTTPInfo(r ApiGetStatusRequest, opts ...Request
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -2928,7 +3033,9 @@ GetStatus casts the HTTP response body to a defined struct.
 
 Retrieves the time when the Analytics data for the specified index was last updated.
 
-The Analytics data is updated every 5 minutes.
+If the index has been recently created or no search has been performed yet the updated time is `null`.
+
+The Analytics data is updated every 5&nbsp;minutes.
 
 Required API Key ACLs:
   - analytics
@@ -3075,7 +3182,7 @@ func (r ApiGetTopCountriesRequest) WithTags(tags string) ApiGetTopCountriesReque
 /*
 GetTopCountries calls the API and returns the raw response from it.
 
-	  Retrieves the countries with the most searches to your index.
+	  Retrieves the countries with the most searches in your index.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -3134,13 +3241,13 @@ func (c *APIClient) GetTopCountriesWithHTTPInfo(r ApiGetTopCountriesRequest, opt
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetTopCountries casts the HTTP response body to a defined struct.
 
-Retrieves the countries with the most searches to your index.
+Retrieves the countries with the most searches in your index.
 
 Required API Key ACLs:
   - analytics
@@ -3308,7 +3415,7 @@ func (r ApiGetTopFilterAttributesRequest) WithTags(tags string) ApiGetTopFilterA
 /*
 GetTopFilterAttributes calls the API and returns the raw response from it.
 
-	Retrieves the most frequently used filter attributes.
+	Retrieves the 1,000 most frequently used filter attributes.
 
 These are attributes of your records that you included in the `attributesForFaceting` setting.
 
@@ -3373,13 +3480,13 @@ func (c *APIClient) GetTopFilterAttributesWithHTTPInfo(r ApiGetTopFilterAttribut
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetTopFilterAttributes casts the HTTP response body to a defined struct.
 
-Retrieves the most frequently used filter attributes.
+Retrieves the 1,000 most frequently used filter attributes.
 
 These are attributes of your records that you included in the `attributesForFaceting` setting.
 
@@ -3561,7 +3668,7 @@ func (r ApiGetTopFilterForAttributeRequest) WithTags(tags string) ApiGetTopFilte
 /*
 GetTopFilterForAttribute calls the API and returns the raw response from it.
 
-	Retrieves the most frequent filter (facet) values for a filter attribute.
+	Retrieves the 1,000 most frequent filter (facet) values for a filter attribute.
 
 These are attributes of your records that you included in the `attributesForFaceting` setting.
 
@@ -3631,13 +3738,13 @@ func (c *APIClient) GetTopFilterForAttributeWithHTTPInfo(r ApiGetTopFilterForAtt
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetTopFilterForAttribute casts the HTTP response body to a defined struct.
 
-Retrieves the most frequent filter (facet) values for a filter attribute.
+Retrieves the 1,000 most frequent filter (facet) values for a filter attribute.
 
 These are attributes of your records that you included in the `attributesForFaceting` setting.
 
@@ -3809,7 +3916,7 @@ func (r ApiGetTopFiltersNoResultsRequest) WithTags(tags string) ApiGetTopFilters
 /*
 GetTopFiltersNoResults calls the API and returns the raw response from it.
 
-	Retrieves the most frequently used filters for a search that didn't return any results.
+	Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
 
 To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
 
@@ -3874,13 +3981,13 @@ func (c *APIClient) GetTopFiltersNoResultsWithHTTPInfo(r ApiGetTopFiltersNoResul
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetTopFiltersNoResults casts the HTTP response body to a defined struct.
 
-Retrieves the most frequently used filters for a search that didn't return any results.
+Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
 
 To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
 
@@ -4083,7 +4190,29 @@ func (r ApiGetTopHitsRequest) WithTags(tags string) ApiGetTopHitsRequest {
 /*
 GetTopHits calls the API and returns the raw response from it.
 
-	  Retrieves the object IDs of the most frequent search results.
+	Retrieves the object IDs of the 1,000 most frequent search results.
+
+If you set the `clickAnalytics` query parameter to true, the response also includes:
+
+- Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+- Click count
+- Click-through rate (CTR)
+- Conversion count
+- Conversion rate (CR)
+- Average click position
+
+If you set the `revenueAnalytics` parameter to `true`, the response also includes:
+
+- Add-to-cart count
+- Add-to-cart rate (ATCR)
+- Purchase count
+- Purchase rate
+- Revenue details for each currency
+
+**There's a difference between 0% rates and null rates:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null.
+- **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -4092,7 +4221,7 @@ GetTopHits calls the API and returns the raw response from it.
 	  @param index string - Index name.
 	  @param search string - Search query.
 	  @param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	  @param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	  @param revenueAnalytics bool - Whether to include metrics related to revenue events in the response.
 	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
 	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
 	  @param limit int32 - Number of items to return.
@@ -4154,13 +4283,35 @@ func (c *APIClient) GetTopHitsWithHTTPInfo(r ApiGetTopHitsRequest, opts ...Reque
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetTopHits casts the HTTP response body to a defined struct.
 
-Retrieves the object IDs of the most frequent search results.
+Retrieves the object IDs of the 1,000 most frequent search results.
+
+If you set the `clickAnalytics` query parameter to true, the response also includes:
+
+- Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+- Click count
+- Click-through rate (CTR)
+- Conversion count
+- Conversion rate (CR)
+- Average click position
+
+If you set the `revenueAnalytics` parameter to `true`, the response also includes:
+
+- Add-to-cart count
+- Add-to-cart rate (ATCR)
+- Purchase count
+- Purchase rate
+- Revenue details for each currency
+
+**There's a difference between 0% rates and null rates:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null.
+- **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 Required API Key ACLs:
   - analytics
@@ -4170,7 +4321,7 @@ Request can be constructed by NewApiGetTopHitsRequest with parameters below.
 	@param index string - Index name.
 	@param search string - Search query.
 	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	@param revenueAnalytics bool - Whether to include metrics related to revenue events in the response.
 	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
 	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
 	@param limit int32 - Number of items to return.
@@ -4379,7 +4530,29 @@ func (r ApiGetTopSearchesRequest) WithTags(tags string) ApiGetTopSearchesRequest
 /*
 GetTopSearches calls the API and returns the raw response from it.
 
-	  Returns the most popular search terms.
+	Returns the most popular searches. For each search, it also includes the average number of hits.
+
+# If you set the `clickAnalytics` query parameter to `true`, the response also includes
+
+- Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+- Click count
+- Click-through rate (CTR)
+- Conversion count
+- Conversion rate (CR)
+- Average click position
+
+If you set the `revenueAnalytics` query parameter to `true`, the response also includes:
+
+- Add-to-cart count
+- Add-to-cart rate (ATCR)
+- Purchase count
+- Purchase rate
+- Revenue details for each currency
+
+**There's a difference between 0% rates and null rates:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null.
+- **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -4387,7 +4560,7 @@ GetTopSearches calls the API and returns the raw response from it.
 	Request can be constructed by NewApiGetTopSearchesRequest with parameters below.
 	  @param index string - Index name.
 	  @param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	  @param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	  @param revenueAnalytics bool - Whether to include metrics related to revenue events in the response.
 	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
 	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
 	  @param orderBy OrderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
@@ -4454,13 +4627,35 @@ func (c *APIClient) GetTopSearchesWithHTTPInfo(r ApiGetTopSearchesRequest, opts 
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
 GetTopSearches casts the HTTP response body to a defined struct.
 
-Returns the most popular search terms.
+Returns the most popular searches. For each search, it also includes the average number of hits.
+
+# If you set the `clickAnalytics` query parameter to `true`, the response also includes
+
+- Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+- Click count
+- Click-through rate (CTR)
+- Conversion count
+- Conversion rate (CR)
+- Average click position
+
+If you set the `revenueAnalytics` query parameter to `true`, the response also includes:
+
+- Add-to-cart count
+- Add-to-cart rate (ATCR)
+- Purchase count
+- Purchase rate
+- Revenue details for each currency
+
+**There's a difference between 0% rates and null rates:**
+
+- **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null.
+- **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
 
 Required API Key ACLs:
   - analytics
@@ -4469,7 +4664,7 @@ Request can be constructed by NewApiGetTopSearchesRequest with parameters below.
 
 	@param index string - Index name.
 	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	@param revenueAnalytics bool - Whether to include metrics related to revenue events in the response.
 	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
 	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
 	@param orderBy OrderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
@@ -4586,10 +4781,12 @@ GetUsersCount calls the API and returns the raw response from it.
 
 	Retrieves the number of unique users within a time range, including a daily breakdown.
 
-Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.
+Since it returns the number of unique users, the sum of the daily values might be different from the total number.
 
-By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
-By default, the analyzed period includes the last eight days including the current day.
+By default:
+
+- Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
+- The analyzed period includes the last eight days including the current day.
 
 	    Required API Key ACLs:
 	    - analytics
@@ -4640,7 +4837,7 @@ func (c *APIClient) GetUsersCountWithHTTPInfo(r ApiGetUsersCountRequest, opts ..
 		return nil, nil, err
 	}
 
-	return c.callAPI(req, false)
+	return c.callAPI(req, false, conf.timeouts)
 }
 
 /*
@@ -4648,10 +4845,12 @@ GetUsersCount casts the HTTP response body to a defined struct.
 
 Retrieves the number of unique users within a time range, including a daily breakdown.
 
-Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.
+Since it returns the number of unique users, the sum of the daily values might be different from the total number.
 
-By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
-By default, the analyzed period includes the last eight days including the current day.
+By default:
+
+- Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
+- The analyzed period includes the last eight days including the current day.
 
 Required API Key ACLs:
   - analytics

@@ -19,7 +19,7 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@v4.5.0
+      uses: actions/setup-java@v4.6.0
       with:
         distribution: zulu
         java-version-file: config/.java-version
@@ -46,10 +46,6 @@ runs:
     - name: Install JavaScript dependencies
       shell: bash
       run: YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
-
-    - name: Build scripts
-      shell: bash
-      run: yarn workspace scripts build:cli
 
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
@@ -139,7 +135,7 @@ runs:
     - name: Install poetry
       if: ${{ inputs.language == 'python' }}
       shell: bash
-      run: pipx install poetry
+      run: pipx install poetry==2
 
     - uses: actions/setup-python@v5
       if: ${{ inputs.language == 'python' }}

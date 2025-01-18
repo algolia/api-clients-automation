@@ -737,8 +737,39 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("get recommendations for recommend model with all parameters")
+  @DisplayName("get recommendations with e2e to check oneOf model")
   void getRecommendationsTest1() {
+    assertDoesNotThrow(() -> {
+      client.getRecommendations(
+        new GetRecommendationsParams()
+          .setRequests(
+            Arrays.asList(
+              new RelatedQuery()
+                .setIndexName("cts_e2e_browse")
+                .setObjectID("Æon Flux")
+                .setModel(RelatedModel.RELATED_PRODUCTS)
+                .setThreshold(20.0)
+                .setMaxRecommendations(2)
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/recommendations", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"objectID\":\"Æon" +
+        " Flux\",\"model\":\"related-products\",\"threshold\":20.0,\"maxRecommendations\":2}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("get recommendations for recommend model with all parameters")
+  void getRecommendationsTest2() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
         new GetRecommendationsParams()
@@ -774,7 +805,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("get recommendations for trending model with minimal parameters")
-  void getRecommendationsTest2() {
+  void getRecommendationsTest3() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
         new GetRecommendationsParams()
@@ -804,7 +835,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("get recommendations for trending model with all parameters")
-  void getRecommendationsTest3() {
+  void getRecommendationsTest4() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
         new GetRecommendationsParams()
@@ -841,7 +872,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("get multiple recommendations with minimal parameters")
-  void getRecommendationsTest4() {
+  void getRecommendationsTest5() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
         new GetRecommendationsParams()
@@ -875,7 +906,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("get multiple recommendations with all parameters")
-  void getRecommendationsTest5() {
+  void getRecommendationsTest6() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
         new GetRecommendationsParams()
@@ -923,7 +954,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("get frequently bought together recommendations")
-  void getRecommendationsTest6() {
+  void getRecommendationsTest7() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
         new GetRecommendationsParams()

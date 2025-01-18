@@ -178,7 +178,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.11.2\).*/',
+                '/^Algolia for PHP \(4.12.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -493,6 +493,59 @@ class SearchTest extends TestCase implements HttpClientInterface
             '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
             json_encode($res)
         );
+    }
+
+    #[TestDox('call replaceAllObjects with partial scopes')]
+    public function test1replaceAllObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6685']));
+
+        $res = $client->replaceAllObjects(
+            'cts_e2e_replace_all_objects_scopes_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            77,
+            [
+                'settings',
+
+                'synonyms',
+            ],
+        );
+        $this->assertEquals(
+            '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('replaceAllObjects should cleanup on failure')]
+    public function test2replaceAllObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6684']));
+
+        try {
+            $res = $client->replaceAllObjects(
+                'cts_e2e_replace_all_objects_too_big_php',
+                [
+                    ['objectID' => 'fine',
+                        'body' => 'small obj',
+                    ],
+
+                    ['objectID' => 'toolarge',
+                        'body' => 'something bigger than 10KB',
+                    ],
+                ],
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Record is too big');
+        }
     }
 
     #[TestDox('call saveObjects without error')]

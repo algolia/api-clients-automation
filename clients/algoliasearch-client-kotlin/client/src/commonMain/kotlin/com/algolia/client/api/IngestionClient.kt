@@ -816,11 +816,12 @@ public class IngestionClient(
    * @param sourceType Filters the tasks with the specified source type.
    * @param destinationID Destination IDs for filtering the list of tasks.
    * @param triggerType Type of task trigger for filtering the list of tasks.
+   * @param withEmailNotifications If specified, the response only includes tasks with notifications.email.enabled set to this value.
    * @param sort Property by which to sort the list of tasks. (default to createdAt)
    * @param order Sort order of the response, ascending or descending. (default to desc)
    * @param requestOptions additional request configuration.
    */
-  public suspend fun listTasks(itemsPerPage: Int? = null, page: Int? = null, action: List<ActionType>? = null, enabled: Boolean? = null, sourceID: List<String>? = null, sourceType: List<SourceType>? = null, destinationID: List<String>? = null, triggerType: List<TriggerType>? = null, sort: TaskSortKeys? = null, order: OrderKeys? = null, requestOptions: RequestOptions? = null): ListTasksResponse {
+  public suspend fun listTasks(itemsPerPage: Int? = null, page: Int? = null, action: List<ActionType>? = null, enabled: Boolean? = null, sourceID: List<String>? = null, sourceType: List<SourceType>? = null, destinationID: List<String>? = null, triggerType: List<TriggerType>? = null, withEmailNotifications: Boolean? = null, sort: TaskSortKeys? = null, order: OrderKeys? = null, requestOptions: RequestOptions? = null): ListTasksResponse {
     val requestConfig = RequestConfig(
       method = RequestMethod.GET,
       path = listOf("2", "tasks"),
@@ -833,6 +834,7 @@ public class IngestionClient(
         sourceType?.let { put("sourceType", it.joinToString(",")) }
         destinationID?.let { put("destinationID", it.joinToString(",")) }
         triggerType?.let { put("triggerType", it.joinToString(",")) }
+        withEmailNotifications?.let { put("withEmailNotifications", it) }
         sort?.let { put("sort", it) }
         order?.let { put("order", it) }
       },
@@ -937,7 +939,11 @@ public class IngestionClient(
     )
     return requester.execute(
       requestConfig = requestConfig,
-      requestOptions = requestOptions,
+      requestOptions = RequestOptions(
+        readTimeout = 180000.milliseconds,
+        writeTimeout = 180000.milliseconds,
+        connectTimeout = 180000.milliseconds,
+      ) + requestOptions,
     )
   }
 
@@ -1142,7 +1148,7 @@ public class IngestionClient(
   }
 
   /**
-   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
    *
    * Required API Key ACLs:
    *   - addObject
@@ -1159,7 +1165,11 @@ public class IngestionClient(
     )
     return requester.execute(
       requestConfig = requestConfig,
-      requestOptions = requestOptions,
+      requestOptions = RequestOptions(
+        readTimeout = 180000.milliseconds,
+        writeTimeout = 180000.milliseconds,
+        connectTimeout = 180000.milliseconds,
+      ) + requestOptions,
     )
   }
 
@@ -1356,7 +1366,11 @@ public class IngestionClient(
     )
     return requester.execute(
       requestConfig = requestConfig,
-      requestOptions = requestOptions,
+      requestOptions = RequestOptions(
+        readTimeout = 180000.milliseconds,
+        writeTimeout = 180000.milliseconds,
+        connectTimeout = 180000.milliseconds,
+      ) + requestOptions,
     )
   }
 
@@ -1380,7 +1394,11 @@ public class IngestionClient(
     )
     return requester.execute(
       requestConfig = requestConfig,
-      requestOptions = requestOptions,
+      requestOptions = RequestOptions(
+        readTimeout = 180000.milliseconds,
+        writeTimeout = 180000.milliseconds,
+        connectTimeout = 180000.milliseconds,
+      ) + requestOptions,
     )
   }
 }

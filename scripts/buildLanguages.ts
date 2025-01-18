@@ -1,10 +1,10 @@
 import { existsSync } from 'node:fs';
 
-import { createClientName, run, toAbsolutePath } from './common.js';
-import { getLanguageFolder } from './config.js';
-import { formatter } from './formatter.js';
-import { createSpinner } from './spinners.js';
-import type { Generator, Language } from './types.js';
+import { createClientName, run, toAbsolutePath } from './common.ts';
+import { getLanguageFolder } from './config.ts';
+import { formatter } from './formatter.ts';
+import { createSpinner } from './spinners.ts';
+import type { Generator, Language } from './types.ts';
 
 type BuildType = 'client' | 'guides' | 'playground' | 'snippets';
 

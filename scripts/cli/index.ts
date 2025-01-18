@@ -1,23 +1,23 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildLanguages } from '../buildLanguages.js';
-import { CI, CLIENTS, LANGUAGES, run, setVerbose, toAbsolutePath } from '../common.js';
-import { getLanguageFolder } from '../config.js';
-import { ctsGenerateMany } from '../cts/generate.js';
-import { runCts } from '../cts/runCts.js';
-import { startTestServer } from '../cts/testServer/index.js';
-import { docsGenerateMany } from '../docs/generate.js';
-import { formatter } from '../formatter.js';
-import { generate } from '../generate.js';
-import { playground } from '../playground.js';
-import { createReleasePR } from '../release/createReleasePR.js';
-import { buildSpecs } from '../specs/index.js';
-import type { Language } from '../types.js';
+import { buildLanguages } from '../buildLanguages.ts';
+import { CI, CLIENTS, LANGUAGES, run, setVerbose, toAbsolutePath } from '../common.ts';
+import { getLanguageFolder } from '../config.ts';
+import { ctsGenerateMany } from '../cts/generate.ts';
+import { runCts } from '../cts/runCts.ts';
+import { startTestServer } from '../cts/testServer/index.ts';
+import { docsGenerateMany } from '../docs/generate.ts';
+import { formatter } from '../formatter.ts';
+import { generate } from '../generate.ts';
+import { playground } from '../playground.ts';
+import { createReleasePR } from '../release/createReleasePR.ts';
+import { buildSpecs } from '../specs/index.ts';
+import type { Language } from '../types.ts';
 
 import { existsSync } from 'node:fs';
-import type { LangArg } from './utils.js';
-import { ALL, generatorList, getClientChoices, PROMPT_CLIENTS, PROMPT_LANGUAGES, transformSelection } from './utils.js';
+import type { LangArg } from './utils.ts';
+import { ALL, generatorList, getClientChoices, PROMPT_CLIENTS, PROMPT_LANGUAGES, transformSelection } from './utils.ts';
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
@@ -303,14 +303,12 @@ program
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
   .option('-vh, --versions-history', 'only generates the versions-history policy', false)
-  .option('-b --breaking', 'allow breaking change on the CI', false)
-  .action(async ({ verbose, releaseType, dryRun, versionsHistory, breaking }) => {
+  .action(async ({ verbose, releaseType, dryRun, versionsHistory }) => {
     setVerbose(Boolean(verbose));
 
     await createReleasePR({
       releaseType,
       dryRun,
-      breaking,
       versionsHistory,
     });
   });

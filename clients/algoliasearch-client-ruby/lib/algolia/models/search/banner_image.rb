@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Search
-    # image of a search banner.
+    # Image to show inside a banner.
     class BannerImage
       attr_accessor :urls
 
@@ -17,11 +17,6 @@ module Algolia
           :urls => :urls,
           :title => :title
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

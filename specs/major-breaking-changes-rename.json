@@ -31,7 +31,6 @@
     "client.getTopUserIDs": "client.getTopUserIds",
     "client.getUserID": "client.getUserId",
     "client.listApiKeys": "client.listApiKeys",
-    "client.listIndexes": "client.listIndices",
     "client.listIndices": "client.listIndices",
     "client.listUserIDs": "client.listUserIds",
     "client.moveIndex": "client.operationIndex",

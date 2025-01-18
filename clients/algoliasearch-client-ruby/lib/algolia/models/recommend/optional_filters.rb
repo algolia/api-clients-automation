@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Recommend
-    # Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don't exclude records from the search results. Records that match the optional filter rank before records that don't match. If you're using a negative filter `facet:-value`, matching records rank after records that don't match.  - Optional filters don't work on virtual replicas. - Optional filters are applied _after_ sort-by attributes. - Optional filters don't work with numeric attributes.
+    # Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don't exclude records from the search results. Records that match the optional filter rank before records that don't match. If you're using a negative filter `facet:-value`, matching records rank after records that don't match.  - Optional filters don't work on virtual replicas. - Optional filters are applied _after_ sort-by attributes. - Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)). - Optional filters don't work with numeric attributes.
     module OptionalFilters
       class << self
       # List of class defined in oneOf (OpenAPI v3)
@@ -45,7 +45,6 @@ module Algolia
 
         SchemaMismatchError = Class.new(StandardError)
 
-        # Note: 'File' is missing here because in the regular case we get the data _after_ a call to JSON.parse.
         def find_and_cast_into_type(klass, data)
           return if data.nil?
 
@@ -84,12 +83,12 @@ module Algolia
               if const.respond_to?(:openapi_one_of)
                 # nested oneOf model
                 model = const.build(data)
-              elsif const.respond_to?(:acceptable_attributes)
-                # raise if data contains keys that are not known to the model
-                raise unless (data.keys - const.acceptable_attributes).empty?
-                model = const.build_from_hash(data)
+              elsif const.respond_to?(:discriminator_attributes)
+                if const.discriminator_attributes.all? { |attr| data.key?(attr) }
+                  model = const.build_from_hash(data)
+                end
               else
-                # maybe it's an enum
+                # maybe it's an enum, or doens't have discriminators
                 model = const.build_from_hash(data)
               end
 

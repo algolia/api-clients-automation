@@ -582,6 +582,10 @@ components:
 
         - Optional filters are applied _after_ sort-by attributes.
 
+        - Optional filters are applied _before_ custom ranking attributes (in
+        the default
+        [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)).
+
         - Optional filters don't work with numeric attributes.
       example:
         - category:Book
@@ -1585,14 +1589,14 @@ components:
         url:
           type: string
     bannerImageUrl:
-      description: url for a search banner image.
+      description: URL for an image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     bannerImage:
-      description: image of a search banner.
+      description: Image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
@@ -1603,14 +1607,14 @@ components:
         title:
           type: string
     bannerLink:
-      description: link for a banner defined in merchandising studio.
+      description: Link for a banner defined in the Merchandising Studio.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     banner:
-      description: a search banner with image and url.
+      description: Banner with image and link to redirect users.
       type: object
       additionalProperties: false
       properties:
@@ -1619,12 +1623,12 @@ components:
         link:
           $ref: '#/components/schemas/bannerLink'
     banners:
-      description: banners defined in the merchandising studio for the given search.
+      description: Banners defined in the Merchandising Studio for a given search.
       type: array
       items:
         $ref: '#/components/schemas/banner'
     widgets:
-      description: widgets returned from any rules that are applied to the current search.
+      description: Widgets returned from any rules that are applied to the current search.
       type: object
       additionalProperties: false
       properties:
@@ -1739,49 +1743,6 @@ components:
             - attribute
             - exact
             - custom
-          x-categories:
-            - Ranking
-        customRanking:
-          type: array
-          items:
-            type: string
-          example:
-            - desc(popularity)
-            - asc(price)
-          description: >
-            Attributes to use as [custom
-            ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
-
-            Attribute names are case-sensitive.
-
-
-            The custom ranking attributes decide which items are shown first if
-            the other ranking criteria are equal.
-
-
-            Records with missing values for your selected custom ranking
-            attributes are always sorted last.
-
-            Boolean attributes are sorted based on their alphabetical order.
-
-
-            **Modifiers**
-
-
-            - `asc("ATTRIBUTE")`.
-              Sort the index by the values of an attribute, in ascending order.
-
-            - `desc("ATTRIBUTE")`.
-              Sort the index by the values of an attribute, in descending order.
-
-            If you use two or more custom ranking attributes,
-
-            [reduce the
-            precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
-            of your first attributes,
-
-            or the other attributes will never be applied.
-          default: []
           x-categories:
             - Ranking
         relevancyStrictness:
@@ -1956,18 +1917,6 @@ components:
           $ref: '#/components/schemas/ignorePlurals'
         removeStopWords:
           $ref: '#/components/schemas/removeStopWords'
-        keepDiacriticsOnCharacters:
-          type: string
-          example: øé
-          description: |
-            Characters for which diacritics should be preserved.
-
-            By default, Algolia removes diacritics from letters.
-            For example, `é` becomes `e`. If this causes issues in your search,
-            you can specify characters that should keep their diacritics.
-          default: ''
-          x-categories:
-            - Languages
         queryLanguages:
           type: array
           items:
@@ -3381,6 +3330,61 @@ components:
           type: string
         maxFacetHits:
           $ref: '#/components/schemas/maxFacetHits'
+        keepDiacriticsOnCharacters:
+          type: string
+          example: øé
+          description: |
+            Characters for which diacritics should be preserved.
+
+            By default, Algolia removes diacritics from letters.
+            For example, `é` becomes `e`. If this causes issues in your search,
+            you can specify characters that should keep their diacritics.
+          default: ''
+          x-categories:
+            - Languages
+        customRanking:
+          type: array
+          items:
+            type: string
+          example:
+            - desc(popularity)
+            - asc(price)
+          description: >
+            Attributes to use as [custom
+            ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+
+            Attribute names are case-sensitive.
+
+
+            The custom ranking attributes decide which items are shown first if
+            the other ranking criteria are equal.
+
+
+            Records with missing values for your selected custom ranking
+            attributes are always sorted last.
+
+            Boolean attributes are sorted based on their alphabetical order.
+
+
+            **Modifiers**
+
+
+            - `asc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in ascending order.
+
+            - `desc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in descending order.
+
+            If you use two or more custom ranking attributes,
+
+            [reduce the
+            precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
+            of your first attributes,
+
+            or the other attributes will never be applied.
+          default: []
+          x-categories:
+            - Ranking
     indexSettings:
       description: Index settings.
       allOf:

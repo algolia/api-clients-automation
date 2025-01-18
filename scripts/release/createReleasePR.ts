@@ -8,8 +8,8 @@ import generationCommitText, {
   commitStartPrepareRelease,
   commitStartRelease,
   isGeneratedCommit,
-} from '../ci/codegen/text.js';
-import { getNbGitDiff } from '../ci/utils.js';
+} from '../ci/codegen/text.ts';
+import { getNbGitDiff } from '../ci/utils.ts';
 import {
   CI,
   configureGitHubAuthor,
@@ -24,15 +24,15 @@ import {
   run,
   setVerbose,
   TODAY,
-} from '../common.js';
-import { getPackageVersionDefault } from '../config.js';
-import type { Language } from '../types.js';
+} from '../common.ts';
+import { getPackageVersionDefault } from '../config.ts';
+import type { Language } from '../types.ts';
 
-import { getFileChanges, getLastReleasedTag, stripCommitMessage } from './common.js';
-import TEXT from './text.js';
-import type { Changelog, Commit, CommitType, ParsedCommit, Scope, Versions } from './types.js';
-import { updateAPIVersions } from './updateAPIVersions.js';
-import { generateVersionsHistory } from './versionsHistory.js';
+import { getFileChanges, getLastReleasedTag, stripCommitMessage } from './common.ts';
+import TEXT from './text.ts';
+import type { Changelog, Commit, CommitType, ParsedCommit, Scope, Versions } from './types.ts';
+import { updateAPIVersions } from './updateAPIVersions.ts';
+import { generateVersionsHistory } from './versionsHistory.ts';
 
 dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 
@@ -341,12 +341,10 @@ async function prepareGitEnvironment(dryRun: boolean): Promise<void> {
 export async function createReleasePR({
   releaseType,
   dryRun,
-  breaking,
   versionsHistory,
 }: {
   releaseType?: semver.ReleaseType;
   dryRun?: boolean;
-  breaking?: boolean;
   versionsHistory?: boolean;
 }): Promise<void> {
   await prepareGitEnvironment(dryRun || versionsHistory || false);
@@ -418,7 +416,7 @@ export async function createReleasePR({
 
   setVerbose(true);
   console.log(`Pushing updated changes to: ${headBranch}`);
-  const commitMessage = `${generationCommitText.commitPrepareReleaseMessage}${breaking ? ' [skip-bc]' : ''}`;
+  const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .');
   await run(`CI=true git commit -m "${commitMessage}"`);
 

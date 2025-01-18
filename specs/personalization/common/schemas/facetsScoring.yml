@@ -1,0 +1,12 @@
+facetsScoring:
+  type: object
+  additionalProperties: false
+  required:
+    - score
+    - facetName
+  properties:
+    score:
+      $ref: 'personalizationStrategy.yml#/score'
+    facetName:
+      type: string
+      description: Facet attribute name.

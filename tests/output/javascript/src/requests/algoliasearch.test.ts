@@ -177,6 +177,35 @@ describe('getRecommendations', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('get recommendations with e2e to check oneOf model', async () => {
+    const req = (await client.getRecommendations({
+      requests: [
+        {
+          indexName: 'cts_e2e_browse',
+          objectID: 'Æon Flux',
+          model: 'related-products',
+          threshold: 20.0,
+          maxRecommendations: 2,
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/recommendations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: 'cts_e2e_browse',
+          objectID: 'Æon Flux',
+          model: 'related-products',
+          threshold: 20.0,
+          maxRecommendations: 2,
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('get recommendations for recommend model with all parameters', async () => {
     const req = (await client.getRecommendations({
       requests: [
@@ -689,7 +718,6 @@ describe('search', () => {
           attributesToRetrieve: [''],
           attributesToSnippet: [''],
           clickAnalytics: true,
-          customRanking: [''],
           decompoundQuery: true,
           disableExactOnAttributes: [''],
           disableTypoToleranceOnAttributes: [''],
@@ -717,7 +745,6 @@ describe('search', () => {
             [47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9],
             [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
           ],
-          keepDiacriticsOnCharacters: '',
           length: 1,
           maxValuesPerFacet: 0,
           minProximity: 1,
@@ -781,7 +808,6 @@ describe('search', () => {
           attributesToRetrieve: [''],
           attributesToSnippet: [''],
           clickAnalytics: true,
-          customRanking: [''],
           decompoundQuery: true,
           disableExactOnAttributes: [''],
           disableTypoToleranceOnAttributes: [''],
@@ -809,7 +835,6 @@ describe('search', () => {
             [47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9],
             [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
           ],
-          keepDiacriticsOnCharacters: '',
           length: 1,
           maxValuesPerFacet: 0,
           minProximity: 1,

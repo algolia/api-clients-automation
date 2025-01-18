@@ -1315,7 +1315,7 @@ void snippetForremoveUserId() async {
 //
 // call replaceAllObjects without error
 void snippetForreplaceAllObjects() async {
-  // >SEPARATOR replaceAllObjects default
+  // >SEPARATOR replaceAllObjects call replaceAllObjects without error
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1366,6 +1366,65 @@ void snippetForreplaceAllObjects() async {
       },
     ],
     batchSize: 3,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// call replaceAllObjects with partial scopes
+void snippetForreplaceAllObjects1() async {
+  // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.replaceAllObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
+    batchSize: 77,
+    scopes: [
+      ScopeType.fromJson("settings"),
+      ScopeType.fromJson("synonyms"),
+    ],
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// replaceAllObjects should cleanup on failure
+void snippetForreplaceAllObjects2() async {
+  // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.replaceAllObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "fine",
+        'body': "small obj",
+      },
+      {
+        'objectID': "toolarge",
+        'body': "something bigger than 10KB",
+      },
+    ],
   );
   // >LOG
   // SEPARATOR<

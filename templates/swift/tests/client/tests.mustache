@@ -33,7 +33,7 @@
           XCTAssertNoThrow(try regexMatch(echoResponse.algoliaAgent, against: pattern), "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern);
         {{/testUserAgent}}
         {{#testTimeouts}}
-          XCTAssertEqual(TimeInterval({{{matchResponseTimeout}}} / 1000), echoResponse.timeout);
+          XCTAssertEqual(TimeInterval({{{matchResponseTimeout}}}) / 1000, echoResponse.timeout);
         {{/testTimeouts}}
         {{#testHost}}
           XCTAssertEqual("{{{match.value}}}", echoResponse.host);

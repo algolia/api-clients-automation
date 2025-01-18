@@ -70,7 +70,7 @@ public class TopSearchWithAnalytics {
   }
 
   /**
-   * Click-through rate, calculated as number of tracked searches with at least one click event
+   * Click-through rate: calculated as the number of tracked searches with at least one click event
    * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
    * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
@@ -115,9 +115,9 @@ public class TopSearchWithAnalytics {
   }
 
   /**
-   * Conversion rate, calculated as number of tracked searches with at least one conversion event
-   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
-   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
+   * Conversion rate: calculated as the number of tracked searches with at least one conversion
+   * event divided by the number of tracked searches. If null, Algolia didn't receive any search
+   * requests with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
   @javax.annotation.Nullable
   public Double getConversionRate() {

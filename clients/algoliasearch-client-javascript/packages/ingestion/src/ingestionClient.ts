@@ -118,7 +118,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.18.0';
+export const apiClientVersion = '1.19.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -195,6 +195,11 @@ export function createIngestionClient({
      * The `appId` currently in use.
      */
     appId: appIdOption,
+
+    /**
+     * The `apiKey` currently in use.
+     */
+    apiKey: apiKeyOption,
 
     /**
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
@@ -1488,6 +1493,7 @@ export function createIngestionClient({
      * @param listTasks.sourceType - Filters the tasks with the specified source type.
      * @param listTasks.destinationID - Destination IDs for filtering the list of tasks.
      * @param listTasks.triggerType - Type of task trigger for filtering the list of tasks.
+     * @param listTasks.withEmailNotifications - If specified, the response only includes tasks with notifications.email.enabled set to this value.
      * @param listTasks.sort - Property by which to sort the list of tasks.
      * @param listTasks.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1502,6 +1508,7 @@ export function createIngestionClient({
         sourceType,
         destinationID,
         triggerType,
+        withEmailNotifications,
         sort,
         order,
       }: ListTasksProps = {},
@@ -1541,6 +1548,10 @@ export function createIngestionClient({
 
       if (triggerType !== undefined) {
         queryParameters['triggerType'] = triggerType.toString();
+      }
+
+      if (withEmailNotifications !== undefined) {
+        queryParameters['withEmailNotifications'] = withEmailNotifications.toString();
       }
 
       if (sort !== undefined) {
@@ -2055,7 +2066,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
      *
      * Required API Key ACLs:
      *  - addObject

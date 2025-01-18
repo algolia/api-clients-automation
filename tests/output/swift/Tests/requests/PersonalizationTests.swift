@@ -132,7 +132,6 @@ final class PersonalizationClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("to be overriden")],
             requestOptions: RequestOptions(
                 headers: ["x-header-1": "spaces are left alone"],
-
                 queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
             )
         )
@@ -778,10 +777,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
         let response = try await client
             .setPersonalizationStrategyWithHTTPInfo(personalizationStrategyParams: PersonalizationStrategyParams(
-                eventScoring: [
-                    EventScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click),
+                eventsScoring: [
+                    EventsScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click),
                 ],
-                facetScoring: [FacetScoring(score: 42, facetName: "Event")],
+                facetsScoring: [FacetsScoring(score: 42, facetName: "Event")],
                 personalizationImpact: 42
             ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -791,7 +790,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"eventScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
+            "{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

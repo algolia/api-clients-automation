@@ -285,6 +285,48 @@ baseIndexSettings:
       type: string
     maxFacetHits:
       $ref: '#/maxFacetHits'
+    keepDiacriticsOnCharacters:
+      type: string
+      example: øé
+      description: |
+        Characters for which diacritics should be preserved.
+
+        By default, Algolia removes diacritics from letters.
+        For example, `é` becomes `e`. If this causes issues in your search,
+        you can specify characters that should keep their diacritics.
+      default: ''
+      x-categories:
+        - Languages
+    customRanking:
+      type: array
+      items:
+        type: string
+      example:
+        - desc(popularity)
+        - asc(price)
+      description: |
+        Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+        Attribute names are case-sensitive.
+
+        The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.
+
+        Records with missing values for your selected custom ranking attributes are always sorted last.
+        Boolean attributes are sorted based on their alphabetical order.
+
+        **Modifiers**
+
+        - `asc("ATTRIBUTE")`.
+          Sort the index by the values of an attribute, in ascending order.
+
+        - `desc("ATTRIBUTE")`.
+          Sort the index by the values of an attribute, in descending order.
+
+        If you use two or more custom ranking attributes,
+        [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes,
+        or the other attributes will never be applied.
+      default: []
+      x-categories:
+        - Ranking
 
 indexSettingsAsSearchParams:
   type: object
@@ -341,36 +383,6 @@ indexSettingsAsSearchParams:
         - attribute
         - exact
         - custom
-      x-categories:
-        - Ranking
-    customRanking:
-      type: array
-      items:
-        type: string
-      example:
-        - desc(popularity)
-        - asc(price)
-      description: |
-        Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
-        Attribute names are case-sensitive.
-
-        The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.
-
-        Records with missing values for your selected custom ranking attributes are always sorted last.
-        Boolean attributes are sorted based on their alphabetical order.
-
-        **Modifiers**
-
-        - `asc("ATTRIBUTE")`.
-          Sort the index by the values of an attribute, in ascending order.
-
-        - `desc("ATTRIBUTE")`.
-          Sort the index by the values of an attribute, in descending order.
-
-        If you use two or more custom ranking attributes,
-        [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes,
-        or the other attributes will never be applied.
-      default: []
       x-categories:
         - Ranking
     relevancyStrictness:
@@ -497,18 +509,6 @@ indexSettingsAsSearchParams:
       $ref: '#/ignorePlurals'
     removeStopWords:
       $ref: '#/removeStopWords'
-    keepDiacriticsOnCharacters:
-      type: string
-      example: øé
-      description: |
-        Characters for which diacritics should be preserved.
-
-        By default, Algolia removes diacritics from letters.
-        For example, `é` becomes `e`. If this causes issues in your search,
-        you can specify characters that should keep their diacritics.
-      default: ''
-      x-categories:
-        - Languages
     queryLanguages:
       type: array
       items:
@@ -1008,7 +1008,7 @@ facetOrdering:
       $ref: '#/values'
 
 widgets:
-  description: widgets returned from any rules that are applied to the current search.
+  description: Widgets returned from any rules that are applied to the current search.
   type: object
   additionalProperties: false
   properties:
@@ -1016,13 +1016,13 @@ widgets:
       $ref: '#/banners'
 
 banners:
-  description: banners defined in the merchandising studio for the given search.
+  description: Banners defined in the Merchandising Studio for a given search.
   type: array
   items:
     $ref: '#/banner'
 
 banner:
-  description: a search banner with image and url.
+  description: Banner with image and link to redirect users.
   type: object
   additionalProperties: false
   properties:
@@ -1032,7 +1032,7 @@ banner:
       $ref: '#/bannerLink'
 
 bannerLink:
-  description: link for a banner defined in merchandising studio.
+  description: Link for a banner defined in the Merchandising Studio.
   type: object
   additionalProperties: false
   properties:
@@ -1040,7 +1040,7 @@ bannerLink:
       type: string
 
 bannerImage:
-  description: image of a search banner.
+  description: Image to show inside a banner.
   type: object
   additionalProperties: false
   properties:
@@ -1052,7 +1052,7 @@ bannerImage:
       type: string
 
 bannerImageUrl:
-  description: url for a search banner image.
+  description: URL for an image to show inside a banner.
   type: object
   additionalProperties: false
   properties:

@@ -10,6 +10,15 @@ client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
 {{#requestOptions.headers.parametersWithDataType}}
   .withHeader("{{{key}}}", "{{{value}}}")
 {{/requestOptions.headers.parametersWithDataType}}
+{{#requestOptions.timeouts.connect}}
+  .withConnectTimeout(Some(Duration({{.}}, TimeUnit.MILLISECONDS)))
+{{/requestOptions.timeouts.connect}}
+{{#requestOptions.timeouts.read}}
+  .withReadTimeout(Some(Duration({{.}}, TimeUnit.MILLISECONDS)))
+{{/requestOptions.timeouts.read}}
+{{#requestOptions.timeouts.write}}
+  .withWriteTimeout(Some(Duration({{.}}, TimeUnit.MILLISECONDS)))
+{{/requestOptions.timeouts.write}}
   .build())
 {{/hasRequestOptions}}
 )

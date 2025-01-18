@@ -92,7 +92,7 @@ func getDefaultHosts(appID string) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.10.2); Go (%s); Search (4.10.2)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.11.0); Go (%s); Search (4.11.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.
@@ -101,13 +101,13 @@ func (c *APIClient) AddDefaultHeader(key string, value string) {
 }
 
 // callAPI do the request.
-func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool) (*http.Response, []byte, error) {
+func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool, requestConfiguration transport.RequestConfiguration) (*http.Response, []byte, error) {
 	callKind := call.Write
 	if useReadTransporter || request.Method == http.MethodGet {
 		callKind = call.Read
 	}
 
-	resp, body, err := c.transport.Request(request.Context(), request, callKind)
+	resp, body, err := c.transport.Request(request.Context(), request, callKind, requestConfiguration)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to do request: %w", err)
 	}

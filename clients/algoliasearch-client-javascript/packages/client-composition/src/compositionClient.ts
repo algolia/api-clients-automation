@@ -41,7 +41,7 @@ import type {
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '0.0.1-alpha.8';
+export const apiClientVersion = '0.0.1-alpha.9';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -112,6 +112,11 @@ export function createCompositionClient({
      * The `appId` currently in use.
      */
     appId: appIdOption,
+
+    /**
+     * The `apiKey` currently in use.
+     */
+    apiKey: apiKeyOption,
 
     /**
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.

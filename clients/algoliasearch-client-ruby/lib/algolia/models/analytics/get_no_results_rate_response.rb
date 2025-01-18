@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class GetNoResultsRateResponse
-      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
+      # No results rate: calculated as the number of searches with zero results divided by the total number of searches.
       attr_accessor :rate
 
       # Number of searches.
@@ -26,11 +26,6 @@ module Algolia
           :no_result_count => :noResultCount,
           :dates => :dates
         }
-      end
-
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
       end
 
       # Attribute type mapping.

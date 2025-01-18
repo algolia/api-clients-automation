@@ -9,6 +9,8 @@ get:
     Retrieves the positions in the search results and their associated number of clicks.
 
     This lets you check how many clicks the first, second, or tenth search results receive.
+
+    An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

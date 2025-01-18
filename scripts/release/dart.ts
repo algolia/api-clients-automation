@@ -2,11 +2,11 @@ import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
 
-import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
-import { GENERATORS, toAbsolutePath } from '../common.js';
+import clientsConfig from '../../config/clients.config.json' with { type: 'json' };
+import { GENERATORS, toAbsolutePath } from '../common.ts';
 
-import { writeJsonFile } from './common.js';
-import { updateChangelog } from './updateAPIVersions.js';
+import { writeJsonFile } from './common.ts';
+import { updateChangelog } from './updateAPIVersions.ts';
 
 /**
  * Updates packages versions and generates the changelog.

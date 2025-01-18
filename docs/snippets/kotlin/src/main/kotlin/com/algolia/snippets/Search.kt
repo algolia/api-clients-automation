@@ -1416,7 +1416,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForReplaceAllObjects() {
-    // >SEPARATOR replaceAllObjects default
+    // >SEPARATOR replaceAllObjects call replaceAllObjects without error
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1526,6 +1526,88 @@ class SnippetSearchClient {
         },
       ),
       batchSize = 3,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceAllObjects1() {
+    // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.replaceAllObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("1"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Adam"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("2"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Benoit"),
+          )
+        },
+      ),
+      batchSize = 77,
+      scopes = listOf(ScopeType.entries.first { it.value == "settings" }, ScopeType.entries.first { it.value == "synonyms" }),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceAllObjects2() {
+    // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.replaceAllObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("fine"),
+          )
+          put(
+            "body",
+            JsonPrimitive("small obj"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("toolarge"),
+          )
+          put(
+            "body",
+            JsonPrimitive("something bigger than 10KB"),
+          )
+        },
+      ),
     )
 
     // >LOG

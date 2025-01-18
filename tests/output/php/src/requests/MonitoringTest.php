@@ -188,8 +188,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -215,8 +214,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -298,8 +296,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'isItWorking' => true,
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -325,8 +322,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
             [
                 'queryParameters' => [
                     'myParam' => 2,
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -353,8 +349,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -381,8 +376,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -409,8 +403,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
-                ],
-            ]
+                ], ]
         );
 
         $this->assertRequests([
@@ -624,7 +617,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
 
             if (isset($request['body'])) {
                 $this->assertEquals(
-                    json_encode($request['body']),
+                    json_encode($request['body'], JSON_UNESCAPED_UNICODE),
                     $recordedRequest->getBody()->getContents()
                 );
             }

@@ -498,6 +498,32 @@ class TestRecommendClient:
 
     async def test_get_recommendations_1(self):
         """
+        get recommendations with e2e to check oneOf model
+        """
+        _req = await self._client.get_recommendations_with_http_info(
+            get_recommendations_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_browse",
+                        "objectID": "Æon Flux",
+                        "model": "related-products",
+                        "threshold": 20.0,
+                        "maxRecommendations": 2,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/recommendations"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}"""
+        )
+
+    async def test_get_recommendations_2(self):
+        """
         get recommendations for recommend model with all parameters
         """
         _req = await self._client.get_recommendations_with_http_info(
@@ -534,7 +560,7 @@ class TestRecommendClient:
             """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
         )
 
-    async def test_get_recommendations_2(self):
+    async def test_get_recommendations_3(self):
         """
         get recommendations for trending model with minimal parameters
         """
@@ -560,7 +586,7 @@ class TestRecommendClient:
             """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}"""
         )
 
-    async def test_get_recommendations_3(self):
+    async def test_get_recommendations_4(self):
         """
         get recommendations for trending model with all parameters
         """
@@ -599,7 +625,7 @@ class TestRecommendClient:
             """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
         )
 
-    async def test_get_recommendations_4(self):
+    async def test_get_recommendations_5(self):
         """
         get multiple recommendations with minimal parameters
         """
@@ -630,7 +656,7 @@ class TestRecommendClient:
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}"""
         )
 
-    async def test_get_recommendations_5(self):
+    async def test_get_recommendations_6(self):
         """
         get multiple recommendations with all parameters
         """
@@ -687,7 +713,7 @@ class TestRecommendClient:
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
         )
 
-    async def test_get_recommendations_6(self):
+    async def test_get_recommendations_7(self):
         """
         get frequently bought together recommendations
         """
@@ -1221,6 +1247,32 @@ class TestRecommendClientSync:
 
     def test_get_recommendations_1(self):
         """
+        get recommendations with e2e to check oneOf model
+        """
+        _req = self._client.get_recommendations_with_http_info(
+            get_recommendations_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_browse",
+                        "objectID": "Æon Flux",
+                        "model": "related-products",
+                        "threshold": 20.0,
+                        "maxRecommendations": 2,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/recommendations"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}"""
+        )
+
+    def test_get_recommendations_2(self):
+        """
         get recommendations for recommend model with all parameters
         """
         _req = self._client.get_recommendations_with_http_info(
@@ -1257,7 +1309,7 @@ class TestRecommendClientSync:
             """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
         )
 
-    def test_get_recommendations_2(self):
+    def test_get_recommendations_3(self):
         """
         get recommendations for trending model with minimal parameters
         """
@@ -1283,7 +1335,7 @@ class TestRecommendClientSync:
             """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}"""
         )
 
-    def test_get_recommendations_3(self):
+    def test_get_recommendations_4(self):
         """
         get recommendations for trending model with all parameters
         """
@@ -1322,7 +1374,7 @@ class TestRecommendClientSync:
             """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
         )
 
-    def test_get_recommendations_4(self):
+    def test_get_recommendations_5(self):
         """
         get multiple recommendations with minimal parameters
         """
@@ -1353,7 +1405,7 @@ class TestRecommendClientSync:
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}"""
         )
 
-    def test_get_recommendations_5(self):
+    def test_get_recommendations_6(self):
         """
         get multiple recommendations with all parameters
         """
@@ -1410,7 +1462,7 @@ class TestRecommendClientSync:
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
         )
 
-    def test_get_recommendations_6(self):
+    def test_get_recommendations_7(self):
         """
         get frequently bought together recommendations
         """

@@ -20,7 +20,6 @@
 package algoliasearch.ingestion
 
 import algoliasearch.ingestion.BigQueryDataType._
-import algoliasearch.ingestion.DockerRegistry._
 import algoliasearch.ingestion.MappingTypeCSV._
 import algoliasearch.ingestion.MethodType._
 

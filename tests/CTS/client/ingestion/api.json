@@ -28,7 +28,7 @@
             "go": "API error [429] Too Many Requests",
             "java": "Status Code: 429 - Too Many Requests",
             "javascript": "Too Many Requests",
-            "kotlin": "Client request(GET http://%localhost%:6676/1/html-error) invalid: 429 Too Many Requests. Text: \\\"<html><body>429 Too Many Requests</body></html>\\\"",
+            "kotlin": "Client request\\\\(GET http://%localhost%:6676/1/html-error\\\\) invalid: 429 Too Many Requests. Text: \\\"<html><body>429 Too Many Requests</body></html>\\\"",
             "php": "429: Too Many Requests",
             "python": "Too Many Requests",
             "ruby": "429: Too Many Requests",
@@ -72,6 +72,53 @@
           "match": {
             "connectTimeout": 25000,
             "responseTimeout": 25000
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "endpoint level timeout",
+    "steps": [
+      {
+        "type": "method",
+        "method": "validateSourceBeforeUpdate",
+        "parameters": {
+          "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "sourceUpdate": {
+            "name": "newName"
+          }
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 180000,
+            "responseTimeout": 180000
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "can override endpoint level timeout",
+    "steps": [
+      {
+        "type": "method",
+        "method": "validateSourceBeforeUpdate",
+        "parameters": {
+          "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "sourceUpdate": {
+            "name": "newName"
+          }
+        },
+        "requestOptions": {
+          "writeTimeout": 3456
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 180000,
+            "responseTimeout": 3456
           }
         }
       }

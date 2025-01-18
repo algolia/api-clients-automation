@@ -13,12 +13,13 @@ import {
   run,
   setVerbose,
   toAbsolutePath,
-} from '../../common.js';
-import { getNbGitDiff } from '../utils.js';
-import { GuidesToPush, pushToRepositoryConfiguration, RepositoryConfiguration, SpecsToPush } from './types.js';
+} from '../../common.ts';
+import { getNbGitDiff } from '../utils.ts';
+import type { GuidesToPush, RepositoryConfiguration, SpecsToPush } from './types.ts';
+import { pushToRepositoryConfiguration } from './types.ts';
 
-import { getClientsConfigField } from '../../config.js';
-import { commitStartRelease } from './text.js';
+import { getClientsConfigField } from '../../config.ts';
+import { commitStartRelease } from './text.ts';
 
 async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<void> {
   const pathToSpecs = toAbsolutePath(`${tempGitDir}/${spec.output}`);

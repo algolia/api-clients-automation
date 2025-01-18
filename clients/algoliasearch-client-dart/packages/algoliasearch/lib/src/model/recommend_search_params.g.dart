@@ -108,6 +108,10 @@ RecommendSearchParams _$RecommendSearchParamsFromJson(
               $checkedConvert('attributeForDistinct', (v) => v as String?),
           maxFacetHits:
               $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
+          keepDiacriticsOnCharacters: $checkedConvert(
+              'keepDiacriticsOnCharacters', (v) => v as String?),
+          customRanking: $checkedConvert('customRanking',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
@@ -271,6 +275,9 @@ Map<String, dynamic> _$RecommendSearchParamsToJson(
       if (instance.attributeForDistinct case final value?)
         'attributeForDistinct': value,
       if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
+      if (instance.keepDiacriticsOnCharacters case final value?)
+        'keepDiacriticsOnCharacters': value,
+      if (instance.customRanking case final value?) 'customRanking': value,
       if (instance.attributesToRetrieve case final value?)
         'attributesToRetrieve': value,
       if (instance.ranking case final value?) 'ranking': value,

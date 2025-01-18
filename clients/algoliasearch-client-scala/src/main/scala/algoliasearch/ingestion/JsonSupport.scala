@@ -30,8 +30,6 @@ object JsonSupport {
     new BigQueryDataTypeSerializer() :+
     new DestinationSortKeysSerializer() :+
     new DestinationTypeSerializer() :+
-    new DockerImageTypeSerializer() :+
-    new DockerRegistrySerializer() :+
     new DockerStreamsSyncModeSerializer() :+
     new EntityTypeSerializer() :+
     new EventSortKeysSerializer() :+
