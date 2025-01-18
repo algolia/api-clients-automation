@@ -38,7 +38,7 @@
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-yml": "1.16.0",
     "husky": "9.1.7",
-    "lint-staged": "15.3.0",
+    "lint-staged": "15.4.1",
     "oxlint": "0.15.6",
     "prettier": "3.4.2",
     "prettier-plugin-java": "2.6.6",
