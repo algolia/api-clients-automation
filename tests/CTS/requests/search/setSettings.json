@@ -191,40 +191,6 @@
     }
   },
   {
-    "testName": "distinct company",
-    "isSnippet": true,
-    "parameters": {
-      "indexName": "theIndexName",
-      "indexSettings": {
-        "distinct": "company"
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/settings",
-      "method": "PUT",
-      "body": {
-        "distinct": "company"
-      }
-    }
-  },
-  {
-    "testName": "distinct design",
-    "isSnippet": true,
-    "parameters": {
-      "indexName": "theIndexName",
-      "indexSettings": {
-        "distinct": "design"
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/settings",
-      "method": "PUT",
-      "body": {
-        "distinct": "design"
-      }
-    }
-  },
-  {
     "testName": "distinct true",
     "isSnippet": true,
     "parameters": {
@@ -237,25 +203,6 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "distinct": true
-      }
-    }
-  },
-  {
-    "testName": "distinct section",
-    "isSnippet": true,
-    "parameters": {
-      "indexName": "theIndexName",
-      "indexSettings": {
-        "attributeForDistinct": "section",
-        "distinct": true
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/settings",
-      "method": "PUT",
-      "body": {
-        "attributeForDistinct": "section",
         "distinct": true
       }
     }
