@@ -592,6 +592,8 @@ public class ParametersWithDataType {
           spec.setIsArray(true);
           // This is just to find the correct path in `handlePrimitive`, but it's not always the
           // real type
+          // FIXME: this set voluntarily the type to string, which will fail
+          // We need to infer the real type
           CodegenProperty baseItems = new CodegenProperty();
           baseItems.dataType = "String";
           spec.setItems(baseItems);

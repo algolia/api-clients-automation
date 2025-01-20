@@ -93,5 +93,60 @@
         }
       }
     ]
+  },
+  {
+    "testName": "saveObjectsPlaylist",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "playlists",
+          "objects": [
+            {
+              "objectID": "1",
+              "user": "public",
+              "name": "Hot 100 Billboard Charts",
+              "tracks": [
+                "Despacito",
+                "Shape of You"
+              ],
+              "createdAt": 1500240452
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "saveObjectsPublicUser",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "playlists",
+          "objects": [
+            {
+              "objectID": "1",
+              "user": "public",
+              "name": "Hot 100 Billboard Charts",
+              "tracks": [
+                "Despacito",
+                "Shape of You"
+              ],
+              "createdAt": 1500240452
+            }
+          ],
+          "requestOptions": {
+            "headers": {
+              "X-Algolia-User-ID": "*"
+            }
+          }
+        }
+      }
+    ]
   }
 ]
