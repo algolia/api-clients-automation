@@ -415,6 +415,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "tomato-fruit",
       "rule": {
         "objectID": "tomato-fruit",
         "conditions": [{
@@ -450,6 +451,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "Promote-Apple-Newest",
       "rule": {
         "objectID": "Promote-Apple-Newest",
         "conditions": [{
@@ -491,6 +493,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "Promote-iPhone-X",
       "rule": {
         "objectID": "Promote-iPhone-X",
         "conditions": [{
@@ -532,6 +535,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "promote-harry-potter-box-set",
       "rule": {
         "objectID": "promote-harry-potter-box-set",
         "conditions": [{
@@ -571,6 +575,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "article-rule",
       "rule": {
         "objectID": "article-rule",
         "conditions": [{
@@ -618,9 +623,10 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "tagged-brand-rule",
       "rule": {
         "conditions": [{
-          "pattern": "brand\\: {facet:brand}",
+          "pattern": "brand\\\\: {facet:brand}",
           "anchoring": "contains",
           "alternatives": false
         }],
@@ -630,7 +636,7 @@
               "facet":"brand"
             }],
             "query": {
-              "remove": ["brand\\:", "{facet:brand}"]
+              "remove": ["brand\\\\:", "{facet:brand}"]
             }
           }
         },
@@ -643,7 +649,7 @@
       "method": "PUT",
       "body": {
         "conditions": [{
-          "pattern": "brand\\: {facet:brand}",
+          "pattern": "brand\\\\: {facet:brand}",
           "anchoring": "contains",
           "alternatives": false
         }],
@@ -653,7 +659,7 @@
               "facet":"brand"
             }],
             "query": {
-              "remove": ["brand\\:", "{facet:brand}"]
+              "remove": ["brand\\\\:", "{facet:brand}"]
             }
           }
         },
@@ -667,6 +673,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "color-facets",
       "rule": {
         "objectID": "color-facets",
         "conditions": [{
@@ -704,6 +711,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "hide-12345",
       "rule": {
         "objectID": "hide-12345",
         "conditions": [{
@@ -739,6 +747,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "red-color",
       "rule": {
         "objectID": "red-color",
         "conditions": [{
@@ -756,7 +765,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/indexName/rules/color-facets",
+      "path": "/1/indexes/indexName/rules/red-color",
       "method": "PUT",
       "body": {
         "objectID": "red-color",
@@ -780,6 +789,7 @@
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
+      "objectID": "cheap",
       "rule": {
         "objectID": "cheap",
         "conditions": [{
