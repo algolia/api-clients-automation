@@ -1,6 +1,7 @@
 [
   {
     "testName": "listIndices with minimal parameters",
+    "isSnippet": true,
     "parameters": {},
     "request": {
       "path": "/1/indexes",

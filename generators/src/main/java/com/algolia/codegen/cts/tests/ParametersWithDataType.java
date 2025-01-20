@@ -592,6 +592,8 @@ public class ParametersWithDataType {
           spec.setIsArray(true);
           // This is just to find the correct path in `handlePrimitive`, but it's not always the
           // real type
+          // FIXME: this set voluntarily the type to string, which will fail
+          // We need to infer the real type
           CodegenProperty baseItems = new CodegenProperty();
           baseItems.dataType = "String";
           spec.setItems(baseItems);
@@ -699,6 +701,10 @@ public class ParametersWithDataType {
     // If there is a number, try to use it as other number type, in the order
     // Integer, Long, Float, Double
     if (hasFloat && (paramType.equals("Integer") || paramType.equals("Long") || paramType.equals("Double"))) {
+      return maybeMatch;
+    }
+
+    if (model == null || model.interfaceModels == null) {
       return maybeMatch;
     }
 
