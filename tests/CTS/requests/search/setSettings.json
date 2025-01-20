@@ -574,6 +574,29 @@
     }
   },
   {
+    "testName": "customRanking applying search parameters for a specific query",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [
+            "desc(nb_airline_liaisons)"
+          ],
+        "attributesForFaceting": ["city, country"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [
+            "desc(nb_airline_liaisons)"
+          ],
+        "attributesForFaceting": ["city, country"]
+      }
+    }
+  },
+  {
     "testName": "customRanking rounded pageviews",
     "isSnippet": true,
     "parameters": {
