@@ -152,7 +152,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     String packageName = getPackageName((String) additionalProperties.get("client"));
 
     additionalProperties.put("apiName", CLIENT);
-    additionalProperties.put("clientName", clientName);
+    // Just so the full client doesn't have the weird Full naming
+    additionalProperties.put("clientName", CLIENT.contains("composition") ? "composition" + Helpers.API_SUFFIX : clientName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);

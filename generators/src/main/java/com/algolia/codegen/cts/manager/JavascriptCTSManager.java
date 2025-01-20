@@ -53,7 +53,7 @@ public class JavascriptCTSManager implements CTSManager {
         bundle.put("importPackage", "@algolia/composition");
         break;
       case "composition-full":
-        bundle.put("clientName", "compositionFullClient");
+        bundle.put("clientName", "compositionClient");
         bundle.put("importPackage", "@algolia/client-composition");
         break;
       case "algoliasearch":
