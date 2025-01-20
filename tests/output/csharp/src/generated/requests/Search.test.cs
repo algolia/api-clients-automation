@@ -2985,6 +2985,24 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "withFilters")]
+  public async Task SearchSingleIndexTest4()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Filters = "country:US AND price.gross < 2.0" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"filters\":\"country:US AND price.gross < 2.0\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "searchSynonyms with minimal parameters")]
   public async Task SearchSynonymsTest()
   {
@@ -3417,8 +3435,271 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "setSettings allow all `indexSettings`")]
+  [Fact(DisplayName = "neuralSearch")]
   public async Task SetSettingsTest10()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Mode = Enum.Parse<Mode>("NeuralSearch") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"mode\":\"neuralSearch\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "keywordSearch")]
+  public async Task SetSettingsTest11()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Mode = Enum.Parse<Mode>("KeywordSearch") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"mode\":\"keywordSearch\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "distinct")]
+  public async Task SetSettingsTest12()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { AttributeForDistinct = "section", Distinct = new Distinct(true) }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributeForDistinct\":\"section\",\"distinct\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "searchableAttributes same priority")]
+  public async Task SetSettingsTest13()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string> { "title,comments", "ingredients" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"searchableAttributes\":[\"title,comments\",\"ingredients\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "searchableAttributes higher priority")]
+  public async Task SetSettingsTest14()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string> { "title", "ingredients" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"searchableAttributes\":[\"title\",\"ingredients\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "customRanking retweets")]
+  public async Task SetSettingsTest15()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(retweets)", "desc(likes)" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customRanking\":[\"desc(retweets)\",\"desc(likes)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "customRanking boosted")]
+  public async Task SetSettingsTest16()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { CustomRanking = new List<string> { "desc(boosted)" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customRanking\":[\"desc(boosted)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "customRanking pageviews")]
+  public async Task SetSettingsTest17()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(pageviews)", "desc(comments)" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customRanking\":[\"desc(pageviews)\",\"desc(comments)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "customRanking rounded pageviews")]
+  public async Task SetSettingsTest18()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(rounded_pageviews)", "desc(comments)" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "customRanking price")]
+  public async Task SetSettingsTest19()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { CustomRanking = new List<string> { "desc(price)" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customRanking\":[\"desc(price)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "ranking exhaustive")]
+  public async Task SetSettingsTest20()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom",
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "ranking standard replica")]
+  public async Task SetSettingsTest21()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Ranking = new List<string> { "desc(post_date_timestamp)" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"ranking\":[\"desc(post_date_timestamp)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "ranking virtual replica")]
+  public async Task SetSettingsTest22()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { CustomRanking = new List<string> { "desc(post_date_timestamp)" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customRanking\":[\"desc(post_date_timestamp)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "setSettings allow all `indexSettings`")]
+  public async Task SetSettingsTest23()
   {
     await client.SetSettingsAsync(
       "theIndexName",

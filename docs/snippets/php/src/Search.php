@@ -2274,7 +2274,7 @@ class SnippetSearchClient
      */
     public function snippetForSearchSingleIndex(): void
     {
-        // >SEPARATOR searchSingleIndex default
+        // >SEPARATOR searchSingleIndex search with searchParams
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -2285,6 +2285,30 @@ class SnippetSearchClient
                 'facetFilters' => [
                     'tags:algolia',
                 ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * withFilters
+     */
+    public function snippetForSearchSingleIndex1(): void
+    {
+        // >SEPARATOR searchSingleIndex withFilters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => 'country:US AND price.gross < 2.0',
             ],
         );
 
@@ -2396,7 +2420,7 @@ class SnippetSearchClient
      */
     public function snippetForSetSettings(): void
     {
-        // >SEPARATOR setSettings default
+        // >SEPARATOR setSettings setSettingsAttributesForFaceting
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -2409,6 +2433,365 @@ class SnippetSearchClient
                 'filterOnly(category)',
 
                 'searchable(publisher)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * neuralSearch
+     */
+    public function snippetForSetSettings1(): void
+    {
+        // >SEPARATOR setSettings neuralSearch
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['mode' => 'neuralSearch',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * keywordSearch
+     */
+    public function snippetForSetSettings2(): void
+    {
+        // >SEPARATOR setSettings keywordSearch
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['mode' => 'keywordSearch',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * distinct
+     */
+    public function snippetForSetSettings3(): void
+    {
+        // >SEPARATOR setSettings distinct
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributeForDistinct' => 'section',
+                'distinct' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributes same priority
+     */
+    public function snippetForSetSettings4(): void
+    {
+        // >SEPARATOR setSettings searchableAttributes same priority
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'title,comments',
+
+                'ingredients',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributes higher priority
+     */
+    public function snippetForSetSettings5(): void
+    {
+        // >SEPARATOR setSettings searchableAttributes higher priority
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'title',
+
+                'ingredients',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking retweets
+     */
+    public function snippetForSetSettings6(): void
+    {
+        // >SEPARATOR setSettings customRanking retweets
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(retweets)',
+
+                'desc(likes)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking boosted
+     */
+    public function snippetForSetSettings7(): void
+    {
+        // >SEPARATOR setSettings customRanking boosted
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(boosted)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking pageviews
+     */
+    public function snippetForSetSettings8(): void
+    {
+        // >SEPARATOR setSettings customRanking pageviews
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(pageviews)',
+
+                'desc(comments)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking rounded pageviews
+     */
+    public function snippetForSetSettings9(): void
+    {
+        // >SEPARATOR setSettings customRanking rounded pageviews
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(rounded_pageviews)',
+
+                'desc(comments)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking price
+     */
+    public function snippetForSetSettings10(): void
+    {
+        // >SEPARATOR setSettings customRanking price
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(price)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ranking exhaustive
+     */
+    public function snippetForSetSettings11(): void
+    {
+        // >SEPARATOR setSettings ranking exhaustive
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['ranking' => [
+                'desc(price)',
+
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'proximity',
+
+                'attribute',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ranking standard replica
+     */
+    public function snippetForSetSettings12(): void
+    {
+        // >SEPARATOR setSettings ranking standard replica
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['ranking' => [
+                'desc(post_date_timestamp)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ranking virtual replica
+     */
+    public function snippetForSetSettings13(): void
+    {
+        // >SEPARATOR setSettings ranking virtual replica
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(post_date_timestamp)',
             ],
             ],
         );

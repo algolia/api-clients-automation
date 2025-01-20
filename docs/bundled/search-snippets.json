@@ -212,7 +212,8 @@
       "default": "var response = await client.SearchRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchRulesParams { Query = \"zorro\" }\n);"
     },
     "searchSingleIndex": {
-      "default": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(\n    new SearchParamsObject\n    {\n      Query = \"myQuery\",\n      FacetFilters = new FacetFilters(\n        new List<FacetFilters> { new FacetFilters(\"tags:algolia\") }\n      ),\n    }\n  )\n);"
+      "search with searchParams": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(\n    new SearchParamsObject\n    {\n      Query = \"myQuery\",\n      FacetFilters = new FacetFilters(\n        new List<FacetFilters> { new FacetFilters(\"tags:algolia\") }\n      ),\n    }\n  )\n);",
+      "withFilters": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Filters = \"country:US AND price.gross < 2.0\" })\n);"
     },
     "searchSynonyms": {
       "default": "var response = await client.SearchSynonymsAsync(\"<YOUR_INDEX_NAME>\");"
@@ -227,7 +228,20 @@
       "default": "var response = await client.SetDictionarySettingsAsync(\n  new DictionarySettingsParams\n  {\n    DisableStandardEntries = new StandardEntries\n    {\n      Plurals = new Dictionary<string, Boolean>\n      {\n        { \"fr\", false },\n        { \"en\", false },\n        { \"ru\", true },\n      },\n    },\n  }\n);"
     },
     "setSettings": {
-      "default": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    AttributesForFaceting = new List<string>\n    {\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\",\n    },\n  }\n);"
+      "setSettingsAttributesForFaceting": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    AttributesForFaceting = new List<string>\n    {\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\",\n    },\n  }\n);",
+      "neuralSearch": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { Mode = Enum.Parse<Mode>(\"NeuralSearch\") }\n);",
+      "keywordSearch": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { Mode = Enum.Parse<Mode>(\"KeywordSearch\") }\n);",
+      "distinct": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { AttributeForDistinct = \"section\", Distinct = new Distinct(true) }\n);",
+      "searchableAttributes same priority": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    SearchableAttributes = new List<string> { \"title,comments\", \"ingredients\" },\n  }\n);",
+      "searchableAttributes higher priority": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    SearchableAttributes = new List<string> { \"title\", \"ingredients\" },\n  }\n);",
+      "customRanking retweets": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    CustomRanking = new List<string> { \"desc(retweets)\", \"desc(likes)\" },\n  }\n);",
+      "customRanking boosted": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { CustomRanking = new List<string> { \"desc(boosted)\" } }\n);",
+      "customRanking pageviews": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    CustomRanking = new List<string> { \"desc(pageviews)\", \"desc(comments)\" },\n  }\n);",
+      "customRanking rounded pageviews": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    CustomRanking = new List<string> { \"desc(rounded_pageviews)\", \"desc(comments)\" },\n  }\n);",
+      "customRanking price": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { CustomRanking = new List<string> { \"desc(price)\" } }\n);",
+      "ranking exhaustive": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    Ranking = new List<string>\n    {\n      \"desc(price)\",\n      \"typo\",\n      \"geo\",\n      \"words\",\n      \"filters\",\n      \"proximity\",\n      \"attribute\",\n      \"exact\",\n      \"custom\",\n    },\n  }\n);",
+      "ranking standard replica": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { Ranking = new List<string> { \"desc(post_date_timestamp)\" } }\n);",
+      "ranking virtual replica": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { CustomRanking = new List<string> { \"desc(post_date_timestamp)\" } }\n);"
     },
     "updateApiKey": {
       "default": "var response = await client.UpdateApiKeyAsync(\n  \"ALGOLIA_API_KEY\",\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
@@ -460,7 +474,8 @@
       "default": "final response = await client.searchRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchRulesParams: SearchRulesParams(\n    query: \"zorro\",\n  ),\n);"
     },
     "searchSingleIndex": {
-      "default": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"myQuery\",\n    facetFilters: [\n      \"tags:algolia\",\n    ],\n  ),\n);"
+      "search with searchParams": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"myQuery\",\n    facetFilters: [\n      \"tags:algolia\",\n    ],\n  ),\n);",
+      "withFilters": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    filters: \"country:US AND price.gross < 2.0\",\n  ),\n);"
     },
     "searchSynonyms": {
       "default": "final response = await client.searchSynonyms(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
@@ -475,7 +490,20 @@
       "default": "final response = await client.setDictionarySettings(\n  dictionarySettingsParams: DictionarySettingsParams(\n    disableStandardEntries: StandardEntries(\n      plurals: {\n        'fr': false,\n        'en': false,\n        'ru': true,\n      },\n    ),\n  ),\n);"
     },
     "setSettings": {
-      "default": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    attributesForFaceting: [\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\",\n    ],\n  ),\n);"
+      "setSettingsAttributesForFaceting": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    attributesForFaceting: [\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\",\n    ],\n  ),\n);",
+      "neuralSearch": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    mode: Mode.fromJson(\"neuralSearch\"),\n  ),\n);",
+      "keywordSearch": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    mode: Mode.fromJson(\"keywordSearch\"),\n  ),\n);",
+      "distinct": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    attributeForDistinct: \"section\",\n    distinct: true,\n  ),\n);",
+      "searchableAttributes same priority": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    searchableAttributes: [\n      \"title,comments\",\n      \"ingredients\",\n    ],\n  ),\n);",
+      "searchableAttributes higher priority": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    searchableAttributes: [\n      \"title\",\n      \"ingredients\",\n    ],\n  ),\n);",
+      "customRanking retweets": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    customRanking: [\n      \"desc(retweets)\",\n      \"desc(likes)\",\n    ],\n  ),\n);",
+      "customRanking boosted": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    customRanking: [\n      \"desc(boosted)\",\n    ],\n  ),\n);",
+      "customRanking pageviews": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    customRanking: [\n      \"desc(pageviews)\",\n      \"desc(comments)\",\n    ],\n  ),\n);",
+      "customRanking rounded pageviews": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    customRanking: [\n      \"desc(rounded_pageviews)\",\n      \"desc(comments)\",\n    ],\n  ),\n);",
+      "customRanking price": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    customRanking: [\n      \"desc(price)\",\n    ],\n  ),\n);",
+      "ranking exhaustive": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    ranking: [\n      \"desc(price)\",\n      \"typo\",\n      \"geo\",\n      \"words\",\n      \"filters\",\n      \"proximity\",\n      \"attribute\",\n      \"exact\",\n      \"custom\",\n    ],\n  ),\n);",
+      "ranking standard replica": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    ranking: [\n      \"desc(post_date_timestamp)\",\n    ],\n  ),\n);",
+      "ranking virtual replica": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    customRanking: [\n      \"desc(post_date_timestamp)\",\n    ],\n  ),\n);"
     },
     "updateApiKey": {
       "default": "final response = await client.updateApiKey(\n  key: \"ALGOLIA_API_KEY\",\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  ),\n);"
@@ -708,7 +736,8 @@
       "default": "response, err := client.SearchRules(client.NewApiSearchRulesRequest(\n  \"<YOUR_INDEX_NAME>\",\n).WithSearchRulesParams(\n  search.NewEmptySearchRulesParams().SetQuery(\"zorro\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSingleIndex": {
-      "default": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\",\n).WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"myQuery\").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(\n    []search.FacetFilters{*search.StringAsFacetFilters(\"tags:algolia\")})))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "search with searchParams": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\",\n).WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"myQuery\").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(\n    []search.FacetFilters{*search.StringAsFacetFilters(\"tags:algolia\")})))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "withFilters": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\",\n).WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetFilters(\"country:US AND price.gross < 2.0\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSynonyms": {
       "default": "response, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -723,7 +752,20 @@
       "default": "response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(\n\n  search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(\n    search.NewEmptyStandardEntries().SetPlurals(map[string]bool{\"fr\": false, \"en\": false, \"ru\": true})),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setSettings": {
-      "default": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetAttributesForFaceting(\n    []string{\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "setSettingsAttributesForFaceting": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetAttributesForFaceting(\n    []string{\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "neuralSearch": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetMode(search.Mode(\"neuralSearch\")),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "keywordSearch": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetMode(search.Mode(\"keywordSearch\")),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "distinct": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetAttributeForDistinct(\"section\").SetDistinct(search.BoolAsDistinct(true)),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "searchableAttributes same priority": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetSearchableAttributes(\n    []string{\"title,comments\", \"ingredients\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "searchableAttributes higher priority": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetSearchableAttributes(\n    []string{\"title\", \"ingredients\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "customRanking retweets": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetCustomRanking(\n    []string{\"desc(retweets)\", \"desc(likes)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "customRanking boosted": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetCustomRanking(\n    []string{\"desc(boosted)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "customRanking pageviews": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetCustomRanking(\n    []string{\"desc(pageviews)\", \"desc(comments)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "customRanking rounded pageviews": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetCustomRanking(\n    []string{\"desc(rounded_pageviews)\", \"desc(comments)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "customRanking price": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetCustomRanking(\n    []string{\"desc(price)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "ranking exhaustive": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetRanking(\n    []string{\"desc(price)\", \"typo\", \"geo\", \"words\", \"filters\", \"proximity\", \"attribute\", \"exact\", \"custom\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "ranking standard replica": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetRanking(\n    []string{\"desc(post_date_timestamp)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "ranking virtual replica": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetCustomRanking(\n    []string{\"desc(post_date_timestamp)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateApiKey": {
       "default": "response, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(\n  \"ALGOLIA_API_KEY\",\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -956,7 +998,8 @@
       "default": "client.searchRules(\"<YOUR_INDEX_NAME>\", new SearchRulesParams().setQuery(\"zorro\"));"
     },
     "searchSingleIndex": {
-      "default": "client.searchSingleIndex(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParamsObject().setQuery(\"myQuery\").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(\"tags:algolia\")))),\n  Hit.class\n);"
+      "search with searchParams": "client.searchSingleIndex(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParamsObject().setQuery(\"myQuery\").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(\"tags:algolia\")))),\n  Hit.class\n);",
+      "withFilters": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setFilters(\"country:US AND price.gross < 2.0\"), Hit.class);"
     },
     "searchSynonyms": {
       "default": "client.searchSynonyms(\"<YOUR_INDEX_NAME>\");"
@@ -971,7 +1014,20 @@
       "default": "client.setDictionarySettings(\n  new DictionarySettingsParams()\n    .setDisableStandardEntries(\n      new StandardEntries()\n        .setPlurals(\n          new HashMap() {\n            {\n              put(\"fr\", false);\n              put(\"en\", false);\n              put(\"ru\", true);\n            }\n          }\n        )\n    )\n);"
     },
     "setSettings": {
-      "default": "client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setAttributesForFaceting(Arrays.asList(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n);"
+      "setSettingsAttributesForFaceting": "client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setAttributesForFaceting(Arrays.asList(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n);",
+      "neuralSearch": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setMode(Mode.NEURAL_SEARCH));",
+      "keywordSearch": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));",
+      "distinct": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setAttributeForDistinct(\"section\").setDistinct(Distinct.of(true)));",
+      "searchableAttributes same priority": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setSearchableAttributes(Arrays.asList(\"title,comments\", \"ingredients\")));",
+      "searchableAttributes higher priority": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setSearchableAttributes(Arrays.asList(\"title\", \"ingredients\")));",
+      "customRanking retweets": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setCustomRanking(Arrays.asList(\"desc(retweets)\", \"desc(likes)\")));",
+      "customRanking boosted": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setCustomRanking(Arrays.asList(\"desc(boosted)\")));",
+      "customRanking pageviews": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setCustomRanking(Arrays.asList(\"desc(pageviews)\", \"desc(comments)\")));",
+      "customRanking rounded pageviews": "client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setCustomRanking(Arrays.asList(\"desc(rounded_pageviews)\", \"desc(comments)\"))\n);",
+      "customRanking price": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setCustomRanking(Arrays.asList(\"desc(price)\")));",
+      "ranking exhaustive": "client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings()\n    .setRanking(Arrays.asList(\"desc(price)\", \"typo\", \"geo\", \"words\", \"filters\", \"proximity\", \"attribute\", \"exact\", \"custom\"))\n);",
+      "ranking standard replica": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setRanking(Arrays.asList(\"desc(post_date_timestamp)\")));",
+      "ranking virtual replica": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setCustomRanking(Arrays.asList(\"desc(post_date_timestamp)\")));"
     },
     "updateApiKey": {
       "default": "client.updateApiKey(\n  \"ALGOLIA_API_KEY\",\n  new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)\n);"
@@ -1204,7 +1260,8 @@
       "default": "const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });"
     },
     "searchSingleIndex": {
-      "default": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },\n});"
+      "search with searchParams": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },\n});",
+      "withFilters": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { filters: 'country:US AND price.gross < 2.0' },\n});"
     },
     "searchSynonyms": {
       "default": "const response = await client.searchSynonyms({ indexName: 'indexName' });"
@@ -1219,7 +1276,20 @@
       "default": "const response = await client.setDictionarySettings({\n  disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },\n});"
     },
     "setSettings": {
-      "default": "const response = await client.setSettings({\n  indexName: '<YOUR_INDEX_NAME>',\n  indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },\n});"
+      "setSettingsAttributesForFaceting": "const response = await client.setSettings({\n  indexName: '<YOUR_INDEX_NAME>',\n  indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },\n});",
+      "neuralSearch": "const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'neuralSearch' } });",
+      "keywordSearch": "const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'keywordSearch' } });",
+      "distinct": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { attributeForDistinct: 'section', distinct: true },\n});",
+      "searchableAttributes same priority": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { searchableAttributes: ['title,comments', 'ingredients'] },\n});",
+      "searchableAttributes higher priority": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { searchableAttributes: ['title', 'ingredients'] },\n});",
+      "customRanking retweets": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { customRanking: ['desc(retweets)', 'desc(likes)'] },\n});",
+      "customRanking boosted": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { customRanking: ['desc(boosted)'] },\n});",
+      "customRanking pageviews": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { customRanking: ['desc(pageviews)', 'desc(comments)'] },\n});",
+      "customRanking rounded pageviews": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { customRanking: ['desc(rounded_pageviews)', 'desc(comments)'] },\n});",
+      "customRanking price": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { customRanking: ['desc(price)'] },\n});",
+      "ranking exhaustive": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: {\n    ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],\n  },\n});",
+      "ranking standard replica": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { ranking: ['desc(post_date_timestamp)'] },\n});",
+      "ranking virtual replica": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { customRanking: ['desc(post_date_timestamp)'] },\n});"
     },
     "updateApiKey": {
       "default": "const response = await client.updateApiKey({\n  key: 'ALGOLIA_API_KEY',\n  apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },\n});"
@@ -1452,7 +1522,8 @@
       "default": "var response = client.searchRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchRulesParams = SearchRulesParams(\n    query = \"zorro\",\n  ),\n)"
     },
     "searchSingleIndex": {
-      "default": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"myQuery\",\n    facetFilters = FacetFilters.of(listOf(FacetFilters.of(\"tags:algolia\"))),\n  ),\n)"
+      "search with searchParams": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"myQuery\",\n    facetFilters = FacetFilters.of(listOf(FacetFilters.of(\"tags:algolia\"))),\n  ),\n)",
+      "withFilters": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    filters = \"country:US AND price.gross < 2.0\",\n  ),\n)"
     },
     "searchSynonyms": {
       "default": "var response = client.searchSynonyms(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
@@ -1467,7 +1538,20 @@
       "default": "var response = client.setDictionarySettings(\n  dictionarySettingsParams = DictionarySettingsParams(\n    disableStandardEntries = StandardEntries(\n      plurals = mapOf(\"fr\" to false, \"en\" to false, \"ru\" to true),\n    ),\n  ),\n)"
     },
     "setSettings": {
-      "default": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributesForFaceting = listOf(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"),\n  ),\n)"
+      "setSettingsAttributesForFaceting": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributesForFaceting = listOf(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"),\n  ),\n)",
+      "neuralSearch": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    mode = Mode.entries.first { it.value == \"neuralSearch\" },\n  ),\n)",
+      "keywordSearch": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    mode = Mode.entries.first { it.value == \"keywordSearch\" },\n  ),\n)",
+      "distinct": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributeForDistinct = \"section\",\n    distinct = Distinct.of(true),\n  ),\n)",
+      "searchableAttributes same priority": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    searchableAttributes = listOf(\"title,comments\", \"ingredients\"),\n  ),\n)",
+      "searchableAttributes higher priority": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    searchableAttributes = listOf(\"title\", \"ingredients\"),\n  ),\n)",
+      "customRanking retweets": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = listOf(\"desc(retweets)\", \"desc(likes)\"),\n  ),\n)",
+      "customRanking boosted": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = listOf(\"desc(boosted)\"),\n  ),\n)",
+      "customRanking pageviews": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = listOf(\"desc(pageviews)\", \"desc(comments)\"),\n  ),\n)",
+      "customRanking rounded pageviews": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = listOf(\"desc(rounded_pageviews)\", \"desc(comments)\"),\n  ),\n)",
+      "customRanking price": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = listOf(\"desc(price)\"),\n  ),\n)",
+      "ranking exhaustive": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    ranking = listOf(\"desc(price)\", \"typo\", \"geo\", \"words\", \"filters\", \"proximity\", \"attribute\", \"exact\", \"custom\"),\n  ),\n)",
+      "ranking standard replica": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    ranking = listOf(\"desc(post_date_timestamp)\"),\n  ),\n)",
+      "ranking virtual replica": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = listOf(\"desc(post_date_timestamp)\"),\n  ),\n)"
     },
     "updateApiKey": {
       "default": "var response = client.updateApiKey(\n  key = \"ALGOLIA_API_KEY\",\n  apiKey = ApiKey(\n    acl = listOf(Acl.entries.first { it.value == \"search\" }, Acl.entries.first { it.value == \"addObject\" }),\n    validity = 300,\n    maxQueriesPerIPPerHour = 100,\n    maxHitsPerQuery = 20,\n  ),\n)"
@@ -1700,7 +1784,8 @@
       "default": "$response = $client->searchRules(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'zorro',\n    ],\n);"
     },
     "searchSingleIndex": {
-      "default": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'myQuery',\n        'facetFilters' => [\n            'tags:algolia',\n        ],\n    ],\n);"
+      "search with searchParams": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'myQuery',\n        'facetFilters' => [\n            'tags:algolia',\n        ],\n    ],\n);",
+      "withFilters": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['filters' => 'country:US AND price.gross < 2.0',\n    ],\n);"
     },
     "searchSynonyms": {
       "default": "$response = $client->searchSynonyms(\n    '<YOUR_INDEX_NAME>',\n);"
@@ -1715,7 +1800,20 @@
       "default": "$response = $client->setDictionarySettings(\n    ['disableStandardEntries' => ['plurals' => ['fr' => false,\n        'en' => false,\n        'ru' => true,\n    ],\n    ],\n    ],\n);"
     },
     "setSettings": {
-      "default": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['attributesForFaceting' => [\n        'actor',\n\n        'filterOnly(category)',\n\n        'searchable(publisher)',\n    ],\n    ],\n);"
+      "setSettingsAttributesForFaceting": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['attributesForFaceting' => [\n        'actor',\n\n        'filterOnly(category)',\n\n        'searchable(publisher)',\n    ],\n    ],\n);",
+      "neuralSearch": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['mode' => 'neuralSearch',\n    ],\n);",
+      "keywordSearch": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['mode' => 'keywordSearch',\n    ],\n);",
+      "distinct": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['attributeForDistinct' => 'section',\n        'distinct' => true,\n    ],\n);",
+      "searchableAttributes same priority": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['searchableAttributes' => [\n        'title,comments',\n\n        'ingredients',\n    ],\n    ],\n);",
+      "searchableAttributes higher priority": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['searchableAttributes' => [\n        'title',\n\n        'ingredients',\n    ],\n    ],\n);",
+      "customRanking retweets": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['customRanking' => [\n        'desc(retweets)',\n\n        'desc(likes)',\n    ],\n    ],\n);",
+      "customRanking boosted": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['customRanking' => [\n        'desc(boosted)',\n    ],\n    ],\n);",
+      "customRanking pageviews": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['customRanking' => [\n        'desc(pageviews)',\n\n        'desc(comments)',\n    ],\n    ],\n);",
+      "customRanking rounded pageviews": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['customRanking' => [\n        'desc(rounded_pageviews)',\n\n        'desc(comments)',\n    ],\n    ],\n);",
+      "customRanking price": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['customRanking' => [\n        'desc(price)',\n    ],\n    ],\n);",
+      "ranking exhaustive": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['ranking' => [\n        'desc(price)',\n\n        'typo',\n\n        'geo',\n\n        'words',\n\n        'filters',\n\n        'proximity',\n\n        'attribute',\n\n        'exact',\n\n        'custom',\n    ],\n    ],\n);",
+      "ranking standard replica": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['ranking' => [\n        'desc(post_date_timestamp)',\n    ],\n    ],\n);",
+      "ranking virtual replica": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['customRanking' => [\n        'desc(post_date_timestamp)',\n    ],\n    ],\n);"
     },
     "updateApiKey": {
       "default": "$response = $client->updateApiKey(\n    'ALGOLIA_API_KEY',\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'validity' => 300,\n        'maxQueriesPerIPPerHour' => 100,\n        'maxHitsPerQuery' => 20,\n    ],\n);"
@@ -1948,7 +2046,8 @@
       "default": "response = client.search_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)"
     },
     "searchSingleIndex": {
-      "default": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"myQuery\",\n        \"facetFilters\": [\n            \"tags:algolia\",\n        ],\n    },\n)"
+      "search with searchParams": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"myQuery\",\n        \"facetFilters\": [\n            \"tags:algolia\",\n        ],\n    },\n)",
+      "withFilters": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"filters\": \"country:US AND price.gross < 2.0\",\n    },\n)"
     },
     "searchSynonyms": {
       "default": "response = client.search_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
@@ -1963,7 +2062,20 @@
       "default": "response = client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n        },\n    },\n)"
     },
     "setSettings": {
-      "default": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"attributesForFaceting\": [\n            \"actor\",\n            \"filterOnly(category)\",\n            \"searchable(publisher)\",\n        ],\n    },\n)"
+      "setSettingsAttributesForFaceting": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"attributesForFaceting\": [\n            \"actor\",\n            \"filterOnly(category)\",\n            \"searchable(publisher)\",\n        ],\n    },\n)",
+      "neuralSearch": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"mode\": \"neuralSearch\",\n    },\n)",
+      "keywordSearch": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"mode\": \"keywordSearch\",\n    },\n)",
+      "distinct": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"attributeForDistinct\": \"section\",\n        \"distinct\": True,\n    },\n)",
+      "searchableAttributes same priority": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"searchableAttributes\": [\n            \"title,comments\",\n            \"ingredients\",\n        ],\n    },\n)",
+      "searchableAttributes higher priority": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"searchableAttributes\": [\n            \"title\",\n            \"ingredients\",\n        ],\n    },\n)",
+      "customRanking retweets": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"customRanking\": [\n            \"desc(retweets)\",\n            \"desc(likes)\",\n        ],\n    },\n)",
+      "customRanking boosted": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"customRanking\": [\n            \"desc(boosted)\",\n        ],\n    },\n)",
+      "customRanking pageviews": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"customRanking\": [\n            \"desc(pageviews)\",\n            \"desc(comments)\",\n        ],\n    },\n)",
+      "customRanking rounded pageviews": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"customRanking\": [\n            \"desc(rounded_pageviews)\",\n            \"desc(comments)\",\n        ],\n    },\n)",
+      "customRanking price": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"customRanking\": [\n            \"desc(price)\",\n        ],\n    },\n)",
+      "ranking exhaustive": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"ranking\": [\n            \"desc(price)\",\n            \"typo\",\n            \"geo\",\n            \"words\",\n            \"filters\",\n            \"proximity\",\n            \"attribute\",\n            \"exact\",\n            \"custom\",\n        ],\n    },\n)",
+      "ranking standard replica": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"ranking\": [\n            \"desc(post_date_timestamp)\",\n        ],\n    },\n)",
+      "ranking virtual replica": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"customRanking\": [\n            \"desc(post_date_timestamp)\",\n        ],\n    },\n)"
     },
     "updateApiKey": {
       "default": "response = client.update_api_key(\n    key=\"ALGOLIA_API_KEY\",\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)"
@@ -2196,7 +2308,8 @@
       "default": "response = client.search_rules(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchRulesParams.new(query: \"zorro\"))"
     },
     "searchSingleIndex": {
-      "default": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"myQuery\", facet_filters: [\"tags:algolia\"])\n)"
+      "search with searchParams": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"myQuery\", facet_filters: [\"tags:algolia\"])\n)",
+      "withFilters": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(filters: \"country:US AND price.gross < 2.0\")\n)"
     },
     "searchSynonyms": {
       "default": "response = client.search_synonyms(\"<YOUR_INDEX_NAME>\")"
@@ -2211,7 +2324,20 @@
       "default": "response = client.set_dictionary_settings(\n  Algolia::Search::DictionarySettingsParams.new(\n    disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})\n  )\n)"
     },
     "setSettings": {
-      "default": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(\n    attributes_for_faceting: [\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"]\n  )\n)"
+      "setSettingsAttributesForFaceting": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(\n    attributes_for_faceting: [\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"]\n  )\n)",
+      "neuralSearch": "response = client.set_settings(\"<YOUR_INDEX_NAME>\", Algolia::Search::IndexSettings.new(mode: \"neuralSearch\"))",
+      "keywordSearch": "response = client.set_settings(\"<YOUR_INDEX_NAME>\", Algolia::Search::IndexSettings.new(mode: \"keywordSearch\"))",
+      "distinct": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(attribute_for_distinct: \"section\", distinct: true)\n)",
+      "searchableAttributes same priority": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(searchable_attributes: [\"title,comments\", \"ingredients\"])\n)",
+      "searchableAttributes higher priority": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(searchable_attributes: [\"title\", \"ingredients\"])\n)",
+      "customRanking retweets": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(custom_ranking: [\"desc(retweets)\", \"desc(likes)\"])\n)",
+      "customRanking boosted": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(custom_ranking: [\"desc(boosted)\"])\n)",
+      "customRanking pageviews": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(custom_ranking: [\"desc(pageviews)\", \"desc(comments)\"])\n)",
+      "customRanking rounded pageviews": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(custom_ranking: [\"desc(rounded_pageviews)\", \"desc(comments)\"])\n)",
+      "customRanking price": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(custom_ranking: [\"desc(price)\"])\n)",
+      "ranking exhaustive": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(\n    ranking: [\"desc(price)\", \"typo\", \"geo\", \"words\", \"filters\", \"proximity\", \"attribute\", \"exact\", \"custom\"]\n  )\n)",
+      "ranking standard replica": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(ranking: [\"desc(post_date_timestamp)\"])\n)",
+      "ranking virtual replica": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(custom_ranking: [\"desc(post_date_timestamp)\"])\n)"
     },
     "updateApiKey": {
       "default": "response = client.update_api_key(\n  \"ALGOLIA_API_KEY\",\n  Algolia::Search::ApiKey.new(\n    acl: [\"search\", \"addObject\"],\n    validity: 300,\n    max_queries_per_ip_per_hour: 100,\n    max_hits_per_query: 20\n  )\n)"
@@ -2419,7 +2545,8 @@
       "default": "val response = client.searchRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchRulesParams = Some(\n    SearchRulesParams(\n      query = Some(\"zorro\")\n    )\n  )\n)"
     },
     "searchSingleIndex": {
-      "default": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"myQuery\"),\n      facetFilters = Some(FacetFilters(Seq(FacetFilters(\"tags:algolia\"))))\n    )\n  )\n)"
+      "search with searchParams": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"myQuery\"),\n      facetFilters = Some(FacetFilters(Seq(FacetFilters(\"tags:algolia\"))))\n    )\n  )\n)",
+      "withFilters": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      filters = Some(\"country:US AND price.gross < 2.0\")\n    )\n  )\n)"
     },
     "searchSynonyms": {
       "default": "val response = client.searchSynonyms(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
@@ -2431,7 +2558,20 @@
       "default": "val response = client.setDictionarySettings(\n  dictionarySettingsParams = DictionarySettingsParams(\n    disableStandardEntries = StandardEntries(\n      plurals = Some(Map(\"fr\" -> false, \"en\" -> false, \"ru\" -> true))\n    )\n  )\n)"
     },
     "setSettings": {
-      "default": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributesForFaceting = Some(Seq(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n  )\n)"
+      "setSettingsAttributesForFaceting": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributesForFaceting = Some(Seq(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n  )\n)",
+      "neuralSearch": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    mode = Some(Mode.withName(\"neuralSearch\"))\n  )\n)",
+      "keywordSearch": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    mode = Some(Mode.withName(\"keywordSearch\"))\n  )\n)",
+      "distinct": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributeForDistinct = Some(\"section\"),\n    distinct = Some(Distinct(true))\n  )\n)",
+      "searchableAttributes same priority": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    searchableAttributes = Some(Seq(\"title,comments\", \"ingredients\"))\n  )\n)",
+      "searchableAttributes higher priority": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    searchableAttributes = Some(Seq(\"title\", \"ingredients\"))\n  )\n)",
+      "customRanking retweets": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = Some(Seq(\"desc(retweets)\", \"desc(likes)\"))\n  )\n)",
+      "customRanking boosted": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = Some(Seq(\"desc(boosted)\"))\n  )\n)",
+      "customRanking pageviews": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = Some(Seq(\"desc(pageviews)\", \"desc(comments)\"))\n  )\n)",
+      "customRanking rounded pageviews": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = Some(Seq(\"desc(rounded_pageviews)\", \"desc(comments)\"))\n  )\n)",
+      "customRanking price": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = Some(Seq(\"desc(price)\"))\n  )\n)",
+      "ranking exhaustive": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    ranking =\n      Some(Seq(\"desc(price)\", \"typo\", \"geo\", \"words\", \"filters\", \"proximity\", \"attribute\", \"exact\", \"custom\"))\n  )\n)",
+      "ranking standard replica": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    ranking = Some(Seq(\"desc(post_date_timestamp)\"))\n  )\n)",
+      "ranking virtual replica": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    customRanking = Some(Seq(\"desc(post_date_timestamp)\"))\n  )\n)"
     },
     "updateApiKey": {
       "default": "val response = client.updateApiKey(\n  key = \"ALGOLIA_API_KEY\",\n  apiKey = ApiKey(\n    acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n    validity = Some(300),\n    maxQueriesPerIPPerHour = Some(100),\n    maxHitsPerQuery = Some(20)\n  )\n)"
@@ -2653,7 +2793,8 @@
       "default": "let response = try await client.searchRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchRulesParams: SearchRulesParams(query: \"zorro\")\n)"
     },
     "searchSingleIndex": {
-      "default": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"myQuery\",\n        facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string(\"tags:algolia\")])\n    ))\n)"
+      "search with searchParams": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"myQuery\",\n        facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string(\"tags:algolia\")])\n    ))\n)",
+      "withFilters": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams\n        .searchSearchParamsObject(SearchSearchParamsObject(filters: \"country:US AND price.gross < 2.0\"))\n)"
     },
     "searchSynonyms": {
       "default": "let response = try await client.searchSynonyms(indexName: \"<YOUR_INDEX_NAME>\")"
@@ -2668,7 +2809,20 @@
       "default": "let response = try await client\n    .setDictionarySettings(\n        dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [\n            \"fr\": false,\n            \"en\": false,\n            \"ru\": true,\n        ]))\n    )"
     },
     "setSettings": {
-      "default": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(attributesForFaceting: [\n        \"actor\",\n        \"filterOnly(category)\",\n        \"searchable(publisher)\",\n    ])\n)"
+      "setSettingsAttributesForFaceting": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(attributesForFaceting: [\n        \"actor\",\n        \"filterOnly(category)\",\n        \"searchable(publisher)\",\n    ])\n)",
+      "neuralSearch": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(mode: SearchMode.neuralSearch)\n)",
+      "keywordSearch": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(mode: SearchMode.keywordSearch)\n)",
+      "distinct": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(attributeForDistinct: \"section\", distinct: SearchDistinct.bool(true))\n)",
+      "searchableAttributes same priority": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(searchableAttributes: [\"title,comments\", \"ingredients\"])\n)",
+      "searchableAttributes higher priority": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(searchableAttributes: [\"title\", \"ingredients\"])\n)",
+      "customRanking retweets": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(customRanking: [\"desc(retweets)\", \"desc(likes)\"])\n)",
+      "customRanking boosted": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(customRanking: [\"desc(boosted)\"])\n)",
+      "customRanking pageviews": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(customRanking: [\"desc(pageviews)\", \"desc(comments)\"])\n)",
+      "customRanking rounded pageviews": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(customRanking: [\"desc(rounded_pageviews)\", \"desc(comments)\"])\n)",
+      "customRanking price": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(customRanking: [\"desc(price)\"])\n)",
+      "ranking exhaustive": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(ranking: [\n        \"desc(price)\",\n        \"typo\",\n        \"geo\",\n        \"words\",\n        \"filters\",\n        \"proximity\",\n        \"attribute\",\n        \"exact\",\n        \"custom\",\n    ])\n)",
+      "ranking standard replica": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(ranking: [\"desc(post_date_timestamp)\"])\n)",
+      "ranking virtual replica": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(customRanking: [\"desc(post_date_timestamp)\"])\n)"
     },
     "updateApiKey": {
       "default": "let response = try await client.updateApiKey(\n    key: \"ALGOLIA_API_KEY\",\n    apiKey: ApiKey(\n        acl: [Acl.search, Acl.addObject],\n        maxHitsPerQuery: 20,\n        maxQueriesPerIPPerHour: 100,\n        validity: 300\n    )\n)"

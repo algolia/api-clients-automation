@@ -2333,7 +2333,7 @@ def snippet_for_search_single_index():
 
     search with searchParams
     """
-    # >SEPARATOR searchSingleIndex default
+    # >SEPARATOR searchSingleIndex search with searchParams
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2346,6 +2346,31 @@ def snippet_for_search_single_index():
             "facetFilters": [
                 "tags:algolia",
             ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index1():
+    """
+    Snippet for the searchSingleIndex method.
+
+    withFilters
+    """
+    # >SEPARATOR searchSingleIndex withFilters
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "filters": "country:US AND price.gross < 2.0",
         },
     )
 
@@ -2460,7 +2485,7 @@ def snippet_for_set_settings():
 
     setSettingsAttributesForFaceting
     """
-    # >SEPARATOR setSettings default
+    # >SEPARATOR setSettings setSettingsAttributesForFaceting
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2473,6 +2498,365 @@ def snippet_for_set_settings():
                 "actor",
                 "filterOnly(category)",
                 "searchable(publisher)",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings1():
+    """
+    Snippet for the setSettings method.
+
+    neuralSearch
+    """
+    # >SEPARATOR setSettings neuralSearch
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "mode": "neuralSearch",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings2():
+    """
+    Snippet for the setSettings method.
+
+    keywordSearch
+    """
+    # >SEPARATOR setSettings keywordSearch
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "mode": "keywordSearch",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings3():
+    """
+    Snippet for the setSettings method.
+
+    distinct
+    """
+    # >SEPARATOR setSettings distinct
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "attributeForDistinct": "section",
+            "distinct": True,
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings4():
+    """
+    Snippet for the setSettings method.
+
+    searchableAttributes same priority
+    """
+    # >SEPARATOR setSettings searchableAttributes same priority
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "searchableAttributes": [
+                "title,comments",
+                "ingredients",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings5():
+    """
+    Snippet for the setSettings method.
+
+    searchableAttributes higher priority
+    """
+    # >SEPARATOR setSettings searchableAttributes higher priority
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "searchableAttributes": [
+                "title",
+                "ingredients",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings6():
+    """
+    Snippet for the setSettings method.
+
+    customRanking retweets
+    """
+    # >SEPARATOR setSettings customRanking retweets
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "customRanking": [
+                "desc(retweets)",
+                "desc(likes)",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings7():
+    """
+    Snippet for the setSettings method.
+
+    customRanking boosted
+    """
+    # >SEPARATOR setSettings customRanking boosted
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "customRanking": [
+                "desc(boosted)",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings8():
+    """
+    Snippet for the setSettings method.
+
+    customRanking pageviews
+    """
+    # >SEPARATOR setSettings customRanking pageviews
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "customRanking": [
+                "desc(pageviews)",
+                "desc(comments)",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings9():
+    """
+    Snippet for the setSettings method.
+
+    customRanking rounded pageviews
+    """
+    # >SEPARATOR setSettings customRanking rounded pageviews
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "customRanking": [
+                "desc(rounded_pageviews)",
+                "desc(comments)",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings10():
+    """
+    Snippet for the setSettings method.
+
+    customRanking price
+    """
+    # >SEPARATOR setSettings customRanking price
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "customRanking": [
+                "desc(price)",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings11():
+    """
+    Snippet for the setSettings method.
+
+    ranking exhaustive
+    """
+    # >SEPARATOR setSettings ranking exhaustive
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "ranking": [
+                "desc(price)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings12():
+    """
+    Snippet for the setSettings method.
+
+    ranking standard replica
+    """
+    # >SEPARATOR setSettings ranking standard replica
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "ranking": [
+                "desc(post_date_timestamp)",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings13():
+    """
+    Snippet for the setSettings method.
+
+    ranking virtual replica
+    """
+    # >SEPARATOR setSettings ranking virtual replica
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "customRanking": [
+                "desc(post_date_timestamp)",
             ],
         },
     )

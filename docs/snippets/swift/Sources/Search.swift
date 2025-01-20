@@ -1466,7 +1466,7 @@ final class SearchClientSnippet {
     ///
     /// search with searchParams
     func snippetForSearchSingleIndex() async throws {
-        // >SEPARATOR searchSingleIndex default
+        // >SEPARATOR searchSingleIndex search with searchParams
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -1477,6 +1477,24 @@ final class SearchClientSnippet {
                 query: "myQuery",
                 facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
             ))
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
+    /// withFilters
+    func snippetForSearchSingleIndex1() async throws {
+        // >SEPARATOR searchSingleIndex withFilters
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(filters: "country:US AND price.gross < 2.0"))
         )
         // >LOG
         // SEPARATOR<
@@ -1554,7 +1572,7 @@ final class SearchClientSnippet {
     ///
     /// setSettingsAttributesForFaceting
     func snippetForSetSettings() async throws {
-        // >SEPARATOR setSettings default
+        // >SEPARATOR setSettings setSettingsAttributesForFaceting
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -1566,6 +1584,237 @@ final class SearchClientSnippet {
                 "filterOnly(category)",
                 "searchable(publisher)",
             ])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// neuralSearch
+    func snippetForSetSettings1() async throws {
+        // >SEPARATOR setSettings neuralSearch
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(mode: SearchMode.neuralSearch)
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// keywordSearch
+    func snippetForSetSettings2() async throws {
+        // >SEPARATOR setSettings keywordSearch
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(mode: SearchMode.keywordSearch)
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// distinct
+    func snippetForSetSettings3() async throws {
+        // >SEPARATOR setSettings distinct
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributeForDistinct: "section", distinct: SearchDistinct.bool(true))
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// searchableAttributes same priority
+    func snippetForSetSettings4() async throws {
+        // >SEPARATOR setSettings searchableAttributes same priority
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(searchableAttributes: ["title,comments", "ingredients"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// searchableAttributes higher priority
+    func snippetForSetSettings5() async throws {
+        // >SEPARATOR setSettings searchableAttributes higher priority
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(searchableAttributes: ["title", "ingredients"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// customRanking retweets
+    func snippetForSetSettings6() async throws {
+        // >SEPARATOR setSettings customRanking retweets
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(customRanking: ["desc(retweets)", "desc(likes)"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// customRanking boosted
+    func snippetForSetSettings7() async throws {
+        // >SEPARATOR setSettings customRanking boosted
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(customRanking: ["desc(boosted)"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// customRanking pageviews
+    func snippetForSetSettings8() async throws {
+        // >SEPARATOR setSettings customRanking pageviews
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(customRanking: ["desc(pageviews)", "desc(comments)"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// customRanking rounded pageviews
+    func snippetForSetSettings9() async throws {
+        // >SEPARATOR setSettings customRanking rounded pageviews
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(customRanking: ["desc(rounded_pageviews)", "desc(comments)"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// customRanking price
+    func snippetForSetSettings10() async throws {
+        // >SEPARATOR setSettings customRanking price
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(customRanking: ["desc(price)"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// ranking exhaustive
+    func snippetForSetSettings11() async throws {
+        // >SEPARATOR setSettings ranking exhaustive
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(ranking: [
+                "desc(price)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// ranking standard replica
+    func snippetForSetSettings12() async throws {
+        // >SEPARATOR setSettings ranking standard replica
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(ranking: ["desc(post_date_timestamp)"])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setSettings method.
+    ///
+    /// ranking virtual replica
+    func snippetForSetSettings13() async throws {
+        // >SEPARATOR setSettings ranking virtual replica
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.setSettings(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(customRanking: ["desc(post_date_timestamp)"])
         )
         // >LOG
         // SEPARATOR<

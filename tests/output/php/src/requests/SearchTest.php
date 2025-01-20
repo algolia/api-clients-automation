@@ -2916,6 +2916,25 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('withFilters')]
+    public function testSearchSingleIndex4(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['filters' => 'country:US AND price.gross < 2.0',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"filters":"country:US AND price.gross < 2.0"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('searchSynonyms with minimal parameters')]
     public function testSearchSynonyms(): void
     {
@@ -3242,8 +3261,302 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('setSettings allow all `indexSettings`')]
+    #[TestDox('neuralSearch')]
     public function testSetSettings10(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['mode' => 'neuralSearch',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"mode":"neuralSearch"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('keywordSearch')]
+    public function testSetSettings11(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['mode' => 'keywordSearch',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"mode":"keywordSearch"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('distinct')]
+    public function testSetSettings12(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributeForDistinct' => 'section',
+                'distinct' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributeForDistinct":"section","distinct":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('searchableAttributes same priority')]
+    public function testSetSettings13(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['searchableAttributes' => [
+                'title,comments',
+
+                'ingredients',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"searchableAttributes":["title,comments","ingredients"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('searchableAttributes higher priority')]
+    public function testSetSettings14(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['searchableAttributes' => [
+                'title',
+
+                'ingredients',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"searchableAttributes":["title","ingredients"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('customRanking retweets')]
+    public function testSetSettings15(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customRanking' => [
+                'desc(retweets)',
+
+                'desc(likes)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customRanking":["desc(retweets)","desc(likes)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('customRanking boosted')]
+    public function testSetSettings16(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customRanking' => [
+                'desc(boosted)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customRanking":["desc(boosted)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('customRanking pageviews')]
+    public function testSetSettings17(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customRanking' => [
+                'desc(pageviews)',
+
+                'desc(comments)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customRanking":["desc(pageviews)","desc(comments)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('customRanking rounded pageviews')]
+    public function testSetSettings18(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customRanking' => [
+                'desc(rounded_pageviews)',
+
+                'desc(comments)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('customRanking price')]
+    public function testSetSettings19(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customRanking' => [
+                'desc(price)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customRanking":["desc(price)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('ranking exhaustive')]
+    public function testSetSettings20(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['ranking' => [
+                'desc(price)',
+
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'proximity',
+
+                'attribute',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('ranking standard replica')]
+    public function testSetSettings21(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['ranking' => [
+                'desc(post_date_timestamp)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"ranking":["desc(post_date_timestamp)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('ranking virtual replica')]
+    public function testSetSettings22(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customRanking' => [
+                'desc(post_date_timestamp)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customRanking":["desc(post_date_timestamp)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('setSettings allow all `indexSettings`')]
+    public function testSetSettings23(): void
     {
         $client = $this->getClient();
         $client->setSettings(

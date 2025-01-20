@@ -2923,6 +2923,27 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("withFilters4") {
+    val (client, echo) = testClient()
+    val future = client.searchSingleIndex(
+      indexName = "indexName",
+      searchParams = Some(
+        SearchParamsObject(
+          filters = Some("country:US AND price.gross < 2.0")
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/query")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"filters":"country:US AND price.gross < 2.0"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("searchSynonyms with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.searchSynonyms(
@@ -3290,7 +3311,257 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow all `indexSettings`10") {
+  test("neuralSearch10") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        mode = Some(Mode.withName("neuralSearch"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"mode":"neuralSearch"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("keywordSearch11") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        mode = Some(Mode.withName("keywordSearch"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"mode":"keywordSearch"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("distinct12") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        attributeForDistinct = Some("section"),
+        distinct = Some(Distinct(true))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"attributeForDistinct":"section","distinct":true}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("searchableAttributes same priority13") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        searchableAttributes = Some(Seq("title,comments", "ingredients"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"searchableAttributes":["title,comments","ingredients"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("searchableAttributes higher priority14") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        searchableAttributes = Some(Seq("title", "ingredients"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"searchableAttributes":["title","ingredients"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("customRanking retweets15") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        customRanking = Some(Seq("desc(retweets)", "desc(likes)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"customRanking":["desc(retweets)","desc(likes)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("customRanking boosted16") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        customRanking = Some(Seq("desc(boosted)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"customRanking":["desc(boosted)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("customRanking pageviews17") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        customRanking = Some(Seq("desc(pageviews)", "desc(comments)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"customRanking":["desc(pageviews)","desc(comments)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("customRanking rounded pageviews18") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        customRanking = Some(Seq("desc(rounded_pageviews)", "desc(comments)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("customRanking price19") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        customRanking = Some(Seq("desc(price)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"customRanking":["desc(price)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("ranking exhaustive20") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        ranking =
+          Some(Seq("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody =
+      parse("""{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("ranking standard replica21") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        ranking = Some(Seq("desc(post_date_timestamp)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"ranking":["desc(post_date_timestamp)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("ranking virtual replica22") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        customRanking = Some(Seq("desc(post_date_timestamp)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"customRanking":["desc(post_date_timestamp)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("setSettings allow all `indexSettings`23") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",

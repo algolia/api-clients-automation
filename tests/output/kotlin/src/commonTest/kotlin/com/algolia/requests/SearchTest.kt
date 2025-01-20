@@ -2902,6 +2902,25 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `withFilters4`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "country:US AND price.gross < 2.0",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"country:US AND price.gross < 2.0"}""", it.body)
+      },
+    )
+  }
+
   // searchSynonyms
 
   @Test
@@ -3220,7 +3239,255 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow all 'indexSettings'10`() = runTest {
+  fun `neuralSearch10`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            mode = Mode.entries.first { it.value == "neuralSearch" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"mode":"neuralSearch"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `keywordSearch11`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            mode = Mode.entries.first { it.value == "keywordSearch" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"mode":"keywordSearch"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `distinct12`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributeForDistinct = "section",
+            distinct = Distinct.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributeForDistinct":"section","distinct":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributes same priority13`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("title,comments", "ingredients"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["title,comments","ingredients"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributes higher priority14`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("title", "ingredients"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["title","ingredients"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking retweets15`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(retweets)", "desc(likes)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(retweets)","desc(likes)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking boosted16`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(boosted)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(boosted)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking pageviews17`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(pageviews)", "desc(comments)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(pageviews)","desc(comments)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking rounded pageviews18`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(rounded_pageviews)", "desc(comments)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking price19`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(price)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(price)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking exhaustive20`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking standard replica21`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("desc(post_date_timestamp)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["desc(post_date_timestamp)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking virtual replica22`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(post_date_timestamp)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(post_date_timestamp)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `setSettings allow all 'indexSettings'23`() = runTest {
     client.runTest(
       call = {
         setSettings(
