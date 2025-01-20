@@ -178,5 +178,361 @@
         "forwardToReplicas": "true"
       }
     }
+  },
+  {
+    "testName": "b2b catalog",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "article-rule",
+      "rule": {
+        "objectID": "article-rule",
+        "conditions": [
+          {
+            "pattern": "article",
+            "anchoring": "startsWith"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "query": {
+              "type": "remove",
+              "delete": "article"
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/article-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "article-rule",
+        "conditions": [
+          {
+            "pattern": "article",
+            "anchoring": "startsWith"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "query": {
+              "type": "remove",
+              "delete": "article"
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "merchandising and promoting",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "director-rule",
+      "rule": {
+        "objectID": "director-rule",
+        "conditions": [
+          {
+            "pattern": "{facet:director} director",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": ["director"],
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "director"
+            }]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/director-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "director-rule",
+        "conditions": [
+          {
+            "pattern": "{facet:director} director",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": ["director"],
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "director"
+            }]
+            }
+          }
+        }
+
+      }
+    }
+  },
+  {
+    "testName": "harry potter",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "harry-potter-rule",
+      "rule": {
+        "objectID": "harry-potter-rule",
+        "conditions": [
+          {
+            "pattern": "harry potter",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "userData": {
+            "promo_content": "20% OFF on all Harry Potter books!"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/harry-potter-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "harry-potter-rule",
+        "conditions": [
+          {
+            "pattern": "harry potter",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "userData": {
+            "promo_content": "20% OFF on all Harry Potter books!"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "merchandising empty query",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "clearance-category-filter",
+      "rule": {
+        "objectID": "clearance-category-filter",
+        "conditions": [
+          {
+            "pattern": "",
+            "anchoring": "is",
+            "context": "landing"
+          }
+        ],
+        "consequence": {
+          "optionalFilters": "clearance:true"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/clearance-category-filter",
+      "method": "PUT",
+      "body": {
+        "objectID": "clearance-category-filter",
+        "conditions": [
+          {
+            "pattern": "",
+            "anchoring": "is",
+            "context": "landing"
+          }
+        ],
+        "consequence": {
+          "optionalFilters": "clearance:true"
+        }
+      }
+    }
+  },
+  {
+    "testName": "redirect",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "redirect-help-rule",
+      "rule": {
+        "objectID": "redirect-help-rule",
+        "conditions": [
+          {
+            "pattern": "help",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "optionalFilters": "clearance:true"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/redirect-help-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "clearance-category-filter",
+        "conditions": [
+          {
+            "pattern": "help",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "userData": {
+            "redirect": "https://www.algolia.com/support"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "hide hits",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+        "objectID": "hide-12345",
+        "conditions": [{
+          "pattern": "cheap",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "hide": {
+            "objectID": "to-hide-12345"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/hide-12345",
+      "method": "PUT",
+      "body": {
+        "objectID": "hide-12345",
+        "conditions": [{
+          "pattern": "cheap",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "hide": {
+            "objectID": "to-hide-12345"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "promote some results over others",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+        "objectID": "tomato-fruit",
+        "condition": {
+          "pattern": "tomato",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "optionalFilters": "food_group:fruit"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/tomato-fruit",
+      "method": "PUT",
+      "body": {
+        "objectID": "tomato-fruit",
+        "condition": {
+          "pattern": "tomato",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "optionalFilters": "food_group:fruit"
+        }
+      }
+    }
+  },
+  {
+    "testName": "promote several hits",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+        "objectID": "Promote-Apple-Newest",
+        "condition": {
+          "pattern": "apple",
+          "anchoring": "is"
+        },
+        "consequence": {
+          "promote": [
+            {
+              "objectIDs": ["iPhone-12345", "watch-123"],
+              "position": 0
+            }
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/Promote-Apple-Newest",
+      "method": "PUT",
+      "body": {
+        "objectID": "Promote-Apple-Newest",
+        "condition": {
+          "pattern": "apple",
+          "anchoring": "is"
+        },
+        "consequence": {
+          "promote": [
+            {
+              "objectIDs": ["iPhone-12345", "watch-123"],
+              "position": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "testName": "promote newest release",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+        "objectID": "Promote-iPhone-X",
+        "condition": {
+          "pattern": "iPhone",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "promote": [
+            {
+              "objectID": "iPhone-12345",
+              "position": 0
+            }
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/Promote-iPhone-X",
+      "method": "PUT",
+      "body": {
+        "objectID": "Promote-iPhone-X",
+        "condition": {
+          "pattern": "iPhone",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "promote": [
+            {
+              "objectID": "iPhone-12345",
+              "position": 0
+            }
+          ]
+        }
+      }
+    }
   }
 ]
