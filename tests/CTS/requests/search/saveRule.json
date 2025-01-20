@@ -181,6 +181,7 @@
   },
   {
     "testName": "b2b catalog",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "article-rule",
@@ -232,6 +233,7 @@
   },
   {
     "testName": "merchandising and promoting",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "director-rule",
@@ -284,6 +286,7 @@
   },
   {
     "testName": "harry potter",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "harry-potter-rule",
@@ -323,6 +326,7 @@
   },
   {
     "testName": "merchandising empty query",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "clearance-category-filter",
@@ -336,7 +340,9 @@
           }
         ],
         "consequence": {
-          "optionalFilters": "clearance:true"
+          "params": {
+            "optionalFilters": "clearance:true"
+          }
         }
       }
     },
@@ -353,13 +359,16 @@
           }
         ],
         "consequence": {
-          "optionalFilters": "clearance:true"
+          "params": {
+            "optionalFilters": "clearance:true"
+          }
         }
       }
     }
   },
   {
     "testName": "redirect",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "redirect-help-rule",
@@ -372,7 +381,9 @@
           }
         ],
         "consequence": {
-          "optionalFilters": "clearance:true"
+          "params": {
+            "optionalFilters": "clearance:true"
+          }
         }
       }
     },
@@ -397,6 +408,7 @@
   },
   {
     "testName": "hide hits",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -431,6 +443,7 @@
   },
   {
     "testName": "promote some results over others",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -440,7 +453,9 @@
           "anchoring": "contains"
         },
         "consequence": {
-          "optionalFilters": "food_group:fruit"
+          "params": {
+            "optionalFilters": "food_group:fruit"
+          }
         }
       }
     },
@@ -454,13 +469,16 @@
           "anchoring": "contains"
         },
         "consequence": {
-          "optionalFilters": "food_group:fruit"
+          "params": {
+            "optionalFilters": "food_group:fruit"
+          }
         }
       }
     }
   },
   {
     "testName": "promote several hits",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -501,6 +519,7 @@
   },
   {
     "testName": "promote newest release",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -541,6 +560,7 @@
   },
   {
     "testName": "promote single item",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -579,6 +599,7 @@
   },
   {
     "testName": "limit search results",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -625,6 +646,7 @@
   },
   {
     "testName": "query match",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -673,6 +695,7 @@
   },
   {
     "testName": "dynamic filtering",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -705,6 +728,7 @@
   },
   {
     "testName": "one rule per facet",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
@@ -745,6 +769,7 @@
   },
   {
     "testName": "numerical filters",
+    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "rule": {
