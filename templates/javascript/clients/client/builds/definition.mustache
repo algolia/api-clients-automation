@@ -22,7 +22,7 @@ export {
   isScheduleTrigger,
   isSubscriptionTrigger,
   {{/isIngestionClient}}
-} from '../src/{{clientName}}';
+} from '../src/{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}{{^isCompositionFullClient}}{{clientName}}{{/isCompositionFullClient}}';
 
 export * from '../model';
 
