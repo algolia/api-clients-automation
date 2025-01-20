@@ -352,5 +352,414 @@
         "aroundLatLng": "40.71, -74.01"
       }
     }
+  },
+  {
+    "testName": "aroundLatLngViaIP",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "aroundLatLngViaIP": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "aroundLatLngViaIP": true
+      }
+    }
+  },
+  {
+    "testName": "aroundRadius",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "aroundLatLng": "40.71, -74.01",
+        "aroundRadius": 1000000
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "aroundLatLng": "40.71, -74.01",
+        "aroundRadius": 1000000
+      }
+    }
+  },
+  {
+    "testName": "insideBoundingBox",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "insideBoundingBox": [
+          [
+            49.067996905313834,
+            65.73828125,
+            25.905859247243498,
+            128.8046875
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "insideBoundingBox": [
+          [
+            49.067996905313834,
+            65.73828125,
+            25.905859247243498,
+            128.8046875
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "insidePolygon",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "insidePolygon": [
+          [
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "insidePolygon": [
+          [
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "insidePolygon",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "insidePolygon": [
+          [
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "insidePolygon": [
+          [
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "optionalFilters",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "optionalFilters": [
+          "can_deliver_quickly:true"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "optionalFilters": [
+          "can_deliver_quickly:true"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "optionalFiltersMany",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "optionalFilters": [
+          "brand:Apple<score=3>",
+          "brand:Samsung<score=2>",
+          "brand:-Huawei"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "optionalFilters": [
+          "brand:Apple<score=3>",
+          "brand:Samsung<score=2>",
+          "brand:-Huawei"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "optionalFiltersSimple",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "optionalFilters": [
+          "brand:Apple<score=2>",
+          "type:tablet"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "optionalFilters": [
+          "brand:Apple<score=2>",
+          "type:tablet"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "restrictSearchableAttributes",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "restrictSearchableAttributes": [
+          "title_fr"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "restrictSearchableAttributes": [
+          "title_fr"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "getRankingInfo",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "getRankingInfo": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "getRankingInfo": true
+      }
+    }
+  },
+  {
+    "testName": "clickAnalytics",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "clickAnalytics": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "clickAnalytics": true
+      }
+    }
+  },
+  {
+    "testName": "clickAnalyticsUserToken",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "clickAnalytics": true,
+        "userToken": "user-1"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "clickAnalytics": true,
+        "userToken": "user-1"
+      }
+    }
+  },
+  {
+    "testName": "enablePersonalization",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "enablePersonalization": true,
+        "userToken": "user-1"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "enablePersonalization": true,
+        "userToken": "user-1"
+      }
+    }
+  },
+  {
+    "testName": "userToken",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "userToken": "user-1"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "userToken": "user-1"
+      }
+    }
+  },
+  {
+    "testName": "analyticsTag",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "analyticsTags": [
+          "YOUR_ANALYTICS_TAG"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "analyticsTags": [
+          "YOUR_ANALYTICS_TAG"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "facetFiltersUsers",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "facetFilters": [
+          "user:user42",
+          "user:public"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "facetFilters": [
+          "user:user42",
+          "user:public"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "buildTheQuery",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "categoryPageId: Men's Clothing",
+        "hitsPerPage": 50,
+        "analyticsTags": [
+          "mens-clothing"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "categoryPageId: Men's Clothing",
+        "hitsPerPage": 50,
+        "analyticsTags": [
+          "mens-clothing"
+        ]
+      }
+    }
   }
 ]
