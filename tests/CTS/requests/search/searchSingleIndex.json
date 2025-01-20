@@ -128,7 +128,7 @@
     }
   },
   {
-    "testName": "withFilters",
+    "testName": "filters",
     "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
@@ -141,6 +141,215 @@
       "method": "POST",
       "body": {
         "filters": "country:US AND price.gross < 2.0"
+      }
+    }
+  },
+  {
+    "testName": "distinct",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "distinct": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "distinct": true
+      }
+    }
+  },
+  {
+    "testName": "filtersNumeric",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "price < 10"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "price < 10"
+      }
+    }
+  },
+  {
+    "testName": "filtersTimestamp",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "NOT date_timestamp:1514764800 TO 1546300799"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "NOT date_timestamp:1514764800 TO 1546300799"
+      }
+    }
+  },
+  {
+    "testName": "filtersSumOrFiltersScoresFalse",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        "sumOrFiltersScores": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        "sumOrFiltersScores": false
+      }
+    }
+  },
+  {
+    "testName": "filtersSumOrFiltersScoresTrue",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        "sumOrFiltersScores": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        "sumOrFiltersScores": true
+      }
+    }
+  },
+  {
+    "testName": "filtersStephenKing",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "author:\"Stephen King\""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "author:\\\"Stephen King\\\""
+      }
+    }
+  },
+  {
+    "testName": "filtersNotTags",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "NOT _tags:non-fiction"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "NOT _tags:non-fiction"
+      }
+    }
+  },
+  {
+    "testName": "facetFiltersList",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "facetFilters": [
+          [
+            "author:Stephen King",
+            "genre:Horror"
+          ],
+          "publisher:Penguin"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "facetFilters": [
+          [
+            "author:Stephen King",
+            "genre:Horror"
+          ],
+          "publisher:Penguin"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "facetFiltersNeg",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "facetFilters": "category:-Ebook"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "facetFilters": "category:-Ebook"
+      }
+    }
+  },
+  {
+    "testName": "filtersAndFacetFilters",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "(author:\"Stephen King\" OR genre:\"Horror\")",
+        "facetFilters": [
+          "publisher:Penguin"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "(author:\\\"Stephen King\\\" OR genre:\\\"Horror\\\")",
+        "facetFilters": [
+          "publisher:Penguin"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "aroundLatLng",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "aroundLatLng": "40.71, -74.01"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "aroundLatLng": "40.71, -74.01"
       }
     }
   }
