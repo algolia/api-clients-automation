@@ -77,6 +77,7 @@
   },
   {
     "testName": "Partial update with a new value for an object attribute",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
@@ -92,6 +93,25 @@
       "body": {
         "attributeId": {
           "nested": "value"
+        }
+      }
+    }
+  },
+  {
+    "testName": "with visible_by filter",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "visible_by": ["Angela", "group/Finance", "group/Shareholders" ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": {
+          "visible_by": ["Angela", "group/Finance", "group/Shareholders" ]
         }
       }
     }

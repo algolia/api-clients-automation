@@ -1,6 +1,6 @@
 [
   {
-    "testName": "generate secured api key basic",
+    "testName": "api key basic",
     "steps": [
       {
         "type": "method",
@@ -22,7 +22,7 @@
     ]
   },
   {
-    "testName": "generate secured api key with searchParams",
+    "testName": "with searchParams",
     "steps": [
       {
         "type": "method",
@@ -59,7 +59,7 @@
     ]
   },
   {
-    "testName": "generate secured api key with user filters",
+    "testName": "with filters",
     "isSnippet": true,
     "steps": [
       {
@@ -68,7 +68,39 @@
         "parameters": {
           "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
           "restrictions": {
-            "filters": "user:user42 AND user:public"
+            "filters": "user:user42 AND user:public AND (visible_by:${currentUserID} OR visible_by:group/${currentGroupID})"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "with visible_by filter",
+    "isSnippet": true,
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
+          "restrictions": {
+            "filters": "visible_by:group/Finance"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "with userID",
+    "isSnippet": true,
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
+          "restrictions": {
+            "userToken": "user42"
           }
         }
       }
