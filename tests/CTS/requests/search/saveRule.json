@@ -195,8 +195,10 @@
         "consequence": {
           "params": {
             "query": {
-              "type": "remove",
-              "delete": "article"
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
             },
             "restrictSearchableAttributes": ["title", "book_id"]
           }
@@ -217,8 +219,10 @@
         "consequence": {
           "params": {
             "query": {
-              "type": "remove",
-              "delete": "article"
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
             },
             "restrictSearchableAttributes": ["title", "book_id"]
           }
@@ -246,7 +250,7 @@
               "edits": [{
                 "type": "remove",
                 "delete": "director"
-            }]
+              }]
             }
           }
         }
@@ -270,7 +274,7 @@
               "edits": [{
                 "type": "remove",
                 "delete": "director"
-            }]
+              }]
             }
           }
         }
@@ -547,9 +551,9 @@
         },
         "consequence": {
           "promote": [{
-              "objectID": "HP-12345",
-              "position": 0
-            }]
+            "objectID": "HP-12345",
+            "position": 0
+          }]
         }
       }
     },
@@ -578,40 +582,44 @@
     "parameters": {
       "indexName": "indexName",
       "rule": {
-"objectID": "article-rule",
-"conditions": [{
-  "pattern": "article",
-  "anchoring": "startsWith"
-}],
-"consequence": {
-  "params": {
-    "query": {
-      "type": "remove",
-      "delete": "article"
-    },
-    "restrictSearchableAttributes": ["title", "book_id"]
-  }
-}
+        "objectID": "article-rule",
+        "conditions": [{
+          "pattern": "article",
+          "anchoring": "startsWith"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
       }
     },
     "request": {
       "path": "/1/indexes/indexName/rules/article-rule",
       "method": "PUT",
       "body": {
-"objectID": "article-rule",
-"conditions": [{
-  "pattern": "article",
-  "anchoring": "startsWith"
-}],
-"consequence": {
-  "params": {
-    "query": {
-      "type": "remove",
-      "delete": "article"
-    },
-    "restrictSearchableAttributes": ["title", "book_id"]
-  }
-}
+        "objectID": "article-rule",
+        "conditions": [{
+          "pattern": "article",
+          "anchoring": "startsWith"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
       }
     }
   },
@@ -620,46 +628,46 @@
     "parameters": {
       "indexName": "indexName",
       "rule": {
- "condition": {
-    "pattern": "brand\\: {facet:brand}",
-    "anchoring": "contains",
-    "alternatives": false
-  },
-  "consequences": [
-    {
-      "params": {
-        "automaticFacetFilters": ["brand"],
-        "query": {
-          "remove": ["brand\\:", "{facet:brand}"]
-        }
-      }
-    }
-  ],
-  "description": "filter on brand: {brand}",
-  "objectID": "tagged-brand-rule"
+        "condition": {
+          "pattern": "brand\\: {facet:brand}",
+          "anchoring": "contains",
+          "alternatives": false
+        },
+        "consequences": [
+          {
+            "params": {
+              "automaticFacetFilters": ["brand"],
+              "query": {
+                "remove": ["brand\\:", "{facet:brand}"]
+              }
+            }
+          }
+        ],
+        "description": "filter on brand: {brand}",
+        "objectID": "tagged-brand-rule"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/rules/tagged-brand-rule",
       "method": "PUT",
       "body": {
- "condition": {
-    "pattern": "brand\\: {facet:brand}",
-    "anchoring": "contains",
-    "alternatives": false
-  },
-  "consequences": [
-    {
-      "params": {
-        "automaticFacetFilters": ["brand"],
-        "query": {
-          "remove": ["brand\\:", "{facet:brand}"]
-        }
-      }
-    }
-  ],
-  "description": "filter on brand: {brand}",
-  "objectID": "tagged-brand-rule"
+        "condition": {
+          "pattern": "brand\\: {facet:brand}",
+          "anchoring": "contains",
+          "alternatives": false
+        },
+        "consequences": [
+          {
+            "params": {
+              "automaticFacetFilters": ["brand"],
+              "query": {
+                "remove": ["brand\\:", "{facet:brand}"]
+              }
+            }
+          }
+        ],
+        "description": "filter on brand: {brand}",
+        "objectID": "tagged-brand-rule"
       }
     }
   },
@@ -668,30 +676,30 @@
     "parameters": {
       "indexName": "indexName",
       "rule": {
-  "objectID": "color-facets",
-  "condition": {
-    "pattern": "{facet:color}"
-  },
-  "consequence": {
-    "params": {
-      "automaticFacetFilters": ["color"]
-    }
-  }
+        "objectID": "color-facets",
+        "condition": {
+          "pattern": "{facet:color}"
+        },
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": ["color"]
+          }
+        }
       }
     },
     "request": {
       "path": "/1/indexes/indexName/rules/color-facets",
       "method": "PUT",
       "body": {
-  "objectID": "color-facets",
-  "condition": {
-    "pattern": "{facet:color}"
-  },
-  "consequence": {
-    "params": {
-      "automaticFacetFilters": ["color"]
-    }
-  }
+        "objectID": "color-facets",
+        "condition": {
+          "pattern": "{facet:color}"
+        },
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": ["color"]
+          }
+        }
       }
     }
   },
@@ -700,38 +708,38 @@
     "parameters": {
       "indexName": "indexName",
       "rule": {
-  "objectID": "red-color",
-  "condition": {
-    "pattern": "red",
-    "anchoring": "contains"
-  },
-  "consequence": {
-    "params": {
-      "query": {
-        "remove": "red"
-      },
-      "filters": "color:red"
-    }
-  }
+        "objectID": "red-color",
+        "condition": {
+          "pattern": "red",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": "red"
+            },
+            "filters": "color:red"
+          }
+        }
       }
     },
     "request": {
       "path": "/1/indexes/indexName/rules/color-facets",
       "method": "PUT",
       "body": {
-  "objectID": "red-color",
-  "condition": {
-    "pattern": "red",
-    "anchoring": "contains"
-  },
-  "consequence": {
-    "params": {
-      "query": {
-        "remove": "red"
-      },
-      "filters": "color:red"
-    }
-  }
+        "objectID": "red-color",
+        "condition": {
+          "pattern": "red",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": "red"
+            },
+            "filters": "color:red"
+          }
+        }
       }
     }
   },
@@ -740,38 +748,38 @@
     "parameters": {
       "indexName": "indexName",
       "rule": {
-  "objectID": "cheap",
-  "condition": {
-    "pattern": "cheap",
-    "anchoring": "contains"
-  },
-  "consequence": {
-    "params": {
-      "query": {
-        "remove": "cheap"
-      }
-    },
-    "filters": "price < 10"
-  }
+        "objectID": "cheap",
+        "condition": {
+          "pattern": "cheap",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": "cheap"
+            }
+          },
+          "filters": "price < 10"
+        }
       }
     },
     "request": {
       "path": "/1/indexes/indexName/rules/cheap",
       "method": "PUT",
       "body": {
-  "objectID": "cheap",
-  "condition": {
-    "pattern": "cheap",
-    "anchoring": "contains"
-  },
-  "consequence": {
-    "params": {
-      "query": {
-        "remove": "cheap"
-      }
-    },
-    "filters": "price < 10"
-  }
+        "objectID": "cheap",
+        "condition": {
+          "pattern": "cheap",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": "cheap"
+            }
+          },
+          "filters": "price < 10"
+        }
       }
     }
   }
