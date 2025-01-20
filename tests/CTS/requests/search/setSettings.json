@@ -269,6 +269,238 @@
     }
   },
   {
+    "testName": "searchableAttributes same priority",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "title,comments",
+          "ingredients"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "searchableAttributes": [
+          "title,comments",
+          "ingredients"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributes higher priority",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "title",
+          "ingredients"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "searchableAttributes": [
+          "title",
+          "ingredients"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "customRanking retweets",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [
+          "desc(retweets)",
+          "desc(likes)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [
+          "desc(retweets)",
+          "desc(likes)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "customRanking boosted",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [ "desc(boosted)" ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [ "desc(boosted)" ]
+      }
+    }
+  },
+  {
+    "testName": "customRanking pageviews",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [ 
+          "desc(pageviews)",
+          "desc(comments)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [ 
+          "desc(pageviews)",
+          "desc(comments)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "customRanking rounded pageviews",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [ 
+          "desc(rounded_pageviews)",
+          "desc(comments)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [ 
+          "desc(rounded_pageviews)",
+          "desc(comments)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "customRanking price",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [ 
+          "desc(price)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [ 
+          "desc(price)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "ranking exhaustive",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "ranking standard replica",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "desc(post_date_timestamp)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "desc(post_date_timestamp)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "ranking virtual replica",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [
+          "desc(post_date_timestamp)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [
+          "desc(post_date_timestamp)"
+        ]
+      }
+    }
+  },
+  {
     "testName": "setSettings allow all `indexSettings`",
     "parameters": {
       "indexName": "theIndexName",
