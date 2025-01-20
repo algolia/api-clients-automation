@@ -250,7 +250,7 @@
     }
   },
   {
-    "testName": "distinct",
+    "testName": "distinct section",
     "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
@@ -677,6 +677,148 @@
           "genre",
           "author"
         ]
+      }
+    }
+  },
+  {
+    "testName": "ranking closest dates",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "asc(date_timestamp)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "asc(date_timestamp)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "distinct company",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "distinct": "company"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "distinct": "company"
+      }
+    }
+  },
+  {
+    "testName": "distinct design",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "distinct": "design"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "distinct": "design"
+      }
+    }
+  },
+  {
+    "testName": "distinct true",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "distinct": true 
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "distinct": true
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributes item variation",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+          "searchableAttributes": [
+            "design",
+            "type",
+            "color"
+          ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+          "searchableAttributes": [
+            "design",
+            "type",
+            "color"
+          ]
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributes around location",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+          "searchableAttributes": [
+            "name",
+            "country",
+            "code",
+            "iata_code"
+          ],
+          "customRanking": ["desc(links_count)"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+          "searchableAttributes": [
+            "name",
+            "country",
+            "code",
+            "iata_code"
+          ],
+          "customRanking": ["desc(links_count)"]
       }
     }
   },
