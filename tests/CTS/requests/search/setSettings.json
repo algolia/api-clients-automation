@@ -839,11 +839,11 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "searchableAttributes": ["name", "description"],
+        "searchableAttributes": ["name", "description"]
+      },
         "queryParameters": {
           "forwardToReplicas": "true"
         }
-      }
     }
   },
   {
