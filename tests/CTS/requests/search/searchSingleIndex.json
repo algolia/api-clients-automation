@@ -128,6 +128,23 @@
     }
   },
   {
+    "testName": "query",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "phone"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "phone"
+      }
+    }
+  },
+  {
     "testName": "filters",
     "isSnippet": true,
     "parameters": {
