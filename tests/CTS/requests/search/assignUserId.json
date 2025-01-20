@@ -1,19 +1,20 @@
 [
   {
+    "testName": "simple",
     "parameters": {
-      "xAlgoliaUserID": "userID",
+      "xAlgoliaUserID": "user42",
       "assignUserIdParams": {
-        "cluster": "theCluster"
+        "cluster": "d4242-eu"
       }
     },
     "request": {
       "path": "/1/clusters/mapping",
       "method": "POST",
       "body": {
-        "cluster": "theCluster"
+        "cluster": "d4242-eu"
       },
       "headers": {
-        "x-algolia-user-id": "userID"
+        "x-algolia-user-id": "d4242-eu"
       }
     }
   },
