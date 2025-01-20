@@ -57,5 +57,21 @@
         }
       }
     ]
+  },
+  {
+    "testName": "generate secured api key with user filters",
+    "isSnippet": true,
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
+          "restrictions": {
+            "filters": "user:user42 AND user:public"
+          }
+        }
+      }
+    ]
   }
 ]
