@@ -247,6 +247,7 @@
         ],
         "consequence": {
           "params": {
+            "restrictSearchableAttributes": ["title", "book_id"],
             "automaticFacetFilters": [{
               "facet":"director"
             }],
@@ -385,8 +386,8 @@
           }
         ],
         "consequence": {
-          "params": {
-            "optionalFilters": "clearance:true"
+          "userData": {
+            "redirect": "https://www.algolia.com/support"
           }
         }
       }
@@ -556,13 +557,13 @@
       "body": {
         "objectID": "promote-harry-potter-box-set",
         "conditions": [{
-          "pattern": "iPhone",
+          "pattern": "Harry Potter",
           "anchoring": "contains"
         }],
         "consequence": {
           "promote": [
             {
-              "objectID": "iPhone-12345",
+              "objectID": "HP-12345",
               "position": 0
             }
           ]
