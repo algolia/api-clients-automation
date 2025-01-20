@@ -10,6 +10,7 @@ public class EscapeQuotesLambda implements Mustache.Lambda {
   @Override
   public void execute(Template.Fragment fragment, Writer writer) throws IOException {
     String text = fragment.execute();
-    writer.write(text.replace("\"", "\\\""));
+    // replaces all occurrences of " that are not preceded by a backslash with \"
+    writer.write(text.replaceAll("(?<!\\\\)\"", "\\\\\""));
   }
 }
