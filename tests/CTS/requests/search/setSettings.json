@@ -1327,5 +1327,205 @@
         }
       }
     }
+  },
+  {
+    "testName": "searchableAttributesWithCustomRankingsAndAttributesForFaceting",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "brand",
+          "name",
+          "categories",
+          "unordered(description)"
+        ],
+        "customRanking": [
+          "desc(popularity)"
+        ],
+        "attributesForFaceting": [
+          "searchable(brand)",
+          "type",
+          "categories",
+          "price"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+          "searchableAttributes": [
+            "brand",
+            "name",
+            "categories",
+            "unordered(description)"
+          ],
+          "customRanking": [
+            "desc(popularity)"
+          ],
+          "attributesForFaceting": [
+            "searchable(brand)",
+            "type",
+            "categories",
+            "price"
+          ]
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributesProductReferenceSuffixes",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "name",
+          "product_reference",
+          "product_reference_suffixes"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+          "searchableAttributes": [
+            "name",
+            "product_reference",
+            "product_reference_suffixes"
+          ]
+      }
+    }
+  },
+  {
+    "testName": "queryLanguageAndIgnorePlurals",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "queryLanguages": [
+          "en"
+        ],
+        "ignorePlurals": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "queryLanguages": [
+          "en"
+        ],
+        "ignorePlurals": true
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributesInMovies",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "movies",
+      "indexSettings": {
+        "searchableAttributes": [
+          "title_eng", "title_fr", "title_es"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/movies/settings",
+      "method": "PUT",
+      "body": {
+        "searchableAttributes": [
+          "title_eng", "title_fr", "title_es"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "disablePrefixOnAttributes",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "disablePrefixOnAttributes": [
+          "serial_number"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "disablePrefixOnAttributes": [
+          "serial_number"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "disableTypoToleranceOnAttributes",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "disableTypoToleranceOnAttributes": [
+          "serial_number"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "disableTypoToleranceOnAttributes": [
+          "serial_number"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributesSimpleExample",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "serial_number"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "searchableAttributes": [
+          "serial_number"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributesSimpleExampleAlt",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "serial_number",
+          "serial_number_suffixes"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "searchableAttributes": [
+          "serial_number",
+          "serial_number_suffixes"
+        ]
+      }
+    }
   }
 ]
