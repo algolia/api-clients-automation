@@ -126,5 +126,22 @@
         ]
       }
     }
+  },
+  {
+    "testName": "withFilters",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "country:US AND price.gross < 2.0"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "country:US AND price.gross < 2.0"
+      }
+    }
   }
 ]
