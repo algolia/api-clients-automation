@@ -702,6 +702,10 @@ public class ParametersWithDataType {
       return maybeMatch;
     }
 
+    if (model == null || model.interfaceModels == null) {
+      return maybeMatch;
+    }
+
     for (CodegenModel oneOf : model.interfaceModels) {
       // Somehow the dataType can be in lower case?
       if (oneOf.dataType.equalsIgnoreCase(paramType)) {
