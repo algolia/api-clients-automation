@@ -1,31 +1,6 @@
 [
   {
-    "testName": "setSettingsAttributesForFaceting",
-    "isSnippet": true,
-    "parameters": {
-      "indexName": "<YOUR_INDEX_NAME>",
-      "indexSettings": {
-        "attributesForFaceting": [
-          "actor",
-          "filterOnly(category)",
-          "searchable(publisher)"
-        ]
-      }
-    },
-    "request": {
-      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
-      "method": "PUT",
-      "body": {
-        "attributesForFaceting": [
-          "actor",
-          "filterOnly(category)",
-          "searchable(publisher)"
-        ]
-      }
-    }
-  },
-  {
-    "testName": "setSettings with minimal parameters",
+    "testName": "minimal parameters",
     "parameters": {
       "indexName": "cts_e2e_settings",
       "indexSettings": {
@@ -48,7 +23,7 @@
     }
   },
   {
-    "testName": "setSettings allow boolean `typoTolerance`",
+    "testName": "boolean typoTolerance",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -68,7 +43,7 @@
     }
   },
   {
-    "testName": "setSettings allow enum `typoTolerance`",
+    "testName": "enum typoTolerance",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -88,7 +63,7 @@
     }
   },
   {
-    "testName": "setSettings allow boolean `ignorePlurals`",
+    "testName": "ignorePlurals",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -108,7 +83,7 @@
     }
   },
   {
-    "testName": "setSettings allow list of string `ignorePlurals`",
+    "testName": "list of string ignorePlurals",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -132,7 +107,7 @@
     }
   },
   {
-    "testName": "setSettings allow boolean `removeStopWords`",
+    "testName": "removeStopWords",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -152,7 +127,7 @@
     }
   },
   {
-    "testName": "setSettings allow list of string `removeStopWords`",
+    "testName": "removeStopWords",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -176,7 +151,7 @@
     }
   },
   {
-    "testName": "setSettings allow boolean `distinct`",
+    "testName": "boolean distinct",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -196,7 +171,7 @@
     }
   },
   {
-    "testName": "setSettings allow integers for `distinct`",
+    "testName": "integer distinct",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -216,36 +191,53 @@
     }
   },
   {
-    "testName": "neuralSearch",
+    "testName": "distinct company",
     "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "mode": "neuralSearch"
+        "distinct": "company"
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "mode": "neuralSearch"
+        "distinct": "company"
       }
     }
   },
   {
-    "testName": "keywordSearch",
+    "testName": "distinct design",
     "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "mode": "keywordSearch"
+        "distinct": "design"
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "mode": "keywordSearch"
+        "distinct": "design"
+      }
+    }
+  },
+  {
+    "testName": "distinct true",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "distinct": true 
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "distinct": true
       }
     }
   },
@@ -265,6 +257,147 @@
       "body": {
         "attributeForDistinct": "section",
         "distinct": true
+      }
+    }
+  },
+  {
+    "testName": "attributesForFaceting allergens",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "allergens"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "allergens"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "attributesForFaceting optional filters",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "can_deliver_quickly",
+          "restaurant"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "can_deliver_quickly",
+          "restaurant"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "attributesForFaceting redirect index",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "query_terms"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "query_terms"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "attributesForFaceting multiple consequences",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "director"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "director"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "attributesForFaceting in-depth optional filters",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "filterOnly(brand)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "filterOnly(brand)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "mode neuralSearch",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "mode": "neuralSearch"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "mode": "neuralSearch"
+      }
+    }
+  },
+  {
+    "testName": "mode keywordSearch",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "mode": "keywordSearch"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "mode": "keywordSearch"
       }
     }
   },
@@ -658,24 +791,26 @@
     }
   },
   {
-    "testName": "attributesForFaceting",
+    "testName": "attributesForFaceting complex",
     "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
         "attributesForFaceting": [
-          "genre",
-          "author"
+          "actor",
+          "filterOnly(category)",
+          "searchable(publisher)"
         ]
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/settings",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
       "method": "PUT",
       "body": {
         "attributesForFaceting": [
-          "genre",
-          "author"
+          "actor",
+          "filterOnly(category)",
+          "searchable(publisher)"
         ]
       }
     }
@@ -714,57 +849,6 @@
           "exact",
           "custom"
         ]
-      }
-    }
-  },
-  {
-    "testName": "distinct company",
-    "isSnippet": true,
-    "parameters": {
-      "indexName": "theIndexName",
-      "indexSettings": {
-        "distinct": "company"
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/settings",
-      "method": "PUT",
-      "body": {
-        "distinct": "company"
-      }
-    }
-  },
-  {
-    "testName": "distinct design",
-    "isSnippet": true,
-    "parameters": {
-      "indexName": "theIndexName",
-      "indexSettings": {
-        "distinct": "design"
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/settings",
-      "method": "PUT",
-      "body": {
-        "distinct": "design"
-      }
-    }
-  },
-  {
-    "testName": "distinct true",
-    "isSnippet": true,
-    "parameters": {
-      "indexName": "theIndexName",
-      "indexSettings": {
-        "distinct": true 
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/settings",
-      "method": "PUT",
-      "body": {
-        "distinct": true
       }
     }
   },
@@ -823,7 +907,36 @@
     }
   },
   {
-    "testName": "setSettings allow all `indexSettings`",
+    "testName": "searchableAttributes around location",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+          "searchableAttributes": [
+            "name",
+            "country",
+            "code",
+            "iata_code"
+          ],
+          "customRanking": ["desc(links_count)"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+          "searchableAttributes": [
+            "name",
+            "country",
+            "code",
+            "iata_code"
+          ],
+          "customRanking": ["desc(links_count)"]
+      }
+    }
+  },
+  {
+    "testName": "`indexSettings`",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
