@@ -534,5 +534,43 @@
         }
       }
     }
+  },
+  {
+    "testName": "promote single item",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+        "objectID": "promote-harry-potter-box-set",
+        "condition": {
+          "pattern": "Harry Potter",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "promote": [{
+              "objectID": "HP-12345",
+              "position": 0
+            }]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/promote-harry-potter-box-set",
+      "method": "PUT",
+      "body": {
+        "objectID": "promote-harry-potter-box-set",
+        "condition": {
+          "pattern": "iPhone",
+          "anchoring": "contains"
+        },
+        "consequence": {
+          "promote": [
+            {
+              "objectID": "iPhone-12345",
+              "position": 0
+            }
+          ]
+        }
+      }
+    }
   }
 ]
