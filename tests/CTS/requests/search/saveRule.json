@@ -662,5 +662,117 @@
   "objectID": "tagged-brand-rule"
       }
     }
+  },
+  {
+    "testName": "dynamic filtering",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+  "objectID": "color-facets",
+  "condition": {
+    "pattern": "{facet:color}"
+  },
+  "consequence": {
+    "params": {
+      "automaticFacetFilters": ["color"]
+    }
+  }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/color-facets",
+      "method": "PUT",
+      "body": {
+  "objectID": "color-facets",
+  "condition": {
+    "pattern": "{facet:color}"
+  },
+  "consequence": {
+    "params": {
+      "automaticFacetFilters": ["color"]
+    }
+  }
+      }
+    }
+  },
+  {
+    "testName": "one rule per facet",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+  "objectID": "red-color",
+  "condition": {
+    "pattern": "red",
+    "anchoring": "contains"
+  },
+  "consequence": {
+    "params": {
+      "query": {
+        "remove": "red"
+      },
+      "filters": "color:red"
+    }
+  }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/color-facets",
+      "method": "PUT",
+      "body": {
+  "objectID": "red-color",
+  "condition": {
+    "pattern": "red",
+    "anchoring": "contains"
+  },
+  "consequence": {
+    "params": {
+      "query": {
+        "remove": "red"
+      },
+      "filters": "color:red"
+    }
+  }
+      }
+    }
+  },
+  {
+    "testName": "numerical filters",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+  "objectID": "cheap",
+  "condition": {
+    "pattern": "cheap",
+    "anchoring": "contains"
+  },
+  "consequence": {
+    "params": {
+      "query": {
+        "remove": "cheap"
+      }
+    },
+    "filters": "price < 10"
+  }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/cheap",
+      "method": "PUT",
+      "body": {
+  "objectID": "cheap",
+  "condition": {
+    "pattern": "cheap",
+    "anchoring": "contains"
+  },
+  "consequence": {
+    "params": {
+      "query": {
+        "remove": "cheap"
+      }
+    },
+    "filters": "price < 10"
+  }
+      }
+    }
   }
 ]
