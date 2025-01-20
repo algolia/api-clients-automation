@@ -282,6 +282,69 @@
     }
   },
   {
+    "testName": "attributesForFaceting categoryPageId",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "searchable(categoryPageId)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "searchable(categoryPageId)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "unRetrievableAttributes",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "unRetrievableAttributes": [
+          "visible_by"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "unRetrievableAttributes": [
+          "visible_by"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "attributesForFaceting user restricted data",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "filterOnly(visible_by)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "filterOnly(visible_by)"
+        ]
+      }
+    }
+  },
+  {
     "testName": "attributesForFaceting optional filters",
     "isSnippet": true,
     "parameters": {
@@ -936,7 +999,28 @@
     }
   },
   {
-    "testName": "`indexSettings`",
+    "testName": "disableTypoToleranceOnAttributes",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+          "disableTypoToleranceOnAttributes": [
+            "serial_number"
+          ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+          "disableTypoToleranceOnAttributes": [
+            "serial_number"
+          ]
+      }
+    }
+  },
+  {
+    "testName": "everything",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
