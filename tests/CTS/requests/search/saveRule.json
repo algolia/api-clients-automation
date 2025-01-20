@@ -572,5 +572,95 @@
         }
       }
     }
+  },
+  {
+    "testName": "limit search results",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+"objectID": "article-rule",
+"conditions": [{
+  "pattern": "article",
+  "anchoring": "startsWith"
+}],
+"consequence": {
+  "params": {
+    "query": {
+      "type": "remove",
+      "delete": "article"
+    },
+    "restrictSearchableAttributes": ["title", "book_id"]
+  }
+}
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/article-rule",
+      "method": "PUT",
+      "body": {
+"objectID": "article-rule",
+"conditions": [{
+  "pattern": "article",
+  "anchoring": "startsWith"
+}],
+"consequence": {
+  "params": {
+    "query": {
+      "type": "remove",
+      "delete": "article"
+    },
+    "restrictSearchableAttributes": ["title", "book_id"]
+  }
+}
+      }
+    }
+  },
+  {
+    "testName": "query match",
+    "parameters": {
+      "indexName": "indexName",
+      "rule": {
+ "condition": {
+    "pattern": "brand\\: {facet:brand}",
+    "anchoring": "contains",
+    "alternatives": false
+  },
+  "consequences": [
+    {
+      "params": {
+        "automaticFacetFilters": ["brand"],
+        "query": {
+          "remove": ["brand\\:", "{facet:brand}"]
+        }
+      }
+    }
+  ],
+  "description": "filter on brand: {brand}",
+  "objectID": "tagged-brand-rule"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/tagged-brand-rule",
+      "method": "PUT",
+      "body": {
+ "condition": {
+    "pattern": "brand\\: {facet:brand}",
+    "anchoring": "contains",
+    "alternatives": false
+  },
+  "consequences": [
+    {
+      "params": {
+        "automaticFacetFilters": ["brand"],
+        "query": {
+          "remove": ["brand\\:", "{facet:brand}"]
+        }
+      }
+    }
+  ],
+  "description": "filter on brand: {brand}",
+  "objectID": "tagged-brand-rule"
+      }
+    }
   }
 ]
