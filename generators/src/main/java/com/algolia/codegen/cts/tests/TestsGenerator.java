@@ -56,7 +56,7 @@ public abstract class TestsGenerator {
       json = injectVariables(json);
       String key = f.getName().replace(".json", "");
       // some clients don't have custom methods
-      if (clientName.equals("composition") && key.equals("commonApi")) {
+      if (clientName.equals("composition") && (key.equals("commonApi") || key.equals("setClientApiKey"))) {
         continue skipFile;
       }
       cts.put(key, Json.mapper().readValue(json, jsonType));
