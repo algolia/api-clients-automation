@@ -3402,8 +3402,188 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow all `indexSettings`")
+  @DisplayName("neuralSearch")
   void setSettingsTest10() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"mode\":\"neuralSearch\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("keywordSearch")
+  void setSettingsTest11() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"mode\":\"keywordSearch\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("distinct")
+  void setSettingsTest12() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setAttributeForDistinct("section").setDistinct(Distinct.of(true)));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributeForDistinct\":\"section\",\"distinct\":true}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributes same priority")
+  void setSettingsTest13() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("title,comments", "ingredients")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"title,comments\",\"ingredients\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributes higher priority")
+  void setSettingsTest14() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("title", "ingredients")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"title\",\"ingredients\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking retweets")
+  void setSettingsTest15() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(retweets)", "desc(likes)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(retweets)\",\"desc(likes)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking boosted")
+  void setSettingsTest16() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(boosted)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"customRanking\":[\"desc(boosted)\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("customRanking pageviews")
+  void setSettingsTest17() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(pageviews)", "desc(comments)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(pageviews)\",\"desc(comments)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking rounded pageviews")
+  void setSettingsTest18() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(rounded_pageviews)", "desc(comments)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking price")
+  void setSettingsTest19() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(price)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"customRanking\":[\"desc(price)\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("ranking exhaustive")
+  void setSettingsTest20() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setRanking(Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("ranking standard replica")
+  void setSettingsTest21() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setRanking(Arrays.asList("desc(post_date_timestamp)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"ranking\":[\"desc(post_date_timestamp)\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("ranking virtual replica")
+  void setSettingsTest22() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(post_date_timestamp)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(post_date_timestamp)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("setSettings allow all `indexSettings`")
+  void setSettingsTest23() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",

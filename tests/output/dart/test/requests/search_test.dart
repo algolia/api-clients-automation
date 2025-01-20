@@ -3849,6 +3849,348 @@ void main() {
 
   // setSettings
   test(
+    'neuralSearch',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          mode: Mode.fromJson("neuralSearch"),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"mode":"neuralSearch"}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'keywordSearch',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          mode: Mode.fromJson("keywordSearch"),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"mode":"keywordSearch"}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'distinct',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          attributeForDistinct: "section",
+          distinct: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributeForDistinct":"section","distinct":true}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributes same priority',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "title,comments",
+            "ingredients",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["title,comments","ingredients"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributes higher priority',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "title",
+            "ingredients",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["title","ingredients"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking retweets',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(retweets)",
+            "desc(likes)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(retweets)","desc(likes)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking boosted',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(boosted)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"customRanking":["desc(boosted)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking pageviews',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(pageviews)",
+            "desc(comments)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(pageviews)","desc(comments)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking rounded pageviews',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(rounded_pageviews)",
+            "desc(comments)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking price',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(price)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"customRanking":["desc(price)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking exhaustive',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          ranking: [
+            "desc(price)",
+            "typo",
+            "geo",
+            "words",
+            "filters",
+            "proximity",
+            "attribute",
+            "exact",
+            "custom",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking standard replica',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          ranking: [
+            "desc(post_date_timestamp)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"ranking":["desc(post_date_timestamp)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking virtual replica',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(post_date_timestamp)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(post_date_timestamp)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
     'setSettings allow all `indexSettings`',
     () => runTest(
       builder: (requester) => SearchClient(

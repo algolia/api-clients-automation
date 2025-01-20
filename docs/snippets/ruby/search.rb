@@ -2072,7 +2072,7 @@ end
 #
 # setSettingsAttributesForFaceting
 def snippet_for_set_settings
-  # >SEPARATOR setSettings default
+  # >SEPARATOR setSettings setSettingsAttributesForFaceting
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -2082,6 +2082,301 @@ def snippet_for_set_settings
     Algolia::Search::IndexSettings.new(
       attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
     )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# neuralSearch
+def snippet_for_set_settings1
+  # >SEPARATOR setSettings neuralSearch
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(mode: "neuralSearch"))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# keywordSearch
+def snippet_for_set_settings2
+  # >SEPARATOR setSettings keywordSearch
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(mode: "keywordSearch"))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# distinct
+def snippet_for_set_settings3
+  # >SEPARATOR setSettings distinct
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attribute_for_distinct: "section", distinct: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributes same priority
+def snippet_for_set_settings4
+  # >SEPARATOR setSettings searchableAttributes same priority
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["title,comments", "ingredients"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributes higher priority
+def snippet_for_set_settings5
+  # >SEPARATOR setSettings searchableAttributes higher priority
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["title", "ingredients"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking retweets
+def snippet_for_set_settings6
+  # >SEPARATOR setSettings customRanking retweets
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(retweets)", "desc(likes)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking boosted
+def snippet_for_set_settings7
+  # >SEPARATOR setSettings customRanking boosted
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(boosted)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking pageviews
+def snippet_for_set_settings8
+  # >SEPARATOR setSettings customRanking pageviews
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(pageviews)", "desc(comments)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking rounded pageviews
+def snippet_for_set_settings9
+  # >SEPARATOR setSettings customRanking rounded pageviews
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(rounded_pageviews)", "desc(comments)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking price
+def snippet_for_set_settings10
+  # >SEPARATOR setSettings customRanking price
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(price)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# ranking exhaustive
+def snippet_for_set_settings11
+  # >SEPARATOR setSettings ranking exhaustive
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      ranking: ["desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# ranking standard replica
+def snippet_for_set_settings12
+  # >SEPARATOR setSettings ranking standard replica
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(ranking: ["desc(post_date_timestamp)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# ranking virtual replica
+def snippet_for_set_settings13
+  # >SEPARATOR setSettings ranking virtual replica
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(post_date_timestamp)"])
   )
 
   # >LOG

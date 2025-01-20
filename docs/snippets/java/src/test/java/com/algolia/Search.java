@@ -1775,7 +1775,7 @@ class SnippetSearchClient {
   //
   // setSettingsAttributesForFaceting
   void snippetForSetSettings() throws Exception {
-    // >SEPARATOR setSettings default
+    // >SEPARATOR setSettings setSettingsAttributesForFaceting
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
@@ -1784,6 +1784,195 @@ class SnippetSearchClient {
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // neuralSearch
+  void snippetForSetSettings1() throws Exception {
+    // >SEPARATOR setSettings neuralSearch
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // keywordSearch
+  void snippetForSetSettings2() throws Exception {
+    // >SEPARATOR setSettings keywordSearch
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // distinct
+  void snippetForSetSettings3() throws Exception {
+    // >SEPARATOR setSettings distinct
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributeForDistinct("section").setDistinct(Distinct.of(true)));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // searchableAttributes same priority
+  void snippetForSetSettings4() throws Exception {
+    // >SEPARATOR setSettings searchableAttributes same priority
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("title,comments", "ingredients")));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // searchableAttributes higher priority
+  void snippetForSetSettings5() throws Exception {
+    // >SEPARATOR setSettings searchableAttributes higher priority
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("title", "ingredients")));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // customRanking retweets
+  void snippetForSetSettings6() throws Exception {
+    // >SEPARATOR setSettings customRanking retweets
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(retweets)", "desc(likes)")));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // customRanking boosted
+  void snippetForSetSettings7() throws Exception {
+    // >SEPARATOR setSettings customRanking boosted
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(boosted)")));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // customRanking pageviews
+  void snippetForSetSettings8() throws Exception {
+    // >SEPARATOR setSettings customRanking pageviews
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(pageviews)", "desc(comments)")));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // customRanking rounded pageviews
+  void snippetForSetSettings9() throws Exception {
+    // >SEPARATOR setSettings customRanking rounded pageviews
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCustomRanking(Arrays.asList("desc(rounded_pageviews)", "desc(comments)"))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // customRanking price
+  void snippetForSetSettings10() throws Exception {
+    // >SEPARATOR setSettings customRanking price
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(price)")));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // ranking exhaustive
+  void snippetForSetSettings11() throws Exception {
+    // >SEPARATOR setSettings ranking exhaustive
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings()
+        .setRanking(Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // ranking standard replica
+  void snippetForSetSettings12() throws Exception {
+    // >SEPARATOR setSettings ranking standard replica
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRanking(Arrays.asList("desc(post_date_timestamp)")));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // ranking virtual replica
+  void snippetForSetSettings13() throws Exception {
+    // >SEPARATOR setSettings ranking virtual replica
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(post_date_timestamp)")));
     // >LOG
     // SEPARATOR<
   }

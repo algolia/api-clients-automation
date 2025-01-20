@@ -2072,7 +2072,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSetSettings()
   {
-    // >SEPARATOR setSettings default
+    // >SEPARATOR setSettings setSettingsAttributesForFaceting
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -2088,6 +2088,295 @@ public class SnippetSearchClient
           "searchable(publisher)",
         },
       }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// neuralSearch
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings1()
+  {
+    // >SEPARATOR setSettings neuralSearch
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { Mode = Enum.Parse<Mode>("NeuralSearch") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// keywordSearch
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings2()
+  {
+    // >SEPARATOR setSettings keywordSearch
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { Mode = Enum.Parse<Mode>("KeywordSearch") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// distinct
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings3()
+  {
+    // >SEPARATOR setSettings distinct
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AttributeForDistinct = "section", Distinct = new Distinct(true) }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// searchableAttributes same priority
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings4()
+  {
+    // >SEPARATOR setSettings searchableAttributes same priority
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string> { "title,comments", "ingredients" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// searchableAttributes higher priority
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings5()
+  {
+    // >SEPARATOR setSettings searchableAttributes higher priority
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string> { "title", "ingredients" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// customRanking retweets
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings6()
+  {
+    // >SEPARATOR setSettings customRanking retweets
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(retweets)", "desc(likes)" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// customRanking boosted
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings7()
+  {
+    // >SEPARATOR setSettings customRanking boosted
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { CustomRanking = new List<string> { "desc(boosted)" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// customRanking pageviews
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings8()
+  {
+    // >SEPARATOR setSettings customRanking pageviews
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(pageviews)", "desc(comments)" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// customRanking rounded pageviews
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings9()
+  {
+    // >SEPARATOR setSettings customRanking rounded pageviews
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(rounded_pageviews)", "desc(comments)" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// customRanking price
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings10()
+  {
+    // >SEPARATOR setSettings customRanking price
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { CustomRanking = new List<string> { "desc(price)" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// ranking exhaustive
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings11()
+  {
+    // >SEPARATOR setSettings ranking exhaustive
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom",
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// ranking standard replica
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings12()
+  {
+    // >SEPARATOR setSettings ranking standard replica
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { Ranking = new List<string> { "desc(post_date_timestamp)" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// ranking virtual replica
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings13()
+  {
+    // >SEPARATOR setSettings ranking virtual replica
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { CustomRanking = new List<string> { "desc(post_date_timestamp)" } }
     );
     // >LOG
     // SEPARATOR<

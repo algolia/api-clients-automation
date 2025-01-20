@@ -2358,8 +2358,194 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"distinct\":1}"), JSON.parse(req.body))
   end
 
-  # setSettings allow all `indexSettings`
+  # neuralSearch
   def test_set_settings10
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(mode: "neuralSearch"))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"mode\":\"neuralSearch\"}"), JSON.parse(req.body))
+  end
+
+  # keywordSearch
+  def test_set_settings11
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(mode: "keywordSearch"))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"mode\":\"keywordSearch\"}"), JSON.parse(req.body))
+  end
+
+  # distinct
+  def test_set_settings12
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(attribute_for_distinct: "section", distinct: true)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeForDistinct\":\"section\",\"distinct\":true}"), JSON.parse(req.body))
+  end
+
+  # searchableAttributes same priority
+  def test_set_settings13
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["title,comments", "ingredients"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"searchableAttributes\":[\"title,comments\",\"ingredients\"]}"), JSON.parse(req.body))
+  end
+
+  # searchableAttributes higher priority
+  def test_set_settings14
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["title", "ingredients"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"searchableAttributes\":[\"title\",\"ingredients\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking retweets
+  def test_set_settings15
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(retweets)", "desc(likes)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(retweets)\",\"desc(likes)\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking boosted
+  def test_set_settings16
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(boosted)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(boosted)\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking pageviews
+  def test_set_settings17
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(pageviews)", "desc(comments)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(pageviews)\",\"desc(comments)\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking rounded pageviews
+  def test_set_settings18
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(rounded_pageviews)", "desc(comments)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # customRanking price
+  def test_set_settings19
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(price)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(price)\"]}"), JSON.parse(req.body))
+  end
+
+  # ranking exhaustive
+  def test_set_settings20
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(
+        ranking: ["desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # ranking standard replica
+  def test_set_settings21
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(ranking: ["desc(post_date_timestamp)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"ranking\":[\"desc(post_date_timestamp)\"]}"), JSON.parse(req.body))
+  end
+
+  # ranking virtual replica
+  def test_set_settings22
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(post_date_timestamp)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(post_date_timestamp)\"]}"), JSON.parse(req.body))
+  end
+
+  # setSettings allow all `indexSettings`
+  def test_set_settings23
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(

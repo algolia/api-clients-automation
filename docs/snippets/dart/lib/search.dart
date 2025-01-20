@@ -2014,7 +2014,7 @@ void snippetForsetDictionarySettings() async {
 //
 // setSettingsAttributesForFaceting
 void snippetForsetSettings() async {
-  // >SEPARATOR setSettings default
+  // >SEPARATOR setSettings setSettingsAttributesForFaceting
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2027,6 +2027,300 @@ void snippetForsetSettings() async {
         "actor",
         "filterOnly(category)",
         "searchable(publisher)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// neuralSearch
+void snippetForsetSettings1() async {
+  // >SEPARATOR setSettings neuralSearch
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      mode: Mode.fromJson("neuralSearch"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// keywordSearch
+void snippetForsetSettings2() async {
+  // >SEPARATOR setSettings keywordSearch
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      mode: Mode.fromJson("keywordSearch"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct
+void snippetForsetSettings3() async {
+  // >SEPARATOR setSettings distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributeForDistinct: "section",
+      distinct: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes same priority
+void snippetForsetSettings4() async {
+  // >SEPARATOR setSettings searchableAttributes same priority
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "title,comments",
+        "ingredients",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes higher priority
+void snippetForsetSettings5() async {
+  // >SEPARATOR setSettings searchableAttributes higher priority
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "title",
+        "ingredients",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking retweets
+void snippetForsetSettings6() async {
+  // >SEPARATOR setSettings customRanking retweets
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(retweets)",
+        "desc(likes)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking boosted
+void snippetForsetSettings7() async {
+  // >SEPARATOR setSettings customRanking boosted
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(boosted)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking pageviews
+void snippetForsetSettings8() async {
+  // >SEPARATOR setSettings customRanking pageviews
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(pageviews)",
+        "desc(comments)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking rounded pageviews
+void snippetForsetSettings9() async {
+  // >SEPARATOR setSettings customRanking rounded pageviews
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(rounded_pageviews)",
+        "desc(comments)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking price
+void snippetForsetSettings10() async {
+  // >SEPARATOR setSettings customRanking price
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(price)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking exhaustive
+void snippetForsetSettings11() async {
+  // >SEPARATOR setSettings ranking exhaustive
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "desc(price)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking standard replica
+void snippetForsetSettings12() async {
+  // >SEPARATOR setSettings ranking standard replica
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "desc(post_date_timestamp)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking virtual replica
+void snippetForsetSettings13() async {
+  // >SEPARATOR setSettings ranking virtual replica
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(post_date_timestamp)",
       ],
     ),
   );

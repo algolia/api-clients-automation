@@ -2378,6 +2378,185 @@ func TestSearch_SetSettings(t *testing.T) {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
+	t.Run("neuralSearch", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetMode(search.Mode("neuralSearch")),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"mode":"neuralSearch"}`)
+	})
+	t.Run("keywordSearch", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetMode(search.Mode("keywordSearch")),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"mode":"keywordSearch"}`)
+	})
+	t.Run("distinct", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetAttributeForDistinct("section").SetDistinct(search.BoolAsDistinct(true)),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"attributeForDistinct":"section","distinct":true}`)
+	})
+	t.Run("searchableAttributes same priority", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetSearchableAttributes(
+				[]string{"title,comments", "ingredients"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"searchableAttributes":["title,comments","ingredients"]}`)
+	})
+	t.Run("searchableAttributes higher priority", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetSearchableAttributes(
+				[]string{"title", "ingredients"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"searchableAttributes":["title","ingredients"]}`)
+	})
+	t.Run("customRanking retweets", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetCustomRanking(
+				[]string{"desc(retweets)", "desc(likes)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"customRanking":["desc(retweets)","desc(likes)"]}`)
+	})
+	t.Run("customRanking boosted", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetCustomRanking(
+				[]string{"desc(boosted)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"customRanking":["desc(boosted)"]}`)
+	})
+	t.Run("customRanking pageviews", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetCustomRanking(
+				[]string{"desc(pageviews)", "desc(comments)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"customRanking":["desc(pageviews)","desc(comments)"]}`)
+	})
+	t.Run("customRanking rounded pageviews", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetCustomRanking(
+				[]string{"desc(rounded_pageviews)", "desc(comments)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}`)
+	})
+	t.Run("customRanking price", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetCustomRanking(
+				[]string{"desc(price)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"customRanking":["desc(price)"]}`)
+	})
+	t.Run("ranking exhaustive", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetRanking(
+				[]string{"desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}`)
+	})
+	t.Run("ranking standard replica", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetRanking(
+				[]string{"desc(post_date_timestamp)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"ranking":["desc(post_date_timestamp)"]}`)
+	})
+	t.Run("ranking virtual replica", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetCustomRanking(
+				[]string{"desc(post_date_timestamp)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"customRanking":["desc(post_date_timestamp)"]}`)
+	})
 	t.Run("setSettings allow all `indexSettings`", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",

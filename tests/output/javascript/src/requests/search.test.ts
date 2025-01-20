@@ -2193,6 +2193,166 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
+  test('neuralSearch', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { mode: 'neuralSearch' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ mode: 'neuralSearch' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('keywordSearch', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { mode: 'keywordSearch' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ mode: 'keywordSearch' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('distinct', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributeForDistinct: 'section', distinct: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributeForDistinct: 'section', distinct: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributes same priority', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['title,comments', 'ingredients'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['title,comments', 'ingredients'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributes higher priority', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['title', 'ingredients'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['title', 'ingredients'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking retweets', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(retweets)', 'desc(likes)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(retweets)', 'desc(likes)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking boosted', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(boosted)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(boosted)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking pageviews', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(pageviews)', 'desc(comments)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(pageviews)', 'desc(comments)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking rounded pageviews', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(rounded_pageviews)', 'desc(comments)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(rounded_pageviews)', 'desc(comments)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking price', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(price)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(price)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('ranking exhaustive', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('ranking standard replica', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { ranking: ['desc(post_date_timestamp)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ ranking: ['desc(post_date_timestamp)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('ranking virtual replica', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(post_date_timestamp)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(post_date_timestamp)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('setSettings allow all `indexSettings`', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',

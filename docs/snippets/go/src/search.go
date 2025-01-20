@@ -2673,7 +2673,7 @@ func SnippetForSetSettingsOfSearch() {
 	   setSettingsAttributesForFaceting
 	*/
 
-	// >SEPARATOR setSettings default
+	// >SEPARATOR setSettings setSettingsAttributesForFaceting
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -2686,6 +2686,406 @@ func SnippetForSetSettingsOfSearch() {
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyIndexSettings().SetAttributesForFaceting(
 			[]string{"actor", "filterOnly(category)", "searchable(publisher)"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch1() {
+	/*
+	   Snippet for the setSettings method.
+
+	   neuralSearch
+	*/
+
+	// >SEPARATOR setSettings neuralSearch
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetMode(search.Mode("neuralSearch")),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch2() {
+	/*
+	   Snippet for the setSettings method.
+
+	   keywordSearch
+	*/
+
+	// >SEPARATOR setSettings keywordSearch
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetMode(search.Mode("keywordSearch")),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch3() {
+	/*
+	   Snippet for the setSettings method.
+
+	   distinct
+	*/
+
+	// >SEPARATOR setSettings distinct
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributeForDistinct("section").SetDistinct(search.BoolAsDistinct(true)),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch4() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributes same priority
+	*/
+
+	// >SEPARATOR setSettings searchableAttributes same priority
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"title,comments", "ingredients"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch5() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributes higher priority
+	*/
+
+	// >SEPARATOR setSettings searchableAttributes higher priority
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"title", "ingredients"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch6() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking retweets
+	*/
+
+	// >SEPARATOR setSettings customRanking retweets
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(retweets)", "desc(likes)"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch7() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking boosted
+	*/
+
+	// >SEPARATOR setSettings customRanking boosted
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(boosted)"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch8() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking pageviews
+	*/
+
+	// >SEPARATOR setSettings customRanking pageviews
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(pageviews)", "desc(comments)"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch9() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking rounded pageviews
+	*/
+
+	// >SEPARATOR setSettings customRanking rounded pageviews
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(rounded_pageviews)", "desc(comments)"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch10() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking price
+	*/
+
+	// >SEPARATOR setSettings customRanking price
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(price)"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch11() {
+	/*
+	   Snippet for the setSettings method.
+
+	   ranking exhaustive
+	*/
+
+	// >SEPARATOR setSettings ranking exhaustive
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetRanking(
+			[]string{"desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch12() {
+	/*
+	   Snippet for the setSettings method.
+
+	   ranking standard replica
+	*/
+
+	// >SEPARATOR setSettings ranking standard replica
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetRanking(
+			[]string{"desc(post_date_timestamp)"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch13() {
+	/*
+	   Snippet for the setSettings method.
+
+	   ranking virtual replica
+	*/
+
+	// >SEPARATOR setSettings ranking virtual replica
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(post_date_timestamp)"}),
 	))
 	if err != nil {
 		// handle the eventual error

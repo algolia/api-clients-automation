@@ -3053,6 +3053,279 @@ class TestSearchClient:
 
     async def test_set_settings_10(self):
         """
+        neuralSearch
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "neuralSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
+
+    async def test_set_settings_11(self):
+        """
+        keywordSearch
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "keywordSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
+
+    async def test_set_settings_12(self):
+        """
+        distinct
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "section",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"section","distinct":true}"""
+        )
+
+    async def test_set_settings_13(self):
+        """
+        searchableAttributes same priority
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title,comments",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title,comments","ingredients"]}"""
+        )
+
+    async def test_set_settings_14(self):
+        """
+        searchableAttributes higher priority
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title","ingredients"]}"""
+        )
+
+    async def test_set_settings_15(self):
+        """
+        customRanking retweets
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(retweets)",
+                    "desc(likes)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(retweets)","desc(likes)"]}"""
+        )
+
+    async def test_set_settings_16(self):
+        """
+        customRanking boosted
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(boosted)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(boosted)"]}""")
+
+    async def test_set_settings_17(self):
+        """
+        customRanking pageviews
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(pageviews)","desc(comments)"]}"""
+        )
+
+    async def test_set_settings_18(self):
+        """
+        customRanking rounded pageviews
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(rounded_pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}"""
+        )
+
+    async def test_set_settings_19(self):
+        """
+        customRanking price
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(price)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(price)"]}""")
+
+    async def test_set_settings_20(self):
+        """
+        ranking exhaustive
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    async def test_set_settings_21(self):
+        """
+        ranking standard replica
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(post_date_timestamp)"]}"""
+        )
+
+    async def test_set_settings_22(self):
+        """
+        ranking virtual replica
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(post_date_timestamp)"]}"""
+        )
+
+    async def test_set_settings_23(self):
+        """
         setSettings allow all `indexSettings`
         """
         _req = await self._client.set_settings_with_http_info(
@@ -6274,6 +6547,279 @@ class TestSearchClientSync:
         assert loads(_req.data) == loads("""{"distinct":1}""")
 
     def test_set_settings_10(self):
+        """
+        neuralSearch
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "neuralSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
+
+    def test_set_settings_11(self):
+        """
+        keywordSearch
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "keywordSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
+
+    def test_set_settings_12(self):
+        """
+        distinct
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "section",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"section","distinct":true}"""
+        )
+
+    def test_set_settings_13(self):
+        """
+        searchableAttributes same priority
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title,comments",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title,comments","ingredients"]}"""
+        )
+
+    def test_set_settings_14(self):
+        """
+        searchableAttributes higher priority
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title","ingredients"]}"""
+        )
+
+    def test_set_settings_15(self):
+        """
+        customRanking retweets
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(retweets)",
+                    "desc(likes)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(retweets)","desc(likes)"]}"""
+        )
+
+    def test_set_settings_16(self):
+        """
+        customRanking boosted
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(boosted)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(boosted)"]}""")
+
+    def test_set_settings_17(self):
+        """
+        customRanking pageviews
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(pageviews)","desc(comments)"]}"""
+        )
+
+    def test_set_settings_18(self):
+        """
+        customRanking rounded pageviews
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(rounded_pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}"""
+        )
+
+    def test_set_settings_19(self):
+        """
+        customRanking price
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(price)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(price)"]}""")
+
+    def test_set_settings_20(self):
+        """
+        ranking exhaustive
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    def test_set_settings_21(self):
+        """
+        ranking standard replica
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(post_date_timestamp)"]}"""
+        )
+
+    def test_set_settings_22(self):
+        """
+        ranking virtual replica
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(post_date_timestamp)"]}"""
+        )
+
+    def test_set_settings_23(self):
         """
         setSettings allow all `indexSettings`
         """
