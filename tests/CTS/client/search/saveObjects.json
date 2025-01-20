@@ -96,7 +96,7 @@
   },
   {
     "testName": "saveObjectsPlaylist",
-    "autoCreateClient": false,
+    "autoCreateClient": true,
     "steps": [
       {
         "type": "method",
@@ -121,7 +121,7 @@
   },
   {
     "testName": "saveObjectsPublicUser",
-    "autoCreateClient": false,
+    "autoCreateClient": true,
     "steps": [
       {
         "type": "method",
@@ -139,13 +139,13 @@
               ],
               "createdAt": 1500240452
             }
-          ],
+          ]
+        },
           "requestOptions": {
             "headers": {
               "X-Algolia-User-ID": "*"
             }
           }
-        }
       }
     ]
   }
