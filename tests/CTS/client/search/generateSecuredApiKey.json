@@ -68,7 +68,7 @@
         "parameters": {
           "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
           "restrictions": {
-            "filters": "user:user42 AND user:public AND (visible_by:${currentUserID} OR visible_by:group/${currentGroupID})"
+            "filters": "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)"
           }
         }
       }
