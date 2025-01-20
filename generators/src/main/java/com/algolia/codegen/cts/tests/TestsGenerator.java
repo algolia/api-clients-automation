@@ -51,10 +51,15 @@ public abstract class TestsGenerator {
 
     Map<String, T> cts = new TreeMap<>();
 
-    for (File f : allTests) {
+    skipFile: for (File f : allTests) {
       String json = new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())));
       json = injectVariables(json);
-      cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(json, jsonType));
+      String key = f.getName().replace(".json", "");
+      // some clients don't have custom methods
+      if (clientName.equals("composition") && (key.equals("commonApi") || key.equals("setClientApiKey"))) {
+        continue skipFile;
+      }
+      cts.put(key, Json.mapper().readValue(json, jsonType));
     }
     return cts;
   }

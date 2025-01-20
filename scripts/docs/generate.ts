@@ -1,4 +1,4 @@
-import { callGenerator, exists, run, setupAndGen, toAbsolutePath } from '../common.ts';
+import { callGenerator, exists, isWSL, run, setupAndGen, toAbsolutePath } from '../common.ts';
 import { getTestOutputFolder } from '../config.ts';
 import { formatter } from '../formatter.ts';
 import type { Generator } from '../types.ts';
@@ -32,6 +32,9 @@ export async function docsGenerateMany(generators: Generator[], scope: 'guides' 
     }
 
     if (await exists(toAbsolutePath(docsPath))) {
+      if (isWSL()) {
+        await run(`sudo chmod 777 -R ${docsPath}`);
+      }
       await formatter(lang, docsPath);
     }
   }

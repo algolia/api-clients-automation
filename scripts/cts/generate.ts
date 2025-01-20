@@ -1,4 +1,4 @@
-import { callGenerator, run, setupAndGen } from '../common.ts';
+import { callGenerator, isWSL, run, setupAndGen } from '../common.ts';
 import { getTestOutputFolder } from '../config.ts';
 import { formatter } from '../formatter.ts';
 import type { Generator } from '../types.ts';
@@ -36,6 +36,9 @@ export async function ctsGenerateMany(generators: Generator[], languageVersion =
       });
     }
 
+    if (isWSL()) {
+      await run(`sudo chmod 777 -R tests/output/${lang}`);
+    }
     await formatter(lang, `tests/output/${lang}`);
   }
 }

@@ -36,6 +36,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     isAlgoliasearchClient = client.equals("algoliasearch");
     String version = Helpers.getClientConfigField("dart", "packageVersion");
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
 
     // pubspec.yaml
     setPubAuthor("Algolia");

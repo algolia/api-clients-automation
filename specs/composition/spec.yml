@@ -47,55 +47,10 @@ x-tagGroups:
     tags:
       - Compositions
 paths:
-  # ######################
-  # ### Custom request ###
-  # ######################
-  /{path}:
-    $ref: '../common/paths/customRequest.yml'
-
   # ########################
   # ### Search Endpoints ###
   # ########################
   /1/compositions/{compositionID}/run:
-    $ref: 'paths/search/search.yml'
+    $ref: '../composition-full/paths/search/search.yml'
   /1/compositions/{compositionID}/facets/{facetName}/query:
-    $ref: 'paths/search/searchForFacetValues.yml'
-
-  # #########################
-  # ### Objects Endpoints ###
-  # #########################
-  /1/compositions/{compositionID}:
-    $ref: 'paths/objects/objects.yml'
-  /1/compositions/*/batch:
-    $ref: 'paths/objects/multipleBatch.yml'
-
-  # #######################
-  # ### Rules Endpoints ###
-  # #######################
-  /1/compositions/{compositionID}/rules/{objectID}:
-    $ref: 'paths/rules/rule.yml'
-  /1/compositions/{compositionID}/rules/batch:
-    $ref: 'paths/rules/saveRules.yml'
-  /1/compositions/{compositionID}/rules/search:
-    $ref: 'paths/rules/searchRules.yml'
-
-  # ##########################
-  # ### Advanced Endpoints ###
-  # ##########################
-  /1/compositions/{compositionID}/task/{taskID}:
-    $ref: 'paths/advanced/getTask.yml'
-
-  # #####################################
-  # ### Manage Compositions Endpoints ###
-  # #####################################
-  /1/compositions:
-    $ref: 'paths/manage_compositions/listCompositions.yml'
-
-  # ###############
-  # ### Helpers ###
-  # ###############
-  /setClientApiKey:
-    $ref: '../common/helpers/setClientApiKey.yml#/method'
-
-  /waitForCompositionTask:
-    $ref: 'helpers/waitForCompositionTask.yml#/method'
+    $ref: '../composition-full/paths/search/searchForFacetValues.yml'

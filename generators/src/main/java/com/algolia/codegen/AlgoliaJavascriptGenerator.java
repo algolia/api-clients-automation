@@ -18,7 +18,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   private String CLIENT;
   private boolean isAlgoliasearchClient;
-  private boolean isAlgoliaCompositionClient;
 
   @Override
   public String getName() {
@@ -31,7 +30,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     CLIENT = Helpers.camelize((String) additionalProperties.get("client"));
     isAlgoliasearchClient = CLIENT.equals("algoliasearch");
-    isAlgoliaCompositionClient = CLIENT.equals("composition");
 
     // generator specific options
     setSupportsES6(true);
@@ -154,9 +152,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     String packageName = getPackageName((String) additionalProperties.get("client"));
 
     additionalProperties.put("apiName", CLIENT);
-    additionalProperties.put("clientName", clientName);
+    // Just so the full client doesn't have the weird Full naming
+    additionalProperties.put("clientName", CLIENT.contains("composition") ? "composition" + Helpers.API_SUFFIX : clientName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
-    additionalProperties.put("is" + Helpers.capitalize(CLIENT) + "Client", true);
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
@@ -186,7 +185,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
         dependency.put("withInitMethod", !name.contains("search"));
         dependency.put(
           "dependencyHasRegionalHosts",
-          !name.contains("search") && !name.contains("recommend") && !name.contains("monitoring")
+          !name.contains("search") && !name.contains("recommend") && !name.contains("monitoring") && !name.startsWith("composition")
         );
 
         dependencies.add(dependency);

@@ -26,7 +26,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
   public void processOpts() {
     CLIENT = (String) additionalProperties.get("client");
 
-    additionalProperties.put("isSearchClient", CLIENT.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put("packageVersion", Helpers.getClientConfigField("python", "packageVersion"));
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 

@@ -78,7 +78,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
-    additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     typeMapping.put("AnyType", "Any");
 
     nameMapping.putAll(NAME_MAPPING);

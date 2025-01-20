@@ -67,12 +67,14 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "exactonsinglewordquery",
     "exhaustive",
     "facetfilters",
+    "facethits",
     "facetordering",
     "facets",
     "facetstats",
     "forbidden",
     "highlightresult",
     "highlightresultoption",
+    "hit",
     "ignoreplurals",
     "indexsettingsassearchparams",
     "insideboundingbox",
@@ -102,10 +104,14 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "removewordsifnoresults",
     "renderingcontent",
     "rerankingapplyfilter",
+    "searchforfacetvaluesrequest",
+    "searchforfacetvaluesresponse",
+    "searchhits",
     "searchpagination",
     "searchparams",
     "searchparamsobject",
     "searchparamsquery",
+    "searchresponse",
     "semanticsearch",
     "snippetresult",
     "snippetresultoption",
@@ -179,7 +185,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       System.exit(1);
     }
 
-    additionalProperties.put("isSearchClient", CLIENT.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
