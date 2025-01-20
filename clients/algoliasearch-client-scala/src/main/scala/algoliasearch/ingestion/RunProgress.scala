@@ -22,6 +22,6 @@ package algoliasearch.ingestion
 /** RunProgress
   */
 case class RunProgress(
-    expectedNbOfEvents: Option[Int] = scala.None,
-    receivedNbOfEvents: Option[Int] = scala.None
+    expectedNbOfEvents: Int,
+    receivedNbOfEvents: Int
 )
