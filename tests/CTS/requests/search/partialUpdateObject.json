@@ -110,9 +110,7 @@
       "path": "/1/indexes/theIndexName/uniqueID/partial",
       "method": "POST",
       "body": {
-        "attributesToUpdate": {
-          "visible_by": ["Angela", "group/Finance", "group/Shareholders" ]
-        }
+        "visible_by": ["Angela", "group/Finance", "group/Shareholders" ]
       }
     }
   }

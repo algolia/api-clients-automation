@@ -396,7 +396,7 @@
       "path": "/1/indexes/indexName/rules/redirect-help-rule",
       "method": "PUT",
       "body": {
-        "objectID": "clearance-category-filter",
+        "objectID": "redirect-help-rule",
         "conditions": [
           {
             "pattern": "help",
@@ -627,7 +627,7 @@
       "objectID": "tagged-brand-rule",
       "rule": {
         "conditions": [{
-          "pattern": "brand\\\\: {facet:brand}",
+          "pattern": "brand: {facet:brand}",
           "anchoring": "contains",
           "alternatives": false
         }],
@@ -637,7 +637,7 @@
               "facet":"brand"
             }],
             "query": {
-              "remove": ["brand\\\\:", "{facet:brand}"]
+              "remove": ["brand:", "{facet:brand}"]
             }
           }
         },
@@ -650,7 +650,7 @@
       "method": "PUT",
       "body": {
         "conditions": [{
-          "pattern": "brand\\\\: {facet:brand}",
+          "pattern": "brand: {facet:brand}",
           "anchoring": "contains",
           "alternatives": false
         }],
@@ -660,7 +660,7 @@
               "facet":"brand"
             }],
             "query": {
-              "remove": ["brand\\\\:", "{facet:brand}"]
+              "remove": ["brand:", "{facet:brand}"]
             }
           }
         },
