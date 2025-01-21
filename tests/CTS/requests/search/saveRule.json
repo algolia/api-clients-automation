@@ -275,6 +275,9 @@
         "consequence": {
           "params": {
             "restrictSearchableAttributes": ["title", "book_id"],
+            "automaticFacetFilters": [{
+              "facet":"director"
+            }],
             "query": {
               "edits": [{
                 "type": "remove",
