@@ -274,16 +274,13 @@
         ],
         "consequence": {
           "params": {
-            "automaticFacetFilters": [{
-              "facet":"director"
-            }],
+            "restrictSearchableAttributes": ["title", "book_id"],
             "query": {
               "edits": [{
                 "type": "remove",
                 "delete": "director"
               }]
-            },
-            "restrictSearchableAttributes": ["title", "book_id"]
+            }
           }
         }
       }
