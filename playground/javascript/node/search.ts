@@ -19,10 +19,10 @@ async function testSearch() {
   try {
     const req = await client.setSettings({
       indexName: 'theIndexName',
-      indexSettings: { distinct: 'company' },
+      indexSettings: { distinct: true },
     })
 
-    // @ts-ignore
+
     console.log(`[OK]`, req);
   } catch (e: any) {
     // Instance of
