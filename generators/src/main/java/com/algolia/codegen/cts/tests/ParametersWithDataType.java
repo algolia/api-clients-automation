@@ -145,7 +145,7 @@ public class ParametersWithDataType {
     }
 
     testOutput.put("key", paramName);
-    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]+$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
