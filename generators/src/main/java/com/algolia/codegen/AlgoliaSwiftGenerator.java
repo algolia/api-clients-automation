@@ -7,7 +7,7 @@ import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
-import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.ComposedSchema;
@@ -190,19 +190,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(USE_BACKTICK_ESCAPES, true);
     additionalProperties.put("hashableModels", true);
 
-    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
-    additionalProperties.put(
-      "lambda.client-to-name",
-      (Mustache.Lambda) (fragment, writer) -> writer.write(getClientName(fragment.execute()))
-    );
-    additionalProperties.put(
-      "lambda.to-codable",
-      (Mustache.Lambda) (fragment, writer) -> {
-        String initialType = fragment.execute();
-        writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "Codable" : initialType);
-      }
-    );
-
     super.processOpts();
 
     supportingFiles.add(
@@ -289,8 +276,18 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   }
 
   @Override
-  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
+  protected ImmutableMap.Builder<String, Lambda> addMustacheLambdas() {
+    ImmutableMap.Builder<String, Lambda> lambdas = super.addMustacheLambdas();
+
+    lambdas.put("toSeconds", new ToSecondsLambda());
+    lambdas.put("type-to-name", (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    lambdas.put("client-to-name", (fragment, writer) -> writer.write(getClientName(fragment.execute())));
+    lambdas.put("to-codable", (fragment, writer) -> {
+      String initialType = fragment.execute();
+      writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "Codable" : initialType);
+    });
+
+    return lambdas;
   }
 
   @Override

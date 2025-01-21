@@ -2012,9 +2012,9 @@
       "default": "response = client.batch_assign_user_ids(\n  \"userID\",\n  Algolia::Search::BatchAssignUserIdsParams.new(cluster: \"theCluster\", users: [\"user1\", \"user2\"])\n)"
     },
     "batchDictionaryEntries": {
-      "replace": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: Algolia::Search::DictionaryEntry.new(\n          object_id: \"1\",\n          language: \"en\",\n          word: \"fancy\",\n          words: [\"believe\", \"algolia\"],\n          decomposition: [\"trust\", \"algolia\"],\n          state: \"enabled\"\n        )\n      )\n    ]\n  )\n)",
-      "delete": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"deleteEntry\",\n        body: Algolia::Search::DictionaryEntry.new(object_id: \"1\")\n      )\n    ]\n  )\n)",
-      "append": "response = client.batch_dictionary_entries(\n  \"stopwords\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: Algolia::Search::DictionaryEntry.new(object_id: \"1\", language: \"en\", additional: \"try me\")\n      )\n    ]\n  )\n)"
+      "replace": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: Algolia::Search::DictionaryEntry.new(\n          algolia_object_id: \"1\",\n          language: \"en\",\n          word: \"fancy\",\n          words: [\"believe\", \"algolia\"],\n          decomposition: [\"trust\", \"algolia\"],\n          state: \"enabled\"\n        )\n      )\n    ]\n  )\n)",
+      "delete": "response = client.batch_dictionary_entries(\n  \"plurals\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    clear_existing_dictionary_entries: true,\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"deleteEntry\",\n        body: Algolia::Search::DictionaryEntry.new(algolia_object_id: \"1\")\n      )\n    ]\n  )\n)",
+      "append": "response = client.batch_dictionary_entries(\n  \"stopwords\",\n  Algolia::Search::BatchDictionaryEntriesParams.new(\n    requests: [\n      Algolia::Search::BatchDictionaryEntriesRequest.new(\n        action: \"addEntry\",\n        body: Algolia::Search::DictionaryEntry.new(algolia_object_id: \"1\", language: \"en\", additional: \"try me\")\n      )\n    ]\n  )\n)"
     },
     "browse": {
       "default": "response = client.browse(\"<YOUR_INDEX_NAME>\")"
@@ -2087,7 +2087,7 @@
       "default": "response = client.get_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\", [\"attr1\", \"attr2\"])"
     },
     "getObjects": {
-      "default": "response = client.get_objects(\n  Algolia::Search::GetObjectsParams.new(\n    requests: [\n      Algolia::Search::GetObjectsRequest.new(\n        attributes_to_retrieve: [\"attr1\", \"attr2\"],\n        object_id: \"uniqueID\",\n        index_name: \"<YOUR_INDEX_NAME>\"\n      )\n    ]\n  )\n)"
+      "default": "response = client.get_objects(\n  Algolia::Search::GetObjectsParams.new(\n    requests: [\n      Algolia::Search::GetObjectsRequest.new(\n        attributes_to_retrieve: [\"attr1\", \"attr2\"],\n        algolia_object_id: \"uniqueID\",\n        index_name: \"<YOUR_INDEX_NAME>\"\n      )\n    ]\n  )\n)"
     },
     "getRule": {
       "default": "response = client.get_rule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\")"
@@ -2167,16 +2167,16 @@
       "saveObjects should report errors": "response = client.save_objects(\n  \"<YOUR_INDEX_NAME>\",\n  [{objectID: \"1\", name: \"Adam\"}, {objectID: \"2\", name: \"Benoit\"}]\n)"
     },
     "saveRule": {
-      "default": "response = client.save_rule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Algolia::Search::Rule.new(\n    object_id: \"id1\",\n    conditions: [Algolia::Search::Condition.new(pattern: \"apple\", anchoring: \"contains\")],\n    consequence: Algolia::Search::Consequence.new(\n      params: Algolia::Search::ConsequenceParams.new(filters: \"brand:xiaomi\")\n    )\n  )\n)"
+      "default": "response = client.save_rule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Algolia::Search::Rule.new(\n    algolia_object_id: \"id1\",\n    conditions: [Algolia::Search::Condition.new(pattern: \"apple\", anchoring: \"contains\")],\n    consequence: Algolia::Search::Consequence.new(\n      params: Algolia::Search::ConsequenceParams.new(filters: \"brand:xiaomi\")\n    )\n  )\n)"
     },
     "saveRules": {
-      "default": "response = client.save_rules(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    Algolia::Search::Rule.new(\n      object_id: \"a-rule-id\",\n      conditions: [Algolia::Search::Condition.new(pattern: \"smartphone\", anchoring: \"contains\")],\n      consequence: Algolia::Search::Consequence.new(\n        params: Algolia::Search::ConsequenceParams.new(filters: \"brand:apple\")\n      )\n    ),\n    Algolia::Search::Rule.new(\n      object_id: \"a-second-rule-id\",\n      conditions: [Algolia::Search::Condition.new(pattern: \"apple\", anchoring: \"contains\")],\n      consequence: Algolia::Search::Consequence.new(\n        params: Algolia::Search::ConsequenceParams.new(filters: \"brand:samsung\")\n      )\n    )\n  ],\n  false,\n  true\n)"
+      "default": "response = client.save_rules(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    Algolia::Search::Rule.new(\n      algolia_object_id: \"a-rule-id\",\n      conditions: [Algolia::Search::Condition.new(pattern: \"smartphone\", anchoring: \"contains\")],\n      consequence: Algolia::Search::Consequence.new(\n        params: Algolia::Search::ConsequenceParams.new(filters: \"brand:apple\")\n      )\n    ),\n    Algolia::Search::Rule.new(\n      algolia_object_id: \"a-second-rule-id\",\n      conditions: [Algolia::Search::Condition.new(pattern: \"apple\", anchoring: \"contains\")],\n      consequence: Algolia::Search::Consequence.new(\n        params: Algolia::Search::ConsequenceParams.new(filters: \"brand:samsung\")\n      )\n    )\n  ],\n  false,\n  true\n)"
     },
     "saveSynonym": {
-      "default": "response = client.save_synonym(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Algolia::Search::SynonymHit.new(object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n  true\n)"
+      "default": "response = client.save_synonym(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  Algolia::Search::SynonymHit.new(algolia_object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n  true\n)"
     },
     "saveSynonyms": {
-      "default": "response = client.save_synonyms(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    Algolia::Search::SynonymHit.new(object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n    Algolia::Search::SynonymHit.new(\n      object_id: \"id2\",\n      type: \"onewaysynonym\",\n      input: \"iphone\",\n      synonyms: [\"ephone\", \"aphone\", \"yphone\"]\n    )\n  ],\n  true,\n  true\n)"
+      "default": "response = client.save_synonyms(\n  \"<YOUR_INDEX_NAME>\",\n  [\n    Algolia::Search::SynonymHit.new(algolia_object_id: \"id1\", type: \"synonym\", synonyms: [\"car\", \"vehicule\", \"auto\"]),\n    Algolia::Search::SynonymHit.new(\n      algolia_object_id: \"id2\",\n      type: \"onewaysynonym\",\n      input: \"iphone\",\n      synonyms: [\"ephone\", \"aphone\", \"yphone\"]\n    )\n  ],\n  true,\n  true\n)"
     },
     "search": {
       "withHitsPerPage": "response = client.search(\n  Algolia::Search::SearchMethodParams.new(\n    requests: [\n      Algolia::Search::SearchForHits.new(index_name: \"<YOUR_INDEX_NAME>\", query: \"<YOUR_QUERY>\", hits_per_page: 50)\n    ]\n  )\n)",

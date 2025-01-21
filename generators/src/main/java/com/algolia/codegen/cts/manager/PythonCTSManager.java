@@ -1,7 +1,9 @@
 package com.algolia.codegen.cts.manager;
 
+import com.algolia.codegen.cts.lambda.CodeIdentifierLambda;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.Helpers;
+import com.samskivert.mustache.Mustache.Lambda;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
@@ -38,5 +40,10 @@ public class PythonCTSManager implements CTSManager {
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("import", Helpers.toSnakeCase(this.client).toLowerCase());
+  }
+
+  @Override
+  public void addMustacheLambdas(Map<String, Lambda> lambdas) {
+    lambdas.put("codeIdentifier", new CodeIdentifierLambda(Helpers::toSnakeCase));
   }
 }

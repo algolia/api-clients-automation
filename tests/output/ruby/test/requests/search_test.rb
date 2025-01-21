@@ -259,7 +259,7 @@ class TestSearchClient < Test::Unit::TestCase
           Algolia::Search::BatchDictionaryEntriesRequest.new(
             action: "addEntry",
             body: Algolia::Search::DictionaryEntry.new(
-              object_id: "1",
+              algolia_object_id: "1",
               language: "en",
               word: "fancy",
               words: ["believe", "algolia"],
@@ -292,7 +292,7 @@ class TestSearchClient < Test::Unit::TestCase
         requests: [
           Algolia::Search::BatchDictionaryEntriesRequest.new(
             action: "deleteEntry",
-            body: Algolia::Search::DictionaryEntry.new(object_id: "1")
+            body: Algolia::Search::DictionaryEntry.new(algolia_object_id: "1")
           )
         ]
       )
@@ -318,7 +318,7 @@ class TestSearchClient < Test::Unit::TestCase
         requests: [
           Algolia::Search::BatchDictionaryEntriesRequest.new(
             action: "addEntry",
-            body: Algolia::Search::DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
+            body: Algolia::Search::DictionaryEntry.new(algolia_object_id: "1", language: "en", additional: "try me")
           )
         ]
       )
@@ -876,7 +876,7 @@ class TestSearchClient < Test::Unit::TestCase
         requests: [
           Algolia::Search::GetObjectsRequest.new(
             attributes_to_retrieve: ["attr1", "attr2"],
-            object_id: "uniqueID",
+            algolia_object_id: "uniqueID",
             index_name: "theIndexName"
           )
         ]
@@ -1269,7 +1269,7 @@ class TestSearchClient < Test::Unit::TestCase
       "indexName",
       "id1",
       Algolia::Search::Rule.new(
-        object_id: "id1",
+        algolia_object_id: "id1",
         conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
         consequence: Algolia::Search::Consequence.new(
           params: Algolia::Search::ConsequenceParams.new(filters: "brand:xiaomi")
@@ -1295,7 +1295,7 @@ class TestSearchClient < Test::Unit::TestCase
       "indexName",
       "id1",
       Algolia::Search::Rule.new(
-        object_id: "id1",
+        algolia_object_id: "id1",
         conditions: [
           Algolia::Search::Condition.new(
             pattern: "apple",
@@ -1315,11 +1315,11 @@ class TestSearchClient < Test::Unit::TestCase
               ]
             )
           ),
-          hide: [Algolia::Search::ConsequenceHide.new(object_id: "321")],
+          hide: [Algolia::Search::ConsequenceHide.new(algolia_object_id: "321")],
           filter_promotes: false,
           user_data: {:"algolia" => "aloglia"},
           promote: [
-            Algolia::Search::PromoteObjectID.new(object_id: "abc", position: 3),
+            Algolia::Search::PromoteObjectID.new(algolia_object_id: "abc", position: 3),
             Algolia::Search::PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)
           ]
         ),
@@ -1348,14 +1348,14 @@ class TestSearchClient < Test::Unit::TestCase
       "<YOUR_INDEX_NAME>",
       [
         Algolia::Search::Rule.new(
-          object_id: "a-rule-id",
+          algolia_object_id: "a-rule-id",
           conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
           consequence: Algolia::Search::Consequence.new(
             params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
           )
         ),
         Algolia::Search::Rule.new(
-          object_id: "a-second-rule-id",
+          algolia_object_id: "a-second-rule-id",
           conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
           consequence: Algolia::Search::Consequence.new(
             params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
@@ -1384,7 +1384,7 @@ class TestSearchClient < Test::Unit::TestCase
       "<YOUR_INDEX_NAME>",
       [
         Algolia::Search::Rule.new(
-          object_id: "id1",
+          algolia_object_id: "id1",
           conditions: [
             Algolia::Search::Condition.new(
               pattern: "apple",
@@ -1404,11 +1404,11 @@ class TestSearchClient < Test::Unit::TestCase
                 ]
               )
             ),
-            hide: [Algolia::Search::ConsequenceHide.new(object_id: "321")],
+            hide: [Algolia::Search::ConsequenceHide.new(algolia_object_id: "321")],
             filter_promotes: false,
             user_data: {:"algolia" => "aloglia"},
             promote: [
-              Algolia::Search::PromoteObjectID.new(object_id: "abc", position: 3),
+              Algolia::Search::PromoteObjectID.new(algolia_object_id: "abc", position: 3),
               Algolia::Search::PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)
             ]
           ),
@@ -1438,7 +1438,7 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_synonym_with_http_info(
       "indexName",
       "id1",
-      Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+      Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
       true
     )
 
@@ -1457,9 +1457,13 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.save_synonyms_with_http_info(
       "<YOUR_INDEX_NAME>",
       [
-        Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
         Algolia::Search::SynonymHit.new(
-          object_id: "id2",
+          algolia_object_id: "id1",
+          type: "synonym",
+          synonyms: ["car", "vehicule", "auto"]
+        ),
+        Algolia::Search::SynonymHit.new(
+          algolia_object_id: "id2",
           type: "onewaysynonym",
           input: "iphone",
           synonyms: ["ephone", "aphone", "yphone"]

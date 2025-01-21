@@ -310,7 +310,7 @@ def snippet_for_batch_dictionary_entries
         Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "addEntry",
           body: Algolia::Search::DictionaryEntry.new(
-            object_id: "1",
+            algolia_object_id: "1",
             language: "en",
             word: "fancy",
             words: ["believe", "algolia"],
@@ -347,7 +347,7 @@ def snippet_for_batch_dictionary_entries1
       requests: [
         Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "deleteEntry",
-          body: Algolia::Search::DictionaryEntry.new(object_id: "1")
+          body: Algolia::Search::DictionaryEntry.new(algolia_object_id: "1")
         )
       ]
     )
@@ -377,7 +377,7 @@ def snippet_for_batch_dictionary_entries2
       requests: [
         Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "addEntry",
-          body: Algolia::Search::DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
+          body: Algolia::Search::DictionaryEntry.new(algolia_object_id: "1", language: "en", additional: "try me")
         )
       ]
     )
@@ -906,7 +906,7 @@ def snippet_for_get_objects
       requests: [
         Algolia::Search::GetObjectsRequest.new(
           attributes_to_retrieve: ["attr1", "attr2"],
-          object_id: "uniqueID",
+          algolia_object_id: "uniqueID",
           index_name: "<YOUR_INDEX_NAME>"
         )
       ]
@@ -1615,7 +1615,7 @@ def snippet_for_save_rule
     "<YOUR_INDEX_NAME>",
     "id1",
     Algolia::Search::Rule.new(
-      object_id: "id1",
+      algolia_object_id: "id1",
       conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
       consequence: Algolia::Search::Consequence.new(
         params: Algolia::Search::ConsequenceParams.new(filters: "brand:xiaomi")
@@ -1645,14 +1645,14 @@ def snippet_for_save_rules
     "<YOUR_INDEX_NAME>",
     [
       Algolia::Search::Rule.new(
-        object_id: "a-rule-id",
+        algolia_object_id: "a-rule-id",
         conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
         consequence: Algolia::Search::Consequence.new(
           params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
         )
       ),
       Algolia::Search::Rule.new(
-        object_id: "a-second-rule-id",
+        algolia_object_id: "a-second-rule-id",
         conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
         consequence: Algolia::Search::Consequence.new(
           params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
@@ -1684,7 +1684,7 @@ def snippet_for_save_synonym
   response = client.save_synonym(
     "<YOUR_INDEX_NAME>",
     "id1",
-    Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+    Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
     true
   )
 
@@ -1709,9 +1709,9 @@ def snippet_for_save_synonyms
   response = client.save_synonyms(
     "<YOUR_INDEX_NAME>",
     [
-      Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+      Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
       Algolia::Search::SynonymHit.new(
-        object_id: "id2",
+        algolia_object_id: "id2",
         type: "onewaysynonym",
         input: "iphone",
         synonyms: ["ephone", "aphone", "yphone"]

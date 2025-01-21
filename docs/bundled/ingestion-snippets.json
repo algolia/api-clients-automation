@@ -1387,7 +1387,7 @@
       "default": "response = client.list_transformations"
     },
     "pushTask": {
-      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      Algolia::Ingestion::PushTaskRecords.new(key: \"bar\", foo: \"1\", object_id: \"o\"),\n      Algolia::Ingestion::PushTaskRecords.new(key: \"baz\", foo: \"2\", object_id: \"k\")\n    ]\n  )\n)"
+      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      Algolia::Ingestion::PushTaskRecords.new(key: \"bar\", foo: \"1\", algolia_object_id: \"o\"),\n      Algolia::Ingestion::PushTaskRecords.new(key: \"baz\", foo: \"2\", algolia_object_id: \"k\")\n    ]\n  )\n)"
     },
     "runSource": {
       "default": "response = client.run_source(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::RunSourcePayload.new(\n    index_to_include: [\"products_us\", \"products eu\"],\n    entity_ids: [\"1234\", \"5678\"],\n    entity_type: \"product\"\n  )\n)"

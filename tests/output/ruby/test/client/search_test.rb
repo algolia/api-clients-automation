@@ -428,7 +428,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
-        "Parameter `object_id` is required when calling `add_or_update_object`.".sub(
+        "Parameter `algolia_object_id` is required when calling `add_or_update_object`.".sub(
           "%localhost%",
           ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
         ),
