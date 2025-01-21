@@ -334,8 +334,8 @@ jobs:
           language: ${{ matrix.client.language }}
           version: ${{ matrix.client.version }}
 
-      # - name: Generate clients
-      #   run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+      - name: Generate clients
+        run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       # no need to build the clients here, it will be done in the Run CTS step anyway.
 
