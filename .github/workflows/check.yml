@@ -200,11 +200,11 @@ jobs:
         with:
           type: specs
 
-      # - name: Remove generated clients
-      #   if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
-      #   run: |
-      #     cd clients/algoliasearch-client-javascript/packages
-      #     find . -mindepth 1 -maxdepth 1 ! -name 'requester-*' ! -name 'logger-*' ! -name 'client-common' -type d -exec rm -rf {}/src {}/model {}/dist {}/builds \;
+      - name: Remove generated clients
+        if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
+        run: |
+          cd clients/algoliasearch-client-javascript/packages
+          find . -mindepth 1 -maxdepth 1 ! -name 'requester-*' ! -name 'logger-*' ! -name 'client-common' -type d -exec rm -rf {}/src {}/model {}/dist {}/builds \;
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -212,8 +212,8 @@ jobs:
           language: javascript
           version: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version }}
 
-      # - name: Generate clients
-      #   run: yarn cli generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+      - name: Generate clients
+        run: yarn cli generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
       - name: Update `yarn.lock` for JavaScript
         run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
