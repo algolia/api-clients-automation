@@ -96,8 +96,20 @@
   },
   {
     "testName": "saveObjectsPlaylist",
-    "autoCreateClient": true,
+    "autoCreateClient": false,
     "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6686
+            }
+          ]
+        }
+      },
       {
         "type": "method",
         "method": "saveObjects",
