@@ -1,7 +1,9 @@
 package com.algolia.codegen.cts.manager;
 
+import com.algolia.codegen.cts.lambda.CSharpIdentifierLambda;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
+import com.samskivert.mustache.Mustache.Lambda;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
@@ -41,5 +43,10 @@ public class CSharpCTSManager implements CTSManager {
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("packageVersion", getVersion());
+  }
+
+  @Override
+  public void addMustacheLambdas(Map<String, Lambda> lambdas) {
+    lambdas.put("identifier", new CSharpIdentifierLambda());
   }
 }
