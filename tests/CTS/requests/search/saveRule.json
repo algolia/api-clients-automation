@@ -904,7 +904,8 @@
             }
           }
         }
-      },
+      }
+    },
       "request": {
         "path": "/1/indexes/indexName/rules/diet-rule",
         "method": "PUT",
@@ -929,7 +930,6 @@
           }
         }
       }
-    }
   },
   {
     "testName": "conditionless",
@@ -952,7 +952,8 @@
             }
           }
         }
-      },
+      }
+    },
       "request": {
         "path": "/1/indexes/indexName/rules/diet-rule",
         "method": "PUT",
@@ -973,6 +974,5 @@
           }
         }
       }
-    }
   }
 ]
