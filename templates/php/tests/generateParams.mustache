@@ -6,7 +6,7 @@
   {{{value}}}
 {{/isVerbatim}}
 {{#isString}}
-  "{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}",
+  "{{#lambda.escapeQuotes}}{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}{{/lambda.escapeQuotes}}",
 {{/isString}}
 {{#isEnum}}
   "{{{value}}}",
