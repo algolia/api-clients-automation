@@ -274,6 +274,7 @@
         ],
         "consequence": {
           "params": {
+            "restrictSearchableAttributes": ["title", "book_id"],
             "automaticFacetFilters": [{
               "facet":"director"
             }],
@@ -282,8 +283,7 @@
                 "type": "remove",
                 "delete": "director"
               }]
-            },
-            "restrictSearchableAttributes": ["title", "book_id"]
+            }
           }
         }
       }
