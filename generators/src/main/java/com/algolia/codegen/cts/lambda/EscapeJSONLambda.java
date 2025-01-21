@@ -5,11 +5,11 @@ import com.samskivert.mustache.Template;
 import java.io.IOException;
 import java.io.Writer;
 
-public class EscapeEscapedQuotesLambda implements Mustache.Lambda {
+public class EscapeJSONLambda implements Mustache.Lambda {
 
   @Override
   public void execute(Template.Fragment fragment, Writer writer) throws IOException {
     String text = fragment.execute();
-    writer.write(text.replace("\\\"", "\\\\\\\""));
+    writer.write(text.replace("\\", "\\\\").replace("\"", "\\\""));
   }
 }

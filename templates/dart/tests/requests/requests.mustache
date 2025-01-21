@@ -53,7 +53,7 @@ void main() {
         expectParams(request.queryParameters, """{{{.}}}""");
         {{/queryParameters}}
         {{#body}}
-        expectBody(request.body, """{{{.}}}""");
+        expectBody(request.body, """{{#lambda.escapeSlash}}{{{.}}}{{/lambda.escapeSlash}}""");
         {{/body}}
         {{^body}}
         {{#assertNullBody}}

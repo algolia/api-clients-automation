@@ -59,6 +59,8 @@ public class TestsRequest extends TestsGenerator {
       return null;
     }
 
+    System.out.println(body);
+
     switch (language) {
       case "go": // jsonassert expect % to be formatted, we need to escape them
         return body.replace("%", "%%");

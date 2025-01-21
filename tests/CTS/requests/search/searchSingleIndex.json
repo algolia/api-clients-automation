@@ -291,11 +291,11 @@
       "indexName": "indexName",
       "searchParams": {
         "facetFilters": [
+          "publisher:Penguin",
           [
             "author:Stephen King",
             "genre:Horror"
-          ],
-          "publisher:Penguin"
+          ]
         ]
       }
     },
@@ -304,11 +304,11 @@
       "method": "POST",
       "body": {
         "facetFilters": [
+          "publisher:Penguin",
           [
             "author:Stephen King",
             "genre:Horror"
-          ],
-          "publisher:Penguin"
+          ]
         ]
       }
     }
