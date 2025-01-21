@@ -930,5 +930,49 @@
         }
       }
     }
+  },
+  {
+    "testName": "conditionless",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "diet-rule",
+      "rule": {
+        "objectID": "diet-rule",
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "request": {
+        "path": "/1/indexes/indexName/rules/diet-rule",
+        "method": "PUT",
+        "body": {
+          "objectID": "diet-rule",
+          "consequence": {
+            "params": {
+              "filters": "'low-carb' OR 'low-fat'",
+              "query": {
+                "edits": [
+                  {
+                    "type": "remove",
+                    "delete": "diet"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
   }
 ]
