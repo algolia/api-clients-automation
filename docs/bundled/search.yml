@@ -5627,7 +5627,7 @@ paths:
                 requests: [
                   Algolia::Search::GetObjectsRequest.new(
                     attributes_to_retrieve: ["attr1", "attr2"],
-                    object_id: "uniqueID",
+                    algolia_object_id: "uniqueID",
                     index_name: "<YOUR_INDEX_NAME>"
                   )
                 ]
@@ -6956,9 +6956,9 @@ paths:
             response = client.save_synonyms(
               "<YOUR_INDEX_NAME>",
               [
-                Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+                Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
                 Algolia::Search::SynonymHit.new(
-                  object_id: "id2",
+                  algolia_object_id: "id2",
                   type: "onewaysynonym",
                   input: "iphone",
                   synonyms: ["ephone", "aphone", "yphone"]
@@ -9477,14 +9477,14 @@ paths:
               "<YOUR_INDEX_NAME>",
               [
                 Algolia::Search::Rule.new(
-                  object_id: "a-rule-id",
+                  algolia_object_id: "a-rule-id",
                   conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
                   consequence: Algolia::Search::Consequence.new(
                     params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
                   )
                 ),
                 Algolia::Search::Rule.new(
-                  object_id: "a-second-rule-id",
+                  algolia_object_id: "a-second-rule-id",
                   conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
                   consequence: Algolia::Search::Consequence.new(
                     params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
@@ -10572,7 +10572,7 @@ paths:
                   Algolia::Search::BatchDictionaryEntriesRequest.new(
                     action: "addEntry",
                     body: Algolia::Search::DictionaryEntry.new(
-                      object_id: "1",
+                      algolia_object_id: "1",
                       language: "en",
                       word: "fancy",
                       words: ["believe", "algolia"],

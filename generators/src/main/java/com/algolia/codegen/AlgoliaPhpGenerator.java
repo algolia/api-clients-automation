@@ -22,7 +22,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     return "algolia-php";
   }
 
-  public static String getClientName(String client) {
+  public String getClientName(String client) {
     return Helpers.createClientName(client, "php");
   }
 

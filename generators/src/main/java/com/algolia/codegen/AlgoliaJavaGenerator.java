@@ -3,7 +3,6 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
-import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -18,9 +17,6 @@ import org.openapitools.codegen.model.OperationsMap;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
-
-  // This is used for the CTS generation
-  private static final AlgoliaJavaGenerator INSTANCE = new AlgoliaJavaGenerator();
 
   @Override
   public String getName() {
@@ -157,7 +153,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   protected Builder<String, Lambda> addMustacheLambdas() {
     Builder<String, Lambda> lambdas = super.addMustacheLambdas();
 
-    lambdas.put("type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    lambdas.put("type-to-name", (fragment, writer) -> writer.write(typeToName(fragment.execute())));
 
     return lambdas;
   }

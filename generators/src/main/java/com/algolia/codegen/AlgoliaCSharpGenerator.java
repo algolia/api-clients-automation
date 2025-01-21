@@ -3,7 +3,6 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap.Builder;
-import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -23,7 +22,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     return "algolia-csharp";
   }
 
-  public static String getClientName(String client) {
+  public String getClientName(String client) {
     return Helpers.createClientName(client, "csharp");
   }
 
@@ -50,11 +49,6 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     additionalProperties.put("equatable", false);
     additionalProperties.put("disallowAdditionalPropertiesIfNotPresent", true);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
-
-    additionalProperties.put(
-      "lambda.escape-generic",
-      (Mustache.Lambda) (fragment, writer) -> writer.write(escapeGenericForDoc(fragment.execute()))
-    );
 
     setApiNameSuffix(Helpers.API_SUFFIX);
 
@@ -175,7 +169,8 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   protected Builder<String, Lambda> addMustacheLambdas() {
     Builder<String, Lambda> lambdas = super.addMustacheLambdas();
 
-    lambdas.put("type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    lambdas.put("type-to-name", (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    lambdas.put("escape-generic", (fragment, writer) -> writer.write(escapeGenericForDoc(fragment.execute())));
 
     return lambdas;
   }
