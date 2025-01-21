@@ -343,7 +343,6 @@
     "clients": [
       "abtesting",
       "analytics",
-      "composition",
       "ingestion",
       "insights",
       "monitoring",

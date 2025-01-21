@@ -153,7 +153,7 @@ public class GenericPropagator {
       // modelContainers always have 1 and only 1 model in our specs
       CodegenModel model = modelMap.getModels().get(0).getModel();
       String modelName = model.name;
-      if (language.equals("swift") && !client.equals("search")) {
+      if (language.equals("swift")) {
         modelName = AlgoliaSwiftGenerator.prefixReservedModelName(modelName, client);
       }
       modelsMap.put(modelName, model);
@@ -166,7 +166,7 @@ public class GenericPropagator {
     for (ModelMap modelMap : models) {
       CodegenModel model = modelMap.getModel();
       String modelName = model.name;
-      if (language.equals("swift") && !client.equals("search")) {
+      if (language.equals("swift")) {
         modelName = AlgoliaSwiftGenerator.prefixReservedModelName(modelName, client);
       }
       modelsMap.put(modelName, model);
