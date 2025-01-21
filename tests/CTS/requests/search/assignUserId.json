@@ -14,7 +14,7 @@
         "cluster": "d4242-eu"
       },
       "headers": {
-        "x-algolia-user-id": "d4242-eu"
+        "x-algolia-user-id": "user42"
       }
     }
   },
