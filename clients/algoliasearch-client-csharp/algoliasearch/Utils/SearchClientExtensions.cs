@@ -184,9 +184,9 @@ public partial interface ISearchClient
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <typeparam name="T"></typeparam>
-  List<BatchResponse> SaveObjectsAsync<T>(string indexName, IEnumerable<T> objects, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class;
+  Task<List<BatchResponse>> SaveObjectsAsync<T>(string indexName, IEnumerable<T> objects, RequestOptions options, CancellationToken cancellationToken = default) where T : class;
   /// <inheritdoc cref="SaveObjectsAsync{T}(string, IEnumerable{T}, RequestOptions, CancellationToken)"/>
-  List<BatchResponse> SaveObjects<T>(string indexName, IEnumerable<T> objects, RequestOptions options = null, CancellationToken cancellationToken = default) where T : class;
+  List<BatchResponse> SaveObjects<T>(string indexName, IEnumerable<T> objects, RequestOptions options, CancellationToken cancellationToken = default) where T : class;
 
   /// <summary>
   /// Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
@@ -609,17 +609,17 @@ public partial class SearchClient : ISearchClient
   public List<BatchResponse> SaveObjects<T>(string indexName, IEnumerable<T> objects, bool waitForTasks = false, int batchSize = 1000, RequestOptions options = null,
     CancellationToken cancellationToken = default) where T : class =>
     AsyncHelper.RunSync(() => SaveObjectsAsync(indexName, objects, waitForTasks, batchSize, options, cancellationToken));
-  
+
   /// <inheritdoc/>
   public async Task<List<BatchResponse>> SaveObjectsAsync<T>(string indexName, IEnumerable<T> objects,
-    RequestOptions options = null,
+    RequestOptions options,
     CancellationToken cancellationToken = default) where T : class
   {
-    return await ChunkedBatchAsync(indexName, objects, Action.AddObject, false, 1000, options, cancellationToken).ConfigureAwait(false);
+    return await SaveObjectsAsync(indexName, objects, false, 1000, options, cancellationToken).ConfigureAwait(false);
   }
 
   /// <inheritdoc/>
-  public List<BatchResponse> SaveObjects<T>(string indexName, IEnumerable<T> objects, RequestOptions options = null,
+  public List<BatchResponse> SaveObjects<T>(string indexName, IEnumerable<T> objects, RequestOptions options,
     CancellationToken cancellationToken = default) where T : class =>
     AsyncHelper.RunSync(() => SaveObjectsAsync(indexName, objects, options, cancellationToken));
 
