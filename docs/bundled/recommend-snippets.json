@@ -356,7 +356,7 @@
       "default": "response = client.get_recommend_status(\"<YOUR_INDEX_NAME>\", \"related-products\", 12345)"
     },
     "getRecommendations": {
-      "default": "response = client.get_recommendations(\n  Algolia::Recommend::GetRecommendationsParams.new(\n    requests: [\n      Algolia::Recommend::RelatedQuery.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        object_id: \"objectID\",\n        model: \"related-products\",\n        threshold: 42.1\n      )\n    ]\n  )\n)"
+      "default": "response = client.get_recommendations(\n  Algolia::Recommend::GetRecommendationsParams.new(\n    requests: [\n      Algolia::Recommend::RelatedQuery.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        algolia_object_id: \"objectID\",\n        model: \"related-products\",\n        threshold: 42.1\n      )\n    ]\n  )\n)"
     },
     "searchRecommendRules": {
       "default": "response = client.search_recommend_rules(\"<YOUR_INDEX_NAME>\", \"related-products\")"

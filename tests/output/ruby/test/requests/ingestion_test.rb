@@ -926,8 +926,8 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::PushTaskPayload.new(
         action: "addObject",
         records: [
-          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
         ]
       )
     )
@@ -951,8 +951,8 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::PushTaskPayload.new(
         action: "addObject",
         records: [
-          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
         ]
       ),
       true
