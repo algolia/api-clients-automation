@@ -826,5 +826,109 @@
         }
       }
     }
+  },
+  {
+    "testName": "negative filters",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "gluten-free-rule",
+      "rule": {
+        "objectID": "gluten-free-rule",
+        "conditions": [{
+          "pattern": "gluten-free",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "NOT allergens:gluten",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "gluten-free"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/gluten-free-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "gluten-free-rule",
+        "conditions": [{
+          "pattern": "gluten-free",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "NOT allergens:gluten",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "gluten-free"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "positive filters",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "diet-rule",
+      "rule": {
+        "objectID": "diet-rule",
+        "conditions": [{
+          "pattern": "diet",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "request": {
+        "path": "/1/indexes/indexName/rules/diet-rule",
+        "method": "PUT",
+        "body": {
+          "objectID": "diet-rule",
+          "conditions": [{
+            "pattern": "diet",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "filters": "'low-carb' OR 'low-fat'",
+              "query": {
+                "edits": [
+                  {
+                    "type": "remove",
+                    "delete": "diet"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
   }
 ]
