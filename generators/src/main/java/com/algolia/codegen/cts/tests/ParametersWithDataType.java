@@ -492,11 +492,16 @@ public class ParametersWithDataType {
   }
 
   private String getTypeName(IJsonSchemaValidationProperties param) {
+    String typeName = param.getDataType();
     if (param instanceof CodegenModel parameter) {
-      return parameter.classname;
+      typeName = parameter.classname;
     }
 
-    return param.getDataType();
+    if (language.equals("scala") && typeName.equals("List")) {
+      typeName = "Seq";
+    }
+
+    return typeName;
   }
 
   private boolean isString(IJsonSchemaValidationProperties param) {
