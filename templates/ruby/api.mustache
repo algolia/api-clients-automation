@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # {{{generationBanner}}}
 
 {{#isSearchClient}}
@@ -47,7 +49,7 @@ module {{moduleName}}
       raise "`region` must be one of the following: #{regions.join(', ')}" if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
       {{/fallbackToAliasHost}}
 
-      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? '{{{hostWithFallback}}}' : {{/fallbackToAliasHost}} '{{{regionalHost}}}'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      hosts << Transport::StatefulHost.new({{#fallbackToAliasHost}}region.nil? ? '{{{hostWithFallback}}}' : {{/fallbackToAliasHost}} '{{{regionalHost}}}'.sub('{region}', region), accept: CallType::READ | CallType::WRITE)
       {{/hasRegionalHost}}
       {{#hostWithAppID}}
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)

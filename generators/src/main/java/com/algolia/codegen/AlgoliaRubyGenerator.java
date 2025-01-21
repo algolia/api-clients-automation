@@ -43,6 +43,9 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
 
+    reservedWords.add("object_id");
+    reservedWordsMappings.put("object_id", "algolia_object_id");
+
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
     // Remove some files we don't want to output or change their paths

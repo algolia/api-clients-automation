@@ -1,7 +1,7 @@
 {{{objectName}}}(
 {{#value}}
 {{^isAdditionalProperty}}
-{{#lambda.scalaIdentifier}}{{&key}}{{/lambda.scalaIdentifier}} = {{> tests/param_optional}},
+{{#lambda.identifier}}{{key}}{{/lambda.identifier}} = {{> tests/param_optional}},
 {{/isAdditionalProperty}}
 {{/value}}
 {{#hasAdditionalProperties}}

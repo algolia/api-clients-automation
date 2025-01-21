@@ -101,12 +101,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeQuotes", new EscapeQuotesLambda());
     lambdas.put("escapeSlash", new EscapeSlashLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
-    lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
-    lambdas.put("csharpIdentifier", new CSharpIdentifierLambda());
-    lambdas.put("javaEnum", new JavaEnumLambda());
-    lambdas.put("codeSnakeCase", new CodeSnakeCaseLambda());
-    lambdas.put("escapeRubyKeywords", new EscapeRubyKeywordsLambda());
-    lambdas.put("swiftIdentifier", new SwiftIdentifierLambda());
+
     return lambdas;
   }
 
@@ -115,7 +110,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     try {
       Map<String, CodegenOperation> operations = buildOperations(objs);
 
-      Object lambda = objs.get("lambda");
+      Map<String, Lambda> lambda = new HashMap<>((Map<String, Lambda>) objs.get("lambda"));
       List<CodegenServer> servers = (List<CodegenServer>) objs.get("servers");
       CodegenServerVariable regionVariable = null;
       outerLoop: for (CodegenServer server : servers) {
@@ -163,6 +158,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       if (new File("tests/CTS/guides/" + client + ".json").exists()) {
         bundle.put("dynamicSnippet", new DynamicSnippetLambda(this, models, operations, language, client));
       }
+      // restore the lambda from the original bundle
+      ctsManager.addMustacheLambdas(lambda);
       bundle.put("lambda", lambda);
 
       String languageVersion = ctsManager.getLanguageVersion((String) additionalProperties.getOrDefault("languageVersion", ""));
