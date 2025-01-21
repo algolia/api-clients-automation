@@ -54,8 +54,7 @@ public class GenericPropagator {
     }
     return (
       (boolean) vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-      (boolean) vendorExtensions.getOrDefault("x-has-child-generic", false) ||
-      (boolean) vendorExtensions.getOrDefault("x-is-generic", false)
+      (boolean) vendorExtensions.getOrDefault("x-has-child-generic", false)
     );
   }
 
@@ -80,13 +79,16 @@ public class GenericPropagator {
     }
     // if items itself isn't generic, we recurse on its items and properties until we reach the
     // end or find a generic property
-    if (items != null && (hasGeneric(items) || markPropagatedGeneric(items, getVar, skipOneOf))) {
+    if (
+      items != null &&
+      ((boolean) items.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(items, getVar, skipOneOf))
+    ) {
       setPropagatedGeneric(model);
       return true;
     }
     for (CodegenProperty variable : getVar.apply(model)) {
       // same thing for the variable, if it's not a generic, we recurse on it until we find one
-      if (hasGeneric(items) || markPropagatedGeneric(variable, getVar, skipOneOf)) {
+      if ((boolean) variable.vendorExtensions.getOrDefault("x-is-generic", false) || markPropagatedGeneric(variable, getVar, skipOneOf)) {
         setPropagatedGeneric(model);
         return true;
       }
@@ -130,8 +132,7 @@ public class GenericPropagator {
       return;
     }
     for (CodegenProperty prop : composedSchemas) {
-      if (hasGeneric(prop) || hasGeneric(propertyToModel(models, prop))) {
-        setHasChildGeneric(model);
+      if (hasGeneric(propertyToModel(models, prop))) {
         setHasChildGeneric(prop);
       }
     }
@@ -208,7 +209,7 @@ public class GenericPropagator {
   }
 
   public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap, boolean skipOneOf) {
-    propagateGenericsToModels("dontcare", "dontcare", modelsMap, false);
+    propagateGenericsToModels("dontcare", "dontcare", modelsMap, skipOneOf);
   }
 
   public static void propagateGenericsToModels(String language, String client, Map<String, ModelsMap> modelsMap) {
