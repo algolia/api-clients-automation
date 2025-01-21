@@ -326,7 +326,7 @@ public class ParametersWithDataType {
       } else {
         while (current.getItems() != null) {
           current = current.getItems();
-          typeName += "Of" + getTypeName(current);
+          typeName += "Of" + Helpers.capitalize(getTypeName(current));
           isList = true;
         }
       }
