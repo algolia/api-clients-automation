@@ -263,7 +263,7 @@
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "filters": "author:\\\"Stephen King\\\""
+        "filters": "author:\"Stephen King\""
       }
     }
   },
@@ -346,7 +346,7 @@
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "filters": "(author:\\\"Stephen King\\\" OR genre:\\\"Horror\\\")",
+        "filters": "(author:\"Stephen King\" OR genre:\"Horror\")",
         "facetFilters": [
           "publisher:Penguin"
         ]
