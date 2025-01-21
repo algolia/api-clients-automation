@@ -99,6 +99,7 @@
   },
   {
     "testName": "with visible_by filter",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",

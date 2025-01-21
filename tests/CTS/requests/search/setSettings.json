@@ -107,7 +107,8 @@
     }
   },
   {
-    "testName": "removeStopWords",
+    "testName": "removeStopWords boolean",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -127,7 +128,8 @@
     }
   },
   {
-    "testName": "removeStopWords",
+    "testName": "removeStopWords list of string",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
