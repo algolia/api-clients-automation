@@ -71,6 +71,10 @@ func WithContext(ctx context.Context) requestOption {
 
 func WithHeaderParam(key string, value any) requestOption {
 	return requestOption(func(c *config) {
+    if c.headerParams == nil {
+      c.headerParams = map[string]string{}
+    }
+
 		c.headerParams[key] = utils.ParameterToString(value)
 	})
 }
