@@ -10,6 +10,7 @@ public class EscapeSlashLambda implements Mustache.Lambda {
   @Override
   public void execute(Template.Fragment fragment, Writer writer) throws IOException {
     String text = fragment.execute();
-    writer.write(text.replace("\\", "\\\\"));
+    // replace all backslashes with double backslashes, unless they are followed by a $
+    writer.write(text.replaceAll("\\\\(?!\\$)", "\\\\\\\\"));
   }
 }
