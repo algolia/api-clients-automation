@@ -100,6 +100,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeDollar", new EscapeDollarLambda());
     lambdas.put("escapeQuotes", new EscapeQuotesLambda());
     lambdas.put("escapeSlash", new EscapeSlashLambda());
+    lambdas.put("escapeJSON", new EscapeJSONLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
 
     return lambdas;

@@ -145,7 +145,7 @@ public class ParametersWithDataType {
     }
 
     testOutput.put("key", paramName);
-    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]+$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
@@ -191,7 +191,7 @@ public class ParametersWithDataType {
   private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int depth) throws CTSException {
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", paramName);
-    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]+$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     // try to infer the type
