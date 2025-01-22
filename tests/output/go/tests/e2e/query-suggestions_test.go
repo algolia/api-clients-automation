@@ -35,8 +35,7 @@ func TestSuggestionsE2E_GetConfig(t *testing.T) {
 	t.Run("Retrieve QS config e2e", func(t *testing.T) {
 		client := createE2ESuggestionsClient(t)
 		res, err := client.GetConfig(client.NewApiGetConfigRequest(
-			"cts_e2e_browse_query_suggestions",
-		))
+			"cts_e2e_browse_query_suggestions"))
 		require.NoError(t, err)
 		_ = res
 

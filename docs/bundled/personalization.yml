@@ -157,9 +157,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -387,9 +385,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -617,9 +613,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -842,9 +836,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1096,9 +1088,7 @@ paths:
 
             response, err :=
             client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(
-              "UserToken",
-            ))
-
+              "UserToken"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1348,9 +1338,7 @@ paths:
 
             response, err :=
             client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(
-              "UserToken",
-            ))
-
+              "UserToken"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1837,9 +1825,7 @@ paths:
 
               personalization.NewEmptyPersonalizationStrategyParams().SetEventsScoring(
                 []personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetsScoring(
-                []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
-            ))
-
+                []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42)))
             if err != nil {
               // handle the eventual error
               panic(err)

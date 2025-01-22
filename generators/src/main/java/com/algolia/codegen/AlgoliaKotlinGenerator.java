@@ -48,7 +48,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("auth"));
 
     // Search config
-    additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
 
     // We don't extend hashmap
     propertyAdditionalKeywords.clear();

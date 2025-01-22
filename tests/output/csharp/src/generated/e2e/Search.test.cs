@@ -409,8 +409,8 @@ public class SearchClientRequestTestsE2E
     }
   }
 
-  [Fact(DisplayName = "setSettings with minimal parameters")]
-  public async Task SetSettingsTest1()
+  [Fact(DisplayName = "minimal parameters")]
+  public async Task SetSettingsTest()
   {
     try
     {

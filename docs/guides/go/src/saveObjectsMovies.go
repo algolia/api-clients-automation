@@ -38,8 +38,7 @@ func saveObjectsMovies() {
 
 	// push data to algolia
 	result, err := client.SaveObjects(
-		"<YOUR_INDEX_NAME>", movies,
-	)
+		"<YOUR_INDEX_NAME>", movies)
 	if err != nil {
 		fmt.Println(err)
 		return

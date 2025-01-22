@@ -228,7 +228,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.12.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.13.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -270,7 +270,7 @@ public class SearchClientTests
     }
   }
 
-  [Fact(DisplayName = "generate secured api key basic")]
+  [Fact(DisplayName = "api key basic")]
   public async Task GenerateSecuredApiKeyTest0()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
@@ -291,7 +291,7 @@ public class SearchClientTests
     }
   }
 
-  [Fact(DisplayName = "generate secured api key with searchParams")]
+  [Fact(DisplayName = "with searchParams")]
   public async Task GenerateSecuredApiKeyTest1()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
@@ -320,6 +320,45 @@ public class SearchClientTests
       Assert.Equal(
         "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
         res
+      );
+    }
+  }
+
+  [Fact(DisplayName = "with filters")]
+  public async Task GenerateSecuredApiKeyTest2()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    {
+      var res = client.GenerateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions
+        {
+          Filters = "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
+        }
+      );
+    }
+  }
+
+  [Fact(DisplayName = "with visible_by filter")]
+  public async Task GenerateSecuredApiKeyTest3()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    {
+      var res = client.GenerateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions { Filters = "visible_by:group/Finance" }
+      );
+    }
+  }
+
+  [Fact(DisplayName = "with userID")]
+  public async Task GenerateSecuredApiKeyTest4()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    {
+      var res = client.GenerateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions { UserToken = "user42" }
       );
     }
   }
@@ -793,6 +832,89 @@ public class SearchClientTests
       "{\"message\":\"Invalid Application-ID or API key\",\"status\":403}".ToLowerInvariant(),
       _ex.Message.ToLowerInvariant()
     );
+  }
+
+  [Fact(DisplayName = "saveObjectsPlaylist")]
+  public async Task SaveObjectsTest2()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6686,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    {
+      var res = await client.SaveObjectsAsync(
+        "playlists",
+        new List<Object>
+        {
+          new Dictionary<string, string>
+          {
+            { "objectID", "1" },
+            { "visibility", "public" },
+            { "name", "Hot 100 Billboard Charts" },
+            { "playlistId", "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f" },
+            { "createdAt", "1500240452" },
+          },
+        }
+      );
+    }
+  }
+
+  [Fact(DisplayName = "saveObjectsPublicUser")]
+  public async Task SaveObjectsTest3()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6686,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    {
+      var res = await client.SaveObjectsAsync(
+        "playlists",
+        new List<Object>
+        {
+          new Dictionary<string, string>
+          {
+            { "objectID", "1" },
+            { "visibility", "public" },
+            { "name", "Hot 100 Billboard Charts" },
+            { "playlistId", "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f" },
+            { "createdAt", "1500240452" },
+          },
+        },
+        new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
+      );
+    }
   }
 
   [Fact(DisplayName = "switch API key")]

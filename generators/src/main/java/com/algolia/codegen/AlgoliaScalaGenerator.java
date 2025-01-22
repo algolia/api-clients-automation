@@ -3,7 +3,7 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
-import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -57,8 +57,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     additionalProperties.put(CodegenConstants.MODEL_PACKAGE, "algoliasearch." + packageName);
     additionalProperties.put(CodegenConstants.API_PACKAGE, "algoliasearch.api");
     additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, "algoliasearch");
-    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
-    additionalProperties.put("lambda.escape-path", (Mustache.Lambda) (fragment, writer) -> writer.write(escapePath(fragment.execute())));
+
     super.processOpts();
     setApiNameSuffix(Helpers.API_SUFFIX);
 
@@ -78,7 +77,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
-    additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     typeMapping.put("AnyType", "Any");
 
     nameMapping.putAll(NAME_MAPPING);
@@ -92,8 +91,13 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   @Override
-  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas();
+  protected ImmutableMap.Builder<String, Lambda> addMustacheLambdas() {
+    ImmutableMap.Builder<String, Lambda> lambdas = super.addMustacheLambdas();
+
+    lambdas.put("type-to-name", (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    lambdas.put("escape-path", (fragment, writer) -> writer.write(escapePath(fragment.execute())));
+
+    return lambdas;
   }
 
   /** Convert a Seq type to a valid class name. */

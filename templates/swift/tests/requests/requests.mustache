@@ -30,7 +30,7 @@ final class {{client}}RequestsTests: XCTestCase {
           let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
           let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-          let expectedBodyData = "{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
+          let expectedBodyData = "{{#lambda.escapeJSON}}{{{body}}}{{/lambda.escapeJSON}}".data(using: .utf8)
           let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
           XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

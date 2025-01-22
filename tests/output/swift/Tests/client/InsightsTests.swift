@@ -18,6 +18,7 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -36,10 +37,11 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.13.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.14.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -66,6 +68,7 @@ final class InsightsClientClientTests: XCTestCase {
                         timestamp: Int64(1_641_290_601_962)
                     )),
             ]))
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -82,6 +85,7 @@ final class InsightsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         let response = try await client.customDeleteWithHTTPInfo(path: "test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -121,6 +125,7 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         do {
             let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -129,10 +134,11 @@ final class InsightsClientClientTests: XCTestCase {
             XCTAssertEqual(comparableJSON, responseBodyJSON)
         }
         do {
-            try client.setClientApiKey(apiKey: "updated-api-key")
+            let _ = try client.setClientApiKey(apiKey: "updated-api-key")
         }
         do {
             let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 

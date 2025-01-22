@@ -49,40 +49,40 @@
       "default": "import suggestions \"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions\""
     },
     "createConfig": {
-      "default": "response, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
-      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteConfig": {
-      "default": "response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getAllConfigs": {
       "default": "response, err := client.GetAllConfigs()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getConfig": {
-      "default": "response, err := client.GetConfig(client.NewApiGetConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetConfig(client.NewApiGetConfigRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getConfigStatus": {
-      "default": "response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getLogFile": {
-      "default": "response, err := client.GetLogFile(client.NewApiGetLogFileRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetLogFile(client.NewApiGetLogFileRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateConfig": {
-      "default": "response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := suggestions.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"

@@ -7,7 +7,7 @@ import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.lambda.ToSecondsLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
-import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.ComposedSchema;
@@ -179,7 +179,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       System.exit(1);
     }
 
-    additionalProperties.put("isSearchClient", CLIENT.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
@@ -189,19 +189,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(OBJC_COMPATIBLE, false);
     additionalProperties.put(USE_BACKTICK_ESCAPES, true);
     additionalProperties.put("hashableModels", true);
-
-    additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
-    additionalProperties.put(
-      "lambda.client-to-name",
-      (Mustache.Lambda) (fragment, writer) -> writer.write(getClientName(fragment.execute()))
-    );
-    additionalProperties.put(
-      "lambda.to-codable",
-      (Mustache.Lambda) (fragment, writer) -> {
-        String initialType = fragment.execute();
-        writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "Codable" : initialType);
-      }
-    );
 
     super.processOpts();
 
@@ -289,8 +276,18 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   }
 
   @Override
-  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas().put("toSeconds", new ToSecondsLambda());
+  protected ImmutableMap.Builder<String, Lambda> addMustacheLambdas() {
+    ImmutableMap.Builder<String, Lambda> lambdas = super.addMustacheLambdas();
+
+    lambdas.put("toSeconds", new ToSecondsLambda());
+    lambdas.put("type-to-name", (fragment, writer) -> writer.write(typeToName(fragment.execute())));
+    lambdas.put("client-to-name", (fragment, writer) -> writer.write(getClientName(fragment.execute())));
+    lambdas.put("to-codable", (fragment, writer) -> {
+      String initialType = fragment.execute();
+      writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "Codable" : initialType);
+    });
+
+    return lambdas;
   }
 
   @Override
@@ -304,14 +301,14 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
     Helpers.removeHelpers(operations);
-    GenericPropagator.propagateGenericsToOperations(operations, models);
+    GenericPropagator.propagateGenericsToOperations("swift", CLIENT, operations, models);
     return operations;
   }
 
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    GenericPropagator.propagateGenericsToModels(models);
+    GenericPropagator.propagateGenericsToModels("swift", CLIENT, models);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
     return models;

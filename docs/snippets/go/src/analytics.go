@@ -23,8 +23,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -52,8 +51,7 @@ func SnippetForCustomGetOfAnalytics() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -81,8 +79,7 @@ func SnippetForCustomPostOfAnalytics() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -110,8 +107,7 @@ func SnippetForCustomPutOfAnalytics() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -139,8 +135,7 @@ func SnippetForGetAddToCartRateOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -168,8 +163,7 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -197,8 +191,7 @@ func SnippetForGetClickPositionsOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -226,8 +219,7 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -255,8 +247,7 @@ func SnippetForGetConversionRateOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -284,8 +275,7 @@ func SnippetForGetNoClickRateOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -313,8 +303,7 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -342,8 +331,7 @@ func SnippetForGetPurchaseRateOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -371,8 +359,7 @@ func SnippetForGetRevenueOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetRevenue(client.NewApiGetRevenueRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -400,8 +387,7 @@ func SnippetForGetSearchesCountOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -429,8 +415,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -458,8 +443,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -487,8 +471,7 @@ func SnippetForGetStatusOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetStatus(client.NewApiGetStatusRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -516,8 +499,7 @@ func SnippetForGetTopCountriesOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -545,8 +527,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -574,8 +555,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-		"myAttribute", "index",
-	))
+		"myAttribute", "index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -603,8 +583,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -632,8 +611,7 @@ func SnippetForGetTopHitsOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -661,8 +639,7 @@ func SnippetForGetTopSearchesOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -690,8 +667,7 @@ func SnippetForGetUsersCountOfAnalytics() {
 
 	// Call the API
 	response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
-		"index",
-	))
+		"index"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -719,8 +695,7 @@ func SnippetForSetClientApiKeyOfAnalytics() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)

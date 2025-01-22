@@ -178,7 +178,7 @@ def snippet_for_get_recommendations
       requests: [
         Algolia::Recommend::RelatedQuery.new(
           index_name: "<YOUR_INDEX_NAME>",
-          object_id: "objectID",
+          algolia_object_id: "objectID",
           model: "related-products",
           threshold: 42.1
         )

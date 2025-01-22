@@ -37,8 +37,7 @@ func TestRecommend_BatchRecommendRules(t *testing.T) {
 
 	t.Run("batch recommend rules", func(t *testing.T) {
 		_, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
-			"indexName", recommend.RecommendModels("related-products"),
-		))
+			"indexName", recommend.RecommendModels("related-products")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/batch", echo.Path)
@@ -55,8 +54,7 @@ func TestRecommend_CustomDelete(t *testing.T) {
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -66,8 +64,7 @@ func TestRecommend_CustomDelete(t *testing.T) {
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -89,8 +86,7 @@ func TestRecommend_CustomGet(t *testing.T) {
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -100,8 +96,7 @@ func TestRecommend_CustomGet(t *testing.T) {
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters with space"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -117,11 +112,8 @@ func TestRecommend_CustomGet(t *testing.T) {
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "to be overriden"}),
-			recommend.WithQueryParam("query", "parameters with space"), recommend.WithQueryParam("and an array",
-				[]string{"array", "with spaces"}), recommend.WithHeaderParam("x-header-1", "spaces are left alone"),
-		)
+			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), recommend.WithQueryParam("query", "parameters with space"), recommend.WithQueryParam("and an array",
+			[]string{"array", "with spaces"}), recommend.WithHeaderParam("x-header-1", "spaces are left alone"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -148,8 +140,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -160,8 +151,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -178,10 +168,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithQueryParam("query", "myQueryParameter"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -198,10 +185,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithQueryParam("query2", "myQueryParameter"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query2", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -218,10 +202,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -243,10 +224,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -268,10 +246,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithQueryParam("isItWorking", true),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("isItWorking", true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -288,10 +263,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithQueryParam("myParam", 2),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam", 2))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -308,11 +280,8 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithQueryParam("myParam",
-				[]string{"b and c", "d"}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+			[]string{"b and c", "d"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -329,11 +298,8 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithQueryParam("myParam",
-				[]bool{true, true, false}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+			[]bool{true, true, false}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -350,11 +316,8 @@ func TestRecommend_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.WithQueryParam("myParam",
-				[]int32{1, 2}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+			[]int32{1, 2}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -377,8 +340,7 @@ func TestRecommend_CustomPut(t *testing.T) {
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -389,8 +351,7 @@ func TestRecommend_CustomPut(t *testing.T) {
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -413,8 +374,7 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 
 	t.Run("deleteRecommendRule", func(t *testing.T) {
 		_, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-			"indexName", recommend.RecommendModels("related-products"), "objectID",
-		))
+			"indexName", recommend.RecommendModels("related-products"), "objectID"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/objectID", echo.Path)
@@ -430,8 +390,7 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 
 	t.Run("getRecommendRule", func(t *testing.T) {
 		_, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-			"indexName", recommend.RecommendModels("related-products"), "objectID",
-		))
+			"indexName", recommend.RecommendModels("related-products"), "objectID"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/objectID", echo.Path)
@@ -447,8 +406,7 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 
 	t.Run("getRecommendStatus", func(t *testing.T) {
 		_, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-			"indexName", recommend.RecommendModels("related-products"), 12345,
-		))
+			"indexName", recommend.RecommendModels("related-products"), 12345))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/task/12345", echo.Path)
@@ -467,8 +425,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
-		))
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -482,8 +439,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))}),
-		))
+					recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -501,8 +457,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
 						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))}),
-		))
+							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -516,8 +471,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
-					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetFacetName("facet").SetFacetValue("value"))}),
-		))
+					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetFacetName("facet").SetFacetValue("value"))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -535,8 +489,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
 						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))}),
-		))
+							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -551,8 +504,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7)), *recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7))}),
-		))
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -575,8 +527,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query2")}))).SetFallbackParameters(
 						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))}),
-		))
+							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -590,8 +541,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.BoughtTogetherQueryAsRecommendationsRequest(
-					recommend.NewEmptyBoughtTogetherQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.FbtModel("bought-together")).SetThreshold(42.7))}),
-		))
+					recommend.NewEmptyBoughtTogetherQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.FbtModel("bought-together")).SetThreshold(42.7))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -608,8 +558,7 @@ func TestRecommend_SearchRecommendRules(t *testing.T) {
 
 	t.Run("searchRecommendRules", func(t *testing.T) {
 		_, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-			"indexName", recommend.RecommendModels("related-products"),
-		))
+			"indexName", recommend.RecommendModels("related-products")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/search", echo.Path)

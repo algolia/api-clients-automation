@@ -27,8 +27,7 @@ func SnippetForAddABTestsOfAbtesting() {
 		abtesting.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetVariants(
 			[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
 				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-	))
+				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -56,8 +55,7 @@ func SnippetForCustomDeleteOfAbtesting() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -85,8 +83,7 @@ func SnippetForCustomGetOfAbtesting() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -114,8 +111,7 @@ func SnippetForCustomPostOfAbtesting() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -143,8 +139,7 @@ func SnippetForCustomPutOfAbtesting() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -172,8 +167,7 @@ func SnippetForDeleteABTestOfAbtesting() {
 
 	// Call the API
 	response, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(
-		42,
-	))
+		42))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -208,8 +202,7 @@ func SnippetForEstimateABTestOfAbtesting() {
 				abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric("conversionRate")))).SetVariants(
 			[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
 				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-	))
+				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -237,8 +230,7 @@ func SnippetForGetABTestOfAbtesting() {
 
 	// Call the API
 	response, err := client.GetABTest(client.NewApiGetABTestRequest(
-		42,
-	))
+		42))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -297,8 +289,7 @@ func SnippetForScheduleABTestOfAbtesting() {
 		abtesting.NewEmptyScheduleABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetScheduledAt("2022-11-31T00:00:00.000Z").SetName("myABTest").SetVariants(
 			[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
 				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-	))
+				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -326,8 +317,7 @@ func SnippetForSetClientApiKeyOfAbtesting() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -353,8 +343,7 @@ func SnippetForStopABTestOfAbtesting() {
 
 	// Call the API
 	response, err := client.StopABTest(client.NewApiStopABTestRequest(
-		42,
-	))
+		42))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

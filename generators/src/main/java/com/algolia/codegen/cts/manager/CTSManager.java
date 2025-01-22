@@ -2,6 +2,7 @@ package com.algolia.codegen.cts.manager;
 
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.Helpers;
+import com.samskivert.mustache.Mustache.Lambda;
 import java.io.IOException;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
@@ -36,6 +37,10 @@ public interface CTSManager {
   }
 
   public default void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
+    // NO-OP
+  }
+
+  public default void addMustacheLambdas(Map<String, Lambda> lambdas) {
     // NO-OP
   }
 }

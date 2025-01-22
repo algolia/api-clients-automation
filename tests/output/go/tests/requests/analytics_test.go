@@ -38,8 +38,7 @@ func TestAnalytics_CustomDelete(t *testing.T) {
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -49,8 +48,7 @@ func TestAnalytics_CustomDelete(t *testing.T) {
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -72,8 +70,7 @@ func TestAnalytics_CustomGet(t *testing.T) {
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -83,8 +80,7 @@ func TestAnalytics_CustomGet(t *testing.T) {
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters with space"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -100,11 +96,8 @@ func TestAnalytics_CustomGet(t *testing.T) {
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "to be overriden"}),
-			analytics.WithQueryParam("query", "parameters with space"), analytics.WithQueryParam("and an array",
-				[]string{"array", "with spaces"}), analytics.WithHeaderParam("x-header-1", "spaces are left alone"),
-		)
+			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), analytics.WithQueryParam("query", "parameters with space"), analytics.WithQueryParam("and an array",
+			[]string{"array", "with spaces"}), analytics.WithHeaderParam("x-header-1", "spaces are left alone"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -131,8 +124,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -143,8 +135,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -161,10 +152,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithQueryParam("query", "myQueryParameter"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -181,10 +169,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithQueryParam("query2", "myQueryParameter"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query2", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -201,10 +186,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -226,10 +208,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -251,10 +230,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithQueryParam("isItWorking", true),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("isItWorking", true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -271,10 +247,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithQueryParam("myParam", 2),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam", 2))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -291,11 +264,8 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithQueryParam("myParam",
-				[]string{"b and c", "d"}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+			[]string{"b and c", "d"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -312,11 +282,8 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithQueryParam("myParam",
-				[]bool{true, true, false}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+			[]bool{true, true, false}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -333,11 +300,8 @@ func TestAnalytics_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.WithQueryParam("myParam",
-				[]int32{1, 2}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+			[]int32{1, 2}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -360,8 +324,7 @@ func TestAnalytics_CustomPut(t *testing.T) {
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -372,8 +335,7 @@ func TestAnalytics_CustomPut(t *testing.T) {
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -396,8 +358,7 @@ func TestAnalytics_GetAddToCartRate(t *testing.T) {
 
 	t.Run("get getAddToCartRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/addToCartRate", echo.Path)
@@ -413,8 +374,7 @@ func TestAnalytics_GetAddToCartRate(t *testing.T) {
 	})
 	t.Run("get getAddToCartRate with all parameters", func(t *testing.T) {
 		_, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/addToCartRate", echo.Path)
@@ -436,8 +396,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 
 	t.Run("get getAverageClickPosition with minimal parameters", func(t *testing.T) {
 		_, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/clicks/averageClickPosition", echo.Path)
@@ -453,8 +412,7 @@ func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 	})
 	t.Run("get getAverageClickPosition with all parameters", func(t *testing.T) {
 		_, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/clicks/averageClickPosition", echo.Path)
@@ -476,8 +434,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 
 	t.Run("get getClickPositions with minimal parameters", func(t *testing.T) {
 		_, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/clicks/positions", echo.Path)
@@ -493,8 +450,7 @@ func TestAnalytics_GetClickPositions(t *testing.T) {
 	})
 	t.Run("get getClickPositions with all parameters", func(t *testing.T) {
 		_, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/clicks/positions", echo.Path)
@@ -516,8 +472,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 
 	t.Run("get getClickThroughRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/clicks/clickThroughRate", echo.Path)
@@ -533,8 +488,7 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 	})
 	t.Run("get getClickThroughRate with all parameters", func(t *testing.T) {
 		_, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/clicks/clickThroughRate", echo.Path)
@@ -556,8 +510,7 @@ func TestAnalytics_GetConversionRate(t *testing.T) {
 
 	t.Run("get getConversationRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/conversionRate", echo.Path)
@@ -573,8 +526,7 @@ func TestAnalytics_GetConversionRate(t *testing.T) {
 	})
 	t.Run("get getConversationRate with all parameters", func(t *testing.T) {
 		_, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/conversionRate", echo.Path)
@@ -596,8 +548,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 
 	t.Run("get getNoClickRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noClickRate", echo.Path)
@@ -613,8 +564,7 @@ func TestAnalytics_GetNoClickRate(t *testing.T) {
 	})
 	t.Run("get getNoClickRate with all parameters", func(t *testing.T) {
 		_, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noClickRate", echo.Path)
@@ -636,8 +586,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 
 	t.Run("get getNoResultsRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noResultRate", echo.Path)
@@ -653,8 +602,7 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 	})
 	t.Run("get getNoResultsRate with all parameters", func(t *testing.T) {
 		_, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noResultRate", echo.Path)
@@ -676,8 +624,7 @@ func TestAnalytics_GetPurchaseRate(t *testing.T) {
 
 	t.Run("get getPurchaseRate with minimal parameters", func(t *testing.T) {
 		_, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/purchaseRate", echo.Path)
@@ -693,8 +640,7 @@ func TestAnalytics_GetPurchaseRate(t *testing.T) {
 	})
 	t.Run("get getPurchaseRate with all parameters", func(t *testing.T) {
 		_, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/purchaseRate", echo.Path)
@@ -716,8 +662,7 @@ func TestAnalytics_GetRevenue(t *testing.T) {
 
 	t.Run("get getRevenue with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRevenue(client.NewApiGetRevenueRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/revenue", echo.Path)
@@ -733,8 +678,7 @@ func TestAnalytics_GetRevenue(t *testing.T) {
 	})
 	t.Run("get getRevenue with all parameters", func(t *testing.T) {
 		_, err := client.GetRevenue(client.NewApiGetRevenueRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/conversions/revenue", echo.Path)
@@ -756,8 +700,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 
 	t.Run("get getSearchesCount with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/count", echo.Path)
@@ -773,8 +716,7 @@ func TestAnalytics_GetSearchesCount(t *testing.T) {
 	})
 	t.Run("get getSearchesCount with all parameters", func(t *testing.T) {
 		_, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/count", echo.Path)
@@ -796,8 +738,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 
 	t.Run("get getSearchesNoClicks with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noClicks", echo.Path)
@@ -813,8 +754,7 @@ func TestAnalytics_GetSearchesNoClicks(t *testing.T) {
 	})
 	t.Run("get getSearchesNoClicks with all parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noClicks", echo.Path)
@@ -836,8 +776,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 
 	t.Run("get getSearchesNoResults with minimal parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noResults", echo.Path)
@@ -853,8 +792,7 @@ func TestAnalytics_GetSearchesNoResults(t *testing.T) {
 	})
 	t.Run("get getSearchesNoResults with all parameters", func(t *testing.T) {
 		_, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noResults", echo.Path)
@@ -876,8 +814,7 @@ func TestAnalytics_GetStatus(t *testing.T) {
 
 	t.Run("get getStatus with minimal parameters", func(t *testing.T) {
 		_, err := client.GetStatus(client.NewApiGetStatusRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/status", echo.Path)
@@ -899,8 +836,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 
 	t.Run("get getTopCountries with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/countries", echo.Path)
@@ -916,8 +852,7 @@ func TestAnalytics_GetTopCountries(t *testing.T) {
 	})
 	t.Run("get getTopCountries with all parameters", func(t *testing.T) {
 		_, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/countries", echo.Path)
@@ -939,8 +874,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 
 	t.Run("get getTopFilterAttributes with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters", echo.Path)
@@ -956,8 +890,7 @@ func TestAnalytics_GetTopFilterAttributes(t *testing.T) {
 	})
 	t.Run("get getTopFilterAttributes with all parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
-			"index",
-		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters", echo.Path)
@@ -979,8 +912,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 
 	t.Run("get getTopFilterForAttribute with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-			"myAttribute", "index",
-		))
+			"myAttribute", "index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters/myAttribute", echo.Path)
@@ -996,8 +928,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 	})
 	t.Run("get getTopFilterForAttribute with minimal parameters and multiple attributes", func(t *testing.T) {
 		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-			"myAttribute1,myAttribute2", "index",
-		))
+			"myAttribute1,myAttribute2", "index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters/myAttribute1%2CmyAttribute2", echo.Path)
@@ -1013,8 +944,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 	})
 	t.Run("get getTopFilterForAttribute with all parameters", func(t *testing.T) {
 		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-			"myAttribute", "index",
-		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"myAttribute", "index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters/myAttribute", echo.Path)
@@ -1030,8 +960,7 @@ func TestAnalytics_GetTopFilterForAttribute(t *testing.T) {
 	})
 	t.Run("get getTopFilterForAttribute with all parameters and multiple attributes", func(t *testing.T) {
 		_, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-			"myAttribute1,myAttribute2", "index",
-		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"myAttribute1,myAttribute2", "index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters/myAttribute1%2CmyAttribute2", echo.Path)
@@ -1053,8 +982,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 
 	t.Run("get getTopFiltersNoResults with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters/noResults", echo.Path)
@@ -1070,8 +998,7 @@ func TestAnalytics_GetTopFiltersNoResults(t *testing.T) {
 	})
 	t.Run("get getTopFiltersNoResults with all parameters", func(t *testing.T) {
 		_, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
-			"index",
-		).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/filters/noResults", echo.Path)
@@ -1093,8 +1020,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 
 	t.Run("get getTopHits with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/hits", echo.Path)
@@ -1110,8 +1036,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 	})
 	t.Run("get getTopHits with all parameters", func(t *testing.T) {
 		_, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
-			"index",
-		).WithSearch("mySearch").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+			"index").WithSearch("mySearch").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/hits", echo.Path)
@@ -1133,8 +1058,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 
 	t.Run("get getTopSearches with minimal parameters", func(t *testing.T) {
 		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches", echo.Path)
@@ -1150,8 +1074,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 	})
 	t.Run("get getTopSearches with all parameters", func(t *testing.T) {
 		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
-			"index",
-		).WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
+			"index").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches", echo.Path)
@@ -1173,8 +1096,7 @@ func TestAnalytics_GetUsersCount(t *testing.T) {
 
 	t.Run("get getUsersCount with minimal parameters", func(t *testing.T) {
 		_, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
-			"index",
-		))
+			"index"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/users/count", echo.Path)
@@ -1190,8 +1112,7 @@ func TestAnalytics_GetUsersCount(t *testing.T) {
 	})
 	t.Run("get getUsersCount with all parameters", func(t *testing.T) {
 		_, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
-			"index",
-		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+			"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/users/count", echo.Path)

@@ -1,62 +1,143 @@
 {
-  "csharp": {},
-  "dart": {},
-  "go": {},
-  "java": {},
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Composition;"
+    },
+    "search": {
+      "default": "var response = await client.SearchAsync<Hit>(\n  \"foo\",\n  new RequestBody { Params = new Params { Query = \"batman\" } }\n);"
+    },
+    "searchForFacetValues": {
+      "default": "var response = await client.SearchForFacetValuesAsync(\n  \"foo\",\n  \"brand\",\n  new SearchForFacetValuesRequest\n  {\n    Params = new SearchForFacetValuesParams { MaxFacetHits = 10 },\n  }\n);"
+    },
+    "init": {
+      "default": "var client = new CompositionClient(\n  new CompositionConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\n);"
+    }
+  },
+  "dart": {
+    "import": {
+      "default": "import 'package:algolia_client_composition/algolia_client_composition.dart';"
+    },
+    "search": {
+      "default": "final response = await client.search(\n  compositionID: \"foo\",\n  requestBody: RequestBody(\n    params: Params(\n      query: \"batman\",\n    ),\n  ),\n);"
+    },
+    "searchForFacetValues": {
+      "default": "final response = await client.searchForFacetValues(\n  compositionID: \"foo\",\n  facetName: \"brand\",\n  searchForFacetValuesRequest: SearchForFacetValuesRequest(\n    params: SearchForFacetValuesParams(\n      maxFacetHits: 10,\n    ),\n  ),\n);"
+    },
+    "init": {
+      "default": "final client = CompositionClient(\n    appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');"
+    }
+  },
+  "go": {
+    "import": {
+      "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/composition\""
+    },
+    "search": {
+      "default": "response, err := client.Search(client.NewApiSearchRequest(\n  \"foo\",\n  composition.NewEmptyRequestBody().SetParams(\n    composition.NewEmptyParams().SetQuery(\"batman\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "searchForFacetValues": {
+      "default": "response, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(\n  \"foo\", \"brand\").WithSearchForFacetValuesRequest(\n  composition.NewEmptySearchForFacetValuesRequest().SetParams(\n    composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "init": {
+      "default": "client, err := composition.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.CompositionClient;\nimport com.algolia.model.composition.*;"
+    },
+    "search": {
+      "default": "client.search(\"foo\", new RequestBody().setParams(new Params().setQuery(\"batman\")), Hit.class);"
+    },
+    "searchForFacetValues": {
+      "default": "client.searchForFacetValues(\n  \"foo\",\n  \"brand\",\n  new SearchForFacetValuesRequest().setParams(new SearchForFacetValuesParams().setMaxFacetHits(10))\n);"
+    },
+    "init": {
+      "default": "CompositionClient client = new CompositionClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\");"
+    }
+  },
   "javascript": {
     "import": {
-      "default": "import { compositionClient } from '@algolia/client-composition';"
-    },
-    "customDelete": {
-      "default": "const response = await client.customDelete({ path: 'test/minimal' });"
-    },
-    "customGet": {
-      "default": "const response = await client.customGet({ path: 'test/minimal' });"
-    },
-    "customPost": {
-      "default": "const response = await client.customPost({ path: 'test/minimal' });"
-    },
-    "customPut": {
-      "default": "const response = await client.customPut({ path: 'test/minimal' });"
-    },
-    "getComposition": {
-      "default": "const response = await client.getComposition({ compositionID: 'foo' });"
-    },
-    "getRule": {
-      "default": "const response = await client.getRule({ compositionID: 'foo', objectID: '123' });"
-    },
-    "getTask": {
-      "default": "const response = await client.getTask({ compositionID: 'foo', taskID: 42 });"
-    },
-    "listCompositions": {
-      "default": "const response = await client.listCompositions();"
-    },
-    "multipleBatch": {
-      "default": "const response = await client.multipleBatch({\n  requests: [\n    {\n      action: 'upsert',\n      body: {\n        objectID: 'foo',\n        name: 'my first composition',\n        behavior: { injection: { main: { source: { search: { index: 'bar' } } }, injectedItems: [] } },\n      },\n    },\n    { action: 'delete', body: { objectID: 'baz' } },\n  ],\n});"
-    },
-    "saveRules": {
-      "default": "const response = await client.saveRules({\n  compositionID: 'foo',\n  rules: {\n    requests: [\n      {\n        action: 'upsert',\n        body: {\n          objectID: '123',\n          conditions: [{ pattern: 'a' }],\n          consequence: { behavior: { injection: { main: { source: { search: { index: '<YOUR_INDEX_NAME>' } } } } } },\n        },\n      },\n    ],\n  },\n});"
+      "default": "import { compositionClient } from '@algolia/composition';"
     },
     "search": {
       "default": "const response = await client.search({ compositionID: 'foo', requestBody: { params: { query: 'batman' } } });"
     },
-    "searchCompositionRules": {
-      "default": "const response = await client.searchCompositionRules({\n  compositionID: 'foo',\n  searchCompositionRulesParams: { query: 'batman' },\n});"
-    },
     "searchForFacetValues": {
       "default": "const response = await client.searchForFacetValues({\n  compositionID: 'foo',\n  facetName: 'brand',\n  searchForFacetValuesRequest: { params: { maxFacetHits: 10 } },\n});"
-    },
-    "setClientApiKey": {
-      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "init": {
       "default": "//\nconst client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
-  "kotlin": {},
-  "php": {},
-  "python": {},
-  "ruby": {},
-  "scala": {},
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.CompositionClient"
+    },
+    "search": {
+      "default": "var response = client.search(\n  compositionID = \"foo\",\n  requestBody = RequestBody(\n    params = Params(\n      query = \"batman\",\n    ),\n  ),\n)"
+    },
+    "searchForFacetValues": {
+      "default": "var response = client.searchForFacetValues(\n  compositionID = \"foo\",\n  facetName = \"brand\",\n  searchForFacetValuesRequest = SearchForFacetValuesRequest(\n    params = SearchForFacetValuesParams(\n      maxFacetHits = 10,\n    ),\n  ),\n)"
+    },
+    "init": {
+      "default": "val client = CompositionClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\")"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\CompositionClient;"
+    },
+    "search": {
+      "default": "$response = $client->search(\n    'foo',\n    ['params' => ['query' => 'batman',\n    ],\n    ],\n);"
+    },
+    "searchForFacetValues": {
+      "default": "$response = $client->searchForFacetValues(\n    'foo',\n    'brand',\n    ['params' => ['maxFacetHits' => 10,\n    ],\n    ],\n);"
+    },
+    "init": {
+      "default": "$client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.composition.client import CompositionClientSync"
+    },
+    "search": {
+      "default": "response = client.search(\n    composition_id=\"foo\",\n    request_body={\n        \"params\": {\n            \"query\": \"batman\",\n        },\n    },\n)"
+    },
+    "searchForFacetValues": {
+      "default": "response = client.search_for_facet_values(\n    composition_id=\"foo\",\n    facet_name=\"brand\",\n    search_for_facet_values_request={\n        \"params\": {\n            \"maxFacetHits\": 10,\n        },\n    },\n)"
+    },
+    "init": {
+      "default": "# In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.\nclient = CompositionClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "search": {
+      "default": "response = client.search(\n  \"foo\",\n  Algolia::Composition::RequestBody.new(params: Algolia::Composition::Params.new(query: \"batman\"))\n)"
+    },
+    "searchForFacetValues": {
+      "default": "response = client.search_for_facet_values(\n  \"foo\",\n  \"brand\",\n  Algolia::Composition::SearchForFacetValuesRequest.new(\n    params: Algolia::Composition::SearchForFacetValuesParams.new(max_facet_hits: 10)\n  )\n)"
+    },
+    "init": {
+      "default": "client = Algolia::CompositionClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.CompositionClient"
+    },
+    "search": {
+      "default": "val response = client.search(\n  compositionID = \"foo\",\n  requestBody = RequestBody(\n    params = Some(\n      Params(\n        query = Some(\"batman\")\n      )\n    )\n  )\n)"
+    },
+    "searchForFacetValues": {
+      "default": "val response = client.searchForFacetValues(\n  compositionID = \"foo\",\n  facetName = \"brand\",\n  searchForFacetValuesRequest = Some(\n    SearchForFacetValuesRequest(\n      params = Some(\n        SearchForFacetValuesParams(\n          maxFacetHits = Some(10)\n        )\n      )\n    )\n  )\n)"
+    },
+    "init": {
+      "default": "val client = CompositionClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\")"
+    }
+  },
   "swift": {}
 }

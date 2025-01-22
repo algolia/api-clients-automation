@@ -23,8 +23,7 @@ func SnippetForCustomDeleteOfInsights() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -52,8 +51,7 @@ func SnippetForCustomGetOfInsights() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -81,8 +79,7 @@ func SnippetForCustomPostOfInsights() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -110,8 +107,7 @@ func SnippetForCustomPutOfInsights() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -139,8 +135,7 @@ func SnippetForDeleteUserTokenOfInsights() {
 
 	// Call the API
 	err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
-		"test-user-1",
-	))
+		"test-user-1"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -171,8 +166,7 @@ func SnippetForPushEventsOfInsights() {
 			[]insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
 				insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent("click")).SetEventName("Product Clicked").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
 					[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7").SetPositions(
-					[]int32{7, 6}))}),
-	))
+					[]int32{7, 6}))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -200,8 +194,7 @@ func SnippetForSetClientApiKeyOfInsights() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)

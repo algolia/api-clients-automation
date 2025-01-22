@@ -23,8 +23,7 @@ func SnippetForBatchRecommendRulesOfRecommend() {
 
 	// Call the API
 	response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -52,8 +51,7 @@ func SnippetForCustomDeleteOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -81,8 +79,7 @@ func SnippetForCustomGetOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -110,8 +107,7 @@ func SnippetForCustomPostOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -139,8 +135,7 @@ func SnippetForCustomPutOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -168,8 +163,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 
 	// Call the API
 	response, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -197,8 +191,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 
 	// Call the API
 	response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -226,8 +219,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 
 	// Call the API
 	response, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345,
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -258,8 +250,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 
 		recommend.NewEmptyGetRecommendationsParams().SetRequests(
 			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
-	))
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -287,8 +278,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 
 	// Call the API
 	response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -316,8 +306,7 @@ func SnippetForSetClientApiKeyOfRecommend() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)

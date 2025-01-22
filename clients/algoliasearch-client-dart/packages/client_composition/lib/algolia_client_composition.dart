@@ -1,0 +1,58 @@
+// A sub-package of the AlgoliaSearch library, offering composition-specific functionalities for enhanced search and discovery in Dart/Flutter apps.
+library;
+
+export 'package:algolia_client_core/algolia_client_core.dart';
+
+export 'src/api/composition_client.dart';
+
+export 'src/model/around_radius_all.dart';
+export 'src/model/banner.dart';
+export 'src/model/banner_image.dart';
+export 'src/model/banner_image_url.dart';
+export 'src/model/banner_link.dart';
+export 'src/model/base_search_response.dart';
+export 'src/model/composition_base_search_response.dart';
+export 'src/model/composition_id_ranking_info.dart';
+export 'src/model/composition_ranking_info.dart';
+export 'src/model/composition_run_applied_rules.dart';
+export 'src/model/composition_run_search_response.dart';
+export 'src/model/compositions_search_response.dart';
+export 'src/model/error_base.dart';
+export 'src/model/exhaustive.dart';
+export 'src/model/facet_hits.dart';
+export 'src/model/facet_ordering.dart';
+export 'src/model/facet_stats.dart';
+export 'src/model/facets.dart';
+export 'src/model/highlight_result_option.dart';
+export 'src/model/hit.dart';
+export 'src/model/hit_ranking_info.dart';
+export 'src/model/match_level.dart';
+export 'src/model/matched_geo_location.dart';
+export 'src/model/params.dart';
+export 'src/model/personalization.dart';
+export 'src/model/range.dart';
+export 'src/model/ranking_info.dart';
+export 'src/model/redirect.dart';
+export 'src/model/redirect_rule_index_data.dart';
+export 'src/model/redirect_rule_index_metadata.dart';
+export 'src/model/redirect_url.dart';
+export 'src/model/rendering_content.dart';
+export 'src/model/request_body.dart';
+export 'src/model/results_composition_info_response.dart';
+export 'src/model/results_compositions_response.dart';
+export 'src/model/results_injected_item_applied_rules_info_response.dart';
+export 'src/model/results_injected_item_info_response.dart';
+export 'src/model/search_for_facet_values_params.dart';
+export 'src/model/search_for_facet_values_request.dart';
+export 'src/model/search_for_facet_values_response.dart';
+export 'src/model/search_for_facet_values_results.dart';
+export 'src/model/search_hits.dart';
+export 'src/model/search_pagination.dart';
+export 'src/model/search_response.dart';
+export 'src/model/search_results.dart';
+export 'src/model/search_results_item.dart';
+export 'src/model/snippet_result_option.dart';
+export 'src/model/sort_remaining_by.dart';
+export 'src/model/supported_language.dart';
+export 'src/model/value.dart';
+export 'src/model/widgets.dart';

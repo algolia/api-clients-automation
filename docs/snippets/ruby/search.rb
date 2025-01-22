@@ -74,14 +74,14 @@ end
 
 # Snippet for the assignUserId method.
 #
-# assignUserId
+# simple
 def snippet_for_assign_user_id
   # >SEPARATOR assignUserId default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.assign_user_id("userID", Algolia::Search::AssignUserIdParams.new(cluster: "theCluster"))
+  response = client.assign_user_id("user42", Algolia::Search::AssignUserIdParams.new(cluster: "d4242-eu"))
 
   # >LOG
   # use the class directly
@@ -310,7 +310,7 @@ def snippet_for_batch_dictionary_entries
         Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "addEntry",
           body: Algolia::Search::DictionaryEntry.new(
-            object_id: "1",
+            algolia_object_id: "1",
             language: "en",
             word: "fancy",
             words: ["believe", "algolia"],
@@ -347,7 +347,7 @@ def snippet_for_batch_dictionary_entries1
       requests: [
         Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "deleteEntry",
-          body: Algolia::Search::DictionaryEntry.new(object_id: "1")
+          body: Algolia::Search::DictionaryEntry.new(algolia_object_id: "1")
         )
       ]
     )
@@ -377,7 +377,7 @@ def snippet_for_batch_dictionary_entries2
       requests: [
         Algolia::Search::BatchDictionaryEntriesRequest.new(
           action: "addEntry",
-          body: Algolia::Search::DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
+          body: Algolia::Search::DictionaryEntry.new(algolia_object_id: "1", language: "en", additional: "try me")
         )
       ]
     )
@@ -714,9 +714,9 @@ end
 
 # Snippet for the generateSecuredApiKey method.
 #
-# generate secured api key basic
+# api key basic
 def snippet_for_generate_secured_api_key
-  # >SEPARATOR generateSecuredApiKey generate secured api key basic
+  # >SEPARATOR generateSecuredApiKey api key basic
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -737,9 +737,9 @@ end
 
 # Snippet for the generateSecuredApiKey method.
 #
-# generate secured api key with searchParams
+# with searchParams
 def snippet_for_generate_secured_api_key1
-  # >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+  # >SEPARATOR generateSecuredApiKey with searchParams
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -761,6 +761,77 @@ def snippet_for_generate_secured_api_key1
         optional_words: ["one", "two"]
       )
     )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the generateSecuredApiKey method.
+#
+# with filters
+def snippet_for_generate_secured_api_key2
+  # >SEPARATOR generateSecuredApiKey with filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.generate_secured_api_key(
+    "2640659426d5107b6e47d75db9cbaef8",
+    Algolia::Search::SecuredApiKeyRestrictions.new(
+      filters: "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)"
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the generateSecuredApiKey method.
+#
+# with visible_by filter
+def snippet_for_generate_secured_api_key3
+  # >SEPARATOR generateSecuredApiKey with visible_by filter
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.generate_secured_api_key(
+    "2640659426d5107b6e47d75db9cbaef8",
+    Algolia::Search::SecuredApiKeyRestrictions.new(filters: "visible_by:group/Finance")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the generateSecuredApiKey method.
+#
+# with userID
+def snippet_for_generate_secured_api_key4
+  # >SEPARATOR generateSecuredApiKey with userID
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.generate_secured_api_key(
+    "2640659426d5107b6e47d75db9cbaef8",
+    Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
   )
 
   # >LOG
@@ -906,7 +977,7 @@ def snippet_for_get_objects
       requests: [
         Algolia::Search::GetObjectsRequest.new(
           attributes_to_retrieve: ["attr1", "attr2"],
-          object_id: "uniqueID",
+          algolia_object_id: "uniqueID",
           index_name: "<YOUR_INDEX_NAME>"
         )
       ]
@@ -1327,14 +1398,38 @@ end
 
 # Snippet for the partialUpdateObject method.
 #
-# Partial update with a new value for a string attribute
+# Partial update with a new value for an object attribute
 def snippet_for_partial_update_object
-  # >SEPARATOR partialUpdateObject default
+  # >SEPARATOR partialUpdateObject Partial update with a new value for an object attribute
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.partial_update_object("<YOUR_INDEX_NAME>", "uniqueID", {attributeId: "new value"})
+  response = client.partial_update_object("<YOUR_INDEX_NAME>", "uniqueID", {attributeId: {nested: "value"}})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the partialUpdateObject method.
+#
+# with visible_by filter
+def snippet_for_partial_update_object1
+  # >SEPARATOR partialUpdateObject with visible_by filter
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.partial_update_object(
+    "<YOUR_INDEX_NAME>",
+    "uniqueID",
+    {visible_by: ["Angela", "group/Finance", "group/Shareholders"]}
+  )
 
   # >LOG
   # use the class directly
@@ -1602,23 +1697,637 @@ def snippet_for_save_objects1
   # SEPARATOR<
 end
 
+# Snippet for the saveObjects method.
+#
+# saveObjectsPlaylist
+def snippet_for_save_objects2
+  # >SEPARATOR saveObjects saveObjectsPlaylist
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_objects(
+    "<YOUR_INDEX_NAME>",
+    [
+      {
+        objectID: "1",
+        visibility: "public",
+        name: "Hot 100 Billboard Charts",
+        playlistId: "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+        createdAt: "1500240452"
+      }
+    ]
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveObjects method.
+#
+# saveObjectsPublicUser
+def snippet_for_save_objects3
+  # >SEPARATOR saveObjects saveObjectsPublicUser
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_objects(
+    "<YOUR_INDEX_NAME>",
+    [
+      {
+        objectID: "1",
+        visibility: "public",
+        name: "Hot 100 Billboard Charts",
+        playlistId: "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+        createdAt: "1500240452"
+      }
+    ]
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the saveRule method.
 #
-# saveRule with minimal parameters
+# b2b catalog
 def snippet_for_save_rule
-  # >SEPARATOR saveRule default
+  # >SEPARATOR saveRule b2b catalog
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_rule(
     "<YOUR_INDEX_NAME>",
-    "id1",
+    "article-rule",
     Algolia::Search::Rule.new(
-      object_id: "id1",
-      conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+      algolia_object_id: "article-rule",
+      conditions: [Algolia::Search::Condition.new(pattern: "article", anchoring: "startsWith")],
       consequence: Algolia::Search::Consequence.new(
-        params: Algolia::Search::ConsequenceParams.new(filters: "brand:xiaomi")
+        params: Algolia::Search::ConsequenceParams.new(
+          query: Algolia::Search::ConsequenceQueryObject.new(
+            edits: [Algolia::Search::Edit.new(type: "remove", delete: "article")]
+          ),
+          restrict_searchable_attributes: ["title", "book_id"]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# merchandising and promoting
+def snippet_for_save_rule1
+  # >SEPARATOR saveRule merchandising and promoting
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "director-rule",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "director-rule",
+      conditions: [Algolia::Search::Condition.new(pattern: "{facet:director} director", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          restrict_searchable_attributes: ["title", "book_id"],
+          automatic_facet_filters: [Algolia::Search::AutomaticFacetFilter.new(facet: "director")],
+          query: Algolia::Search::ConsequenceQueryObject.new(
+            edits: [Algolia::Search::Edit.new(type: "remove", delete: "director")]
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# harry potter
+def snippet_for_save_rule2
+  # >SEPARATOR saveRule harry potter
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "harry-potter-rule",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "harry-potter-rule",
+      conditions: [Algolia::Search::Condition.new(pattern: "harry potter", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        user_data: {:"promo_content" => "20% OFF on all Harry Potter books!"}
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# merchandising empty query
+def snippet_for_save_rule3
+  # >SEPARATOR saveRule merchandising empty query
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "clearance-category-filter",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "clearance-category-filter",
+      conditions: [Algolia::Search::Condition.new(pattern: "", anchoring: "is", context: "landing")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(optional_filters: "clearance:true")
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# redirect
+def snippet_for_save_rule4
+  # >SEPARATOR saveRule redirect
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "redirect-help-rule",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "redirect-help-rule",
+      conditions: [Algolia::Search::Condition.new(pattern: "help", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(user_data: {:"redirect" => "https://www.algolia.com/support"})
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# promote some results over others
+def snippet_for_save_rule5
+  # >SEPARATOR saveRule promote some results over others
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "tomato-fruit",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "tomato-fruit",
+      conditions: [Algolia::Search::Condition.new(pattern: "tomato", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(optional_filters: "food_group:fruit")
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# promote several hits
+def snippet_for_save_rule6
+  # >SEPARATOR saveRule promote several hits
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "Promote-Apple-Newest",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "Promote-Apple-Newest",
+      conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "is")],
+      consequence: Algolia::Search::Consequence.new(
+        promote: [Algolia::Search::PromoteObjectIDs.new(object_ids: ["iPhone-12345", "watch-123"], position: 0)]
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# promote newest release
+def snippet_for_save_rule7
+  # >SEPARATOR saveRule promote newest release
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "Promote-iPhone-X",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "Promote-iPhone-X",
+      conditions: [Algolia::Search::Condition.new(pattern: "iPhone", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        promote: [Algolia::Search::PromoteObjectID.new(algolia_object_id: "iPhone-12345", position: 0)]
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# promote single item
+def snippet_for_save_rule8
+  # >SEPARATOR saveRule promote single item
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "promote-harry-potter-box-set",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "promote-harry-potter-box-set",
+      conditions: [Algolia::Search::Condition.new(pattern: "Harry Potter", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        promote: [Algolia::Search::PromoteObjectID.new(algolia_object_id: "HP-12345", position: 0)]
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# limit search results
+def snippet_for_save_rule9
+  # >SEPARATOR saveRule limit search results
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "article-rule",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "article-rule",
+      conditions: [Algolia::Search::Condition.new(pattern: "article", anchoring: "startsWith")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          query: Algolia::Search::ConsequenceQueryObject.new(
+            edits: [Algolia::Search::Edit.new(type: "remove", delete: "article")]
+          ),
+          restrict_searchable_attributes: ["title", "book_id"]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# query match
+def snippet_for_save_rule10
+  # >SEPARATOR saveRule query match
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "tagged-brand-rule",
+    Algolia::Search::Rule.new(
+      conditions: [
+        Algolia::Search::Condition.new(pattern: "brand: {facet:brand}", anchoring: "contains", alternatives: false)
+      ],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          automatic_facet_filters: [Algolia::Search::AutomaticFacetFilter.new(facet: "brand")],
+          query: Algolia::Search::ConsequenceQueryObject.new(remove: ["brand:", "{facet:brand}"])
+        )
+      ),
+      description: "filter on brand: {brand}",
+      algolia_object_id: "tagged-brand-rule"
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# dynamic filtering
+def snippet_for_save_rule11
+  # >SEPARATOR saveRule dynamic filtering
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "color-facets",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "color-facets",
+      conditions: [Algolia::Search::Condition.new(pattern: "{facet:color}")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          automatic_facet_filters: [Algolia::Search::AutomaticFacetFilter.new(facet: "color")]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# hide hits
+def snippet_for_save_rule12
+  # >SEPARATOR saveRule hide hits
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "hide-12345",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "hide-12345",
+      conditions: [Algolia::Search::Condition.new(pattern: "cheap", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        hide: [Algolia::Search::ConsequenceHide.new(algolia_object_id: "to-hide-12345")]
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# one rule per facet
+def snippet_for_save_rule13
+  # >SEPARATOR saveRule one rule per facet
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "red-color",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "red-color",
+      conditions: [Algolia::Search::Condition.new(pattern: "red", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          query: Algolia::Search::ConsequenceQueryObject.new(remove: ["red"]),
+          filters: "color:red"
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# numerical filters
+def snippet_for_save_rule14
+  # >SEPARATOR saveRule numerical filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "cheap",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "cheap",
+      conditions: [Algolia::Search::Condition.new(pattern: "cheap", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          query: Algolia::Search::ConsequenceQueryObject.new(remove: ["cheap"]),
+          filters: "price < 10"
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# negative filters
+def snippet_for_save_rule15
+  # >SEPARATOR saveRule negative filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "gluten-free-rule",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "gluten-free-rule",
+      conditions: [Algolia::Search::Condition.new(pattern: "gluten-free", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          filters: "NOT allergens:gluten",
+          query: Algolia::Search::ConsequenceQueryObject.new(
+            edits: [Algolia::Search::Edit.new(type: "remove", delete: "gluten-free")]
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# positive filters
+def snippet_for_save_rule16
+  # >SEPARATOR saveRule positive filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "diet-rule",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "diet-rule",
+      conditions: [Algolia::Search::Condition.new(pattern: "diet", anchoring: "contains")],
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          filters: "'low-carb' OR 'low-fat'",
+          query: Algolia::Search::ConsequenceQueryObject.new(
+            edits: [Algolia::Search::Edit.new(type: "remove", delete: "diet")]
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# conditionless
+def snippet_for_save_rule17
+  # >SEPARATOR saveRule conditionless
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "diet-rule",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "diet-rule",
+      consequence: Algolia::Search::Consequence.new(
+        params: Algolia::Search::ConsequenceParams.new(
+          filters: "'low-carb' OR 'low-fat'",
+          query: Algolia::Search::ConsequenceQueryObject.new(
+            edits: [Algolia::Search::Edit.new(type: "remove", delete: "diet")]
+          )
+        )
       )
     )
   )
@@ -1645,14 +2354,14 @@ def snippet_for_save_rules
     "<YOUR_INDEX_NAME>",
     [
       Algolia::Search::Rule.new(
-        object_id: "a-rule-id",
+        algolia_object_id: "a-rule-id",
         conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
         consequence: Algolia::Search::Consequence.new(
           params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
         )
       ),
       Algolia::Search::Rule.new(
-        object_id: "a-second-rule-id",
+        algolia_object_id: "a-second-rule-id",
         conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
         consequence: Algolia::Search::Consequence.new(
           params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
@@ -1684,7 +2393,7 @@ def snippet_for_save_synonym
   response = client.save_synonym(
     "<YOUR_INDEX_NAME>",
     "id1",
-    Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+    Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
     true
   )
 
@@ -1709,9 +2418,9 @@ def snippet_for_save_synonyms
   response = client.save_synonyms(
     "<YOUR_INDEX_NAME>",
     [
-      Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+      Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
       Algolia::Search::SynonymHit.new(
-        object_id: "id2",
+        algolia_object_id: "id2",
         type: "onewaysynonym",
         input: "iphone",
         synonyms: ["ephone", "aphone", "yphone"]
@@ -1969,7 +2678,7 @@ end
 #
 # search with searchParams
 def snippet_for_search_single_index
-  # >SEPARATOR searchSingleIndex default
+  # >SEPARATOR searchSingleIndex search with searchParams
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -1977,6 +2686,743 @@ def snippet_for_search_single_index
   response = client.search_single_index(
     "<YOUR_INDEX_NAME>",
     Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# query
+def snippet_for_search_single_index1
+  # >SEPARATOR searchSingleIndex query
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index("<YOUR_INDEX_NAME>", Algolia::Search::SearchParamsObject.new(query: "phone"))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filters
+def snippet_for_search_single_index2
+  # >SEPARATOR searchSingleIndex filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(filters: "country:US AND price.gross < 2.0")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# distinct
+def snippet_for_search_single_index3
+  # >SEPARATOR searchSingleIndex distinct
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index("<YOUR_INDEX_NAME>", Algolia::Search::SearchParamsObject.new(distinct: true))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filtersNumeric
+def snippet_for_search_single_index4
+  # >SEPARATOR searchSingleIndex filtersNumeric
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(filters: "price < 10")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filtersTimestamp
+def snippet_for_search_single_index5
+  # >SEPARATOR searchSingleIndex filtersTimestamp
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(filters: "NOT date_timestamp:1514764800 TO 1546300799")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filtersSumOrFiltersScoresFalse
+def snippet_for_search_single_index6
+  # >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+      sum_or_filters_scores: false
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filtersSumOrFiltersScoresTrue
+def snippet_for_search_single_index7
+  # >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+      sum_or_filters_scores: true
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filtersStephenKing
+def snippet_for_search_single_index8
+  # >SEPARATOR searchSingleIndex filtersStephenKing
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(filters: "author:\"Stephen King\"")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filtersNotTags
+def snippet_for_search_single_index9
+  # >SEPARATOR searchSingleIndex filtersNotTags
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(filters: "NOT _tags:non-fiction")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# facetFiltersList
+def snippet_for_search_single_index10
+  # >SEPARATOR searchSingleIndex facetFiltersList
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      facet_filters: ["publisher:Penguin", ["author:Stephen King", "genre:Horror"]]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# facetFiltersNeg
+def snippet_for_search_single_index11
+  # >SEPARATOR searchSingleIndex facetFiltersNeg
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(facet_filters: "category:-Ebook")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# filtersAndFacetFilters
+def snippet_for_search_single_index12
+  # >SEPARATOR searchSingleIndex filtersAndFacetFilters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      filters: "(author:\"Stephen King\" OR genre:\"Horror\")",
+      facet_filters: ["publisher:Penguin"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# aroundLatLng
+def snippet_for_search_single_index13
+  # >SEPARATOR searchSingleIndex aroundLatLng
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(around_lat_lng: "40.71, -74.01")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# aroundLatLngViaIP
+def snippet_for_search_single_index14
+  # >SEPARATOR searchSingleIndex aroundLatLngViaIP
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(around_lat_lng_via_ip: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# aroundRadius
+def snippet_for_search_single_index15
+  # >SEPARATOR searchSingleIndex aroundRadius
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(around_lat_lng: "40.71, -74.01", around_radius: 1000000)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# insideBoundingBox
+def snippet_for_search_single_index16
+  # >SEPARATOR searchSingleIndex insideBoundingBox
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      inside_bounding_box: [[49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875]]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# insidePolygon
+def snippet_for_search_single_index17
+  # >SEPARATOR searchSingleIndex insidePolygon
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      inside_polygon: [
+        [
+          42.01,
+          -124.31,
+          48.835509470063045,
+          -124.40453125000005,
+          45.01082951668149,
+          -65.95726562500005,
+          31.247243545293433,
+          -81.06578125000004,
+          25.924152577235226,
+          -97.68234374999997,
+          32.300311895879545,
+          -117.54828125
+        ]
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# insidePolygon
+def snippet_for_search_single_index18
+  # >SEPARATOR searchSingleIndex insidePolygon
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      inside_polygon: [
+        [
+          42.01,
+          -124.31,
+          48.835509470063045,
+          -124.40453125000005,
+          45.01082951668149,
+          -65.95726562500005,
+          31.247243545293433,
+          -81.06578125000004,
+          25.924152577235226,
+          -97.68234374999997,
+          32.300311895879545,
+          -117.54828125
+        ]
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# optionalFilters
+def snippet_for_search_single_index19
+  # >SEPARATOR searchSingleIndex optionalFilters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(optional_filters: ["can_deliver_quickly:true"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# optionalFiltersMany
+def snippet_for_search_single_index20
+  # >SEPARATOR searchSingleIndex optionalFiltersMany
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      optional_filters: ["brand:Apple<score=3>", "brand:Samsung<score=2>", "brand:-Huawei"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# optionalFiltersSimple
+def snippet_for_search_single_index21
+  # >SEPARATOR searchSingleIndex optionalFiltersSimple
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(optional_filters: ["brand:Apple<score=2>", "type:tablet"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# restrictSearchableAttributes
+def snippet_for_search_single_index22
+  # >SEPARATOR searchSingleIndex restrictSearchableAttributes
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(restrict_searchable_attributes: ["title_fr"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# getRankingInfo
+def snippet_for_search_single_index23
+  # >SEPARATOR searchSingleIndex getRankingInfo
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(get_ranking_info: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# clickAnalytics
+def snippet_for_search_single_index24
+  # >SEPARATOR searchSingleIndex clickAnalytics
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(click_analytics: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# clickAnalyticsUserToken
+def snippet_for_search_single_index25
+  # >SEPARATOR searchSingleIndex clickAnalyticsUserToken
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(click_analytics: true, user_token: "user-1")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# enablePersonalization
+def snippet_for_search_single_index26
+  # >SEPARATOR searchSingleIndex enablePersonalization
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(enable_personalization: true, user_token: "user-1")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# userToken
+def snippet_for_search_single_index27
+  # >SEPARATOR searchSingleIndex userToken
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(user_token: "user-1")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# analyticsTag
+def snippet_for_search_single_index28
+  # >SEPARATOR searchSingleIndex analyticsTag
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(analytics_tags: ["YOUR_ANALYTICS_TAG"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# facetFiltersUsers
+def snippet_for_search_single_index29
+  # >SEPARATOR searchSingleIndex facetFiltersUsers
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(facet_filters: ["user:user42", "user:public"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# buildTheQuery
+def snippet_for_search_single_index30
+  # >SEPARATOR searchSingleIndex buildTheQuery
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      filters: "categoryPageId: Men's Clothing",
+      hits_per_page: 50,
+      analytics_tags: ["mens-clothing"]
+    )
   )
 
   # >LOG
@@ -2070,9 +3516,780 @@ end
 
 # Snippet for the setSettings method.
 #
-# setSettingsAttributesForFaceting
+# removeStopWords boolean
 def snippet_for_set_settings
-  # >SEPARATOR setSettings default
+  # >SEPARATOR setSettings removeStopWords boolean
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(remove_stop_words: true), true)
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# removeStopWords list of string
+def snippet_for_set_settings1
+  # >SEPARATOR setSettings removeStopWords list of string
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(remove_stop_words: ["fr"]),
+    true
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# distinct company
+def snippet_for_set_settings2
+  # >SEPARATOR setSettings distinct company
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attribute_for_distinct: "company", distinct: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# distinct design
+def snippet_for_set_settings3
+  # >SEPARATOR setSettings distinct design
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attribute_for_distinct: "design", distinct: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# distinct true
+def snippet_for_set_settings4
+  # >SEPARATOR setSettings distinct true
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(distinct: true))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# distinct section
+def snippet_for_set_settings5
+  # >SEPARATOR setSettings distinct section
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attribute_for_distinct: "section", distinct: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting allergens
+def snippet_for_set_settings6
+  # >SEPARATOR setSettings attributesForFaceting allergens
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_for_faceting: ["allergens"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting categoryPageId
+def snippet_for_set_settings7
+  # >SEPARATOR setSettings attributesForFaceting categoryPageId
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_for_faceting: ["searchable(categoryPageId)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# unretrievableAttributes
+def snippet_for_set_settings8
+  # >SEPARATOR setSettings unretrievableAttributes
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(unretrievable_attributes: ["visible_by"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting user restricted data
+def snippet_for_set_settings9
+  # >SEPARATOR setSettings attributesForFaceting user restricted data
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_for_faceting: ["filterOnly(visible_by)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting optional filters
+def snippet_for_set_settings10
+  # >SEPARATOR setSettings attributesForFaceting optional filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_for_faceting: ["can_deliver_quickly", "restaurant"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting redirect index
+def snippet_for_set_settings11
+  # >SEPARATOR setSettings attributesForFaceting redirect index
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_for_faceting: ["query_terms"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting multiple consequences
+def snippet_for_set_settings12
+  # >SEPARATOR setSettings attributesForFaceting multiple consequences
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_for_faceting: ["director"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting in-depth optional filters
+def snippet_for_set_settings13
+  # >SEPARATOR setSettings attributesForFaceting in-depth optional filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_for_faceting: ["filterOnly(brand)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# mode neuralSearch
+def snippet_for_set_settings14
+  # >SEPARATOR setSettings mode neuralSearch
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(mode: "neuralSearch"))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# mode keywordSearch
+def snippet_for_set_settings15
+  # >SEPARATOR setSettings mode keywordSearch
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(mode: "keywordSearch"))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributes same priority
+def snippet_for_set_settings16
+  # >SEPARATOR setSettings searchableAttributes same priority
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["title,comments", "ingredients"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributes higher priority
+def snippet_for_set_settings17
+  # >SEPARATOR setSettings searchableAttributes higher priority
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["title", "ingredients"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking retweets
+def snippet_for_set_settings18
+  # >SEPARATOR setSettings customRanking retweets
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(retweets)", "desc(likes)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking boosted
+def snippet_for_set_settings19
+  # >SEPARATOR setSettings customRanking boosted
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(boosted)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking pageviews
+def snippet_for_set_settings20
+  # >SEPARATOR setSettings customRanking pageviews
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(pageviews)", "desc(comments)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking applying search parameters for a specific query
+def snippet_for_set_settings21
+  # >SEPARATOR setSettings customRanking applying search parameters for a specific query
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      custom_ranking: ["desc(nb_airline_liaisons)"],
+      attributes_for_faceting: ["city, country"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking rounded pageviews
+def snippet_for_set_settings22
+  # >SEPARATOR setSettings customRanking rounded pageviews
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(rounded_pageviews)", "desc(comments)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking price
+def snippet_for_set_settings23
+  # >SEPARATOR setSettings customRanking price
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(price)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# ranking exhaustive
+def snippet_for_set_settings24
+  # >SEPARATOR setSettings ranking exhaustive
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      ranking: ["desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# ranking standard replica
+def snippet_for_set_settings25
+  # >SEPARATOR setSettings ranking standard replica
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(ranking: ["desc(post_date_timestamp)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# ranking virtual replica
+def snippet_for_set_settings26
+  # >SEPARATOR setSettings ranking virtual replica
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["desc(post_date_timestamp)"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# customRanking and ranking sort alphabetically
+def snippet_for_set_settings27
+  # >SEPARATOR setSettings customRanking and ranking sort alphabetically
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      custom_ranking: ["asc(textual_attribute)"],
+      ranking: ["custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# relevancyStrictness
+def snippet_for_set_settings28
+  # >SEPARATOR setSettings relevancyStrictness
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(custom_ranking: ["asc(textual_attribute)"], relevancy_strictness: 0)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# create replica index
+def snippet_for_set_settings29
+  # >SEPARATOR setSettings create replica index
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(replicas: ["products_price_desc"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# unlink replica index
+def snippet_for_set_settings30
+  # >SEPARATOR setSettings unlink replica index
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(replicas: [""]))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# forwardToReplicas
+def snippet_for_set_settings31
+  # >SEPARATOR setSettings forwardToReplicas
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["name", "description"]),
+    true
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# maxValuesPerFacet
+def snippet_for_set_settings32
+  # >SEPARATOR setSettings maxValuesPerFacet
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(max_values_per_facet: 1000))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# maxFacetHits
+def snippet_for_set_settings33
+  # >SEPARATOR setSettings maxFacetHits
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(max_facet_hits: 1000))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesForFaceting complex
+def snippet_for_set_settings34
+  # >SEPARATOR setSettings attributesForFaceting complex
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -2082,6 +4299,319 @@ def snippet_for_set_settings
     Algolia::Search::IndexSettings.new(
       attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
     )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# ranking closest dates
+def snippet_for_set_settings35
+  # >SEPARATOR setSettings ranking closest dates
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      ranking: ["asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributes item variation
+def snippet_for_set_settings36
+  # >SEPARATOR setSettings searchableAttributes item variation
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["design", "type", "color"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributes around location
+def snippet_for_set_settings37
+  # >SEPARATOR setSettings searchableAttributes around location
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      searchable_attributes: ["name", "country", "code", "iata_code"],
+      custom_ranking: ["desc(links_count)"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributes around location
+def snippet_for_set_settings38
+  # >SEPARATOR setSettings searchableAttributes around location
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      searchable_attributes: ["name", "country", "code", "iata_code"],
+      custom_ranking: ["desc(links_count)"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# disableTypoToleranceOnAttributes
+def snippet_for_set_settings39
+  # >SEPARATOR setSettings disableTypoToleranceOnAttributes
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(disable_typo_tolerance_on_attributes: ["serial_number"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributesWithCustomRankingsAndAttributesForFaceting
+def snippet_for_set_settings40
+  # >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      searchable_attributes: ["brand", "name", "categories", "unordered(description)"],
+      custom_ranking: ["desc(popularity)"],
+      attributes_for_faceting: ["searchable(brand)", "type", "categories", "price"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributesProductReferenceSuffixes
+def snippet_for_set_settings41
+  # >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      searchable_attributes: ["name", "product_reference", "product_reference_suffixes"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# queryLanguageAndIgnorePlurals
+def snippet_for_set_settings42
+  # >SEPARATOR setSettings queryLanguageAndIgnorePlurals
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(query_languages: ["en"], ignore_plurals: true)
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributesInMovies
+def snippet_for_set_settings43
+  # >SEPARATOR setSettings searchableAttributesInMovies
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["title_eng", "title_fr", "title_es"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# disablePrefixOnAttributes
+def snippet_for_set_settings44
+  # >SEPARATOR setSettings disablePrefixOnAttributes
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(disable_prefix_on_attributes: ["serial_number"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# disableTypoToleranceOnAttributes
+def snippet_for_set_settings45
+  # >SEPARATOR setSettings disableTypoToleranceOnAttributes
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(disable_typo_tolerance_on_attributes: ["serial_number"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributesSimpleExample
+def snippet_for_set_settings46
+  # >SEPARATOR setSettings searchableAttributesSimpleExample
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["serial_number"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# searchableAttributesSimpleExampleAlt
+def snippet_for_set_settings47
+  # >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(searchable_attributes: ["serial_number", "serial_number_suffixes"])
   )
 
   # >LOG

@@ -187,88 +187,88 @@
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion\""
     },
     "createAuthentication": {
-      "default": "response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(\n\n  ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"oauth\")).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n    ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\"))),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(\n\n  ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"oauth\")).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n    ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\")))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createDestination": {
-      "default": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(ingestion.DestinationIndexNameAsDestinationInput(\n    ingestion.NewEmptyDestinationIndexName().SetIndexName(\"<YOUR_INDEX_NAME>\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(ingestion.DestinationIndexNameAsDestinationInput(\n    ingestion.NewEmptyDestinationIndexName().SetIndexName(\"<YOUR_INDEX_NAME>\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createSource": {
-      "default": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTask": {
-      "default": "response, err := client.CreateTask(client.NewApiCreateTaskRequest(\n\n  ingestion.NewEmptyTaskCreate().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetAction(ingestion.ActionType(\"replace\")),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateTask(client.NewApiCreateTaskRequest(\n\n  ingestion.NewEmptyTaskCreate().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetAction(ingestion.ActionType(\"replace\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTaskV1": {
-      "default": "response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(\n\n  ingestion.NewEmptyTaskCreateV1().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType(\"onDemand\")))).SetAction(ingestion.ActionType(\"replace\")),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(\n\n  ingestion.NewEmptyTaskCreateV1().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType(\"onDemand\")))).SetAction(ingestion.ActionType(\"replace\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTransformation": {
-      "default": "response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(\n\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(\n\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
-      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteAuthentication": {
-      "default": "response, err := client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteDestination": {
-      "default": "response, err := client.DeleteDestination(client.NewApiDeleteDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteDestination(client.NewApiDeleteDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteSource": {
-      "default": "response, err := client.DeleteSource(client.NewApiDeleteSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteSource(client.NewApiDeleteSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteTask": {
-      "default": "response, err := client.DeleteTask(client.NewApiDeleteTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteTask(client.NewApiDeleteTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteTaskV1": {
-      "default": "response, err := client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteTransformation": {
-      "default": "response, err := client.DeleteTransformation(client.NewApiDeleteTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteTransformation(client.NewApiDeleteTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "disableTask": {
-      "default": "response, err := client.DisableTask(client.NewApiDisableTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DisableTask(client.NewApiDisableTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "disableTaskV1": {
-      "default": "response, err := client.DisableTaskV1(client.NewApiDisableTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DisableTaskV1(client.NewApiDisableTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "enableTask": {
-      "default": "response, err := client.EnableTask(client.NewApiEnableTaskRequest(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.EnableTask(client.NewApiEnableTaskRequest(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "enableTaskV1": {
-      "default": "response, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getAuthentication": {
-      "default": "response, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getDestination": {
-      "default": "response, err := client.GetDestination(client.NewApiGetDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetDestination(client.NewApiGetDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getEvent": {
-      "default": "response, err := client.GetEvent(client.NewApiGetEventRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetEvent(client.NewApiGetEventRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRun": {
-      "default": "response, err := client.GetRun(client.NewApiGetRunRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetRun(client.NewApiGetRunRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSource": {
-      "default": "response, err := client.GetSource(client.NewApiGetSourceRequest(\n  \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetSource(client.NewApiGetSourceRequest(\n  \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTask": {
-      "default": "response, err := client.GetTask(client.NewApiGetTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTask(client.NewApiGetTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTaskV1": {
-      "default": "response, err := client.GetTaskV1(client.NewApiGetTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTaskV1(client.NewApiGetTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTransformation": {
-      "default": "response, err := client.GetTransformation(client.NewApiGetTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTransformation(client.NewApiGetTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listAuthentications": {
       "default": "response, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -277,7 +277,7 @@
       "default": "response, err := client.ListDestinations(client.NewApiListDestinationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listEvents": {
-      "default": "response, err := client.ListEvents(client.NewApiListEventsRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListEvents(client.NewApiListEventsRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listRuns": {
       "default": "response, err := client.ListRuns(client.NewApiListRunsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -295,70 +295,70 @@
       "default": "response, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "pushTask": {
-      "default": "response, err := client.PushTask(client.NewApiPushTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.PushTask(client.NewApiPushTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "runSource": {
-      "default": "response, err := client.RunSource(client.NewApiRunSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n).WithRunSourcePayload(\n  ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(\n    []string{\"products_us\", \"products eu\"}).SetEntityIDs(\n    []string{\"1234\", \"5678\"}).SetEntityType(ingestion.EntityType(\"product\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.RunSource(client.NewApiRunSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\").WithRunSourcePayload(\n  ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(\n    []string{\"products_us\", \"products eu\"}).SetEntityIDs(\n    []string{\"1234\", \"5678\"}).SetEntityType(ingestion.EntityType(\"product\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "runTask": {
-      "default": "response, err := client.RunTask(client.NewApiRunTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.RunTask(client.NewApiRunTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "runTaskV1": {
-      "default": "response, err := client.RunTaskV1(client.NewApiRunTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.RunTaskV1(client.NewApiRunTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchAuthentications": {
-      "default": "response, err := client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(\n\n  ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(\n\n  ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchDestinations": {
-      "default": "response, err := client.SearchDestinations(client.NewApiSearchDestinationsRequest(\n\n  ingestion.NewEmptyDestinationSearch().SetDestinationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchDestinations(client.NewApiSearchDestinationsRequest(\n\n  ingestion.NewEmptyDestinationSearch().SetDestinationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSources": {
-      "default": "response, err := client.SearchSources(client.NewApiSearchSourcesRequest(\n\n  ingestion.NewEmptySourceSearch().SetSourceIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchSources(client.NewApiSearchSourcesRequest(\n\n  ingestion.NewEmptySourceSearch().SetSourceIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchTasks": {
-      "default": "response, err := client.SearchTasks(client.NewApiSearchTasksRequest(\n\n  ingestion.NewEmptyTaskSearch().SetTaskIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchTasks(client.NewApiSearchTasksRequest(\n\n  ingestion.NewEmptyTaskSearch().SetTaskIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchTasksV1": {
-      "default": "response, err := client.SearchTasksV1(client.NewApiSearchTasksV1Request(\n\n  ingestion.NewEmptyTaskSearch().SetTaskIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchTasksV1(client.NewApiSearchTasksV1Request(\n\n  ingestion.NewEmptyTaskSearch().SetTaskIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchTransformations": {
-      "default": "response, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(\n\n  ingestion.NewEmptyTransformationSearch().SetTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(\n\n  ingestion.NewEmptyTransformationSearch().SetTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "triggerDockerSourceDiscover": {
-      "default": "response, err := client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "tryTransformation": {
-      "default": "response, err := client.TryTransformation(client.NewApiTryTransformationRequest(\n\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.TryTransformation(client.NewApiTryTransformationRequest(\n\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "tryTransformationBeforeUpdate": {
-      "default": "response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateAuthentication": {
-      "default": "response, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyAuthenticationUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyAuthenticationUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateDestination": {
-      "default": "response, err := client.UpdateDestination(client.NewApiUpdateDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyDestinationUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateDestination(client.NewApiUpdateDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyDestinationUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateSource": {
-      "default": "response, err := client.UpdateSource(client.NewApiUpdateSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateSource(client.NewApiUpdateSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateTask": {
-      "default": "response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron(\"* * * * *\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron(\"* * * * *\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateTaskV1": {
-      "default": "response, err := client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdateV1().SetEnabled(false),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateTransformation": {
-      "default": "response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "validateSource": {
       "default": "response, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "validateSourceBeforeUpdate": {
-      "default": "response, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := ingestion.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
@@ -1387,7 +1387,7 @@
       "default": "response = client.list_transformations"
     },
     "pushTask": {
-      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      Algolia::Ingestion::PushTaskRecords.new(key: \"bar\", foo: \"1\", object_id: \"o\"),\n      Algolia::Ingestion::PushTaskRecords.new(key: \"baz\", foo: \"2\", object_id: \"k\")\n    ]\n  )\n)"
+      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      Algolia::Ingestion::PushTaskRecords.new(key: \"bar\", foo: \"1\", algolia_object_id: \"o\"),\n      Algolia::Ingestion::PushTaskRecords.new(key: \"baz\", foo: \"2\", algolia_object_id: \"k\")\n    ]\n  )\n)"
     },
     "runSource": {
       "default": "response = client.run_source(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::RunSourcePayload.new(\n    index_to_include: [\"products_us\", \"products eu\"],\n    entity_ids: [\"1234\", \"5678\"],\n    entity_type: \"product\"\n  )\n)"
