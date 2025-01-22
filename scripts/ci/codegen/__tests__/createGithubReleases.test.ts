@@ -7,6 +7,8 @@ describe('createGithubRelease', () => {
   });
 
   it('generates a release', async () => {
+    vi.stubEnv('GITHUB_TOKEN', 'token');
+
     const createRelease = vi.fn().mockResolvedValue(undefined);
     const octokit = {
       repos: {
