@@ -46,6 +46,18 @@
       "objects": "$var: playlists"
     }
   },
+  "saveObjectsPlaylistsWithUserIDPublic": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "indexName",
+      "objects": "$var: playlists"
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "*"
+      }
+    }
+  },
   "saveObjectsPlaylistsWithRequestOptions": {
     "method": "saveObjects",
     "parameters": {

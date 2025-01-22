@@ -1,0 +1,17 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func saveObjectsPublicUser() async throws {
+  do {
+    {{> snippets/init}}
+
+    {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
+  } catch {
+    print(error)
+  }
+}
