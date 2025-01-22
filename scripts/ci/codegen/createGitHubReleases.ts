@@ -4,11 +4,12 @@ import { isPreRelease } from '../../release/versionsHistory.ts';
 import type { Language } from '../../types.ts';
 import { cloneRepository } from '../utils.ts';
 
+import type { Octokit } from '@octokit/rest';
 import { resolve } from 'path';
 import { stripCommitMessage } from '../../release/common.ts';
 import { commitStartRelease } from './text.ts';
 
-async function createGitHubRelease(lang: Language): Promise<void> {
+export async function createGitHubRelease(octokit: Octokit, lang: Language): Promise<void> {
   // **Full Changelog**:
 
   const githubToken = ensureGitHubToken();
@@ -30,7 +31,7 @@ async function createGitHubRelease(lang: Language): Promise<void> {
   }
 
   const newVersion = tags[0];
-  const isMajor = newVersion.endsWith('0.0');
+  const isMajor = newVersion.endsWith('.0.0');
   let previousVersion = '';
 
   // if we are not on the major, we create a release for the last version, otherwise we get every versions of the pre release
@@ -49,7 +50,11 @@ async function createGitHubRelease(lang: Language): Promise<void> {
     throw new Error('unable to find changelog');
   }
 
-  const changelog = [...fullChangelog][0][1].trim().replaceAll(/- \[/g, '* [');
+  // extract the last changelog block, and format it to make the contribution visible in the release
+  const changelog = [...fullChangelog][0][1]
+    .trim()
+    .replaceAll(/- \[/g, '* [')
+    .replaceAll(/by \[(.*?)\]\(https:\/\/github\.com.*?\)/g, 'by $1');
 
   const repository = `algoliasearch-client-${lang}`;
   const repositoryLink = `https://github.com/${OWNER}/${repository}`;
@@ -64,7 +69,7 @@ ${stripCommitMessage(changelog)}
 `;
 
   try {
-    await getOctokit().repos.createRelease({
+    await octokit.repos.createRelease({
       owner: OWNER,
       repo: repository,
       tag_name: newVersion,
@@ -95,7 +100,7 @@ async function createGitHubReleases(languagesReleased: Language[]): Promise<void
     languagesReleased.map(async (lang) => {
       console.log(`> creating GitHub release for ${lang}`);
 
-      return await createGitHubRelease(lang);
+      return await createGitHubRelease(getOctokit(), lang);
     }),
   );
 }
