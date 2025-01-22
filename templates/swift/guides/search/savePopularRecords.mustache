@@ -1,0 +1,29 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func savePopularRecords() async throws {
+  do {
+    {{> snippets/init}}
+
+    var records: [Record] = []
+
+    try await client.browseObjects(indexName: indexName, browseParams: BrowseParamsObject(), aggregator: { (response: BrowseResponse<Record>) in
+        records.append(contentsOf: response.hits.map {
+            $0.nbFollowers < 1_000_000 ? $0 : Record(
+                twitterHandle: $0.twitterHandle,
+                nbFollowers: $0.nbFollowers,
+                isPopular: true
+            )
+        })
+    })
+
+    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+  } catch {
+    print(error)
+  }
+}

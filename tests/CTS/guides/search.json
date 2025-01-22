@@ -31,5 +31,12 @@
       "indexName": "indexName",
       "searchParams": "$var: searchParams"
     }
+  },
+  "saveObjectsRecords": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "indexName",
+      "objects": "$var: records"
+    }
   }
 }
