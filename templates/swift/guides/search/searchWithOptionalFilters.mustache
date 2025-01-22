@@ -1,0 +1,23 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func searchWithOptionalFilters() async throws {
+  do {
+    {{> snippets/init}}
+
+    let optionalFilters = reduceLabelsToFilters(labels)
+    let searchParams = SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", optionalFilters: optionalFilters)
+    )
+
+    let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+    print(response)
+  } catch {
+    print(error)
+  }
+}
