@@ -235,7 +235,7 @@
           "consequence": {
             "params": {
               "query": {
-                "remove": "toaster"
+                "remove": ["toaster"]
               },
               "filters": "product_type:toaster"
             }
@@ -250,7 +250,7 @@
           "consequence": {
             "params": {
               "query": {
-                "remove": "cheap"
+                "remove": ["cheap"]
               },
               "filters": "price < 15"
             }
@@ -271,7 +271,7 @@
           "consequence": {
             "params": {
               "query": {
-                "remove": "toaster"
+                "remove": ["toaster"]
               },
               "filters": "product_type:toaster"
             }
@@ -286,7 +286,7 @@
           "consequence": {
             "params": {
               "query": {
-                "remove": "cheap"
+                "remove": ["cheap"] 
               },
               "filters": "price < 15"
             }
