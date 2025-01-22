@@ -16,7 +16,7 @@ object Main {
     implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
 
     // Fetch sample dataset
-    val url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
+    val url = "https://dashboard.algolia.com/sample_datasets/movie.json"
     val result = Source.fromURL(url).mkString
     val movies = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
 

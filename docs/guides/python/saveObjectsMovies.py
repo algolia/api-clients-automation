@@ -5,7 +5,7 @@ from algoliasearch.search.client import SearchClientSync
 
 async def main():
     # Fetch sample dataset
-    url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
+    url = "https://dashboard.algolia.com/sample_datasets/movie.json"
     movies = requests.get(url).json()
 
     # Connect and authenticate with your Algolia app

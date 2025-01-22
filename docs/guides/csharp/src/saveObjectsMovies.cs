@@ -10,7 +10,7 @@ class SaveObjectsMovies
   public static async Task Main(string[] args)
   {
     // read json file from url
-    var url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie";
+    var url = "https://dashboard.algolia.com/sample_datasets/movie.json";
     var httpClient = new HttpClient();
     var response = await httpClient.GetAsync(url);
     var content = await response.Content.ReadAsStringAsync();

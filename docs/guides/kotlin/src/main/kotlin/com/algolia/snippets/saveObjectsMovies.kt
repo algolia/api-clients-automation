@@ -8,7 +8,7 @@ import kotlinx.serialization.json.JsonObject
 import java.net.URI
 
 suspend fun main() {
-  val url = URI.create("https://dashboard.algolia.com/api/1/sample_datasets?type=movie")
+  val url = URI.create("https://dashboard.algolia.com/sample_datasets/movie.json")
   val json = url.toURL().readText()
   val movies: List<JsonObject> = Json.decodeFromString(ListSerializer(JsonObject.serializer()), json)
 

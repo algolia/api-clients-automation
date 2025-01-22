@@ -9,7 +9,7 @@ void main() async {
 
   // read json file from url
   final datasetRequest = await http.get(
-      Uri.parse('https://dashboard.algolia.com/api/1/sample_datasets?type=movie'));
+      Uri.parse('https://dashboard.algolia.com/sample_datasets/movie.json'));
 
   if (datasetRequest.statusCode == 200) {
     final moviesData = jsonDecode(datasetRequest.body);

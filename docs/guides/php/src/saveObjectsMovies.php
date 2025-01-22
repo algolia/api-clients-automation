@@ -3,7 +3,7 @@ require(__DIR__."/vendor/autoload.php");
 use Algolia\AlgoliaSearch\Api\SearchClient;
 
 // Fetch sample dataset
-$url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie";
+$url = "https://dashboard.algolia.com/sample_datasets/movie.json";
 $response = file_get_contents($url);
 $movies = json_decode($response, true);
 
