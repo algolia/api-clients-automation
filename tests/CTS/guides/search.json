@@ -5,5 +5,12 @@
       "indexName": "movies_index",
       "objects": "$var: movies"
     }
+  },
+  "saveObjectsChunks": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "actors",
+      "objects": "$var: chunks"
+    }
   }
 }
