@@ -6,13 +6,13 @@ import Foundation
 import Core
 {{> snippets/import}}
 
-func searchRecentlyPublishedBooks() async throws {
+func searchWithRuleContexts() async throws {
   do {
     {{> snippets/init}}
 
-    let dateTimestamp = Int(Date().timeIntervalSince1970)
+    let platformTag = getPlatformTag()
     let searchParams = SearchSearchParams.searchSearchParamsObject(
-      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", filters: "date_timestamp > \(dateTimestamp)")
+      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", ruleContexts: [platformTag])
     )
 
     let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
