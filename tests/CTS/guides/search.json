@@ -12,5 +12,17 @@
       "indexName": "actors",
       "objects": "$var: chunks"
     }
+  },
+  "deleteMultipleIndicesPrimary": {
+    "method": "multipleBatch",
+    "parameters": {
+      "requests": "$var: requests"
+    }
+  },
+  "deleteMultipleIndicesReplica": {
+    "method": "multipleBatch",
+    "parameters": {
+      "requests": "$var: requests"
+    }
   }
 }
