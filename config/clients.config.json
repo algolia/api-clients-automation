@@ -3,6 +3,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -31,6 +32,10 @@
       {
         "name": "algoliasearch",
         "output": "clients/algoliasearch-client-dart/packages/algoliasearch"
+      },
+      {
+        "name": "composition",
+        "output": "clients/algoliasearch-client-dart/packages/client_composition"
       },
       {
         "name": "insights",
@@ -64,6 +69,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -91,6 +97,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -135,6 +142,10 @@
         "output": "clients/algoliasearch-client-javascript/packages/client-analytics"
       },
       {
+        "name": "composition",
+        "output": "clients/algoliasearch-client-javascript/packages/composition"
+      },
+      {
         "name": "ingestion",
         "output": "clients/algoliasearch-client-javascript/packages/ingestion"
       },
@@ -163,7 +174,7 @@
         "output": "clients/algoliasearch-client-javascript/packages/client-search"
       },
       {
-        "name": "composition",
+        "name": "composition-full",
         "output": "clients/algoliasearch-client-javascript/packages/client-composition"
       }
     ],
@@ -185,6 +196,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -212,6 +224,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -239,6 +252,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -273,6 +287,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -300,6 +315,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",

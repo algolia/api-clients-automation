@@ -179,7 +179,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       System.exit(1);
     }
 
-    additionalProperties.put("isSearchClient", CLIENT.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
 
     additionalProperties.put(RESPONSE_AS, new String[] { RESPONSE_LIBRARY_ASYNC_AWAIT });
@@ -301,14 +301,14 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
     Helpers.removeHelpers(operations);
-    GenericPropagator.propagateGenericsToOperations(operations, models);
+    GenericPropagator.propagateGenericsToOperations("swift", CLIENT, operations, models);
     return operations;
   }
 
   @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    GenericPropagator.propagateGenericsToModels(models);
+    GenericPropagator.propagateGenericsToModels("swift", CLIENT, models);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
     return models;

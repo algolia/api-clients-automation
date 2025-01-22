@@ -5,7 +5,7 @@ import { createNullLogger, createMemoryCache, createFallbackableCache, createBro
 
 import type { ClientOptions } from '@algolia/client-common';
 
-import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{clientName}}';
+import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}{{^isCompositionFullClient}}{{clientName}}{{/isCompositionFullClient}}';
 
 {{#hasRegionalHost}}
 import { REGIONS } from '../src/{{clientName}}';
@@ -22,7 +22,7 @@ export {
   isScheduleTrigger,
   isSubscriptionTrigger,
   {{/isIngestionClient}}
-} from '../src/{{clientName}}';
+} from '../src/{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}{{^isCompositionFullClient}}{{clientName}}{{/isCompositionFullClient}}';
 
 export * from '../model';
 
