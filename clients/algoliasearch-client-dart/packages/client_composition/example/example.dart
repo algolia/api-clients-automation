@@ -7,7 +7,7 @@ void main() async {
     apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
   );
 
-  final compositions = await composition.search(
+  await composition.search(
     compositionID: "foo",
     requestBody: RequestBody(
       params: Params(
