@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:algolia_client_recommend/src/version.dart';
+import 'package:algolia_client_composition/src/version.dart';
 import 'package:test/test.dart';
 
 void main() {
