@@ -826,7 +826,7 @@
       "method": "PUT",
       "body": {
         "replicas": [
-            "products_price_desc"
+            "virtual(products_price_desc)"
         ]
       }
     }

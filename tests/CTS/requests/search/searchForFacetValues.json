@@ -30,5 +30,22 @@
         "maxFacetHits": 42
       }
     }
+  },
+  {
+    "testName": "facetName and facetQuery",
+    "parameters": {
+      "indexName": "indexName",
+      "facetName": "author",
+      "searchForFacetValuesRequest": {
+        "facetQuery": "stephen king"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/facets/author/query",
+      "method": "POST",
+      "body": {
+        "facetQuery": "stephen king"
+      }
+    }
   }
 ]
