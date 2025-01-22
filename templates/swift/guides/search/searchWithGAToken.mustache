@@ -1,0 +1,29 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func searchWithGAToken() async throws {
+  do {
+    {{> snippets/init}}
+
+    let userToken = getGoogleAnalyticsUserIdFromBrowserCookie("_ga");
+    var searchParams = SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", userToken: userToken)
+    )
+
+    let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+
+    let loggedInUser: String? = "..."
+    searchParams = SearchSearchParams.searchSearchParamsObject(
+        SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", userToken: loggedInUser ?? userToken)
+    )
+
+    let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  } catch {
+    print(error)
+  }
+}
