@@ -24,5 +24,12 @@
     "parameters": {
       "requests": "$var: requests"
     }
+  },
+  "searchRecentlyPublishedBooks": {
+    "method": "searchSingleIndex",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": "$var: searchParams"
+    }
   }
 }
