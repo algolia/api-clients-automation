@@ -1,0 +1,32 @@
+import scala.io.Source
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+{{> snippets/import}}
+import algoliasearch.extension.SearchClientExtensions
+
+import org.json4s.native.JsonMethods
+import org.json4s.jvalue2extractable
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+    implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+
+    val result = Source.fromFile("records.json").getLines().mkString
+    val records = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
+
+    {{> snippets/init}}
+
+    records.grouped(10000).foreach { chunks =>
+      try {
+        Await.result(
+          {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}},
+          Duration(100, "sec")
+        )
+      } catch {
+        case e: Exception => println(e)
+      }
+    }
+  }
+}
