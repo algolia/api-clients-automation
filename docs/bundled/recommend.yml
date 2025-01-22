@@ -2445,7 +2445,6 @@ paths:
               title: rules
               type: array
               description: Recommend rules.
-              additionalProperties: false
               items:
                 $ref: '#/components/schemas/RecommendRule'
       responses:
