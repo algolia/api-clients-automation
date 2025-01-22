@@ -1,0 +1,19 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func setHeaderUserIDThenSaveObjects() async throws {
+  do {
+    {{> snippets/init}}
+
+    for playlist in playlists {
+      {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+    }
+  } catch {
+    print(error)
+  }
+}
