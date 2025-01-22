@@ -354,6 +354,57 @@
     }
   },
   {
+    "testName": "facet author genre",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "facets":["author","genre"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "facets":["author","genre"]
+      }
+    }
+  },
+  {
+    "testName": "facet wildcard",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "facets":["*"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "facets":["*"]
+      }
+    }
+  },
+  {
+    "testName": "maxValuesPerFacet",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "maxValuesPerFacet":1000
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "maxValuesPerFacet":1000
+      }
+    }
+  },
+  {
     "testName": "aroundLatLng",
     "isSnippet": true,
     "parameters": {

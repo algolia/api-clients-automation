@@ -811,6 +811,27 @@
     }
   },
   {
+    "testName": "create virtual replica index",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "replicas": [
+            "virtual(products_price_desc)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "replicas": [
+            "products_price_desc"
+        ]
+      }
+    }
+  },
+  {
     "testName": "unlink replica index",
     "isSnippet": true,
     "parameters": {
