@@ -38,5 +38,19 @@
       "indexName": "indexName",
       "objects": "$var: records"
     }
+  },
+  "saveObjectsPlaylists": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "indexName",
+      "objects": "$var: playlists"
+    }
+  },
+  "setSettings": {
+    "method": "setSettings",
+    "parameters": {
+      "indexName": "indexName",
+      "indexSettings": "$var: settings"
+    }
   }
 }

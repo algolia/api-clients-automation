@@ -1,0 +1,22 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func setSettingsThenSaveObjects() async throws {
+  do {
+    {{> snippets/init}}
+
+    let settings = IndexSettings(
+      attributesForFaceting: ["filterOnly(user)"]
+    )
+    {{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+
+    {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+  } catch {
+    print(error)
+  }
+}
