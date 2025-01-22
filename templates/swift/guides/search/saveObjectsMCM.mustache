@@ -1,0 +1,25 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func saveObjectsMCM() async throws {
+    // Fetch from your own data storage and with your own code
+    // the list of application IDs and API keys to target each cluster
+    let configurations = getAllAppIDConfigurations();
+
+    // Send the records to each cluster
+    for (appID, apiKey) in configurations {
+      do {
+        let client = try SearchClient(appID: appID, apiKey: apiKey)
+
+        {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+      } catch {
+        print(error)
+      }
+    }
+
+}
