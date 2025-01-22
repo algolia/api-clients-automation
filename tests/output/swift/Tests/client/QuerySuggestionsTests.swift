@@ -22,6 +22,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -44,6 +45,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -115,6 +117,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
         do {
             let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -123,10 +126,11 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
             XCTAssertEqual(comparableJSON, responseBodyJSON)
         }
         do {
-            try client.setClientApiKey(apiKey: "updated-api-key")
+            let _ = try client.setClientApiKey(apiKey: "updated-api-key")
         }
         do {
             let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 

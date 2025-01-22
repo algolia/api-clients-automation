@@ -158,7 +158,7 @@ describe('deleteObjects', () => {
 });
 
 describe('generateSecuredApiKey', () => {
-  test('generate secured api key basic', async () => {
+  test('api key basic', async () => {
     const client = createClient();
 
     {
@@ -173,7 +173,7 @@ describe('generateSecuredApiKey', () => {
     }
   }, 15000);
 
-  test('generate secured api key with searchParams', async () => {
+  test('with searchParams', async () => {
     const client = createClient();
 
     {
@@ -199,6 +199,39 @@ describe('generateSecuredApiKey', () => {
       expect(result).toEqual(
         'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
       );
+    }
+  }, 15000);
+
+  test('with filters', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+        restrictions: { filters: 'user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)' },
+      });
+    }
+  }, 15000);
+
+  test('with visible_by filter', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+        restrictions: { filters: 'visible_by:group/Finance' },
+      });
+    }
+  }, 15000);
+
+  test('with userID', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+        restrictions: { userToken: 'user42' },
+      });
     }
   }, 15000);
 });
@@ -550,6 +583,67 @@ describe('saveObjects', () => {
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('Invalid Application-ID or API key');
+    }
+  }, 15000);
+
+  test('saveObjectsPlaylist', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.saveObjects({
+        indexName: 'playlists',
+        objects: [
+          {
+            objectID: '1',
+            visibility: 'public',
+            name: 'Hot 100 Billboard Charts',
+            playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+            createdAt: '1500240452',
+          },
+        ],
+      });
+    }
+  }, 15000);
+
+  test('saveObjectsPublicUser', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.saveObjects(
+        {
+          indexName: 'playlists',
+          objects: [
+            {
+              objectID: '1',
+              visibility: 'public',
+              name: 'Hot 100 Billboard Charts',
+              playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+              createdAt: '1500240452',
+            },
+          ],
+        },
+        {
+          headers: { 'X-Algolia-User-ID': '*' },
+        },
+      );
     }
   }, 15000);
 });

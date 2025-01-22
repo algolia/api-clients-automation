@@ -211,9 +211,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -454,9 +452,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -697,9 +693,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -935,9 +929,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1236,9 +1228,7 @@ paths:
 
               recommend.NewEmptyGetRecommendationsParams().SetRequests(
                 []recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-                  recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
-            ))
-
+                  recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1564,9 +1554,7 @@ paths:
 
             response, err :=
             client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1877,9 +1865,7 @@ paths:
 
             response, err :=
             client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345,
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2215,9 +2201,7 @@ paths:
 
             response, err :=
             client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2498,9 +2482,7 @@ paths:
 
             response, err :=
             client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
             if err != nil {
               // handle the eventual error
               panic(err)

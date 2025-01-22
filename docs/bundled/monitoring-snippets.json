@@ -55,37 +55,37 @@
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/monitoring\""
     },
     "customDelete": {
-      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getClusterIncidents": {
-      "default": "response, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(\n  \"c1-de\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getClusterStatus": {
-      "default": "response, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(\n  \"c1-de\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getIncidents": {
       "default": "response, err := client.GetIncidents()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getIndexingTime": {
-      "default": "response, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(\n  \"c1-de\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getLatency": {
-      "default": "response, err := client.GetLatency(client.NewApiGetLatencyRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetLatency(client.NewApiGetLatencyRequest(\n  \"c1-de\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getMetrics": {
-      "default": "response, err := client.GetMetrics(client.NewApiGetMetricsRequest(\n  monitoring.Metric(\"avg_build_time\"), monitoring.Period(\"minute\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetMetrics(client.NewApiGetMetricsRequest(\n  monitoring.Metric(\"avg_build_time\"), monitoring.Period(\"minute\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getReachability": {
-      "default": "response, err := client.GetReachability(client.NewApiGetReachabilityRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetReachability(client.NewApiGetReachabilityRequest(\n  \"c1-de\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getServers": {
       "default": "response, err := client.GetServers()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -94,7 +94,7 @@
       "default": "response, err := client.GetStatus()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := monitoring.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"

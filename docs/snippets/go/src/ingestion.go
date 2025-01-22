@@ -25,8 +25,7 @@ func SnippetForCreateAuthenticationOfIngestion() {
 	response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
 
 		ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-			ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
-	))
+			ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -56,8 +55,7 @@ func SnippetForCreateDestinationOfIngestion() {
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
 		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
-	))
+			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -89,8 +87,7 @@ func SnippetForCreateSourceOfIngestion() {
 		ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
 			ingestion.NewEmptySourceCommercetools().SetStoreKeys(
 				[]string{"myStore"}).SetLocales(
-				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
-	))
+				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -119,8 +116,7 @@ func SnippetForCreateTaskOfIngestion() {
 	// Call the API
 	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace")),
-	))
+		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace"))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -150,8 +146,7 @@ func SnippetForCreateTaskV1OfIngestion() {
 	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
 
 		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")),
-	))
+			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -180,8 +175,7 @@ func SnippetForCreateTransformationOfIngestion() {
 	// Call the API
 	response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(
 
-		ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz"),
-	))
+		ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -209,8 +203,7 @@ func SnippetForCustomDeleteOfIngestion() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -238,8 +231,7 @@ func SnippetForCustomGetOfIngestion() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -267,8 +259,7 @@ func SnippetForCustomPostOfIngestion() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -296,8 +287,7 @@ func SnippetForCustomPutOfIngestion() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -325,8 +315,7 @@ func SnippetForDeleteAuthenticationOfIngestion() {
 
 	// Call the API
 	response, err := client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -354,8 +343,7 @@ func SnippetForDeleteDestinationOfIngestion() {
 
 	// Call the API
 	response, err := client.DeleteDestination(client.NewApiDeleteDestinationRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -383,8 +371,7 @@ func SnippetForDeleteSourceOfIngestion() {
 
 	// Call the API
 	response, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -412,8 +399,7 @@ func SnippetForDeleteTaskOfIngestion() {
 
 	// Call the API
 	response, err := client.DeleteTask(client.NewApiDeleteTaskRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -441,8 +427,7 @@ func SnippetForDeleteTaskV1OfIngestion() {
 
 	// Call the API
 	response, err := client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -470,8 +455,7 @@ func SnippetForDeleteTransformationOfIngestion() {
 
 	// Call the API
 	response, err := client.DeleteTransformation(client.NewApiDeleteTransformationRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -499,8 +483,7 @@ func SnippetForDisableTaskOfIngestion() {
 
 	// Call the API
 	response, err := client.DisableTask(client.NewApiDisableTaskRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -528,8 +511,7 @@ func SnippetForDisableTaskV1OfIngestion() {
 
 	// Call the API
 	response, err := client.DisableTaskV1(client.NewApiDisableTaskV1Request(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -557,8 +539,7 @@ func SnippetForEnableTaskOfIngestion() {
 
 	// Call the API
 	response, err := client.EnableTask(client.NewApiEnableTaskRequest(
-		"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-	))
+		"76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -586,8 +567,7 @@ func SnippetForEnableTaskV1OfIngestion() {
 
 	// Call the API
 	response, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(
-		"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-	))
+		"76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -615,8 +595,7 @@ func SnippetForGetAuthenticationOfIngestion() {
 
 	// Call the API
 	response, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -644,8 +623,7 @@ func SnippetForGetDestinationOfIngestion() {
 
 	// Call the API
 	response, err := client.GetDestination(client.NewApiGetDestinationRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -673,8 +651,7 @@ func SnippetForGetEventOfIngestion() {
 
 	// Call the API
 	response, err := client.GetEvent(client.NewApiGetEventRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -702,8 +679,7 @@ func SnippetForGetRunOfIngestion() {
 
 	// Call the API
 	response, err := client.GetRun(client.NewApiGetRunRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -731,8 +707,7 @@ func SnippetForGetSourceOfIngestion() {
 
 	// Call the API
 	response, err := client.GetSource(client.NewApiGetSourceRequest(
-		"75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-	))
+		"75eeb306-51d3-4e5e-a279-3c92bd8893ac"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -760,8 +735,7 @@ func SnippetForGetTaskOfIngestion() {
 
 	// Call the API
 	response, err := client.GetTask(client.NewApiGetTaskRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -789,8 +763,7 @@ func SnippetForGetTaskV1OfIngestion() {
 
 	// Call the API
 	response, err := client.GetTaskV1(client.NewApiGetTaskV1Request(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -818,8 +791,7 @@ func SnippetForGetTransformationOfIngestion() {
 
 	// Call the API
 	response, err := client.GetTransformation(client.NewApiGetTransformationRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -901,8 +873,7 @@ func SnippetForListEventsOfIngestion() {
 
 	// Call the API
 	response, err := client.ListEvents(client.NewApiListEventsRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1067,8 +1038,7 @@ func SnippetForPushTaskOfIngestion() {
 	response, err := client.PushTask(client.NewApiPushTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")}),
-	))
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1096,8 +1066,7 @@ func SnippetForRunSourceOfIngestion() {
 
 	// Call the API
 	response, err := client.RunSource(client.NewApiRunSourceRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	).WithRunSourcePayload(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f").WithRunSourcePayload(
 		ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(
 			[]string{"products_us", "products eu"}).SetEntityIDs(
 			[]string{"1234", "5678"}).SetEntityType(ingestion.EntityType("product"))))
@@ -1128,8 +1097,7 @@ func SnippetForRunTaskOfIngestion() {
 
 	// Call the API
 	response, err := client.RunTask(client.NewApiRunTaskRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1157,8 +1125,7 @@ func SnippetForRunTaskV1OfIngestion() {
 
 	// Call the API
 	response, err := client.RunTaskV1(client.NewApiRunTaskV1Request(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1188,8 +1155,7 @@ func SnippetForSearchAuthenticationsOfIngestion() {
 	response, err := client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(
 
 		ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(
-			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
-	))
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1219,8 +1185,7 @@ func SnippetForSearchDestinationsOfIngestion() {
 	response, err := client.SearchDestinations(client.NewApiSearchDestinationsRequest(
 
 		ingestion.NewEmptyDestinationSearch().SetDestinationIDs(
-			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
-	))
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1250,8 +1215,7 @@ func SnippetForSearchSourcesOfIngestion() {
 	response, err := client.SearchSources(client.NewApiSearchSourcesRequest(
 
 		ingestion.NewEmptySourceSearch().SetSourceIDs(
-			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
-	))
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1281,8 +1245,7 @@ func SnippetForSearchTasksOfIngestion() {
 	response, err := client.SearchTasks(client.NewApiSearchTasksRequest(
 
 		ingestion.NewEmptyTaskSearch().SetTaskIDs(
-			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-	))
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1312,8 +1275,7 @@ func SnippetForSearchTasksV1OfIngestion() {
 	response, err := client.SearchTasksV1(client.NewApiSearchTasksV1Request(
 
 		ingestion.NewEmptyTaskSearch().SetTaskIDs(
-			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-	))
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1343,8 +1305,7 @@ func SnippetForSearchTransformationsOfIngestion() {
 	response, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(
 
 		ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
-			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-	))
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1372,8 +1333,7 @@ func SnippetForSetClientApiKeyOfIngestion() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1399,8 +1359,7 @@ func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 
 	// Call the API
 	response, err := client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1429,8 +1388,7 @@ func SnippetForTryTransformationOfIngestion() {
 	// Call the API
 	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
-		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
-	))
+		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1459,8 +1417,7 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	// Call the API
 	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
-	))
+		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1489,8 +1446,7 @@ func SnippetForUpdateAuthenticationOfIngestion() {
 	// Call the API
 	response, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyAuthenticationUpdate().SetName("newName"),
-	))
+		ingestion.NewEmptyAuthenticationUpdate().SetName("newName")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1519,8 +1475,7 @@ func SnippetForUpdateDestinationOfIngestion() {
 	// Call the API
 	response, err := client.UpdateDestination(client.NewApiUpdateDestinationRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyDestinationUpdate().SetName("newName"),
-	))
+		ingestion.NewEmptyDestinationUpdate().SetName("newName")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1549,8 +1504,7 @@ func SnippetForUpdateSourceOfIngestion() {
 	// Call the API
 	response, err := client.UpdateSource(client.NewApiUpdateSourceRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptySourceUpdate().SetName("newName"),
-	))
+		ingestion.NewEmptySourceUpdate().SetName("newName")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1579,8 +1533,7 @@ func SnippetForUpdateTaskOfIngestion() {
 	// Call the API
 	response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron("* * * * *"),
-	))
+		ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron("* * * * *")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1609,8 +1562,7 @@ func SnippetForUpdateTaskV1OfIngestion() {
 	// Call the API
 	response, err := client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTaskUpdateV1().SetEnabled(false),
-	))
+		ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1639,8 +1591,7 @@ func SnippetForUpdateTransformationOfIngestion() {
 	// Call the API
 	response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz"),
-	))
+		ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1700,8 +1651,7 @@ func SnippetForValidateSourceBeforeUpdateOfIngestion() {
 	// Call the API
 	response, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptySourceUpdate().SetName("newName"),
-	))
+		ingestion.NewEmptySourceUpdate().SetName("newName")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

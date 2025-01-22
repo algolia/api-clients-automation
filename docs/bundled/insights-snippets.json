@@ -62,25 +62,25 @@
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/insights\""
     },
     "customDelete": {
-      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteUserToken": {
-      "default": "err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(\n  \"test-user-1\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(\n  \"test-user-1\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "pushEvents": {
-      "default": "response, err := client.PushEvents(client.NewApiPushEventsRequest(\n\n  insights.NewEmptyInsightsEvents().SetEvents(\n    []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(\n      insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent(\"click\")).SetEventName(\"Product Clicked\").SetIndex(\"products\").SetUserToken(\"user-123456\").SetAuthenticatedUserToken(\"user-123456\").SetTimestamp(1641290601962).SetObjectIDs(\n        []string{\"9780545139700\", \"9780439784542\"}).SetQueryID(\"43b15df305339e827f0ac0bdc5ebcaa7\").SetPositions(\n        []int32{7, 6}))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.PushEvents(client.NewApiPushEventsRequest(\n\n  insights.NewEmptyInsightsEvents().SetEvents(\n    []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(\n      insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent(\"click\")).SetEventName(\"Product Clicked\").SetIndex(\"products\").SetUserToken(\"user-123456\").SetAuthenticatedUserToken(\"user-123456\").SetTimestamp(1641290601962).SetObjectIDs(\n        []string{\"9780545139700\", \"9780439784542\"}).SetQueryID(\"43b15df305339e827f0ac0bdc5ebcaa7\").SetPositions(\n        []int32{7, 6}))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := insights.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", insights.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"

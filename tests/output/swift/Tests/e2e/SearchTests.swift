@@ -372,8 +372,8 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
-    /// setSettings with minimal parameters
-    func testSetSettingsTest1() async throws {
+    /// minimal parameters
+    func testSetSettingsTest() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
             return

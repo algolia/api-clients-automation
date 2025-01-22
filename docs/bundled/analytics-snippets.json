@@ -88,79 +88,79 @@
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/analytics\""
     },
     "customDelete": {
-      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getAddToCartRate": {
-      "default": "response, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getAverageClickPosition": {
-      "default": "response, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getClickPositions": {
-      "default": "response, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getClickThroughRate": {
-      "default": "response, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getConversionRate": {
-      "default": "response, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getNoClickRate": {
-      "default": "response, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getNoResultsRate": {
-      "default": "response, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getPurchaseRate": {
-      "default": "response, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRevenue": {
-      "default": "response, err := client.GetRevenue(client.NewApiGetRevenueRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetRevenue(client.NewApiGetRevenueRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSearchesCount": {
-      "default": "response, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSearchesNoClicks": {
-      "default": "response, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSearchesNoResults": {
-      "default": "response, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getStatus": {
-      "default": "response, err := client.GetStatus(client.NewApiGetStatusRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetStatus(client.NewApiGetStatusRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTopCountries": {
-      "default": "response, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTopFilterAttributes": {
-      "default": "response, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTopFilterForAttribute": {
-      "default": "response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(\n  \"myAttribute\", \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(\n  \"myAttribute\", \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTopFiltersNoResults": {
-      "default": "response, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTopHits": {
-      "default": "response, err := client.GetTopHits(client.NewApiGetTopHitsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTopHits(client.NewApiGetTopHitsRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTopSearches": {
-      "default": "response, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getUsersCount": {
-      "default": "response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := analytics.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"

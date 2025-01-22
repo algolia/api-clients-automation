@@ -25,8 +25,7 @@ func SnippetForAddApiKeyOfSearch() {
 	response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
 		search.NewEmptyApiKey().SetAcl(
-			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
-	))
+			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -54,8 +53,7 @@ func SnippetForAddOrUpdateObjectOfSearch() {
 
 	// Call the API
 	response, err := client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
-		"<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"},
-	))
+		"<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -84,8 +82,7 @@ func SnippetForAppendSourceOfSearch() {
 	// Call the API
 	response, err := client.AppendSource(client.NewApiAppendSourceRequest(
 
-		search.NewEmptySource().SetSource("theSource").SetDescription("theDescription"),
-	))
+		search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -100,7 +97,7 @@ func SnippetForAssignUserIdOfSearch() {
 	/*
 	   Snippet for the assignUserId method.
 
-	   assignUserId
+	   simple
 	*/
 
 	// >SEPARATOR assignUserId default
@@ -113,9 +110,8 @@ func SnippetForAssignUserIdOfSearch() {
 
 	// Call the API
 	response, err := client.AssignUserId(client.NewApiAssignUserIdRequest(
-		"userID",
-		search.NewEmptyAssignUserIdParams().SetCluster("theCluster"),
-	))
+		"user42",
+		search.NewEmptyAssignUserIdParams().SetCluster("d4242-eu")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -145,8 +141,7 @@ func SnippetForBatchOfSearch() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
-	))
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -176,8 +171,7 @@ func SnippetForBatchOfSearch1() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("clear")).SetBody(map[string]any{"key": "value"})}),
-	))
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("clear")).SetBody(map[string]any{"key": "value"})})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -207,8 +201,7 @@ func SnippetForBatchOfSearch2() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("delete")).SetBody(map[string]any{"key": "value"})}),
-	))
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("delete")).SetBody(map[string]any{"key": "value"})})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -238,8 +231,7 @@ func SnippetForBatchOfSearch3() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("deleteObject")).SetBody(map[string]any{"key": "value"})}),
-	))
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("deleteObject")).SetBody(map[string]any{"key": "value"})})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -269,8 +261,7 @@ func SnippetForBatchOfSearch4() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObject")).SetBody(map[string]any{"key": "value"})}),
-	))
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObject")).SetBody(map[string]any{"key": "value"})})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -300,8 +291,7 @@ func SnippetForBatchOfSearch5() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObjectNoCreate")).SetBody(map[string]any{"key": "value"})}),
-	))
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObjectNoCreate")).SetBody(map[string]any{"key": "value"})})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -331,8 +321,7 @@ func SnippetForBatchOfSearch6() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("updateObject")).SetBody(map[string]any{"key": "value"})}),
-	))
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("updateObject")).SetBody(map[string]any{"key": "value"})})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -362,8 +351,7 @@ func SnippetForBatchAssignUserIdsOfSearch() {
 	response, err := client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
 		"userID",
 		search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
-			[]string{"user1", "user2"}),
-	))
+			[]string{"user1", "user2"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -396,8 +384,7 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
 				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
 					[]string{"believe", "algolia"}).SetDecomposition(
-					[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
-	))
+					[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -428,8 +415,7 @@ func SnippetForBatchDictionaryEntriesOfSearch1() {
 		search.DictionaryType("plurals"),
 		search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
 			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("1"))}),
-	))
+				search.NewEmptyDictionaryEntry().SetObjectID("1"))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -460,8 +446,7 @@ func SnippetForBatchDictionaryEntriesOfSearch2() {
 		search.DictionaryType("stopwords"),
 		search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
 			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetAdditionalProperty("additional", "try me"))}),
-	))
+				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetAdditionalProperty("additional", "try me"))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -489,8 +474,7 @@ func SnippetForBrowseOfSearch() {
 
 	// Call the API
 	response, err := client.Browse(client.NewApiBrowseRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -518,8 +502,7 @@ func SnippetForClearObjectsOfSearch() {
 
 	// Call the API
 	response, err := client.ClearObjects(client.NewApiClearObjectsRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -547,8 +530,7 @@ func SnippetForClearRulesOfSearch() {
 
 	// Call the API
 	response, err := client.ClearRules(client.NewApiClearRulesRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -576,8 +558,7 @@ func SnippetForClearSynonymsOfSearch() {
 
 	// Call the API
 	response, err := client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -605,8 +586,7 @@ func SnippetForCustomDeleteOfSearch() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -634,8 +614,7 @@ func SnippetForCustomGetOfSearch() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -663,8 +642,7 @@ func SnippetForCustomPostOfSearch() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -692,8 +670,7 @@ func SnippetForCustomPutOfSearch() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -721,8 +698,7 @@ func SnippetForDeleteApiKeyOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
-		"myTestApiKey",
-	))
+		"myTestApiKey"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -751,8 +727,7 @@ func SnippetForDeleteByOfSearch() {
 	// Call the API
 	response, err := client.DeleteBy(client.NewApiDeleteByRequest(
 		"<YOUR_INDEX_NAME>",
-		search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
-	))
+		search.NewEmptyDeleteByParams().SetFilters("brand:brandName")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -780,8 +755,7 @@ func SnippetForDeleteIndexOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -809,8 +783,7 @@ func SnippetForDeleteObjectOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteObject(client.NewApiDeleteObjectRequest(
-		"<YOUR_INDEX_NAME>", "uniqueID",
-	))
+		"<YOUR_INDEX_NAME>", "uniqueID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -839,8 +812,7 @@ func SnippetForDeleteObjectsOfSearch() {
 	// Call the API
 	response, err := client.DeleteObjects(
 		"<YOUR_INDEX_NAME>",
-		[]string{"1", "2"},
-	)
+		[]string{"1", "2"})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -868,8 +840,7 @@ func SnippetForDeleteRuleOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
-		"<YOUR_INDEX_NAME>", "id1",
-	))
+		"<YOUR_INDEX_NAME>", "id1"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -897,8 +868,7 @@ func SnippetForDeleteSourceOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
-		"theSource",
-	))
+		"theSource"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -926,8 +896,7 @@ func SnippetForDeleteSynonymOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
-		"<YOUR_INDEX_NAME>", "id1",
-	))
+		"<YOUR_INDEX_NAME>", "id1"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -942,10 +911,10 @@ func SnippetForGenerateSecuredApiKeyOfSearch() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
 
-	   generate secured api key basic
+	   api key basic
 	*/
 
-	// >SEPARATOR generateSecuredApiKey generate secured api key basic
+	// >SEPARATOR generateSecuredApiKey api key basic
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -957,8 +926,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch() {
 	response, err := client.GenerateSecuredApiKey(
 		"2640659426d5107b6e47d75db9cbaef8",
 		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
-			[]string{"Movies"}),
-	)
+			[]string{"Movies"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -973,10 +941,10 @@ func SnippetForGenerateSecuredApiKeyOfSearch1() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
 
-	   generate secured api key with searchParams
+	   with searchParams
 	*/
 
-	// >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+	// >SEPARATOR generateSecuredApiKey with searchParams
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -990,8 +958,94 @@ func SnippetForGenerateSecuredApiKeyOfSearch1() {
 		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
 			[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
-				[]string{"one", "two"}))),
-	)
+				[]string{"one", "two"}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGenerateSecuredApiKeyOfSearch2() {
+	/*
+	   Snippet for the generateSecuredApiKey method.
+
+	   with filters
+	*/
+
+	// >SEPARATOR generateSecuredApiKey with filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateSecuredApiKey(
+		"2640659426d5107b6e47d75db9cbaef8",
+		search.NewEmptySecuredApiKeyRestrictions().SetFilters("user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGenerateSecuredApiKeyOfSearch3() {
+	/*
+	   Snippet for the generateSecuredApiKey method.
+
+	   with visible_by filter
+	*/
+
+	// >SEPARATOR generateSecuredApiKey with visible_by filter
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateSecuredApiKey(
+		"2640659426d5107b6e47d75db9cbaef8",
+		search.NewEmptySecuredApiKeyRestrictions().SetFilters("visible_by:group/Finance"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGenerateSecuredApiKeyOfSearch4() {
+	/*
+	   Snippet for the generateSecuredApiKey method.
+
+	   with userID
+	*/
+
+	// >SEPARATOR generateSecuredApiKey with userID
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateSecuredApiKey(
+		"2640659426d5107b6e47d75db9cbaef8",
+		search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1019,8 +1073,7 @@ func SnippetForGetApiKeyOfSearch() {
 
 	// Call the API
 	response, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
-		"myTestApiKey",
-	))
+		"myTestApiKey"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1048,8 +1101,7 @@ func SnippetForGetAppTaskOfSearch() {
 
 	// Call the API
 	response, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
-		123,
-	))
+		123))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1158,8 +1210,7 @@ func SnippetForGetObjectOfSearch() {
 
 	// Call the API
 	response, err := client.GetObject(client.NewApiGetObjectRequest(
-		"<YOUR_INDEX_NAME>", "uniqueID",
-	).WithAttributesToRetrieve(
+		"<YOUR_INDEX_NAME>", "uniqueID").WithAttributesToRetrieve(
 		[]string{"attr1", "attr2"}))
 	if err != nil {
 		// handle the eventual error
@@ -1191,8 +1242,7 @@ func SnippetForGetObjectsOfSearch() {
 
 		search.NewEmptyGetObjectsParams().SetRequests(
 			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-				[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
-	))
+				[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1220,8 +1270,7 @@ func SnippetForGetRuleOfSearch() {
 
 	// Call the API
 	response, err := client.GetRule(client.NewApiGetRuleRequest(
-		"<YOUR_INDEX_NAME>", "qr-1725004648916",
-	))
+		"<YOUR_INDEX_NAME>", "qr-1725004648916"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1249,8 +1298,7 @@ func SnippetForGetSettingsOfSearch() {
 
 	// Call the API
 	response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1305,8 +1353,7 @@ func SnippetForGetSynonymOfSearch() {
 
 	// Call the API
 	response, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-		"<YOUR_INDEX_NAME>", "id1",
-	))
+		"<YOUR_INDEX_NAME>", "id1"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1334,8 +1381,7 @@ func SnippetForGetTaskOfSearch() {
 
 	// Call the API
 	response, err := client.GetTask(client.NewApiGetTaskRequest(
-		"<YOUR_INDEX_NAME>", 123,
-	))
+		"<YOUR_INDEX_NAME>", 123))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1390,8 +1436,7 @@ func SnippetForGetUserIdOfSearch() {
 
 	// Call the API
 	response, err := client.GetUserId(client.NewApiGetUserIdRequest(
-		"uniqueID",
-	))
+		"uniqueID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1446,8 +1491,7 @@ func SnippetForIndexExistsOfSearch() {
 
 	// Call the API
 	response, err := client.IndexExists(
-		"<YOUR_INDEX_NAME>",
-	)
+		"<YOUR_INDEX_NAME>")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1475,8 +1519,7 @@ func SnippetForIndexExistsOfSearch1() {
 
 	// Call the API
 	response, err := client.IndexExists(
-		"<YOUR_INDEX_NAME>",
-	)
+		"<YOUR_INDEX_NAME>")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1504,8 +1547,7 @@ func SnippetForIndexExistsOfSearch2() {
 
 	// Call the API
 	response, err := client.IndexExists(
-		"<YOUR_INDEX_NAME>",
-	)
+		"<YOUR_INDEX_NAME>")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1643,8 +1685,7 @@ func SnippetForMultipleBatchOfSearch() {
 	response, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
 		search.NewEmptyBatchParams().SetRequests(
-			[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")}),
-	))
+			[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1674,8 +1715,7 @@ func SnippetForOperationIndexOfSearch() {
 	response, err := client.OperationIndex(client.NewApiOperationIndexRequest(
 		"<SOURCE_INDEX_NAME>",
 		search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>").SetScope(
-			[]search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")}),
-	))
+			[]search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1704,8 +1744,7 @@ func SnippetForOperationIndexOfSearch1() {
 	// Call the API
 	response, err := client.OperationIndex(client.NewApiOperationIndexRequest(
 		"<SOURCE_INDEX_NAME>",
-		search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("copy")).SetDestination("<DESTINATION_INDEX_NAME>"),
-	))
+		search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("copy")).SetDestination("<DESTINATION_INDEX_NAME>")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1734,8 +1773,7 @@ func SnippetForOperationIndexOfSearch2() {
 	// Call the API
 	response, err := client.OperationIndex(client.NewApiOperationIndexRequest(
 		"<SOURCE_INDEX_NAME>",
-		search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>"),
-	))
+		search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1750,10 +1788,10 @@ func SnippetForPartialUpdateObjectOfSearch() {
 	/*
 	   Snippet for the partialUpdateObject method.
 
-	   Partial update with a new value for a string attribute
+	   Partial update with a new value for an object attribute
 	*/
 
-	// >SEPARATOR partialUpdateObject default
+	// >SEPARATOR partialUpdateObject Partial update with a new value for an object attribute
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1763,8 +1801,35 @@ func SnippetForPartialUpdateObjectOfSearch() {
 
 	// Call the API
 	response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-		"<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"},
-	))
+		"<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": map[string]any{"nested": "value"}}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPartialUpdateObjectOfSearch1() {
+	/*
+	   Snippet for the partialUpdateObject method.
+
+	   with visible_by filter
+	*/
+
+	// >SEPARATOR partialUpdateObject with visible_by filter
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
+		"<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"visible_by": []string{"Angela", "group/Finance", "group/Shareholders"}}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1793,8 +1858,7 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 	// Call the API
 	response, err := client.PartialUpdateObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
-		search.WithCreateIfNotExists(true))
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1823,8 +1887,7 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 	// Call the API
 	response, err := client.PartialUpdateObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}},
-		search.WithCreateIfNotExists(false))
+		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}}, search.WithCreateIfNotExists(false))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1852,8 +1915,7 @@ func SnippetForRemoveUserIdOfSearch() {
 
 	// Call the API
 	response, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(
-		"uniqueID",
-	))
+		"uniqueID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1882,8 +1944,7 @@ func SnippetForReplaceAllObjectsOfSearch() {
 	// Call the API
 	response, err := client.ReplaceAllObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}},
-		search.WithBatchSize(3))
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}}, search.WithBatchSize(3))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1912,8 +1973,7 @@ func SnippetForReplaceAllObjectsOfSearch1() {
 	// Call the API
 	response, err := client.ReplaceAllObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
-		search.WithBatchSize(77), search.WithScopes(
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithBatchSize(77), search.WithScopes(
 			[]search.ScopeType{search.ScopeType("settings"), search.ScopeType("synonyms")}))
 	if err != nil {
 		// handle the eventual error
@@ -1943,8 +2003,7 @@ func SnippetForReplaceAllObjectsOfSearch2() {
 	// Call the API
 	response, err := client.ReplaceAllObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "fine", "body": "small obj"}, map[string]any{"objectID": "toolarge", "body": "something bigger than 10KB"}},
-	)
+		[]map[string]any{map[string]any{"objectID": "fine", "body": "small obj"}, map[string]any{"objectID": "toolarge", "body": "something bigger than 10KB"}})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1973,8 +2032,7 @@ func SnippetForReplaceSourcesOfSearch() {
 	// Call the API
 	response, err := client.ReplaceSources(client.NewApiReplaceSourcesRequest(
 
-		[]search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")},
-	))
+		[]search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2002,8 +2060,7 @@ func SnippetForRestoreApiKeyOfSearch() {
 
 	// Call the API
 	response, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-		"ALGOLIA_API_KEY",
-	))
+		"ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2031,8 +2088,7 @@ func SnippetForSaveObjectOfSearch() {
 
 	// Call the API
 	response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-		"<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"},
-	))
+		"<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2061,8 +2117,7 @@ func SnippetForSaveObjectsOfSearch() {
 	// Call the API
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
-	)
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2091,8 +2146,65 @@ func SnippetForSaveObjectsOfSearch1() {
 	// Call the API
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
-	)
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveObjectsOfSearch2() {
+	/*
+	   Snippet for the saveObjects method.
+
+	   saveObjectsPlaylist
+	*/
+
+	// >SEPARATOR saveObjects saveObjectsPlaylist
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}})
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveObjectsOfSearch3() {
+	/*
+	   Snippet for the saveObjects method.
+
+	   saveObjectsPublicUser
+	*/
+
+	// >SEPARATOR saveObjects saveObjectsPublicUser
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2107,10 +2219,10 @@ func SnippetForSaveRuleOfSearch() {
 	/*
 	   Snippet for the saveRule method.
 
-	   saveRule with minimal parameters
+	   b2b catalog
 	*/
 
-	// >SEPARATOR saveRule default
+	// >SEPARATOR saveRule b2b catalog
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -2120,12 +2232,580 @@ func SnippetForSaveRuleOfSearch() {
 
 	// Call the API
 	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
-		"<YOUR_INDEX_NAME>", "id1",
-		search.NewEmptyRule().SetObjectID("id1").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+		"<YOUR_INDEX_NAME>", "article-rule",
+		search.NewEmptyRule().SetObjectID("article-rule").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("article").SetAnchoring(search.Anchoring("startsWith"))}).SetConsequence(
 			search.NewEmptyConsequence().SetParams(
-				search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi"))),
-	))
+				search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetEdits(
+						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article")}))).SetRestrictSearchableAttributes(
+					[]string{"title", "book_id"})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch1() {
+	/*
+	   Snippet for the saveRule method.
+
+	   merchandising and promoting
+	*/
+
+	// >SEPARATOR saveRule merchandising and promoting
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "director-rule",
+		search.NewEmptyRule().SetObjectID("director-rule").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:director} director").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetRestrictSearchableAttributes(
+					[]string{"title", "book_id"}).SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
+					[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("director")})).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetEdits(
+						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("director")})))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch2() {
+	/*
+	   Snippet for the saveRule method.
+
+	   harry potter
+	*/
+
+	// >SEPARATOR saveRule harry potter
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "harry-potter-rule",
+		search.NewEmptyRule().SetObjectID("harry-potter-rule").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("harry potter").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetUserData(map[string]any{"promo_content": "20% OFF on all Harry Potter books!"}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch3() {
+	/*
+	   Snippet for the saveRule method.
+
+	   merchandising empty query
+	*/
+
+	// >SEPARATOR saveRule merchandising empty query
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "clearance-category-filter",
+		search.NewEmptyRule().SetObjectID("clearance-category-filter").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("").SetAnchoring(search.Anchoring("is")).SetContext("landing")}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetOptionalFilters(search.StringAsOptionalFilters("clearance:true"))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch4() {
+	/*
+	   Snippet for the saveRule method.
+
+	   redirect
+	*/
+
+	// >SEPARATOR saveRule redirect
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "redirect-help-rule",
+		search.NewEmptyRule().SetObjectID("redirect-help-rule").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("help").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetUserData(map[string]any{"redirect": "https://www.algolia.com/support"}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch5() {
+	/*
+	   Snippet for the saveRule method.
+
+	   promote some results over others
+	*/
+
+	// >SEPARATOR saveRule promote some results over others
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "tomato-fruit",
+		search.NewEmptyRule().SetObjectID("tomato-fruit").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("tomato").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetOptionalFilters(search.StringAsOptionalFilters("food_group:fruit"))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch6() {
+	/*
+	   Snippet for the saveRule method.
+
+	   promote several hits
+	*/
+
+	// >SEPARATOR saveRule promote several hits
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "Promote-Apple-Newest",
+		search.NewEmptyRule().SetObjectID("Promote-Apple-Newest").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("is"))}).SetConsequence(
+			search.NewEmptyConsequence().SetPromote(
+				[]search.Promote{*search.PromoteObjectIDsAsPromote(
+					search.NewEmptyPromoteObjectIDs().SetObjectIDs(
+						[]string{"iPhone-12345", "watch-123"}).SetPosition(0))}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch7() {
+	/*
+	   Snippet for the saveRule method.
+
+	   promote newest release
+	*/
+
+	// >SEPARATOR saveRule promote newest release
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "Promote-iPhone-X",
+		search.NewEmptyRule().SetObjectID("Promote-iPhone-X").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("iPhone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetPromote(
+				[]search.Promote{*search.PromoteObjectIDAsPromote(
+					search.NewEmptyPromoteObjectID().SetObjectID("iPhone-12345").SetPosition(0))}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch8() {
+	/*
+	   Snippet for the saveRule method.
+
+	   promote single item
+	*/
+
+	// >SEPARATOR saveRule promote single item
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "promote-harry-potter-box-set",
+		search.NewEmptyRule().SetObjectID("promote-harry-potter-box-set").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("Harry Potter").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetPromote(
+				[]search.Promote{*search.PromoteObjectIDAsPromote(
+					search.NewEmptyPromoteObjectID().SetObjectID("HP-12345").SetPosition(0))}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch9() {
+	/*
+	   Snippet for the saveRule method.
+
+	   limit search results
+	*/
+
+	// >SEPARATOR saveRule limit search results
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "article-rule",
+		search.NewEmptyRule().SetObjectID("article-rule").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("article").SetAnchoring(search.Anchoring("startsWith"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetEdits(
+						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article")}))).SetRestrictSearchableAttributes(
+					[]string{"title", "book_id"})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch10() {
+	/*
+	   Snippet for the saveRule method.
+
+	   query match
+	*/
+
+	// >SEPARATOR saveRule query match
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "tagged-brand-rule",
+		search.NewEmptyRule().SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("brand: {facet:brand}").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false)}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
+					[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("brand")})).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetRemove(
+						[]string{"brand:", "{facet:brand}"}))))).SetDescription("filter on brand: {brand}").SetObjectID("tagged-brand-rule")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch11() {
+	/*
+	   Snippet for the saveRule method.
+
+	   dynamic filtering
+	*/
+
+	// >SEPARATOR saveRule dynamic filtering
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "color-facets",
+		search.NewEmptyRule().SetObjectID("color-facets").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:color}")}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
+					[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("color")}))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch12() {
+	/*
+	   Snippet for the saveRule method.
+
+	   hide hits
+	*/
+
+	// >SEPARATOR saveRule hide hits
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "hide-12345",
+		search.NewEmptyRule().SetObjectID("hide-12345").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetHide(
+				[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("to-hide-12345")}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch13() {
+	/*
+	   Snippet for the saveRule method.
+
+	   one rule per facet
+	*/
+
+	// >SEPARATOR saveRule one rule per facet
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "red-color",
+		search.NewEmptyRule().SetObjectID("red-color").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("red").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetRemove(
+						[]string{"red"}))).SetFilters("color:red")))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch14() {
+	/*
+	   Snippet for the saveRule method.
+
+	   numerical filters
+	*/
+
+	// >SEPARATOR saveRule numerical filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "cheap",
+		search.NewEmptyRule().SetObjectID("cheap").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetRemove(
+						[]string{"cheap"}))).SetFilters("price < 10")))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch15() {
+	/*
+	   Snippet for the saveRule method.
+
+	   negative filters
+	*/
+
+	// >SEPARATOR saveRule negative filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "gluten-free-rule",
+		search.NewEmptyRule().SetObjectID("gluten-free-rule").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("gluten-free").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("NOT allergens:gluten").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetEdits(
+						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("gluten-free")})))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch16() {
+	/*
+	   Snippet for the saveRule method.
+
+	   positive filters
+	*/
+
+	// >SEPARATOR saveRule positive filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "diet-rule",
+		search.NewEmptyRule().SetObjectID("diet-rule").SetConditions(
+			[]search.Condition{*search.NewEmptyCondition().SetPattern("diet").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("'low-carb' OR 'low-fat'").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetEdits(
+						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("diet")})))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch17() {
+	/*
+	   Snippet for the saveRule method.
+
+	   conditionless
+	*/
+
+	// >SEPARATOR saveRule conditionless
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "diet-rule",
+		search.NewEmptyRule().SetObjectID("diet-rule").SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetFilters("'low-carb' OR 'low-fat'").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+					search.NewEmptyConsequenceQueryObject().SetEdits(
+						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("diet")})))))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2160,8 +2840,7 @@ func SnippetForSaveRulesOfSearch() {
 				search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
 			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
 			search.NewEmptyConsequence().SetParams(
-				search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
-	).WithForwardToReplicas(false).WithClearExistingRules(true))
+				search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}).WithForwardToReplicas(false).WithClearExistingRules(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2191,8 +2870,7 @@ func SnippetForSaveSynonymOfSearch() {
 	response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
 		"<YOUR_INDEX_NAME>", "id1",
 		search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-			[]string{"car", "vehicule", "auto"}),
-	).WithForwardToReplicas(true))
+			[]string{"car", "vehicule", "auto"})).WithForwardToReplicas(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2223,8 +2901,7 @@ func SnippetForSaveSynonymsOfSearch() {
 		"<YOUR_INDEX_NAME>",
 		[]search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
 			[]string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
-			[]string{"ephone", "aphone", "yphone"})},
-	).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
+			[]string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2255,8 +2932,7 @@ func SnippetForSearchOfSearch() {
 
 		search.NewEmptySearchMethodParams().SetRequests(
 			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}),
-	))
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2287,8 +2963,7 @@ func SnippetForSearchOfSearch1() {
 
 		search.NewEmptySearchMethodParams().SetRequests(
 			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Scarlett Johansson"))}),
-	))
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Scarlett Johansson"))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2319,8 +2994,7 @@ func SnippetForSearchOfSearch2() {
 
 		search.NewEmptySearchMethodParams().SetRequests(
 			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Tom Cruise OR actor:Scarlett Johansson"))}),
-	))
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Tom Cruise OR actor:Scarlett Johansson"))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2351,8 +3025,7 @@ func SnippetForSearchOfSearch3() {
 
 		search.NewEmptySearchMethodParams().SetRequests(
 			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("NOT actor:Nicolas Cage"))}),
-	))
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("NOT actor:Nicolas Cage"))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2384,8 +3057,7 @@ func SnippetForSearchOfSearch4() {
 		search.NewEmptySearchMethodParams().SetRequests(
 			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
 				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
-					[]string{"author", "genre"}))}),
-	))
+					[]string{"author", "genre"}))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2417,8 +3089,7 @@ func SnippetForSearchOfSearch5() {
 		search.NewEmptySearchMethodParams().SetRequests(
 			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
 				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
-					[]string{"*"}))}),
-	))
+					[]string{"*"}))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2447,8 +3118,7 @@ func SnippetForSearchDictionaryEntriesOfSearch() {
 	// Call the API
 	response, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
 		search.DictionaryType("stopwords"),
-		search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
-	))
+		search.NewEmptySearchDictionaryEntriesParams().SetQuery("about")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2476,8 +3146,7 @@ func SnippetForSearchForFacetValuesOfSearch() {
 
 	// Call the API
 	response, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-		"<YOUR_INDEX_NAME>", "facetName",
-	))
+		"<YOUR_INDEX_NAME>", "facetName"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2505,8 +3174,7 @@ func SnippetForSearchRulesOfSearch() {
 
 	// Call the API
 	response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-		"<YOUR_INDEX_NAME>",
-	).WithSearchRulesParams(
+		"<YOUR_INDEX_NAME>").WithSearchRulesParams(
 		search.NewEmptySearchRulesParams().SetQuery("zorro")))
 	if err != nil {
 		// handle the eventual error
@@ -2525,7 +3193,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 	   search with searchParams
 	*/
 
-	// >SEPARATOR searchSingleIndex default
+	// >SEPARATOR searchSingleIndex search with searchParams
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -2535,10 +3203,895 @@ func SnippetForSearchSingleIndexOfSearch() {
 
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>",
-	).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
 			[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch1() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   query
+	*/
+
+	// >SEPARATOR searchSingleIndex query
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("phone"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch2() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filters
+	*/
+
+	// >SEPARATOR searchSingleIndex filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("country:US AND price.gross < 2.0"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch3() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   distinct
+	*/
+
+	// >SEPARATOR searchSingleIndex distinct
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetDistinct(search.BoolAsDistinct(true)))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch4() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filtersNumeric
+	*/
+
+	// >SEPARATOR searchSingleIndex filtersNumeric
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("price < 10"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch5() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filtersTimestamp
+	*/
+
+	// >SEPARATOR searchSingleIndex filtersTimestamp
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("NOT date_timestamp:1514764800 TO 1546300799"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch6() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filtersSumOrFiltersScoresFalse
+	*/
+
+	// >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(false))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch7() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filtersSumOrFiltersScoresTrue
+	*/
+
+	// >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch8() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filtersStephenKing
+	*/
+
+	// >SEPARATOR searchSingleIndex filtersStephenKing
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("author:\"Stephen King\""))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch9() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filtersNotTags
+	*/
+
+	// >SEPARATOR searchSingleIndex filtersNotTags
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("NOT _tags:non-fiction"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch10() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   facetFiltersList
+	*/
+
+	// >SEPARATOR searchSingleIndex facetFiltersList
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+			[]search.FacetFilters{*search.StringAsFacetFilters("publisher:Penguin"), *search.ArrayOfFacetFiltersAsFacetFilters(
+				[]search.FacetFilters{*search.StringAsFacetFilters("author:Stephen King"), *search.StringAsFacetFilters("genre:Horror")})})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch11() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   facetFiltersNeg
+	*/
+
+	// >SEPARATOR searchSingleIndex facetFiltersNeg
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFacetFilters(search.StringAsFacetFilters("category:-Ebook")))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch12() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   filtersAndFacetFilters
+	*/
+
+	// >SEPARATOR searchSingleIndex filtersAndFacetFilters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("(author:\"Stephen King\" OR genre:\"Horror\")").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+			[]search.FacetFilters{*search.StringAsFacetFilters("publisher:Penguin")})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch13() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   aroundLatLng
+	*/
+
+	// >SEPARATOR searchSingleIndex aroundLatLng
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetAroundLatLng("40.71, -74.01"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch14() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   aroundLatLngViaIP
+	*/
+
+	// >SEPARATOR searchSingleIndex aroundLatLngViaIP
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetAroundLatLngViaIP(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch15() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   aroundRadius
+	*/
+
+	// >SEPARATOR searchSingleIndex aroundRadius
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetAroundLatLng("40.71, -74.01").SetAroundRadius(search.Int32AsAroundRadius(1000000)))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch16() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   insideBoundingBox
+	*/
+
+	// >SEPARATOR searchSingleIndex insideBoundingBox
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
+			[][]float64{
+				[]float64{49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875}})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch17() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   insidePolygon
+	*/
+
+	// >SEPARATOR searchSingleIndex insidePolygon
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetInsidePolygon(
+			[][]float64{
+				[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch18() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   insidePolygon
+	*/
+
+	// >SEPARATOR searchSingleIndex insidePolygon
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetInsidePolygon(
+			[][]float64{
+				[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch19() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   optionalFilters
+	*/
+
+	// >SEPARATOR searchSingleIndex optionalFilters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
+			[]search.OptionalFilters{*search.StringAsOptionalFilters("can_deliver_quickly:true")})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch20() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   optionalFiltersMany
+	*/
+
+	// >SEPARATOR searchSingleIndex optionalFiltersMany
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
+			[]search.OptionalFilters{*search.StringAsOptionalFilters("brand:Apple<score=3>"), *search.StringAsOptionalFilters("brand:Samsung<score=2>"), *search.StringAsOptionalFilters("brand:-Huawei")})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch21() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   optionalFiltersSimple
+	*/
+
+	// >SEPARATOR searchSingleIndex optionalFiltersSimple
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
+			[]search.OptionalFilters{*search.StringAsOptionalFilters("brand:Apple<score=2>"), *search.StringAsOptionalFilters("type:tablet")})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch22() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   restrictSearchableAttributes
+	*/
+
+	// >SEPARATOR searchSingleIndex restrictSearchableAttributes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetRestrictSearchableAttributes(
+			[]string{"title_fr"}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch23() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   getRankingInfo
+	*/
+
+	// >SEPARATOR searchSingleIndex getRankingInfo
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetGetRankingInfo(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch24() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   clickAnalytics
+	*/
+
+	// >SEPARATOR searchSingleIndex clickAnalytics
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetClickAnalytics(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch25() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   clickAnalyticsUserToken
+	*/
+
+	// >SEPARATOR searchSingleIndex clickAnalyticsUserToken
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetClickAnalytics(true).SetUserToken("user-1"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch26() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   enablePersonalization
+	*/
+
+	// >SEPARATOR searchSingleIndex enablePersonalization
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetEnablePersonalization(true).SetUserToken("user-1"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch27() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   userToken
+	*/
+
+	// >SEPARATOR searchSingleIndex userToken
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetUserToken("user-1"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch28() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   analyticsTag
+	*/
+
+	// >SEPARATOR searchSingleIndex analyticsTag
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetAnalyticsTags(
+			[]string{"YOUR_ANALYTICS_TAG"}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch29() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   facetFiltersUsers
+	*/
+
+	// >SEPARATOR searchSingleIndex facetFiltersUsers
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+			[]search.FacetFilters{*search.StringAsFacetFilters("user:user42"), *search.StringAsFacetFilters("user:public")})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch30() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   buildTheQuery
+	*/
+
+	// >SEPARATOR searchSingleIndex buildTheQuery
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("categoryPageId: Men's Clothing").SetHitsPerPage(50).SetAnalyticsTags(
+			[]string{"mens-clothing"}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2566,8 +4119,7 @@ func SnippetForSearchSynonymsOfSearch() {
 
 	// Call the API
 	response, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2596,8 +4148,7 @@ func SnippetForSearchUserIdsOfSearch() {
 	// Call the API
 	response, err := client.SearchUserIds(client.NewApiSearchUserIdsRequest(
 
-		search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10),
-	))
+		search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2625,8 +4176,7 @@ func SnippetForSetClientApiKeyOfSearch() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2654,8 +4204,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 	response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
 		search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-			search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true})),
-	))
+			search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2670,10 +4219,185 @@ func SnippetForSetSettingsOfSearch() {
 	/*
 	   Snippet for the setSettings method.
 
-	   setSettingsAttributesForFaceting
+	   removeStopWords boolean
 	*/
 
-	// >SEPARATOR setSettings default
+	// >SEPARATOR setSettings removeStopWords boolean
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetRemoveStopWords(search.BoolAsRemoveStopWords(true))).WithForwardToReplicas(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch1() {
+	/*
+	   Snippet for the setSettings method.
+
+	   removeStopWords list of string
+	*/
+
+	// >SEPARATOR setSettings removeStopWords list of string
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
+			[]search.SupportedLanguage{search.SupportedLanguage("fr")}))).WithForwardToReplicas(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch2() {
+	/*
+	   Snippet for the setSettings method.
+
+	   distinct company
+	*/
+
+	// >SEPARATOR setSettings distinct company
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributeForDistinct("company").SetDistinct(search.BoolAsDistinct(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch3() {
+	/*
+	   Snippet for the setSettings method.
+
+	   distinct design
+	*/
+
+	// >SEPARATOR setSettings distinct design
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributeForDistinct("design").SetDistinct(search.BoolAsDistinct(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch4() {
+	/*
+	   Snippet for the setSettings method.
+
+	   distinct true
+	*/
+
+	// >SEPARATOR setSettings distinct true
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetDistinct(search.BoolAsDistinct(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch5() {
+	/*
+	   Snippet for the setSettings method.
+
+	   distinct section
+	*/
+
+	// >SEPARATOR setSettings distinct section
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributeForDistinct("section").SetDistinct(search.BoolAsDistinct(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch6() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting allergens
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting allergens
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -2685,8 +4409,1239 @@ func SnippetForSetSettingsOfSearch() {
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyIndexSettings().SetAttributesForFaceting(
-			[]string{"actor", "filterOnly(category)", "searchable(publisher)"}),
-	))
+			[]string{"allergens"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch7() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting categoryPageId
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting categoryPageId
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesForFaceting(
+			[]string{"searchable(categoryPageId)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch8() {
+	/*
+	   Snippet for the setSettings method.
+
+	   unretrievableAttributes
+	*/
+
+	// >SEPARATOR setSettings unretrievableAttributes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetUnretrievableAttributes(
+			[]string{"visible_by"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch9() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting user restricted data
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting user restricted data
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesForFaceting(
+			[]string{"filterOnly(visible_by)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch10() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting optional filters
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting optional filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesForFaceting(
+			[]string{"can_deliver_quickly", "restaurant"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch11() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting redirect index
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting redirect index
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesForFaceting(
+			[]string{"query_terms"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch12() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting multiple consequences
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting multiple consequences
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesForFaceting(
+			[]string{"director"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch13() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting in-depth optional filters
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting in-depth optional filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesForFaceting(
+			[]string{"filterOnly(brand)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch14() {
+	/*
+	   Snippet for the setSettings method.
+
+	   mode neuralSearch
+	*/
+
+	// >SEPARATOR setSettings mode neuralSearch
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetMode(search.Mode("neuralSearch"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch15() {
+	/*
+	   Snippet for the setSettings method.
+
+	   mode keywordSearch
+	*/
+
+	// >SEPARATOR setSettings mode keywordSearch
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetMode(search.Mode("keywordSearch"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch16() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributes same priority
+	*/
+
+	// >SEPARATOR setSettings searchableAttributes same priority
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"title,comments", "ingredients"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch17() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributes higher priority
+	*/
+
+	// >SEPARATOR setSettings searchableAttributes higher priority
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"title", "ingredients"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch18() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking retweets
+	*/
+
+	// >SEPARATOR setSettings customRanking retweets
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(retweets)", "desc(likes)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch19() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking boosted
+	*/
+
+	// >SEPARATOR setSettings customRanking boosted
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(boosted)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch20() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking pageviews
+	*/
+
+	// >SEPARATOR setSettings customRanking pageviews
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(pageviews)", "desc(comments)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch21() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking applying search parameters for a specific query
+	*/
+
+	// >SEPARATOR setSettings customRanking applying search parameters for a specific query
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(nb_airline_liaisons)"}).SetAttributesForFaceting(
+			[]string{"city, country"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch22() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking rounded pageviews
+	*/
+
+	// >SEPARATOR setSettings customRanking rounded pageviews
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(rounded_pageviews)", "desc(comments)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch23() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking price
+	*/
+
+	// >SEPARATOR setSettings customRanking price
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(price)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch24() {
+	/*
+	   Snippet for the setSettings method.
+
+	   ranking exhaustive
+	*/
+
+	// >SEPARATOR setSettings ranking exhaustive
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetRanking(
+			[]string{"desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch25() {
+	/*
+	   Snippet for the setSettings method.
+
+	   ranking standard replica
+	*/
+
+	// >SEPARATOR setSettings ranking standard replica
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetRanking(
+			[]string{"desc(post_date_timestamp)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch26() {
+	/*
+	   Snippet for the setSettings method.
+
+	   ranking virtual replica
+	*/
+
+	// >SEPARATOR setSettings ranking virtual replica
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"desc(post_date_timestamp)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch27() {
+	/*
+	   Snippet for the setSettings method.
+
+	   customRanking and ranking sort alphabetically
+	*/
+
+	// >SEPARATOR setSettings customRanking and ranking sort alphabetically
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"asc(textual_attribute)"}).SetRanking(
+			[]string{"custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch28() {
+	/*
+	   Snippet for the setSettings method.
+
+	   relevancyStrictness
+	*/
+
+	// >SEPARATOR setSettings relevancyStrictness
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetCustomRanking(
+			[]string{"asc(textual_attribute)"}).SetRelevancyStrictness(0)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch29() {
+	/*
+	   Snippet for the setSettings method.
+
+	   create replica index
+	*/
+
+	// >SEPARATOR setSettings create replica index
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetReplicas(
+			[]string{"products_price_desc"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch30() {
+	/*
+	   Snippet for the setSettings method.
+
+	   unlink replica index
+	*/
+
+	// >SEPARATOR setSettings unlink replica index
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetReplicas(
+			[]string{""})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch31() {
+	/*
+	   Snippet for the setSettings method.
+
+	   forwardToReplicas
+	*/
+
+	// >SEPARATOR setSettings forwardToReplicas
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"name", "description"})).WithForwardToReplicas(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch32() {
+	/*
+	   Snippet for the setSettings method.
+
+	   maxValuesPerFacet
+	*/
+
+	// >SEPARATOR setSettings maxValuesPerFacet
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetMaxValuesPerFacet(1000)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch33() {
+	/*
+	   Snippet for the setSettings method.
+
+	   maxFacetHits
+	*/
+
+	// >SEPARATOR setSettings maxFacetHits
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetMaxFacetHits(1000)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch34() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesForFaceting complex
+	*/
+
+	// >SEPARATOR setSettings attributesForFaceting complex
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesForFaceting(
+			[]string{"actor", "filterOnly(category)", "searchable(publisher)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch35() {
+	/*
+	   Snippet for the setSettings method.
+
+	   ranking closest dates
+	*/
+
+	// >SEPARATOR setSettings ranking closest dates
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetRanking(
+			[]string{"asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch36() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributes item variation
+	*/
+
+	// >SEPARATOR setSettings searchableAttributes item variation
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"design", "type", "color"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch37() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributes around location
+	*/
+
+	// >SEPARATOR setSettings searchableAttributes around location
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"name", "country", "code", "iata_code"}).SetCustomRanking(
+			[]string{"desc(links_count)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch38() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributes around location
+	*/
+
+	// >SEPARATOR setSettings searchableAttributes around location
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"name", "country", "code", "iata_code"}).SetCustomRanking(
+			[]string{"desc(links_count)"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch39() {
+	/*
+	   Snippet for the setSettings method.
+
+	   disableTypoToleranceOnAttributes
+	*/
+
+	// >SEPARATOR setSettings disableTypoToleranceOnAttributes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetDisableTypoToleranceOnAttributes(
+			[]string{"serial_number"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch40() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributesWithCustomRankingsAndAttributesForFaceting
+	*/
+
+	// >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"brand", "name", "categories", "unordered(description)"}).SetCustomRanking(
+			[]string{"desc(popularity)"}).SetAttributesForFaceting(
+			[]string{"searchable(brand)", "type", "categories", "price"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch41() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributesProductReferenceSuffixes
+	*/
+
+	// >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"name", "product_reference", "product_reference_suffixes"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch42() {
+	/*
+	   Snippet for the setSettings method.
+
+	   queryLanguageAndIgnorePlurals
+	*/
+
+	// >SEPARATOR setSettings queryLanguageAndIgnorePlurals
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetQueryLanguages(
+			[]search.SupportedLanguage{search.SupportedLanguage("en")}).SetIgnorePlurals(search.BoolAsIgnorePlurals(true))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch43() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributesInMovies
+	*/
+
+	// >SEPARATOR setSettings searchableAttributesInMovies
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"title_eng", "title_fr", "title_es"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch44() {
+	/*
+	   Snippet for the setSettings method.
+
+	   disablePrefixOnAttributes
+	*/
+
+	// >SEPARATOR setSettings disablePrefixOnAttributes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetDisablePrefixOnAttributes(
+			[]string{"serial_number"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch45() {
+	/*
+	   Snippet for the setSettings method.
+
+	   disableTypoToleranceOnAttributes
+	*/
+
+	// >SEPARATOR setSettings disableTypoToleranceOnAttributes
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetDisableTypoToleranceOnAttributes(
+			[]string{"serial_number"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch46() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributesSimpleExample
+	*/
+
+	// >SEPARATOR setSettings searchableAttributesSimpleExample
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"serial_number"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetSettingsOfSearch47() {
+	/*
+	   Snippet for the setSettings method.
+
+	   searchableAttributesSimpleExampleAlt
+	*/
+
+	// >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSearchableAttributes(
+			[]string{"serial_number", "serial_number_suffixes"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2716,8 +5671,7 @@ func SnippetForUpdateApiKeyOfSearch() {
 	response, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
 		"ALGOLIA_API_KEY",
 		search.NewEmptyApiKey().SetAcl(
-			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
-	))
+			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2745,8 +5699,7 @@ func SnippetForWaitForApiKeyOfSearch() {
 
 	// Call the API
 	response, err := client.WaitForApiKey(
-		"api-key-add-operation-test-go", search.ApiKeyOperation("add"),
-	)
+		"api-key-add-operation-test-go", search.ApiKeyOperation("add"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2774,8 +5727,7 @@ func SnippetForWaitForApiKeyOfSearch1() {
 
 	// Call the API
 	response, err := client.WaitForApiKey(
-		"api-key-update-operation-test-go", search.ApiKeyOperation("update"),
-		search.WithApiKey(
+		"api-key-update-operation-test-go", search.ApiKeyOperation("update"), search.WithApiKey(
 			search.NewEmptyApiKey().SetDescription("my updated api key").SetAcl(
 				[]search.Acl{search.Acl("search"), search.Acl("addObject"), search.Acl("deleteObject")}).SetIndexes(
 				[]string{"Movies", "Books"}).SetReferers(
@@ -2807,8 +5759,7 @@ func SnippetForWaitForApiKeyOfSearch2() {
 
 	// Call the API
 	response, err := client.WaitForApiKey(
-		"api-key-delete-operation-test-go", search.ApiKeyOperation("delete"),
-	)
+		"api-key-delete-operation-test-go", search.ApiKeyOperation("delete"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2836,8 +5787,7 @@ func SnippetForWaitForAppTaskOfSearch() {
 
 	// Call the API
 	response, err := client.WaitForAppTask(
-		123,
-	)
+		123)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2865,8 +5815,7 @@ func SnippetForWaitForTaskOfSearch() {
 
 	// Call the API
 	response, err := client.WaitForTask(
-		"<YOUR_INDEX_NAME>", 123,
-	)
+		"<YOUR_INDEX_NAME>", 123)
 	if err != nil {
 		// handle the eventual error
 		panic(err)

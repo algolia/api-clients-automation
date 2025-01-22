@@ -23,8 +23,7 @@ func SnippetForCustomDeleteOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -52,8 +51,7 @@ func SnippetForCustomGetOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -81,8 +79,7 @@ func SnippetForCustomPostOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -110,8 +107,7 @@ func SnippetForCustomPutOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -139,8 +135,7 @@ func SnippetForGetClusterIncidentsOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -168,8 +163,7 @@ func SnippetForGetClusterStatusOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -224,8 +218,7 @@ func SnippetForGetIndexingTimeOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -253,8 +246,7 @@ func SnippetForGetLatencyOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetLatency(client.NewApiGetLatencyRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -282,8 +274,7 @@ func SnippetForGetMetricsOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetMetrics(client.NewApiGetMetricsRequest(
-		monitoring.Metric("avg_build_time"), monitoring.Period("minute"),
-	))
+		monitoring.Metric("avg_build_time"), monitoring.Period("minute")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -311,8 +302,7 @@ func SnippetForGetReachabilityOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetReachability(client.NewApiGetReachabilityRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -394,8 +384,7 @@ func SnippetForSetClientApiKeyOfMonitoring() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)

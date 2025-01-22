@@ -25,8 +25,7 @@ func SnippetForSearchOfComposition() {
 	response, err := client.Search(client.NewApiSearchRequest(
 		"foo",
 		composition.NewEmptyRequestBody().SetParams(
-			composition.NewEmptyParams().SetQuery("batman")),
-	))
+			composition.NewEmptyParams().SetQuery("batman"))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -54,8 +53,7 @@ func SnippetForSearchForFacetValuesOfComposition() {
 
 	// Call the API
 	response, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-		"foo", "brand",
-	).WithSearchForFacetValuesRequest(
+		"foo", "brand").WithSearchForFacetValuesRequest(
 		composition.NewEmptySearchForFacetValuesRequest().SetParams(
 			composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))))
 	if err != nil {

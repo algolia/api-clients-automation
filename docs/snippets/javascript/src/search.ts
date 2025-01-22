@@ -70,7 +70,7 @@ export async function snippetForAppendSource(): Promise<void> {
 
 // Snippet for the assignUserId method.
 //
-// assignUserId
+// simple
 export async function snippetForAssignUserId(): Promise<void> {
   // >SEPARATOR assignUserId default
   // Initialize the client
@@ -78,10 +78,7 @@ export async function snippetForAssignUserId(): Promise<void> {
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
-  const response = await client.assignUserId({
-    xAlgoliaUserID: 'userID',
-    assignUserIdParams: { cluster: 'theCluster' },
-  });
+  const response = await client.assignUserId({ xAlgoliaUserID: 'user42', assignUserIdParams: { cluster: 'd4242-eu' } });
 
   // >LOG
   // use typed response
@@ -635,9 +632,9 @@ export async function snippetForDeleteSynonym(): Promise<void> {
 
 // Snippet for the generateSecuredApiKey method.
 //
-// generate secured api key basic
+// api key basic
 export function snippetForGenerateSecuredApiKey(): void {
-  // >SEPARATOR generateSecuredApiKey generate secured api key basic
+  // >SEPARATOR generateSecuredApiKey api key basic
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -656,9 +653,9 @@ export function snippetForGenerateSecuredApiKey(): void {
 
 // Snippet for the generateSecuredApiKey method.
 //
-// generate secured api key with searchParams
+// with searchParams
 export function snippetForGenerateSecuredApiKey1(): void {
-  // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+  // >SEPARATOR generateSecuredApiKey with searchParams
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -681,6 +678,69 @@ export function snippetForGenerateSecuredApiKey1(): void {
         optionalWords: ['one', 'two'],
       },
     },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// with filters
+export function snippetForGenerateSecuredApiKey2(): void {
+  // >SEPARATOR generateSecuredApiKey with filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+    restrictions: { filters: 'user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// with visible_by filter
+export function snippetForGenerateSecuredApiKey3(): void {
+  // >SEPARATOR generateSecuredApiKey with visible_by filter
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+    restrictions: { filters: 'visible_by:group/Finance' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// with userID
+export function snippetForGenerateSecuredApiKey4(): void {
+  // >SEPARATOR generateSecuredApiKey with userID
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+    restrictions: { userToken: 'user42' },
   });
 
   // >LOG
@@ -1176,9 +1236,9 @@ export async function snippetForOperationIndex2(): Promise<void> {
 
 // Snippet for the partialUpdateObject method.
 //
-// Partial update with a new value for a string attribute
+// Partial update with a new value for an object attribute
 export async function snippetForPartialUpdateObject(): Promise<void> {
-  // >SEPARATOR partialUpdateObject default
+  // >SEPARATOR partialUpdateObject Partial update with a new value for an object attribute
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -1187,7 +1247,29 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
   const response = await client.partialUpdateObject({
     indexName: 'theIndexName',
     objectID: 'uniqueID',
-    attributesToUpdate: { attributeId: 'new value' },
+    attributesToUpdate: { attributeId: { nested: 'value' } },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// with visible_by filter
+export async function snippetForPartialUpdateObject1(): Promise<void> {
+  // >SEPARATOR partialUpdateObject with visible_by filter
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObject({
+    indexName: 'theIndexName',
+    objectID: 'uniqueID',
+    attributesToUpdate: { visible_by: ['Angela', 'group/Finance', 'group/Shareholders'] },
   });
 
   // >LOG
@@ -1449,11 +1531,69 @@ export async function snippetForSaveObjects1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the saveObjects method.
+//
+// saveObjectsPlaylist
+export async function snippetForSaveObjects2(): Promise<void> {
+  // >SEPARATOR saveObjects saveObjectsPlaylist
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjects({
+    indexName: 'playlists',
+    objects: [
+      {
+        objectID: '1',
+        visibility: 'public',
+        name: 'Hot 100 Billboard Charts',
+        playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+        createdAt: '1500240452',
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// saveObjectsPublicUser
+export async function snippetForSaveObjects3(): Promise<void> {
+  // >SEPARATOR saveObjects saveObjectsPublicUser
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjects({
+    indexName: 'playlists',
+    objects: [
+      {
+        objectID: '1',
+        visibility: 'public',
+        name: 'Hot 100 Billboard Charts',
+        playlistId: 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+        createdAt: '1500240452',
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the saveRule method.
 //
-// saveRule with minimal parameters
+// b2b catalog
 export async function snippetForSaveRule(): Promise<void> {
-  // >SEPARATOR saveRule default
+  // >SEPARATOR saveRule b2b catalog
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -1461,11 +1601,477 @@ export async function snippetForSaveRule(): Promise<void> {
   // Call the API
   const response = await client.saveRule({
     indexName: 'indexName',
-    objectID: 'id1',
+    objectID: 'article-rule',
     rule: {
-      objectID: 'id1',
-      conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-      consequence: { params: { filters: 'brand:xiaomi' } },
+      objectID: 'article-rule',
+      conditions: [{ pattern: 'article', anchoring: 'startsWith' }],
+      consequence: {
+        params: {
+          query: { edits: [{ type: 'remove', delete: 'article' }] },
+          restrictSearchableAttributes: ['title', 'book_id'],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// merchandising and promoting
+export async function snippetForSaveRule1(): Promise<void> {
+  // >SEPARATOR saveRule merchandising and promoting
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'director-rule',
+    rule: {
+      objectID: 'director-rule',
+      conditions: [{ pattern: '{facet:director} director', anchoring: 'contains' }],
+      consequence: {
+        params: {
+          restrictSearchableAttributes: ['title', 'book_id'],
+          automaticFacetFilters: [{ facet: 'director' }],
+          query: { edits: [{ type: 'remove', delete: 'director' }] },
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// harry potter
+export async function snippetForSaveRule2(): Promise<void> {
+  // >SEPARATOR saveRule harry potter
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'harry-potter-rule',
+    rule: {
+      objectID: 'harry-potter-rule',
+      conditions: [{ pattern: 'harry potter', anchoring: 'contains' }],
+      consequence: { userData: { promo_content: '20% OFF on all Harry Potter books!' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// merchandising empty query
+export async function snippetForSaveRule3(): Promise<void> {
+  // >SEPARATOR saveRule merchandising empty query
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'clearance-category-filter',
+    rule: {
+      objectID: 'clearance-category-filter',
+      conditions: [{ pattern: '', anchoring: 'is', context: 'landing' }],
+      consequence: { params: { optionalFilters: 'clearance:true' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// redirect
+export async function snippetForSaveRule4(): Promise<void> {
+  // >SEPARATOR saveRule redirect
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'redirect-help-rule',
+    rule: {
+      objectID: 'redirect-help-rule',
+      conditions: [{ pattern: 'help', anchoring: 'contains' }],
+      consequence: { userData: { redirect: 'https://www.algolia.com/support' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote some results over others
+export async function snippetForSaveRule5(): Promise<void> {
+  // >SEPARATOR saveRule promote some results over others
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'tomato-fruit',
+    rule: {
+      objectID: 'tomato-fruit',
+      conditions: [{ pattern: 'tomato', anchoring: 'contains' }],
+      consequence: { params: { optionalFilters: 'food_group:fruit' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote several hits
+export async function snippetForSaveRule6(): Promise<void> {
+  // >SEPARATOR saveRule promote several hits
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'Promote-Apple-Newest',
+    rule: {
+      objectID: 'Promote-Apple-Newest',
+      conditions: [{ pattern: 'apple', anchoring: 'is' }],
+      consequence: { promote: [{ objectIDs: ['iPhone-12345', 'watch-123'], position: 0 }] },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote newest release
+export async function snippetForSaveRule7(): Promise<void> {
+  // >SEPARATOR saveRule promote newest release
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'Promote-iPhone-X',
+    rule: {
+      objectID: 'Promote-iPhone-X',
+      conditions: [{ pattern: 'iPhone', anchoring: 'contains' }],
+      consequence: { promote: [{ objectID: 'iPhone-12345', position: 0 }] },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote single item
+export async function snippetForSaveRule8(): Promise<void> {
+  // >SEPARATOR saveRule promote single item
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'promote-harry-potter-box-set',
+    rule: {
+      objectID: 'promote-harry-potter-box-set',
+      conditions: [{ pattern: 'Harry Potter', anchoring: 'contains' }],
+      consequence: { promote: [{ objectID: 'HP-12345', position: 0 }] },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// limit search results
+export async function snippetForSaveRule9(): Promise<void> {
+  // >SEPARATOR saveRule limit search results
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'article-rule',
+    rule: {
+      objectID: 'article-rule',
+      conditions: [{ pattern: 'article', anchoring: 'startsWith' }],
+      consequence: {
+        params: {
+          query: { edits: [{ type: 'remove', delete: 'article' }] },
+          restrictSearchableAttributes: ['title', 'book_id'],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// query match
+export async function snippetForSaveRule10(): Promise<void> {
+  // >SEPARATOR saveRule query match
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'tagged-brand-rule',
+    rule: {
+      conditions: [{ pattern: 'brand: {facet:brand}', anchoring: 'contains', alternatives: false }],
+      consequence: {
+        params: { automaticFacetFilters: [{ facet: 'brand' }], query: { remove: ['brand:', '{facet:brand}'] } },
+      },
+      description: 'filter on brand: {brand}',
+      objectID: 'tagged-brand-rule',
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// dynamic filtering
+export async function snippetForSaveRule11(): Promise<void> {
+  // >SEPARATOR saveRule dynamic filtering
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'color-facets',
+    rule: {
+      objectID: 'color-facets',
+      conditions: [{ pattern: '{facet:color}' }],
+      consequence: { params: { automaticFacetFilters: [{ facet: 'color' }] } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// hide hits
+export async function snippetForSaveRule12(): Promise<void> {
+  // >SEPARATOR saveRule hide hits
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'hide-12345',
+    rule: {
+      objectID: 'hide-12345',
+      conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+      consequence: { hide: [{ objectID: 'to-hide-12345' }] },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// one rule per facet
+export async function snippetForSaveRule13(): Promise<void> {
+  // >SEPARATOR saveRule one rule per facet
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'red-color',
+    rule: {
+      objectID: 'red-color',
+      conditions: [{ pattern: 'red', anchoring: 'contains' }],
+      consequence: { params: { query: { remove: ['red'] }, filters: 'color:red' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// numerical filters
+export async function snippetForSaveRule14(): Promise<void> {
+  // >SEPARATOR saveRule numerical filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'cheap',
+    rule: {
+      objectID: 'cheap',
+      conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+      consequence: { params: { query: { remove: ['cheap'] }, filters: 'price < 10' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// negative filters
+export async function snippetForSaveRule15(): Promise<void> {
+  // >SEPARATOR saveRule negative filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'gluten-free-rule',
+    rule: {
+      objectID: 'gluten-free-rule',
+      conditions: [{ pattern: 'gluten-free', anchoring: 'contains' }],
+      consequence: {
+        params: { filters: 'NOT allergens:gluten', query: { edits: [{ type: 'remove', delete: 'gluten-free' }] } },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// positive filters
+export async function snippetForSaveRule16(): Promise<void> {
+  // >SEPARATOR saveRule positive filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'diet-rule',
+    rule: {
+      objectID: 'diet-rule',
+      conditions: [{ pattern: 'diet', anchoring: 'contains' }],
+      consequence: {
+        params: { filters: "'low-carb' OR 'low-fat'", query: { edits: [{ type: 'remove', delete: 'diet' }] } },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// conditionless
+export async function snippetForSaveRule17(): Promise<void> {
+  // >SEPARATOR saveRule conditionless
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'diet-rule',
+    rule: {
+      objectID: 'diet-rule',
+      consequence: {
+        params: { filters: "'low-carb' OR 'low-fat'", query: { edits: [{ type: 'remove', delete: 'diet' }] } },
+      },
     },
   });
 
@@ -1745,7 +2351,7 @@ export async function snippetForSearchRules(): Promise<void> {
 //
 // search with searchParams
 export async function snippetForSearchSingleIndex(): Promise<void> {
-  // >SEPARATOR searchSingleIndex default
+  // >SEPARATOR searchSingleIndex search with searchParams
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -1754,6 +2360,640 @@ export async function snippetForSearchSingleIndex(): Promise<void> {
   const response = await client.searchSingleIndex({
     indexName: 'indexName',
     searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// query
+export async function snippetForSearchSingleIndex1(): Promise<void> {
+  // >SEPARATOR searchSingleIndex query
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { query: 'phone' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filters
+export async function snippetForSearchSingleIndex2(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: 'country:US AND price.gross < 2.0' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// distinct
+export async function snippetForSearchSingleIndex3(): Promise<void> {
+  // >SEPARATOR searchSingleIndex distinct
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { distinct: true } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersNumeric
+export async function snippetForSearchSingleIndex4(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersNumeric
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { filters: 'price < 10' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersTimestamp
+export async function snippetForSearchSingleIndex5(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersTimestamp
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: 'NOT date_timestamp:1514764800 TO 1546300799' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersSumOrFiltersScoresFalse
+export async function snippetForSearchSingleIndex6(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: {
+      filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+      sumOrFiltersScores: false,
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersSumOrFiltersScoresTrue
+export async function snippetForSearchSingleIndex7(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: {
+      filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+      sumOrFiltersScores: true,
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersStephenKing
+export async function snippetForSearchSingleIndex8(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersStephenKing
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: 'author:"Stephen King"' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersNotTags
+export async function snippetForSearchSingleIndex9(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersNotTags
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: 'NOT _tags:non-fiction' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersList
+export async function snippetForSearchSingleIndex10(): Promise<void> {
+  // >SEPARATOR searchSingleIndex facetFiltersList
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { facetFilters: ['publisher:Penguin', ['author:Stephen King', 'genre:Horror']] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersNeg
+export async function snippetForSearchSingleIndex11(): Promise<void> {
+  // >SEPARATOR searchSingleIndex facetFiltersNeg
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { facetFilters: 'category:-Ebook' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersAndFacetFilters
+export async function snippetForSearchSingleIndex12(): Promise<void> {
+  // >SEPARATOR searchSingleIndex filtersAndFacetFilters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: '(author:"Stephen King" OR genre:"Horror")', facetFilters: ['publisher:Penguin'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// aroundLatLng
+export async function snippetForSearchSingleIndex13(): Promise<void> {
+  // >SEPARATOR searchSingleIndex aroundLatLng
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { aroundLatLng: '40.71, -74.01' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// aroundLatLngViaIP
+export async function snippetForSearchSingleIndex14(): Promise<void> {
+  // >SEPARATOR searchSingleIndex aroundLatLngViaIP
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { aroundLatLngViaIP: true },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// aroundRadius
+export async function snippetForSearchSingleIndex15(): Promise<void> {
+  // >SEPARATOR searchSingleIndex aroundRadius
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { aroundLatLng: '40.71, -74.01', aroundRadius: 1000000 },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// insideBoundingBox
+export async function snippetForSearchSingleIndex16(): Promise<void> {
+  // >SEPARATOR searchSingleIndex insideBoundingBox
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { insideBoundingBox: [[49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875]] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// insidePolygon
+export async function snippetForSearchSingleIndex17(): Promise<void> {
+  // >SEPARATOR searchSingleIndex insidePolygon
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: {
+      insidePolygon: [
+        [
+          42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+          31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+          -117.54828125,
+        ],
+      ],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// insidePolygon
+export async function snippetForSearchSingleIndex18(): Promise<void> {
+  // >SEPARATOR searchSingleIndex insidePolygon
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: {
+      insidePolygon: [
+        [
+          42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+          31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+          -117.54828125,
+        ],
+      ],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// optionalFilters
+export async function snippetForSearchSingleIndex19(): Promise<void> {
+  // >SEPARATOR searchSingleIndex optionalFilters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { optionalFilters: ['can_deliver_quickly:true'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// optionalFiltersMany
+export async function snippetForSearchSingleIndex20(): Promise<void> {
+  // >SEPARATOR searchSingleIndex optionalFiltersMany
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { optionalFilters: ['brand:Apple<score=3>', 'brand:Samsung<score=2>', 'brand:-Huawei'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// optionalFiltersSimple
+export async function snippetForSearchSingleIndex21(): Promise<void> {
+  // >SEPARATOR searchSingleIndex optionalFiltersSimple
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { optionalFilters: ['brand:Apple<score=2>', 'type:tablet'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// restrictSearchableAttributes
+export async function snippetForSearchSingleIndex22(): Promise<void> {
+  // >SEPARATOR searchSingleIndex restrictSearchableAttributes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { restrictSearchableAttributes: ['title_fr'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// getRankingInfo
+export async function snippetForSearchSingleIndex23(): Promise<void> {
+  // >SEPARATOR searchSingleIndex getRankingInfo
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { getRankingInfo: true } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// clickAnalytics
+export async function snippetForSearchSingleIndex24(): Promise<void> {
+  // >SEPARATOR searchSingleIndex clickAnalytics
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { clickAnalytics: true } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// clickAnalyticsUserToken
+export async function snippetForSearchSingleIndex25(): Promise<void> {
+  // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { clickAnalytics: true, userToken: 'user-1' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enablePersonalization
+export async function snippetForSearchSingleIndex26(): Promise<void> {
+  // >SEPARATOR searchSingleIndex enablePersonalization
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { enablePersonalization: true, userToken: 'user-1' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// userToken
+export async function snippetForSearchSingleIndex27(): Promise<void> {
+  // >SEPARATOR searchSingleIndex userToken
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { userToken: 'user-1' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// analyticsTag
+export async function snippetForSearchSingleIndex28(): Promise<void> {
+  // >SEPARATOR searchSingleIndex analyticsTag
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { analyticsTags: ['YOUR_ANALYTICS_TAG'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersUsers
+export async function snippetForSearchSingleIndex29(): Promise<void> {
+  // >SEPARATOR searchSingleIndex facetFiltersUsers
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { facetFilters: ['user:user42', 'user:public'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// buildTheQuery
+export async function snippetForSearchSingleIndex30(): Promise<void> {
+  // >SEPARATOR searchSingleIndex buildTheQuery
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { filters: "categoryPageId: Men's Clothing", hitsPerPage: 50, analyticsTags: ['mens-clothing'] },
   });
 
   // >LOG
@@ -1841,9 +3081,713 @@ export async function snippetForSetDictionarySettings(): Promise<void> {
 
 // Snippet for the setSettings method.
 //
-// setSettingsAttributesForFaceting
+// removeStopWords boolean
 export async function snippetForSetSettings(): Promise<void> {
-  // >SEPARATOR setSettings default
+  // >SEPARATOR setSettings removeStopWords boolean
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { removeStopWords: true },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// removeStopWords list of string
+export async function snippetForSetSettings1(): Promise<void> {
+  // >SEPARATOR setSettings removeStopWords list of string
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { removeStopWords: ['fr'] },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct company
+export async function snippetForSetSettings2(): Promise<void> {
+  // >SEPARATOR setSettings distinct company
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { attributeForDistinct: 'company', distinct: true },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct design
+export async function snippetForSetSettings3(): Promise<void> {
+  // >SEPARATOR setSettings distinct design
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { attributeForDistinct: 'design', distinct: true },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct true
+export async function snippetForSetSettings4(): Promise<void> {
+  // >SEPARATOR setSettings distinct true
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { distinct: true } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct section
+export async function snippetForSetSettings5(): Promise<void> {
+  // >SEPARATOR setSettings distinct section
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { attributeForDistinct: 'section', distinct: true },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting allergens
+export async function snippetForSetSettings6(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting allergens
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { attributesForFaceting: ['allergens'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting categoryPageId
+export async function snippetForSetSettings7(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting categoryPageId
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { attributesForFaceting: ['searchable(categoryPageId)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// unretrievableAttributes
+export async function snippetForSetSettings8(): Promise<void> {
+  // >SEPARATOR setSettings unretrievableAttributes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { unretrievableAttributes: ['visible_by'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting user restricted data
+export async function snippetForSetSettings9(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting user restricted data
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { attributesForFaceting: ['filterOnly(visible_by)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting optional filters
+export async function snippetForSetSettings10(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting optional filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { attributesForFaceting: ['can_deliver_quickly', 'restaurant'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting redirect index
+export async function snippetForSetSettings11(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting redirect index
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { attributesForFaceting: ['query_terms'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting multiple consequences
+export async function snippetForSetSettings12(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting multiple consequences
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { attributesForFaceting: ['director'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting in-depth optional filters
+export async function snippetForSetSettings13(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: '<YOUR_INDEX_NAME>',
+    indexSettings: { attributesForFaceting: ['filterOnly(brand)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// mode neuralSearch
+export async function snippetForSetSettings14(): Promise<void> {
+  // >SEPARATOR setSettings mode neuralSearch
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'neuralSearch' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// mode keywordSearch
+export async function snippetForSetSettings15(): Promise<void> {
+  // >SEPARATOR setSettings mode keywordSearch
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'keywordSearch' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes same priority
+export async function snippetForSetSettings16(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributes same priority
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { searchableAttributes: ['title,comments', 'ingredients'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes higher priority
+export async function snippetForSetSettings17(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributes higher priority
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { searchableAttributes: ['title', 'ingredients'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking retweets
+export async function snippetForSetSettings18(): Promise<void> {
+  // >SEPARATOR setSettings customRanking retweets
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['desc(retweets)', 'desc(likes)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking boosted
+export async function snippetForSetSettings19(): Promise<void> {
+  // >SEPARATOR setSettings customRanking boosted
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['desc(boosted)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking pageviews
+export async function snippetForSetSettings20(): Promise<void> {
+  // >SEPARATOR setSettings customRanking pageviews
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['desc(pageviews)', 'desc(comments)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking applying search parameters for a specific query
+export async function snippetForSetSettings21(): Promise<void> {
+  // >SEPARATOR setSettings customRanking applying search parameters for a specific query
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['desc(nb_airline_liaisons)'], attributesForFaceting: ['city, country'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking rounded pageviews
+export async function snippetForSetSettings22(): Promise<void> {
+  // >SEPARATOR setSettings customRanking rounded pageviews
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['desc(rounded_pageviews)', 'desc(comments)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking price
+export async function snippetForSetSettings23(): Promise<void> {
+  // >SEPARATOR setSettings customRanking price
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['desc(price)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking exhaustive
+export async function snippetForSetSettings24(): Promise<void> {
+  // >SEPARATOR setSettings ranking exhaustive
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking standard replica
+export async function snippetForSetSettings25(): Promise<void> {
+  // >SEPARATOR setSettings ranking standard replica
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { ranking: ['desc(post_date_timestamp)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking virtual replica
+export async function snippetForSetSettings26(): Promise<void> {
+  // >SEPARATOR setSettings ranking virtual replica
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['desc(post_date_timestamp)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking and ranking sort alphabetically
+export async function snippetForSetSettings27(): Promise<void> {
+  // >SEPARATOR setSettings customRanking and ranking sort alphabetically
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      customRanking: ['asc(textual_attribute)'],
+      ranking: ['custom', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact'],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// relevancyStrictness
+export async function snippetForSetSettings28(): Promise<void> {
+  // >SEPARATOR setSettings relevancyStrictness
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { customRanking: ['asc(textual_attribute)'], relevancyStrictness: 0 },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// create replica index
+export async function snippetForSetSettings29(): Promise<void> {
+  // >SEPARATOR setSettings create replica index
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { replicas: ['products_price_desc'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// unlink replica index
+export async function snippetForSetSettings30(): Promise<void> {
+  // >SEPARATOR setSettings unlink replica index
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { replicas: [''] } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// forwardToReplicas
+export async function snippetForSetSettings31(): Promise<void> {
+  // >SEPARATOR setSettings forwardToReplicas
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { searchableAttributes: ['name', 'description'] },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// maxValuesPerFacet
+export async function snippetForSetSettings32(): Promise<void> {
+  // >SEPARATOR setSettings maxValuesPerFacet
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { maxValuesPerFacet: 1000 } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// maxFacetHits
+export async function snippetForSetSettings33(): Promise<void> {
+  // >SEPARATOR setSettings maxFacetHits
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { maxFacetHits: 1000 } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting complex
+export async function snippetForSetSettings34(): Promise<void> {
+  // >SEPARATOR setSettings attributesForFaceting complex
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -1852,6 +3796,291 @@ export async function snippetForSetSettings(): Promise<void> {
   const response = await client.setSettings({
     indexName: '<YOUR_INDEX_NAME>',
     indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking closest dates
+export async function snippetForSetSettings35(): Promise<void> {
+  // >SEPARATOR setSettings ranking closest dates
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      ranking: ['asc(date_timestamp)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes item variation
+export async function snippetForSetSettings36(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributes item variation
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { searchableAttributes: ['design', 'type', 'color'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes around location
+export async function snippetForSetSettings37(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributes around location
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      searchableAttributes: ['name', 'country', 'code', 'iata_code'],
+      customRanking: ['desc(links_count)'],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes around location
+export async function snippetForSetSettings38(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributes around location
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      searchableAttributes: ['name', 'country', 'code', 'iata_code'],
+      customRanking: ['desc(links_count)'],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disableTypoToleranceOnAttributes
+export async function snippetForSetSettings39(): Promise<void> {
+  // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { disableTypoToleranceOnAttributes: ['serial_number'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesWithCustomRankingsAndAttributesForFaceting
+export async function snippetForSetSettings40(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      searchableAttributes: ['brand', 'name', 'categories', 'unordered(description)'],
+      customRanking: ['desc(popularity)'],
+      attributesForFaceting: ['searchable(brand)', 'type', 'categories', 'price'],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesProductReferenceSuffixes
+export async function snippetForSetSettings41(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { searchableAttributes: ['name', 'product_reference', 'product_reference_suffixes'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// queryLanguageAndIgnorePlurals
+export async function snippetForSetSettings42(): Promise<void> {
+  // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { queryLanguages: ['en'], ignorePlurals: true },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesInMovies
+export async function snippetForSetSettings43(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributesInMovies
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'movies',
+    indexSettings: { searchableAttributes: ['title_eng', 'title_fr', 'title_es'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disablePrefixOnAttributes
+export async function snippetForSetSettings44(): Promise<void> {
+  // >SEPARATOR setSettings disablePrefixOnAttributes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { disablePrefixOnAttributes: ['serial_number'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disableTypoToleranceOnAttributes
+export async function snippetForSetSettings45(): Promise<void> {
+  // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { disableTypoToleranceOnAttributes: ['serial_number'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesSimpleExample
+export async function snippetForSetSettings46(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributesSimpleExample
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { searchableAttributes: ['serial_number'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesSimpleExampleAlt
+export async function snippetForSetSettings47(): Promise<void> {
+  // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { searchableAttributes: ['serial_number', 'serial_number_suffixes'] },
   });
 
   // >LOG

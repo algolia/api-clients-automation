@@ -31,8 +31,7 @@ func push() {
 	// setting `watch` to `true` will make the call synchronous
 	resp, err := client.PushTask(client.NewApiPushTaskRequest(
 		"YOUR_TASK_ID",
-		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(records),
-	).WithWatch(true))
+		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(records)).WithWatch(true))
 	if err != nil {
 		panic(err)
 	}

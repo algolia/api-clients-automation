@@ -35,8 +35,7 @@ func TestSearchE2E_Browse(t *testing.T) {
 	t.Run("browse with minimal parameters", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.Browse(client.NewApiBrowseRequest(
-			"cts_e2e_browse",
-		))
+			"cts_e2e_browse"))
 		require.NoError(t, err)
 		_ = res
 
@@ -64,8 +63,7 @@ func TestSearchE2E_GetObject(t *testing.T) {
 	t.Run("search with a real object", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.GetObject(client.NewApiGetObjectRequest(
-			"cts_e2e_browse", "Batman and Robin",
-		))
+			"cts_e2e_browse", "Batman and Robin"))
 		require.NoError(t, err)
 		_ = res
 
@@ -93,8 +91,7 @@ func TestSearchE2E_GetRule(t *testing.T) {
 	t.Run("getRule", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.GetRule(client.NewApiGetRuleRequest(
-			"cts_e2e_browse", "qr-1725004648916",
-		))
+			"cts_e2e_browse", "qr-1725004648916"))
 		require.NoError(t, err)
 		_ = res
 
@@ -122,8 +119,7 @@ func TestSearchE2E_GetSettings(t *testing.T) {
 	t.Run("getSettings", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.GetSettings(client.NewApiGetSettingsRequest(
-			"cts_e2e_settings",
-		))
+			"cts_e2e_settings"))
 		require.NoError(t, err)
 		_ = res
 
@@ -154,8 +150,7 @@ func TestSearchE2E_Search(t *testing.T) {
 
 			search.NewEmptySearchMethodParams().SetRequests(
 				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_empty_index"))}),
-		))
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_empty_index"))})))
 		require.NoError(t, err)
 		_ = res
 
@@ -186,8 +181,7 @@ func TestSearchE2E_Search(t *testing.T) {
 					search.NewEmptySearchForHits().SetIndexName("cts_e2e_highlight_snippet_results").SetQuery("vim").SetAttributesToSnippet(
 						[]string{"*:20"}).SetAttributesToHighlight(
 						[]string{"*"}).SetAttributesToRetrieve(
-						[]string{"*"}))}),
-		))
+						[]string{"*"}))})))
 		require.NoError(t, err)
 		_ = res
 
@@ -215,8 +209,7 @@ func TestSearchE2E_Search(t *testing.T) {
 
 			search.NewEmptySearchMethodParams().SetRequests(
 				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
-					search.NewEmptySearchForFacets().SetIndexName("cts_e2e_search_facet").SetType(search.SearchTypeFacet("facet")).SetFacet("editor"))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches")),
-		))
+					search.NewEmptySearchForFacets().SetIndexName("cts_e2e_search_facet").SetType(search.SearchTypeFacet("facet")).SetFacet("editor"))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches"))))
 		require.NoError(t, err)
 		_ = res
 
@@ -253,8 +246,7 @@ func TestSearchE2E_Search(t *testing.T) {
 					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
 						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
 							[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim"), *search.ArrayOfFacetFiltersAsFacetFilters(
-								[]search.FacetFilters{*search.StringAsFacetFilters("editor:goland")})})})))}),
-		))
+								[]search.FacetFilters{*search.StringAsFacetFilters("editor:goland")})})})))})))
 		require.NoError(t, err)
 		_ = res
 
@@ -283,8 +275,7 @@ func TestSearchE2E_SearchDictionaryEntries(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
 			search.DictionaryType("stopwords"),
-			search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
-		))
+			search.NewEmptySearchDictionaryEntriesParams().SetQuery("about")))
 		require.NoError(t, err)
 		_ = res
 
@@ -312,8 +303,7 @@ func TestSearchE2E_SearchRules(t *testing.T) {
 	t.Run("searchRules", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.SearchRules(client.NewApiSearchRulesRequest(
-			"cts_e2e_browse",
-		).WithSearchRulesParams(
+			"cts_e2e_browse").WithSearchRulesParams(
 			search.NewEmptySearchRulesParams().SetQuery("zorro")))
 		require.NoError(t, err)
 		_ = res
@@ -342,8 +332,7 @@ func TestSearchE2E_SearchSingleIndex(t *testing.T) {
 	t.Run("search with special characters in indexName", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"cts_e2e_space in index",
-		))
+			"cts_e2e_space in index"))
 		require.NoError(t, err)
 		_ = res
 
@@ -351,8 +340,7 @@ func TestSearchE2E_SearchSingleIndex(t *testing.T) {
 	t.Run("single search retrieve snippets", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"cts_e2e_browse",
-		).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			"cts_e2e_browse").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("batman mask of the phantasm").SetAttributesToRetrieve(
 				[]string{"*"}).SetAttributesToSnippet(
 				[]string{"*:20"}))))
@@ -380,12 +368,11 @@ func TestSearchE2E_SearchSingleIndex(t *testing.T) {
 }
 
 func TestSearchE2E_SetSettings(t *testing.T) {
-	t.Run("setSettings with minimal parameters", func(t *testing.T) {
+	t.Run("minimal parameters", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"cts_e2e_settings",
-			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10),
-		).WithForwardToReplicas(true))
+			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
 		require.NoError(t, err)
 		_ = res
 

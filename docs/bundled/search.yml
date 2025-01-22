@@ -339,9 +339,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -585,9 +583,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -831,9 +827,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1072,9 +1066,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1350,8 +1342,7 @@ paths:
 
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-              "<YOUR_INDEX_NAME>",
-            ).WithSearchParams(search.SearchParamsObjectAsSearchParams(
+              "<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
               search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
                 []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
             if err != nil {
@@ -1710,9 +1701,7 @@ paths:
 
               search.NewEmptySearchMethodParams().SetRequests(
                 []search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-                  search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}),
-            ))
-
+                  search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2047,9 +2036,7 @@ paths:
 
             response, err :=
             client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-              "<YOUR_INDEX_NAME>", "facetName",
-            ))
-
+              "<YOUR_INDEX_NAME>", "facetName"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2352,9 +2339,7 @@ paths:
             // Call the API
 
             response, err := client.Browse(client.NewApiBrowseRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2661,9 +2646,7 @@ paths:
             // Call the API
 
             response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-              "<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"},
-            ))
-
+              "<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2960,9 +2943,7 @@ paths:
             // Call the API
 
             response, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3253,8 +3234,7 @@ paths:
             // Call the API
 
             response, err := client.GetObject(client.NewApiGetObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID",
-            ).WithAttributesToRetrieve(
+              "<YOUR_INDEX_NAME>", "uniqueID").WithAttributesToRetrieve(
               []string{"attr1", "attr2"}))
             if err != nil {
               // handle the eventual error
@@ -3627,9 +3607,7 @@ paths:
 
             response, err := client.DeleteBy(client.NewApiDeleteByRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
-            ))
-
+              search.NewEmptyDeleteByParams().SetFilters("brand:brandName")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3900,9 +3878,7 @@ paths:
 
             response, err :=
             client.ClearObjects(client.NewApiClearObjectsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4195,7 +4171,13 @@ paths:
             var response = await client.PartialUpdateObjectAsync(
               "<YOUR_INDEX_NAME>",
               "uniqueID",
-              new Dictionary<string, string> { { "attributeId", "new value" } }
+              new Dictionary<string, Object>
+              {
+                {
+                  "attributeId",
+                  new Dictionary<string, string> { { "nested", "value" } }
+                },
+              }
             );
 
             // >LOG
@@ -4211,7 +4193,9 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               objectID: "uniqueID",
               attributesToUpdate: {
-                'attributeId': "new value",
+                'attributeId': {
+                  'nested': "value",
+                },
               },
             );
             // >LOG
@@ -4233,9 +4217,7 @@ paths:
 
             response, err :=
             client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"},
-            ))
-
+              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": map[string]any{"nested": "value"}}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4263,7 +4245,14 @@ paths:
               "uniqueID",
               new HashMap() {
                 {
-                  put("attributeId", "new value");
+                  put(
+                    "attributeId",
+                    new HashMap() {
+                      {
+                        put("nested", "value");
+                      }
+                    }
+                  );
                 }
               }
             );
@@ -4285,7 +4274,7 @@ paths:
             const response = await client.partialUpdateObject({
               indexName: 'theIndexName',
               objectID: 'uniqueID',
-              attributesToUpdate: { attributeId: 'new value' },
+              attributesToUpdate: { attributeId: { nested: 'value' } },
             });
 
 
@@ -4311,7 +4300,12 @@ paths:
               attributesToUpdate = buildJsonObject {
                 put(
                   "attributeId",
-                  JsonPrimitive("new value"),
+                  buildJsonObject {
+                    put(
+                      "nested",
+                      JsonPrimitive("value"),
+                    )
+                  },
                 )
               },
             )
@@ -4336,7 +4330,8 @@ paths:
             $response = $client->partialUpdateObject(
                 '<YOUR_INDEX_NAME>',
                 'uniqueID',
-                ['attributeId' => 'new value',
+                ['attributeId' => ['nested' => 'value',
+                ],
                 ],
             );
 
@@ -4364,7 +4359,9 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_update={
-                    "attributeId": "new value",
+                    "attributeId": {
+                        "nested": "value",
+                    },
                 },
             )
 
@@ -4386,7 +4383,7 @@ paths:
             # Call the API
 
             response = client.partial_update_object("<YOUR_INDEX_NAME>",
-            "uniqueID", {attributeId: "new value"})
+            "uniqueID", {attributeId: {nested: "value"}})
 
 
             # >LOG
@@ -4413,7 +4410,7 @@ paths:
             val response = client.partialUpdateObject(
               indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
-              attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
+              attributesToUpdate = JObject(List(JField("attributeId", JObject(List(JField("nested", JString("value")))))))
             )
 
 
@@ -4436,7 +4433,7 @@ paths:
             let response = try await client.partialUpdateObject(
                 indexName: "<YOUR_INDEX_NAME>",
                 objectID: "uniqueID",
-                attributesToUpdate: ["attributeId": "new value"]
+                attributesToUpdate: ["attributeId": ["nested": "value"]]
             )
 
             // >LOG
@@ -4568,9 +4565,7 @@ paths:
             response, err := client.Batch(client.NewApiBatchRequest(
               "<YOUR_INDEX_NAME>",
               search.NewEmptyBatchWriteParams().SetRequests(
-                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
-            ))
-
+                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5038,9 +5033,7 @@ paths:
             client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
               search.NewEmptyBatchParams().SetRequests(
-                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")}),
-            ))
-
+                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5454,9 +5447,7 @@ paths:
 
               search.NewEmptyGetObjectsParams().SetRequests(
                 []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
-            ))
-
+                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5772,9 +5763,7 @@ paths:
             // Call the API
 
             response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6008,15 +5997,8 @@ paths:
 
             var response = await client.SetSettingsAsync(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings
-              {
-                AttributesForFaceting = new List<string>
-                {
-                  "actor",
-                  "filterOnly(category)",
-                  "searchable(publisher)",
-                },
-              }
+              new IndexSettings { RemoveStopWords = new RemoveStopWords(true) },
+              true
             );
 
             // >LOG
@@ -6031,12 +6013,9 @@ paths:
             final response = await client.setSettings(
               indexName: "<YOUR_INDEX_NAME>",
               indexSettings: IndexSettings(
-                attributesForFaceting: [
-                  "actor",
-                  "filterOnly(category)",
-                  "searchable(publisher)",
-                ],
+                removeStopWords: true,
               ),
+              forwardToReplicas: true,
             );
             // >LOG
         - lang: go
@@ -6057,10 +6036,7 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetAttributesForFaceting(
-                []string{"actor", "filterOnly(category)", "searchable(publisher)"}),
-            ))
-
+              search.NewEmptyIndexSettings().SetRemoveStopWords(search.BoolAsRemoveStopWords(true))).WithForwardToReplicas(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6083,10 +6059,8 @@ paths:
 
             // Call the API
 
-            client.setSettings(
-              "<YOUR_INDEX_NAME>",
-              new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
-            );
+            client.setSettings("<YOUR_INDEX_NAME>", new
+            IndexSettings().setRemoveStopWords(RemoveStopWords.of(true)), true);
 
             // >LOG
         - lang: javascript
@@ -6103,8 +6077,9 @@ paths:
             // Call the API
 
             const response = await client.setSettings({
-              indexName: '<YOUR_INDEX_NAME>',
-              indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
+              indexName: 'theIndexName',
+              indexSettings: { removeStopWords: true },
+              forwardToReplicas: true,
             });
 
 
@@ -6127,8 +6102,9 @@ paths:
             var response = client.setSettings(
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
-                attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)"),
+                removeStopWords = RemoveStopWords.of(true),
               ),
+              forwardToReplicas = true,
             )
 
 
@@ -6150,14 +6126,9 @@ paths:
 
             $response = $client->setSettings(
                 '<YOUR_INDEX_NAME>',
-                ['attributesForFaceting' => [
-                    'actor',
-
-                    'filterOnly(category)',
-
-                    'searchable(publisher)',
+                ['removeStopWords' => true,
                 ],
-                ],
+                true,
             );
 
 
@@ -6183,12 +6154,9 @@ paths:
             response = client.set_settings(
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
-                    "attributesForFaceting": [
-                        "actor",
-                        "filterOnly(category)",
-                        "searchable(publisher)",
-                    ],
+                    "removeStopWords": True,
                 },
+                forward_to_replicas=True,
             )
 
 
@@ -6208,12 +6176,8 @@ paths:
 
             # Call the API
 
-            response = client.set_settings(
-              "<YOUR_INDEX_NAME>",
-              Algolia::Search::IndexSettings.new(
-                attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
-              )
-            )
+            response = client.set_settings("<YOUR_INDEX_NAME>",
+            Algolia::Search::IndexSettings.new(remove_stop_words: true), true)
 
 
             # >LOG
@@ -6240,8 +6204,9 @@ paths:
             val response = client.setSettings(
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
-                attributesForFaceting = Some(Seq("actor", "filterOnly(category)", "searchable(publisher)"))
-              )
+                removeStopWords = Some(RemoveStopWords(true))
+              ),
+              forwardToReplicas = Some(true)
             )
 
 
@@ -6263,11 +6228,8 @@ paths:
 
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
-                indexSettings: IndexSettings(attributesForFaceting: [
-                    "actor",
-                    "filterOnly(category)",
-                    "searchable(publisher)",
-                ])
+                indexSettings: IndexSettings(removeStopWords: SearchRemoveStopWords.bool(true)),
+                forwardToReplicas: true
             )
 
             // >LOG
@@ -6355,9 +6317,7 @@ paths:
             // Call the API
 
             response, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-            ))
-
+              "<YOUR_INDEX_NAME>", "id1"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6743,9 +6703,7 @@ paths:
               "<YOUR_INDEX_NAME>",
               []search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
                 []string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
-                []string{"ephone", "aphone", "yphone"})},
-            ).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
-
+                []string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7120,9 +7078,7 @@ paths:
 
             response, err :=
             client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7395,9 +7351,7 @@ paths:
 
             response, err :=
             client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7926,9 +7880,7 @@ paths:
             response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
               search.NewEmptyApiKey().SetAcl(
-                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
-            ))
-
+                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8243,9 +8195,7 @@ paths:
             // Call the API
 
             response, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
-              "myTestApiKey",
-            ))
-
+              "myTestApiKey"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8574,9 +8524,7 @@ paths:
 
             response, err :=
             client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-              "ALGOLIA_API_KEY",
-            ))
-
+              "ALGOLIA_API_KEY"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8827,9 +8775,7 @@ paths:
             // Call the API
 
             response, err := client.GetRule(client.NewApiGetRuleRequest(
-              "<YOUR_INDEX_NAME>", "qr-1725004648916",
-            ))
-
+              "<YOUR_INDEX_NAME>", "qr-1725004648916"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9228,9 +9174,7 @@ paths:
                   search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
                 []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
                 search.NewEmptyConsequence().SetParams(
-                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
-            ).WithForwardToReplicas(false).WithClearExistingRules(true))
-
+                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}).WithForwardToReplicas(false).WithClearExistingRules(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9674,9 +9618,7 @@ paths:
             // Call the API
 
             response, err := client.ClearRules(client.NewApiClearRulesRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9988,8 +9930,7 @@ paths:
             // Call the API
 
             response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-              "<YOUR_INDEX_NAME>",
-            ).WithSearchRulesParams(
+              "<YOUR_INDEX_NAME>").WithSearchRulesParams(
               search.NewEmptySearchRulesParams().SetQuery("zorro")))
             if err != nil {
               // handle the eventual error
@@ -10342,9 +10283,7 @@ paths:
                 []search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
                   search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
                     []string{"believe", "algolia"}).SetDecomposition(
-                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
-            ))
-
+                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10762,9 +10701,7 @@ paths:
             response, err :=
             client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
               search.DictionaryType("stopwords"),
-              search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
-            ))
-
+              search.NewEmptySearchDictionaryEntriesParams().SetQuery("about")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11311,9 +11248,7 @@ paths:
             client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
               search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true})),
-            ))
-
+                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11844,8 +11779,8 @@ paths:
             // Call the API
 
             var response = await client.AssignUserIdAsync(
-              "userID",
-              new AssignUserIdParams { Cluster = "theCluster" }
+              "user42",
+              new AssignUserIdParams { Cluster = "d4242-eu" }
             );
 
             // >LOG
@@ -11858,9 +11793,9 @@ paths:
 
             // Call the API
             final response = await client.assignUserId(
-              xAlgoliaUserID: "userID",
+              xAlgoliaUserID: "user42",
               assignUserIdParams: AssignUserIdParams(
-                cluster: "theCluster",
+                cluster: "d4242-eu",
               ),
             );
             // >LOG
@@ -11882,10 +11817,8 @@ paths:
 
             response, err :=
             client.AssignUserId(client.NewApiAssignUserIdRequest(
-              "userID",
-              search.NewEmptyAssignUserIdParams().SetCluster("theCluster"),
-            ))
-
+              "user42",
+              search.NewEmptyAssignUserIdParams().SetCluster("d4242-eu")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11908,8 +11841,8 @@ paths:
 
             // Call the API
 
-            client.assignUserId("userID", new
-            AssignUserIdParams().setCluster("theCluster"));
+            client.assignUserId("user42", new
+            AssignUserIdParams().setCluster("d4242-eu"));
 
             // >LOG
         - lang: javascript
@@ -11925,10 +11858,8 @@ paths:
 
             // Call the API
 
-            const response = await client.assignUserId({
-              xAlgoliaUserID: 'userID',
-              assignUserIdParams: { cluster: 'theCluster' },
-            });
+            const response = await client.assignUserId({ xAlgoliaUserID:
+            'user42', assignUserIdParams: { cluster: 'd4242-eu' } });
 
 
             // >LOG
@@ -11948,9 +11879,9 @@ paths:
             // Call the API
 
             var response = client.assignUserId(
-              xAlgoliaUserID = "userID",
+              xAlgoliaUserID = "user42",
               assignUserIdParams = AssignUserIdParams(
-                cluster = "theCluster",
+                cluster = "d4242-eu",
               ),
             )
 
@@ -11972,8 +11903,8 @@ paths:
             // Call the API
 
             $response = $client->assignUserId(
-                'userID',
-                ['cluster' => 'theCluster',
+                'user42',
+                ['cluster' => 'd4242-eu',
                 ],
             );
 
@@ -11998,9 +11929,9 @@ paths:
             # Call the API
 
             response = client.assign_user_id(
-                x_algolia_user_id="userID",
+                x_algolia_user_id="user42",
                 assign_user_id_params={
-                    "cluster": "theCluster",
+                    "cluster": "d4242-eu",
                 },
             )
 
@@ -12021,8 +11952,8 @@ paths:
 
             # Call the API
 
-            response = client.assign_user_id("userID",
-            Algolia::Search::AssignUserIdParams.new(cluster: "theCluster"))
+            response = client.assign_user_id("user42",
+            Algolia::Search::AssignUserIdParams.new(cluster: "d4242-eu"))
 
 
             # >LOG
@@ -12047,9 +11978,9 @@ paths:
             // Call the API
 
             val response = client.assignUserId(
-              xAlgoliaUserID = "userID",
+              xAlgoliaUserID = "user42",
               assignUserIdParams = AssignUserIdParams(
-                cluster = "theCluster"
+                cluster = "d4242-eu"
               )
             )
 
@@ -12071,8 +12002,8 @@ paths:
             // Call the API
 
             let response = try await client.assignUserId(
-                xAlgoliaUserID: "userID",
-                assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
+                xAlgoliaUserID: "user42",
+                assignUserIdParams: AssignUserIdParams(cluster: "d4242-eu")
             )
 
             // >LOG
@@ -12460,9 +12391,7 @@ paths:
             client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
               "userID",
               search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
-                []string{"user1", "user2"}),
-            ))
-
+                []string{"user1", "user2"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13021,9 +12950,7 @@ paths:
             // Call the API
 
             response, err := client.GetUserId(client.NewApiGetUserIdRequest(
-              "uniqueID",
-            ))
-
+              "uniqueID"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13656,9 +13583,7 @@ paths:
             response, err :=
             client.SearchUserIds(client.NewApiSearchUserIdsRequest(
 
-              search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10),
-            ))
-
+              search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10)))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14477,9 +14402,7 @@ paths:
             response, err :=
             client.ReplaceSources(client.NewApiReplaceSourcesRequest(
 
-              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")},
-            ))
-
+              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14764,9 +14687,7 @@ paths:
             response, err :=
             client.AppendSource(client.NewApiAppendSourceRequest(
 
-              search.NewEmptySource().SetSource("theSource").SetDescription("theDescription"),
-            ))
-
+              search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15049,9 +14970,7 @@ paths:
 
             response, err :=
             client.DeleteSource(client.NewApiDeleteSourceRequest(
-              "theSource",
-            ))
-
+              "theSource"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15721,9 +15640,7 @@ paths:
             // Call the API
 
             response, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
-              123,
-            ))
-
+              123))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15987,9 +15904,7 @@ paths:
             // Call the API
 
             response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "<YOUR_INDEX_NAME>", 123,
-            ))
-
+              "<YOUR_INDEX_NAME>", 123))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -16334,9 +16249,7 @@ paths:
             client.OperationIndex(client.NewApiOperationIndexRequest(
               "<SOURCE_INDEX_NAME>",
               search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>").SetScope(
-                []search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")}),
-            ))
-
+                []search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")})))
             if err != nil {
               // handle the eventual error
               panic(err)

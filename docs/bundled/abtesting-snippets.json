@@ -49,40 +49,40 @@
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting\""
     },
     "addABTests": {
-      "default": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtesting.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtesting.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
-      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteABTest": {
-      "default": "response, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "estimateABTest": {
-      "default": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(\n      abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(\n      abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric(\"conversionRate\")))).SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(\n      abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(\n      abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric(\"conversionRate\")))).SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getABTest": {
-      "default": "response, err := client.GetABTest(client.NewApiGetABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetABTest(client.NewApiGetABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listABTests": {
       "default": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "scheduleABTest": {
-      "default": "response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(\n\n  abtesting.NewEmptyScheduleABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetScheduledAt(\"2022-11-31T00:00:00.000Z\").SetName(\"myABTest\").SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(\n\n  abtesting.NewEmptyScheduleABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetScheduledAt(\"2022-11-31T00:00:00.000Z\").SetName(\"myABTest\").SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "stopABTest": {
-      "default": "response, err := client.StopABTest(client.NewApiStopABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.StopABTest(client.NewApiStopABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := abtesting.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", abtesting.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"

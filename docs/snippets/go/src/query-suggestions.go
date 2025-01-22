@@ -31,8 +31,7 @@ func SnippetForCreateConfigOfSuggestions() {
 					[]string{"facetA", "facetB"},
 					[]string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
 			[]string{"french"})).SetExclude(
-			[]string{"test"}),
-	))
+			[]string{"test"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -60,8 +59,7 @@ func SnippetForCustomDeleteOfSuggestions() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -89,8 +87,7 @@ func SnippetForCustomGetOfSuggestions() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -118,8 +115,7 @@ func SnippetForCustomPostOfSuggestions() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -147,8 +143,7 @@ func SnippetForCustomPutOfSuggestions() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -176,8 +171,7 @@ func SnippetForDeleteConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -232,8 +226,7 @@ func SnippetForGetConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetConfig(client.NewApiGetConfigRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -261,8 +254,7 @@ func SnippetForGetConfigStatusOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -290,8 +282,7 @@ func SnippetForGetLogFileOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetLogFile(client.NewApiGetLogFileRequest(
-		"<YOUR_INDEX_NAME>",
-	))
+		"<YOUR_INDEX_NAME>"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -319,8 +310,7 @@ func SnippetForSetClientApiKeyOfSuggestions() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -354,8 +344,7 @@ func SnippetForUpdateConfigOfSuggestions() {
 					[]string{"facetA", "facetB"},
 					[]string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
 			[]string{"french"})).SetExclude(
-			[]string{"test"}),
-	))
+			[]string{"test"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

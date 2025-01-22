@@ -60,21 +60,18 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"source\":\"theSource\",\"description\":\"theDescription\"}"), JSON.parse(req.body))
   end
 
-  # assignUserId
+  # simple
   def test_assign_user_id
-    req = @client.assign_user_id_with_http_info(
-      "userID",
-      Algolia::Search::AssignUserIdParams.new(cluster: "theCluster")
-    )
+    req = @client.assign_user_id_with_http_info("user42", Algolia::Search::AssignUserIdParams.new(cluster: "d4242-eu"))
 
     assert_equal(:post, req.method)
     assert_equal("/1/clusters/mapping", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-user-id" => "userID"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-user-id" => "user42"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
-    assert_equal(JSON.parse("{\"cluster\":\"theCluster\"}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"cluster\":\"d4242-eu\"}"), JSON.parse(req.body))
   end
 
   # it should not encode the userID
@@ -1217,6 +1214,24 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"attributeId\":{\"nested\":\"value\"}}"), JSON.parse(req.body))
   end
 
+  # with visible_by filter
+  def test_partial_update_object5
+    req = @client.partial_update_object_with_http_info(
+      "theIndexName",
+      "uniqueID",
+      {visible_by: ["Angela", "group/Finance", "group/Shareholders"]}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"visible_by\":[\"Angela\",\"group/Finance\",\"group/Shareholders\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
   # removeUserId
   def test_remove_user_id
     req = @client.remove_user_id_with_http_info("uniqueID")
@@ -1342,6 +1357,516 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # b2b catalog
+  def test_save_rule2
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "article-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "article-rule",
+        conditions: [Algolia::Search::Condition.new(pattern: "article", anchoring: "startsWith")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            query: Algolia::Search::ConsequenceQueryObject.new(
+              edits: [Algolia::Search::Edit.new(type: "remove", delete: "article")]
+            ),
+            restrict_searchable_attributes: ["title", "book_id"]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/article-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # merchandising and promoting
+  def test_save_rule3
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "director-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "director-rule",
+        conditions: [Algolia::Search::Condition.new(pattern: "{facet:director} director", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            restrict_searchable_attributes: ["title", "book_id"],
+            automatic_facet_filters: [Algolia::Search::AutomaticFacetFilter.new(facet: "director")],
+            query: Algolia::Search::ConsequenceQueryObject.new(
+              edits: [Algolia::Search::Edit.new(type: "remove", delete: "director")]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/director-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"director-rule\",\"conditions\":[{\"pattern\":\"{facet:director} director\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"restrictSearchableAttributes\":[\"title\",\"book_id\"],\"automaticFacetFilters\":[{\"facet\":\"director\"}],\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"director\"}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # harry potter
+  def test_save_rule4
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "harry-potter-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "harry-potter-rule",
+        conditions: [Algolia::Search::Condition.new(pattern: "harry potter", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          user_data: {:"promo_content" => "20% OFF on all Harry Potter books!"}
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/harry-potter-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"harry-potter-rule\",\"conditions\":[{\"pattern\":\"harry potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"promo_content\":\"20% OFF on all Harry Potter books!\"}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # merchandising empty query
+  def test_save_rule5
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "clearance-category-filter",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "clearance-category-filter",
+        conditions: [Algolia::Search::Condition.new(pattern: "", anchoring: "is", context: "landing")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(optional_filters: "clearance:true")
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/clearance-category-filter", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"clearance-category-filter\",\"conditions\":[{\"pattern\":\"\",\"anchoring\":\"is\",\"context\":\"landing\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"clearance:true\"}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # redirect
+  def test_save_rule6
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "redirect-help-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "redirect-help-rule",
+        conditions: [Algolia::Search::Condition.new(pattern: "help", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(user_data: {:"redirect" => "https://www.algolia.com/support"})
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/redirect-help-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"redirect-help-rule\",\"conditions\":[{\"pattern\":\"help\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"redirect\":\"https://www.algolia.com/support\"}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # promote some results over others
+  def test_save_rule7
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "tomato-fruit",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "tomato-fruit",
+        conditions: [Algolia::Search::Condition.new(pattern: "tomato", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(optional_filters: "food_group:fruit")
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/tomato-fruit", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"tomato-fruit\",\"conditions\":[{\"pattern\":\"tomato\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"food_group:fruit\"}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # promote several hits
+  def test_save_rule8
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "Promote-Apple-Newest",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "Promote-Apple-Newest",
+        conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "is")],
+        consequence: Algolia::Search::Consequence.new(
+          promote: [Algolia::Search::PromoteObjectIDs.new(object_ids: ["iPhone-12345", "watch-123"], position: 0)]
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/Promote-Apple-Newest", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"Promote-Apple-Newest\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"is\"}],\"consequence\":{\"promote\":[{\"objectIDs\":[\"iPhone-12345\",\"watch-123\"],\"position\":0}]}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # promote newest release
+  def test_save_rule9
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "Promote-iPhone-X",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "Promote-iPhone-X",
+        conditions: [Algolia::Search::Condition.new(pattern: "iPhone", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          promote: [Algolia::Search::PromoteObjectID.new(algolia_object_id: "iPhone-12345", position: 0)]
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/Promote-iPhone-X", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"Promote-iPhone-X\",\"conditions\":[{\"pattern\":\"iPhone\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"iPhone-12345\",\"position\":0}]}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # promote single item
+  def test_save_rule10
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "promote-harry-potter-box-set",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "promote-harry-potter-box-set",
+        conditions: [Algolia::Search::Condition.new(pattern: "Harry Potter", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          promote: [Algolia::Search::PromoteObjectID.new(algolia_object_id: "HP-12345", position: 0)]
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/promote-harry-potter-box-set", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"promote-harry-potter-box-set\",\"conditions\":[{\"pattern\":\"Harry Potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"HP-12345\",\"position\":0}]}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # limit search results
+  def test_save_rule11
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "article-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "article-rule",
+        conditions: [Algolia::Search::Condition.new(pattern: "article", anchoring: "startsWith")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            query: Algolia::Search::ConsequenceQueryObject.new(
+              edits: [Algolia::Search::Edit.new(type: "remove", delete: "article")]
+            ),
+            restrict_searchable_attributes: ["title", "book_id"]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/article-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # query match
+  def test_save_rule12
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "tagged-brand-rule",
+      Algolia::Search::Rule.new(
+        conditions: [
+          Algolia::Search::Condition.new(pattern: "brand: {facet:brand}", anchoring: "contains", alternatives: false)
+        ],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            automatic_facet_filters: [Algolia::Search::AutomaticFacetFilter.new(facet: "brand")],
+            query: Algolia::Search::ConsequenceQueryObject.new(remove: ["brand:", "{facet:brand}"])
+          )
+        ),
+        description: "filter on brand: {brand}",
+        algolia_object_id: "tagged-brand-rule"
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/tagged-brand-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"conditions\":[{\"pattern\":\"brand: {facet:brand}\",\"anchoring\":\"contains\",\"alternatives\":false}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"brand\"}],\"query\":{\"remove\":[\"brand:\",\"{facet:brand}\"]}}},\"description\":\"filter on brand: {brand}\",\"objectID\":\"tagged-brand-rule\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # dynamic filtering
+  def test_save_rule13
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "color-facets",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "color-facets",
+        conditions: [Algolia::Search::Condition.new(pattern: "{facet:color}")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            automatic_facet_filters: [Algolia::Search::AutomaticFacetFilter.new(facet: "color")]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/color-facets", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"color-facets\",\"conditions\":[{\"pattern\":\"{facet:color}\"}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"color\"}]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # hide hits
+  def test_save_rule14
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "hide-12345",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "hide-12345",
+        conditions: [Algolia::Search::Condition.new(pattern: "cheap", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          hide: [Algolia::Search::ConsequenceHide.new(algolia_object_id: "to-hide-12345")]
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/hide-12345", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"hide-12345\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"hide\":[{\"objectID\":\"to-hide-12345\"}]}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # one rule per facet
+  def test_save_rule15
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "red-color",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "red-color",
+        conditions: [Algolia::Search::Condition.new(pattern: "red", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            query: Algolia::Search::ConsequenceQueryObject.new(remove: ["red"]),
+            filters: "color:red"
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/red-color", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"red-color\",\"conditions\":[{\"pattern\":\"red\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"red\"]},\"filters\":\"color:red\"}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # numerical filters
+  def test_save_rule16
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "cheap",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "cheap",
+        conditions: [Algolia::Search::Condition.new(pattern: "cheap", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            query: Algolia::Search::ConsequenceQueryObject.new(remove: ["cheap"]),
+            filters: "price < 10"
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/cheap", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 10\"}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # negative filters
+  def test_save_rule17
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "gluten-free-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "gluten-free-rule",
+        conditions: [Algolia::Search::Condition.new(pattern: "gluten-free", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            filters: "NOT allergens:gluten",
+            query: Algolia::Search::ConsequenceQueryObject.new(
+              edits: [Algolia::Search::Edit.new(type: "remove", delete: "gluten-free")]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/gluten-free-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"gluten-free-rule\",\"conditions\":[{\"pattern\":\"gluten-free\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"NOT allergens:gluten\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"gluten-free\"}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # positive filters
+  def test_save_rule18
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "diet-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "diet-rule",
+        conditions: [Algolia::Search::Condition.new(pattern: "diet", anchoring: "contains")],
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            filters: "'low-carb' OR 'low-fat'",
+            query: Algolia::Search::ConsequenceQueryObject.new(
+              edits: [Algolia::Search::Edit.new(type: "remove", delete: "diet")]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/diet-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"diet-rule\",\"conditions\":[{\"pattern\":\"diet\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # conditionless
+  def test_save_rule19
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "diet-rule",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "diet-rule",
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(
+            filters: "'low-carb' OR 'low-fat'",
+            query: Algolia::Search::ConsequenceQueryObject.new(
+              edits: [Algolia::Search::Edit.new(type: "remove", delete: "diet")]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/diet-rule", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # saveRules with minimal parameters
   def test_save_rules
     req = @client.save_rules_with_http_info(
@@ -1428,6 +1953,80 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "[{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}]"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # dynamic filtering
+  def test_save_rules2
+    req = @client.save_rules_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      [
+        Algolia::Search::Rule.new(
+          algolia_object_id: "toaster",
+          conditions: [Algolia::Search::Condition.new(pattern: "toaster", anchoring: "contains")],
+          consequence: Algolia::Search::Consequence.new(
+            params: Algolia::Search::ConsequenceParams.new(
+              query: Algolia::Search::ConsequenceQueryObject.new(remove: ["toaster"]),
+              filters: "product_type:toaster"
+            )
+          )
+        ),
+        Algolia::Search::Rule.new(
+          algolia_object_id: "cheap",
+          conditions: [Algolia::Search::Condition.new(pattern: "cheap", anchoring: "contains")],
+          consequence: Algolia::Search::Consequence.new(
+            params: Algolia::Search::ConsequenceParams.new(
+              query: Algolia::Search::ConsequenceQueryObject.new(remove: ["cheap"]),
+              filters: "price < 15"
+            )
+          )
+        )
+      ]
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "[{\"objectID\":\"toaster\",\"conditions\":[{\"pattern\":\"toaster\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"toaster\"]},\"filters\":\"product_type:toaster\"}}},{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 15\"}}}]"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # enhance search results
+  def test_save_rules3
+    req = @client.save_rules_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      [
+        Algolia::Search::Rule.new(
+          algolia_object_id: "country",
+          conditions: [Algolia::Search::Condition.new(pattern: "{facet:country}", anchoring: "contains")],
+          consequence: Algolia::Search::Consequence.new(
+            params: Algolia::Search::ConsequenceParams.new(around_lat_lng_via_ip: false)
+          )
+        ),
+        Algolia::Search::Rule.new(
+          algolia_object_id: "city",
+          conditions: [Algolia::Search::Condition.new(pattern: "{facet:city}", anchoring: "contains")],
+          consequence: Algolia::Search::Consequence.new(
+            params: Algolia::Search::ConsequenceParams.new(around_lat_lng_via_ip: false)
+          )
+        )
+      ]
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "[{\"objectID\":\"country\",\"conditions\":[{\"pattern\":\"{facet:country}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}},{\"objectID\":\"city\",\"conditions\":[{\"pattern\":\"{facet:city}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}}]"
       ),
       JSON.parse(req.body)
     )
@@ -2125,6 +2724,518 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # query
+  def test_search_single_index4
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(query: "phone")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"query\":\"phone\"}"), JSON.parse(req.body))
+  end
+
+  # filters
+  def test_search_single_index5
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(filters: "country:US AND price.gross < 2.0")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"filters\":\"country:US AND price.gross < 2.0\"}"), JSON.parse(req.body))
+  end
+
+  # distinct
+  def test_search_single_index6
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(distinct: true)
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"distinct\":true}"), JSON.parse(req.body))
+  end
+
+  # filtersNumeric
+  def test_search_single_index7
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(filters: "price < 10")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"filters\":\"price < 10\"}"), JSON.parse(req.body))
+  end
+
+  # filtersTimestamp
+  def test_search_single_index8
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(filters: "NOT date_timestamp:1514764800 TO 1546300799")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"filters\":\"NOT date_timestamp:1514764800 TO 1546300799\"}"), JSON.parse(req.body))
+  end
+
+  # filtersSumOrFiltersScoresFalse
+  def test_search_single_index9
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        sum_or_filters_scores: false
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":false}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # filtersSumOrFiltersScoresTrue
+  def test_search_single_index10
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        sum_or_filters_scores: true
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":true}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # filtersStephenKing
+  def test_search_single_index11
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(filters: "author:\"Stephen King\"")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"filters\":\"author:\\\"Stephen King\\\"\"}"), JSON.parse(req.body))
+  end
+
+  # filtersNotTags
+  def test_search_single_index12
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(filters: "NOT _tags:non-fiction")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"filters\":\"NOT _tags:non-fiction\"}"), JSON.parse(req.body))
+  end
+
+  # facetFiltersList
+  def test_search_single_index13
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        facet_filters: ["publisher:Penguin", ["author:Stephen King", "genre:Horror"]]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"facetFilters\":[\"publisher:Penguin\",[\"author:Stephen King\",\"genre:Horror\"]]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # facetFiltersNeg
+  def test_search_single_index14
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(facet_filters: "category:-Ebook")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facetFilters\":\"category:-Ebook\"}"), JSON.parse(req.body))
+  end
+
+  # filtersAndFacetFilters
+  def test_search_single_index15
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        filters: "(author:\"Stephen King\" OR genre:\"Horror\")",
+        facet_filters: ["publisher:Penguin"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"filters\":\"(author:\\\"Stephen King\\\" OR genre:\\\"Horror\\\")\",\"facetFilters\":[\"publisher:Penguin\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # aroundLatLng
+  def test_search_single_index16
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(around_lat_lng: "40.71, -74.01")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"aroundLatLng\":\"40.71, -74.01\"}"), JSON.parse(req.body))
+  end
+
+  # aroundLatLngViaIP
+  def test_search_single_index17
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(around_lat_lng_via_ip: true)
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"aroundLatLngViaIP\":true}"), JSON.parse(req.body))
+  end
+
+  # aroundRadius
+  def test_search_single_index18
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(around_lat_lng: "40.71, -74.01", around_radius: 1000000)
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"aroundLatLng\":\"40.71, -74.01\",\"aroundRadius\":1000000}"), JSON.parse(req.body))
+  end
+
+  # insideBoundingBox
+  def test_search_single_index19
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        inside_bounding_box: [[49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875]]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"insideBoundingBox\":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # insidePolygon
+  def test_search_single_index20
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        inside_polygon: [
+          [
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
+          ]
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # insidePolygon
+  def test_search_single_index21
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        inside_polygon: [
+          [
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
+          ]
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # optionalFilters
+  def test_search_single_index22
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(optional_filters: ["can_deliver_quickly:true"])
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"optionalFilters\":[\"can_deliver_quickly:true\"]}"), JSON.parse(req.body))
+  end
+
+  # optionalFiltersMany
+  def test_search_single_index23
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        optional_filters: ["brand:Apple<score=3>", "brand:Samsung<score=2>", "brand:-Huawei"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"optionalFilters\":[\"brand:Apple<score=3>\",\"brand:Samsung<score=2>\",\"brand:-Huawei\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # optionalFiltersSimple
+  def test_search_single_index24
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(optional_filters: ["brand:Apple<score=2>", "type:tablet"])
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"optionalFilters\":[\"brand:Apple<score=2>\",\"type:tablet\"]}"), JSON.parse(req.body))
+  end
+
+  # restrictSearchableAttributes
+  def test_search_single_index25
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(restrict_searchable_attributes: ["title_fr"])
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"restrictSearchableAttributes\":[\"title_fr\"]}"), JSON.parse(req.body))
+  end
+
+  # getRankingInfo
+  def test_search_single_index26
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(get_ranking_info: true)
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"getRankingInfo\":true}"), JSON.parse(req.body))
+  end
+
+  # clickAnalytics
+  def test_search_single_index27
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(click_analytics: true)
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"clickAnalytics\":true}"), JSON.parse(req.body))
+  end
+
+  # clickAnalyticsUserToken
+  def test_search_single_index28
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(click_analytics: true, user_token: "user-1")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"clickAnalytics\":true,\"userToken\":\"user-1\"}"), JSON.parse(req.body))
+  end
+
+  # enablePersonalization
+  def test_search_single_index29
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(enable_personalization: true, user_token: "user-1")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"enablePersonalization\":true,\"userToken\":\"user-1\"}"), JSON.parse(req.body))
+  end
+
+  # userToken
+  def test_search_single_index30
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(user_token: "user-1")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"userToken\":\"user-1\"}"), JSON.parse(req.body))
+  end
+
+  # analyticsTag
+  def test_search_single_index31
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(analytics_tags: ["YOUR_ANALYTICS_TAG"])
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"analyticsTags\":[\"YOUR_ANALYTICS_TAG\"]}"), JSON.parse(req.body))
+  end
+
+  # facetFiltersUsers
+  def test_search_single_index32
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(facet_filters: ["user:user42", "user:public"])
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facetFilters\":[\"user:user42\",\"user:public\"]}"), JSON.parse(req.body))
+  end
+
+  # buildTheQuery
+  def test_search_single_index33
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(
+        filters: "categoryPageId: Men's Clothing",
+        hits_per_page: 50,
+        analytics_tags: ["mens-clothing"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"filters\":\"categoryPageId: Men's Clothing\",\"hitsPerPage\":50,\"analyticsTags\":[\"mens-clothing\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # searchSynonyms with minimal parameters
   def test_search_synonyms
     req = @client.search_synonyms_with_http_info("indexName")
@@ -2216,8 +3327,599 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # setSettingsAttributesForFaceting
+  # minimal parameters
   def test_set_settings
+    req = @client.set_settings_with_http_info(
+      "cts_e2e_settings",
+      Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/cts_e2e_settings/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"paginationLimitedTo\":10}"), JSON.parse(req.body))
+  end
+
+  # boolean typoTolerance
+  def test_set_settings1
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(typo_tolerance: true),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"typoTolerance\":true}"), JSON.parse(req.body))
+  end
+
+  # enum typoTolerance
+  def test_set_settings2
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(typo_tolerance: "min"),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"typoTolerance\":\"min\"}"), JSON.parse(req.body))
+  end
+
+  # ignorePlurals
+  def test_set_settings3
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(ignore_plurals: true),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"ignorePlurals\":true}"), JSON.parse(req.body))
+  end
+
+  # list of string ignorePlurals
+  def test_set_settings4
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(ignore_plurals: ["fr"]),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"ignorePlurals\":[\"fr\"]}"), JSON.parse(req.body))
+  end
+
+  # removeStopWords boolean
+  def test_set_settings5
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(remove_stop_words: true),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"removeStopWords\":true}"), JSON.parse(req.body))
+  end
+
+  # removeStopWords list of string
+  def test_set_settings6
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(remove_stop_words: ["fr"]),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"removeStopWords\":[\"fr\"]}"), JSON.parse(req.body))
+  end
+
+  # boolean distinct
+  def test_set_settings7
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(distinct: true), true)
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"distinct\":true}"), JSON.parse(req.body))
+  end
+
+  # integer distinct
+  def test_set_settings8
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(distinct: 1), true)
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"distinct\":1}"), JSON.parse(req.body))
+  end
+
+  # distinct company
+  def test_set_settings9
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(attribute_for_distinct: "company", distinct: true)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeForDistinct\":\"company\",\"distinct\":true}"), JSON.parse(req.body))
+  end
+
+  # distinct design
+  def test_set_settings10
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(attribute_for_distinct: "design", distinct: true)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeForDistinct\":\"design\",\"distinct\":true}"), JSON.parse(req.body))
+  end
+
+  # distinct true
+  def test_set_settings11
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(distinct: true))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"distinct\":true}"), JSON.parse(req.body))
+  end
+
+  # distinct section
+  def test_set_settings12
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(attribute_for_distinct: "section", distinct: true)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeForDistinct\":\"section\",\"distinct\":true}"), JSON.parse(req.body))
+  end
+
+  # attributesForFaceting allergens
+  def test_set_settings13
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(attributes_for_faceting: ["allergens"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributesForFaceting\":[\"allergens\"]}"), JSON.parse(req.body))
+  end
+
+  # attributesForFaceting categoryPageId
+  def test_set_settings14
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(attributes_for_faceting: ["searchable(categoryPageId)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributesForFaceting\":[\"searchable(categoryPageId)\"]}"), JSON.parse(req.body))
+  end
+
+  # unretrievableAttributes
+  def test_set_settings15
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(unretrievable_attributes: ["visible_by"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"unretrievableAttributes\":[\"visible_by\"]}"), JSON.parse(req.body))
+  end
+
+  # attributesForFaceting user restricted data
+  def test_set_settings16
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(attributes_for_faceting: ["filterOnly(visible_by)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributesForFaceting\":[\"filterOnly(visible_by)\"]}"), JSON.parse(req.body))
+  end
+
+  # attributesForFaceting optional filters
+  def test_set_settings17
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(attributes_for_faceting: ["can_deliver_quickly", "restaurant"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"attributesForFaceting\":[\"can_deliver_quickly\",\"restaurant\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # attributesForFaceting redirect index
+  def test_set_settings18
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(attributes_for_faceting: ["query_terms"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributesForFaceting\":[\"query_terms\"]}"), JSON.parse(req.body))
+  end
+
+  # attributesForFaceting multiple consequences
+  def test_set_settings19
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(attributes_for_faceting: ["director"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributesForFaceting\":[\"director\"]}"), JSON.parse(req.body))
+  end
+
+  # attributesForFaceting in-depth optional filters
+  def test_set_settings20
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      Algolia::Search::IndexSettings.new(attributes_for_faceting: ["filterOnly(brand)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributesForFaceting\":[\"filterOnly(brand)\"]}"), JSON.parse(req.body))
+  end
+
+  # mode neuralSearch
+  def test_set_settings21
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(mode: "neuralSearch"))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"mode\":\"neuralSearch\"}"), JSON.parse(req.body))
+  end
+
+  # mode keywordSearch
+  def test_set_settings22
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(mode: "keywordSearch"))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"mode\":\"keywordSearch\"}"), JSON.parse(req.body))
+  end
+
+  # searchableAttributes same priority
+  def test_set_settings23
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["title,comments", "ingredients"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"searchableAttributes\":[\"title,comments\",\"ingredients\"]}"), JSON.parse(req.body))
+  end
+
+  # searchableAttributes higher priority
+  def test_set_settings24
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["title", "ingredients"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"searchableAttributes\":[\"title\",\"ingredients\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking retweets
+  def test_set_settings25
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(retweets)", "desc(likes)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(retweets)\",\"desc(likes)\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking boosted
+  def test_set_settings26
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(boosted)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(boosted)\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking pageviews
+  def test_set_settings27
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(pageviews)", "desc(comments)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(pageviews)\",\"desc(comments)\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking applying search parameters for a specific query
+  def test_set_settings28
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(
+        custom_ranking: ["desc(nb_airline_liaisons)"],
+        attributes_for_faceting: ["city, country"]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"customRanking\":[\"desc(nb_airline_liaisons)\"],\"attributesForFaceting\":[\"city, country\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # customRanking rounded pageviews
+  def test_set_settings29
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(rounded_pageviews)", "desc(comments)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # customRanking price
+  def test_set_settings30
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(price)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(price)\"]}"), JSON.parse(req.body))
+  end
+
+  # ranking exhaustive
+  def test_set_settings31
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(
+        ranking: ["desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # ranking standard replica
+  def test_set_settings32
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(ranking: ["desc(post_date_timestamp)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"ranking\":[\"desc(post_date_timestamp)\"]}"), JSON.parse(req.body))
+  end
+
+  # ranking virtual replica
+  def test_set_settings33
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["desc(post_date_timestamp)"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"customRanking\":[\"desc(post_date_timestamp)\"]}"), JSON.parse(req.body))
+  end
+
+  # customRanking and ranking sort alphabetically
+  def test_set_settings34
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(
+        custom_ranking: ["asc(textual_attribute)"],
+        ranking: ["custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"customRanking\":[\"asc(textual_attribute)\"],\"ranking\":[\"custom\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # relevancyStrictness
+  def test_set_settings35
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(custom_ranking: ["asc(textual_attribute)"], relevancy_strictness: 0)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"customRanking\":[\"asc(textual_attribute)\"],\"relevancyStrictness\":0}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # create replica index
+  def test_set_settings36
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(replicas: ["products_price_desc"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"replicas\":[\"products_price_desc\"]}"), JSON.parse(req.body))
+  end
+
+  # unlink replica index
+  def test_set_settings37
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(replicas: [""]))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"replicas\":[\"\"]}"), JSON.parse(req.body))
+  end
+
+  # forwardToReplicas
+  def test_set_settings38
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["name", "description"]),
+      true
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"searchableAttributes\":[\"name\",\"description\"]}"), JSON.parse(req.body))
+  end
+
+  # maxValuesPerFacet
+  def test_set_settings39
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(max_values_per_facet: 1000)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"maxValuesPerFacet\":1000}"), JSON.parse(req.body))
+  end
+
+  # maxFacetHits
+  def test_set_settings40
+    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(max_facet_hits: 1000))
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"maxFacetHits\":1000}"), JSON.parse(req.body))
+  end
+
+  # attributesForFaceting complex
+  def test_set_settings41
     req = @client.set_settings_with_http_info(
       "<YOUR_INDEX_NAME>",
       Algolia::Search::IndexSettings.new(
@@ -2235,135 +3937,101 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # setSettings with minimal parameters
-  def test_set_settings1
-    req = @client.set_settings_with_http_info(
-      "cts_e2e_settings",
-      Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
-      true
-    )
-
-    assert_equal(:put, req.method)
-    assert_equal("/1/indexes/cts_e2e_settings/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"paginationLimitedTo\":10}"), JSON.parse(req.body))
-  end
-
-  # setSettings allow boolean `typoTolerance`
-  def test_set_settings2
+  # ranking closest dates
+  def test_set_settings42
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      Algolia::Search::IndexSettings.new(typo_tolerance: true),
-      true
+      Algolia::Search::IndexSettings.new(
+        ranking: ["asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+      )
     )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"typoTolerance\":true}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse(
+        "{\"ranking\":[\"asc(date_timestamp)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+      ),
+      JSON.parse(req.body)
+    )
   end
 
-  # setSettings allow enum `typoTolerance`
-  def test_set_settings3
+  # searchableAttributes item variation
+  def test_set_settings43
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      Algolia::Search::IndexSettings.new(typo_tolerance: "min"),
-      true
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["design", "type", "color"])
     )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"typoTolerance\":\"min\"}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"searchableAttributes\":[\"design\",\"type\",\"color\"]}"), JSON.parse(req.body))
   end
 
-  # setSettings allow boolean `ignorePlurals`
-  def test_set_settings4
+  # searchableAttributes around location
+  def test_set_settings44
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      Algolia::Search::IndexSettings.new(ignore_plurals: true),
-      true
+      Algolia::Search::IndexSettings.new(
+        searchable_attributes: ["name", "country", "code", "iata_code"],
+        custom_ranking: ["desc(links_count)"]
+      )
     )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"ignorePlurals\":true}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse(
+        "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}"
+      ),
+      JSON.parse(req.body)
+    )
   end
 
-  # setSettings allow list of string `ignorePlurals`
-  def test_set_settings5
+  # searchableAttributes around location
+  def test_set_settings45
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      Algolia::Search::IndexSettings.new(ignore_plurals: ["fr"]),
-      true
+      Algolia::Search::IndexSettings.new(
+        searchable_attributes: ["name", "country", "code", "iata_code"],
+        custom_ranking: ["desc(links_count)"]
+      )
     )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"ignorePlurals\":[\"fr\"]}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse(
+        "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}"
+      ),
+      JSON.parse(req.body)
+    )
   end
 
-  # setSettings allow boolean `removeStopWords`
-  def test_set_settings6
+  # disableTypoToleranceOnAttributes
+  def test_set_settings46
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      Algolia::Search::IndexSettings.new(remove_stop_words: true),
-      true
+      Algolia::Search::IndexSettings.new(disable_typo_tolerance_on_attributes: ["serial_number"])
     )
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"removeStopWords\":true}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}"), JSON.parse(req.body))
   end
 
-  # setSettings allow list of string `removeStopWords`
-  def test_set_settings7
-    req = @client.set_settings_with_http_info(
-      "theIndexName",
-      Algolia::Search::IndexSettings.new(remove_stop_words: ["fr"]),
-      true
-    )
-
-    assert_equal(:put, req.method)
-    assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"removeStopWords\":[\"fr\"]}"), JSON.parse(req.body))
-  end
-
-  # setSettings allow boolean `distinct`
-  def test_set_settings8
-    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(distinct: true), true)
-
-    assert_equal(:put, req.method)
-    assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"distinct\":true}"), JSON.parse(req.body))
-  end
-
-  # setSettings allow integers for `distinct`
-  def test_set_settings9
-    req = @client.set_settings_with_http_info("theIndexName", Algolia::Search::IndexSettings.new(distinct: 1), true)
-
-    assert_equal(:put, req.method)
-    assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"distinct\":1}"), JSON.parse(req.body))
-  end
-
-  # setSettings allow all `indexSettings`
-  def test_set_settings10
+  # everything
+  def test_set_settings47
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
@@ -2444,6 +4112,138 @@ class TestSearchClient < Test::Unit::TestCase
       JSON.parse(
         "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"fr\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}"
       ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # searchableAttributesWithCustomRankingsAndAttributesForFaceting
+  def test_set_settings48
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(
+        searchable_attributes: ["brand", "name", "categories", "unordered(description)"],
+        custom_ranking: ["desc(popularity)"],
+        attributes_for_faceting: ["searchable(brand)", "type", "categories", "price"]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"searchableAttributes\":[\"brand\",\"name\",\"categories\",\"unordered(description)\"],\"customRanking\":[\"desc(popularity)\"],\"attributesForFaceting\":[\"searchable(brand)\",\"type\",\"categories\",\"price\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # searchableAttributesProductReferenceSuffixes
+  def test_set_settings49
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(
+        searchable_attributes: ["name", "product_reference", "product_reference_suffixes"]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"searchableAttributes\":[\"name\",\"product_reference\",\"product_reference_suffixes\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # queryLanguageAndIgnorePlurals
+  def test_set_settings50
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(query_languages: ["en"], ignore_plurals: true)
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"queryLanguages\":[\"en\"],\"ignorePlurals\":true}"), JSON.parse(req.body))
+  end
+
+  # searchableAttributesInMovies
+  def test_set_settings51
+    req = @client.set_settings_with_http_info(
+      "movies",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["title_eng", "title_fr", "title_es"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/movies/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"searchableAttributes\":[\"title_eng\",\"title_fr\",\"title_es\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # disablePrefixOnAttributes
+  def test_set_settings52
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(disable_prefix_on_attributes: ["serial_number"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"disablePrefixOnAttributes\":[\"serial_number\"]}"), JSON.parse(req.body))
+  end
+
+  # disableTypoToleranceOnAttributes
+  def test_set_settings53
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(disable_typo_tolerance_on_attributes: ["serial_number"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}"), JSON.parse(req.body))
+  end
+
+  # searchableAttributesSimpleExample
+  def test_set_settings54
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["serial_number"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"searchableAttributes\":[\"serial_number\"]}"), JSON.parse(req.body))
+  end
+
+  # searchableAttributesSimpleExampleAlt
+  def test_set_settings55
+    req = @client.set_settings_with_http_info(
+      "theIndexName",
+      Algolia::Search::IndexSettings.new(searchable_attributes: ["serial_number", "serial_number_suffixes"])
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/theIndexName/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"searchableAttributes\":[\"serial_number\",\"serial_number_suffixes\"]}"),
       JSON.parse(req.body)
     )
   end

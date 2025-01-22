@@ -39,8 +39,7 @@ func TestAnalyticscommonApi0(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -53,8 +52,7 @@ func TestAnalyticscommonApi1(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.11.0\).*`), echo.Header.Get("User-Agent"))
 }
@@ -79,8 +77,7 @@ func TestAnalyticsparameters0(t *testing.T) {
 	client, err = analytics.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
-		"my-index",
-	))
+		"my-index"))
 	require.NoError(t, err)
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
@@ -106,8 +103,7 @@ func TestAnalyticsparameters1(t *testing.T) {
 	client, err = analytics.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"test",
-	))
+		"test"))
 	require.NoError(t, err)
 	require.Equal(t, "analytics.de.algolia.com", echo.Host)
 }
@@ -142,8 +138,7 @@ func TestAnalyticsparameters3(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	res, err = client.GetClickPositions(client.NewApiGetClickPositionsRequest(
-		tests.ZeroValue[string](),
-	))
+		tests.ZeroValue[string]()))
 	require.EqualError(t, err, "Parameter `index` is required when calling `GetClickPositions`.")
 }
 
@@ -169,8 +164,7 @@ func TestAnalyticssetClientApiKey0(t *testing.T) {
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/1",
-		))
+			"check-api-key/1"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -178,14 +172,12 @@ func TestAnalyticssetClientApiKey0(t *testing.T) {
 	}
 	{
 		err = client.SetClientApiKey(
-			"updated-api-key",
-		)
+			"updated-api-key")
 		require.NoError(t, err)
 	}
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/2",
-		))
+			"check-api-key/2"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)

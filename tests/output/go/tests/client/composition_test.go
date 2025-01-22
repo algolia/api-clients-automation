@@ -48,8 +48,7 @@ func TestCompositionapi0(t *testing.T) {
 	require.NoError(t, err)
 	res, err = client.Search(client.NewApiSearchRequest(
 		"test-composition-id",
-		composition.NewEmptyRequestBody(),
-	))
+		composition.NewEmptyRequestBody()))
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
@@ -75,8 +74,7 @@ func TestCompositionapi1(t *testing.T) {
 	require.NoError(t, err)
 	res, err = client.Search(client.NewApiSearchRequest(
 		"test-composition-id",
-		composition.NewEmptyRequestBody(),
-	))
+		composition.NewEmptyRequestBody()))
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }

@@ -199,7 +199,7 @@ class SearchTest {
   }
 
   @Test
-  fun `generate secured api key basic`() = runTest {
+  fun `api key basic`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
@@ -220,7 +220,7 @@ class SearchTest {
   }
 
   @Test
-  fun `generate secured api key with searchParams`() = runTest {
+  fun `with searchParams`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
       call = {
@@ -248,6 +248,57 @@ class SearchTest {
         assertEquals("MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", it)
       },
 
+    )
+  }
+
+  @Test
+  fun `with filters`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `with visible_by filter`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = "visible_by:group/Finance",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `with userID`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            userToken = "user42",
+          ),
+        )
+      },
+      intercept = {
+      },
     )
   }
 
@@ -693,6 +744,87 @@ class SearchTest {
         ),
       )
     }.let { error -> assertError(error, "Client request\\(POST http://%localhost%:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch\\) invalid: 403 Forbidden. Text: \"\\{\"message\":\"Invalid Application-ID or API key\",\"status\":403\\}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+  }
+
+  @Test
+  fun `saveObjectsPlaylist`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
+    client.runTest(
+      call = {
+        saveObjects(
+          indexName = "playlists",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "visibility",
+                JsonPrimitive("public"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Hot 100 Billboard Charts"),
+              )
+              put(
+                "playlistId",
+                JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
+              )
+              put(
+                "createdAt",
+                JsonPrimitive("1500240452"),
+              )
+            },
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `saveObjectsPublicUser`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
+    client.runTest(
+      call = {
+        saveObjects(
+          indexName = "playlists",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "visibility",
+                JsonPrimitive("public"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Hot 100 Billboard Charts"),
+              )
+              put(
+                "playlistId",
+                JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
+              )
+              put(
+                "createdAt",
+                JsonPrimitive("1500240452"),
+              )
+            },
+          ),
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("X-Algolia-User-ID", "*")
+            },
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
   }
 
   @Test
