@@ -7,6 +7,7 @@ import { createSpinner } from '../../spinners.ts';
 import type { CTSType } from '../runCts.ts';
 
 import { expect } from 'chai';
+import { algoliaMockServer } from './algoliaMock.ts';
 import { apiKeyServer } from './apiKey.ts';
 import { benchmarkServer } from './benchmark.ts';
 import { chunkWrapperServer } from './chunkWrapper.ts';
@@ -31,6 +32,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       chunkWrapperServer(),
       waitForApiKeyServer(),
       apiKeyServer(),
+      algoliaMockServer(),
     );
   }
   if (suites.benchmark) {

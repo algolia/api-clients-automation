@@ -1,6 +1,6 @@
 {{#isNull}}empty(){{/isNull}}
 {{#isVerbatim}}{{{value}}}{{/isVerbatim}}
-{{#isString}}"{{#lambda.escapeDollar}}{{{value}}}{{/lambda.escapeDollar}}"{{/isString}}
+{{#isString}}"{{#lambda.escapeQuotes}}{{#lambda.escapeDollar}}{{{value}}}{{/lambda.escapeDollar}}{{/lambda.escapeQuotes}}"{{/isString}}
 {{#isNumber}}{{{value}}}{{/isNumber}}
 {{#isBoolean}}{{{value}}}{{/isBoolean}}
 {{#isEnum}}{{{objectName}}}.fromJson("{{value}}"){{/isEnum}}

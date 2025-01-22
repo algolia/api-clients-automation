@@ -206,6 +206,8 @@ public class TestsClient extends TestsGenerator {
                 }
               }
               stepOut.put("match", paramsType.enhanceParameter(step.expected.match));
+            } else if (!step.type.equals("createClient")) {
+              stepOut.put("useEchoRequester", false);
             }
             steps.add(stepOut);
           }

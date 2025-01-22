@@ -17,15 +17,13 @@ console.log('version', apiClientVersion, 'requests', requests);
 
 async function testSearch() {
   try {
-    const res = await client.search({
-      requests: 
-      [
-        { indexName: 'foo', hitsPerPage: 2 }
-      ]
-    });
+    const req = await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { distinct: true },
+    })
 
-    // @ts-ignore
-    console.log(`[OK]`, res.results[0].hits);
+
+    console.log(`[OK]`, req);
   } catch (e: any) {
     // Instance of
     if (e instanceof ApiError) {
