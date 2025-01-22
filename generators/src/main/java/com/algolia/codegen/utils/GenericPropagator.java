@@ -1,5 +1,6 @@
 package com.algolia.codegen.utils;
 
+import com.algolia.codegen.AlgoliaSwiftGenerator;
 import java.util.*;
 import java.util.function.Function;
 import org.openapitools.codegen.*;
@@ -43,18 +44,18 @@ public class GenericPropagator {
    *     x-has-child-generic
    */
   private static boolean hasGeneric(IJsonSchemaValidationProperties property) {
-    if (property instanceof CodegenModel) {
-      return (
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
-      );
-    } else if (property instanceof CodegenProperty) {
-      return (
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
-      );
+    Map<String, Object> vendorExtensions;
+    if (property instanceof CodegenModel model) {
+      vendorExtensions = model.vendorExtensions;
+    } else if (property instanceof CodegenProperty prop) {
+      vendorExtensions = prop.vendorExtensions;
+    } else {
+      return false;
     }
-    return false;
+    return (
+      (boolean) vendorExtensions.getOrDefault("x-propagated-generic", false) ||
+      (boolean) vendorExtensions.getOrDefault("x-has-child-generic", false)
+    );
   }
 
   private static CodegenModel propertyToModel(Map<String, CodegenModel> models, CodegenProperty prop) {
@@ -122,7 +123,11 @@ public class GenericPropagator {
     return false;
   }
 
-  private static void setGenericToComposedSchema(Map<String, CodegenModel> models, List<CodegenProperty> composedSchemas) {
+  private static void setGenericToComposedSchema(
+    Map<String, CodegenModel> models,
+    CodegenModel model,
+    List<CodegenProperty> composedSchemas
+  ) {
     if (composedSchemas == null) {
       return;
     }
@@ -138,26 +143,34 @@ public class GenericPropagator {
     if (composedSchemas == null) {
       return;
     }
-    setGenericToComposedSchema(models, composedSchemas.getOneOf());
-    setGenericToComposedSchema(models, composedSchemas.getAllOf());
-    setGenericToComposedSchema(models, composedSchemas.getAnyOf());
+    setGenericToComposedSchema(models, model, composedSchemas.getOneOf());
+    setGenericToComposedSchema(models, model, composedSchemas.getAllOf());
+    setGenericToComposedSchema(models, model, composedSchemas.getAnyOf());
   }
 
-  private static Map<String, CodegenModel> convertToMap(Map<String, ModelsMap> models) {
+  private static Map<String, CodegenModel> convertToMap(String language, String client, Map<String, ModelsMap> models) {
     Map<String, CodegenModel> modelsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     for (ModelsMap modelMap : models.values()) {
       // modelContainers always have 1 and only 1 model in our specs
       CodegenModel model = modelMap.getModels().get(0).getModel();
-      modelsMap.put(model.name, model);
+      String modelName = model.name;
+      if (language.equals("swift")) {
+        modelName = AlgoliaSwiftGenerator.prefixReservedModelName(modelName, client);
+      }
+      modelsMap.put(modelName, model);
     }
     return modelsMap;
   }
 
-  private static Map<String, CodegenModel> convertToMap(List<ModelMap> models) {
+  private static Map<String, CodegenModel> convertToMap(String language, String client, List<ModelMap> models) {
     Map<String, CodegenModel> modelsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     for (ModelMap modelMap : models) {
       CodegenModel model = modelMap.getModel();
-      modelsMap.put(model.name, model);
+      String modelName = model.name;
+      if (language.equals("swift")) {
+        modelName = AlgoliaSwiftGenerator.prefixReservedModelName(modelName, client);
+      }
+      modelsMap.put(modelName, model);
     }
     return modelsMap;
   }
@@ -165,25 +178,29 @@ public class GenericPropagator {
   /**
    * Models and their members will be marked with either x-propagated-generic or x-has-child-generic
    */
-  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap, boolean skipOneOf) {
+  public static void propagateGenericsToModels(String language, String client, Map<String, ModelsMap> modelsMap, boolean skipOneOf) {
     // We propagate generics in two phases:
     // 1. We mark the direct parent of the generic model to replace it with T
     // 2. We tell each parent with generic properties to pass that generic type all the way down
 
-    Map<String, CodegenModel> models = convertToMap(modelsMap);
+    Map<String, CodegenModel> models = convertToMap(language, client, modelsMap);
 
-    for (CodegenModel model : models.values()) {
-      markPropagatedGeneric(model, m -> m.getVars(), skipOneOf);
-      markPropagatedGeneric(model, m -> m.getRequiredVars(), skipOneOf);
-    }
+    // we don't know in which order the model will come, so we iterate multiple times to make sure
+    // models at any depth are propagated
+    for (int i = 0; i < 5; i++) {
+      for (CodegenModel model : models.values()) {
+        markPropagatedGeneric(model, m -> m.getVars(), skipOneOf);
+        markPropagatedGeneric(model, m -> m.getRequiredVars(), skipOneOf);
+      }
 
-    for (CodegenModel model : models.values()) {
-      propagateGenericRecursive(models, model, m -> m.getVars());
-      propagateGenericRecursive(models, model, m -> m.getRequiredVars());
-    }
+      for (CodegenModel model : models.values()) {
+        propagateGenericRecursive(models, model, m -> m.getVars());
+        propagateGenericRecursive(models, model, m -> m.getRequiredVars());
+      }
 
-    for (CodegenModel model : models.values()) {
-      propagateToComposedSchema(models, model);
+      for (CodegenModel model : models.values()) {
+        propagateToComposedSchema(models, model);
+      }
     }
   }
 
@@ -191,9 +208,21 @@ public class GenericPropagator {
     propagateGenericsToModels(modelsMap, false);
   }
 
+  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap, boolean skipOneOf) {
+    propagateGenericsToModels("dontcare", "dontcare", modelsMap, skipOneOf);
+  }
+
+  public static void propagateGenericsToModels(String language, String client, Map<String, ModelsMap> modelsMap) {
+    propagateGenericsToModels(language, client, modelsMap, false);
+  }
+
   /** Mark operations with a generic return type with x-is-generic */
   public static void propagateGenericsToOperations(OperationsMap operations, List<ModelMap> allModels) {
-    Map<String, CodegenModel> models = convertToMap(allModels);
+    propagateGenericsToOperations("dontcare", "dontcare", operations, allModels);
+  }
+
+  public static void propagateGenericsToOperations(String language, String client, OperationsMap operations, List<ModelMap> allModels) {
+    Map<String, CodegenModel> models = convertToMap(language, client, allModels);
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
       if (ope.returnType == null) {
         continue;

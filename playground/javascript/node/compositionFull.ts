@@ -1,5 +1,5 @@
 import { ApiError } from '@algolia/client-common';
-import { compositionClient } from '@algolia/composition';
+import { compositionClient } from '@algolia/client-composition';
 
 const appId = process.env.METIS_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.METIS_API_KEY || '**** ADMIN_KEY *****';
@@ -36,7 +36,7 @@ async function testComposition() {
     // });
     // console.log(`[OK]`, res);
 
-    console.log(await client.search({ compositionID: 'id1', requestBody: {} }))
+    console.log(await client.listCompositions())
 
   } catch (e) {
     if (e instanceof ApiError) {
