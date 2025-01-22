@@ -38,7 +38,7 @@ jobs:
         run: sleep 300
 
   publish_clients:
-    needs: 
+    needs:
       - check
       - wait_for_core
     strategy:
@@ -47,6 +47,7 @@ jobs:
           - packages/client_search
           - packages/client_insights
           - packages/client_recommend
+          - packages/client_composition
     permissions:
       id-token: write
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
