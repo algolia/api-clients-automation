@@ -155,6 +155,12 @@ __metadata:
   languageName: node
   linkType: soft
 
+"@algolia/composition@link:../../../clients/algoliasearch-client-javascript/packages/composition::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@algolia/composition@link:../../../clients/algoliasearch-client-javascript/packages/composition::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
+  languageName: node
+  linkType: soft
+
 "@algolia/events@npm:^4.0.1":
   version: 4.0.1
   resolution: "@algolia/events@npm:4.0.1"
@@ -5727,6 +5733,7 @@ __metadata:
     "@algolia/client-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/client-personalization"
     "@algolia/client-query-suggestions": "link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions"
     "@algolia/client-search": "link:../../../clients/algoliasearch-client-javascript/packages/client-search"
+    "@algolia/composition": "link:../../../clients/algoliasearch-client-javascript/packages/composition"
     "@algolia/ingestion": "link:../../../clients/algoliasearch-client-javascript/packages/ingestion"
     "@algolia/monitoring": "link:../../../clients/algoliasearch-client-javascript/packages/monitoring"
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend"
