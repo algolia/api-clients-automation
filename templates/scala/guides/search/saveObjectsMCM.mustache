@@ -1,0 +1,21 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
+{{> snippets/import}}
+import algoliasearch.config.RequestOptions
+
+def saveObjectsMCM(): Future[Unit] = {
+  val configurations = getAllAppIDConfigurations()
+  val playlists = Seq(/* Your playlist objects here */)
+
+  Future.sequence {
+    configurations.map { case (appID, apiKey) =>
+      val client = new SearchClient(appID, apiKey)
+
+      {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}.recover {
+        case ex: Exception =>
+          println(s"Error for appID $appID: ${ex.getMessage}")
+      }
+    }
+  }.map(_ => ())
+}
