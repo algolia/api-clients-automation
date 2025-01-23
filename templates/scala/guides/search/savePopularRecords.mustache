@@ -1,0 +1,34 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
+{{> snippets/import}}
+import algoliasearch.search.{BrowseParamsObject, BrowseResponse}
+
+def savePopularRecords(): Future[Unit] = {
+  {{> snippets/init}}
+
+  var records: Seq[Record] = Seq.empty
+
+  client
+    .browseObjects(indexName, BrowseParamsObject(), aggregator = (response: BrowseResponse) => {
+      records = records ++ response.hits.map { hit =>
+        val props = hit.additionalProperties.getOrElse(List()).toMap
+
+        val nbFollowers = props("nbFollowers").toString.toInt
+
+        Record(
+          twitterHandle = props("twitterHandle").toString,
+          nbFollowers = nbFollowers,
+          isPopular = nbFollowers > 1000000,
+        )
+      }
+    })
+    .flatMap { _ =>
+      {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+
+      Future.unit
+    }
+    .recover { case ex: Exception =>
+      println(s"An error occurred: ${ex.getMessage}")
+    }
+}
