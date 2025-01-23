@@ -33,6 +33,16 @@ simple:
       },
       {
         code: `
+wrongType:
+  type: string
+  properties:
+    noType:
+      type: string
+    `,
+        errors: [{ messageId: 'hasType' }],
+      },
+      {
+        code: `
 array:
   items:
     type: string

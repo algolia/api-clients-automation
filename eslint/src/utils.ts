@@ -26,6 +26,13 @@ export function isPairWithKey(node: AST.YAMLNode | null, key: string): node is A
   return isScalar(node.key) && node.key.value === key;
 }
 
+export function isPairWithValue(node: AST.YAMLNode | null, value: string): node is AST.YAMLPair {
+  if (node === null || node.type !== 'YAMLPair' || node.value === null) {
+    return false;
+  }
+  return isScalar(node.value) && node.value.value === value;
+}
+
 export function isNullable(node: AST.YAMLNode | null): boolean {
   return (
     isSequence(node) &&

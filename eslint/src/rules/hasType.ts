@@ -1,6 +1,6 @@
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isPairWithKey } from '../utils.js';
+import { isPairWithKey, isPairWithValue } from '../utils.js';
 
 export const hasType = createRule('hasType', {
   meta: {
@@ -27,15 +27,15 @@ export const hasType = createRule('hasType', {
           return; // allow everything in properties
         }
 
-        const hasType = !!node.parent.pairs.find((pair) => isPairWithKey(pair, 'type'));
-        if (isPairWithKey(node, 'properties') && !hasType) {
+        const type = node.parent.pairs.find((pair) => isPairWithKey(pair, 'type'));
+        if (isPairWithKey(node, 'properties') && (!type || !isPairWithValue(type, 'object'))) {
           return context.report({
             node: node as any,
             messageId: 'hasType',
           });
         }
 
-        if (isPairWithKey(node, 'items') && !hasType) {
+        if (isPairWithKey(node, 'items') && (!type || !isPairWithValue(type, 'array'))) {
           return context.report({
             node: node as any,
             messageId: 'hasType',
