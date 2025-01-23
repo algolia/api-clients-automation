@@ -1,0 +1,23 @@
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import java.time.Instant
+
+{{> snippets/import}}
+import algoliasearch.search.SearchParamsObject
+
+def searchRecentlyPublishedBooks(): Future[Unit] = {
+  {{> snippets/init}}
+
+  val dateTimestamp = Instant.now.getEpochSecond
+  val searchParams = SearchParamsObject(
+    query = Some("<YOUR_SEARCH_QUERY>"),
+    filters = Some(s"date_timestamp > $dateTimestamp")
+  )
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map { response =>
+    println(response)
+  }.recover {
+    case ex: Exception =>
+      println(s"An error occurred: ${ex.getMessage}")
+  }
+}
