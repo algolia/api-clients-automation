@@ -2135,7 +2135,8 @@ class SnippetSearchClient
                         'anchoring' => 'contains',
                     ],
                 ],
-                'consequence' => ['userData' => ['promo_content' => '20% OFF on all Harry Potter books!'],
+                'consequence' => ['userData' => ['promo_content' => '20% OFF on all Harry Potter books!',
+                ],
                 ],
             ],
         );
@@ -2201,7 +2202,8 @@ class SnippetSearchClient
                         'anchoring' => 'contains',
                     ],
                 ],
-                'consequence' => ['userData' => ['redirect' => 'https://www.algolia.com/support'],
+                'consequence' => ['userData' => ['redirect' => 'https://www.algolia.com/support',
+                ],
                 ],
             ],
         );

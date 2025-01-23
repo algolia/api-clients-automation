@@ -37,7 +37,7 @@ import algoliasearch.recommend.TrendingFacetsModel._
   *   Facet attribute for which to retrieve trending facet values.
   */
 case class TrendingFacets(
-    facetName: Option[Any] = scala.None,
+    facetName: String,
     model: TrendingFacetsModel,
     fallbackParameters: Option[FallbackParams] = scala.None
 )

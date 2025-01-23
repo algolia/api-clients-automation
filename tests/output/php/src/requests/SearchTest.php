@@ -1880,7 +1880,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                         ],
                     ],
                     'filterPromotes' => false,
-                    'userData' => ['algolia' => 'aloglia'],
+                    'userData' => ['algolia' => 'aloglia',
+                    ],
                     'promote' => [
                         ['objectID' => 'abc',
                             'position' => 3,
@@ -2009,7 +2010,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                         'anchoring' => 'contains',
                     ],
                 ],
-                'consequence' => ['userData' => ['promo_content' => '20% OFF on all Harry Potter books!'],
+                'consequence' => ['userData' => ['promo_content' => '20% OFF on all Harry Potter books!',
+                ],
                 ],
             ],
         );
@@ -2065,7 +2067,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                         'anchoring' => 'contains',
                     ],
                 ],
-                'consequence' => ['userData' => ['redirect' => 'https://www.algolia.com/support'],
+                'consequence' => ['userData' => ['redirect' => 'https://www.algolia.com/support',
+                ],
                 ],
             ],
         );
@@ -2582,7 +2585,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                             ],
                         ],
                         'filterPromotes' => false,
-                        'userData' => ['algolia' => 'aloglia'],
+                        'userData' => ['algolia' => 'aloglia',
+                        ],
                         'promote' => [
                             ['objectID' => 'abc',
                                 'position' => 3,

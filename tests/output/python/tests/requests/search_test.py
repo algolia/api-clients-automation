@@ -1724,7 +1724,9 @@ class TestSearchClient:
                         },
                     ],
                     "filterPromotes": False,
-                    "userData": {"algolia": "aloglia"},
+                    "userData": {
+                        "algolia": "aloglia",
+                    },
                     "promote": [
                         {
                             "objectID": "abc",
@@ -1864,7 +1866,9 @@ class TestSearchClient:
                     },
                 ],
                 "consequence": {
-                    "userData": {"promo_content": "20% OFF on all Harry Potter books!"},
+                    "userData": {
+                        "promo_content": "20% OFF on all Harry Potter books!",
+                    },
                 },
             },
         )
@@ -1925,7 +1929,9 @@ class TestSearchClient:
                     },
                 ],
                 "consequence": {
-                    "userData": {"redirect": "https://www.algolia.com/support"},
+                    "userData": {
+                        "redirect": "https://www.algolia.com/support",
+                    },
                 },
             },
         )
@@ -2504,7 +2510,9 @@ class TestSearchClient:
                             },
                         ],
                         "filterPromotes": False,
-                        "userData": {"algolia": "aloglia"},
+                        "userData": {
+                            "algolia": "aloglia",
+                        },
                         "promote": [
                             {
                                 "objectID": "abc",
@@ -7319,7 +7327,9 @@ class TestSearchClientSync:
                         },
                     ],
                     "filterPromotes": False,
-                    "userData": {"algolia": "aloglia"},
+                    "userData": {
+                        "algolia": "aloglia",
+                    },
                     "promote": [
                         {
                             "objectID": "abc",
@@ -7459,7 +7469,9 @@ class TestSearchClientSync:
                     },
                 ],
                 "consequence": {
-                    "userData": {"promo_content": "20% OFF on all Harry Potter books!"},
+                    "userData": {
+                        "promo_content": "20% OFF on all Harry Potter books!",
+                    },
                 },
             },
         )
@@ -7520,7 +7532,9 @@ class TestSearchClientSync:
                     },
                 ],
                 "consequence": {
-                    "userData": {"redirect": "https://www.algolia.com/support"},
+                    "userData": {
+                        "redirect": "https://www.algolia.com/support",
+                    },
                 },
             },
         )
@@ -8099,7 +8113,9 @@ class TestSearchClientSync:
                             },
                         ],
                         "filterPromotes": False,
-                        "userData": {"algolia": "aloglia"},
+                        "userData": {
+                            "algolia": "aloglia",
+                        },
                         "promote": [
                             {
                                 "objectID": "abc",

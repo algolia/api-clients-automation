@@ -5152,6 +5152,7 @@ components:
       type: object
       properties:
         facetName:
+          type: string
           description: Facet attribute for which to retrieve trending facet values.
         model:
           $ref: '#/components/schemas/trendingFacetsModel'

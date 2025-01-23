@@ -2263,7 +2263,7 @@ void main() {
             ],
             filterPromotes: false,
             userData: {
-              'algolia': 'aloglia',
+              'algolia': "aloglia",
             },
             promote: [
               PromoteObjectID(
@@ -2422,7 +2422,7 @@ void main() {
           ],
           consequence: Consequence(
             userData: {
-              'promo_content': '20% OFF on all Harry Potter books!',
+              'promo_content': "20% OFF on all Harry Potter books!",
             },
           ),
         ),
@@ -2497,7 +2497,7 @@ void main() {
           ],
           consequence: Consequence(
             userData: {
-              'redirect': 'https://www.algolia.com/support',
+              'redirect': "https://www.algolia.com/support",
             },
           ),
         ),
@@ -3157,7 +3157,7 @@ void main() {
               ],
               filterPromotes: false,
               userData: {
-                'algolia': 'aloglia',
+                'algolia': "aloglia",
               },
               promote: [
                 PromoteObjectID(

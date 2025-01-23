@@ -2058,7 +2058,10 @@ class SnippetSearchClient {
         ),
         consequence = Consequence(
           userData = buildJsonObject {
-            put("promo_content", "20% OFF on all Harry Potter books!")
+            put(
+              "promo_content",
+              JsonPrimitive("20% OFF on all Harry Potter books!"),
+            )
           },
         ),
       ),
@@ -2125,7 +2128,10 @@ class SnippetSearchClient {
         ),
         consequence = Consequence(
           userData = buildJsonObject {
-            put("redirect", "https://www.algolia.com/support")
+            put(
+              "redirect",
+              JsonPrimitive("https://www.algolia.com/support"),
+            )
           },
         ),
       ),
