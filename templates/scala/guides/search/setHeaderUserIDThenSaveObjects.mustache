@@ -1,0 +1,19 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+{{> snippets/import}}
+
+def setHeaderUserIDThenSaveObjects(): Future[Unit] = {
+  {{> snippets/init}}
+
+  playlists.foreach { playlist =>
+      Await.result(
+        {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}},
+        Duration(5, "sec")
+      )
+  }
+
+  Future.unit
+}
