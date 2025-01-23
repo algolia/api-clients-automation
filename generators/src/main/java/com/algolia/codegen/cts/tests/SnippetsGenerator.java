@@ -102,11 +102,6 @@ public class SnippetsGenerator extends TestsGenerator {
       }
 
       List<Snippet> ops = Arrays.stream(snippets.get(operationId)).toList();
-      if (ops.size() == 0) {
-        // default to the first test
-        ops = List.of(snippets.get(operationId)[0]);
-      }
-
       List<Map<String, Object>> tests = new ArrayList<>();
 
       for (int i = 0; i < ops.size(); i++) {
