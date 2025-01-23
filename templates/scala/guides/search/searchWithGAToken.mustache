@@ -1,0 +1,27 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+{{> snippets/import}}
+import algoliasearch.search.SearchParamsObject
+
+def searchWithGAToken(): Future[Unit] = {
+  {{> snippets/init}}
+
+  val userToken = getGoogleAnalyticsUserIdFromBrowserCookie("_ga")
+  var searchParams = SearchParamsObject(query = Some("<YOUR_SEARCH_QUERY>"), userToken = Some(userToken))
+
+  Await.result(
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map(_ => Future.unit),
+    Duration(5, "sec")
+  )
+
+  val loggedInUser = Some("...")
+  searchParams = SearchParamsObject(query = Some("<YOUR_SEARCH_QUERY>"), userToken = Some(loggedInUser.getOrElse(userToken)))
+
+  Await.result(
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map(_ => Future.unit),
+    Duration(5, "sec")
+  )
+}
