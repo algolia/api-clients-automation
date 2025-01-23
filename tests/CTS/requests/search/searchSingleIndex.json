@@ -24,7 +24,6 @@
   },
   {
     "testName": "search with searchParams",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -129,7 +128,6 @@
   },
   {
     "testName": "query",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -146,7 +144,6 @@
   },
   {
     "testName": "filters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -163,7 +160,6 @@
   },
   {
     "testName": "distinct",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -180,7 +176,6 @@
   },
   {
     "testName": "filtersNumeric",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -197,7 +192,6 @@
   },
   {
     "testName": "filtersTimestamp",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -214,7 +208,6 @@
   },
   {
     "testName": "filtersSumOrFiltersScoresFalse",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -233,7 +226,6 @@
   },
   {
     "testName": "filtersSumOrFiltersScoresTrue",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -252,7 +244,6 @@
   },
   {
     "testName": "filtersStephenKing",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -269,7 +260,6 @@
   },
   {
     "testName": "filtersNotTags",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -286,7 +276,6 @@
   },
   {
     "testName": "facetFiltersList",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -315,7 +304,6 @@
   },
   {
     "testName": "facetFiltersNeg",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -332,7 +320,6 @@
   },
   {
     "testName": "filtersAndFacetFilters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -354,8 +341,55 @@
     }
   },
   {
+    "testName": "facet author genre",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "facets":["author","genre"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "facets":["author","genre"]
+      }
+    }
+  },
+  {
+    "testName": "facet wildcard",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "facets":["*"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "facets":["*"]
+      }
+    }
+  },
+  {
+    "testName": "maxValuesPerFacet",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "maxValuesPerFacet":1000
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "maxValuesPerFacet":1000
+      }
+    }
+  },
+  {
     "testName": "aroundLatLng",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -372,7 +406,6 @@
   },
   {
     "testName": "aroundLatLngViaIP",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -389,7 +422,6 @@
   },
   {
     "testName": "aroundRadius",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -408,7 +440,6 @@
   },
   {
     "testName": "insideBoundingBox",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -439,7 +470,6 @@
   },
   {
     "testName": "insidePolygon",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -486,7 +516,6 @@
   },
   {
     "testName": "insidePolygon",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -533,7 +562,6 @@
   },
   {
     "testName": "optionalFilters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -554,7 +582,6 @@
   },
   {
     "testName": "optionalFiltersMany",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -579,7 +606,6 @@
   },
   {
     "testName": "optionalFiltersSimple",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -602,7 +628,6 @@
   },
   {
     "testName": "restrictSearchableAttributes",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -623,7 +648,6 @@
   },
   {
     "testName": "getRankingInfo",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -640,7 +664,6 @@
   },
   {
     "testName": "clickAnalytics",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -657,7 +680,6 @@
   },
   {
     "testName": "clickAnalyticsUserToken",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -676,7 +698,6 @@
   },
   {
     "testName": "enablePersonalization",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -695,7 +716,6 @@
   },
   {
     "testName": "userToken",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -712,7 +732,6 @@
   },
   {
     "testName": "analyticsTag",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -733,7 +752,6 @@
   },
   {
     "testName": "facetFiltersUsers",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -756,7 +774,6 @@
   },
   {
     "testName": "buildTheQuery",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
