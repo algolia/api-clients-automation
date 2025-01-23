@@ -7,16 +7,22 @@ import Core
 {{> snippets/import}}
 
 func setSettingsThenSaveObjects() async throws {
-  do {
-    {{> snippets/init}}
+  for playlist in playlists {
+    // Fetch from your own data storage and with your own code
+    // the associated application ID and API key for this user
+    let appID = getAppIDFor(playlist.user);
+    let apiKey = getIndexingApiKeyFor(playlist.user);
 
-    let settings = IndexSettings(
-      attributesForFaceting: ["filterOnly(user)"]
-    )
-    {{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+    do {
+      let client = try SearchClient(appID: appID, apiKey: apiKey)
+      let settings = IndexSettings(
+        attributesForFaceting: ["filterOnly(user)"]
+      )
+      {{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
 
-    {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
-  } catch {
-    print(error)
+      {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+    } catch {
+      print(error)
+    }
   }
 }
