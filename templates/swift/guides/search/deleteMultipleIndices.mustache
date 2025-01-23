@@ -12,7 +12,7 @@ func deleteMultipleIndices() async throws {
     {{> snippets/init}}
 
     // List all indices
-    let indices = try await client.listIndices()
+    let indices = {{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}}
 
     // Primary indices don't have a `primary` key
     let primaryIndices = indices.items.filter { $0.primary == nil }

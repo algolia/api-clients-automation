@@ -13,6 +13,9 @@
       "objects": "$var: chunks"
     }
   },
+  "listIndicesSimple": {
+    "method": "listIndices"
+  },
   "deleteMultipleIndicesPrimary": {
     "method": "multipleBatch",
     "parameters": {
