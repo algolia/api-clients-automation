@@ -1841,7 +1841,7 @@ public class SearchClientRequestTests
           },
           Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321" } },
           FilterPromotes = false,
-          UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
+          UserData = new Dictionary<string, string> { { "algolia", "aloglia" } },
           Promote = new List<Promote>
           {
             new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3 }),
@@ -1993,7 +1993,7 @@ public class SearchClientRequestTests
         },
         Consequence = new Consequence
         {
-          UserData = new Dictionary<string, object>
+          UserData = new Dictionary<string, string>
           {
             { "promo_content", "20% OFF on all Harry Potter books!" },
           },
@@ -2064,7 +2064,7 @@ public class SearchClientRequestTests
         },
         Consequence = new Consequence
         {
-          UserData = new Dictionary<string, object>
+          UserData = new Dictionary<string, string>
           {
             { "redirect", "https://www.algolia.com/support" },
           },
@@ -2673,7 +2673,7 @@ public class SearchClientRequestTests
             },
             Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321" } },
             FilterPromotes = false,
-            UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
+            UserData = new Dictionary<string, string> { { "algolia", "aloglia" } },
             Promote = new List<Promote>
             {
               new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3 }),

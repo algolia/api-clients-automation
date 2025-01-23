@@ -1830,7 +1830,7 @@ public class SnippetSearchClient
         },
         Consequence = new Consequence
         {
-          UserData = new Dictionary<string, object>
+          UserData = new Dictionary<string, string>
           {
             { "promo_content", "20% OFF on all Harry Potter books!" },
           },
@@ -1905,7 +1905,7 @@ public class SnippetSearchClient
         },
         Consequence = new Consequence
         {
-          UserData = new Dictionary<string, object>
+          UserData = new Dictionary<string, string>
           {
             { "redirect", "https://www.algolia.com/support" },
           },

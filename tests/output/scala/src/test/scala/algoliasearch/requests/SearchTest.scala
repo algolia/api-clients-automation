@@ -1879,13 +1879,7 @@ class SearchTest extends AnyFunSuite {
             )
           ),
           filterPromotes = Some(false),
-          userData = Some(
-            JObject(
-              List(
-                JField("algolia", JString("aloglia"))
-              )
-            )
-          ),
+          userData = Some(JObject(List(JField("algolia", JString("aloglia"))))),
           promote = Some(
             Seq(
               PromoteObjectID(
@@ -2055,13 +2049,7 @@ class SearchTest extends AnyFunSuite {
           )
         ),
         consequence = Consequence(
-          userData = Some(
-            JObject(
-              List(
-                JField("promo_content", JString("20% OFF on all Harry Potter books!"))
-              )
-            )
-          )
+          userData = Some(JObject(List(JField("promo_content", JString("20% OFF on all Harry Potter books!")))))
         )
       )
     )
@@ -2132,13 +2120,7 @@ class SearchTest extends AnyFunSuite {
           )
         ),
         consequence = Consequence(
-          userData = Some(
-            JObject(
-              List(
-                JField("redirect", JString("https://www.algolia.com/support"))
-              )
-            )
-          )
+          userData = Some(JObject(List(JField("redirect", JString("https://www.algolia.com/support")))))
         )
       )
     )
@@ -2835,13 +2817,7 @@ class SearchTest extends AnyFunSuite {
               )
             ),
             filterPromotes = Some(false),
-            userData = Some(
-              JObject(
-                List(
-                  JField("algolia", JString("aloglia"))
-                )
-              )
-            ),
+            userData = Some(JObject(List(JField("algolia", JString("aloglia"))))),
             promote = Some(
               Seq(
                 PromoteObjectID(

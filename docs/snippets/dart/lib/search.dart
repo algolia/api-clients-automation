@@ -1798,7 +1798,7 @@ void snippetForsaveRule2() async {
       ],
       consequence: Consequence(
         userData: {
-          'promo_content': '20% OFF on all Harry Potter books!',
+          'promo_content': "20% OFF on all Harry Potter books!",
         },
       ),
     ),
@@ -1863,7 +1863,7 @@ void snippetForsaveRule4() async {
       ],
       consequence: Consequence(
         userData: {
-          'redirect': 'https://www.algolia.com/support',
+          'redirect': "https://www.algolia.com/support",
         },
       ),
     ),

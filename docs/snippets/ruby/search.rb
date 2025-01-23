@@ -1845,9 +1845,7 @@ def snippet_for_save_rule2
     Algolia::Search::Rule.new(
       algolia_object_id: "harry-potter-rule",
       conditions: [Algolia::Search::Condition.new(pattern: "harry potter", anchoring: "contains")],
-      consequence: Algolia::Search::Consequence.new(
-        user_data: {:"promo_content" => "20% OFF on all Harry Potter books!"}
-      )
+      consequence: Algolia::Search::Consequence.new(user_data: {promo_content: "20% OFF on all Harry Potter books!"})
     )
   )
 
@@ -1905,7 +1903,7 @@ def snippet_for_save_rule4
     Algolia::Search::Rule.new(
       algolia_object_id: "redirect-help-rule",
       conditions: [Algolia::Search::Condition.new(pattern: "help", anchoring: "contains")],
-      consequence: Algolia::Search::Consequence.new(user_data: {:"redirect" => "https://www.algolia.com/support"})
+      consequence: Algolia::Search::Consequence.new(user_data: {redirect: "https://www.algolia.com/support"})
     )
   )
 

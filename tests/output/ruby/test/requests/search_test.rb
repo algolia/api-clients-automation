@@ -1332,7 +1332,7 @@ class TestSearchClient < Test::Unit::TestCase
           ),
           hide: [Algolia::Search::ConsequenceHide.new(algolia_object_id: "321")],
           filter_promotes: false,
-          user_data: {:"algolia" => "aloglia"},
+          user_data: {algolia: "aloglia"},
           promote: [
             Algolia::Search::PromoteObjectID.new(algolia_object_id: "abc", position: 3),
             Algolia::Search::PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)
@@ -1428,9 +1428,7 @@ class TestSearchClient < Test::Unit::TestCase
       Algolia::Search::Rule.new(
         algolia_object_id: "harry-potter-rule",
         conditions: [Algolia::Search::Condition.new(pattern: "harry potter", anchoring: "contains")],
-        consequence: Algolia::Search::Consequence.new(
-          user_data: {:"promo_content" => "20% OFF on all Harry Potter books!"}
-        )
+        consequence: Algolia::Search::Consequence.new(user_data: {promo_content: "20% OFF on all Harry Potter books!"})
       )
     )
 
@@ -1480,7 +1478,7 @@ class TestSearchClient < Test::Unit::TestCase
       Algolia::Search::Rule.new(
         algolia_object_id: "redirect-help-rule",
         conditions: [Algolia::Search::Condition.new(pattern: "help", anchoring: "contains")],
-        consequence: Algolia::Search::Consequence.new(user_data: {:"redirect" => "https://www.algolia.com/support"})
+        consequence: Algolia::Search::Consequence.new(user_data: {redirect: "https://www.algolia.com/support"})
       )
     )
 
@@ -1931,7 +1929,7 @@ class TestSearchClient < Test::Unit::TestCase
             ),
             hide: [Algolia::Search::ConsequenceHide.new(algolia_object_id: "321")],
             filter_promotes: false,
-            user_data: {:"algolia" => "aloglia"},
+            user_data: {algolia: "aloglia"},
             promote: [
               Algolia::Search::PromoteObjectID.new(algolia_object_id: "abc", position: 3),
               Algolia::Search::PromoteObjectIDs.new(object_ids: ["abc", "def"], position: 1)

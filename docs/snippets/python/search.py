@@ -2194,7 +2194,9 @@ def snippet_for_save_rule2():
                 },
             ],
             "consequence": {
-                "userData": {"promo_content": "20% OFF on all Harry Potter books!"},
+                "userData": {
+                    "promo_content": "20% OFF on all Harry Potter books!",
+                },
             },
         },
     )
@@ -2267,7 +2269,9 @@ def snippet_for_save_rule4():
                 },
             ],
             "consequence": {
-                "userData": {"redirect": "https://www.algolia.com/support"},
+                "userData": {
+                    "redirect": "https://www.algolia.com/support",
+                },
             },
         },
     )

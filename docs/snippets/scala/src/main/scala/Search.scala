@@ -1494,13 +1494,7 @@ class SnippetSearchClient {
           )
         ),
         consequence = Consequence(
-          userData = Some(
-            JObject(
-              List(
-                JField("promo_content", JString("20% OFF on all Harry Potter books!"))
-              )
-            )
-          )
+          userData = Some(JObject(List(JField("promo_content", JString("20% OFF on all Harry Potter books!")))))
         )
       )
     )
@@ -1575,13 +1569,7 @@ class SnippetSearchClient {
           )
         ),
         consequence = Consequence(
-          userData = Some(
-            JObject(
-              List(
-                JField("redirect", JString("https://www.algolia.com/support"))
-              )
-            )
-          )
+          userData = Some(JObject(List(JField("redirect", JString("https://www.algolia.com/support")))))
         )
       )
     )
