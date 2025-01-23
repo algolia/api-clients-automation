@@ -5,6 +5,7 @@ sources:
     $ref: '#/source'
 
 source:
+  type: object
   description: Source.
   required:
     - source
