@@ -4,3 +4,6 @@ import com.algolia.client.transport.*
 {{#isSearchClient}}
 import com.algolia.client.extensions.*
 {{/isSearchClient}}
+{{#isCompositionClient}}
+import com.algolia.client.model.{{import}}.RequestBody
+{{/isCompositionClient}}
