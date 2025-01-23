@@ -8,8 +8,8 @@ void main() async {
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // read json file from url
-  final datasetRequest = await http.get(
-      Uri.parse('https://dashboard.algolia.com/sample_datasets/movie.json'));
+  final datasetRequest = await http.get(Uri.parse(
+      'https://dashboard.algolia.com/api/1/sample_datasets?type=movie'));
 
   if (datasetRequest.statusCode == 200) {
     final moviesData = jsonDecode(datasetRequest.body);
