@@ -3586,6 +3586,26 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `facetName and facetQuery2`() = runTest {
+    client.runTest(
+      call = {
+        searchForFacetValues(
+          indexName = "indexName",
+          facetName = "author",
+          searchForFacetValuesRequest = SearchForFacetValuesRequest(
+            facetQuery = "stephen king",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/facets/author/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facetQuery":"stephen king"}""", it.body)
+      },
+    )
+  }
+
   // searchRules
 
   @Test
@@ -3914,7 +3934,64 @@ class SearchTest {
   }
 
   @Test
-  fun `aroundLatLng16`() = runTest {
+  fun `facet author genre16`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            facets = listOf("author", "genre"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facets":["author","genre"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facet wildcard17`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            facets = listOf("*"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facets":["*"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `maxValuesPerFacet18`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            maxValuesPerFacet = 1000,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"maxValuesPerFacet":1000}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `aroundLatLng19`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3933,7 +4010,7 @@ class SearchTest {
   }
 
   @Test
-  fun `aroundLatLngViaIP17`() = runTest {
+  fun `aroundLatLngViaIP20`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3952,7 +4029,7 @@ class SearchTest {
   }
 
   @Test
-  fun `aroundRadius18`() = runTest {
+  fun `aroundRadius21`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3972,7 +4049,7 @@ class SearchTest {
   }
 
   @Test
-  fun `insideBoundingBox19`() = runTest {
+  fun `insideBoundingBox22`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3991,7 +4068,7 @@ class SearchTest {
   }
 
   @Test
-  fun `insidePolygon20`() = runTest {
+  fun `insidePolygon23`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4010,7 +4087,7 @@ class SearchTest {
   }
 
   @Test
-  fun `insidePolygon21`() = runTest {
+  fun `insidePolygon24`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4029,7 +4106,7 @@ class SearchTest {
   }
 
   @Test
-  fun `optionalFilters22`() = runTest {
+  fun `optionalFilters25`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4048,7 +4125,7 @@ class SearchTest {
   }
 
   @Test
-  fun `optionalFiltersMany23`() = runTest {
+  fun `optionalFiltersMany26`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4067,7 +4144,7 @@ class SearchTest {
   }
 
   @Test
-  fun `optionalFiltersSimple24`() = runTest {
+  fun `optionalFiltersSimple27`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4086,7 +4163,7 @@ class SearchTest {
   }
 
   @Test
-  fun `restrictSearchableAttributes25`() = runTest {
+  fun `restrictSearchableAttributes28`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4105,7 +4182,7 @@ class SearchTest {
   }
 
   @Test
-  fun `getRankingInfo26`() = runTest {
+  fun `getRankingInfo29`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4124,7 +4201,7 @@ class SearchTest {
   }
 
   @Test
-  fun `clickAnalytics27`() = runTest {
+  fun `clickAnalytics30`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4143,7 +4220,7 @@ class SearchTest {
   }
 
   @Test
-  fun `clickAnalyticsUserToken28`() = runTest {
+  fun `clickAnalyticsUserToken31`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4163,7 +4240,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enablePersonalization29`() = runTest {
+  fun `enablePersonalization32`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4183,7 +4260,7 @@ class SearchTest {
   }
 
   @Test
-  fun `userToken30`() = runTest {
+  fun `userToken33`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4202,7 +4279,7 @@ class SearchTest {
   }
 
   @Test
-  fun `analyticsTag31`() = runTest {
+  fun `analyticsTag34`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4221,7 +4298,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facetFiltersUsers32`() = runTest {
+  fun `facetFiltersUsers35`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4240,7 +4317,7 @@ class SearchTest {
   }
 
   @Test
-  fun `buildTheQuery33`() = runTest {
+  fun `buildTheQuery36`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5097,7 +5174,26 @@ class SearchTest {
   }
 
   @Test
-  fun `unlink replica index37`() = runTest {
+  fun `create virtual replica index37`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            replicas = listOf("virtual(products_price_desc)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"replicas":["virtual(products_price_desc)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `unlink replica index38`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5116,7 +5212,7 @@ class SearchTest {
   }
 
   @Test
-  fun `forwardToReplicas38`() = runTest {
+  fun `forwardToReplicas39`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5137,7 +5233,7 @@ class SearchTest {
   }
 
   @Test
-  fun `maxValuesPerFacet39`() = runTest {
+  fun `maxValuesPerFacet40`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5156,7 +5252,7 @@ class SearchTest {
   }
 
   @Test
-  fun `maxFacetHits40`() = runTest {
+  fun `maxFacetHits41`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5175,7 +5271,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesForFaceting complex41`() = runTest {
+  fun `attributesForFaceting complex42`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5194,7 +5290,7 @@ class SearchTest {
   }
 
   @Test
-  fun `ranking closest dates42`() = runTest {
+  fun `ranking closest dates43`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5213,7 +5309,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributes item variation43`() = runTest {
+  fun `searchableAttributes item variation44`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5227,26 +5323,6 @@ class SearchTest {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody("""{"searchableAttributes":["design","type","color"]}""", it.body)
-      },
-    )
-  }
-
-  @Test
-  fun `searchableAttributes around location44`() = runTest {
-    client.runTest(
-      call = {
-        setSettings(
-          indexName = "theIndexName",
-          indexSettings = IndexSettings(
-            searchableAttributes = listOf("name", "country", "code", "iata_code"),
-            customRanking = listOf("desc(links_count)"),
-          ),
-        )
-      },
-      intercept = {
-        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}""", it.body)
       },
     )
   }
@@ -5272,7 +5348,27 @@ class SearchTest {
   }
 
   @Test
-  fun `disableTypoToleranceOnAttributes46`() = runTest {
+  fun `searchableAttributes around location46`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("name", "country", "code", "iata_code"),
+            customRanking = listOf("desc(links_count)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disableTypoToleranceOnAttributes47`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5291,7 +5387,7 @@ class SearchTest {
   }
 
   @Test
-  fun `everything47`() = runTest {
+  fun `everything48`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5394,7 +5490,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesWithCustomRankingsAndAttributesForFaceting48`() = runTest {
+  fun `searchableAttributesWithCustomRankingsAndAttributesForFaceting49`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5415,7 +5511,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesProductReferenceSuffixes49`() = runTest {
+  fun `searchableAttributesProductReferenceSuffixes50`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5434,7 +5530,7 @@ class SearchTest {
   }
 
   @Test
-  fun `queryLanguageAndIgnorePlurals50`() = runTest {
+  fun `queryLanguageAndIgnorePlurals51`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5454,7 +5550,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesInMovies51`() = runTest {
+  fun `searchableAttributesInMovies52`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5473,7 +5569,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disablePrefixOnAttributes52`() = runTest {
+  fun `disablePrefixOnAttributes53`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5492,7 +5588,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disableTypoToleranceOnAttributes53`() = runTest {
+  fun `disableTypoToleranceOnAttributes54`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5511,7 +5607,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesSimpleExample54`() = runTest {
+  fun `searchableAttributesSimpleExample55`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -5530,7 +5626,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesSimpleExampleAlt55`() = runTest {
+  fun `searchableAttributesSimpleExampleAlt56`() = runTest {
     client.runTest(
       call = {
         setSettings(

@@ -2,8 +2,9 @@ package com.algolia.methods.snippets;
 
 // >IMPORT
 import com.algolia.api.CompositionClient;
-import com.algolia.model.composition.*;
+import com.algolia.config.*;
 // IMPORT<
+import com.algolia.model.composition.*;
 import java.util.*;
 
 class SnippetCompositionClient {

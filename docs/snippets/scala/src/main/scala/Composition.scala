@@ -5,6 +5,7 @@ import scala.concurrent.duration.Duration
 
 // >IMPORT
 import algoliasearch.api.CompositionClient
+import algoliasearch.config.*
 
 // IMPORT<
 import algoliasearch.composition.*

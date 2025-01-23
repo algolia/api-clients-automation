@@ -18,7 +18,7 @@ class SnippetIngestionClient
      */
     public function snippetForCreateAuthentication(): void
     {
-        // >SEPARATOR createAuthentication default
+        // >SEPARATOR createAuthentication createAuthenticationOAuth
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -40,13 +40,40 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CreateAuthentication method.
+     *
+     * createAuthenticationAlgolia
+     */
+    public function snippetForCreateAuthentication1(): void
+    {
+        // >SEPARATOR createAuthentication createAuthenticationAlgolia
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createAuthentication(
+            ['type' => 'algolia',
+                'name' => 'authName',
+                'input' => ['appID' => 'ALGOLIA_APPLICATION_ID',
+                    'apiKey' => 'ALGOLIA_API_KEY',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CreateDestination method.
      *
      * createDestination
      */
     public function snippetForCreateDestination(): void
     {
-        // >SEPARATOR createDestination default
+        // >SEPARATOR createDestination createDestination
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -67,13 +94,42 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CreateDestination method.
+     *
+     * with transformationIDs
+     */
+    public function snippetForCreateDestination1(): void
+    {
+        // >SEPARATOR createDestination with transformationIDs
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createDestination(
+            ['type' => 'search',
+                'name' => 'destinationName',
+                'input' => ['indexName' => '<YOUR_INDEX_NAME>',
+                ],
+                'transformationIDs' => [
+                    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CreateSource method.
      *
      * createSource
      */
     public function snippetForCreateSource(): void
     {
-        // >SEPARATOR createSource default
+        // >SEPARATOR createSource createSource
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -101,13 +157,37 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CreateSource method.
+     *
+     * push
+     */
+    public function snippetForCreateSource1(): void
+    {
+        // >SEPARATOR createSource push
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createSource(
+            ['type' => 'push',
+                'name' => 'pushezpourentrer',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CreateTask method.
      *
      * task without cron
      */
     public function snippetForCreateTask(): void
     {
-        // >SEPARATOR createTask default
+        // >SEPARATOR createTask task without cron
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -126,13 +206,76 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CreateTask method.
+     *
+     * task with cron
+     */
+    public function snippetForCreateTask1(): void
+    {
+        // >SEPARATOR createTask task with cron
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'notifications' => ['email' => ['enabled' => true,
+                ],
+                ],
+                'policies' => ['criticalThreshold' => 8,
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CreateTask method.
+     *
+     * task shopify
+     */
+    public function snippetForCreateTask2(): void
+    {
+        // >SEPARATOR createTask task shopify
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CreateTaskV1 method.
      *
      * createTaskOnDemand
      */
     public function snippetForCreateTaskV1(): void
     {
-        // >SEPARATOR createTaskV1 default
+        // >SEPARATOR createTaskV1 createTaskOnDemand
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -143,6 +286,94 @@ class SnippetIngestionClient
                 'trigger' => ['type' => 'onDemand',
                 ],
                 'action' => 'replace',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CreateTaskV1 method.
+     *
+     * createTaskSchedule
+     */
+    public function snippetForCreateTaskV11(): void
+    {
+        // >SEPARATOR createTaskV1 createTaskSchedule
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createTaskV1(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'trigger' => ['type' => 'schedule',
+                    'cron' => '* * * * *',
+                ],
+                'action' => 'replace',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CreateTaskV1 method.
+     *
+     * createTaskSubscription
+     */
+    public function snippetForCreateTaskV12(): void
+    {
+        // >SEPARATOR createTaskV1 createTaskSubscription
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createTaskV1(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'trigger' => ['type' => 'onDemand',
+                ],
+                'action' => 'replace',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CreateTaskV1 method.
+     *
+     * task shopify
+     */
+    public function snippetForCreateTaskV13(): void
+    {
+        // >SEPARATOR createTaskV1 task shopify
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->createTaskV1(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'trigger' => ['type' => 'onDemand',
+                ],
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
             ],
         );
 
@@ -184,7 +415,7 @@ class SnippetIngestionClient
      */
     public function snippetForCustomDelete(): void
     {
-        // >SEPARATOR customDelete default
+        // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -200,13 +431,37 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CustomDelete method.
+     *
+     * allow del method for a custom path with all parameters
+     */
+    public function snippetForCustomDelete1(): void
+    {
+        // >SEPARATOR customDelete allow del method for a custom path with all parameters
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customDelete(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomGet method.
      *
      * allow get method for a custom path with minimal parameters
      */
     public function snippetForCustomGet(): void
     {
-        // >SEPARATOR customGet default
+        // >SEPARATOR customGet allow get method for a custom path with minimal parameters
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -222,13 +477,71 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CustomGet method.
+     *
+     * allow get method for a custom path with all parameters
+     */
+    public function snippetForCustomGet1(): void
+    {
+        // >SEPARATOR customGet allow get method for a custom path with all parameters
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'parameters with space',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomGet method.
+     *
+     * requestOptions should be escaped too
+     */
+    public function snippetForCustomGet2(): void
+    {
+        // >SEPARATOR customGet requestOptions should be escaped too
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'to be overriden',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'parameters with space',
+                    'and an array' => ['array', 'with spaces',
+                    ],
+                ],
+                'headers' => [
+                    'x-header-1' => 'spaces are left alone',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomPost method.
      *
      * allow post method for a custom path with minimal parameters
      */
     public function snippetForCustomPost(): void
     {
-        // >SEPARATOR customPost default
+        // >SEPARATOR customPost allow post method for a custom path with minimal parameters
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -244,19 +557,346 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CustomPost method.
+     *
+     * allow post method for a custom path with all parameters
+     */
+    public function snippetForCustomPost1(): void
+    {
+        // >SEPARATOR customPost allow post method for a custom path with all parameters
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default query parameters
+     */
+    public function snippetForCustomPost2(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default query parameters
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges query parameters with default ones
+     */
+    public function snippetForCustomPost3(): void
+    {
+        // >SEPARATOR customPost requestOptions merges query parameters with default ones
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query2' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default headers
+     */
+    public function snippetForCustomPost4(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default headers
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges headers with default ones
+     */
+    public function snippetForCustomPost5(): void
+    {
+        // >SEPARATOR customPost requestOptions merges headers with default ones
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts booleans
+     */
+    public function snippetForCustomPost6(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'isItWorking' => true,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts integers
+     */
+    public function snippetForCustomPost7(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts integers
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => 2,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of string
+     */
+    public function snippetForCustomPost8(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => ['b and c', 'd',
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of booleans
+     */
+    public function snippetForCustomPost9(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [true, true, false,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of integers
+     */
+    public function snippetForCustomPost10(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [1, 2,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomPut method.
      *
      * allow put method for a custom path with minimal parameters
      */
     public function snippetForCustomPut(): void
     {
-        // >SEPARATOR customPut default
+        // >SEPARATOR customPut allow put method for a custom path with minimal parameters
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPut(
             'test/minimal',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPut method.
+     *
+     * allow put method for a custom path with all parameters
+     */
+    public function snippetForCustomPut1(): void
+    {
+        // >SEPARATOR customPut allow put method for a custom path with all parameters
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPut(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
         );
 
         // >LOG
@@ -669,12 +1309,45 @@ class SnippetIngestionClient
      */
     public function snippetForListAuthentications(): void
     {
-        // >SEPARATOR listAuthentications default
+        // >SEPARATOR listAuthentications getAuthentications
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listAuthentications();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListAuthentications method.
+     *
+     * getAuthentications with query params
+     */
+    public function snippetForListAuthentications1(): void
+    {
+        // >SEPARATOR listAuthentications getAuthentications with query params
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->listAuthentications(
+            2,
+            1,
+            [
+                'basic',
+
+                'algolia',
+            ],
+            [
+                'none',
+            ],
+            'createdAt',
+            'asc',
+        );
 
         // >LOG
         // play with the response
@@ -831,7 +1504,7 @@ class SnippetIngestionClient
      */
     public function snippetForPushTask(): void
     {
-        // >SEPARATOR pushTask default
+        // >SEPARATOR pushTask pushTask
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -851,6 +1524,42 @@ class SnippetIngestionClient
                     ],
                 ],
             ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PushTask method.
+     *
+     * allows for watch query parameter
+     */
+    public function snippetForPushTask1(): void
+    {
+        // >SEPARATOR pushTask allows for watch query parameter
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->pushTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+            true,
         );
 
         // >LOG
@@ -1154,7 +1863,7 @@ class SnippetIngestionClient
      */
     public function snippetForTryTransformation(): void
     {
-        // >SEPARATOR tryTransformation default
+        // >SEPARATOR tryTransformation tryTransformation
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -1173,13 +1882,47 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the TryTransformation method.
+     *
+     * with authentications
+     */
+    public function snippetForTryTransformation1(): void
+    {
+        // >SEPARATOR tryTransformation with authentications
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->tryTransformation(
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the TryTransformationBeforeUpdate method.
      *
      * tryTransformationBeforeUpdate
      */
     public function snippetForTryTransformationBeforeUpdate(): void
     {
-        // >SEPARATOR tryTransformationBeforeUpdate default
+        // >SEPARATOR tryTransformationBeforeUpdate tryTransformationBeforeUpdate
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -1188,6 +1931,41 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['code' => 'foo',
                 'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the TryTransformationBeforeUpdate method.
+     *
+     * existing with authentications
+     */
+    public function snippetForTryTransformationBeforeUpdate1(): void
+    {
+        // >SEPARATOR tryTransformationBeforeUpdate existing with authentications
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
                 ],
             ],
         );

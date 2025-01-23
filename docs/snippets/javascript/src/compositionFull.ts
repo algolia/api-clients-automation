@@ -8,7 +8,7 @@ import { compositionClient } from '@algolia/client-composition';
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForCustomDelete(): Promise<void> {
-  // >SEPARATOR customDelete default
+  // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -22,11 +22,29 @@ export async function snippetForCustomDelete(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with all parameters
+export async function snippetForCustomDelete1(): Promise<void> {
+  // >SEPARATOR customDelete allow del method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForCustomGet(): Promise<void> {
-  // >SEPARATOR customGet default
+  // >SEPARATOR customGet allow get method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -40,11 +58,53 @@ export async function snippetForCustomGet(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with all parameters
+export async function snippetForCustomGet1(): Promise<void> {
+  // >SEPARATOR customGet allow get method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// requestOptions should be escaped too
+export async function snippetForCustomGet2(): Promise<void> {
+  // >SEPARATOR customGet requestOptions should be escaped too
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customGet(
+    { path: 'test/all', parameters: { query: 'to be overriden' } },
+    {
+      queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
+      headers: { 'x-header-1': 'spaces are left alone' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForCustomPost(): Promise<void> {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -58,17 +118,268 @@ export async function snippetForCustomPost(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+export async function snippetForCustomPost1(): Promise<void> {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost({
+    path: 'test/all',
+    parameters: { query: 'parameters' },
+    body: { body: 'parameters' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+export async function snippetForCustomPost2(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+export async function snippetForCustomPost3(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query2: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+export async function snippetForCustomPost4(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+export async function snippetForCustomPost5(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+export async function snippetForCustomPost6(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { isItWorking: true },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+export async function snippetForCustomPost7(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: 2 },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+export async function snippetForCustomPost8(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: ['b and c', 'd'] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+export async function snippetForCustomPost9(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [true, true, false] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+export async function snippetForCustomPost10(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [1, 2] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForCustomPut(): Promise<void> {
-  // >SEPARATOR customPut default
+  // >SEPARATOR customPut allow put method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with all parameters
+export async function snippetForCustomPut1(): Promise<void> {
+  // >SEPARATOR customPut allow put method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPut({
+    path: 'test/all',
+    parameters: { query: 'parameters' },
+    body: { body: 'parameters' },
+  });
 
   // >LOG
   // use typed response
@@ -134,7 +445,25 @@ export async function snippetForGetTask(): Promise<void> {
 //
 // listCompositions
 export async function snippetForListCompositions(): Promise<void> {
-  // >SEPARATOR listCompositions default
+  // >SEPARATOR listCompositions listCompositions
+  // Initialize the client
+  //
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.listCompositions();
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listCompositions method.
+//
+// listCompositions
+export async function snippetForListCompositions1(): Promise<void> {
+  // >SEPARATOR listCompositions listCompositions
   // Initialize the client
   //
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');

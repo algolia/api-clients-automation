@@ -3,6 +3,9 @@ package com.algolia.snippets
 
 // >IMPORT
 import com.algolia.client.api.CompositionClient
+import com.algolia.client.configuration.*
+import com.algolia.client.transport.*
+import com.algolia.client.model.composition.RequestBody
 
 // IMPORT<
 import com.algolia.client.model.composition.*

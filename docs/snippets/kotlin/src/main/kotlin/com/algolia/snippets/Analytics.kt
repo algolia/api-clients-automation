@@ -3,6 +3,8 @@ package com.algolia.snippets
 
 // >IMPORT
 import com.algolia.client.api.AnalyticsClient
+import com.algolia.client.configuration.*
+import com.algolia.client.transport.*
 
 // IMPORT<
 import com.algolia.client.model.analytics.*
@@ -11,7 +13,7 @@ import kotlin.system.exitProcess
 
 class SnippetAnalyticsClient {
   suspend fun snippetForCustomDelete() {
-    // >SEPARATOR customDelete default
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -28,8 +30,27 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomDelete1() {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customDelete(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomGet() {
-    // >SEPARATOR customGet default
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -46,8 +67,55 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomGet1() {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customGet(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters with space"),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomGet2() {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customGet(
+      path = "test/all",
+      parameters = mapOf("query" to "to be overriden"),
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query", "parameters with space")
+          put("and an array", listOf("array", "with spaces"))
+        },
+        headers = buildMap {
+          put("x-header-1", "spaces are left alone")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomPost() {
-    // >SEPARATOR customPost default
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -64,8 +132,303 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomPost1() {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "body",
+          JsonPrimitive("parameters"),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost2() {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query", "myQueryParameter")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost3() {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query2", "myQueryParameter")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost4() {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("x-algolia-api-key", "ALGOLIA_API_KEY")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost5() {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("x-algolia-api-key", "ALGOLIA_API_KEY")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost6() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("isItWorking", true)
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost7() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", 2)
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost8() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf("b and c", "d"))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost9() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf(true, true, false))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost10() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf(1, 2))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomPut() {
-    // >SEPARATOR customPut default
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -82,8 +445,33 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomPut1() {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPut(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "body",
+          JsonPrimitive("parameters"),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetAddToCartRate() {
-    // >SEPARATOR getAddToCartRate default
+    // >SEPARATOR getAddToCartRate get getAddToCartRate with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -100,8 +488,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetAddToCartRate1() {
+    // >SEPARATOR getAddToCartRate get getAddToCartRate with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getAddToCartRate(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetAverageClickPosition() {
-    // >SEPARATOR getAverageClickPosition default
+    // >SEPARATOR getAverageClickPosition get getAverageClickPosition with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -118,8 +527,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetAverageClickPosition1() {
+    // >SEPARATOR getAverageClickPosition get getAverageClickPosition with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getAverageClickPosition(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetClickPositions() {
-    // >SEPARATOR getClickPositions default
+    // >SEPARATOR getClickPositions get getClickPositions with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -136,8 +566,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetClickPositions1() {
+    // >SEPARATOR getClickPositions get getClickPositions with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getClickPositions(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetClickThroughRate() {
-    // >SEPARATOR getClickThroughRate default
+    // >SEPARATOR getClickThroughRate get getClickThroughRate with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -154,8 +605,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetClickThroughRate1() {
+    // >SEPARATOR getClickThroughRate get getClickThroughRate with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getClickThroughRate(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetConversionRate() {
-    // >SEPARATOR getConversionRate default
+    // >SEPARATOR getConversionRate get getConversationRate with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -172,8 +644,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetConversionRate1() {
+    // >SEPARATOR getConversionRate get getConversationRate with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getConversionRate(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetNoClickRate() {
-    // >SEPARATOR getNoClickRate default
+    // >SEPARATOR getNoClickRate get getNoClickRate with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -190,8 +683,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetNoClickRate1() {
+    // >SEPARATOR getNoClickRate get getNoClickRate with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getNoClickRate(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetNoResultsRate() {
-    // >SEPARATOR getNoResultsRate default
+    // >SEPARATOR getNoResultsRate get getNoResultsRate with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -208,8 +722,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetNoResultsRate1() {
+    // >SEPARATOR getNoResultsRate get getNoResultsRate with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getNoResultsRate(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetPurchaseRate() {
-    // >SEPARATOR getPurchaseRate default
+    // >SEPARATOR getPurchaseRate get getPurchaseRate with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -226,8 +761,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetPurchaseRate1() {
+    // >SEPARATOR getPurchaseRate get getPurchaseRate with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getPurchaseRate(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetRevenue() {
-    // >SEPARATOR getRevenue default
+    // >SEPARATOR getRevenue get getRevenue with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -244,8 +800,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetRevenue1() {
+    // >SEPARATOR getRevenue get getRevenue with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getRevenue(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetSearchesCount() {
-    // >SEPARATOR getSearchesCount default
+    // >SEPARATOR getSearchesCount get getSearchesCount with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -262,8 +839,29 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetSearchesCount1() {
+    // >SEPARATOR getSearchesCount get getSearchesCount with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getSearchesCount(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetSearchesNoClicks() {
-    // >SEPARATOR getSearchesNoClicks default
+    // >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -280,14 +878,60 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetSearchesNoClicks1() {
+    // >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getSearchesNoClicks(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetSearchesNoResults() {
-    // >SEPARATOR getSearchesNoResults default
+    // >SEPARATOR getSearchesNoResults get getSearchesNoResults with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getSearchesNoResults(
       index = "index",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetSearchesNoResults1() {
+    // >SEPARATOR getSearchesNoResults get getSearchesNoResults with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getSearchesNoResults(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
     )
 
     // >LOG
@@ -317,7 +961,7 @@ class SnippetAnalyticsClient {
   }
 
   suspend fun snippetForGetTopCountries() {
-    // >SEPARATOR getTopCountries default
+    // >SEPARATOR getTopCountries get getTopCountries with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -334,8 +978,31 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTopCountries1() {
+    // >SEPARATOR getTopCountries get getTopCountries with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopCountries(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetTopFilterAttributes() {
-    // >SEPARATOR getTopFilterAttributes default
+    // >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -352,8 +1019,32 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTopFilterAttributes1() {
+    // >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopFilterAttributes(
+      index = "index",
+      search = "mySearch",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetTopFilterForAttribute() {
-    // >SEPARATOR getTopFilterForAttribute default
+    // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -371,8 +1062,77 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTopFilterForAttribute1() {
+    // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters and multiple attributes
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopFilterForAttribute(
+      attribute = "myAttribute1,myAttribute2",
+      index = "index",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetTopFilterForAttribute2() {
+    // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopFilterForAttribute(
+      attribute = "myAttribute",
+      index = "index",
+      search = "mySearch",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetTopFilterForAttribute3() {
+    // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters and multiple attributes
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopFilterForAttribute(
+      attribute = "myAttribute1,myAttribute2",
+      index = "index",
+      search = "mySearch",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetTopFiltersNoResults() {
-    // >SEPARATOR getTopFiltersNoResults default
+    // >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -389,8 +1149,32 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTopFiltersNoResults1() {
+    // >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopFiltersNoResults(
+      index = "index",
+      search = "mySearch",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetTopHits() {
-    // >SEPARATOR getTopHits default
+    // >SEPARATOR getTopHits get getTopHits with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -407,8 +1191,34 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTopHits1() {
+    // >SEPARATOR getTopHits get getTopHits with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopHits(
+      index = "index",
+      search = "mySearch",
+      clickAnalytics = true,
+      revenueAnalytics = true,
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetTopSearches() {
-    // >SEPARATOR getTopSearches default
+    // >SEPARATOR getTopSearches get getTopSearches with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -425,14 +1235,62 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTopSearches1() {
+    // >SEPARATOR getTopSearches get getTopSearches with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getTopSearches(
+      index = "index",
+      clickAnalytics = true,
+      revenueAnalytics = true,
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      orderBy = OrderBy.entries.first { it.value == "searchCount" },
+      direction = Direction.entries.first { it.value == "asc" },
+      limit = 21,
+      offset = 42,
+      tags = "tag",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetUsersCount() {
-    // >SEPARATOR getUsersCount default
+    // >SEPARATOR getUsersCount get getUsersCount with minimal parameters
     // Initialize the client
     val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getUsersCount(
       index = "index",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetUsersCount1() {
+    // >SEPARATOR getUsersCount get getUsersCount with all parameters
+    // Initialize the client
+    val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.getUsersCount(
+      index = "index",
+      startDate = "1999-09-19",
+      endDate = "2001-01-01",
+      tags = "tag",
     )
 
     // >LOG

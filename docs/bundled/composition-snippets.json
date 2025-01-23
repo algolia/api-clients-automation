@@ -1,7 +1,7 @@
 {
   "csharp": {
     "import": {
-      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Composition;"
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;\nusing Algolia.Search.Models.Composition;"
     },
     "search": {
       "default": "var response = await client.SearchAsync<Hit>(\n  \"foo\",\n  new RequestBody { Params = new Params { Query = \"batman\" } }\n);"
@@ -43,7 +43,7 @@
   },
   "java": {
     "import": {
-      "default": "import com.algolia.api.CompositionClient;\nimport com.algolia.model.composition.*;"
+      "default": "import com.algolia.api.CompositionClient;\nimport com.algolia.config.*;"
     },
     "search": {
       "default": "client.search(\"foo\", new RequestBody().setParams(new Params().setQuery(\"batman\")), Hit.class);"
@@ -71,7 +71,7 @@
   },
   "kotlin": {
     "import": {
-      "default": "import com.algolia.client.api.CompositionClient"
+      "default": "import com.algolia.client.api.CompositionClient\nimport com.algolia.client.configuration.*\nimport com.algolia.client.transport.*\nimport com.algolia.client.model.composition.RequestBody"
     },
     "search": {
       "default": "var response = client.search(\n  compositionID = \"foo\",\n  requestBody = RequestBody(\n    params = Params(\n      query = \"batman\",\n    ),\n  ),\n)"
@@ -127,7 +127,7 @@
   },
   "scala": {
     "import": {
-      "default": "import algoliasearch.api.CompositionClient"
+      "default": "import algoliasearch.api.CompositionClient\nimport algoliasearch.config.*"
     },
     "search": {
       "default": "val response = client.search(\n  compositionID = \"foo\",\n  requestBody = RequestBody(\n    params = Some(\n      Params(\n        query = Some(\"batman\")\n      )\n    )\n  )\n)"

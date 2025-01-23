@@ -72,13 +72,34 @@ export async function snippetForAppendSource(): Promise<void> {
 //
 // simple
 export async function snippetForAssignUserId(): Promise<void> {
-  // >SEPARATOR assignUserId default
+  // >SEPARATOR assignUserId simple
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.assignUserId({ xAlgoliaUserID: 'user42', assignUserIdParams: { cluster: 'd4242-eu' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the assignUserId method.
+//
+// it should not encode the userID
+export async function snippetForAssignUserId1(): Promise<void> {
+  // >SEPARATOR assignUserId it should not encode the userID
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.assignUserId({
+    xAlgoliaUserID: 'user id with spaces',
+    assignUserIdParams: { cluster: 'cluster with spaces' },
+  });
 
   // >LOG
   // use typed response
@@ -346,13 +367,52 @@ export async function snippetForBatchDictionaryEntries2(): Promise<void> {
 //
 // browse with minimal parameters
 export async function snippetForBrowse(): Promise<void> {
-  // >SEPARATOR browse default
+  // >SEPARATOR browse browse with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.browse({ indexName: 'cts_e2e_browse' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the browse method.
+//
+// browse with search parameters
+export async function snippetForBrowse1(): Promise<void> {
+  // >SEPARATOR browse browse with search parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.browse({
+    indexName: 'indexName',
+    browseParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the browse method.
+//
+// browse allow a cursor in parameters
+export async function snippetForBrowse2(): Promise<void> {
+  // >SEPARATOR browse browse allow a cursor in parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.browse({ indexName: 'indexName', browseParams: { cursor: 'test' } });
 
   // >LOG
   // use typed response
@@ -418,7 +478,7 @@ export async function snippetForClearSynonyms(): Promise<void> {
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForCustomDelete(): Promise<void> {
-  // >SEPARATOR customDelete default
+  // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -432,11 +492,29 @@ export async function snippetForCustomDelete(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with all parameters
+export async function snippetForCustomDelete1(): Promise<void> {
+  // >SEPARATOR customDelete allow del method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForCustomGet(): Promise<void> {
-  // >SEPARATOR customGet default
+  // >SEPARATOR customGet allow get method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -450,11 +528,53 @@ export async function snippetForCustomGet(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with all parameters
+export async function snippetForCustomGet1(): Promise<void> {
+  // >SEPARATOR customGet allow get method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// requestOptions should be escaped too
+export async function snippetForCustomGet2(): Promise<void> {
+  // >SEPARATOR customGet requestOptions should be escaped too
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customGet(
+    { path: 'test/all', parameters: { query: 'to be overriden' } },
+    {
+      queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
+      headers: { 'x-header-1': 'spaces are left alone' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForCustomPost(): Promise<void> {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -468,17 +588,268 @@ export async function snippetForCustomPost(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+export async function snippetForCustomPost1(): Promise<void> {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost({
+    path: 'test/all',
+    parameters: { query: 'parameters' },
+    body: { body: 'parameters' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+export async function snippetForCustomPost2(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+export async function snippetForCustomPost3(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query2: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+export async function snippetForCustomPost4(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+export async function snippetForCustomPost5(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+export async function snippetForCustomPost6(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { isItWorking: true },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+export async function snippetForCustomPost7(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: 2 },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+export async function snippetForCustomPost8(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: ['b and c', 'd'] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+export async function snippetForCustomPost9(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [true, true, false] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+export async function snippetForCustomPost10(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [1, 2] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForCustomPut(): Promise<void> {
-  // >SEPARATOR customPut default
+  // >SEPARATOR customPut allow put method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with all parameters
+export async function snippetForCustomPut1(): Promise<void> {
+  // >SEPARATOR customPut allow put method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPut({
+    path: 'test/all',
+    parameters: { query: 'parameters' },
+    body: { body: 'parameters' },
+  });
 
   // >LOG
   // use typed response
@@ -580,13 +951,31 @@ export async function snippetForDeleteObjects(): Promise<void> {
 //
 // delete rule simple case
 export async function snippetForDeleteRule(): Promise<void> {
-  // >SEPARATOR deleteRule default
+  // >SEPARATOR deleteRule delete rule simple case
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteRule({ indexName: 'indexName', objectID: 'id1' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the deleteRule method.
+//
+// delete rule with simple characters to encode in objectID
+export async function snippetForDeleteRule1(): Promise<void> {
+  // >SEPARATOR deleteRule delete rule with simple characters to encode in objectID
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.deleteRule({ indexName: 'indexName', objectID: 'test/with/slash' });
 
   // >LOG
   // use typed response
@@ -825,7 +1214,7 @@ export async function snippetForGetDictionarySettings(): Promise<void> {
 //
 // getLogs with minimal parameters
 export async function snippetForGetLogs(): Promise<void> {
-  // >SEPARATOR getLogs default
+  // >SEPARATOR getLogs getLogs with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -839,11 +1228,29 @@ export async function snippetForGetLogs(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getLogs method.
+//
+// getLogs with parameters
+export async function snippetForGetLogs1(): Promise<void> {
+  // >SEPARATOR getLogs getLogs with parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getLogs({ offset: 5, length: 10, indexName: 'theIndexName', type: 'all' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getObject method.
 //
 // getObject
 export async function snippetForGetObject(): Promise<void> {
-  // >SEPARATOR getObject default
+  // >SEPARATOR getObject getObject
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -854,6 +1261,24 @@ export async function snippetForGetObject(): Promise<void> {
     objectID: 'uniqueID',
     attributesToRetrieve: ['attr1', 'attr2'],
   });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getObject method.
+//
+// search with a real object
+export async function snippetForGetObject1(): Promise<void> {
+  // >SEPARATOR getObject search with a real object
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getObject({ indexName: 'cts_e2e_browse', objectID: 'Batman and Robin' });
 
   // >LOG
   // use typed response
@@ -1011,13 +1436,31 @@ export async function snippetForGetUserId(): Promise<void> {
 //
 // hasPendingMappings with minimal parameters
 export async function snippetForHasPendingMappings(): Promise<void> {
-  // >SEPARATOR hasPendingMappings default
+  // >SEPARATOR hasPendingMappings hasPendingMappings with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.hasPendingMappings();
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the hasPendingMappings method.
+//
+// hasPendingMappings with parameters
+export async function snippetForHasPendingMappings1(): Promise<void> {
+  // >SEPARATOR hasPendingMappings hasPendingMappings with parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.hasPendingMappings({ getClusters: true });
 
   // >LOG
   // use typed response
@@ -1119,7 +1562,7 @@ export async function snippetForListClusters(): Promise<void> {
 //
 // listIndices with minimal parameters
 export async function snippetForListIndices(): Promise<void> {
-  // >SEPARATOR listIndices default
+  // >SEPARATOR listIndices listIndices with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -1133,17 +1576,53 @@ export async function snippetForListIndices(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the listIndices method.
+//
+// listIndices with parameters
+export async function snippetForListIndices1(): Promise<void> {
+  // >SEPARATOR listIndices listIndices with parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.listIndices({ page: 8, hitsPerPage: 3 });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the listUserIds method.
 //
 // listUserIds with minimal parameters
 export async function snippetForListUserIds(): Promise<void> {
-  // >SEPARATOR listUserIds default
+  // >SEPARATOR listUserIds listUserIds with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.listUserIds();
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listUserIds method.
+//
+// listUserIds with parameters
+export async function snippetForListUserIds1(): Promise<void> {
+  // >SEPARATOR listUserIds listUserIds with parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.listUserIds({ page: 8, hitsPerPage: 100 });
 
   // >LOG
   // use typed response
@@ -1236,8 +1715,96 @@ export async function snippetForOperationIndex2(): Promise<void> {
 
 // Snippet for the partialUpdateObject method.
 //
-// Partial update with a new value for an object attribute
+// Partial update with a new value for a string attribute
 export async function snippetForPartialUpdateObject(): Promise<void> {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for a string attribute
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObject({
+    indexName: 'theIndexName',
+    objectID: 'uniqueID',
+    attributesToUpdate: { attributeId: 'new value' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for an integer attribute
+export async function snippetForPartialUpdateObject1(): Promise<void> {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for an integer attribute
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObject({
+    indexName: 'theIndexName',
+    objectID: 'uniqueID',
+    attributesToUpdate: { attributeId: 1 },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for a boolean attribute
+export async function snippetForPartialUpdateObject2(): Promise<void> {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for a boolean attribute
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObject({
+    indexName: 'theIndexName',
+    objectID: 'uniqueID',
+    attributesToUpdate: { attributeId: true },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for an array attribute
+export async function snippetForPartialUpdateObject3(): Promise<void> {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for an array attribute
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObject({
+    indexName: 'theIndexName',
+    objectID: 'uniqueID',
+    attributesToUpdate: { attributeId: ['one', 'two', 'three'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for an object attribute
+export async function snippetForPartialUpdateObject4(): Promise<void> {
   // >SEPARATOR partialUpdateObject Partial update with a new value for an object attribute
   // Initialize the client
   //
@@ -1259,7 +1826,7 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
 // Snippet for the partialUpdateObject method.
 //
 // with visible_by filter
-export async function snippetForPartialUpdateObject1(): Promise<void> {
+export async function snippetForPartialUpdateObject5(): Promise<void> {
   // >SEPARATOR partialUpdateObject with visible_by filter
   // Initialize the client
   //
@@ -1591,8 +2158,82 @@ export async function snippetForSaveObjects3(): Promise<void> {
 
 // Snippet for the saveRule method.
 //
-// b2b catalog
+// saveRule with minimal parameters
 export async function snippetForSaveRule(): Promise<void> {
+  // >SEPARATOR saveRule saveRule with minimal parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'id1',
+    rule: {
+      objectID: 'id1',
+      conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+      consequence: { params: { filters: 'brand:xiaomi' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// saveRule with all parameters
+export async function snippetForSaveRule1(): Promise<void> {
+  // >SEPARATOR saveRule saveRule with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'id1',
+    rule: {
+      objectID: 'id1',
+      conditions: [{ pattern: 'apple', anchoring: 'contains', alternatives: false, context: 'search' }],
+      consequence: {
+        params: {
+          filters: 'brand:apple',
+          query: {
+            remove: ['algolia'],
+            edits: [
+              { type: 'remove', delete: 'abc', insert: 'cde' },
+              { type: 'replace', delete: 'abc', insert: 'cde' },
+            ],
+          },
+        },
+        hide: [{ objectID: '321' }],
+        filterPromotes: false,
+        userData: { algolia: 'aloglia' },
+        promote: [
+          { objectID: 'abc', position: 3 },
+          { objectIDs: ['abc', 'def'], position: 1 },
+        ],
+      },
+      description: 'test',
+      enabled: true,
+      validity: [{ from: 1656670273, until: 1656670277 }],
+    },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// b2b catalog
+export async function snippetForSaveRule2(): Promise<void> {
   // >SEPARATOR saveRule b2b catalog
   // Initialize the client
   //
@@ -1623,7 +2264,7 @@ export async function snippetForSaveRule(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // merchandising and promoting
-export async function snippetForSaveRule1(): Promise<void> {
+export async function snippetForSaveRule3(): Promise<void> {
   // >SEPARATOR saveRule merchandising and promoting
   // Initialize the client
   //
@@ -1655,7 +2296,7 @@ export async function snippetForSaveRule1(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // harry potter
-export async function snippetForSaveRule2(): Promise<void> {
+export async function snippetForSaveRule4(): Promise<void> {
   // >SEPARATOR saveRule harry potter
   // Initialize the client
   //
@@ -1681,7 +2322,7 @@ export async function snippetForSaveRule2(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // merchandising empty query
-export async function snippetForSaveRule3(): Promise<void> {
+export async function snippetForSaveRule5(): Promise<void> {
   // >SEPARATOR saveRule merchandising empty query
   // Initialize the client
   //
@@ -1707,7 +2348,7 @@ export async function snippetForSaveRule3(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // redirect
-export async function snippetForSaveRule4(): Promise<void> {
+export async function snippetForSaveRule6(): Promise<void> {
   // >SEPARATOR saveRule redirect
   // Initialize the client
   //
@@ -1733,7 +2374,7 @@ export async function snippetForSaveRule4(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // promote some results over others
-export async function snippetForSaveRule5(): Promise<void> {
+export async function snippetForSaveRule7(): Promise<void> {
   // >SEPARATOR saveRule promote some results over others
   // Initialize the client
   //
@@ -1759,7 +2400,7 @@ export async function snippetForSaveRule5(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // promote several hits
-export async function snippetForSaveRule6(): Promise<void> {
+export async function snippetForSaveRule8(): Promise<void> {
   // >SEPARATOR saveRule promote several hits
   // Initialize the client
   //
@@ -1785,7 +2426,7 @@ export async function snippetForSaveRule6(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // promote newest release
-export async function snippetForSaveRule7(): Promise<void> {
+export async function snippetForSaveRule9(): Promise<void> {
   // >SEPARATOR saveRule promote newest release
   // Initialize the client
   //
@@ -1811,7 +2452,7 @@ export async function snippetForSaveRule7(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // promote single item
-export async function snippetForSaveRule8(): Promise<void> {
+export async function snippetForSaveRule10(): Promise<void> {
   // >SEPARATOR saveRule promote single item
   // Initialize the client
   //
@@ -1837,7 +2478,7 @@ export async function snippetForSaveRule8(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // limit search results
-export async function snippetForSaveRule9(): Promise<void> {
+export async function snippetForSaveRule11(): Promise<void> {
   // >SEPARATOR saveRule limit search results
   // Initialize the client
   //
@@ -1868,7 +2509,7 @@ export async function snippetForSaveRule9(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // query match
-export async function snippetForSaveRule10(): Promise<void> {
+export async function snippetForSaveRule12(): Promise<void> {
   // >SEPARATOR saveRule query match
   // Initialize the client
   //
@@ -1897,7 +2538,7 @@ export async function snippetForSaveRule10(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // dynamic filtering
-export async function snippetForSaveRule11(): Promise<void> {
+export async function snippetForSaveRule13(): Promise<void> {
   // >SEPARATOR saveRule dynamic filtering
   // Initialize the client
   //
@@ -1923,7 +2564,7 @@ export async function snippetForSaveRule11(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // hide hits
-export async function snippetForSaveRule12(): Promise<void> {
+export async function snippetForSaveRule14(): Promise<void> {
   // >SEPARATOR saveRule hide hits
   // Initialize the client
   //
@@ -1949,7 +2590,7 @@ export async function snippetForSaveRule12(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // one rule per facet
-export async function snippetForSaveRule13(): Promise<void> {
+export async function snippetForSaveRule15(): Promise<void> {
   // >SEPARATOR saveRule one rule per facet
   // Initialize the client
   //
@@ -1975,7 +2616,7 @@ export async function snippetForSaveRule13(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // numerical filters
-export async function snippetForSaveRule14(): Promise<void> {
+export async function snippetForSaveRule16(): Promise<void> {
   // >SEPARATOR saveRule numerical filters
   // Initialize the client
   //
@@ -2001,7 +2642,7 @@ export async function snippetForSaveRule14(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // negative filters
-export async function snippetForSaveRule15(): Promise<void> {
+export async function snippetForSaveRule17(): Promise<void> {
   // >SEPARATOR saveRule negative filters
   // Initialize the client
   //
@@ -2029,7 +2670,7 @@ export async function snippetForSaveRule15(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // positive filters
-export async function snippetForSaveRule16(): Promise<void> {
+export async function snippetForSaveRule18(): Promise<void> {
   // >SEPARATOR saveRule positive filters
   // Initialize the client
   //
@@ -2057,7 +2698,7 @@ export async function snippetForSaveRule16(): Promise<void> {
 // Snippet for the saveRule method.
 //
 // conditionless
-export async function snippetForSaveRule17(): Promise<void> {
+export async function snippetForSaveRule19(): Promise<void> {
   // >SEPARATOR saveRule conditionless
   // Initialize the client
   //
@@ -2085,7 +2726,7 @@ export async function snippetForSaveRule17(): Promise<void> {
 //
 // saveRules with minimal parameters
 export async function snippetForSaveRules(): Promise<void> {
-  // >SEPARATOR saveRules default
+  // >SEPARATOR saveRules saveRules with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -2107,6 +2748,120 @@ export async function snippetForSaveRules(): Promise<void> {
     ],
     forwardToReplicas: false,
     clearExistingRules: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules with all parameters
+export async function snippetForSaveRules1(): Promise<void> {
+  // >SEPARATOR saveRules saveRules with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    indexName: '<YOUR_INDEX_NAME>',
+    rules: [
+      {
+        objectID: 'id1',
+        conditions: [{ pattern: 'apple', anchoring: 'contains', alternatives: false, context: 'search' }],
+        consequence: {
+          params: {
+            filters: 'brand:apple',
+            query: {
+              remove: ['algolia'],
+              edits: [
+                { type: 'remove', delete: 'abc', insert: 'cde' },
+                { type: 'replace', delete: 'abc', insert: 'cde' },
+              ],
+            },
+          },
+          hide: [{ objectID: '321' }],
+          filterPromotes: false,
+          userData: { algolia: 'aloglia' },
+          promote: [
+            { objectID: 'abc', position: 3 },
+            { objectIDs: ['abc', 'def'], position: 1 },
+          ],
+        },
+        description: 'test',
+        enabled: true,
+        validity: [{ from: 1656670273, until: 1656670277 }],
+      },
+    ],
+    forwardToReplicas: true,
+    clearExistingRules: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// dynamic filtering
+export async function snippetForSaveRules2(): Promise<void> {
+  // >SEPARATOR saveRules dynamic filtering
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    indexName: '<YOUR_INDEX_NAME>',
+    rules: [
+      {
+        objectID: 'toaster',
+        conditions: [{ pattern: 'toaster', anchoring: 'contains' }],
+        consequence: { params: { query: { remove: ['toaster'] }, filters: 'product_type:toaster' } },
+      },
+      {
+        objectID: 'cheap',
+        conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+        consequence: { params: { query: { remove: ['cheap'] }, filters: 'price < 15' } },
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// enhance search results
+export async function snippetForSaveRules3(): Promise<void> {
+  // >SEPARATOR saveRules enhance search results
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    indexName: '<YOUR_INDEX_NAME>',
+    rules: [
+      {
+        objectID: 'country',
+        conditions: [{ pattern: '{facet:country}', anchoring: 'contains' }],
+        consequence: { params: { aroundLatLngViaIP: false } },
+      },
+      {
+        objectID: 'city',
+        conditions: [{ pattern: '{facet:city}', anchoring: 'contains' }],
+        consequence: { params: { aroundLatLngViaIP: false } },
+      },
+    ],
   });
 
   // >LOG
@@ -2252,8 +3007,54 @@ export async function snippetForSearch3(): Promise<void> {
 
 // Snippet for the search method.
 //
-// retrieveFacets
+// search for a single hits request with minimal parameters
 export async function snippetForSearch4(): Promise<void> {
+  // >SEPARATOR search search for a single hits request with minimal parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({ requests: [{ indexName: 'cts_e2e_search_empty_index' }] });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with highlight and snippet results
+export async function snippetForSearch5(): Promise<void> {
+  // >SEPARATOR search search with highlight and snippet results
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'cts_e2e_highlight_snippet_results',
+        query: 'vim',
+        attributesToSnippet: ['*:20'],
+        attributesToHighlight: ['*'],
+        attributesToRetrieve: ['*'],
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// retrieveFacets
+export async function snippetForSearch6(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   //
@@ -2273,7 +3074,7 @@ export async function snippetForSearch4(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-export async function snippetForSearch5(): Promise<void> {
+export async function snippetForSearch7(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   //
@@ -2290,11 +3091,307 @@ export async function snippetForSearch5(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// search for a single facet request with minimal parameters
+export async function snippetForSearch8(): Promise<void> {
+  // >SEPARATOR search search for a single facet request with minimal parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [{ indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' }],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single hits request with all parameters
+export async function snippetForSearch9(): Promise<void> {
+  // >SEPARATOR search search for a single hits request with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [{ indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' }],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single facet request with all parameters
+export async function snippetForSearch10(): Promise<void> {
+  // >SEPARATOR search search for a single facet request with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'theIndexName',
+        type: 'facet',
+        facet: 'theFacet',
+        facetQuery: 'theFacetQuery',
+        query: 'theQuery',
+        maxFacetHits: 50,
+      },
+    ],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with minimal parameters
+export async function snippetForSearch11(): Promise<void> {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with minimal parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      { indexName: 'theIndexName' },
+      { indexName: 'theIndexName2', type: 'facet', facet: 'theFacet' },
+      { indexName: 'theIndexName', type: 'default' },
+    ],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with all parameters
+export async function snippetForSearch12(): Promise<void> {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'theIndexName',
+        type: 'facet',
+        facet: 'theFacet',
+        facetQuery: 'theFacetQuery',
+        query: 'theQuery',
+        maxFacetHits: 50,
+      },
+      { indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' },
+    ],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters accept all of the possible shapes
+export async function snippetForSearch13(): Promise<void> {
+  // >SEPARATOR search search filters accept all of the possible shapes
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'theIndexName',
+        facetFilters: 'mySearch:filters',
+        reRankingApplyFilter: 'mySearch:filters',
+        tagFilters: 'mySearch:filters',
+        numericFilters: 'mySearch:filters',
+        optionalFilters: 'mySearch:filters',
+      },
+      {
+        indexName: 'theIndexName',
+        facetFilters: ['mySearch:filters', ['mySearch:filters', ['mySearch:filters']]],
+        reRankingApplyFilter: ['mySearch:filters', ['mySearch:filters']],
+        tagFilters: ['mySearch:filters', ['mySearch:filters']],
+        numericFilters: ['mySearch:filters', ['mySearch:filters']],
+        optionalFilters: ['mySearch:filters', ['mySearch:filters']],
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters end to end
+export async function snippetForSearch14(): Promise<void> {
+  // >SEPARATOR search search filters end to end
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      { indexName: 'cts_e2e_search_facet', filters: "editor:'visual studio' OR editor:neovim" },
+      { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", 'editor:neovim'] },
+      { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", ['editor:neovim']] },
+      {
+        indexName: 'cts_e2e_search_facet',
+        facetFilters: ["editor:'visual studio'", ['editor:neovim', ['editor:goland']]],
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with all search parameters
+export async function snippetForSearch15(): Promise<void> {
+  // >SEPARATOR search search with all search parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        advancedSyntax: true,
+        advancedSyntaxFeatures: ['exactPhrase'],
+        allowTyposOnNumericTokens: true,
+        alternativesAsExact: ['multiWordsSynonym'],
+        analytics: true,
+        analyticsTags: [''],
+        aroundLatLng: '',
+        aroundLatLngViaIP: true,
+        aroundPrecision: 0,
+        aroundRadius: 'all',
+        attributeCriteriaComputedByMinProximity: true,
+        attributesToHighlight: [''],
+        attributesToRetrieve: [''],
+        attributesToSnippet: [''],
+        clickAnalytics: true,
+        decompoundQuery: true,
+        disableExactOnAttributes: [''],
+        disableTypoToleranceOnAttributes: [''],
+        distinct: 0,
+        enableABTest: true,
+        enablePersonalization: true,
+        enableReRanking: true,
+        enableRules: true,
+        exactOnSingleWordQuery: 'attribute',
+        facetFilters: [''],
+        facetingAfterDistinct: true,
+        facets: [''],
+        filters: '',
+        getRankingInfo: true,
+        highlightPostTag: '',
+        highlightPreTag: '',
+        hitsPerPage: 1,
+        ignorePlurals: false,
+        indexName: 'theIndexName',
+        insideBoundingBox: [
+          [47.3165, 4.9665, 47.3424, 5.0201],
+          [40.9234, 2.1185, 38.643, 1.9916],
+        ],
+        insidePolygon: [
+          [47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9],
+          [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
+        ],
+        length: 1,
+        maxValuesPerFacet: 0,
+        minProximity: 1,
+        minWordSizefor1Typo: 0,
+        minWordSizefor2Typos: 0,
+        minimumAroundRadius: 1,
+        naturalLanguages: ['fr'],
+        numericFilters: [''],
+        offset: 0,
+        optionalFilters: [''],
+        optionalWords: [''],
+        page: 0,
+        percentileComputation: true,
+        personalizationImpact: 0,
+        query: '',
+        queryLanguages: ['fr'],
+        queryType: 'prefixAll',
+        ranking: [''],
+        reRankingApplyFilter: [''],
+        relevancyStrictness: 0,
+        removeStopWords: true,
+        removeWordsIfNoResults: 'allOptional',
+        renderingContent: {
+          facetOrdering: { facets: { order: ['a', 'b'] }, values: { a: { order: ['b'], sortRemainingBy: 'count' } } },
+        },
+        replaceSynonymsInHighlight: true,
+        responseFields: [''],
+        restrictHighlightAndSnippetArrays: true,
+        restrictSearchableAttributes: [''],
+        ruleContexts: [''],
+        similarQuery: '',
+        snippetEllipsisText: '',
+        sortFacetValuesBy: '',
+        sumOrFiltersScores: true,
+        synonyms: true,
+        tagFilters: [''],
+        type: 'default',
+        typoTolerance: 'min',
+        userToken: '',
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchDictionaryEntries method.
 //
 // get searchDictionaryEntries results with minimal parameters
 export async function snippetForSearchDictionaryEntries(): Promise<void> {
-  // >SEPARATOR searchDictionaryEntries default
+  // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -2311,17 +3408,82 @@ export async function snippetForSearchDictionaryEntries(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the searchDictionaryEntries method.
+//
+// get searchDictionaryEntries results with all parameters
+export async function snippetForSearchDictionaryEntries1(): Promise<void> {
+  // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchDictionaryEntries({
+    dictionaryName: 'compounds',
+    searchDictionaryEntriesParams: { query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchForFacetValues method.
 //
 // get searchForFacetValues results with minimal parameters
 export async function snippetForSearchForFacetValues(): Promise<void> {
-  // >SEPARATOR searchForFacetValues default
+  // >SEPARATOR searchForFacetValues get searchForFacetValues results with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchForFacetValues({ indexName: 'indexName', facetName: 'facetName' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchForFacetValues method.
+//
+// get searchForFacetValues results with all parameters
+export async function snippetForSearchForFacetValues1(): Promise<void> {
+  // >SEPARATOR searchForFacetValues get searchForFacetValues results with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchForFacetValues({
+    indexName: 'indexName',
+    facetName: 'facetName',
+    searchForFacetValuesRequest: { params: "query=foo&facetFilters=['bar']", facetQuery: 'foo', maxFacetHits: 42 },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchForFacetValues method.
+//
+// facetName and facetQuery
+export async function snippetForSearchForFacetValues2(): Promise<void> {
+  // >SEPARATOR searchForFacetValues facetName and facetQuery
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchForFacetValues({
+    indexName: 'indexName',
+    facetName: 'author',
+    searchForFacetValuesRequest: { facetQuery: 'stephen king' },
+  });
 
   // >LOG
   // use typed response
@@ -2349,8 +3511,44 @@ export async function snippetForSearchRules(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
-// search with searchParams
+// search with minimal parameters
 export async function snippetForSearchSingleIndex(): Promise<void> {
+  // >SEPARATOR searchSingleIndex search with minimal parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search with special characters in indexName
+export async function snippetForSearchSingleIndex1(): Promise<void> {
+  // >SEPARATOR searchSingleIndex search with special characters in indexName
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'cts_e2e_space in index' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search with searchParams
+export async function snippetForSearchSingleIndex2(): Promise<void> {
   // >SEPARATOR searchSingleIndex search with searchParams
   // Initialize the client
   //
@@ -2370,8 +3568,29 @@ export async function snippetForSearchSingleIndex(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
+// single search retrieve snippets
+export async function snippetForSearchSingleIndex3(): Promise<void> {
+  // >SEPARATOR searchSingleIndex single search retrieve snippets
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'cts_e2e_browse',
+    searchParams: { query: 'batman mask of the phantasm', attributesToRetrieve: ['*'], attributesToSnippet: ['*:20'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
 // query
-export async function snippetForSearchSingleIndex1(): Promise<void> {
+export async function snippetForSearchSingleIndex4(): Promise<void> {
   // >SEPARATOR searchSingleIndex query
   // Initialize the client
   //
@@ -2389,7 +3608,7 @@ export async function snippetForSearchSingleIndex1(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filters
-export async function snippetForSearchSingleIndex2(): Promise<void> {
+export async function snippetForSearchSingleIndex5(): Promise<void> {
   // >SEPARATOR searchSingleIndex filters
   // Initialize the client
   //
@@ -2410,7 +3629,7 @@ export async function snippetForSearchSingleIndex2(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // distinct
-export async function snippetForSearchSingleIndex3(): Promise<void> {
+export async function snippetForSearchSingleIndex6(): Promise<void> {
   // >SEPARATOR searchSingleIndex distinct
   // Initialize the client
   //
@@ -2428,7 +3647,7 @@ export async function snippetForSearchSingleIndex3(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersNumeric
-export async function snippetForSearchSingleIndex4(): Promise<void> {
+export async function snippetForSearchSingleIndex7(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersNumeric
   // Initialize the client
   //
@@ -2446,7 +3665,7 @@ export async function snippetForSearchSingleIndex4(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersTimestamp
-export async function snippetForSearchSingleIndex5(): Promise<void> {
+export async function snippetForSearchSingleIndex8(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersTimestamp
   // Initialize the client
   //
@@ -2467,7 +3686,7 @@ export async function snippetForSearchSingleIndex5(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersSumOrFiltersScoresFalse
-export async function snippetForSearchSingleIndex6(): Promise<void> {
+export async function snippetForSearchSingleIndex9(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
   // Initialize the client
   //
@@ -2491,7 +3710,7 @@ export async function snippetForSearchSingleIndex6(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersSumOrFiltersScoresTrue
-export async function snippetForSearchSingleIndex7(): Promise<void> {
+export async function snippetForSearchSingleIndex10(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
   // Initialize the client
   //
@@ -2515,7 +3734,7 @@ export async function snippetForSearchSingleIndex7(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersStephenKing
-export async function snippetForSearchSingleIndex8(): Promise<void> {
+export async function snippetForSearchSingleIndex11(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersStephenKing
   // Initialize the client
   //
@@ -2536,7 +3755,7 @@ export async function snippetForSearchSingleIndex8(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersNotTags
-export async function snippetForSearchSingleIndex9(): Promise<void> {
+export async function snippetForSearchSingleIndex12(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersNotTags
   // Initialize the client
   //
@@ -2557,7 +3776,7 @@ export async function snippetForSearchSingleIndex9(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersList
-export async function snippetForSearchSingleIndex10(): Promise<void> {
+export async function snippetForSearchSingleIndex13(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersList
   // Initialize the client
   //
@@ -2578,7 +3797,7 @@ export async function snippetForSearchSingleIndex10(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersNeg
-export async function snippetForSearchSingleIndex11(): Promise<void> {
+export async function snippetForSearchSingleIndex14(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersNeg
   // Initialize the client
   //
@@ -2599,7 +3818,7 @@ export async function snippetForSearchSingleIndex11(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // filtersAndFacetFilters
-export async function snippetForSearchSingleIndex12(): Promise<void> {
+export async function snippetForSearchSingleIndex15(): Promise<void> {
   // >SEPARATOR searchSingleIndex filtersAndFacetFilters
   // Initialize the client
   //
@@ -2619,8 +3838,68 @@ export async function snippetForSearchSingleIndex12(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
+// facet author genre
+export async function snippetForSearchSingleIndex16(): Promise<void> {
+  // >SEPARATOR searchSingleIndex facet author genre
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { facets: ['author', 'genre'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facet wildcard
+export async function snippetForSearchSingleIndex17(): Promise<void> {
+  // >SEPARATOR searchSingleIndex facet wildcard
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { facets: ['*'] } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// maxValuesPerFacet
+export async function snippetForSearchSingleIndex18(): Promise<void> {
+  // >SEPARATOR searchSingleIndex maxValuesPerFacet
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex({
+    indexName: 'indexName',
+    searchParams: { maxValuesPerFacet: 1000 },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
 // aroundLatLng
-export async function snippetForSearchSingleIndex13(): Promise<void> {
+export async function snippetForSearchSingleIndex19(): Promise<void> {
   // >SEPARATOR searchSingleIndex aroundLatLng
   // Initialize the client
   //
@@ -2641,7 +3920,7 @@ export async function snippetForSearchSingleIndex13(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // aroundLatLngViaIP
-export async function snippetForSearchSingleIndex14(): Promise<void> {
+export async function snippetForSearchSingleIndex20(): Promise<void> {
   // >SEPARATOR searchSingleIndex aroundLatLngViaIP
   // Initialize the client
   //
@@ -2662,7 +3941,7 @@ export async function snippetForSearchSingleIndex14(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // aroundRadius
-export async function snippetForSearchSingleIndex15(): Promise<void> {
+export async function snippetForSearchSingleIndex21(): Promise<void> {
   // >SEPARATOR searchSingleIndex aroundRadius
   // Initialize the client
   //
@@ -2683,7 +3962,7 @@ export async function snippetForSearchSingleIndex15(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // insideBoundingBox
-export async function snippetForSearchSingleIndex16(): Promise<void> {
+export async function snippetForSearchSingleIndex22(): Promise<void> {
   // >SEPARATOR searchSingleIndex insideBoundingBox
   // Initialize the client
   //
@@ -2704,7 +3983,7 @@ export async function snippetForSearchSingleIndex16(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // insidePolygon
-export async function snippetForSearchSingleIndex17(): Promise<void> {
+export async function snippetForSearchSingleIndex23(): Promise<void> {
   // >SEPARATOR searchSingleIndex insidePolygon
   // Initialize the client
   //
@@ -2733,7 +4012,7 @@ export async function snippetForSearchSingleIndex17(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // insidePolygon
-export async function snippetForSearchSingleIndex18(): Promise<void> {
+export async function snippetForSearchSingleIndex24(): Promise<void> {
   // >SEPARATOR searchSingleIndex insidePolygon
   // Initialize the client
   //
@@ -2762,7 +4041,7 @@ export async function snippetForSearchSingleIndex18(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFilters
-export async function snippetForSearchSingleIndex19(): Promise<void> {
+export async function snippetForSearchSingleIndex25(): Promise<void> {
   // >SEPARATOR searchSingleIndex optionalFilters
   // Initialize the client
   //
@@ -2783,7 +4062,7 @@ export async function snippetForSearchSingleIndex19(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFiltersMany
-export async function snippetForSearchSingleIndex20(): Promise<void> {
+export async function snippetForSearchSingleIndex26(): Promise<void> {
   // >SEPARATOR searchSingleIndex optionalFiltersMany
   // Initialize the client
   //
@@ -2804,7 +4083,7 @@ export async function snippetForSearchSingleIndex20(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFiltersSimple
-export async function snippetForSearchSingleIndex21(): Promise<void> {
+export async function snippetForSearchSingleIndex27(): Promise<void> {
   // >SEPARATOR searchSingleIndex optionalFiltersSimple
   // Initialize the client
   //
@@ -2825,7 +4104,7 @@ export async function snippetForSearchSingleIndex21(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // restrictSearchableAttributes
-export async function snippetForSearchSingleIndex22(): Promise<void> {
+export async function snippetForSearchSingleIndex28(): Promise<void> {
   // >SEPARATOR searchSingleIndex restrictSearchableAttributes
   // Initialize the client
   //
@@ -2846,7 +4125,7 @@ export async function snippetForSearchSingleIndex22(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // getRankingInfo
-export async function snippetForSearchSingleIndex23(): Promise<void> {
+export async function snippetForSearchSingleIndex29(): Promise<void> {
   // >SEPARATOR searchSingleIndex getRankingInfo
   // Initialize the client
   //
@@ -2864,7 +4143,7 @@ export async function snippetForSearchSingleIndex23(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // clickAnalytics
-export async function snippetForSearchSingleIndex24(): Promise<void> {
+export async function snippetForSearchSingleIndex30(): Promise<void> {
   // >SEPARATOR searchSingleIndex clickAnalytics
   // Initialize the client
   //
@@ -2882,7 +4161,7 @@ export async function snippetForSearchSingleIndex24(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // clickAnalyticsUserToken
-export async function snippetForSearchSingleIndex25(): Promise<void> {
+export async function snippetForSearchSingleIndex31(): Promise<void> {
   // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
   // Initialize the client
   //
@@ -2903,7 +4182,7 @@ export async function snippetForSearchSingleIndex25(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // enablePersonalization
-export async function snippetForSearchSingleIndex26(): Promise<void> {
+export async function snippetForSearchSingleIndex32(): Promise<void> {
   // >SEPARATOR searchSingleIndex enablePersonalization
   // Initialize the client
   //
@@ -2924,7 +4203,7 @@ export async function snippetForSearchSingleIndex26(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // userToken
-export async function snippetForSearchSingleIndex27(): Promise<void> {
+export async function snippetForSearchSingleIndex33(): Promise<void> {
   // >SEPARATOR searchSingleIndex userToken
   // Initialize the client
   //
@@ -2942,7 +4221,7 @@ export async function snippetForSearchSingleIndex27(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // analyticsTag
-export async function snippetForSearchSingleIndex28(): Promise<void> {
+export async function snippetForSearchSingleIndex34(): Promise<void> {
   // >SEPARATOR searchSingleIndex analyticsTag
   // Initialize the client
   //
@@ -2963,7 +4242,7 @@ export async function snippetForSearchSingleIndex28(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersUsers
-export async function snippetForSearchSingleIndex29(): Promise<void> {
+export async function snippetForSearchSingleIndex35(): Promise<void> {
   // >SEPARATOR searchSingleIndex facetFiltersUsers
   // Initialize the client
   //
@@ -2984,7 +4263,7 @@ export async function snippetForSearchSingleIndex29(): Promise<void> {
 // Snippet for the searchSingleIndex method.
 //
 // buildTheQuery
-export async function snippetForSearchSingleIndex30(): Promise<void> {
+export async function snippetForSearchSingleIndex36(): Promise<void> {
   // >SEPARATOR searchSingleIndex buildTheQuery
   // Initialize the client
   //
@@ -3006,13 +4285,34 @@ export async function snippetForSearchSingleIndex30(): Promise<void> {
 //
 // searchSynonyms with minimal parameters
 export async function snippetForSearchSynonyms(): Promise<void> {
-  // >SEPARATOR searchSynonyms default
+  // >SEPARATOR searchSynonyms searchSynonyms with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchSynonyms({ indexName: 'indexName' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSynonyms method.
+//
+// searchSynonyms with all parameters
+export async function snippetForSearchSynonyms1(): Promise<void> {
+  // >SEPARATOR searchSynonyms searchSynonyms with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSynonyms({
+    indexName: 'indexName',
+    searchSynonymsParams: { query: 'myQuery', type: 'altcorrection1', page: 10, hitsPerPage: 10 },
+  });
 
   // >LOG
   // use typed response
@@ -3063,7 +4363,7 @@ export function snippetForSetClientApiKey(): void {
 //
 // get setDictionarySettings results with minimal parameters
 export async function snippetForSetDictionarySettings(): Promise<void> {
-  // >SEPARATOR setDictionarySettings default
+  // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -3079,10 +4379,144 @@ export async function snippetForSetDictionarySettings(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the setDictionarySettings method.
+//
+// get setDictionarySettings results with all parameters
+export async function snippetForSetDictionarySettings1(): Promise<void> {
+  // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setDictionarySettings({
+    disableStandardEntries: {
+      plurals: { fr: false, en: false, ru: true },
+      stopwords: { fr: false },
+      compounds: { ru: true },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// minimal parameters
+export async function snippetForSetSettings(): Promise<void> {
+  // >SEPARATOR setSettings minimal parameters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'cts_e2e_settings',
+    indexSettings: { paginationLimitedTo: 10 },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// boolean typoTolerance
+export async function snippetForSetSettings1(): Promise<void> {
+  // >SEPARATOR setSettings boolean typoTolerance
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { typoTolerance: true },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enum typoTolerance
+export async function snippetForSetSettings2(): Promise<void> {
+  // >SEPARATOR setSettings enum typoTolerance
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { typoTolerance: 'min' },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ignorePlurals
+export async function snippetForSetSettings3(): Promise<void> {
+  // >SEPARATOR setSettings ignorePlurals
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { ignorePlurals: true },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// list of string ignorePlurals
+export async function snippetForSetSettings4(): Promise<void> {
+  // >SEPARATOR setSettings list of string ignorePlurals
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { ignorePlurals: ['fr'] },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the setSettings method.
 //
 // removeStopWords boolean
-export async function snippetForSetSettings(): Promise<void> {
+export async function snippetForSetSettings5(): Promise<void> {
   // >SEPARATOR setSettings removeStopWords boolean
   // Initialize the client
   //
@@ -3104,7 +4538,7 @@ export async function snippetForSetSettings(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // removeStopWords list of string
-export async function snippetForSetSettings1(): Promise<void> {
+export async function snippetForSetSettings6(): Promise<void> {
   // >SEPARATOR setSettings removeStopWords list of string
   // Initialize the client
   //
@@ -3125,8 +4559,52 @@ export async function snippetForSetSettings1(): Promise<void> {
 
 // Snippet for the setSettings method.
 //
+// boolean distinct
+export async function snippetForSetSettings7(): Promise<void> {
+  // >SEPARATOR setSettings boolean distinct
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { distinct: true },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// integer distinct
+export async function snippetForSetSettings8(): Promise<void> {
+  // >SEPARATOR setSettings integer distinct
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { distinct: 1 },
+    forwardToReplicas: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
 // distinct company
-export async function snippetForSetSettings2(): Promise<void> {
+export async function snippetForSetSettings9(): Promise<void> {
   // >SEPARATOR setSettings distinct company
   // Initialize the client
   //
@@ -3147,7 +4625,7 @@ export async function snippetForSetSettings2(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // distinct design
-export async function snippetForSetSettings3(): Promise<void> {
+export async function snippetForSetSettings10(): Promise<void> {
   // >SEPARATOR setSettings distinct design
   // Initialize the client
   //
@@ -3168,7 +4646,7 @@ export async function snippetForSetSettings3(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // distinct true
-export async function snippetForSetSettings4(): Promise<void> {
+export async function snippetForSetSettings11(): Promise<void> {
   // >SEPARATOR setSettings distinct true
   // Initialize the client
   //
@@ -3186,7 +4664,7 @@ export async function snippetForSetSettings4(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // distinct section
-export async function snippetForSetSettings5(): Promise<void> {
+export async function snippetForSetSettings12(): Promise<void> {
   // >SEPARATOR setSettings distinct section
   // Initialize the client
   //
@@ -3207,7 +4685,7 @@ export async function snippetForSetSettings5(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting allergens
-export async function snippetForSetSettings6(): Promise<void> {
+export async function snippetForSetSettings13(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting allergens
   // Initialize the client
   //
@@ -3228,7 +4706,7 @@ export async function snippetForSetSettings6(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting categoryPageId
-export async function snippetForSetSettings7(): Promise<void> {
+export async function snippetForSetSettings14(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting categoryPageId
   // Initialize the client
   //
@@ -3249,7 +4727,7 @@ export async function snippetForSetSettings7(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // unretrievableAttributes
-export async function snippetForSetSettings8(): Promise<void> {
+export async function snippetForSetSettings15(): Promise<void> {
   // >SEPARATOR setSettings unretrievableAttributes
   // Initialize the client
   //
@@ -3270,7 +4748,7 @@ export async function snippetForSetSettings8(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting user restricted data
-export async function snippetForSetSettings9(): Promise<void> {
+export async function snippetForSetSettings16(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting user restricted data
   // Initialize the client
   //
@@ -3291,7 +4769,7 @@ export async function snippetForSetSettings9(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting optional filters
-export async function snippetForSetSettings10(): Promise<void> {
+export async function snippetForSetSettings17(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting optional filters
   // Initialize the client
   //
@@ -3312,7 +4790,7 @@ export async function snippetForSetSettings10(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting redirect index
-export async function snippetForSetSettings11(): Promise<void> {
+export async function snippetForSetSettings18(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting redirect index
   // Initialize the client
   //
@@ -3333,7 +4811,7 @@ export async function snippetForSetSettings11(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting multiple consequences
-export async function snippetForSetSettings12(): Promise<void> {
+export async function snippetForSetSettings19(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting multiple consequences
   // Initialize the client
   //
@@ -3354,7 +4832,7 @@ export async function snippetForSetSettings12(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting in-depth optional filters
-export async function snippetForSetSettings13(): Promise<void> {
+export async function snippetForSetSettings20(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
   // Initialize the client
   //
@@ -3375,7 +4853,7 @@ export async function snippetForSetSettings13(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // mode neuralSearch
-export async function snippetForSetSettings14(): Promise<void> {
+export async function snippetForSetSettings21(): Promise<void> {
   // >SEPARATOR setSettings mode neuralSearch
   // Initialize the client
   //
@@ -3393,7 +4871,7 @@ export async function snippetForSetSettings14(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // mode keywordSearch
-export async function snippetForSetSettings15(): Promise<void> {
+export async function snippetForSetSettings22(): Promise<void> {
   // >SEPARATOR setSettings mode keywordSearch
   // Initialize the client
   //
@@ -3411,7 +4889,7 @@ export async function snippetForSetSettings15(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributes same priority
-export async function snippetForSetSettings16(): Promise<void> {
+export async function snippetForSetSettings23(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributes same priority
   // Initialize the client
   //
@@ -3432,7 +4910,7 @@ export async function snippetForSetSettings16(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributes higher priority
-export async function snippetForSetSettings17(): Promise<void> {
+export async function snippetForSetSettings24(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributes higher priority
   // Initialize the client
   //
@@ -3453,7 +4931,7 @@ export async function snippetForSetSettings17(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // customRanking retweets
-export async function snippetForSetSettings18(): Promise<void> {
+export async function snippetForSetSettings25(): Promise<void> {
   // >SEPARATOR setSettings customRanking retweets
   // Initialize the client
   //
@@ -3474,7 +4952,7 @@ export async function snippetForSetSettings18(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // customRanking boosted
-export async function snippetForSetSettings19(): Promise<void> {
+export async function snippetForSetSettings26(): Promise<void> {
   // >SEPARATOR setSettings customRanking boosted
   // Initialize the client
   //
@@ -3495,7 +4973,7 @@ export async function snippetForSetSettings19(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // customRanking pageviews
-export async function snippetForSetSettings20(): Promise<void> {
+export async function snippetForSetSettings27(): Promise<void> {
   // >SEPARATOR setSettings customRanking pageviews
   // Initialize the client
   //
@@ -3516,7 +4994,7 @@ export async function snippetForSetSettings20(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // customRanking applying search parameters for a specific query
-export async function snippetForSetSettings21(): Promise<void> {
+export async function snippetForSetSettings28(): Promise<void> {
   // >SEPARATOR setSettings customRanking applying search parameters for a specific query
   // Initialize the client
   //
@@ -3537,7 +5015,7 @@ export async function snippetForSetSettings21(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // customRanking rounded pageviews
-export async function snippetForSetSettings22(): Promise<void> {
+export async function snippetForSetSettings29(): Promise<void> {
   // >SEPARATOR setSettings customRanking rounded pageviews
   // Initialize the client
   //
@@ -3558,7 +5036,7 @@ export async function snippetForSetSettings22(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // customRanking price
-export async function snippetForSetSettings23(): Promise<void> {
+export async function snippetForSetSettings30(): Promise<void> {
   // >SEPARATOR setSettings customRanking price
   // Initialize the client
   //
@@ -3579,7 +5057,7 @@ export async function snippetForSetSettings23(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // ranking exhaustive
-export async function snippetForSetSettings24(): Promise<void> {
+export async function snippetForSetSettings31(): Promise<void> {
   // >SEPARATOR setSettings ranking exhaustive
   // Initialize the client
   //
@@ -3602,7 +5080,7 @@ export async function snippetForSetSettings24(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // ranking standard replica
-export async function snippetForSetSettings25(): Promise<void> {
+export async function snippetForSetSettings32(): Promise<void> {
   // >SEPARATOR setSettings ranking standard replica
   // Initialize the client
   //
@@ -3623,7 +5101,7 @@ export async function snippetForSetSettings25(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // ranking virtual replica
-export async function snippetForSetSettings26(): Promise<void> {
+export async function snippetForSetSettings33(): Promise<void> {
   // >SEPARATOR setSettings ranking virtual replica
   // Initialize the client
   //
@@ -3644,7 +5122,7 @@ export async function snippetForSetSettings26(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // customRanking and ranking sort alphabetically
-export async function snippetForSetSettings27(): Promise<void> {
+export async function snippetForSetSettings34(): Promise<void> {
   // >SEPARATOR setSettings customRanking and ranking sort alphabetically
   // Initialize the client
   //
@@ -3668,7 +5146,7 @@ export async function snippetForSetSettings27(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // relevancyStrictness
-export async function snippetForSetSettings28(): Promise<void> {
+export async function snippetForSetSettings35(): Promise<void> {
   // >SEPARATOR setSettings relevancyStrictness
   // Initialize the client
   //
@@ -3689,7 +5167,7 @@ export async function snippetForSetSettings28(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // create replica index
-export async function snippetForSetSettings29(): Promise<void> {
+export async function snippetForSetSettings36(): Promise<void> {
   // >SEPARATOR setSettings create replica index
   // Initialize the client
   //
@@ -3709,8 +5187,29 @@ export async function snippetForSetSettings29(): Promise<void> {
 
 // Snippet for the setSettings method.
 //
+// create virtual replica index
+export async function snippetForSetSettings37(): Promise<void> {
+  // >SEPARATOR setSettings create virtual replica index
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { replicas: ['virtual(products_price_desc)'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
 // unlink replica index
-export async function snippetForSetSettings30(): Promise<void> {
+export async function snippetForSetSettings38(): Promise<void> {
   // >SEPARATOR setSettings unlink replica index
   // Initialize the client
   //
@@ -3728,7 +5227,7 @@ export async function snippetForSetSettings30(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // forwardToReplicas
-export async function snippetForSetSettings31(): Promise<void> {
+export async function snippetForSetSettings39(): Promise<void> {
   // >SEPARATOR setSettings forwardToReplicas
   // Initialize the client
   //
@@ -3750,7 +5249,7 @@ export async function snippetForSetSettings31(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // maxValuesPerFacet
-export async function snippetForSetSettings32(): Promise<void> {
+export async function snippetForSetSettings40(): Promise<void> {
   // >SEPARATOR setSettings maxValuesPerFacet
   // Initialize the client
   //
@@ -3768,7 +5267,7 @@ export async function snippetForSetSettings32(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // maxFacetHits
-export async function snippetForSetSettings33(): Promise<void> {
+export async function snippetForSetSettings41(): Promise<void> {
   // >SEPARATOR setSettings maxFacetHits
   // Initialize the client
   //
@@ -3786,7 +5285,7 @@ export async function snippetForSetSettings33(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting complex
-export async function snippetForSetSettings34(): Promise<void> {
+export async function snippetForSetSettings42(): Promise<void> {
   // >SEPARATOR setSettings attributesForFaceting complex
   // Initialize the client
   //
@@ -3807,7 +5306,7 @@ export async function snippetForSetSettings34(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // ranking closest dates
-export async function snippetForSetSettings35(): Promise<void> {
+export async function snippetForSetSettings43(): Promise<void> {
   // >SEPARATOR setSettings ranking closest dates
   // Initialize the client
   //
@@ -3830,7 +5329,7 @@ export async function snippetForSetSettings35(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributes item variation
-export async function snippetForSetSettings36(): Promise<void> {
+export async function snippetForSetSettings44(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributes item variation
   // Initialize the client
   //
@@ -3851,7 +5350,7 @@ export async function snippetForSetSettings36(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributes around location
-export async function snippetForSetSettings37(): Promise<void> {
+export async function snippetForSetSettings45(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributes around location
   // Initialize the client
   //
@@ -3875,7 +5374,7 @@ export async function snippetForSetSettings37(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributes around location
-export async function snippetForSetSettings38(): Promise<void> {
+export async function snippetForSetSettings46(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributes around location
   // Initialize the client
   //
@@ -3899,7 +5398,7 @@ export async function snippetForSetSettings38(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disableTypoToleranceOnAttributes
-export async function snippetForSetSettings39(): Promise<void> {
+export async function snippetForSetSettings47(): Promise<void> {
   // >SEPARATOR setSettings disableTypoToleranceOnAttributes
   // Initialize the client
   //
@@ -3919,8 +5418,93 @@ export async function snippetForSetSettings39(): Promise<void> {
 
 // Snippet for the setSettings method.
 //
+// everything
+export async function snippetForSetSettings48(): Promise<void> {
+  // >SEPARATOR setSettings everything
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      advancedSyntax: true,
+      advancedSyntaxFeatures: ['exactPhrase'],
+      allowCompressionOfIntegerArray: true,
+      allowTyposOnNumericTokens: true,
+      alternativesAsExact: ['singleWordSynonym'],
+      attributeCriteriaComputedByMinProximity: true,
+      attributeForDistinct: 'test',
+      attributesForFaceting: ['algolia'],
+      attributesToHighlight: ['algolia'],
+      attributesToRetrieve: ['algolia'],
+      attributesToSnippet: ['algolia'],
+      attributesToTransliterate: ['algolia'],
+      camelCaseAttributes: ['algolia'],
+      customNormalization: { algolia: { aloglia: 'aglolia' } },
+      customRanking: ['algolia'],
+      decompoundQuery: false,
+      decompoundedAttributes: { algolia: 'aloglia' },
+      disableExactOnAttributes: ['algolia'],
+      disablePrefixOnAttributes: ['algolia'],
+      disableTypoToleranceOnAttributes: ['algolia'],
+      disableTypoToleranceOnWords: ['algolia'],
+      distinct: 3,
+      enablePersonalization: true,
+      enableReRanking: false,
+      enableRules: true,
+      exactOnSingleWordQuery: 'attribute',
+      highlightPreTag: '<span>',
+      highlightPostTag: '</span>',
+      hitsPerPage: 10,
+      ignorePlurals: false,
+      indexLanguages: ['fr'],
+      keepDiacriticsOnCharacters: 'abc',
+      maxFacetHits: 20,
+      maxValuesPerFacet: 30,
+      minProximity: 6,
+      minWordSizefor1Typo: 5,
+      minWordSizefor2Typos: 11,
+      mode: 'neuralSearch',
+      numericAttributesForFiltering: ['algolia'],
+      optionalWords: ['myspace'],
+      paginationLimitedTo: 0,
+      queryLanguages: ['fr'],
+      queryType: 'prefixLast',
+      ranking: ['geo'],
+      reRankingApplyFilter: 'mySearch:filters',
+      relevancyStrictness: 10,
+      removeStopWords: false,
+      removeWordsIfNoResults: 'lastWords',
+      renderingContent: {
+        facetOrdering: { facets: { order: ['a', 'b'] }, values: { a: { order: ['b'], sortRemainingBy: 'count' } } },
+      },
+      replaceSynonymsInHighlight: true,
+      replicas: [''],
+      responseFields: ['algolia'],
+      restrictHighlightAndSnippetArrays: true,
+      searchableAttributes: ['foo'],
+      semanticSearch: { eventSources: ['foo'] },
+      separatorsToIndex: 'bar',
+      snippetEllipsisText: '---',
+      sortFacetValuesBy: 'date',
+      typoTolerance: false,
+      unretrievableAttributes: ['foo'],
+      userData: { user: 'data' },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
 // searchableAttributesWithCustomRankingsAndAttributesForFaceting
-export async function snippetForSetSettings40(): Promise<void> {
+export async function snippetForSetSettings49(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
   // Initialize the client
   //
@@ -3945,7 +5529,7 @@ export async function snippetForSetSettings40(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesProductReferenceSuffixes
-export async function snippetForSetSettings41(): Promise<void> {
+export async function snippetForSetSettings50(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
   // Initialize the client
   //
@@ -3966,7 +5550,7 @@ export async function snippetForSetSettings41(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // queryLanguageAndIgnorePlurals
-export async function snippetForSetSettings42(): Promise<void> {
+export async function snippetForSetSettings51(): Promise<void> {
   // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
   // Initialize the client
   //
@@ -3987,7 +5571,7 @@ export async function snippetForSetSettings42(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesInMovies
-export async function snippetForSetSettings43(): Promise<void> {
+export async function snippetForSetSettings52(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesInMovies
   // Initialize the client
   //
@@ -4008,7 +5592,7 @@ export async function snippetForSetSettings43(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disablePrefixOnAttributes
-export async function snippetForSetSettings44(): Promise<void> {
+export async function snippetForSetSettings53(): Promise<void> {
   // >SEPARATOR setSettings disablePrefixOnAttributes
   // Initialize the client
   //
@@ -4029,7 +5613,7 @@ export async function snippetForSetSettings44(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disableTypoToleranceOnAttributes
-export async function snippetForSetSettings45(): Promise<void> {
+export async function snippetForSetSettings54(): Promise<void> {
   // >SEPARATOR setSettings disableTypoToleranceOnAttributes
   // Initialize the client
   //
@@ -4050,7 +5634,7 @@ export async function snippetForSetSettings45(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExample
-export async function snippetForSetSettings46(): Promise<void> {
+export async function snippetForSetSettings55(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesSimpleExample
   // Initialize the client
   //
@@ -4071,7 +5655,7 @@ export async function snippetForSetSettings46(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExampleAlt
-export async function snippetForSetSettings47(): Promise<void> {
+export async function snippetForSetSettings56(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
   // Initialize the client
   //

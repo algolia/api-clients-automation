@@ -45,7 +45,7 @@ func SnippetForCustomDeleteOfAbtesting() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customDelete default
+	// >SEPARATOR customDelete allow del method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
 	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
@@ -66,6 +66,34 @@ func SnippetForCustomDeleteOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomDeleteOfAbtesting1() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with all parameters
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomGetOfAbtesting() {
 	/*
 	   Snippet for the customGet method.
@@ -73,7 +101,7 @@ func SnippetForCustomGetOfAbtesting() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customGet default
+	// >SEPARATOR customGet allow get method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
 	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
@@ -94,6 +122,63 @@ func SnippetForCustomGetOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomGetOfAbtesting1() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with all parameters
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfAbtesting2() {
+	/*
+	   Snippet for the customGet method.
+
+	   requestOptions should be escaped too
+	*/
+
+	// >SEPARATOR customGet requestOptions should be escaped too
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), abtesting.WithQueryParam("query", "parameters with space"), abtesting.WithQueryParam("and an array",
+		[]string{"array", "with spaces"}), abtesting.WithHeaderParam("x-header-1", "spaces are left alone"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPostOfAbtesting() {
 	/*
 	   Snippet for the customPost method.
@@ -101,7 +186,7 @@ func SnippetForCustomPostOfAbtesting() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPost default
+	// >SEPARATOR customPost allow post method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
 	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
@@ -122,6 +207,289 @@ func SnippetForCustomPostOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomPostOfAbtesting1() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with all parameters
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting2() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default query parameters
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default query parameters
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("query", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting3() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges query parameters with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges query parameters with default ones
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("query2", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting4() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default headers
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default headers
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting5() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges headers with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges headers with default ones
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting6() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts booleans
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("isItWorking", true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting7() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts integers
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam", 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting8() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of string
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of string
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
+		[]string{"b and c", "d"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting9() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
+		[]bool{true, true, false}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAbtesting10() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
+		[]int32{1, 2}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPutOfAbtesting() {
 	/*
 	   Snippet for the customPut method.
@@ -129,7 +497,7 @@ func SnippetForCustomPutOfAbtesting() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPut default
+	// >SEPARATOR customPut allow put method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
 	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
@@ -140,6 +508,34 @@ func SnippetForCustomPutOfAbtesting() {
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
 		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPutOfAbtesting1() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with all parameters
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -248,7 +644,7 @@ func SnippetForListABTestsOfAbtesting() {
 	   listABTests with minimal parameters
 	*/
 
-	// >SEPARATOR listABTests default
+	// >SEPARATOR listABTests listABTests with minimal parameters
 	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
 	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
@@ -258,6 +654,33 @@ func SnippetForListABTestsOfAbtesting() {
 
 	// Call the API
 	response, err := client.ListABTests(client.NewApiListABTestsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListABTestsOfAbtesting1() {
+	/*
+	   Snippet for the listABTests method.
+
+	   listABTests with parameters
+	*/
+
+	// >SEPARATOR listABTests listABTests with parameters
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListABTests(client.NewApiListABTestsRequest().WithOffset(0).WithLimit(21).WithIndexPrefix("cts_e2e ab").WithIndexSuffix("t"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

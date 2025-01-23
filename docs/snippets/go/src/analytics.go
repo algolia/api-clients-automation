@@ -13,7 +13,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customDelete default
+	// >SEPARATOR customDelete allow del method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -34,6 +34,34 @@ func SnippetForCustomDeleteOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomDeleteOfAnalytics1() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomGetOfAnalytics() {
 	/*
 	   Snippet for the customGet method.
@@ -41,7 +69,7 @@ func SnippetForCustomGetOfAnalytics() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customGet default
+	// >SEPARATOR customGet allow get method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -62,6 +90,63 @@ func SnippetForCustomGetOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomGetOfAnalytics1() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfAnalytics2() {
+	/*
+	   Snippet for the customGet method.
+
+	   requestOptions should be escaped too
+	*/
+
+	// >SEPARATOR customGet requestOptions should be escaped too
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), analytics.WithQueryParam("query", "parameters with space"), analytics.WithQueryParam("and an array",
+		[]string{"array", "with spaces"}), analytics.WithHeaderParam("x-header-1", "spaces are left alone"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPostOfAnalytics() {
 	/*
 	   Snippet for the customPost method.
@@ -69,7 +154,7 @@ func SnippetForCustomPostOfAnalytics() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPost default
+	// >SEPARATOR customPost allow post method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -90,6 +175,289 @@ func SnippetForCustomPostOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomPostOfAnalytics1() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics2() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default query parameters
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default query parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics3() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges query parameters with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges query parameters with default ones
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query2", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics4() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default headers
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default headers
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics5() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges headers with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges headers with default ones
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics6() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts booleans
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("isItWorking", true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics7() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts integers
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam", 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics8() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of string
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of string
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+		[]string{"b and c", "d"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics9() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+		[]bool{true, true, false}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfAnalytics10() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+		[]int32{1, 2}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPutOfAnalytics() {
 	/*
 	   Snippet for the customPut method.
@@ -97,7 +465,7 @@ func SnippetForCustomPutOfAnalytics() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPut default
+	// >SEPARATOR customPut allow put method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -118,6 +486,34 @@ func SnippetForCustomPutOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomPutOfAnalytics1() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetAddToCartRateOfAnalytics() {
 	/*
 	   Snippet for the getAddToCartRate method.
@@ -125,7 +521,7 @@ func SnippetForGetAddToCartRateOfAnalytics() {
 	   get getAddToCartRate with minimal parameters
 	*/
 
-	// >SEPARATOR getAddToCartRate default
+	// >SEPARATOR getAddToCartRate get getAddToCartRate with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -146,6 +542,34 @@ func SnippetForGetAddToCartRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetAddToCartRateOfAnalytics1() {
+	/*
+	   Snippet for the getAddToCartRate method.
+
+	   get getAddToCartRate with all parameters
+	*/
+
+	// >SEPARATOR getAddToCartRate get getAddToCartRate with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetAverageClickPositionOfAnalytics() {
 	/*
 	   Snippet for the getAverageClickPosition method.
@@ -153,7 +577,7 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 	   get getAverageClickPosition with minimal parameters
 	*/
 
-	// >SEPARATOR getAverageClickPosition default
+	// >SEPARATOR getAverageClickPosition get getAverageClickPosition with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -174,6 +598,34 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetAverageClickPositionOfAnalytics1() {
+	/*
+	   Snippet for the getAverageClickPosition method.
+
+	   get getAverageClickPosition with all parameters
+	*/
+
+	// >SEPARATOR getAverageClickPosition get getAverageClickPosition with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetClickPositionsOfAnalytics() {
 	/*
 	   Snippet for the getClickPositions method.
@@ -181,7 +633,7 @@ func SnippetForGetClickPositionsOfAnalytics() {
 	   get getClickPositions with minimal parameters
 	*/
 
-	// >SEPARATOR getClickPositions default
+	// >SEPARATOR getClickPositions get getClickPositions with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -202,6 +654,34 @@ func SnippetForGetClickPositionsOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetClickPositionsOfAnalytics1() {
+	/*
+	   Snippet for the getClickPositions method.
+
+	   get getClickPositions with all parameters
+	*/
+
+	// >SEPARATOR getClickPositions get getClickPositions with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetClickThroughRateOfAnalytics() {
 	/*
 	   Snippet for the getClickThroughRate method.
@@ -209,7 +689,7 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 	   get getClickThroughRate with minimal parameters
 	*/
 
-	// >SEPARATOR getClickThroughRate default
+	// >SEPARATOR getClickThroughRate get getClickThroughRate with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -230,6 +710,34 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetClickThroughRateOfAnalytics1() {
+	/*
+	   Snippet for the getClickThroughRate method.
+
+	   get getClickThroughRate with all parameters
+	*/
+
+	// >SEPARATOR getClickThroughRate get getClickThroughRate with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetConversionRateOfAnalytics() {
 	/*
 	   Snippet for the getConversionRate method.
@@ -237,7 +745,7 @@ func SnippetForGetConversionRateOfAnalytics() {
 	   get getConversationRate with minimal parameters
 	*/
 
-	// >SEPARATOR getConversionRate default
+	// >SEPARATOR getConversionRate get getConversationRate with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -258,6 +766,34 @@ func SnippetForGetConversionRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetConversionRateOfAnalytics1() {
+	/*
+	   Snippet for the getConversionRate method.
+
+	   get getConversationRate with all parameters
+	*/
+
+	// >SEPARATOR getConversionRate get getConversationRate with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetNoClickRateOfAnalytics() {
 	/*
 	   Snippet for the getNoClickRate method.
@@ -265,7 +801,7 @@ func SnippetForGetNoClickRateOfAnalytics() {
 	   get getNoClickRate with minimal parameters
 	*/
 
-	// >SEPARATOR getNoClickRate default
+	// >SEPARATOR getNoClickRate get getNoClickRate with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -286,6 +822,34 @@ func SnippetForGetNoClickRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetNoClickRateOfAnalytics1() {
+	/*
+	   Snippet for the getNoClickRate method.
+
+	   get getNoClickRate with all parameters
+	*/
+
+	// >SEPARATOR getNoClickRate get getNoClickRate with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetNoResultsRateOfAnalytics() {
 	/*
 	   Snippet for the getNoResultsRate method.
@@ -293,7 +857,7 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 	   get getNoResultsRate with minimal parameters
 	*/
 
-	// >SEPARATOR getNoResultsRate default
+	// >SEPARATOR getNoResultsRate get getNoResultsRate with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -314,6 +878,34 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetNoResultsRateOfAnalytics1() {
+	/*
+	   Snippet for the getNoResultsRate method.
+
+	   get getNoResultsRate with all parameters
+	*/
+
+	// >SEPARATOR getNoResultsRate get getNoResultsRate with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetPurchaseRateOfAnalytics() {
 	/*
 	   Snippet for the getPurchaseRate method.
@@ -321,7 +913,7 @@ func SnippetForGetPurchaseRateOfAnalytics() {
 	   get getPurchaseRate with minimal parameters
 	*/
 
-	// >SEPARATOR getPurchaseRate default
+	// >SEPARATOR getPurchaseRate get getPurchaseRate with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -342,6 +934,34 @@ func SnippetForGetPurchaseRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetPurchaseRateOfAnalytics1() {
+	/*
+	   Snippet for the getPurchaseRate method.
+
+	   get getPurchaseRate with all parameters
+	*/
+
+	// >SEPARATOR getPurchaseRate get getPurchaseRate with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetRevenueOfAnalytics() {
 	/*
 	   Snippet for the getRevenue method.
@@ -349,7 +969,7 @@ func SnippetForGetRevenueOfAnalytics() {
 	   get getRevenue with minimal parameters
 	*/
 
-	// >SEPARATOR getRevenue default
+	// >SEPARATOR getRevenue get getRevenue with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -370,6 +990,34 @@ func SnippetForGetRevenueOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetRevenueOfAnalytics1() {
+	/*
+	   Snippet for the getRevenue method.
+
+	   get getRevenue with all parameters
+	*/
+
+	// >SEPARATOR getRevenue get getRevenue with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRevenue(client.NewApiGetRevenueRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetSearchesCountOfAnalytics() {
 	/*
 	   Snippet for the getSearchesCount method.
@@ -377,7 +1025,7 @@ func SnippetForGetSearchesCountOfAnalytics() {
 	   get getSearchesCount with minimal parameters
 	*/
 
-	// >SEPARATOR getSearchesCount default
+	// >SEPARATOR getSearchesCount get getSearchesCount with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -398,6 +1046,34 @@ func SnippetForGetSearchesCountOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetSearchesCountOfAnalytics1() {
+	/*
+	   Snippet for the getSearchesCount method.
+
+	   get getSearchesCount with all parameters
+	*/
+
+	// >SEPARATOR getSearchesCount get getSearchesCount with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetSearchesNoClicksOfAnalytics() {
 	/*
 	   Snippet for the getSearchesNoClicks method.
@@ -405,7 +1081,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 	   get getSearchesNoClicks with minimal parameters
 	*/
 
-	// >SEPARATOR getSearchesNoClicks default
+	// >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -426,6 +1102,34 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetSearchesNoClicksOfAnalytics1() {
+	/*
+	   Snippet for the getSearchesNoClicks method.
+
+	   get getSearchesNoClicks with all parameters
+	*/
+
+	// >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetSearchesNoResultsOfAnalytics() {
 	/*
 	   Snippet for the getSearchesNoResults method.
@@ -433,7 +1137,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 	   get getSearchesNoResults with minimal parameters
 	*/
 
-	// >SEPARATOR getSearchesNoResults default
+	// >SEPARATOR getSearchesNoResults get getSearchesNoResults with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -444,6 +1148,34 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 	// Call the API
 	response, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
 		"index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetSearchesNoResultsOfAnalytics1() {
+	/*
+	   Snippet for the getSearchesNoResults method.
+
+	   get getSearchesNoResults with all parameters
+	*/
+
+	// >SEPARATOR getSearchesNoResults get getSearchesNoResults with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -489,7 +1221,7 @@ func SnippetForGetTopCountriesOfAnalytics() {
 	   get getTopCountries with minimal parameters
 	*/
 
-	// >SEPARATOR getTopCountries default
+	// >SEPARATOR getTopCountries get getTopCountries with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -510,6 +1242,34 @@ func SnippetForGetTopCountriesOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetTopCountriesOfAnalytics1() {
+	/*
+	   Snippet for the getTopCountries method.
+
+	   get getTopCountries with all parameters
+	*/
+
+	// >SEPARATOR getTopCountries get getTopCountries with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetTopFilterAttributesOfAnalytics() {
 	/*
 	   Snippet for the getTopFilterAttributes method.
@@ -517,7 +1277,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 	   get getTopFilterAttributes with minimal parameters
 	*/
 
-	// >SEPARATOR getTopFilterAttributes default
+	// >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -538,6 +1298,34 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetTopFilterAttributesOfAnalytics1() {
+	/*
+	   Snippet for the getTopFilterAttributes method.
+
+	   get getTopFilterAttributes with all parameters
+	*/
+
+	// >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
+		"index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	/*
 	   Snippet for the getTopFilterForAttribute method.
@@ -545,7 +1333,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	   get getTopFilterForAttribute with minimal parameters
 	*/
 
-	// >SEPARATOR getTopFilterForAttribute default
+	// >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -566,6 +1354,90 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetTopFilterForAttributeOfAnalytics1() {
+	/*
+	   Snippet for the getTopFilterForAttribute method.
+
+	   get getTopFilterForAttribute with minimal parameters and multiple attributes
+	*/
+
+	// >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters and multiple attributes
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+		"myAttribute1,myAttribute2", "index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetTopFilterForAttributeOfAnalytics2() {
+	/*
+	   Snippet for the getTopFilterForAttribute method.
+
+	   get getTopFilterForAttribute with all parameters
+	*/
+
+	// >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+		"myAttribute", "index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetTopFilterForAttributeOfAnalytics3() {
+	/*
+	   Snippet for the getTopFilterForAttribute method.
+
+	   get getTopFilterForAttribute with all parameters and multiple attributes
+	*/
+
+	// >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters and multiple attributes
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+		"myAttribute1,myAttribute2", "index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	/*
 	   Snippet for the getTopFiltersNoResults method.
@@ -573,7 +1445,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	   get getTopFiltersNoResults with minimal parameters
 	*/
 
-	// >SEPARATOR getTopFiltersNoResults default
+	// >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -594,6 +1466,34 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetTopFiltersNoResultsOfAnalytics1() {
+	/*
+	   Snippet for the getTopFiltersNoResults method.
+
+	   get getTopFiltersNoResults with all parameters
+	*/
+
+	// >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
+		"index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetTopHitsOfAnalytics() {
 	/*
 	   Snippet for the getTopHits method.
@@ -601,7 +1501,7 @@ func SnippetForGetTopHitsOfAnalytics() {
 	   get getTopHits with minimal parameters
 	*/
 
-	// >SEPARATOR getTopHits default
+	// >SEPARATOR getTopHits get getTopHits with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -622,6 +1522,34 @@ func SnippetForGetTopHitsOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetTopHitsOfAnalytics1() {
+	/*
+	   Snippet for the getTopHits method.
+
+	   get getTopHits with all parameters
+	*/
+
+	// >SEPARATOR getTopHits get getTopHits with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
+		"index").WithSearch("mySearch").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetTopSearchesOfAnalytics() {
 	/*
 	   Snippet for the getTopSearches method.
@@ -629,7 +1557,7 @@ func SnippetForGetTopSearchesOfAnalytics() {
 	   get getTopSearches with minimal parameters
 	*/
 
-	// >SEPARATOR getTopSearches default
+	// >SEPARATOR getTopSearches get getTopSearches with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -650,6 +1578,34 @@ func SnippetForGetTopSearchesOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetTopSearchesOfAnalytics1() {
+	/*
+	   Snippet for the getTopSearches method.
+
+	   get getTopSearches with all parameters
+	*/
+
+	// >SEPARATOR getTopSearches get getTopSearches with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
+		"index").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetUsersCountOfAnalytics() {
 	/*
 	   Snippet for the getUsersCount method.
@@ -657,7 +1613,7 @@ func SnippetForGetUsersCountOfAnalytics() {
 	   get getUsersCount with minimal parameters
 	*/
 
-	// >SEPARATOR getUsersCount default
+	// >SEPARATOR getUsersCount get getUsersCount with minimal parameters
 	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
 	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
@@ -668,6 +1624,34 @@ func SnippetForGetUsersCountOfAnalytics() {
 	// Call the API
 	response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
 		"index"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetUsersCountOfAnalytics1() {
+	/*
+	   Snippet for the getUsersCount method.
+
+	   get getUsersCount with all parameters
+	*/
+
+	// >SEPARATOR getUsersCount get getUsersCount with all parameters
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
+		"index").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
