@@ -23,7 +23,7 @@
     "postinstall": "husky && yarn workspace eslint-plugin-automation-custom build",
     "playground:browser": "yarn workspace javascript-browser-playground start",
     "scripts:build": "yarn workspace scripts build:actions",
-    "scripts:lint": "yarn workspace scripts lint",
+    "scripts:lint": "yarn cli format javascript scripts && yarn cli format javascript eslint",
     "scripts:test": "yarn workspace scripts test",
     "specs:fix": "eslint --ext=yml $0 --fix",
     "specs:lint": "eslint --ext=yml $0",

@@ -285,6 +285,7 @@ requestOptions:
       $ref: '#/headers'
 
 waitTime:
+  type: object
   description: Timeout for the HTTP request.
   properties:
     min:

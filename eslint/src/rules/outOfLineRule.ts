@@ -1,4 +1,4 @@
-import { RuleModule } from 'eslint-plugin-yml/lib/types.js';
+import type { RuleModule } from 'eslint-plugin-yml/lib/types.js';
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
 import { isNullable, isPairWithKey } from '../utils.js';

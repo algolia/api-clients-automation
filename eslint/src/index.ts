@@ -1,4 +1,5 @@
 import { endWithDot } from './rules/endWithDot.js';
+import { hasType } from './rules/hasType.js';
 import { noBigInt } from './rules/noBigInt.js';
 import { noFinalDot } from './rules/noFinalDot.js';
 import { noNewLine } from './rules/noNewLine.js';
@@ -10,6 +11,7 @@ import { validInlineTitle } from './rules/validInlineTitle.js';
 
 const rules = {
   'end-with-dot': endWithDot,
+  'has-type': hasType,
   'no-big-int': noBigInt,
   'no-final-dot': noFinalDot,
   'no-new-line': noNewLine,
