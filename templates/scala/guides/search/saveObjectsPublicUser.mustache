@@ -1,0 +1,16 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+{{> snippets/import}}
+import algoliasearch.config.RequestOptions
+
+def saveObjectsPublicUser(): Future[Unit] = {
+  {{> snippets/init}}
+
+  Await.result(
+    {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}.map(_ => Future.unit),
+    Duration(5, "sec")
+  )
+}
