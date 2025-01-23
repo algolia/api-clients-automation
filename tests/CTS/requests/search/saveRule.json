@@ -181,7 +181,6 @@
   },
   {
     "testName": "b2b catalog",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "article-rule",
@@ -233,7 +232,6 @@
   },
   {
     "testName": "merchandising and promoting",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "director-rule",
@@ -291,7 +289,6 @@
   },
   {
     "testName": "harry potter",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "harry-potter-rule",
@@ -331,7 +328,6 @@
   },
   {
     "testName": "merchandising empty query",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "clearance-category-filter",
@@ -373,7 +369,6 @@
   },
   {
     "testName": "redirect",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "redirect-help-rule",
@@ -413,7 +408,6 @@
   },
   {
     "testName": "promote some results over others",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "tomato-fruit",
@@ -449,7 +443,6 @@
   },
   {
     "testName": "promote several hits",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "Promote-Apple-Newest",
@@ -491,7 +484,6 @@
   },
   {
     "testName": "promote newest release",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "Promote-iPhone-X",
@@ -533,7 +525,6 @@
   },
   {
     "testName": "promote single item",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "promote-harry-potter-box-set",
@@ -573,7 +564,6 @@
   },
   {
     "testName": "limit search results",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "article-rule",
@@ -621,7 +611,6 @@
   },
   {
     "testName": "query match",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "tagged-brand-rule",
@@ -671,7 +660,6 @@
   },
   {
     "testName": "dynamic filtering",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "color-facets",
@@ -709,7 +697,6 @@
   },
   {
     "testName": "hide hits",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "hide-12345",
@@ -745,7 +732,6 @@
   },
   {
     "testName": "one rule per facet",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "red-color",
@@ -787,7 +773,6 @@
   },
   {
     "testName": "numerical filters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "cheap",
@@ -829,7 +814,6 @@
   },
   {
     "testName": "negative filters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "gluten-free-rule",
@@ -881,7 +865,6 @@
   },
   {
     "testName": "positive filters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "diet-rule",
@@ -933,7 +916,6 @@
   },
   {
     "testName": "conditionless",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "objectID": "diet-rule",

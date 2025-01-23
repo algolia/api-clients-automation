@@ -77,7 +77,6 @@
   },
   {
     "testName": "Partial update with a new value for an object attribute",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
@@ -99,7 +98,6 @@
   },
   {
     "testName": "with visible_by filter",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",

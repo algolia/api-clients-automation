@@ -108,7 +108,6 @@
   },
   {
     "testName": "removeStopWords boolean",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -129,7 +128,6 @@
   },
   {
     "testName": "removeStopWords list of string",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -194,7 +192,6 @@
   },
   {
     "testName": "distinct company",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -213,7 +210,6 @@
   },
   {
     "testName": "distinct design",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -232,7 +228,6 @@
   },
   {
     "testName": "distinct true",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -249,7 +244,6 @@
   },
   {
     "testName": "distinct section",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -268,7 +262,6 @@
   },
   {
     "testName": "attributesForFaceting allergens",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -289,7 +282,6 @@
   },
   {
     "testName": "attributesForFaceting categoryPageId",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -310,7 +302,6 @@
   },
   {
     "testName": "unretrievableAttributes",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -331,7 +322,6 @@
   },
   {
     "testName": "attributesForFaceting user restricted data",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -352,7 +342,6 @@
   },
   {
     "testName": "attributesForFaceting optional filters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -375,7 +364,6 @@
   },
   {
     "testName": "attributesForFaceting redirect index",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -396,7 +384,6 @@
   },
   {
     "testName": "attributesForFaceting multiple consequences",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -417,7 +404,6 @@
   },
   {
     "testName": "attributesForFaceting in-depth optional filters",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -438,7 +424,6 @@
   },
   {
     "testName": "mode neuralSearch",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -455,7 +440,6 @@
   },
   {
     "testName": "mode keywordSearch",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -472,7 +456,6 @@
   },
   {
     "testName": "searchableAttributes same priority",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -495,7 +478,6 @@
   },
   {
     "testName": "searchableAttributes higher priority",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -518,7 +500,6 @@
   },
   {
     "testName": "customRanking retweets",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -541,7 +522,6 @@
   },
   {
     "testName": "customRanking boosted",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -558,7 +538,6 @@
   },
   {
     "testName": "customRanking pageviews",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -581,7 +560,6 @@
   },
   {
     "testName": "customRanking applying search parameters for a specific query",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -604,7 +582,6 @@
   },
   {
     "testName": "customRanking rounded pageviews",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -627,7 +604,6 @@
   },
   {
     "testName": "customRanking price",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -648,7 +624,6 @@
   },
   {
     "testName": "ranking exhaustive",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -685,7 +660,6 @@
   },
   {
     "testName": "ranking standard replica",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -706,7 +680,6 @@
   },
   {
     "testName": "ranking virtual replica",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -727,7 +700,6 @@
   },
   {
     "testName": "customRanking and ranking sort alphabetically",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -768,7 +740,6 @@
   },
   {
     "testName": "relevancyStrictness",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -791,7 +762,6 @@
   },
   {
     "testName": "create replica index",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -812,7 +782,6 @@
   },
   {
     "testName": "create virtual replica index",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -833,7 +802,6 @@
   },
   {
     "testName": "unlink replica index",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -850,7 +818,6 @@
   },
   {
     "testName": "forwardToReplicas",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -871,7 +838,6 @@
   },
   {
     "testName": "maxValuesPerFacet",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -888,7 +854,6 @@
   },
   {
     "testName": "maxFacetHits",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -905,7 +870,6 @@
   },
   {
     "testName": "attributesForFaceting complex",
-    "isSnippet": true,
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "indexSettings": {
@@ -930,7 +894,6 @@
   },
   {
     "testName": "ranking closest dates",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -967,7 +930,6 @@
   },
   {
     "testName": "searchableAttributes item variation",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -992,7 +954,6 @@
   },
   {
     "testName": "searchableAttributes around location",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1021,7 +982,6 @@
   },
   {
     "testName": "searchableAttributes around location",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1050,7 +1010,6 @@
   },
   {
     "testName": "disableTypoToleranceOnAttributes",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1353,7 +1312,6 @@
   },
   {
     "testName": "searchableAttributesWithCustomRankingsAndAttributesForFaceting",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1398,7 +1356,6 @@
   },
   {
     "testName": "searchableAttributesProductReferenceSuffixes",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1423,7 +1380,6 @@
   },
   {
     "testName": "queryLanguageAndIgnorePlurals",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1446,7 +1402,6 @@
   },
   {
     "testName": "searchableAttributesInMovies",
-    "isSnippet": true,
     "parameters": {
       "indexName": "movies",
       "indexSettings": {
@@ -1467,7 +1422,6 @@
   },
   {
     "testName": "disablePrefixOnAttributes",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1488,7 +1442,6 @@
   },
   {
     "testName": "disableTypoToleranceOnAttributes",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1509,7 +1462,6 @@
   },
   {
     "testName": "searchableAttributesSimpleExample",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -1530,7 +1482,6 @@
   },
   {
     "testName": "searchableAttributesSimpleExampleAlt",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
