@@ -1,0 +1,13 @@
+{{> snippets/import}}
+
+void searchRecentlyPublishedBooks() async {
+  {{> snippets/init}}
+
+  var dateTimestamp = DateTime.now().millisecondsSinceEpoch;
+  var searchParams = SearchParamsObject(
+      query: "<YOUR_SEARCH_QUERY>",
+      filters: "date_timestamp > $dateTimestamp"
+  );
+
+  await {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+}
