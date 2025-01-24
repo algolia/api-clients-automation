@@ -1,5 +1,16 @@
+import kotlinx.serialization.json.JsonObject
+
 {{> snippets/import}}
 import com.algolia.client.model.search.*
+
+val playlists = listOf<JsonObject>() // Your records
+
+val getAppIDFor: (String) -> String = {
+    "" // Implement your own logic here
+}
+val getIndexingApiKeyFor: (String) -> String = {
+    "" // Implement your own logic here
+}
 
 suspend fun setSettingsThenSaveObjects() {
   playlists.forEach { playlist ->
