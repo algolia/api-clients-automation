@@ -1,0 +1,9 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+import com.algolia.client.transport.RequestOptions
+
+ suspend fun saveObjectsPublicUser() {
+  {{> snippets/init}}
+
+  client.{{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
+}
