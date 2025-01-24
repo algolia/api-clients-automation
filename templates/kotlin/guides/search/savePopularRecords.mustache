@@ -1,5 +1,6 @@
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 
 {{> snippets/import}}
 import com.algolia.client.model.search.*
@@ -9,7 +10,7 @@ suspend fun savePopularRecords() {
 
   var records: List<JsonObject> = listOf()
 
-  client.browseObjects(indexName, BrowseParamsObject(), aggregator = { response ->
+  client.browseObjects("YOUR_INDEX_NAME", BrowseParamsObject(), aggregator = { response ->
       records = records + response.hits.map { hit ->
           val props = hit.additionalProperties ?: mapOf()
 

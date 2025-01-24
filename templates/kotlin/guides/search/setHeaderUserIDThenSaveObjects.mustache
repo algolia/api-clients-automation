@@ -1,9 +1,11 @@
+import kotlinx.serialization.json.JsonObject
+
 {{> snippets/import}}
 import com.algolia.client.model.search.*
 
-val playlists: List<Map<String, Any>> = listOf() // Your records
-
 suspend fun setHeaderUserIDThenSaveObjects() {
+  val playlists: List<JsonObject> = listOf() // Your records
+
   {{> snippets/init}}
 
   playlists.foreach { playlist ->

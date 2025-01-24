@@ -7,9 +7,9 @@ val getAllAppIDConfigurations: () -> Map<String, String> = {
   mapOf() // A map of your MCM AppID/ApiKey pairs
 }
 
-val playlists: List<JsonObject> = listOf() // Your records
-
 suspend fun saveObjectsMCM() {
+  val playlists: List<JsonObject> = listOf() // Your records
+
   val configurations = getAllAppIDConfigurations()
 
   configurations.map { (appID, apiKey) ->
