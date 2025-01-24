@@ -38,6 +38,7 @@ public class Snippet {
   }
 
   public void addMethodCall(Map<String, Object> context, ParametersWithDataType paramsType, CodegenOperation ope) throws CTSException {
+    System.out.println(this);
     context.put("method", method);
     if (ope.returnType != null && ope.returnType.length() > 0) {
       context.put("returnType", camelize(ope.returnType));
@@ -49,9 +50,9 @@ public class Snippet {
       context.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
       context.put("hasParams", ope.hasParams);
       context.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+      context.put("hasRequestOptions", requestOptions != null);
 
       if (requestOptions != null) {
-        context.put("hasRequestOptions", true);
         Map<String, Object> requestOptionsContext = new HashMap<>();
         if (requestOptions.queryParameters != null) {
           Map<String, Object> queryParameters = new HashMap<>();
