@@ -1,0 +1,94 @@
+variants:
+  type: array
+  description: |
+    A/B test variants.
+
+    The first variant is your _control_ index, typically your production index.
+    All of the additionnal variants are indexes with changed settings that you want to test against the control.
+  items:
+    $ref: "#/variant"
+
+variant:
+  type: object
+  additionalProperties: false
+  properties:
+    description:
+      $ref: "../parameters.yml#/description"
+    estimatedSampleSize:
+      type: integer
+      description: |
+        Estimated number of searches required to achieve the desired statistical significance.
+
+        The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.
+      example: 0
+    filterEffects:
+      $ref: "../parameters.yml#/filterEffects"
+    index:
+      $ref: "../parameters.yml#/index"
+    trafficPercentage:
+      $ref: "../parameters.yml#/trafficPercentage"
+    metrics:
+      $ref: "#/metrics"
+  required:
+    - index
+    - description
+    - trafficPercentage
+    - metrics
+
+metrics:
+  type: array
+  description: All ABTest metrics that were defined during test creation
+  items:
+    $ref: "#/metric"
+
+metric:
+  type: object
+  properties:
+    name:
+      type: string
+    updatedAt:
+      type: string
+      description: Date and time when the metric was last updated, in RFC 3339 format.
+    value:
+      type: number
+      format: double
+    pvalue:
+      type: number
+      format: double
+    dimension:
+      type: string
+      description: Dimension defined during test creation
+    winsorizedValue:
+      type: number
+      format: double
+      description: |
+        Only present in case the metric is a revenue. 
+        It is the normalized value of it. 
+        It is tied to a per revenue-currency pair contrary to other 
+        global filter effects (such as outliers and empty search count).
+  required:
+    - name
+    - updatedAt
+    - value
+    - pvalue
+  example:
+    - name: addToCartCount
+      updatedAt: 2025-06-15T15:06:44.400601Z
+      value: 5
+      pvalue: 0.01
+    - name: clickThroughRate
+      updatedAt: 2025-05-15T17:52:15.644906Z
+      value: 0.20869847452125934
+      pvalue: 0.004
+    - name: revenue
+      dimension: USD
+      updatedAt": 2025-05-15T17:52:15.644906Z
+      value: 1200.50
+      pValue: 0.04
+      winsorizedValue: 1123.45
+    - name: revenue
+      dimension: EUR
+      updatedAt: 2025-05-15T17:52:15.644906Z
+      value: 999.66
+      pValue: 0.04
+      winsorizedValue: 888.44
