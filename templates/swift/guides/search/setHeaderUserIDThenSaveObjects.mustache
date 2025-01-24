@@ -11,6 +11,7 @@ func setHeaderUserIDThenSaveObjects() async throws {
     {{> snippets/init}}
 
     for playlist in playlists {
+      let playlistUserID = playlist.userID
       {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
     }
   } catch {

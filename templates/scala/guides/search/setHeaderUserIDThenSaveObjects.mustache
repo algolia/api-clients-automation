@@ -9,6 +9,7 @@ def setHeaderUserIDThenSaveObjects(): Future[Unit] = {
   {{> snippets/init}}
 
   playlists.foreach { playlist =>
+      val playlistUserID = playlist("userID").toString()
       Await.result(
         {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}},
         Duration(5, "sec")

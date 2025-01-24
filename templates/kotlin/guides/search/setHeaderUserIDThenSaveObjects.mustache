@@ -1,0 +1,11 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun setHeaderUserIDThenSaveObjects() {
+  {{> snippets/init}}
+
+  playlists.foreach { playlist ->
+      val playlistUserID = playlist["userID"].toString()
+      client.{{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+  }
+}

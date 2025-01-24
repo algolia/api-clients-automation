@@ -69,7 +69,7 @@
     },
     "requestOptions": {
       "headers": {
-        "X-Algolia-User-ID": "$var: playlist.userID"
+        "X-Algolia-User-ID": "$var: playlistUserID"
       }
     }
   },
