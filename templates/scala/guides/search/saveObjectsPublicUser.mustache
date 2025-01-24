@@ -6,9 +6,9 @@ import scala.concurrent.duration.Duration
 {{> snippets/import}}
 import algoliasearch.config.RequestOptions
 
-val playlists: Seq[Any] = Seq() // Your records
-
 def saveObjectsPublicUser(): Future[Unit] = {
+  val playlists: Seq[Any] = Seq() // Your records
+
   {{> snippets/init}}
 
   Await.result(

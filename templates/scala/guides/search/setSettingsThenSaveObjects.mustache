@@ -6,8 +6,6 @@ import scala.concurrent.duration.Duration
 {{> snippets/import}}
 import algoliasearch.search.IndexSettings
 
-val playlists: Seq[Map[String, Any]] = Seq()
-
 val getAppIDFor: String => String = _ => {
   "" // Implement your own logic here
 }
@@ -16,6 +14,8 @@ val getIndexingApiKeyFor: String => String = _ => {
 }
 
 def setSettingsThenSaveObjects(): Future[Unit] = {
+  val playlists: Seq[Map[String, Any]] = Seq() // Your records
+
   playlists.foreach { playlist =>
     // Fetch from your own data storage and with your own code
     // the associated application ID and API key for this user
