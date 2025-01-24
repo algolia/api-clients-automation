@@ -68,6 +68,18 @@
       }
     }
   },
+  "batchChunksWithUserIDPublic": {
+    "method": "batch",
+    "parameters": {
+      "indexName": "indexName",
+      "batchWriteParams": "$var: batchParams"
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "*"
+      }
+    }
+  },
   "saveObjectsPlaylistsWithRequestOptions": {
     "method": "saveObjects",
     "parameters": {

@@ -6,6 +6,8 @@ import Foundation
 import Core
 {{> snippets/import}}
 
+let playlists: [[String: AnyCodable]] = [] // Your records
+
 func saveObjectsPublicUser() async throws {
   do {
     {{> snippets/init}}

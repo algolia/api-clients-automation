@@ -8,7 +8,7 @@ val getAllAppIDConfigurations: () => Map[String, String] = () => {
   Map(/* A map of your MCM AppID/ApiKey pairs */)
 }
 
-val playlists: List[Any] = List(/* Your records */)
+val playlists: Seq[Any] = Seq(/* Your records */)
 
 def saveObjectsMCM(): Future[Unit] = {
   val configurations = getAllAppIDConfigurations()
