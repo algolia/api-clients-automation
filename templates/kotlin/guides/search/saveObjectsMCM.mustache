@@ -1,0 +1,16 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun saveObjectsMCM() {
+  val configurations = getAllAppIDConfigurations()
+
+  configurations.map { (appID, apiKey) ->
+    val client = SearchClient(appID, apiKey)
+
+    try {
+      client.{{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+    } catch (e: Exception) {
+      throw Exception("Error for appID $appID: ${e.message}")
+    }
+  }
+}

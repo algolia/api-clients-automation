@@ -6,7 +6,6 @@ import algoliasearch.config.RequestOptions
 
 def saveObjectsMCM(): Future[Unit] = {
   val configurations = getAllAppIDConfigurations()
-  val playlists = Seq(/* Your playlist objects here */)
 
   Future.sequence {
     configurations.map { case (appID, apiKey) =>
