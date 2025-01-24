@@ -6,7 +6,7 @@ import 'dart:io';
  void saveObjectsModified() async {
   {{> snippets/init}}
 
-  const path = '/tmp/records.json';
+  final path = '/tmp/records.json';
   final json = File(path).readAsStringSync();
   List<Map<String, dynamic>> products;
   try {
@@ -15,7 +15,7 @@ import 'dart:io';
     throw Exception('Failed to read file at $path: $e');
   }
 
-  var records = products.map((product) {
+  final records = products.map((product) {
     final reference = product['product_reference'].toString();
     final suffixes = [
       for (int i = 1; i <= reference.length; i++)
@@ -28,7 +28,7 @@ import 'dart:io';
     return updatedProduct;
   }).toList();
 
-  var batchParams = BatchWriteParams(
+  final batchParams = BatchWriteParams(
     requests: records
         .map((record) => BatchRequest(
           action: Action.addObject,

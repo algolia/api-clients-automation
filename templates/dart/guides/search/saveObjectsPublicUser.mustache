@@ -1,11 +1,11 @@
 {{> snippets/import}}
 
-var playlists = [/* Your records */];
+final playlists = [/* Your records */];
 
- void saveObjectsPublicUser() async {
+void saveObjectsPublicUser() async {
   {{> snippets/init}}
 
-  var batchParams = BatchWriteParams(
+  final batchParams = BatchWriteParams(
     requests: playlists
         .map((record) => BatchRequest(
           action: Action.addObject,

@@ -3,8 +3,8 @@
 void searchRecentlyPublishedBooks() async {
   {{> snippets/init}}
 
-  var dateTimestamp = DateTime.now().millisecondsSinceEpoch;
-  var searchParams = SearchParamsObject(
+  final dateTimestamp = DateTime.now().millisecondsSinceEpoch;
+  final searchParams = SearchParamsObject(
       query: "<YOUR_SEARCH_QUERY>",
       filters: "date_timestamp > $dateTimestamp"
   );

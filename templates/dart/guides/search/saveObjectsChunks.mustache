@@ -4,7 +4,7 @@ import 'dart:io';
 {{> snippets/import}}
 
 void saveObjectsChunks() async {
-  const path = '/tmp/records.json';
+  final path = '/tmp/records.json';
   final json = File(path).readAsStringSync();
   List<Map<String, dynamic>> records;
   try {
@@ -15,11 +15,11 @@ void saveObjectsChunks() async {
 
   {{> snippets/init}}
 
-  const chunkSize = 10000;
+  final chunkSize = 10000;
 
   for (var i = 0; i < records.length; i += chunkSize) {
-    var chunk = records.sublist(i, (i + chunkSize > records.length) ? records.length : i + chunkSize);
-    var batchParams = BatchWriteParams(
+    final chunk = records.sublist(i, (i + chunkSize > records.length) ? records.length : i + chunkSize);
+    final batchParams = BatchWriteParams(
       requests: chunk.map((record) =>
           BatchRequest(
             action: Action.addObject,

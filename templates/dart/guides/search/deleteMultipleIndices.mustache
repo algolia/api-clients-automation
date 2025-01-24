@@ -5,15 +5,15 @@ void deleteMultipleIndices() async {
   {{> snippets/init}}
 
   // List all indices
-  var indices = await {{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}};
+  final indices = await {{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}};
 
   // Primary indices don't have a `primary` key
-  var primaryIndices = indices.items.where((element) => element.primary == null).toList();
-  var replicaIndices = indices.items.where((element) => element.primary != null).toList();
+  final primaryIndices = indices.items.where((element) => element.primary == null).toList();
+  final replicaIndices = indices.items.where((element) => element.primary != null).toList();
 
   // Delete primary indices first
   if (primaryIndices.isNotEmpty) {
-      List<MultipleBatchRequest> requests = primaryIndices.map((element) =>
+      final List<MultipleBatchRequest> requests = primaryIndices.map((element) =>
           MultipleBatchRequest(
               action: Action.delete,
               indexName: element.name
@@ -25,7 +25,7 @@ void deleteMultipleIndices() async {
 
   // Now, delete replica indices
   if (replicaIndices.isNotEmpty) {
-      List<MultipleBatchRequest> requests = replicaIndices.map((element) =>
+      final List<MultipleBatchRequest> requests = replicaIndices.map((element) =>
           MultipleBatchRequest(
               action: Action.delete,
               indexName: element.name

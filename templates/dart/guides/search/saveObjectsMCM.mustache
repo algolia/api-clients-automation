@@ -7,15 +7,15 @@ List<Map<String, String>> getAllAppIDConfigurations() {
 List<Map> playlists = [/* Your records */];
 
 void saveObjectsMCM() async {
-  var configurations = getAllAppIDConfigurations();
+  final configurations = getAllAppIDConfigurations();
 
   for (var configuration in configurations) {
-    var appId = configuration['appID'] ?? "";
-    var apiKey = configuration['apiKey'] ?? "";
-    var client = SearchClient(appId: appId, apiKey: apiKey);
+    final appId = configuration['appID'] ?? "";
+    final apiKey = configuration['apiKey'] ?? "";
+    final client = SearchClient(appId: appId, apiKey: apiKey);
 
     try {
-      var batchParams = BatchWriteParams(
+      final batchParams = BatchWriteParams(
         requests: playlists
           .map((record) => BatchRequest(
           action: Action.addObject,

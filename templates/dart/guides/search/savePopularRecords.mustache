@@ -3,15 +3,15 @@
 void savePopularRecords() async {
   {{> snippets/init}}
 
-  List<Map<String, dynamic>> records = [];
+  final List<Map<String, dynamic>> records = [];
 
   BrowseResponse? browseResponse;
   do {
-    var browseParams = BrowseParamsObject(hitsPerPage: 1000, cursor: browseResponse?.cursor);
+    final browseParams = BrowseParamsObject(hitsPerPage: 1000, cursor: browseResponse?.cursor);
     browseResponse = await client.browse(
         indexName: "indexName", browseParams: browseParams
     );
-    for (var hit in browseResponse.hits) {
+    for (final hit in browseResponse.hits) {
       final isPopular = hit['nbFollowers'] > 1000;
       final updatedProduct = {
         ...hit,
@@ -21,7 +21,7 @@ void savePopularRecords() async {
     }
   } while (browseResponse.cursor != null);
 
-  var batchParams = BatchWriteParams(
+  final batchParams = BatchWriteParams(
     requests: records
         .map((record) => BatchRequest(
               action: Action.addObject,
