@@ -8,7 +8,7 @@ suspend fun setHeaderUserIDThenSaveObjects() {
 
   {{> snippets/init}}
 
-  playlists.foreach { playlist ->
+  playlists.forEach { playlist ->
       val playlistUserID = playlist["userID"].toString()
       client.{{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
   }
