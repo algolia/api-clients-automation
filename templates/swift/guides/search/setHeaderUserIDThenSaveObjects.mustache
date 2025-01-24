@@ -6,12 +6,14 @@ import Foundation
 import Core
 {{> snippets/import}}
 
+let playlists: [[String: AnyCodable]] = [/* Your records */]
+
 func setHeaderUserIDThenSaveObjects() async throws {
   do {
     {{> snippets/init}}
 
     for playlist in playlists {
-      let playlistUserID = playlist.userID
+      let playlistUserID = playlist["userID"]?.value as! String
       {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
     }
   } catch {

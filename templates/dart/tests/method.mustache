@@ -7,7 +7,7 @@ client.{{method}}(
   {{#requestOptions.headers}}
     headers: {
     {{#parametersWithDataType}}
-      '{{{key}}}' : '{{value}}',
+      '{{{key}}}' : {{> tests/param_value}},
     {{/parametersWithDataType}}
     },
   {{/requestOptions.headers}}
