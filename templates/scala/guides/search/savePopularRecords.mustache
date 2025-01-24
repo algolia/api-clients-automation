@@ -4,13 +4,19 @@ import scala.concurrent.ExecutionContext.Implicits.global
 {{> snippets/import}}
 import algoliasearch.search.{BrowseParamsObject, BrowseResponse}
 
+case class Record(
+  twitterHandle: String,
+  nbFollowers: Int,
+  isPopular: Boolean,
+)
+
 def savePopularRecords(): Future[Unit] = {
   {{> snippets/init}}
 
   var records: Seq[Record] = Seq.empty
 
   client
-    .browseObjects(indexName, BrowseParamsObject(), aggregator = (response: BrowseResponse) => {
+    .browseObjects("<YOUR_INDEX_NAME>", BrowseParamsObject(), aggregator = (response: BrowseResponse) => {
       records = records ++ response.hits.map { hit =>
         val props = hit.additionalProperties.getOrElse(List()).toMap
 
