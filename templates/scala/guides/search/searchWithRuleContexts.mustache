@@ -4,6 +4,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 {{> snippets/import}}
 import algoliasearch.search.SearchParamsObject
 
+val getPlatformTag: String = {
+  "" // Implement your logic here
+}
+
 def searchWithRuleContexts(): Future[Unit] = {
   {{> snippets/init}}
 

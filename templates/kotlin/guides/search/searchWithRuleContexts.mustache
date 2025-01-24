@@ -1,6 +1,10 @@
 {{> snippets/import}}
 import com.algolia.client.model.search.*
 
+val getPlatformTag: () -> String = {
+    "" // Implement your logic here
+}
+
 suspend fun searchWithRuleContexts() {
   {{> snippets/init}}
 
