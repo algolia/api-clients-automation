@@ -2786,5 +2786,77 @@
         }
       }
     }
+  },
+  {
+    "testName": "set_rendering_content",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "renderingContent": {
+          "facetOrdering": {
+            "facets": {
+              "order": [
+                "size",
+                "brand"
+              ]
+            },
+            "values": {
+              "brand": {
+                "order": [
+                  "uniqlo"
+                ],
+                "hide": [
+                  "muji"
+                ],
+                "sortRemainingBy": "count"
+              },
+              "size": {
+                "order": [
+                  "S",
+                  "M",
+                  "L"
+                ],
+                "sortRemainingBy": "hidden"
+              }
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "renderingContent": {
+          "facetOrdering": {
+            "facets": {
+              "order": [
+                "size",
+                "brand"
+              ]
+            },
+            "values": {
+              "brand": {
+                "order": [
+                  "uniqlo"
+                ],
+                "hide": [
+                  "muji"
+                ],
+                "sortRemainingBy": "count"
+              },
+              "size": {
+                "order": [
+                  "S",
+                  "M",
+                  "L"
+                ],
+                "sortRemainingBy": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
   }
 ]
