@@ -19,7 +19,7 @@ void main() {
         {{/hasRegionalHost}}
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => {{> method}},
+      call: (client) => {{> tests/method}},
       intercept: (request) {
         {{#request}}
         expectPath(request.path, '{{{path}}}');
