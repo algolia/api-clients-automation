@@ -6,6 +6,10 @@ import scala.concurrent.duration.Duration
 {{> snippets/import}}
 import algoliasearch.search.SearchParamsObject
 
+val getBuyerAccountId: () => String = () => {
+  "" // Implement your logic here
+}
+
 def searchWithRuleContextBuyer(): Future[Unit] = {
   {{> snippets/init}}
 
