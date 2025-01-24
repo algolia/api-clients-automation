@@ -6,6 +6,12 @@ import scala.concurrent.duration.Duration
 {{> snippets/import}}
 import algoliasearch.search.SearchParamsObject
 
+val labels: List[String] = List() // A list of labels
+
+val reduceLabelsToFilters: Seq[String] => SeqOfOptionalFilters = _ => {
+  SeqOfOptionalFilters(Seq()) // Implement your logic here
+}
+
 def searchWithOptionalFilters(): Future[Unit] = {
   {{> snippets/init}}
 

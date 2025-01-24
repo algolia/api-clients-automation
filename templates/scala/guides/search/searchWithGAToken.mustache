@@ -6,6 +6,10 @@ import scala.concurrent.duration.Duration
 {{> snippets/import}}
 import algoliasearch.search.SearchParamsObject
 
+val getGoogleAnalyticsUserIdFromBrowserCookie: String => String = _ => {
+  "" // Implement your logic here
+}
+
 def searchWithGAToken(): Future[Unit] = {
   {{> snippets/init}}
 

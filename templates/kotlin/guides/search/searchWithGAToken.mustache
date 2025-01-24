@@ -1,6 +1,10 @@
 {{> snippets/import}}
 import com.algolia.client.model.search.*
 
+val getGoogleAnalyticsUserIdFromBrowserCookie: (String) -> String = {
+  "" // Implement your logic here
+}
+
 suspend fun searchWithGAToken() {
   {{> snippets/init}}
 
@@ -9,7 +13,7 @@ suspend fun searchWithGAToken() {
 
   client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
 
-  val loggedInUser = Some("...")
+  val loggedInUser: String? = null
   searchParams = SearchParamsObject(query = "<YOUR_SEARCH_QUERY>", userToken = loggedInUser ?: userToken)
 
   client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
