@@ -10,7 +10,7 @@
     "method": "saveObjects",
     "parameters": {
       "indexName": "actors",
-      "objects": "$var: chunks"
+      "objects": "$var: chunk"
     }
   },
   "listIndicesSimple": {

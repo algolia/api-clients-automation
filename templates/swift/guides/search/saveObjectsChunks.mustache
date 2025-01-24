@@ -19,7 +19,7 @@ func saveObjectsChunks() async throws {
 
     for beginIndex in stride(from: 0, to: records.count, by: chunkSize) {
       let endIndex = min(beginIndex + chunkSize, records.count)
-      let chunks = Array(records[beginIndex..<endIndex])
+      let chunk = Array(records[beginIndex..<endIndex])
       {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}}
     }
   } catch {

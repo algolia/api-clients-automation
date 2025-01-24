@@ -23,7 +23,7 @@ def saveObjectsChunks(): Future[Unit] = {
 
   {{> snippets/init}}
 
-  records.grouped(10000).foreach { chunks =>
+  records.grouped(10000).foreach { chunk =>
     try {
       Await.result(
         {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}},
