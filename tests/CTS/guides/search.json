@@ -28,6 +28,13 @@
       "requests": "$var: requests"
     }
   },
+  "batchChunks": {
+    "method": "batch",
+    "parameters": {
+      "indexName": "chunked_index",
+      "batchWriteParams": "$var: batchParams"
+    }
+  },
   "searchWithSearchParams": {
     "method": "searchSingleIndex",
     "parameters": {
