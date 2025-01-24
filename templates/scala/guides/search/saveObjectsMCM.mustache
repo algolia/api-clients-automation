@@ -4,6 +4,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 {{> snippets/import}}
 import algoliasearch.config.RequestOptions
 
+val getAllAppIDConfigurations: () => Map[String, String] = () => {
+  Map(/* A map of your MCM AppID/ApiKey pairs */)
+}
+
+val playlists: List[Any] = List(/* Your records */)
+
 def saveObjectsMCM(): Future[Unit] = {
   val configurations = getAllAppIDConfigurations()
 

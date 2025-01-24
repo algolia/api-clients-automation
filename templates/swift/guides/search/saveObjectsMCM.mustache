@@ -6,6 +6,12 @@ import Foundation
 import Core
 {{> snippets/import}}
 
+let getAllAppIDConfigurations: () -> [(String, String)] = {
+  return [/* A list of your MCM AppID/ApiKey pairs */]
+}
+
+let playlists: [[String: AnyCodable]] = [/* Your records */]
+
 func saveObjectsMCM() async throws {
     // Fetch from your own data storage and with your own code
     // the list of application IDs and API keys to target each cluster
