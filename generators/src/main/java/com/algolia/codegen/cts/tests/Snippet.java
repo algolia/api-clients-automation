@@ -38,7 +38,6 @@ public class Snippet {
   }
 
   public void addMethodCall(Map<String, Object> context, ParametersWithDataType paramsType, CodegenOperation ope) throws CTSException {
-    System.out.println(this);
     context.put("method", method);
     if (ope.returnType != null && ope.returnType.length() > 0) {
       context.put("returnType", camelize(ope.returnType));
