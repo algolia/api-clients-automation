@@ -1,0 +1,20 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun setSettingsThenSaveObjects() {
+  playlists.forEach { playlist ->
+    // Fetch from your own data storage and with your own code
+    // the associated application ID and API key for this user
+    val appID = getAppIDFor(playlist["user"].toString());
+    val apiKey = getIndexingApiKeyFor(playlist["user"].toString());
+
+    val client = SearchClient(appID, apiKey)
+    val settings = IndexSettings(
+      attributesForFaceting = listOf("filterOnly(user)")
+    )
+
+    client.{{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+
+    client.{{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+  }
+}
