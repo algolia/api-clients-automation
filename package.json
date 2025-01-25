@@ -41,7 +41,7 @@
     "lint-staged": "15.4.2",
     "oxlint": "0.15.6",
     "prettier": "3.4.2",
-    "prettier-plugin-java": "2.6.6",
+    "prettier-plugin-java": "2.6.7",
     "prettier-plugin-organize-imports": "4.1.0",
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.7.3"
