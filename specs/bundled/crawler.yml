@@ -2559,25 +2559,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:
