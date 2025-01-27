@@ -33,7 +33,7 @@ export function isPairWithValue(node: AST.YAMLNode | null, value: string): node 
   return isScalar(node.value) && node.value.value === value;
 }
 
-export function isNullable(node: AST.YAMLNode | null): boolean {
+export function isNullable(node: AST.YAMLNode | null): node is AST.YAMLSequence {
   return (
     isSequence(node) &&
     node.entries.some(

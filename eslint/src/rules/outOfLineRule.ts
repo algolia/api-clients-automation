@@ -1,7 +1,7 @@
 import type { RuleModule } from 'eslint-plugin-yml/lib/types.js';
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isNullable, isPairWithKey } from '../utils.js';
+import { isBlockScalar, isMapping, isNullable, isPairWithKey, isScalar } from '../utils.js';
 
 export function createOutOfLineRule({
   property,
@@ -24,6 +24,8 @@ export function createOutOfLineRule({
       },
       messages: {
         [messageId]: message,
+        nullDescription: 'description must not be present for `null` type',
+        descriptionLevel: 'description must not be next to the property',
       },
       type: 'layout',
       schema: [],
@@ -38,6 +40,29 @@ export function createOutOfLineRule({
           if (!isPairWithKey(node, property)) {
             return;
           }
+
+          // the 'null' must not have a description otherwise it will generate a model for it
+          if (
+            property === 'oneOf' &&
+            isNullable(node.value) &&
+            node.value.entries.some(
+              (entry) =>
+                isMapping(entry) &&
+                isPairWithKey(entry.pairs[0], 'type') &&
+                isScalar(entry.pairs[0].value) &&
+                !isBlockScalar(entry.pairs[0].value) &&
+                entry.pairs[0].value.raw === "'null'" &&
+                entry.pairs.length > 1,
+            )
+          ) {
+            context.report({
+              node: node.value,
+              messageId: 'nullDescription',
+            });
+
+            return;
+          }
+
           // parent is mapping, and parent is real parent that must be to the far left
           if (node.parent.parent.loc.start.column === 0) {
             return;
