@@ -2429,6 +2429,19 @@ describe('searchForFacetValues', () => {
     expect(req.data).toEqual({ params: "query=foo&facetFilters=['bar']", facetQuery: 'foo', maxFacetHits: 42 });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('facetName and facetQuery', async () => {
+    const req = (await client.searchForFacetValues({
+      indexName: 'indexName',
+      facetName: 'author',
+      searchForFacetValuesRequest: { facetQuery: 'stephen king' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/facets/author/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facetQuery: 'stephen king' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('searchRules', () => {
@@ -2652,6 +2665,42 @@ describe('searchSingleIndex', () => {
       filters: '(author:"Stephen King" OR genre:"Horror")',
       facetFilters: ['publisher:Penguin'],
     });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facet author genre', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { facets: ['author', 'genre'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facets: ['author', 'genre'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facet wildcard', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { facets: ['*'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facets: ['*'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('maxValuesPerFacet', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { maxValuesPerFacet: 1000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ maxValuesPerFacet: 1000 });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -3447,6 +3496,18 @@ describe('setSettings', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ replicas: ['products_price_desc'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('create virtual replica index', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { replicas: ['virtual(products_price_desc)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ replicas: ['virtual(products_price_desc)'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 

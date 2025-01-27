@@ -3578,6 +3578,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("facetName and facetQuery")
+  void searchForFacetValuesTest2() {
+    assertDoesNotThrow(() -> {
+      client.searchForFacetValues("indexName", "author", new SearchForFacetValuesRequest().setFacetQuery("stephen king"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/facets/author/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facetQuery\":\"stephen king\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("searchRules")
   void searchRulesTest() {
     assertDoesNotThrow(() -> {
@@ -3860,8 +3872,44 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("aroundLatLng")
+  @DisplayName("facet author genre")
   void searchSingleIndexTest16() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFacets(Arrays.asList("author", "genre")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facets\":[\"author\",\"genre\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("facet wildcard")
+  void searchSingleIndexTest17() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFacets(Arrays.asList("*")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facets\":[\"*\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("maxValuesPerFacet")
+  void searchSingleIndexTest18() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setMaxValuesPerFacet(1000), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"maxValuesPerFacet\":1000}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("aroundLatLng")
+  void searchSingleIndexTest19() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setAroundLatLng("40.71, -74.01"), Hit.class);
     });
@@ -3873,7 +3921,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("aroundLatLngViaIP")
-  void searchSingleIndexTest17() {
+  void searchSingleIndexTest20() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setAroundLatLngViaIP(true), Hit.class);
     });
@@ -3885,7 +3933,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("aroundRadius")
-  void searchSingleIndexTest18() {
+  void searchSingleIndexTest21() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -3903,7 +3951,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("insideBoundingBox")
-  void searchSingleIndexTest19() {
+  void searchSingleIndexTest22() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -3928,7 +3976,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("insidePolygon")
-  void searchSingleIndexTest20() {
+  void searchSingleIndexTest23() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -3968,7 +4016,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("insidePolygon")
-  void searchSingleIndexTest21() {
+  void searchSingleIndexTest24() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -4008,7 +4056,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("optionalFilters")
-  void searchSingleIndexTest22() {
+  void searchSingleIndexTest25() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -4026,7 +4074,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("optionalFiltersMany")
-  void searchSingleIndexTest23() {
+  void searchSingleIndexTest26() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -4057,7 +4105,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("optionalFiltersSimple")
-  void searchSingleIndexTest24() {
+  void searchSingleIndexTest27() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -4078,7 +4126,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("restrictSearchableAttributes")
-  void searchSingleIndexTest25() {
+  void searchSingleIndexTest28() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setRestrictSearchableAttributes(Arrays.asList("title_fr")), Hit.class);
     });
@@ -4091,7 +4139,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("getRankingInfo")
-  void searchSingleIndexTest26() {
+  void searchSingleIndexTest29() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setGetRankingInfo(true), Hit.class);
     });
@@ -4103,7 +4151,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("clickAnalytics")
-  void searchSingleIndexTest27() {
+  void searchSingleIndexTest30() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setClickAnalytics(true), Hit.class);
     });
@@ -4115,7 +4163,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("clickAnalyticsUserToken")
-  void searchSingleIndexTest28() {
+  void searchSingleIndexTest31() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setClickAnalytics(true).setUserToken("user-1"), Hit.class);
     });
@@ -4128,7 +4176,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("enablePersonalization")
-  void searchSingleIndexTest29() {
+  void searchSingleIndexTest32() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setEnablePersonalization(true).setUserToken("user-1"), Hit.class);
     });
@@ -4142,7 +4190,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("userToken")
-  void searchSingleIndexTest30() {
+  void searchSingleIndexTest33() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setUserToken("user-1"), Hit.class);
     });
@@ -4154,7 +4202,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("analyticsTag")
-  void searchSingleIndexTest31() {
+  void searchSingleIndexTest34() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setAnalyticsTags(Arrays.asList("YOUR_ANALYTICS_TAG")), Hit.class);
     });
@@ -4166,7 +4214,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("facetFiltersUsers")
-  void searchSingleIndexTest32() {
+  void searchSingleIndexTest35() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -4185,7 +4233,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("buildTheQuery")
-  void searchSingleIndexTest33() {
+  void searchSingleIndexTest36() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
@@ -4991,8 +5039,21 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("unlink replica index")
+  @DisplayName("create virtual replica index")
   void setSettingsTest37() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setReplicas(Arrays.asList("virtual(products_price_desc)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"replicas\":[\"virtual(products_price_desc)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("unlink replica index")
+  void setSettingsTest38() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setReplicas(Arrays.asList("")));
     });
@@ -5004,7 +5065,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("forwardToReplicas")
-  void setSettingsTest38() {
+  void setSettingsTest39() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("name", "description")), true);
     });
@@ -5033,7 +5094,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("maxValuesPerFacet")
-  void setSettingsTest39() {
+  void setSettingsTest40() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMaxValuesPerFacet(1000));
     });
@@ -5045,7 +5106,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("maxFacetHits")
-  void setSettingsTest40() {
+  void setSettingsTest41() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMaxFacetHits(1000));
     });
@@ -5057,7 +5118,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("attributesForFaceting complex")
-  void setSettingsTest41() {
+  void setSettingsTest42() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "<YOUR_INDEX_NAME>",
@@ -5078,7 +5139,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("ranking closest dates")
-  void setSettingsTest42() {
+  void setSettingsTest43() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -5100,7 +5161,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributes item variation")
-  void setSettingsTest43() {
+  void setSettingsTest44() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("design", "type", "color")));
     });
@@ -5109,29 +5170,6 @@ class SearchClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"searchableAttributes\":[\"design\",\"type\",\"color\"]}", req.body, JSONCompareMode.STRICT)
-    );
-  }
-
-  @Test
-  @DisplayName("searchableAttributes around location")
-  void setSettingsTest44() {
-    assertDoesNotThrow(() -> {
-      client.setSettings(
-        "theIndexName",
-        new IndexSettings()
-          .setSearchableAttributes(Arrays.asList("name", "country", "code", "iata_code"))
-          .setCustomRanking(Arrays.asList("desc(links_count)"))
-      );
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/settings", req.path);
-    assertEquals("PUT", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}",
-        req.body,
-        JSONCompareMode.STRICT
-      )
     );
   }
 
@@ -5159,8 +5197,31 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("disableTypoToleranceOnAttributes")
+  @DisplayName("searchableAttributes around location")
   void setSettingsTest46() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setSearchableAttributes(Arrays.asList("name", "country", "code", "iata_code"))
+          .setCustomRanking(Arrays.asList("desc(links_count)"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("disableTypoToleranceOnAttributes")
+  void setSettingsTest47() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number")));
     });
@@ -5174,7 +5235,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("everything")
-  void setSettingsTest47() {
+  void setSettingsTest48() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -5294,7 +5355,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesWithCustomRankingsAndAttributesForFaceting")
-  void setSettingsTest48() {
+  void setSettingsTest49() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -5318,7 +5379,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesProductReferenceSuffixes")
-  void setSettingsTest49() {
+  void setSettingsTest50() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -5339,7 +5400,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("queryLanguageAndIgnorePlurals")
-  void setSettingsTest50() {
+  void setSettingsTest51() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -5356,7 +5417,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesInMovies")
-  void setSettingsTest51() {
+  void setSettingsTest52() {
     assertDoesNotThrow(() -> {
       client.setSettings("movies", new IndexSettings().setSearchableAttributes(Arrays.asList("title_eng", "title_fr", "title_es")));
     });
@@ -5370,7 +5431,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disablePrefixOnAttributes")
-  void setSettingsTest52() {
+  void setSettingsTest53() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("serial_number")));
     });
@@ -5384,7 +5445,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disableTypoToleranceOnAttributes")
-  void setSettingsTest53() {
+  void setSettingsTest54() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number")));
     });
@@ -5398,7 +5459,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesSimpleExample")
-  void setSettingsTest54() {
+  void setSettingsTest55() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("serial_number")));
     });
@@ -5410,7 +5471,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesSimpleExampleAlt")
-  void setSettingsTest55() {
+  void setSettingsTest56() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",

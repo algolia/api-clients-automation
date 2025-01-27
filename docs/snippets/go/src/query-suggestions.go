@@ -49,7 +49,7 @@ func SnippetForCustomDeleteOfSuggestions() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customDelete default
+	// >SEPARATOR customDelete allow del method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
 	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
@@ -70,6 +70,34 @@ func SnippetForCustomDeleteOfSuggestions() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomDeleteOfSuggestions1() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with all parameters
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomGetOfSuggestions() {
 	/*
 	   Snippet for the customGet method.
@@ -77,7 +105,7 @@ func SnippetForCustomGetOfSuggestions() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customGet default
+	// >SEPARATOR customGet allow get method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
 	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
@@ -98,6 +126,63 @@ func SnippetForCustomGetOfSuggestions() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomGetOfSuggestions1() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with all parameters
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfSuggestions2() {
+	/*
+	   Snippet for the customGet method.
+
+	   requestOptions should be escaped too
+	*/
+
+	// >SEPARATOR customGet requestOptions should be escaped too
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), suggestions.WithQueryParam("query", "parameters with space"), suggestions.WithQueryParam("and an array",
+		[]string{"array", "with spaces"}), suggestions.WithHeaderParam("x-header-1", "spaces are left alone"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPostOfSuggestions() {
 	/*
 	   Snippet for the customPost method.
@@ -105,7 +190,7 @@ func SnippetForCustomPostOfSuggestions() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPost default
+	// >SEPARATOR customPost allow post method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
 	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
@@ -126,6 +211,289 @@ func SnippetForCustomPostOfSuggestions() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomPostOfSuggestions1() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with all parameters
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions2() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default query parameters
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default query parameters
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("query", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions3() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges query parameters with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges query parameters with default ones
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("query2", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions4() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default headers
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default headers
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions5() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges headers with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges headers with default ones
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions6() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts booleans
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("isItWorking", true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions7() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts integers
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam", 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions8() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of string
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of string
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam",
+		[]string{"b and c", "d"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions9() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam",
+		[]bool{true, true, false}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfSuggestions10() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam",
+		[]int32{1, 2}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPutOfSuggestions() {
 	/*
 	   Snippet for the customPut method.
@@ -133,7 +501,7 @@ func SnippetForCustomPutOfSuggestions() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPut default
+	// >SEPARATOR customPut allow put method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
 	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
@@ -144,6 +512,34 @@ func SnippetForCustomPutOfSuggestions() {
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
 		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPutOfSuggestions1() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with all parameters
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

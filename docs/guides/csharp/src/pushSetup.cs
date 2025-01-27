@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Algolia.Search.Clients;
+using Algolia.Search.Http;
 using Algolia.Search.Models.Ingestion;
 using static Algolia.Search.Models.Ingestion.PushTaskRecords;
 using Action = Algolia.Search.Models.Ingestion.Action;

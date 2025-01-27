@@ -4217,6 +4217,30 @@ void main() {
     ),
   );
 
+  // searchForFacetValues
+  test(
+    'facetName and facetQuery',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchForFacetValues(
+        indexName: "indexName",
+        facetName: "author",
+        searchForFacetValuesRequest: SearchForFacetValuesRequest(
+          facetQuery: "stephen king",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/facets/author/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"facetQuery":"stephen king"}""");
+      },
+    ),
+  );
+
   // searchRules
   test(
     'searchRules',
@@ -4628,6 +4652,80 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"filters":"(author:\\"Stephen King\\" OR genre:\\"Horror\\")","facetFilters":["publisher:Penguin"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'facet author genre',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          facets: [
+            "author",
+            "genre",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"facets":["author","genre"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'facet wildcard',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          facets: [
+            "*",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"facets":["*"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'maxValuesPerFacet',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          maxValuesPerFacet: 1000,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"maxValuesPerFacet":1000}""");
       },
     ),
   );
@@ -6229,6 +6327,32 @@ void main() {
         expectPath(request.path, '/1/indexes/theIndexName/settings');
         expect(request.method, 'put');
         expectBody(request.body, """{"replicas":["products_price_desc"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'create virtual replica index',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          replicas: [
+            "virtual(products_price_desc)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"replicas":["virtual(products_price_desc)"]}""");
       },
     ),
   );

@@ -2,8 +2,9 @@ package com.algolia.methods.snippets;
 
 // >IMPORT
 import com.algolia.api.IngestionClient;
-import com.algolia.model.ingestion.*;
+import com.algolia.config.*;
 // IMPORT<
+import com.algolia.model.ingestion.*;
 import java.util.*;
 
 class SnippetIngestionClient {
@@ -12,7 +13,7 @@ class SnippetIngestionClient {
   //
   // createAuthenticationOAuth
   void snippetForCreateAuthentication() throws Exception {
-    // >SEPARATOR createAuthentication default
+    // >SEPARATOR createAuthentication createAuthenticationOAuth
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -27,11 +28,30 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the createAuthentication method.
+  //
+  // createAuthenticationAlgolia
+  void snippetForCreateAuthentication1() throws Exception {
+    // >SEPARATOR createAuthentication createAuthenticationAlgolia
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createAuthentication(
+      new AuthenticationCreate()
+        .setType(AuthenticationType.ALGOLIA)
+        .setName("authName")
+        .setInput(new AuthAlgolia().setAppID("ALGOLIA_APPLICATION_ID").setApiKey("ALGOLIA_API_KEY"))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the createDestination method.
   //
   // createDestination
   void snippetForCreateDestination() throws Exception {
-    // >SEPARATOR createDestination default
+    // >SEPARATOR createDestination createDestination
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -47,11 +67,31 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the createDestination method.
+  //
+  // with transformationIDs
+  void snippetForCreateDestination1() throws Exception {
+    // >SEPARATOR createDestination with transformationIDs
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createDestination(
+      new DestinationCreate()
+        .setType(DestinationType.SEARCH)
+        .setName("destinationName")
+        .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
+        .setTransformationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the createSource method.
   //
   // createSource
   void snippetForCreateSource() throws Exception {
-    // >SEPARATOR createSource default
+    // >SEPARATOR createSource createSource
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -73,11 +113,25 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the createSource method.
+  //
+  // push
+  void snippetForCreateSource1() throws Exception {
+    // >SEPARATOR createSource push
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createSource(new SourceCreate().setType(SourceType.PUSH).setName("pushezpourentrer"));
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the createTask method.
   //
   // task without cron
   void snippetForCreateTask() throws Exception {
-    // >SEPARATOR createTask default
+    // >SEPARATOR createTask task without cron
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -87,11 +141,57 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the createTask method.
+  //
+  // task with cron
+  void snippetForCreateTask1() throws Exception {
+    // >SEPARATOR createTask task with cron
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createTask(
+      new TaskCreate()
+        .setSourceID("search")
+        .setDestinationID("destinationName")
+        .setCron("* * * * *")
+        .setAction(ActionType.REPLACE)
+        .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))
+        .setPolicies(new Policies().setCriticalThreshold(8))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the createTask method.
+  //
+  // task shopify
+  void snippetForCreateTask2() throws Exception {
+    // >SEPARATOR createTask task shopify
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createTask(
+      new TaskCreate()
+        .setSourceID("search")
+        .setDestinationID("destinationName")
+        .setCron("* * * * *")
+        .setAction(ActionType.REPLACE)
+        .setInput(
+          new DockerStreamsInput()
+            .setStreams(Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the createTaskV1 method.
   //
   // createTaskOnDemand
   void snippetForCreateTaskV1() throws Exception {
-    // >SEPARATOR createTaskV1 default
+    // >SEPARATOR createTaskV1 createTaskOnDemand
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -102,6 +202,70 @@ class SnippetIngestionClient {
         .setDestinationID("destinationName")
         .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
         .setAction(ActionType.REPLACE)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the createTaskV1 method.
+  //
+  // createTaskSchedule
+  void snippetForCreateTaskV11() throws Exception {
+    // >SEPARATOR createTaskV1 createTaskSchedule
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createTaskV1(
+      new TaskCreateV1()
+        .setSourceID("search")
+        .setDestinationID("destinationName")
+        .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.SCHEDULE).setCron("* * * * *"))
+        .setAction(ActionType.REPLACE)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the createTaskV1 method.
+  //
+  // createTaskSubscription
+  void snippetForCreateTaskV12() throws Exception {
+    // >SEPARATOR createTaskV1 createTaskSubscription
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createTaskV1(
+      new TaskCreateV1()
+        .setSourceID("search")
+        .setDestinationID("destinationName")
+        .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+        .setAction(ActionType.REPLACE)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the createTaskV1 method.
+  //
+  // task shopify
+  void snippetForCreateTaskV13() throws Exception {
+    // >SEPARATOR createTaskV1 task shopify
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.createTaskV1(
+      new TaskCreateV1()
+        .setSourceID("search")
+        .setDestinationID("destinationName")
+        .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+        .setAction(ActionType.REPLACE)
+        .setInput(
+          new DockerStreamsInput()
+            .setStreams(Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+        )
     );
     // >LOG
     // SEPARATOR<
@@ -125,7 +289,7 @@ class SnippetIngestionClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() throws Exception {
-    // >SEPARATOR customDelete default
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -135,11 +299,32 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the customDelete method.
+  //
+  // allow del method for a custom path with all parameters
+  void snippetForCustomDelete1() throws Exception {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customDelete(
+      "test/all",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the customGet method.
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() throws Exception {
-    // >SEPARATOR customGet default
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -149,11 +334,57 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the customGet method.
+  //
+  // allow get method for a custom path with all parameters
+  void snippetForCustomGet1() throws Exception {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customGet(
+      "test/all",
+      new HashMap() {
+        {
+          put("query", "parameters with space");
+        }
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customGet method.
+  //
+  // requestOptions should be escaped too
+  void snippetForCustomGet2() throws Exception {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customGet(
+      "test/all",
+      new HashMap() {
+        {
+          put("query", "to be overriden");
+        }
+      },
+      new RequestOptions()
+        .addExtraQueryParameters("query", "parameters with space")
+        .addExtraQueryParameters("and an array", Arrays.asList("array", "with spaces"))
+        .addExtraHeader("x-header-1", "spaces are left alone")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the customPost method.
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() throws Exception {
-    // >SEPARATOR customPost default
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -163,16 +394,311 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the customPost method.
+  //
+  // allow post method for a custom path with all parameters
+  void snippetForCustomPost1() throws Exception {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/all",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("body", "parameters");
+        }
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions can override default query parameters
+  void snippetForCustomPost2() throws Exception {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions merges query parameters with default ones
+  void snippetForCustomPost3() throws Exception {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions can override default headers
+  void snippetForCustomPost4() throws Exception {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions merges headers with default ones
+  void snippetForCustomPost5() throws Exception {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions queryParameters accepts booleans
+  void snippetForCustomPost6() throws Exception {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraQueryParameters("isItWorking", true)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions queryParameters accepts integers
+  void snippetForCustomPost7() throws Exception {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraQueryParameters("myParam", 2)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions queryParameters accepts list of string
+  void snippetForCustomPost8() throws Exception {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions queryParameters accepts list of booleans
+  void snippetForCustomPost9() throws Exception {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPost method.
+  //
+  // requestOptions queryParameters accepts list of integers
+  void snippetForCustomPost10() throws Exception {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPost(
+      "test/requestOptions",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("facet", "filters");
+        }
+      },
+      new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the customPut method.
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() throws Exception {
-    // >SEPARATOR customPut default
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the customPut method.
+  //
+  // allow put method for a custom path with all parameters
+  void snippetForCustomPut1() throws Exception {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.customPut(
+      "test/all",
+      new HashMap() {
+        {
+          put("query", "parameters");
+        }
+      },
+      new HashMap() {
+        {
+          put("body", "parameters");
+        }
+      }
+    );
     // >LOG
     // SEPARATOR<
   }
@@ -433,12 +959,33 @@ class SnippetIngestionClient {
   //
   // getAuthentications
   void snippetForListAuthentications() throws Exception {
-    // >SEPARATOR listAuthentications default
+    // >SEPARATOR listAuthentications getAuthentications
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.listAuthentications();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the listAuthentications method.
+  //
+  // getAuthentications with query params
+  void snippetForListAuthentications1() throws Exception {
+    // >SEPARATOR listAuthentications getAuthentications with query params
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.listAuthentications(
+      2,
+      1,
+      Arrays.asList(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
+      Arrays.asList(PlatformNone.NONE),
+      AuthenticationSortKeys.CREATED_AT,
+      OrderKeys.ASC
+    );
     // >LOG
     // SEPARATOR<
   }
@@ -545,7 +1092,7 @@ class SnippetIngestionClient {
   //
   // pushTask
   void snippetForPushTask() throws Exception {
-    // >SEPARATOR pushTask default
+    // >SEPARATOR pushTask pushTask
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -560,6 +1107,31 @@ class SnippetIngestionClient {
             new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
           )
         )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the pushTask method.
+  //
+  // allows for watch query parameter
+  void snippetForPushTask1() throws Exception {
+    // >SEPARATOR pushTask allows for watch query parameter
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.pushTask(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new PushTaskPayload()
+        .setAction(Action.ADD_OBJECT)
+        .setRecords(
+          Arrays.asList(
+            new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+            new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+          )
+        ),
+      true
     );
     // >LOG
     // SEPARATOR<
@@ -764,7 +1336,7 @@ class SnippetIngestionClient {
   //
   // tryTransformation
   void snippetForTryTransformation() throws Exception {
-    // >SEPARATOR tryTransformation default
+    // >SEPARATOR tryTransformation tryTransformation
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -784,11 +1356,43 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the tryTransformation method.
+  //
+  // with authentications
+  void snippetForTryTransformation1() throws Exception {
+    // >SEPARATOR tryTransformation with authentications
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.tryTransformation(
+      new TransformationTry()
+        .setCode("foo")
+        .setSampleRecord(
+          new HashMap() {
+            {
+              put("bar", "baz");
+            }
+          }
+        )
+        .setAuthentications(
+          Arrays.asList(
+            new AuthenticationCreate()
+              .setType(AuthenticationType.OAUTH)
+              .setName("authName")
+              .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+          )
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the tryTransformationBeforeUpdate method.
   //
   // tryTransformationBeforeUpdate
   void snippetForTryTransformationBeforeUpdate() throws Exception {
-    // >SEPARATOR tryTransformationBeforeUpdate default
+    // >SEPARATOR tryTransformationBeforeUpdate tryTransformationBeforeUpdate
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -803,6 +1407,39 @@ class SnippetIngestionClient {
               put("bar", "baz");
             }
           }
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the tryTransformationBeforeUpdate method.
+  //
+  // existing with authentications
+  void snippetForTryTransformationBeforeUpdate1() throws Exception {
+    // >SEPARATOR tryTransformationBeforeUpdate existing with authentications
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.tryTransformationBeforeUpdate(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationTry()
+        .setCode("foo")
+        .setSampleRecord(
+          new HashMap() {
+            {
+              put("bar", "baz");
+            }
+          }
+        )
+        .setAuthentications(
+          Arrays.asList(
+            new AuthenticationCreate()
+              .setType(AuthenticationType.OAUTH)
+              .setName("authName")
+              .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+          )
         )
     );
     // >LOG

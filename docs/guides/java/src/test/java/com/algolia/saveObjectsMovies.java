@@ -1,4 +1,5 @@
 import com.algolia.api.SearchClient;
+import com.algolia.config.*;
 import com.algolia.model.search.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;

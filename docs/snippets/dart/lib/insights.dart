@@ -7,7 +7,7 @@ import 'package:algolia_client_insights/algolia_client_insights.dart';
 //
 // allow del method for a custom path with minimal parameters
 void snippetForcustomDelete() async {
-  // >SEPARATOR customDelete default
+  // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   // Initialize the client
   final client = InsightsClient(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -22,11 +22,33 @@ void snippetForcustomDelete() async {
   // SEPARATOR<
 }
 
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with all parameters
+void snippetForcustomDelete1() async {
+  // >SEPARATOR customDelete allow del method for a custom path with all parameters
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customDelete(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 void snippetForcustomGet() async {
-  // >SEPARATOR customGet default
+  // >SEPARATOR customGet allow get method for a custom path with minimal parameters
   // Initialize the client
   final client = InsightsClient(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -41,11 +63,67 @@ void snippetForcustomGet() async {
   // SEPARATOR<
 }
 
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with all parameters
+void snippetForcustomGet1() async {
+  // >SEPARATOR customGet allow get method for a custom path with all parameters
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "parameters with space",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// requestOptions should be escaped too
+void snippetForcustomGet2() async {
+  // >SEPARATOR customGet requestOptions should be escaped too
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "to be overriden",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-header-1': 'spaces are left alone',
+      },
+      urlParameters: {
+        'query': "parameters with space",
+        'and an array': [
+          "array",
+          "with spaces",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 void snippetForcustomPost() async {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   final client = InsightsClient(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -60,11 +138,316 @@ void snippetForcustomPost() async {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+void snippetForcustomPost1() async {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+void snippetForcustomPost2() async {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+void snippetForcustomPost3() async {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query2': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+void snippetForcustomPost4() async {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+void snippetForcustomPost5() async {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+void snippetForcustomPost6() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'isItWorking': true,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+void snippetForcustomPost7() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': 2,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+void snippetForcustomPost8() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          "b and c",
+          "d",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+void snippetForcustomPost9() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          true,
+          true,
+          false,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+void snippetForcustomPost10() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          1,
+          2,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 void snippetForcustomPut() async {
-  // >SEPARATOR customPut default
+  // >SEPARATOR customPut allow put method for a custom path with minimal parameters
   // Initialize the client
   final client = InsightsClient(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -74,6 +457,31 @@ void snippetForcustomPut() async {
   // Call the API
   final response = await client.customPut(
     path: "test/minimal",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with all parameters
+void snippetForcustomPut1() async {
+  // >SEPARATOR customPut allow put method for a custom path with all parameters
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.customPut(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
   );
   // >LOG
   // SEPARATOR<
@@ -102,7 +510,7 @@ void snippetFordeleteUserToken() async {
 //
 // pushEvents
 void snippetForpushEvents() async {
-  // >SEPARATOR pushEvents default
+  // >SEPARATOR pushEvents pushEvents
   // Initialize the client
   final client = InsightsClient(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -129,6 +537,171 @@ void snippetForpushEvents() async {
             7,
             6,
           ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the pushEvents method.
+//
+// Many events type
+void snippetForpushEvents1() async {
+  // >SEPARATOR pushEvents Many events type
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.pushEvents(
+    insightsEvents: InsightsEvents(
+      events: [
+        ConvertedObjectIDsAfterSearch(
+          eventType: ConversionEvent.fromJson("conversion"),
+          eventName: "Product Purchased",
+          index: "products",
+          userToken: "user-123456",
+          authenticatedUserToken: "user-123456",
+          timestamp: 1737676800000,
+          objectIDs: [
+            "9780545139700",
+            "9780439784542",
+          ],
+          queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+        ),
+        ViewedObjectIDs(
+          eventType: ViewEvent.fromJson("view"),
+          eventName: "Product Detail Page Viewed",
+          index: "products",
+          userToken: "user-123456",
+          authenticatedUserToken: "user-123456",
+          timestamp: 1737676800000,
+          objectIDs: [
+            "9780545139700",
+            "9780439784542",
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the pushEvents method.
+//
+// ConvertedObjectIDsAfterSearch
+void snippetForpushEvents2() async {
+  // >SEPARATOR pushEvents ConvertedObjectIDsAfterSearch
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.pushEvents(
+    insightsEvents: InsightsEvents(
+      events: [
+        ConvertedObjectIDsAfterSearch(
+          eventType: ConversionEvent.fromJson("conversion"),
+          eventName: "Product Purchased",
+          index: "products",
+          userToken: "user-123456",
+          authenticatedUserToken: "user-123456",
+          timestamp: 1641290601962,
+          objectIDs: [
+            "9780545139700",
+            "9780439784542",
+          ],
+          queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the pushEvents method.
+//
+// ViewedObjectIDs
+void snippetForpushEvents3() async {
+  // >SEPARATOR pushEvents ViewedObjectIDs
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.pushEvents(
+    insightsEvents: InsightsEvents(
+      events: [
+        ViewedObjectIDs(
+          eventType: ViewEvent.fromJson("view"),
+          eventName: "Product Detail Page Viewed",
+          index: "products",
+          userToken: "user-123456",
+          authenticatedUserToken: "user-123456",
+          timestamp: 1641290601962,
+          objectIDs: [
+            "9780545139700",
+            "9780439784542",
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the pushEvents method.
+//
+// AddedToCartObjectIDs
+void snippetForpushEvents4() async {
+  // >SEPARATOR pushEvents AddedToCartObjectIDs
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.pushEvents(
+    insightsEvents: InsightsEvents(
+      events: [
+        AddedToCartObjectIDsAfterSearch(
+          eventType: ConversionEvent.fromJson("conversion"),
+          eventSubtype: AddToCartEvent.fromJson("addToCart"),
+          eventName: "Product Added To Cart",
+          index: "products",
+          queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+          userToken: "user-123456",
+          authenticatedUserToken: "user-123456",
+          timestamp: 1641290601962,
+          objectIDs: [
+            "9780545139700",
+            "9780439784542",
+          ],
+          objectData: [
+            ObjectDataAfterSearch(
+              price: 19.99,
+              quantity: 10,
+              discount: 2.5,
+            ),
+            ObjectDataAfterSearch(
+              price: "8\$",
+              quantity: 7,
+              discount: "30%",
+            ),
+          ],
+          currency: "USD",
         ),
       ],
     ),

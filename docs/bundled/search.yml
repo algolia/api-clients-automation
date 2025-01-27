@@ -1292,18 +1292,8 @@ paths:
 
             // Call the API
 
-            var response = await client.SearchSingleIndexAsync<Hit>(
-              "<YOUR_INDEX_NAME>",
-              new SearchParams(
-                new SearchParamsObject
-                {
-                  Query = "myQuery",
-                  FacetFilters = new FacetFilters(
-                    new List<FacetFilters> { new FacetFilters("tags:algolia") }
-                  ),
-                }
-              )
-            );
+            var response = await
+            client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
 
             // >LOG
         - lang: dart
@@ -1316,12 +1306,6 @@ paths:
             // Call the API
             final response = await client.searchSingleIndex(
               indexName: "<YOUR_INDEX_NAME>",
-              searchParams: SearchParamsObject(
-                query: "myQuery",
-                facetFilters: [
-                  "tags:algolia",
-                ],
-              ),
             );
             // >LOG
         - lang: go
@@ -1342,9 +1326,7 @@ paths:
 
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-              "<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-              search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-                []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1367,11 +1349,7 @@ paths:
 
             // Call the API
 
-            client.searchSingleIndex(
-              "<YOUR_INDEX_NAME>",
-              new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
-              Hit.class
-            );
+            client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
 
             // >LOG
         - lang: javascript
@@ -1387,10 +1365,8 @@ paths:
 
             // Call the API
 
-            const response = await client.searchSingleIndex({
-              indexName: 'indexName',
-              searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
-            });
+            const response = await client.searchSingleIndex({ indexName:
+            'indexName' });
 
 
             // >LOG
@@ -1411,10 +1387,6 @@ paths:
 
             var response = client.searchSingleIndex(
               indexName = "<YOUR_INDEX_NAME>",
-              searchParams = SearchParamsObject(
-                query = "myQuery",
-                facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
-              ),
             )
 
 
@@ -1436,11 +1408,6 @@ paths:
 
             $response = $client->searchSingleIndex(
                 '<YOUR_INDEX_NAME>',
-                ['query' => 'myQuery',
-                    'facetFilters' => [
-                        'tags:algolia',
-                    ],
-                ],
             );
 
 
@@ -1465,12 +1432,6 @@ paths:
 
             response = client.search_single_index(
                 index_name="<YOUR_INDEX_NAME>",
-                search_params={
-                    "query": "myQuery",
-                    "facetFilters": [
-                        "tags:algolia",
-                    ],
-                },
             )
 
 
@@ -1490,10 +1451,7 @@ paths:
 
             # Call the API
 
-            response = client.search_single_index(
-              "<YOUR_INDEX_NAME>",
-              Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
-            )
+            response = client.search_single_index("<YOUR_INDEX_NAME>")
 
 
             # >LOG
@@ -1518,13 +1476,7 @@ paths:
             // Call the API
 
             val response = client.searchSingleIndex(
-              indexName = "<YOUR_INDEX_NAME>",
-              searchParams = Some(
-                SearchParamsObject(
-                  query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
-                )
-              )
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -1545,13 +1497,7 @@ paths:
             // Call the API
 
             let response: SearchResponse<Hit> = try await
-            client.searchSingleIndex(
-                indexName: "<YOUR_INDEX_NAME>",
-                searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
-                    query: "myQuery",
-                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
-                ))
-            )
+            client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
 
             // >LOG
         - lang: cURL
@@ -4171,13 +4117,7 @@ paths:
             var response = await client.PartialUpdateObjectAsync(
               "<YOUR_INDEX_NAME>",
               "uniqueID",
-              new Dictionary<string, Object>
-              {
-                {
-                  "attributeId",
-                  new Dictionary<string, string> { { "nested", "value" } }
-                },
-              }
+              new Dictionary<string, string> { { "attributeId", "new value" } }
             );
 
             // >LOG
@@ -4193,9 +4133,7 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               objectID: "uniqueID",
               attributesToUpdate: {
-                'attributeId': {
-                  'nested': "value",
-                },
+                'attributeId': "new value",
               },
             );
             // >LOG
@@ -4217,7 +4155,7 @@ paths:
 
             response, err :=
             client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": map[string]any{"nested": "value"}}))
+              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4245,14 +4183,7 @@ paths:
               "uniqueID",
               new HashMap() {
                 {
-                  put(
-                    "attributeId",
-                    new HashMap() {
-                      {
-                        put("nested", "value");
-                      }
-                    }
-                  );
+                  put("attributeId", "new value");
                 }
               }
             );
@@ -4274,7 +4205,7 @@ paths:
             const response = await client.partialUpdateObject({
               indexName: 'theIndexName',
               objectID: 'uniqueID',
-              attributesToUpdate: { attributeId: { nested: 'value' } },
+              attributesToUpdate: { attributeId: 'new value' },
             });
 
 
@@ -4300,12 +4231,7 @@ paths:
               attributesToUpdate = buildJsonObject {
                 put(
                   "attributeId",
-                  buildJsonObject {
-                    put(
-                      "nested",
-                      JsonPrimitive("value"),
-                    )
-                  },
+                  JsonPrimitive("new value"),
                 )
               },
             )
@@ -4330,8 +4256,7 @@ paths:
             $response = $client->partialUpdateObject(
                 '<YOUR_INDEX_NAME>',
                 'uniqueID',
-                ['attributeId' => ['nested' => 'value',
-                ],
+                ['attributeId' => 'new value',
                 ],
             );
 
@@ -4359,9 +4284,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_update={
-                    "attributeId": {
-                        "nested": "value",
-                    },
+                    "attributeId": "new value",
                 },
             )
 
@@ -4383,7 +4306,7 @@ paths:
             # Call the API
 
             response = client.partial_update_object("<YOUR_INDEX_NAME>",
-            "uniqueID", {attributeId: {nested: "value"}})
+            "uniqueID", {attributeId: "new value"})
 
 
             # >LOG
@@ -4410,7 +4333,7 @@ paths:
             val response = client.partialUpdateObject(
               indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
-              attributesToUpdate = JObject(List(JField("attributeId", JObject(List(JField("nested", JString("value")))))))
+              attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
             )
 
 
@@ -4433,7 +4356,7 @@ paths:
             let response = try await client.partialUpdateObject(
                 indexName: "<YOUR_INDEX_NAME>",
                 objectID: "uniqueID",
-                attributesToUpdate: ["attributeId": ["nested": "value"]]
+                attributesToUpdate: ["attributeId": "new value"]
             )
 
             // >LOG
@@ -5997,7 +5920,7 @@ paths:
 
             var response = await client.SetSettingsAsync(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings { RemoveStopWords = new RemoveStopWords(true) },
+              new IndexSettings { PaginationLimitedTo = 10 },
               true
             );
 
@@ -6013,7 +5936,7 @@ paths:
             final response = await client.setSettings(
               indexName: "<YOUR_INDEX_NAME>",
               indexSettings: IndexSettings(
-                removeStopWords: true,
+                paginationLimitedTo: 10,
               ),
               forwardToReplicas: true,
             );
@@ -6036,7 +5959,7 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetRemoveStopWords(search.BoolAsRemoveStopWords(true))).WithForwardToReplicas(true))
+              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6060,7 +5983,7 @@ paths:
             // Call the API
 
             client.setSettings("<YOUR_INDEX_NAME>", new
-            IndexSettings().setRemoveStopWords(RemoveStopWords.of(true)), true);
+            IndexSettings().setPaginationLimitedTo(10), true);
 
             // >LOG
         - lang: javascript
@@ -6077,8 +6000,8 @@ paths:
             // Call the API
 
             const response = await client.setSettings({
-              indexName: 'theIndexName',
-              indexSettings: { removeStopWords: true },
+              indexName: 'cts_e2e_settings',
+              indexSettings: { paginationLimitedTo: 10 },
               forwardToReplicas: true,
             });
 
@@ -6102,7 +6025,7 @@ paths:
             var response = client.setSettings(
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
-                removeStopWords = RemoveStopWords.of(true),
+                paginationLimitedTo = 10,
               ),
               forwardToReplicas = true,
             )
@@ -6126,7 +6049,7 @@ paths:
 
             $response = $client->setSettings(
                 '<YOUR_INDEX_NAME>',
-                ['removeStopWords' => true,
+                ['paginationLimitedTo' => 10,
                 ],
                 true,
             );
@@ -6154,7 +6077,7 @@ paths:
             response = client.set_settings(
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
-                    "removeStopWords": True,
+                    "paginationLimitedTo": 10,
                 },
                 forward_to_replicas=True,
             )
@@ -6176,8 +6099,11 @@ paths:
 
             # Call the API
 
-            response = client.set_settings("<YOUR_INDEX_NAME>",
-            Algolia::Search::IndexSettings.new(remove_stop_words: true), true)
+            response = client.set_settings(
+              "<YOUR_INDEX_NAME>",
+              Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+              true
+            )
 
 
             # >LOG
@@ -6204,7 +6130,7 @@ paths:
             val response = client.setSettings(
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
-                removeStopWords = Some(RemoveStopWords(true))
+                paginationLimitedTo = Some(10)
               ),
               forwardToReplicas = Some(true)
             )
@@ -6228,7 +6154,7 @@ paths:
 
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
-                indexSettings: IndexSettings(removeStopWords: SearchRemoveStopWords.bool(true)),
+                indexSettings: IndexSettings(paginationLimitedTo: 10),
                 forwardToReplicas: true
             )
 
@@ -10716,6 +10642,8 @@ paths:
         - lang: java
           label: Java
           source: >
+            // parameters
+
             // Initialize the client
 
             SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
@@ -18448,25 +18376,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:

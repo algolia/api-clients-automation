@@ -3443,6 +3443,24 @@ class TestSearchClient:
             """{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}"""
         )
 
+    async def test_search_for_facet_values_2(self):
+        """
+        facetName and facetQuery
+        """
+        _req = await self._client.search_for_facet_values_with_http_info(
+            index_name="indexName",
+            facet_name="author",
+            search_for_facet_values_request={
+                "facetQuery": "stephen king",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/facets/author/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facetQuery":"stephen king"}""")
+
     async def test_search_rules_(self):
         """
         searchRules
@@ -3764,6 +3782,62 @@ class TestSearchClient:
 
     async def test_search_single_index_16(self):
         """
+        facet author genre
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "author",
+                    "genre",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["author","genre"]}""")
+
+    async def test_search_single_index_17(self):
+        """
+        facet wildcard
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["*"]}""")
+
+    async def test_search_single_index_18(self):
+        """
+        maxValuesPerFacet
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "maxValuesPerFacet": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
+
+    async def test_search_single_index_19(self):
+        """
         aroundLatLng
         """
         _req = await self._client.search_single_index_with_http_info(
@@ -3779,7 +3853,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"aroundLatLng":"40.71, -74.01"}""")
 
-    async def test_search_single_index_17(self):
+    async def test_search_single_index_20(self):
         """
         aroundLatLngViaIP
         """
@@ -3796,7 +3870,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"aroundLatLngViaIP":true}""")
 
-    async def test_search_single_index_18(self):
+    async def test_search_single_index_21(self):
         """
         aroundRadius
         """
@@ -3816,7 +3890,7 @@ class TestSearchClient:
             """{"aroundLatLng":"40.71, -74.01","aroundRadius":1000000}"""
         )
 
-    async def test_search_single_index_19(self):
+    async def test_search_single_index_22(self):
         """
         insideBoundingBox
         """
@@ -3842,7 +3916,7 @@ class TestSearchClient:
             """{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"""
         )
 
-    async def test_search_single_index_20(self):
+    async def test_search_single_index_23(self):
         """
         insidePolygon
         """
@@ -3876,7 +3950,7 @@ class TestSearchClient:
             """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
         )
 
-    async def test_search_single_index_21(self):
+    async def test_search_single_index_24(self):
         """
         insidePolygon
         """
@@ -3910,7 +3984,7 @@ class TestSearchClient:
             """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
         )
 
-    async def test_search_single_index_22(self):
+    async def test_search_single_index_25(self):
         """
         optionalFilters
         """
@@ -3931,7 +4005,7 @@ class TestSearchClient:
             """{"optionalFilters":["can_deliver_quickly:true"]}"""
         )
 
-    async def test_search_single_index_23(self):
+    async def test_search_single_index_26(self):
         """
         optionalFiltersMany
         """
@@ -3954,7 +4028,7 @@ class TestSearchClient:
             """{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}"""
         )
 
-    async def test_search_single_index_24(self):
+    async def test_search_single_index_27(self):
         """
         optionalFiltersSimple
         """
@@ -3976,7 +4050,7 @@ class TestSearchClient:
             """{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}"""
         )
 
-    async def test_search_single_index_25(self):
+    async def test_search_single_index_28(self):
         """
         restrictSearchableAttributes
         """
@@ -3997,7 +4071,7 @@ class TestSearchClient:
             """{"restrictSearchableAttributes":["title_fr"]}"""
         )
 
-    async def test_search_single_index_26(self):
+    async def test_search_single_index_29(self):
         """
         getRankingInfo
         """
@@ -4014,7 +4088,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
 
-    async def test_search_single_index_27(self):
+    async def test_search_single_index_30(self):
         """
         clickAnalytics
         """
@@ -4031,7 +4105,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"clickAnalytics":true}""")
 
-    async def test_search_single_index_28(self):
+    async def test_search_single_index_31(self):
         """
         clickAnalyticsUserToken
         """
@@ -4051,7 +4125,7 @@ class TestSearchClient:
             """{"clickAnalytics":true,"userToken":"user-1"}"""
         )
 
-    async def test_search_single_index_29(self):
+    async def test_search_single_index_32(self):
         """
         enablePersonalization
         """
@@ -4071,7 +4145,7 @@ class TestSearchClient:
             """{"enablePersonalization":true,"userToken":"user-1"}"""
         )
 
-    async def test_search_single_index_30(self):
+    async def test_search_single_index_33(self):
         """
         userToken
         """
@@ -4088,7 +4162,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"userToken":"user-1"}""")
 
-    async def test_search_single_index_31(self):
+    async def test_search_single_index_34(self):
         """
         analyticsTag
         """
@@ -4107,7 +4181,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""")
 
-    async def test_search_single_index_32(self):
+    async def test_search_single_index_35(self):
         """
         facetFiltersUsers
         """
@@ -4129,7 +4203,7 @@ class TestSearchClient:
             """{"facetFilters":["user:user42","user:public"]}"""
         )
 
-    async def test_search_single_index_33(self):
+    async def test_search_single_index_36(self):
         """
         buildTheQuery
         """
@@ -5022,6 +5096,27 @@ class TestSearchClient:
 
     async def test_set_settings_37(self):
         """
+        create virtual replica index
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "virtual(products_price_desc)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"replicas":["virtual(products_price_desc)"]}"""
+        )
+
+    async def test_set_settings_38(self):
+        """
         unlink replica index
         """
         _req = await self._client.set_settings_with_http_info(
@@ -5039,7 +5134,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"replicas":[""]}""")
 
-    async def test_set_settings_38(self):
+    async def test_set_settings_39(self):
         """
         forwardToReplicas
         """
@@ -5062,7 +5157,7 @@ class TestSearchClient:
             """{"searchableAttributes":["name","description"]}"""
         )
 
-    async def test_set_settings_39(self):
+    async def test_set_settings_40(self):
         """
         maxValuesPerFacet
         """
@@ -5079,7 +5174,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
 
-    async def test_set_settings_40(self):
+    async def test_set_settings_41(self):
         """
         maxFacetHits
         """
@@ -5096,7 +5191,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxFacetHits":1000}""")
 
-    async def test_set_settings_41(self):
+    async def test_set_settings_42(self):
         """
         attributesForFaceting complex
         """
@@ -5119,7 +5214,7 @@ class TestSearchClient:
             """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}"""
         )
 
-    async def test_set_settings_42(self):
+    async def test_set_settings_43(self):
         """
         ranking closest dates
         """
@@ -5148,7 +5243,7 @@ class TestSearchClient:
             """{"ranking":["asc(date_timestamp)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-    async def test_set_settings_43(self):
+    async def test_set_settings_44(self):
         """
         searchableAttributes item variation
         """
@@ -5169,33 +5264,6 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"searchableAttributes":["design","type","color"]}"""
-        )
-
-    async def test_set_settings_44(self):
-        """
-        searchableAttributes around location
-        """
-        _req = await self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "searchableAttributes": [
-                    "name",
-                    "country",
-                    "code",
-                    "iata_code",
-                ],
-                "customRanking": [
-                    "desc(links_count)",
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}"""
         )
 
     async def test_set_settings_45(self):
@@ -5227,6 +5295,33 @@ class TestSearchClient:
 
     async def test_set_settings_46(self):
         """
+        searchableAttributes around location
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "name",
+                    "country",
+                    "code",
+                    "iata_code",
+                ],
+                "customRanking": [
+                    "desc(links_count)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}"""
+        )
+
+    async def test_set_settings_47(self):
+        """
         disableTypoToleranceOnAttributes
         """
         _req = await self._client.set_settings_with_http_info(
@@ -5246,7 +5341,7 @@ class TestSearchClient:
             """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    async def test_set_settings_47(self):
+    async def test_set_settings_48(self):
         """
         everything
         """
@@ -5398,7 +5493,7 @@ class TestSearchClient:
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
         )
 
-    async def test_set_settings_48(self):
+    async def test_set_settings_49(self):
         """
         searchableAttributesWithCustomRankingsAndAttributesForFaceting
         """
@@ -5431,7 +5526,7 @@ class TestSearchClient:
             """{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}"""
         )
 
-    async def test_set_settings_49(self):
+    async def test_set_settings_50(self):
         """
         searchableAttributesProductReferenceSuffixes
         """
@@ -5454,7 +5549,7 @@ class TestSearchClient:
             """{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}"""
         )
 
-    async def test_set_settings_50(self):
+    async def test_set_settings_51(self):
         """
         queryLanguageAndIgnorePlurals
         """
@@ -5476,7 +5571,7 @@ class TestSearchClient:
             """{"queryLanguages":["en"],"ignorePlurals":true}"""
         )
 
-    async def test_set_settings_51(self):
+    async def test_set_settings_52(self):
         """
         searchableAttributesInMovies
         """
@@ -5499,7 +5594,7 @@ class TestSearchClient:
             """{"searchableAttributes":["title_eng","title_fr","title_es"]}"""
         )
 
-    async def test_set_settings_52(self):
+    async def test_set_settings_53(self):
         """
         disablePrefixOnAttributes
         """
@@ -5520,7 +5615,7 @@ class TestSearchClient:
             """{"disablePrefixOnAttributes":["serial_number"]}"""
         )
 
-    async def test_set_settings_53(self):
+    async def test_set_settings_54(self):
         """
         disableTypoToleranceOnAttributes
         """
@@ -5541,7 +5636,7 @@ class TestSearchClient:
             """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    async def test_set_settings_54(self):
+    async def test_set_settings_55(self):
         """
         searchableAttributesSimpleExample
         """
@@ -5562,7 +5657,7 @@ class TestSearchClient:
             """{"searchableAttributes":["serial_number"]}"""
         )
 
-    async def test_set_settings_55(self):
+    async def test_set_settings_56(self):
         """
         searchableAttributesSimpleExampleAlt
         """
@@ -9046,6 +9141,24 @@ class TestSearchClientSync:
             """{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}"""
         )
 
+    def test_search_for_facet_values_2(self):
+        """
+        facetName and facetQuery
+        """
+        _req = self._client.search_for_facet_values_with_http_info(
+            index_name="indexName",
+            facet_name="author",
+            search_for_facet_values_request={
+                "facetQuery": "stephen king",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/facets/author/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facetQuery":"stephen king"}""")
+
     def test_search_rules_(self):
         """
         searchRules
@@ -9367,6 +9480,62 @@ class TestSearchClientSync:
 
     def test_search_single_index_16(self):
         """
+        facet author genre
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "author",
+                    "genre",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["author","genre"]}""")
+
+    def test_search_single_index_17(self):
+        """
+        facet wildcard
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["*"]}""")
+
+    def test_search_single_index_18(self):
+        """
+        maxValuesPerFacet
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "maxValuesPerFacet": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
+
+    def test_search_single_index_19(self):
+        """
         aroundLatLng
         """
         _req = self._client.search_single_index_with_http_info(
@@ -9382,7 +9551,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"aroundLatLng":"40.71, -74.01"}""")
 
-    def test_search_single_index_17(self):
+    def test_search_single_index_20(self):
         """
         aroundLatLngViaIP
         """
@@ -9399,7 +9568,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"aroundLatLngViaIP":true}""")
 
-    def test_search_single_index_18(self):
+    def test_search_single_index_21(self):
         """
         aroundRadius
         """
@@ -9419,7 +9588,7 @@ class TestSearchClientSync:
             """{"aroundLatLng":"40.71, -74.01","aroundRadius":1000000}"""
         )
 
-    def test_search_single_index_19(self):
+    def test_search_single_index_22(self):
         """
         insideBoundingBox
         """
@@ -9445,7 +9614,7 @@ class TestSearchClientSync:
             """{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"""
         )
 
-    def test_search_single_index_20(self):
+    def test_search_single_index_23(self):
         """
         insidePolygon
         """
@@ -9479,7 +9648,7 @@ class TestSearchClientSync:
             """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
         )
 
-    def test_search_single_index_21(self):
+    def test_search_single_index_24(self):
         """
         insidePolygon
         """
@@ -9513,7 +9682,7 @@ class TestSearchClientSync:
             """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
         )
 
-    def test_search_single_index_22(self):
+    def test_search_single_index_25(self):
         """
         optionalFilters
         """
@@ -9534,7 +9703,7 @@ class TestSearchClientSync:
             """{"optionalFilters":["can_deliver_quickly:true"]}"""
         )
 
-    def test_search_single_index_23(self):
+    def test_search_single_index_26(self):
         """
         optionalFiltersMany
         """
@@ -9557,7 +9726,7 @@ class TestSearchClientSync:
             """{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}"""
         )
 
-    def test_search_single_index_24(self):
+    def test_search_single_index_27(self):
         """
         optionalFiltersSimple
         """
@@ -9579,7 +9748,7 @@ class TestSearchClientSync:
             """{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}"""
         )
 
-    def test_search_single_index_25(self):
+    def test_search_single_index_28(self):
         """
         restrictSearchableAttributes
         """
@@ -9600,7 +9769,7 @@ class TestSearchClientSync:
             """{"restrictSearchableAttributes":["title_fr"]}"""
         )
 
-    def test_search_single_index_26(self):
+    def test_search_single_index_29(self):
         """
         getRankingInfo
         """
@@ -9617,7 +9786,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
 
-    def test_search_single_index_27(self):
+    def test_search_single_index_30(self):
         """
         clickAnalytics
         """
@@ -9634,7 +9803,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"clickAnalytics":true}""")
 
-    def test_search_single_index_28(self):
+    def test_search_single_index_31(self):
         """
         clickAnalyticsUserToken
         """
@@ -9654,7 +9823,7 @@ class TestSearchClientSync:
             """{"clickAnalytics":true,"userToken":"user-1"}"""
         )
 
-    def test_search_single_index_29(self):
+    def test_search_single_index_32(self):
         """
         enablePersonalization
         """
@@ -9674,7 +9843,7 @@ class TestSearchClientSync:
             """{"enablePersonalization":true,"userToken":"user-1"}"""
         )
 
-    def test_search_single_index_30(self):
+    def test_search_single_index_33(self):
         """
         userToken
         """
@@ -9691,7 +9860,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"userToken":"user-1"}""")
 
-    def test_search_single_index_31(self):
+    def test_search_single_index_34(self):
         """
         analyticsTag
         """
@@ -9710,7 +9879,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""")
 
-    def test_search_single_index_32(self):
+    def test_search_single_index_35(self):
         """
         facetFiltersUsers
         """
@@ -9732,7 +9901,7 @@ class TestSearchClientSync:
             """{"facetFilters":["user:user42","user:public"]}"""
         )
 
-    def test_search_single_index_33(self):
+    def test_search_single_index_36(self):
         """
         buildTheQuery
         """
@@ -10625,6 +10794,27 @@ class TestSearchClientSync:
 
     def test_set_settings_37(self):
         """
+        create virtual replica index
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "virtual(products_price_desc)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"replicas":["virtual(products_price_desc)"]}"""
+        )
+
+    def test_set_settings_38(self):
+        """
         unlink replica index
         """
         _req = self._client.set_settings_with_http_info(
@@ -10642,7 +10832,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"replicas":[""]}""")
 
-    def test_set_settings_38(self):
+    def test_set_settings_39(self):
         """
         forwardToReplicas
         """
@@ -10665,7 +10855,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["name","description"]}"""
         )
 
-    def test_set_settings_39(self):
+    def test_set_settings_40(self):
         """
         maxValuesPerFacet
         """
@@ -10682,7 +10872,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
 
-    def test_set_settings_40(self):
+    def test_set_settings_41(self):
         """
         maxFacetHits
         """
@@ -10699,7 +10889,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxFacetHits":1000}""")
 
-    def test_set_settings_41(self):
+    def test_set_settings_42(self):
         """
         attributesForFaceting complex
         """
@@ -10722,7 +10912,7 @@ class TestSearchClientSync:
             """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}"""
         )
 
-    def test_set_settings_42(self):
+    def test_set_settings_43(self):
         """
         ranking closest dates
         """
@@ -10751,7 +10941,7 @@ class TestSearchClientSync:
             """{"ranking":["asc(date_timestamp)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-    def test_set_settings_43(self):
+    def test_set_settings_44(self):
         """
         searchableAttributes item variation
         """
@@ -10772,33 +10962,6 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"searchableAttributes":["design","type","color"]}"""
-        )
-
-    def test_set_settings_44(self):
-        """
-        searchableAttributes around location
-        """
-        _req = self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "searchableAttributes": [
-                    "name",
-                    "country",
-                    "code",
-                    "iata_code",
-                ],
-                "customRanking": [
-                    "desc(links_count)",
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}"""
         )
 
     def test_set_settings_45(self):
@@ -10830,6 +10993,33 @@ class TestSearchClientSync:
 
     def test_set_settings_46(self):
         """
+        searchableAttributes around location
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "name",
+                    "country",
+                    "code",
+                    "iata_code",
+                ],
+                "customRanking": [
+                    "desc(links_count)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}"""
+        )
+
+    def test_set_settings_47(self):
+        """
         disableTypoToleranceOnAttributes
         """
         _req = self._client.set_settings_with_http_info(
@@ -10849,7 +11039,7 @@ class TestSearchClientSync:
             """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    def test_set_settings_47(self):
+    def test_set_settings_48(self):
         """
         everything
         """
@@ -11001,7 +11191,7 @@ class TestSearchClientSync:
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
         )
 
-    def test_set_settings_48(self):
+    def test_set_settings_49(self):
         """
         searchableAttributesWithCustomRankingsAndAttributesForFaceting
         """
@@ -11034,7 +11224,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}"""
         )
 
-    def test_set_settings_49(self):
+    def test_set_settings_50(self):
         """
         searchableAttributesProductReferenceSuffixes
         """
@@ -11057,7 +11247,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}"""
         )
 
-    def test_set_settings_50(self):
+    def test_set_settings_51(self):
         """
         queryLanguageAndIgnorePlurals
         """
@@ -11079,7 +11269,7 @@ class TestSearchClientSync:
             """{"queryLanguages":["en"],"ignorePlurals":true}"""
         )
 
-    def test_set_settings_51(self):
+    def test_set_settings_52(self):
         """
         searchableAttributesInMovies
         """
@@ -11102,7 +11292,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["title_eng","title_fr","title_es"]}"""
         )
 
-    def test_set_settings_52(self):
+    def test_set_settings_53(self):
         """
         disablePrefixOnAttributes
         """
@@ -11123,7 +11313,7 @@ class TestSearchClientSync:
             """{"disablePrefixOnAttributes":["serial_number"]}"""
         )
 
-    def test_set_settings_53(self):
+    def test_set_settings_54(self):
         """
         disableTypoToleranceOnAttributes
         """
@@ -11144,7 +11334,7 @@ class TestSearchClientSync:
             """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    def test_set_settings_54(self):
+    def test_set_settings_55(self):
         """
         searchableAttributesSimpleExample
         """
@@ -11165,7 +11355,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["serial_number"]}"""
         )
 
-    def test_set_settings_55(self):
+    def test_set_settings_56(self):
         """
         searchableAttributesSimpleExampleAlt
         """

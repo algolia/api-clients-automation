@@ -3712,6 +3712,25 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "facetName and facetQuery")]
+  public async Task SearchForFacetValuesTest2()
+  {
+    await client.SearchForFacetValuesAsync(
+      "indexName",
+      "author",
+      new SearchForFacetValuesRequest { FacetQuery = "stephen king" }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/facets/author/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"facetQuery\":\"stephen king\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "searchRules")]
   public async Task SearchRulesTest()
   {
@@ -4047,8 +4066,63 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "aroundLatLng")]
+  [Fact(DisplayName = "facet author genre")]
   public async Task SearchSingleIndexTest16()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Facets = new List<string> { "author", "genre" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"facets\":[\"author\",\"genre\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "facet wildcard")]
+  public async Task SearchSingleIndexTest17()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Facets = new List<string> { "*" } })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"facets\":[\"*\"]}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "maxValuesPerFacet")]
+  public async Task SearchSingleIndexTest18()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { MaxValuesPerFacet = 1000 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"maxValuesPerFacet\":1000}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "aroundLatLng")]
+  public async Task SearchSingleIndexTest19()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4066,7 +4140,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "aroundLatLngViaIP")]
-  public async Task SearchSingleIndexTest17()
+  public async Task SearchSingleIndexTest20()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4084,7 +4158,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "aroundRadius")]
-  public async Task SearchSingleIndexTest18()
+  public async Task SearchSingleIndexTest21()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4108,7 +4182,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "insideBoundingBox")]
-  public async Task SearchSingleIndexTest19()
+  public async Task SearchSingleIndexTest22()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4136,7 +4210,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "insidePolygon")]
-  public async Task SearchSingleIndexTest20()
+  public async Task SearchSingleIndexTest23()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4176,7 +4250,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "insidePolygon")]
-  public async Task SearchSingleIndexTest21()
+  public async Task SearchSingleIndexTest24()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4216,7 +4290,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "optionalFilters")]
-  public async Task SearchSingleIndexTest22()
+  public async Task SearchSingleIndexTest25()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4241,7 +4315,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "optionalFiltersMany")]
-  public async Task SearchSingleIndexTest23()
+  public async Task SearchSingleIndexTest26()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4271,7 +4345,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "optionalFiltersSimple")]
-  public async Task SearchSingleIndexTest24()
+  public async Task SearchSingleIndexTest27()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4300,7 +4374,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "restrictSearchableAttributes")]
-  public async Task SearchSingleIndexTest25()
+  public async Task SearchSingleIndexTest28()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4320,7 +4394,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "getRankingInfo")]
-  public async Task SearchSingleIndexTest26()
+  public async Task SearchSingleIndexTest29()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4338,7 +4412,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "clickAnalytics")]
-  public async Task SearchSingleIndexTest27()
+  public async Task SearchSingleIndexTest30()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4356,7 +4430,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "clickAnalyticsUserToken")]
-  public async Task SearchSingleIndexTest28()
+  public async Task SearchSingleIndexTest31()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4374,7 +4448,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enablePersonalization")]
-  public async Task SearchSingleIndexTest29()
+  public async Task SearchSingleIndexTest32()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4394,7 +4468,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "userToken")]
-  public async Task SearchSingleIndexTest30()
+  public async Task SearchSingleIndexTest33()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4412,7 +4486,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "analyticsTag")]
-  public async Task SearchSingleIndexTest31()
+  public async Task SearchSingleIndexTest34()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4432,7 +4506,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "facetFiltersUsers")]
-  public async Task SearchSingleIndexTest32()
+  public async Task SearchSingleIndexTest35()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4461,7 +4535,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "buildTheQuery")]
-  public async Task SearchSingleIndexTest33()
+  public async Task SearchSingleIndexTest36()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -5448,8 +5522,26 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "unlink replica index")]
+  [Fact(DisplayName = "create virtual replica index")]
   public async Task SetSettingsTest37()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Replicas = new List<string> { "virtual(products_price_desc)" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"replicas\":[\"virtual(products_price_desc)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "unlink replica index")]
+  public async Task SetSettingsTest38()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5463,7 +5555,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "forwardToReplicas")]
-  public async Task SetSettingsTest38()
+  public async Task SetSettingsTest39()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5498,7 +5590,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "maxValuesPerFacet")]
-  public async Task SetSettingsTest39()
+  public async Task SetSettingsTest40()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxValuesPerFacet = 1000 });
 
@@ -5513,7 +5605,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "maxFacetHits")]
-  public async Task SetSettingsTest40()
+  public async Task SetSettingsTest41()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxFacetHits = 1000 });
 
@@ -5524,7 +5616,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "attributesForFaceting complex")]
-  public async Task SetSettingsTest41()
+  public async Task SetSettingsTest42()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5550,7 +5642,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "ranking closest dates")]
-  public async Task SetSettingsTest42()
+  public async Task SetSettingsTest43()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5582,7 +5674,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributes item variation")]
-  public async Task SetSettingsTest43()
+  public async Task SetSettingsTest44()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5597,28 +5689,6 @@ public class SearchClientRequestTests
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"searchableAttributes\":[\"design\",\"type\",\"color\"]}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "searchableAttributes around location")]
-  public async Task SetSettingsTest44()
-  {
-    await client.SetSettingsAsync(
-      "theIndexName",
-      new IndexSettings
-      {
-        SearchableAttributes = new List<string> { "name", "country", "code", "iata_code" },
-        CustomRanking = new List<string> { "desc(links_count)" },
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
-    Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -5646,8 +5716,30 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "disableTypoToleranceOnAttributes")]
+  [Fact(DisplayName = "searchableAttributes around location")]
   public async Task SetSettingsTest46()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string> { "name", "country", "code", "iata_code" },
+        CustomRanking = new List<string> { "desc(links_count)" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disableTypoToleranceOnAttributes")]
+  public async Task SetSettingsTest47()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5665,7 +5757,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "everything")]
-  public async Task SetSettingsTest47()
+  public async Task SetSettingsTest48()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5778,7 +5870,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesWithCustomRankingsAndAttributesForFaceting")]
-  public async Task SetSettingsTest48()
+  public async Task SetSettingsTest49()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5813,7 +5905,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesProductReferenceSuffixes")]
-  public async Task SetSettingsTest49()
+  public async Task SetSettingsTest50()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5839,7 +5931,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "queryLanguageAndIgnorePlurals")]
-  public async Task SetSettingsTest50()
+  public async Task SetSettingsTest51()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5861,7 +5953,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesInMovies")]
-  public async Task SetSettingsTest51()
+  public async Task SetSettingsTest52()
   {
     await client.SetSettingsAsync(
       "movies",
@@ -5882,7 +5974,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disablePrefixOnAttributes")]
-  public async Task SetSettingsTest52()
+  public async Task SetSettingsTest53()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5900,7 +5992,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disableTypoToleranceOnAttributes")]
-  public async Task SetSettingsTest53()
+  public async Task SetSettingsTest54()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5918,7 +6010,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesSimpleExample")]
-  public async Task SetSettingsTest54()
+  public async Task SetSettingsTest55()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5936,7 +6028,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesSimpleExampleAlt")]
-  public async Task SetSettingsTest55()
+  public async Task SetSettingsTest56()
   {
     await client.SetSettingsAsync(
       "theIndexName",

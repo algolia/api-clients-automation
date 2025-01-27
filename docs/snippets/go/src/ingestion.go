@@ -13,7 +13,7 @@ func SnippetForCreateAuthenticationOfIngestion() {
 	   createAuthenticationOAuth
 	*/
 
-	// >SEPARATOR createAuthentication default
+	// >SEPARATOR createAuthentication createAuthenticationOAuth
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -36,6 +36,36 @@ func SnippetForCreateAuthenticationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCreateAuthenticationOfIngestion1() {
+	/*
+	   Snippet for the createAuthentication method.
+
+	   createAuthenticationAlgolia
+	*/
+
+	// >SEPARATOR createAuthentication createAuthenticationAlgolia
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
+
+		ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("algolia")).SetName("authName").SetInput(ingestion.AuthAlgoliaAsAuthInput(
+			ingestion.NewEmptyAuthAlgolia().SetAppID("ALGOLIA_APPLICATION_ID").SetApiKey("ALGOLIA_API_KEY")))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCreateDestinationOfIngestion() {
 	/*
 	   Snippet for the createDestination method.
@@ -43,7 +73,7 @@ func SnippetForCreateDestinationOfIngestion() {
 	   createDestination
 	*/
 
-	// >SEPARATOR createDestination default
+	// >SEPARATOR createDestination createDestination
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -66,6 +96,37 @@ func SnippetForCreateDestinationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCreateDestinationOfIngestion1() {
+	/*
+	   Snippet for the createDestination method.
+
+	   with transformationIDs
+	*/
+
+	// >SEPARATOR createDestination with transformationIDs
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
+
+		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
+			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetTransformationIDs(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCreateSourceOfIngestion() {
 	/*
 	   Snippet for the createSource method.
@@ -73,7 +134,7 @@ func SnippetForCreateSourceOfIngestion() {
 	   createSource
 	*/
 
-	// >SEPARATOR createSource default
+	// >SEPARATOR createSource createSource
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -98,6 +159,35 @@ func SnippetForCreateSourceOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCreateSourceOfIngestion1() {
+	/*
+	   Snippet for the createSource method.
+
+	   push
+	*/
+
+	// >SEPARATOR createSource push
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateSource(client.NewApiCreateSourceRequest(
+
+		ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("push")).SetName("pushezpourentrer")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCreateTaskOfIngestion() {
 	/*
 	   Snippet for the createTask method.
@@ -105,7 +195,7 @@ func SnippetForCreateTaskOfIngestion() {
 	   task without cron
 	*/
 
-	// >SEPARATOR createTask default
+	// >SEPARATOR createTask task without cron
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -127,6 +217,69 @@ func SnippetForCreateTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCreateTaskOfIngestion1() {
+	/*
+	   Snippet for the createTask method.
+
+	   task with cron
+	*/
+
+	// >SEPARATOR createTask task with cron
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
+
+		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
+			ingestion.NewEmptyNotifications().SetEmail(
+				ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
+			ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCreateTaskOfIngestion2() {
+	/*
+	   Snippet for the createTask method.
+
+	   task shopify
+	*/
+
+	// >SEPARATOR createTask task shopify
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
+
+		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+			ingestion.NewEmptyDockerStreamsInput().SetStreams(
+				[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCreateTaskV1OfIngestion() {
 	/*
 	   Snippet for the createTaskV1 method.
@@ -134,7 +287,7 @@ func SnippetForCreateTaskV1OfIngestion() {
 	   createTaskOnDemand
 	*/
 
-	// >SEPARATOR createTaskV1 default
+	// >SEPARATOR createTaskV1 createTaskOnDemand
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -147,6 +300,98 @@ func SnippetForCreateTaskV1OfIngestion() {
 
 		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
 			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCreateTaskV1OfIngestion1() {
+	/*
+	   Snippet for the createTaskV1 method.
+
+	   createTaskSchedule
+	*/
+
+	// >SEPARATOR createTaskV1 createTaskSchedule
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
+
+		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.ScheduleTriggerInputAsTaskCreateTrigger(
+			ingestion.NewEmptyScheduleTriggerInput().SetType(ingestion.ScheduleTriggerType("schedule")).SetCron("* * * * *"))).SetAction(ingestion.ActionType("replace"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCreateTaskV1OfIngestion2() {
+	/*
+	   Snippet for the createTaskV1 method.
+
+	   createTaskSubscription
+	*/
+
+	// >SEPARATOR createTaskV1 createTaskSubscription
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
+
+		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCreateTaskV1OfIngestion3() {
+	/*
+	   Snippet for the createTaskV1 method.
+
+	   task shopify
+	*/
+
+	// >SEPARATOR createTaskV1 task shopify
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
+
+		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+			ingestion.NewEmptyDockerStreamsInput().SetStreams(
+				[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -193,7 +438,7 @@ func SnippetForCustomDeleteOfIngestion() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customDelete default
+	// >SEPARATOR customDelete allow del method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -214,6 +459,34 @@ func SnippetForCustomDeleteOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomDeleteOfIngestion1() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with all parameters
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomGetOfIngestion() {
 	/*
 	   Snippet for the customGet method.
@@ -221,7 +494,7 @@ func SnippetForCustomGetOfIngestion() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customGet default
+	// >SEPARATOR customGet allow get method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -242,6 +515,63 @@ func SnippetForCustomGetOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomGetOfIngestion1() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with all parameters
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfIngestion2() {
+	/*
+	   Snippet for the customGet method.
+
+	   requestOptions should be escaped too
+	*/
+
+	// >SEPARATOR customGet requestOptions should be escaped too
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), ingestion.WithQueryParam("query", "parameters with space"), ingestion.WithQueryParam("and an array",
+		[]string{"array", "with spaces"}), ingestion.WithHeaderParam("x-header-1", "spaces are left alone"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPostOfIngestion() {
 	/*
 	   Snippet for the customPost method.
@@ -249,7 +579,7 @@ func SnippetForCustomPostOfIngestion() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPost default
+	// >SEPARATOR customPost allow post method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -270,6 +600,289 @@ func SnippetForCustomPostOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForCustomPostOfIngestion1() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with all parameters
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion2() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default query parameters
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default query parameters
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion3() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges query parameters with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges query parameters with default ones
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query2", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion4() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default headers
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default headers
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion5() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges headers with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges headers with default ones
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion6() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts booleans
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("isItWorking", true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion7() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts integers
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam", 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion8() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of string
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of string
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
+		[]string{"b and c", "d"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion9() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
+		[]bool{true, true, false}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfIngestion10() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
+		[]int32{1, 2}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomPutOfIngestion() {
 	/*
 	   Snippet for the customPut method.
@@ -277,7 +890,7 @@ func SnippetForCustomPutOfIngestion() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPut default
+	// >SEPARATOR customPut allow put method for a custom path with minimal parameters
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -288,6 +901,34 @@ func SnippetForCustomPutOfIngestion() {
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
 		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPutOfIngestion1() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with all parameters
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -809,7 +1450,7 @@ func SnippetForListAuthenticationsOfIngestion() {
 	   getAuthentications
 	*/
 
-	// >SEPARATOR listAuthentications default
+	// >SEPARATOR listAuthentications getAuthentications
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -819,6 +1460,35 @@ func SnippetForListAuthenticationsOfIngestion() {
 
 	// Call the API
 	response, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListAuthenticationsOfIngestion1() {
+	/*
+	   Snippet for the listAuthentications method.
+
+	   getAuthentications with query params
+	*/
+
+	// >SEPARATOR listAuthentications getAuthentications with query params
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest().WithItemsPerPage(2).WithPage(1).WithType(
+		[]ingestion.AuthenticationType{ingestion.AuthenticationType("basic"), ingestion.AuthenticationType("algolia")}).WithPlatform(
+		[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1026,7 +1696,7 @@ func SnippetForPushTaskOfIngestion() {
 	   pushTask
 	*/
 
-	// >SEPARATOR pushTask default
+	// >SEPARATOR pushTask pushTask
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -1039,6 +1709,36 @@ func SnippetForPushTaskOfIngestion() {
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
 			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPushTaskOfIngestion1() {
+	/*
+	   Snippet for the pushTask method.
+
+	   allows for watch query parameter
+	*/
+
+	// >SEPARATOR pushTask allows for watch query parameter
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PushTask(client.NewApiPushTaskRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1377,7 +2077,7 @@ func SnippetForTryTransformationOfIngestion() {
 	   tryTransformation
 	*/
 
-	// >SEPARATOR tryTransformation default
+	// >SEPARATOR tryTransformation tryTransformation
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -1399,6 +2099,37 @@ func SnippetForTryTransformationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForTryTransformationOfIngestion1() {
+	/*
+	   Snippet for the tryTransformation method.
+
+	   with authentications
+	*/
+
+	// >SEPARATOR tryTransformation with authentications
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
+
+		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+			[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	/*
 	   Snippet for the tryTransformationBeforeUpdate method.
@@ -1406,7 +2137,7 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	   tryTransformationBeforeUpdate
 	*/
 
-	// >SEPARATOR tryTransformationBeforeUpdate default
+	// >SEPARATOR tryTransformationBeforeUpdate tryTransformationBeforeUpdate
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -1418,6 +2149,37 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForTryTransformationBeforeUpdateOfIngestion1() {
+	/*
+	   Snippet for the tryTransformationBeforeUpdate method.
+
+	   existing with authentications
+	*/
+
+	// >SEPARATOR tryTransformationBeforeUpdate existing with authentications
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+			[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

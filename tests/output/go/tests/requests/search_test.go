@@ -2252,6 +2252,18 @@ func TestSearch_SearchForFacetValues(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}`)
 	})
+	t.Run("facetName and facetQuery", func(t *testing.T) {
+		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
+			"indexName", "author").WithSearchForFacetValuesRequest(
+			search.NewEmptySearchForFacetValuesRequest().SetFacetQuery("stephen king")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/facets/author/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"facetQuery":"stephen king"}`)
+	})
 }
 
 func TestSearch_SearchRules(t *testing.T) {
@@ -2471,6 +2483,44 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"filters":"(author:\"Stephen King\" OR genre:\"Horror\")","facetFilters":["publisher:Penguin"]}`)
+	})
+	t.Run("facet author genre", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFacets(
+				[]string{"author", "genre"}))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"facets":["author","genre"]}`)
+	})
+	t.Run("facet wildcard", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFacets(
+				[]string{"*"}))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"facets":["*"]}`)
+	})
+	t.Run("maxValuesPerFacet", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetMaxValuesPerFacet(1000))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"maxValuesPerFacet":1000}`)
 	})
 	t.Run("aroundLatLng", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -3309,6 +3359,19 @@ func TestSearch_SetSettings(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"replicas":["products_price_desc"]}`)
+	})
+	t.Run("create virtual replica index", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetReplicas(
+				[]string{"virtual(products_price_desc)"})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"replicas":["virtual(products_price_desc)"]}`)
 	})
 	t.Run("unlink replica index", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
