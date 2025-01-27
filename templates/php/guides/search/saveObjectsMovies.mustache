@@ -1,16 +1,16 @@
 <?php
-require(__DIR__."/vendor/autoload.php");
+require(__DIR__."/../vendor/autoload.php");
 {{> snippets/import}}
 
 // Fetch sample dataset
 $url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie";
 $response = file_get_contents($url);
-$movies = json_decode($response, true);
+$movies = json_decode($response ?: "[]", true);
 
 // Connect and authenticate with your Algolia app
 {{> snippets/init}}
 
 // Save records in Algolia index
-{{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+{{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}};
 
 print('Done!');

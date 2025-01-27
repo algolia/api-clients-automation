@@ -104,6 +104,14 @@ export const patterns = [
   '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
   'clients/algoliasearch-client-php/composer.json',
 
+  'docs/guides/php/**',
+  '!docs/guides/php/.gitignore',
+  '!docs/guides/php/composer.json',
+  '!docs/guides/php/phpstan.neon',
+  'docs/guides/php/composer.phar',
+  'docs/guides/php/composer.lock',
+  'docs/guides/php/vendor/**',
+
   // Python
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
