@@ -30,7 +30,7 @@ public class ListABTestsResponse {
     return this;
   }
 
-  /** A/B tests. */
+  /** The list of A/B tests, null if no A/B tests are configured for this application. */
   @javax.annotation.Nullable
   public List<ABTest> getAbtests() {
     return abtests;
