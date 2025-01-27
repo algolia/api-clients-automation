@@ -1,0 +1,24 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+$labels = []; // A list of labels
+$reduceLabelsToFilters = function (array $labels): array {
+    // Implement your logic here
+    return [];
+};
+
+try {
+  {{> snippets/init}}
+
+  $optionalFilters = $reduceLabelsToFilters($labels);
+  $searchParams = [
+    'query' => '<YOUR_SEARCH_QUERY>',
+    'optionalFilters' => $optionalFilters,
+  ];
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+} catch (Exception $e) {
+  echo $e->getMessage() . PHP_EOL;
+}
