@@ -1,0 +1,22 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+try {
+  {{> snippets/init}}
+
+  $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . "actors.json";
+  $response = file_get_contents($url);
+  $records = json_decode($response ?: "[]", true);
+
+  $chunkSize = 10000;
+
+  for ($beginIndex = 0; $beginIndex < count($records); $beginIndex += $chunkSize) {
+      $chunk = array_slice($records, $beginIndex, $chunkSize);
+
+      {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}};
+  }
+} catch (Exception $e) {
+  echo 'Error: ' . $e->getMessage() . "\n";
+}
