@@ -2710,6 +2710,7 @@ components:
       required:
         - url
     waitTime:
+      type: object
       description: Timeout for the HTTP request.
       properties:
         min:
@@ -3247,14 +3248,12 @@ components:
               description: Date and time when the last crawl started, in RFC 3339 format.
               example: '2024-04-07T09:16:04Z'
             - type: 'null'
-              description: If null, this crawler hasn't indexed anything yet.
         lastReindexEndedAt:
           default: null
           oneOf:
             - type: string
               description: Date and time when the last crawl finished, in RFC 3339 format.
             - type: 'null'
-              description: If null, this crawler hasn't indexed anything yet.
       required:
         - name
         - createdAt

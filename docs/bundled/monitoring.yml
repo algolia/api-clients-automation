@@ -3114,6 +3114,7 @@ components:
         - cluster
     Server:
       title: server
+      type: object
       additionalProperties: false
       properties:
         name:
