@@ -3,8 +3,8 @@ ABTests:
     - type: array
       description: A/B tests.
       items:
-        $ref: '#/ABTest'
-    - type: 'null'
+        $ref: "#/ABTest"
+    - type: "null"
       description: No A/B tests are configured for this application.
 
 ABTest:
@@ -12,82 +12,21 @@ ABTest:
   additionalProperties: false
   properties:
     abTestID:
-      $ref: '../parameters.yml#/abTestID'
-    clickSignificance:
-      description: |
-        A/B test significance calculated from click events.
-
-        Values of 0.95 or higher can be considered significant,
-        that is, the difference between A and B variants is _not_ due to random variations.
-        Lower values have a.
-      oneOf:
-        - type: number
-          format: double
-          example: 1
-        - type: 'null'
-    conversionSignificance:
-      description: |
-        A/B test significance calculated from conversion events.
-
-        Values of 0.95 or higher can be considered significant,
-        that is, the difference between A and B variants is _not_ due to random variations.
-      oneOf:
-        - type: number
-          format: double
-          example: 1
-        - type: 'null'
-    addToCartSignificance:
-      description: |
-        A/B test significance calculated from add-to-cart events.
-
-        Values of 0.95 or higher can be considered significant,
-        that is, the difference between A and B variants is _not_ due to random variations.
-      oneOf:
-        - type: number
-          format: double
-          example: 1
-        - type: 'null'
-    purchaseSignificance:
-      description: |
-        A/B test significance calculated from purchase events.
-
-        Values of 0.95 or higher can be considered significant,
-        that is, the difference between A and B variants is _not_ due to random variations.
-      oneOf:
-        - type: number
-          format: double
-          example: 1
-        - type: 'null'
-    revenueSignificance:
-      description: |
-        A/B test significance calculated from revenue data.
-
-        Values of 0.95 or higher can be considered significant,
-        that is, the difference between A and B variants is _not_ due to random variations.
-      oneOf:
-        - type: object
-          additionalProperties:
-            type: number
-            format: double
-            x-additionalPropertiesName: currency code
-          example:
-            USD: 1
-            EUR: 0.87
-        - type: 'null'
+      $ref: "../parameters.yml#/abTestID"
     updatedAt:
-      $ref: '../parameters.yml#/updatedAt'
+      $ref: "../parameters.yml#/updatedAt"
     createdAt:
-      $ref: '../parameters.yml#/createdAt'
+      $ref: "../parameters.yml#/createdAt"
     endAt:
-      $ref: '../parameters.yml#/endAt'
+      $ref: "../parameters.yml#/endAt"
     name:
-      $ref: '../parameters.yml#/name'
+      $ref: "../parameters.yml#/name"
     status:
-      $ref: '#/Status'
+      $ref: "#/Status"
     variants:
-      $ref: 'Variant.yml#/variants'
+      $ref: "Variant.yml#/variants"
     configuration:
-      $ref: '#/ABTestConfiguration'
+      $ref: "#/ABTestConfiguration"
   required:
     - status
     - name
@@ -119,11 +58,11 @@ ABTestConfiguration:
   description: A/B test configuration.
   properties:
     outliers:
-      $ref: '#/Outliers'
+      $ref: "#/Outliers"
     emptySearch:
-      $ref: '#/EmptySearch'
+      $ref: "#/EmptySearch"
     minimumDetectableEffect:
-      $ref: '#/MinimumDetectableEffect'
+      $ref: "#/MinimumDetectableEffect"
 
 Outliers:
   type: object
@@ -155,7 +94,7 @@ MinimumDetectableEffect:
         Smallest difference in an observable metric between variants.
         For example, to detect a 10% difference between variants, set this value to 0.1.
     metric:
-      $ref: '#/EffectMetric'
+      $ref: "#/EffectMetric"
   required:
     - size
     - metric
