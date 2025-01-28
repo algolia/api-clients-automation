@@ -1,4 +1,4 @@
-$client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}, [
+$client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} [
   {{#requestOptions.queryParameters.parameters}}
     'queryParameters' => [
       {{#requestOptions.queryParameters.parametersWithDataType}}

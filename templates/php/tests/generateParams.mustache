@@ -3,7 +3,7 @@
   null,
 {{/isNull}}
 {{#isVerbatim}}
-  ${{{value}}}
+  ${{{value}}},
 {{/isVerbatim}}
 {{#isString}}
   "{{#lambda.escapeJSON}}{{{value}}}{{/lambda.escapeJSON}}",
