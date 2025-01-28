@@ -21,14 +21,15 @@ variant:
 
         The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.
       example: 0
-    filterEffects:
-      $ref: "../parameters.yml#/filterEffects"
     index:
       $ref: "../parameters.yml#/index"
     trafficPercentage:
       $ref: "../parameters.yml#/trafficPercentage"
     metrics:
       $ref: "#/metrics"
+    metadata:
+      $ref: "#/metadata"
+
   required:
     - index
     - description
@@ -52,9 +53,10 @@ metric:
     value:
       type: number
       format: double
-    pvalue:
+    pValue:
       type: number
       format: double
+      description: PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
     dimension:
       type: string
       description: Dimension defined during test creation
@@ -70,25 +72,31 @@ metric:
     - name
     - updatedAt
     - value
-    - pvalue
+    - pValue
   example:
     - name: addToCartCount
       updatedAt: 2025-06-15T15:06:44.400601Z
       value: 5
-      pvalue: 0.01
+      pValue: 0.01
     - name: clickThroughRate
       updatedAt: 2025-05-15T17:52:15.644906Z
       value: 0.20869847452125934
-      pvalue: 0.004
+      pValue: 0.004
     - name: revenue
       dimension: USD
       updatedAt": 2025-05-15T17:52:15.644906Z
       value: 1200.50
       pValue: 0.04
-      winsorizedValue: 1123.45
+      example: 20.2
     - name: revenue
       dimension: EUR
       updatedAt: 2025-05-15T17:52:15.644906Z
       value: 999.66
       pValue: 0.04
-      winsorizedValue: 888.44
+      example: 888.44
+
+metadata:
+  type: object
+  properties:
+    filterEffects:
+      $ref: "../parameters.yml#/filterEffects"
