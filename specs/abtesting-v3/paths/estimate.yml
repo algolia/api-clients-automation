@@ -32,7 +32,6 @@ post:
               type: array
               description: A/B test variants.
               minItems: 2
-              maxItems: 2
               items:
                 $ref: '../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant'
           required:
