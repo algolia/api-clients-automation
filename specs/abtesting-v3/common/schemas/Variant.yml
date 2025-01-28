@@ -28,7 +28,7 @@ variant:
     metrics:
       $ref: "#/metrics"
     metadata:
-      $ref: "#/metadata"
+      $ref: "#/variantMetadata"
 
   required:
     - index
@@ -60,14 +60,8 @@ metric:
     dimension:
       type: string
       description: Dimension defined during test creation
-    winsorizedValue:
-      type: number
-      format: double
-      description: |
-        Only present in case the metric is 'revenue'. 
-        It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.
-        It is tied to a per revenue-currency pair contrary to other 
-        global filter effects (such as outliers and empty search count).
+    metadata:
+      $ref: "#/metricMetadata"
   required:
     - name
     - updatedAt
@@ -84,19 +78,35 @@ metric:
       pValue: 0.004
     - name: revenue
       dimension: USD
-      updatedAt": 2025-05-15T17:52:15.644906Z
+      updatedAt: 2025-05-15T17:52:15.644906Z
       value: 1200.50
       pValue: 0.04
-      example: 20.2
+      metadata: { "winsorizedValue": 80.2 }
     - name: revenue
       dimension: EUR
       updatedAt: 2025-05-15T17:52:15.644906Z
       value: 999.66
       pValue: 0.04
-      example: 888.44
+      metadata: { "winsorizedValue": 888.8 }
 
-metadata:
+variantMetadata:
   type: object
+  description: Variant specific metadata
   properties:
     filterEffects:
       $ref: "../parameters.yml#/filterEffects"
+
+metricMetadata:
+  type: object
+  description: Metric specific metadata
+  properties:
+    winsorizedValue:
+      type: number
+      format: double
+      description: |
+        Only present in case the metric is 'revenue'. 
+        It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.
+        It is tied to a per revenue-currency pair contrary to other 
+        global filter effects (such as outliers and empty search count).
+  example:
+    winsorizedValue: 888.80
