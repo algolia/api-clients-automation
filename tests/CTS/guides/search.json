@@ -14,8 +14,7 @@
     }
   },
   "listIndicesSimple": {
-    "method": "listIndices",
-    "parameters": {}
+    "method": "listIndices"
   },
   "deleteMultipleIndicesPrimary": {
     "method": "multipleBatch",
