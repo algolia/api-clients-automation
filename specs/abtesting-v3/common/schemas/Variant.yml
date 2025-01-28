@@ -4,7 +4,7 @@ variants:
     A/B test variants.
 
     The first variant is your _control_ index, typically your production index.
-    All of the additionnal variants are indexes with changed settings that you want to test against the control.
+    All of the additional variants are indexes with changed settings that you want to test against the control.
   items:
     $ref: "#/variant"
 
