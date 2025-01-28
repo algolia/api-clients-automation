@@ -62,7 +62,7 @@ metric:
       type: number
       format: double
       description: |
-        Only present in case the metric is a revenue. 
+        Only present in case the metric is 'revenue'. 
         It is the normalized value of it. 
         It is tied to a per revenue-currency pair contrary to other 
         global filter effects (such as outliers and empty search count).
