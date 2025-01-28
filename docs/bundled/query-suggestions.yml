@@ -157,9 +157,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -388,9 +386,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -619,9 +615,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -845,9 +839,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1342,9 +1334,7 @@ paths:
                     []string{"facetA", "facetB"},
                     []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
                 []string{"french"})).SetExclude(
-                []string{"test"}),
-            ))
-
+                []string{"test"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1705,9 +1695,7 @@ paths:
             // Call the API
 
             response, err := client.GetConfig(client.NewApiGetConfigRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2035,9 +2023,7 @@ paths:
 
             response, err :=
             client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2288,9 +2274,7 @@ paths:
             // Call the API
 
             response, err := client.GetLogFile(client.NewApiGetLogFileRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)

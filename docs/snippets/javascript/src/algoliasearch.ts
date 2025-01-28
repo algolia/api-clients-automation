@@ -8,7 +8,7 @@ import { liteClient } from 'algoliasearch/lite';
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForCustomPost(): Promise<void> {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -22,11 +22,240 @@ export async function snippetForCustomPost(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+export async function snippetForCustomPost1(): Promise<void> {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost({
+    path: 'test/all',
+    parameters: { query: 'parameters' },
+    body: { body: 'parameters' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+export async function snippetForCustomPost2(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+export async function snippetForCustomPost3(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query2: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+export async function snippetForCustomPost4(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+export async function snippetForCustomPost5(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+export async function snippetForCustomPost6(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { isItWorking: true },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+export async function snippetForCustomPost7(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: 2 },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+export async function snippetForCustomPost8(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: ['b and c', 'd'] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+export async function snippetForCustomPost9(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [true, true, false] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+export async function snippetForCustomPost10(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [1, 2] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getRecommendations method.
 //
 // get recommendations for recommend model with minimal parameters
 export async function snippetForGetRecommendations(): Promise<void> {
-  // >SEPARATOR getRecommendations default
+  // >SEPARATOR getRecommendations get recommendations for recommend model with minimal parameters
   // Initialize the client
   //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -34,6 +263,199 @@ export async function snippetForGetRecommendations(): Promise<void> {
   // Call the API
   const response = await client.getRecommendations({
     requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations with e2e to check oneOf model
+export async function snippetForGetRecommendations1(): Promise<void> {
+  // >SEPARATOR getRecommendations get recommendations with e2e to check oneOf model
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [
+      {
+        indexName: 'cts_e2e_browse',
+        objectID: 'Æon Flux',
+        model: 'related-products',
+        threshold: 20.0,
+        maxRecommendations: 2,
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for recommend model with all parameters
+export async function snippetForGetRecommendations2(): Promise<void> {
+  // >SEPARATOR getRecommendations get recommendations for recommend model with all parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [
+      {
+        indexName: 'indexName',
+        objectID: 'objectID',
+        model: 'related-products',
+        threshold: 42.1,
+        maxRecommendations: 10,
+        queryParameters: { query: 'myQuery', facetFilters: ['query'] },
+        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for trending model with minimal parameters
+export async function snippetForGetRecommendations3(): Promise<void> {
+  // >SEPARATOR getRecommendations get recommendations for trending model with minimal parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [
+      { indexName: 'indexName', model: 'trending-items', threshold: 42.1, facetName: 'facet', facetValue: 'value' },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for trending model with all parameters
+export async function snippetForGetRecommendations4(): Promise<void> {
+  // >SEPARATOR getRecommendations get recommendations for trending model with all parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [
+      {
+        indexName: 'indexName',
+        model: 'trending-items',
+        threshold: 42.1,
+        maxRecommendations: 10,
+        facetName: 'myFacetName',
+        facetValue: 'myFacetValue',
+        queryParameters: { query: 'myQuery', facetFilters: ['query'] },
+        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get multiple recommendations with minimal parameters
+export async function snippetForGetRecommendations5(): Promise<void> {
+  // >SEPARATOR getRecommendations get multiple recommendations with minimal parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [
+      { indexName: 'indexName1', objectID: 'objectID1', model: 'related-products', threshold: 21.7 },
+      { indexName: 'indexName2', objectID: 'objectID2', model: 'related-products', threshold: 21.7 },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get multiple recommendations with all parameters
+export async function snippetForGetRecommendations6(): Promise<void> {
+  // >SEPARATOR getRecommendations get multiple recommendations with all parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [
+      {
+        indexName: 'indexName1',
+        objectID: 'objectID1',
+        model: 'related-products',
+        threshold: 21.7,
+        maxRecommendations: 10,
+        queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
+        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback1'] },
+      },
+      {
+        indexName: 'indexName2',
+        objectID: 'objectID2',
+        model: 'related-products',
+        threshold: 21.7,
+        maxRecommendations: 10,
+        queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
+        fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get frequently bought together recommendations
+export async function snippetForGetRecommendations7(): Promise<void> {
+  // >SEPARATOR getRecommendations get frequently bought together recommendations
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [{ indexName: 'indexName1', objectID: 'objectID1', model: 'bought-together', threshold: 42.7 }],
   });
 
   // >LOG
@@ -130,8 +552,54 @@ export async function snippetForSearch3(): Promise<void> {
 
 // Snippet for the search method.
 //
-// retrieveFacets
+// search for a single hits request with minimal parameters
 export async function snippetForSearch4(): Promise<void> {
+  // >SEPARATOR search search for a single hits request with minimal parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({ requests: [{ indexName: 'cts_e2e_search_empty_index' }] });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with highlight and snippet results
+export async function snippetForSearch5(): Promise<void> {
+  // >SEPARATOR search search with highlight and snippet results
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'cts_e2e_highlight_snippet_results',
+        query: 'vim',
+        attributesToSnippet: ['*:20'],
+        attributesToHighlight: ['*'],
+        attributesToRetrieve: ['*'],
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// retrieveFacets
+export async function snippetForSearch6(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   //
@@ -151,7 +619,7 @@ export async function snippetForSearch4(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-export async function snippetForSearch5(): Promise<void> {
+export async function snippetForSearch7(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   //
@@ -160,6 +628,302 @@ export async function snippetForSearch5(): Promise<void> {
   // Call the API
   const response = await client.search({
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single facet request with minimal parameters
+export async function snippetForSearch8(): Promise<void> {
+  // >SEPARATOR search search for a single facet request with minimal parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [{ indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' }],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single hits request with all parameters
+export async function snippetForSearch9(): Promise<void> {
+  // >SEPARATOR search search for a single hits request with all parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [{ indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' }],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single facet request with all parameters
+export async function snippetForSearch10(): Promise<void> {
+  // >SEPARATOR search search for a single facet request with all parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'theIndexName',
+        type: 'facet',
+        facet: 'theFacet',
+        facetQuery: 'theFacetQuery',
+        query: 'theQuery',
+        maxFacetHits: 50,
+      },
+    ],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with minimal parameters
+export async function snippetForSearch11(): Promise<void> {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with minimal parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      { indexName: 'theIndexName' },
+      { indexName: 'theIndexName2', type: 'facet', facet: 'theFacet' },
+      { indexName: 'theIndexName', type: 'default' },
+    ],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with all parameters
+export async function snippetForSearch12(): Promise<void> {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with all parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'theIndexName',
+        type: 'facet',
+        facet: 'theFacet',
+        facetQuery: 'theFacetQuery',
+        query: 'theQuery',
+        maxFacetHits: 50,
+      },
+      { indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' },
+    ],
+    strategy: 'stopIfEnoughMatches',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters accept all of the possible shapes
+export async function snippetForSearch13(): Promise<void> {
+  // >SEPARATOR search search filters accept all of the possible shapes
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        indexName: 'theIndexName',
+        facetFilters: 'mySearch:filters',
+        reRankingApplyFilter: 'mySearch:filters',
+        tagFilters: 'mySearch:filters',
+        numericFilters: 'mySearch:filters',
+        optionalFilters: 'mySearch:filters',
+      },
+      {
+        indexName: 'theIndexName',
+        facetFilters: ['mySearch:filters', ['mySearch:filters', ['mySearch:filters']]],
+        reRankingApplyFilter: ['mySearch:filters', ['mySearch:filters']],
+        tagFilters: ['mySearch:filters', ['mySearch:filters']],
+        numericFilters: ['mySearch:filters', ['mySearch:filters']],
+        optionalFilters: ['mySearch:filters', ['mySearch:filters']],
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters end to end
+export async function snippetForSearch14(): Promise<void> {
+  // >SEPARATOR search search filters end to end
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      { indexName: 'cts_e2e_search_facet', filters: "editor:'visual studio' OR editor:neovim" },
+      { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", 'editor:neovim'] },
+      { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", ['editor:neovim']] },
+      {
+        indexName: 'cts_e2e_search_facet',
+        facetFilters: ["editor:'visual studio'", ['editor:neovim', ['editor:goland']]],
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with all search parameters
+export async function snippetForSearch15(): Promise<void> {
+  // >SEPARATOR search search with all search parameters
+  // Initialize the client
+  //
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    requests: [
+      {
+        advancedSyntax: true,
+        advancedSyntaxFeatures: ['exactPhrase'],
+        allowTyposOnNumericTokens: true,
+        alternativesAsExact: ['multiWordsSynonym'],
+        analytics: true,
+        analyticsTags: [''],
+        aroundLatLng: '',
+        aroundLatLngViaIP: true,
+        aroundPrecision: 0,
+        aroundRadius: 'all',
+        attributeCriteriaComputedByMinProximity: true,
+        attributesToHighlight: [''],
+        attributesToRetrieve: [''],
+        attributesToSnippet: [''],
+        clickAnalytics: true,
+        decompoundQuery: true,
+        disableExactOnAttributes: [''],
+        disableTypoToleranceOnAttributes: [''],
+        distinct: 0,
+        enableABTest: true,
+        enablePersonalization: true,
+        enableReRanking: true,
+        enableRules: true,
+        exactOnSingleWordQuery: 'attribute',
+        facetFilters: [''],
+        facetingAfterDistinct: true,
+        facets: [''],
+        filters: '',
+        getRankingInfo: true,
+        highlightPostTag: '',
+        highlightPreTag: '',
+        hitsPerPage: 1,
+        ignorePlurals: false,
+        indexName: 'theIndexName',
+        insideBoundingBox: [
+          [47.3165, 4.9665, 47.3424, 5.0201],
+          [40.9234, 2.1185, 38.643, 1.9916],
+        ],
+        insidePolygon: [
+          [47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9],
+          [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
+        ],
+        length: 1,
+        maxValuesPerFacet: 0,
+        minProximity: 1,
+        minWordSizefor1Typo: 0,
+        minWordSizefor2Typos: 0,
+        minimumAroundRadius: 1,
+        naturalLanguages: ['fr'],
+        numericFilters: [''],
+        offset: 0,
+        optionalFilters: [''],
+        optionalWords: [''],
+        page: 0,
+        percentileComputation: true,
+        personalizationImpact: 0,
+        query: '',
+        queryLanguages: ['fr'],
+        queryType: 'prefixAll',
+        ranking: [''],
+        reRankingApplyFilter: [''],
+        relevancyStrictness: 0,
+        removeStopWords: true,
+        removeWordsIfNoResults: 'allOptional',
+        renderingContent: {
+          facetOrdering: { facets: { order: ['a', 'b'] }, values: { a: { order: ['b'], sortRemainingBy: 'count' } } },
+        },
+        replaceSynonymsInHighlight: true,
+        responseFields: [''],
+        restrictHighlightAndSnippetArrays: true,
+        restrictSearchableAttributes: [''],
+        ruleContexts: [''],
+        similarQuery: '',
+        snippetEllipsisText: '',
+        sortFacetValuesBy: '',
+        sumOrFiltersScores: true,
+        synonyms: true,
+        tagFilters: [''],
+        type: 'default',
+        typoTolerance: 'min',
+        userToken: '',
+      },
+    ],
   });
 
   // >LOG

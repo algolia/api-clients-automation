@@ -5502,25 +5502,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:
@@ -7453,6 +7463,7 @@ components:
             required:
               - objectID
         userData:
+          type: object
           description: >
             A JSON object with custom data that will be appended to the
             `userData` array in the response.
@@ -7669,6 +7680,7 @@ components:
             type: boolean
         - type: 'null'
     standardEntries:
+      type: object
       description: >
         Key-value pairs of [supported language ISO
         codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
@@ -7750,6 +7762,7 @@ components:
       description: Data size taken by all the users assigned to the cluster.
       example: 481
     source:
+      type: object
       description: Source.
       required:
         - source

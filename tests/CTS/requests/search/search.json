@@ -1,7 +1,6 @@
 [
   {
     "testName": "withHitsPerPage",
-    "isSnippet": true,
     "parameters": {
       "requests": [
         {
@@ -27,7 +26,6 @@
   },
   {
     "testName": "filterOnly",
-    "isSnippet": true,
     "parameters": {
       "requests": [
         {
@@ -53,7 +51,6 @@
   },
   {
     "testName": "filterOr",
-    "isSnippet": true,
     "parameters": {
       "requests": [
         {
@@ -79,7 +76,6 @@
   },
   {
     "testName": "filterNot",
-    "isSnippet": true,
     "parameters": {
       "requests": [
         {
@@ -279,7 +275,6 @@
   },
   {
     "testName": "retrieveFacets",
-    "isSnippet": true,
     "parameters": {
       "requests": [
         {
@@ -311,7 +306,6 @@
   },
   {
     "testName": "retrieveFacetsWildcard",
-    "isSnippet": true,
     "parameters": {
       "requests": [
         {

@@ -8,7 +8,7 @@ require "algolia"
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
-  # >SEPARATOR customDelete default
+  # >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -24,11 +24,31 @@ def snippet_for_custom_delete
   # SEPARATOR<
 end
 
+# Snippet for the customDelete method.
+#
+# allow del method for a custom path with all parameters
+def snippet_for_custom_delete1
+  # >SEPARATOR customDelete allow del method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_delete("test/all", {query: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
-  # >SEPARATOR customGet default
+  # >SEPARATOR customGet allow get method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -44,11 +64,61 @@ def snippet_for_custom_get
   # SEPARATOR<
 end
 
+# Snippet for the customGet method.
+#
+# allow get method for a custom path with all parameters
+def snippet_for_custom_get1
+  # >SEPARATOR customGet allow get method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_get("test/all", {query: "parameters with space"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customGet method.
+#
+# requestOptions should be escaped too
+def snippet_for_custom_get2
+  # >SEPARATOR customGet requestOptions should be escaped too
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_get(
+    "test/all",
+    {query: "to be overriden"},
+    {
+      :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+      :query_params => JSON.parse(
+        "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
+        :symbolize_names => true
+      )
+    }
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
-  # >SEPARATOR customPost default
+  # >SEPARATOR customPost allow post method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -64,11 +134,256 @@ def snippet_for_custom_post
   # SEPARATOR<
 end
 
+# Snippet for the customPost method.
+#
+# allow post method for a custom path with all parameters
+def snippet_for_custom_post1
+  # >SEPARATOR customPost allow post method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions can override default query parameters
+def snippet_for_custom_post2
+  # >SEPARATOR customPost requestOptions can override default query parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"query\":\"myQueryParameter\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions merges query parameters with default ones
+def snippet_for_custom_post3
+  # >SEPARATOR customPost requestOptions merges query parameters with default ones
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"query2\":\"myQueryParameter\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions can override default headers
+def snippet_for_custom_post4
+  # >SEPARATOR customPost requestOptions can override default headers
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions merges headers with default ones
+def snippet_for_custom_post5
+  # >SEPARATOR customPost requestOptions merges headers with default ones
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts booleans
+def snippet_for_custom_post6
+  # >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"isItWorking\":true}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts integers
+def snippet_for_custom_post7
+  # >SEPARATOR customPost requestOptions queryParameters accepts integers
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":2}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of string
+def snippet_for_custom_post8
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[\"b and c\",\"d\"]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of booleans
+def snippet_for_custom_post9
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[true,true,false]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of integers
+def snippet_for_custom_post10
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[1,2]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
-  # >SEPARATOR customPut default
+  # >SEPARATOR customPut allow put method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -84,11 +399,31 @@ def snippet_for_custom_put
   # SEPARATOR<
 end
 
+# Snippet for the customPut method.
+#
+# allow put method for a custom path with all parameters
+def snippet_for_custom_put1
+  # >SEPARATOR customPut allow put method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getAddToCartRate method.
 #
 # get getAddToCartRate with minimal parameters
 def snippet_for_get_add_to_cart_rate
-  # >SEPARATOR getAddToCartRate default
+  # >SEPARATOR getAddToCartRate get getAddToCartRate with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -104,11 +439,31 @@ def snippet_for_get_add_to_cart_rate
   # SEPARATOR<
 end
 
+# Snippet for the getAddToCartRate method.
+#
+# get getAddToCartRate with all parameters
+def snippet_for_get_add_to_cart_rate1
+  # >SEPARATOR getAddToCartRate get getAddToCartRate with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_add_to_cart_rate("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getAverageClickPosition method.
 #
 # get getAverageClickPosition with minimal parameters
 def snippet_for_get_average_click_position
-  # >SEPARATOR getAverageClickPosition default
+  # >SEPARATOR getAverageClickPosition get getAverageClickPosition with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -124,11 +479,31 @@ def snippet_for_get_average_click_position
   # SEPARATOR<
 end
 
+# Snippet for the getAverageClickPosition method.
+#
+# get getAverageClickPosition with all parameters
+def snippet_for_get_average_click_position1
+  # >SEPARATOR getAverageClickPosition get getAverageClickPosition with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_average_click_position("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getClickPositions method.
 #
 # get getClickPositions with minimal parameters
 def snippet_for_get_click_positions
-  # >SEPARATOR getClickPositions default
+  # >SEPARATOR getClickPositions get getClickPositions with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -144,11 +519,31 @@ def snippet_for_get_click_positions
   # SEPARATOR<
 end
 
+# Snippet for the getClickPositions method.
+#
+# get getClickPositions with all parameters
+def snippet_for_get_click_positions1
+  # >SEPARATOR getClickPositions get getClickPositions with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_click_positions("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getClickThroughRate method.
 #
 # get getClickThroughRate with minimal parameters
 def snippet_for_get_click_through_rate
-  # >SEPARATOR getClickThroughRate default
+  # >SEPARATOR getClickThroughRate get getClickThroughRate with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -164,11 +559,31 @@ def snippet_for_get_click_through_rate
   # SEPARATOR<
 end
 
+# Snippet for the getClickThroughRate method.
+#
+# get getClickThroughRate with all parameters
+def snippet_for_get_click_through_rate1
+  # >SEPARATOR getClickThroughRate get getClickThroughRate with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_click_through_rate("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getConversionRate method.
 #
 # get getConversationRate with minimal parameters
 def snippet_for_get_conversion_rate
-  # >SEPARATOR getConversionRate default
+  # >SEPARATOR getConversionRate get getConversationRate with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -184,11 +599,31 @@ def snippet_for_get_conversion_rate
   # SEPARATOR<
 end
 
+# Snippet for the getConversionRate method.
+#
+# get getConversationRate with all parameters
+def snippet_for_get_conversion_rate1
+  # >SEPARATOR getConversionRate get getConversationRate with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_conversion_rate("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getNoClickRate method.
 #
 # get getNoClickRate with minimal parameters
 def snippet_for_get_no_click_rate
-  # >SEPARATOR getNoClickRate default
+  # >SEPARATOR getNoClickRate get getNoClickRate with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -204,11 +639,31 @@ def snippet_for_get_no_click_rate
   # SEPARATOR<
 end
 
+# Snippet for the getNoClickRate method.
+#
+# get getNoClickRate with all parameters
+def snippet_for_get_no_click_rate1
+  # >SEPARATOR getNoClickRate get getNoClickRate with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_no_click_rate("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getNoResultsRate method.
 #
 # get getNoResultsRate with minimal parameters
 def snippet_for_get_no_results_rate
-  # >SEPARATOR getNoResultsRate default
+  # >SEPARATOR getNoResultsRate get getNoResultsRate with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -224,11 +679,31 @@ def snippet_for_get_no_results_rate
   # SEPARATOR<
 end
 
+# Snippet for the getNoResultsRate method.
+#
+# get getNoResultsRate with all parameters
+def snippet_for_get_no_results_rate1
+  # >SEPARATOR getNoResultsRate get getNoResultsRate with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_no_results_rate("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getPurchaseRate method.
 #
 # get getPurchaseRate with minimal parameters
 def snippet_for_get_purchase_rate
-  # >SEPARATOR getPurchaseRate default
+  # >SEPARATOR getPurchaseRate get getPurchaseRate with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -244,11 +719,31 @@ def snippet_for_get_purchase_rate
   # SEPARATOR<
 end
 
+# Snippet for the getPurchaseRate method.
+#
+# get getPurchaseRate with all parameters
+def snippet_for_get_purchase_rate1
+  # >SEPARATOR getPurchaseRate get getPurchaseRate with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_purchase_rate("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getRevenue method.
 #
 # get getRevenue with minimal parameters
 def snippet_for_get_revenue
-  # >SEPARATOR getRevenue default
+  # >SEPARATOR getRevenue get getRevenue with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -264,11 +759,31 @@ def snippet_for_get_revenue
   # SEPARATOR<
 end
 
+# Snippet for the getRevenue method.
+#
+# get getRevenue with all parameters
+def snippet_for_get_revenue1
+  # >SEPARATOR getRevenue get getRevenue with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_revenue("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getSearchesCount method.
 #
 # get getSearchesCount with minimal parameters
 def snippet_for_get_searches_count
-  # >SEPARATOR getSearchesCount default
+  # >SEPARATOR getSearchesCount get getSearchesCount with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -284,11 +799,31 @@ def snippet_for_get_searches_count
   # SEPARATOR<
 end
 
+# Snippet for the getSearchesCount method.
+#
+# get getSearchesCount with all parameters
+def snippet_for_get_searches_count1
+  # >SEPARATOR getSearchesCount get getSearchesCount with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_searches_count("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getSearchesNoClicks method.
 #
 # get getSearchesNoClicks with minimal parameters
 def snippet_for_get_searches_no_clicks
-  # >SEPARATOR getSearchesNoClicks default
+  # >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -304,16 +839,56 @@ def snippet_for_get_searches_no_clicks
   # SEPARATOR<
 end
 
+# Snippet for the getSearchesNoClicks method.
+#
+# get getSearchesNoClicks with all parameters
+def snippet_for_get_searches_no_clicks1
+  # >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_searches_no_clicks("index", "1999-09-19", "2001-01-01", 21, 42, "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getSearchesNoResults method.
 #
 # get getSearchesNoResults with minimal parameters
 def snippet_for_get_searches_no_results
-  # >SEPARATOR getSearchesNoResults default
+  # >SEPARATOR getSearchesNoResults get getSearchesNoResults with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_searches_no_results("index")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getSearchesNoResults method.
+#
+# get getSearchesNoResults with all parameters
+def snippet_for_get_searches_no_results1
+  # >SEPARATOR getSearchesNoResults get getSearchesNoResults with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_searches_no_results("index", "1999-09-19", "2001-01-01", 21, 42, "tag")
 
   # >LOG
   # use the class directly
@@ -348,7 +923,7 @@ end
 #
 # get getTopCountries with minimal parameters
 def snippet_for_get_top_countries
-  # >SEPARATOR getTopCountries default
+  # >SEPARATOR getTopCountries get getTopCountries with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -364,11 +939,31 @@ def snippet_for_get_top_countries
   # SEPARATOR<
 end
 
+# Snippet for the getTopCountries method.
+#
+# get getTopCountries with all parameters
+def snippet_for_get_top_countries1
+  # >SEPARATOR getTopCountries get getTopCountries with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_countries("index", "1999-09-19", "2001-01-01", 21, 42, "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getTopFilterAttributes method.
 #
 # get getTopFilterAttributes with minimal parameters
 def snippet_for_get_top_filter_attributes
-  # >SEPARATOR getTopFilterAttributes default
+  # >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -384,11 +979,31 @@ def snippet_for_get_top_filter_attributes
   # SEPARATOR<
 end
 
+# Snippet for the getTopFilterAttributes method.
+#
+# get getTopFilterAttributes with all parameters
+def snippet_for_get_top_filter_attributes1
+  # >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_filter_attributes("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getTopFilterForAttribute method.
 #
 # get getTopFilterForAttribute with minimal parameters
 def snippet_for_get_top_filter_for_attribute
-  # >SEPARATOR getTopFilterForAttribute default
+  # >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -404,11 +1019,89 @@ def snippet_for_get_top_filter_for_attribute
   # SEPARATOR<
 end
 
+# Snippet for the getTopFilterForAttribute method.
+#
+# get getTopFilterForAttribute with minimal parameters and multiple attributes
+def snippet_for_get_top_filter_for_attribute1
+  # >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters and multiple attributes
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_filter_for_attribute("myAttribute1,myAttribute2", "index")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getTopFilterForAttribute method.
+#
+# get getTopFilterForAttribute with all parameters
+def snippet_for_get_top_filter_for_attribute2
+  # >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_filter_for_attribute(
+    "myAttribute",
+    "index",
+    "mySearch",
+    "1999-09-19",
+    "2001-01-01",
+    21,
+    42,
+    "tag"
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getTopFilterForAttribute method.
+#
+# get getTopFilterForAttribute with all parameters and multiple attributes
+def snippet_for_get_top_filter_for_attribute3
+  # >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters and multiple attributes
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_filter_for_attribute(
+    "myAttribute1,myAttribute2",
+    "index",
+    "mySearch",
+    "1999-09-19",
+    "2001-01-01",
+    21,
+    42,
+    "tag"
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getTopFiltersNoResults method.
 #
 # get getTopFiltersNoResults with minimal parameters
 def snippet_for_get_top_filters_no_results
-  # >SEPARATOR getTopFiltersNoResults default
+  # >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -424,11 +1117,31 @@ def snippet_for_get_top_filters_no_results
   # SEPARATOR<
 end
 
+# Snippet for the getTopFiltersNoResults method.
+#
+# get getTopFiltersNoResults with all parameters
+def snippet_for_get_top_filters_no_results1
+  # >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_filters_no_results("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getTopHits method.
 #
 # get getTopHits with minimal parameters
 def snippet_for_get_top_hits
-  # >SEPARATOR getTopHits default
+  # >SEPARATOR getTopHits get getTopHits with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -444,11 +1157,31 @@ def snippet_for_get_top_hits
   # SEPARATOR<
 end
 
+# Snippet for the getTopHits method.
+#
+# get getTopHits with all parameters
+def snippet_for_get_top_hits1
+  # >SEPARATOR getTopHits get getTopHits with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_hits("index", "mySearch", true, true, "1999-09-19", "2001-01-01", 21, 42, "tag")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getTopSearches method.
 #
 # get getTopSearches with minimal parameters
 def snippet_for_get_top_searches
-  # >SEPARATOR getTopSearches default
+  # >SEPARATOR getTopSearches get getTopSearches with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -464,16 +1197,67 @@ def snippet_for_get_top_searches
   # SEPARATOR<
 end
 
+# Snippet for the getTopSearches method.
+#
+# get getTopSearches with all parameters
+def snippet_for_get_top_searches1
+  # >SEPARATOR getTopSearches get getTopSearches with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_top_searches(
+    "index",
+    true,
+    true,
+    "1999-09-19",
+    "2001-01-01",
+    "searchCount",
+    "asc",
+    21,
+    42,
+    "tag"
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getUsersCount method.
 #
 # get getUsersCount with minimal parameters
 def snippet_for_get_users_count
-  # >SEPARATOR getUsersCount default
+  # >SEPARATOR getUsersCount get getUsersCount with minimal parameters
   # Initialize the client
   client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_users_count("index")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getUsersCount method.
+#
+# get getUsersCount with all parameters
+def snippet_for_get_users_count1
+  # >SEPARATOR getUsersCount get getUsersCount with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_users_count("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
   # use the class directly

@@ -2,7 +2,7 @@ require "uri"
 require "algolia"
 
 # Fetch sample dataset
-uri = URI("https://dashboard.algolia.com/sample_datasets/movie.json")
+uri = URI("https://dashboard.algolia.com/api/1/sample_datasets?type=movie")
 response = Net::HTTP.get_response(uri)
 movies = JSON.parse(response.body)
 

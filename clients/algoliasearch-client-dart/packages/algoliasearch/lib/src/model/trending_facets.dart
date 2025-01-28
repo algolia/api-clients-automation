@@ -18,7 +18,7 @@ final class TrendingFacets {
 
   /// Facet attribute for which to retrieve trending facet values.
   @JsonKey(name: r'facetName')
-  final Object? facetName;
+  final String facetName;
 
   @JsonKey(name: r'model')
   final TrendingFacetsModel model;
@@ -36,9 +36,7 @@ final class TrendingFacets {
 
   @override
   int get hashCode =>
-      (facetName == null ? 0 : facetName.hashCode) +
-      model.hashCode +
-      fallbackParameters.hashCode;
+      facetName.hashCode + model.hashCode + fallbackParameters.hashCode;
 
   factory TrendingFacets.fromJson(Map<String, dynamic> json) =>
       _$TrendingFacetsFromJson(json);

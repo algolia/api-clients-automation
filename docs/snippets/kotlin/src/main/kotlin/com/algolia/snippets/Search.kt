@@ -3,6 +3,8 @@ package com.algolia.snippets
 
 // >IMPORT
 import com.algolia.client.api.SearchClient
+import com.algolia.client.configuration.*
+import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
 
 // IMPORT<
@@ -82,15 +84,36 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForAssignUserId() {
-    // >SEPARATOR assignUserId default
+    // >SEPARATOR assignUserId simple
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.assignUserId(
-      xAlgoliaUserID = "userID",
+      xAlgoliaUserID = "user42",
       assignUserIdParams = AssignUserIdParams(
-        cluster = "theCluster",
+        cluster = "d4242-eu",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForAssignUserId1() {
+    // >SEPARATOR assignUserId it should not encode the userID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.assignUserId(
+      xAlgoliaUserID = "user id with spaces",
+      assignUserIdParams = AssignUserIdParams(
+        cluster = "cluster with spaces",
       ),
     )
 
@@ -454,13 +477,56 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForBrowse() {
-    // >SEPARATOR browse default
+    // >SEPARATOR browse browse with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.browse(
       indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForBrowse1() {
+    // >SEPARATOR browse browse with search parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.browse(
+      indexName = "<YOUR_INDEX_NAME>",
+      browseParams = BrowseParamsObject(
+        query = "myQuery",
+        facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForBrowse2() {
+    // >SEPARATOR browse browse allow a cursor in parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.browse(
+      indexName = "<YOUR_INDEX_NAME>",
+      browseParams = BrowseParamsObject(
+        cursor = "test",
+      ),
     )
 
     // >LOG
@@ -526,7 +592,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForCustomDelete() {
-    // >SEPARATOR customDelete default
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -543,8 +609,27 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomDelete1() {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customDelete(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomGet() {
-    // >SEPARATOR customGet default
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -561,8 +646,55 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomGet1() {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customGet(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters with space"),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomGet2() {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customGet(
+      path = "test/all",
+      parameters = mapOf("query" to "to be overriden"),
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query", "parameters with space")
+          put("and an array", listOf("array", "with spaces"))
+        },
+        headers = buildMap {
+          put("x-header-1", "spaces are left alone")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomPost() {
-    // >SEPARATOR customPost default
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -579,14 +711,334 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomPost1() {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "body",
+          JsonPrimitive("parameters"),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost2() {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query", "myQueryParameter")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost3() {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query2", "myQueryParameter")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost4() {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("x-algolia-api-key", "ALGOLIA_API_KEY")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost5() {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("x-algolia-api-key", "ALGOLIA_API_KEY")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost6() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("isItWorking", true)
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost7() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", 2)
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost8() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf("b and c", "d"))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost9() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf(true, true, false))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost10() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf(1, 2))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomPut() {
-    // >SEPARATOR customPut default
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.customPut(
       path = "test/minimal",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPut1() {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.customPut(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "body",
+          JsonPrimitive("parameters"),
+        )
+      },
     )
 
     // >LOG
@@ -693,7 +1145,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForDeleteRule() {
-    // >SEPARATOR deleteRule default
+    // >SEPARATOR deleteRule delete rule simple case
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -701,6 +1153,25 @@ class SnippetSearchClient {
     var response = client.deleteRule(
       indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForDeleteRule1() {
+    // >SEPARATOR deleteRule delete rule with simple characters to encode in objectID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.deleteRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "test/with/slash",
     )
 
     // >LOG
@@ -749,7 +1220,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForGenerateSecuredApiKey() {
-    // >SEPARATOR generateSecuredApiKey generate secured api key basic
+    // >SEPARATOR generateSecuredApiKey api key basic
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -771,7 +1242,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForGenerateSecuredApiKey1() {
-    // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+    // >SEPARATOR generateSecuredApiKey with searchParams
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -792,6 +1263,69 @@ class SnippetSearchClient {
           hitsPerPage = 10,
           optionalWords = OptionalWords.of(listOf("one", "two")),
         ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGenerateSecuredApiKey2() {
+    // >SEPARATOR generateSecuredApiKey with filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        filters = "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGenerateSecuredApiKey3() {
+    // >SEPARATOR generateSecuredApiKey with visible_by filter
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        filters = "visible_by:group/Finance",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGenerateSecuredApiKey4() {
+    // >SEPARATOR generateSecuredApiKey with userID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        userToken = "user42",
       ),
     )
 
@@ -872,7 +1406,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForGetLogs() {
-    // >SEPARATOR getLogs default
+    // >SEPARATOR getLogs getLogs with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -887,8 +1421,29 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetLogs1() {
+    // >SEPARATOR getLogs getLogs with parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.getLogs(
+      offset = 5,
+      length = 10,
+      indexName = "<YOUR_INDEX_NAME>",
+      type = LogType.entries.first { it.value == "all" },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetObject() {
-    // >SEPARATOR getObject default
+    // >SEPARATOR getObject getObject
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -897,6 +1452,25 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToRetrieve = listOf("attr1", "attr2"),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetObject1() {
+    // >SEPARATOR getObject search with a real object
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.getObject(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "Batman and Robin",
     )
 
     // >LOG
@@ -1059,12 +1633,30 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForHasPendingMappings() {
-    // >SEPARATOR hasPendingMappings default
+    // >SEPARATOR hasPendingMappings hasPendingMappings with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.hasPendingMappings()
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForHasPendingMappings1() {
+    // >SEPARATOR hasPendingMappings hasPendingMappings with parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.hasPendingMappings(
+      getClusters = true,
+    )
 
     // >LOG
     // Use the response
@@ -1161,7 +1753,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForListIndices() {
-    // >SEPARATOR listIndices default
+    // >SEPARATOR listIndices listIndices with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1176,13 +1768,51 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForListIndices1() {
+    // >SEPARATOR listIndices listIndices with parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.listIndices(
+      page = 8,
+      hitsPerPage = 3,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForListUserIds() {
-    // >SEPARATOR listUserIds default
+    // >SEPARATOR listUserIds listUserIds with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.listUserIds()
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListUserIds1() {
+    // >SEPARATOR listUserIds listUserIds with parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.listUserIds(
+      page = 8,
+      hitsPerPage = 100,
+    )
 
     // >LOG
     // Use the response
@@ -1291,7 +1921,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForPartialUpdateObject() {
-    // >SEPARATOR partialUpdateObject default
+    // >SEPARATOR partialUpdateObject Partial update with a new value for a string attribute
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1303,6 +1933,148 @@ class SnippetSearchClient {
         put(
           "attributeId",
           JsonPrimitive("new value"),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPartialUpdateObject1() {
+    // >SEPARATOR partialUpdateObject Partial update with a new value for an integer attribute
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.partialUpdateObject(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "uniqueID",
+      attributesToUpdate = buildJsonObject {
+        put(
+          "attributeId",
+          JsonPrimitive(1),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPartialUpdateObject2() {
+    // >SEPARATOR partialUpdateObject Partial update with a new value for a boolean attribute
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.partialUpdateObject(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "uniqueID",
+      attributesToUpdate = buildJsonObject {
+        put(
+          "attributeId",
+          JsonPrimitive(true),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPartialUpdateObject3() {
+    // >SEPARATOR partialUpdateObject Partial update with a new value for an array attribute
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.partialUpdateObject(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "uniqueID",
+      attributesToUpdate = buildJsonObject {
+        put(
+          "attributeId",
+          JsonArray(
+            listOf(
+              JsonPrimitive("one"),
+              JsonPrimitive("two"),
+              JsonPrimitive("three"),
+            ),
+          ),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPartialUpdateObject4() {
+    // >SEPARATOR partialUpdateObject Partial update with a new value for an object attribute
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.partialUpdateObject(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "uniqueID",
+      attributesToUpdate = buildJsonObject {
+        put(
+          "attributeId",
+          buildJsonObject {
+            put(
+              "nested",
+              JsonPrimitive("value"),
+            )
+          },
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPartialUpdateObject5() {
+    // >SEPARATOR partialUpdateObject with visible_by filter
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.partialUpdateObject(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "uniqueID",
+      attributesToUpdate = buildJsonObject {
+        put(
+          "visible_by",
+          JsonArray(
+            listOf(
+              JsonPrimitive("Angela"),
+              JsonPrimitive("group/Finance"),
+              JsonPrimitive("group/Shareholders"),
+            ),
+          ),
         )
       },
     )
@@ -1767,8 +2539,92 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSaveObjects2() {
+    // >SEPARATOR saveObjects saveObjectsPlaylist
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("1"),
+          )
+          put(
+            "visibility",
+            JsonPrimitive("public"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Hot 100 Billboard Charts"),
+          )
+          put(
+            "playlistId",
+            JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
+          )
+          put(
+            "createdAt",
+            JsonPrimitive("1500240452"),
+          )
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveObjects3() {
+    // >SEPARATOR saveObjects saveObjectsPublicUser
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("1"),
+          )
+          put(
+            "visibility",
+            JsonPrimitive("public"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Hot 100 Billboard Charts"),
+          )
+          put(
+            "playlistId",
+            JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
+          )
+          put(
+            "createdAt",
+            JsonPrimitive("1500240452"),
+          )
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSaveRule() {
-    // >SEPARATOR saveRule default
+    // >SEPARATOR saveRule saveRule with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1800,8 +2656,772 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSaveRule1() {
+    // >SEPARATOR saveRule saveRule with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "id1",
+      rule = Rule(
+        objectID = "id1",
+        conditions = listOf(
+          Condition(
+            pattern = "apple",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+            alternatives = false,
+            context = "search",
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            filters = "brand:apple",
+            query = ConsequenceQueryObject(
+              remove = listOf("algolia"),
+              edits = listOf(
+                Edit(
+                  type = EditType.entries.first { it.value == "remove" },
+                  delete = "abc",
+                  insert = "cde",
+                ),
+                Edit(
+                  type = EditType.entries.first { it.value == "replace" },
+                  delete = "abc",
+                  insert = "cde",
+                ),
+              ),
+            ),
+          ),
+          hide = listOf(
+            ConsequenceHide(
+              objectID = "321",
+            ),
+          ),
+          filterPromotes = false,
+          userData = buildJsonObject {
+            put(
+              "algolia",
+              JsonPrimitive("aloglia"),
+            )
+          },
+          promote = listOf(
+            PromoteObjectID(
+              objectID = "abc",
+              position = 3,
+            ),
+            PromoteObjectIDs(
+              objectIDs = listOf("abc", "def"),
+              position = 1,
+            ),
+          ),
+        ),
+        description = "test",
+        enabled = true,
+        validity = listOf(
+          TimeRange(
+            from = 1656670273L,
+            until = 1656670277L,
+          ),
+        ),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule2() {
+    // >SEPARATOR saveRule b2b catalog
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "article-rule",
+      rule = Rule(
+        objectID = "article-rule",
+        conditions = listOf(
+          Condition(
+            pattern = "article",
+            anchoring = Anchoring.entries.first { it.value == "startsWith" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            query = ConsequenceQueryObject(
+              edits = listOf(
+                Edit(
+                  type = EditType.entries.first { it.value == "remove" },
+                  delete = "article",
+                ),
+              ),
+            ),
+            restrictSearchableAttributes = listOf("title", "book_id"),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule3() {
+    // >SEPARATOR saveRule merchandising and promoting
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "director-rule",
+      rule = Rule(
+        objectID = "director-rule",
+        conditions = listOf(
+          Condition(
+            pattern = "{facet:director} director",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            restrictSearchableAttributes = listOf("title", "book_id"),
+            automaticFacetFilters = AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
+              listOf(
+                AutomaticFacetFilter(
+                  facet = "director",
+                ),
+              ),
+            ),
+            query = ConsequenceQueryObject(
+              edits = listOf(
+                Edit(
+                  type = EditType.entries.first { it.value == "remove" },
+                  delete = "director",
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule4() {
+    // >SEPARATOR saveRule harry potter
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "harry-potter-rule",
+      rule = Rule(
+        objectID = "harry-potter-rule",
+        conditions = listOf(
+          Condition(
+            pattern = "harry potter",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          userData = buildJsonObject {
+            put(
+              "promo_content",
+              JsonPrimitive("20% OFF on all Harry Potter books!"),
+            )
+          },
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule5() {
+    // >SEPARATOR saveRule merchandising empty query
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "clearance-category-filter",
+      rule = Rule(
+        objectID = "clearance-category-filter",
+        conditions = listOf(
+          Condition(
+            pattern = "",
+            anchoring = Anchoring.entries.first { it.value == "is" },
+            context = "landing",
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            optionalFilters = OptionalFilters.of("clearance:true"),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule6() {
+    // >SEPARATOR saveRule redirect
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "redirect-help-rule",
+      rule = Rule(
+        objectID = "redirect-help-rule",
+        conditions = listOf(
+          Condition(
+            pattern = "help",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          userData = buildJsonObject {
+            put(
+              "redirect",
+              JsonPrimitive("https://www.algolia.com/support"),
+            )
+          },
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule7() {
+    // >SEPARATOR saveRule promote some results over others
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "tomato-fruit",
+      rule = Rule(
+        objectID = "tomato-fruit",
+        conditions = listOf(
+          Condition(
+            pattern = "tomato",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            optionalFilters = OptionalFilters.of("food_group:fruit"),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule8() {
+    // >SEPARATOR saveRule promote several hits
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "Promote-Apple-Newest",
+      rule = Rule(
+        objectID = "Promote-Apple-Newest",
+        conditions = listOf(
+          Condition(
+            pattern = "apple",
+            anchoring = Anchoring.entries.first { it.value == "is" },
+          ),
+        ),
+        consequence = Consequence(
+          promote = listOf(
+            PromoteObjectIDs(
+              objectIDs = listOf("iPhone-12345", "watch-123"),
+              position = 0,
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule9() {
+    // >SEPARATOR saveRule promote newest release
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "Promote-iPhone-X",
+      rule = Rule(
+        objectID = "Promote-iPhone-X",
+        conditions = listOf(
+          Condition(
+            pattern = "iPhone",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          promote = listOf(
+            PromoteObjectID(
+              objectID = "iPhone-12345",
+              position = 0,
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule10() {
+    // >SEPARATOR saveRule promote single item
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "promote-harry-potter-box-set",
+      rule = Rule(
+        objectID = "promote-harry-potter-box-set",
+        conditions = listOf(
+          Condition(
+            pattern = "Harry Potter",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          promote = listOf(
+            PromoteObjectID(
+              objectID = "HP-12345",
+              position = 0,
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule11() {
+    // >SEPARATOR saveRule limit search results
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "article-rule",
+      rule = Rule(
+        objectID = "article-rule",
+        conditions = listOf(
+          Condition(
+            pattern = "article",
+            anchoring = Anchoring.entries.first { it.value == "startsWith" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            query = ConsequenceQueryObject(
+              edits = listOf(
+                Edit(
+                  type = EditType.entries.first { it.value == "remove" },
+                  delete = "article",
+                ),
+              ),
+            ),
+            restrictSearchableAttributes = listOf("title", "book_id"),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule12() {
+    // >SEPARATOR saveRule query match
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "tagged-brand-rule",
+      rule = Rule(
+        conditions = listOf(
+          Condition(
+            pattern = "brand: {facet:brand}",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+            alternatives = false,
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            automaticFacetFilters = AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
+              listOf(
+                AutomaticFacetFilter(
+                  facet = "brand",
+                ),
+              ),
+            ),
+            query = ConsequenceQueryObject(
+              remove = listOf("brand:", "{facet:brand}"),
+            ),
+          ),
+        ),
+        description = "filter on brand: {brand}",
+        objectID = "tagged-brand-rule",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule13() {
+    // >SEPARATOR saveRule dynamic filtering
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "color-facets",
+      rule = Rule(
+        objectID = "color-facets",
+        conditions = listOf(
+          Condition(
+            pattern = "{facet:color}",
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            automaticFacetFilters = AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
+              listOf(
+                AutomaticFacetFilter(
+                  facet = "color",
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule14() {
+    // >SEPARATOR saveRule hide hits
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "hide-12345",
+      rule = Rule(
+        objectID = "hide-12345",
+        conditions = listOf(
+          Condition(
+            pattern = "cheap",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          hide = listOf(
+            ConsequenceHide(
+              objectID = "to-hide-12345",
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule15() {
+    // >SEPARATOR saveRule one rule per facet
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "red-color",
+      rule = Rule(
+        objectID = "red-color",
+        conditions = listOf(
+          Condition(
+            pattern = "red",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            query = ConsequenceQueryObject(
+              remove = listOf("red"),
+            ),
+            filters = "color:red",
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule16() {
+    // >SEPARATOR saveRule numerical filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "cheap",
+      rule = Rule(
+        objectID = "cheap",
+        conditions = listOf(
+          Condition(
+            pattern = "cheap",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            query = ConsequenceQueryObject(
+              remove = listOf("cheap"),
+            ),
+            filters = "price < 10",
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule17() {
+    // >SEPARATOR saveRule negative filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "gluten-free-rule",
+      rule = Rule(
+        objectID = "gluten-free-rule",
+        conditions = listOf(
+          Condition(
+            pattern = "gluten-free",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            filters = "NOT allergens:gluten",
+            query = ConsequenceQueryObject(
+              edits = listOf(
+                Edit(
+                  type = EditType.entries.first { it.value == "remove" },
+                  delete = "gluten-free",
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule18() {
+    // >SEPARATOR saveRule positive filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "diet-rule",
+      rule = Rule(
+        objectID = "diet-rule",
+        conditions = listOf(
+          Condition(
+            pattern = "diet",
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+          ),
+        ),
+        consequence = Consequence(
+          params = ConsequenceParams(
+            filters = "'low-carb' OR 'low-fat'",
+            query = ConsequenceQueryObject(
+              edits = listOf(
+                Edit(
+                  type = EditType.entries.first { it.value == "remove" },
+                  delete = "diet",
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule19() {
+    // >SEPARATOR saveRule conditionless
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "diet-rule",
+      rule = Rule(
+        objectID = "diet-rule",
+        consequence = Consequence(
+          params = ConsequenceParams(
+            filters = "'low-carb' OR 'low-fat'",
+            query = ConsequenceQueryObject(
+              edits = listOf(
+                Edit(
+                  type = EditType.entries.first { it.value == "remove" },
+                  delete = "diet",
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSaveRules() {
-    // >SEPARATOR saveRules default
+    // >SEPARATOR saveRules saveRules with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1840,6 +3460,191 @@ class SnippetSearchClient {
       ),
       forwardToReplicas = false,
       clearExistingRules = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRules1() {
+    // >SEPARATOR saveRules saveRules with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRules(
+      indexName = "<YOUR_INDEX_NAME>",
+      rules = listOf(
+        Rule(
+          objectID = "id1",
+          conditions = listOf(
+            Condition(
+              pattern = "apple",
+              anchoring = Anchoring.entries.first { it.value == "contains" },
+              alternatives = false,
+              context = "search",
+            ),
+          ),
+          consequence = Consequence(
+            params = ConsequenceParams(
+              filters = "brand:apple",
+              query = ConsequenceQueryObject(
+                remove = listOf("algolia"),
+                edits = listOf(
+                  Edit(
+                    type = EditType.entries.first { it.value == "remove" },
+                    delete = "abc",
+                    insert = "cde",
+                  ),
+                  Edit(
+                    type = EditType.entries.first { it.value == "replace" },
+                    delete = "abc",
+                    insert = "cde",
+                  ),
+                ),
+              ),
+            ),
+            hide = listOf(
+              ConsequenceHide(
+                objectID = "321",
+              ),
+            ),
+            filterPromotes = false,
+            userData = buildJsonObject {
+              put(
+                "algolia",
+                JsonPrimitive("aloglia"),
+              )
+            },
+            promote = listOf(
+              PromoteObjectID(
+                objectID = "abc",
+                position = 3,
+              ),
+              PromoteObjectIDs(
+                objectIDs = listOf("abc", "def"),
+                position = 1,
+              ),
+            ),
+          ),
+          description = "test",
+          enabled = true,
+          validity = listOf(
+            TimeRange(
+              from = 1656670273L,
+              until = 1656670277L,
+            ),
+          ),
+        ),
+      ),
+      forwardToReplicas = true,
+      clearExistingRules = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRules2() {
+    // >SEPARATOR saveRules dynamic filtering
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRules(
+      indexName = "<YOUR_INDEX_NAME>",
+      rules = listOf(
+        Rule(
+          objectID = "toaster",
+          conditions = listOf(
+            Condition(
+              pattern = "toaster",
+              anchoring = Anchoring.entries.first { it.value == "contains" },
+            ),
+          ),
+          consequence = Consequence(
+            params = ConsequenceParams(
+              query = ConsequenceQueryObject(
+                remove = listOf("toaster"),
+              ),
+              filters = "product_type:toaster",
+            ),
+          ),
+        ),
+        Rule(
+          objectID = "cheap",
+          conditions = listOf(
+            Condition(
+              pattern = "cheap",
+              anchoring = Anchoring.entries.first { it.value == "contains" },
+            ),
+          ),
+          consequence = Consequence(
+            params = ConsequenceParams(
+              query = ConsequenceQueryObject(
+                remove = listOf("cheap"),
+              ),
+              filters = "price < 15",
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRules3() {
+    // >SEPARATOR saveRules enhance search results
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRules(
+      indexName = "<YOUR_INDEX_NAME>",
+      rules = listOf(
+        Rule(
+          objectID = "country",
+          conditions = listOf(
+            Condition(
+              pattern = "{facet:country}",
+              anchoring = Anchoring.entries.first { it.value == "contains" },
+            ),
+          ),
+          consequence = Consequence(
+            params = ConsequenceParams(
+              aroundLatLngViaIP = false,
+            ),
+          ),
+        ),
+        Rule(
+          objectID = "city",
+          conditions = listOf(
+            Condition(
+              pattern = "{facet:city}",
+              anchoring = Anchoring.entries.first { it.value == "contains" },
+            ),
+          ),
+          consequence = Consequence(
+            params = ConsequenceParams(
+              aroundLatLngViaIP = false,
+            ),
+          ),
+        ),
+      ),
     )
 
     // >LOG
@@ -2013,6 +3818,58 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSearch4() {
+    // >SEPARATOR search search for a single hits request with minimal parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch5() {
+    // >SEPARATOR search search with highlight and snippet results
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = "vim",
+            attributesToSnippet = listOf("*:20"),
+            attributesToHighlight = listOf("*"),
+            attributesToRetrieve = listOf("*"),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch6() {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2038,7 +3895,7 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForSearch5() {
+  suspend fun snippetForSearch7() {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
@@ -2064,8 +3921,344 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSearch8() {
+    // >SEPARATOR search search for a single facet request with minimal parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForFacets(
+            indexName = "<YOUR_INDEX_NAME>",
+            type = SearchTypeFacet.entries.first { it.value == "facet" },
+            facet = "editor",
+          ),
+        ),
+        strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch9() {
+    // >SEPARATOR search search for a single hits request with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = "myQuery",
+            hitsPerPage = 50,
+            type = SearchTypeDefault.entries.first { it.value == "default" },
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch10() {
+    // >SEPARATOR search search for a single facet request with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForFacets(
+            indexName = "<YOUR_INDEX_NAME>",
+            type = SearchTypeFacet.entries.first { it.value == "facet" },
+            facet = "theFacet",
+            facetQuery = "theFacetQuery",
+            query = "theQuery",
+            maxFacetHits = 50,
+          ),
+        ),
+        strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch11() {
+    // >SEPARATOR search search for multiple mixed requests in multiple indices with minimal parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+          ),
+          SearchForFacets(
+            indexName = "<YOUR_INDEX_NAME>",
+            type = SearchTypeFacet.entries.first { it.value == "facet" },
+            facet = "theFacet",
+          ),
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            type = SearchTypeDefault.entries.first { it.value == "default" },
+          ),
+        ),
+        strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch12() {
+    // >SEPARATOR search search for multiple mixed requests in multiple indices with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForFacets(
+            indexName = "<YOUR_INDEX_NAME>",
+            type = SearchTypeFacet.entries.first { it.value == "facet" },
+            facet = "theFacet",
+            facetQuery = "theFacetQuery",
+            query = "theQuery",
+            maxFacetHits = 50,
+          ),
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = "myQuery",
+            hitsPerPage = 50,
+            type = SearchTypeDefault.entries.first { it.value == "default" },
+          ),
+        ),
+        strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch13() {
+    // >SEPARATOR search search filters accept all of the possible shapes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            facetFilters = FacetFilters.of("mySearch:filters"),
+            reRankingApplyFilter = ReRankingApplyFilter.of("mySearch:filters"),
+            tagFilters = TagFilters.of("mySearch:filters"),
+            numericFilters = NumericFilters.of("mySearch:filters"),
+            optionalFilters = OptionalFilters.of("mySearch:filters"),
+          ),
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("mySearch:filters"), FacetFilters.of(listOf(FacetFilters.of("mySearch:filters"), FacetFilters.of(listOf(FacetFilters.of("mySearch:filters"))))))),
+            reRankingApplyFilter = ReRankingApplyFilter.of(listOf(ReRankingApplyFilter.of("mySearch:filters"), ReRankingApplyFilter.of(listOf(ReRankingApplyFilter.of("mySearch:filters"))))),
+            tagFilters = TagFilters.of(listOf(TagFilters.of("mySearch:filters"), TagFilters.of(listOf(TagFilters.of("mySearch:filters"))))),
+            numericFilters = NumericFilters.of(listOf(NumericFilters.of("mySearch:filters"), NumericFilters.of(listOf(NumericFilters.of("mySearch:filters"))))),
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("mySearch:filters"), OptionalFilters.of(listOf(OptionalFilters.of("mySearch:filters"))))),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch14() {
+    // >SEPARATOR search search filters end to end
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            filters = "editor:'visual studio' OR editor:neovim",
+          ),
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim"))),
+          ),
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(listOf(FacetFilters.of("editor:neovim"))))),
+          ),
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(listOf(FacetFilters.of("editor:neovim"), FacetFilters.of(listOf(FacetFilters.of("editor:goland"))))))),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch15() {
+    // >SEPARATOR search search with all search parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = listOf(
+          SearchForHits(
+            advancedSyntax = true,
+            advancedSyntaxFeatures = listOf(AdvancedSyntaxFeatures.entries.first { it.value == "exactPhrase" }),
+            allowTyposOnNumericTokens = true,
+            alternativesAsExact = listOf(AlternativesAsExact.entries.first { it.value == "multiWordsSynonym" }),
+            analytics = true,
+            analyticsTags = listOf(""),
+            aroundLatLng = "",
+            aroundLatLngViaIP = true,
+            aroundPrecision = AroundPrecision.of(0),
+            aroundRadius = AroundRadiusAll.entries.first { it.value == "all" },
+            attributeCriteriaComputedByMinProximity = true,
+            attributesToHighlight = listOf(""),
+            attributesToRetrieve = listOf(""),
+            attributesToSnippet = listOf(""),
+            clickAnalytics = true,
+            decompoundQuery = true,
+            disableExactOnAttributes = listOf(""),
+            disableTypoToleranceOnAttributes = listOf(""),
+            distinct = Distinct.of(0),
+            enableABTest = true,
+            enablePersonalization = true,
+            enableReRanking = true,
+            enableRules = true,
+            exactOnSingleWordQuery = ExactOnSingleWordQuery.entries.first { it.value == "attribute" },
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of(""))),
+            facetingAfterDistinct = true,
+            facets = listOf(""),
+            filters = "",
+            getRankingInfo = true,
+            highlightPostTag = "",
+            highlightPreTag = "",
+            hitsPerPage = 1,
+            ignorePlurals = IgnorePlurals.of(false),
+            indexName = "<YOUR_INDEX_NAME>",
+            insideBoundingBox = InsideBoundingBox.of(listOf(listOf(47.3165, 4.9665, 47.3424, 5.0201), listOf(40.9234, 2.1185, 38.643, 1.9916))),
+            insidePolygon = listOf(listOf(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9), listOf(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)),
+            length = 1,
+            maxValuesPerFacet = 0,
+            minProximity = 1,
+            minWordSizefor1Typo = 0,
+            minWordSizefor2Typos = 0,
+            minimumAroundRadius = 1,
+            naturalLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
+            numericFilters = NumericFilters.of(listOf(NumericFilters.of(""))),
+            offset = 0,
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of(""))),
+            optionalWords = OptionalWords.of(listOf("")),
+            page = 0,
+            percentileComputation = true,
+            personalizationImpact = 0,
+            query = "",
+            queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
+            queryType = QueryType.entries.first { it.value == "prefixAll" },
+            ranking = listOf(""),
+            reRankingApplyFilter = ReRankingApplyFilter.of(listOf(ReRankingApplyFilter.of(""))),
+            relevancyStrictness = 0,
+            removeStopWords = RemoveStopWords.of(true),
+            removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "allOptional" },
+            renderingContent = RenderingContent(
+              facetOrdering = FacetOrdering(
+                facets = Facets(
+                  order = listOf("a", "b"),
+                ),
+                values = mapOf(
+                  "a" to Value(
+                    order = listOf("b"),
+                    sortRemainingBy = SortRemainingBy.entries.first { it.value == "count" },
+                  ),
+                ),
+              ),
+            ),
+            replaceSynonymsInHighlight = true,
+            responseFields = listOf(""),
+            restrictHighlightAndSnippetArrays = true,
+            restrictSearchableAttributes = listOf(""),
+            ruleContexts = listOf(""),
+            similarQuery = "",
+            snippetEllipsisText = "",
+            sortFacetValuesBy = "",
+            sumOrFiltersScores = true,
+            synonyms = true,
+            tagFilters = TagFilters.of(listOf(TagFilters.of(""))),
+            type = SearchTypeDefault.entries.first { it.value == "default" },
+            typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" },
+            userToken = "",
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSearchDictionaryEntries() {
-    // >SEPARATOR searchDictionaryEntries default
+    // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2085,8 +4278,32 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSearchDictionaryEntries1() {
+    // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchDictionaryEntries(
+      dictionaryName = DictionaryType.entries.first { it.value == "compounds" },
+      searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
+        query = "foo",
+        page = 4,
+        hitsPerPage = 2,
+        language = SupportedLanguage.entries.first { it.value == "fr" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSearchForFacetValues() {
-    // >SEPARATOR searchForFacetValues default
+    // >SEPARATOR searchForFacetValues get searchForFacetValues results with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2094,6 +4311,52 @@ class SnippetSearchClient {
     var response = client.searchForFacetValues(
       indexName = "<YOUR_INDEX_NAME>",
       facetName = "facetName",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchForFacetValues1() {
+    // >SEPARATOR searchForFacetValues get searchForFacetValues results with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchForFacetValues(
+      indexName = "<YOUR_INDEX_NAME>",
+      facetName = "facetName",
+      searchForFacetValuesRequest = SearchForFacetValuesRequest(
+        params = "query=foo&facetFilters=['bar']",
+        facetQuery = "foo",
+        maxFacetHits = 42,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchForFacetValues2() {
+    // >SEPARATOR searchForFacetValues facetName and facetQuery
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchForFacetValues(
+      indexName = "<YOUR_INDEX_NAME>",
+      facetName = "author",
+      searchForFacetValuesRequest = SearchForFacetValuesRequest(
+        facetQuery = "stephen king",
+      ),
     )
 
     // >LOG
@@ -2126,7 +4389,43 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSearchSingleIndex() {
-    // >SEPARATOR searchSingleIndex default
+    // >SEPARATOR searchSingleIndex search with minimal parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex1() {
+    // >SEPARATOR searchSingleIndex search with special characters in indexName
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex2() {
+    // >SEPARATOR searchSingleIndex search with searchParams
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2147,14 +4446,762 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSearchSingleIndex3() {
+    // >SEPARATOR searchSingleIndex single search retrieve snippets
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        query = "batman mask of the phantasm",
+        attributesToRetrieve = listOf("*"),
+        attributesToSnippet = listOf("*:20"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex4() {
+    // >SEPARATOR searchSingleIndex query
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        query = "phone",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex5() {
+    // >SEPARATOR searchSingleIndex filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "country:US AND price.gross < 2.0",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex6() {
+    // >SEPARATOR searchSingleIndex distinct
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        distinct = Distinct.of(true),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex7() {
+    // >SEPARATOR searchSingleIndex filtersNumeric
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "price < 10",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex8() {
+    // >SEPARATOR searchSingleIndex filtersTimestamp
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "NOT date_timestamp:1514764800 TO 1546300799",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex9() {
+    // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        sumOrFiltersScores = false,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex10() {
+    // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+        sumOrFiltersScores = true,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex11() {
+    // >SEPARATOR searchSingleIndex filtersStephenKing
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "author:\"Stephen King\"",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex12() {
+    // >SEPARATOR searchSingleIndex filtersNotTags
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "NOT _tags:non-fiction",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex13() {
+    // >SEPARATOR searchSingleIndex facetFiltersList
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        facetFilters = FacetFilters.of(listOf(FacetFilters.of("publisher:Penguin"), FacetFilters.of(listOf(FacetFilters.of("author:Stephen King"), FacetFilters.of("genre:Horror"))))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex14() {
+    // >SEPARATOR searchSingleIndex facetFiltersNeg
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        facetFilters = FacetFilters.of("category:-Ebook"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex15() {
+    // >SEPARATOR searchSingleIndex filtersAndFacetFilters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "(author:\"Stephen King\" OR genre:\"Horror\")",
+        facetFilters = FacetFilters.of(listOf(FacetFilters.of("publisher:Penguin"))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex16() {
+    // >SEPARATOR searchSingleIndex facet author genre
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        facets = listOf("author", "genre"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex17() {
+    // >SEPARATOR searchSingleIndex facet wildcard
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        facets = listOf("*"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex18() {
+    // >SEPARATOR searchSingleIndex maxValuesPerFacet
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        maxValuesPerFacet = 1000,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex19() {
+    // >SEPARATOR searchSingleIndex aroundLatLng
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        aroundLatLng = "40.71, -74.01",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex20() {
+    // >SEPARATOR searchSingleIndex aroundLatLngViaIP
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        aroundLatLngViaIP = true,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex21() {
+    // >SEPARATOR searchSingleIndex aroundRadius
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        aroundLatLng = "40.71, -74.01",
+        aroundRadius = AroundRadius.of(1000000),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex22() {
+    // >SEPARATOR searchSingleIndex insideBoundingBox
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        insideBoundingBox = InsideBoundingBox.of(listOf(listOf(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex23() {
+    // >SEPARATOR searchSingleIndex insidePolygon
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        insidePolygon = listOf(listOf(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125)),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex24() {
+    // >SEPARATOR searchSingleIndex insidePolygon
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        insidePolygon = listOf(listOf(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125)),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex25() {
+    // >SEPARATOR searchSingleIndex optionalFilters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("can_deliver_quickly:true"))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex26() {
+    // >SEPARATOR searchSingleIndex optionalFiltersMany
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("brand:Apple<score=3>"), OptionalFilters.of("brand:Samsung<score=2>"), OptionalFilters.of("brand:-Huawei"))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex27() {
+    // >SEPARATOR searchSingleIndex optionalFiltersSimple
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("brand:Apple<score=2>"), OptionalFilters.of("type:tablet"))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex28() {
+    // >SEPARATOR searchSingleIndex restrictSearchableAttributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        restrictSearchableAttributes = listOf("title_fr"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex29() {
+    // >SEPARATOR searchSingleIndex getRankingInfo
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        getRankingInfo = true,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex30() {
+    // >SEPARATOR searchSingleIndex clickAnalytics
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        clickAnalytics = true,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex31() {
+    // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        clickAnalytics = true,
+        userToken = "user-1",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex32() {
+    // >SEPARATOR searchSingleIndex enablePersonalization
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        enablePersonalization = true,
+        userToken = "user-1",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex33() {
+    // >SEPARATOR searchSingleIndex userToken
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        userToken = "user-1",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex34() {
+    // >SEPARATOR searchSingleIndex analyticsTag
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        analyticsTags = listOf("YOUR_ANALYTICS_TAG"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex35() {
+    // >SEPARATOR searchSingleIndex facetFiltersUsers
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        facetFilters = FacetFilters.of(listOf(FacetFilters.of("user:user42"), FacetFilters.of("user:public"))),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex36() {
+    // >SEPARATOR searchSingleIndex buildTheQuery
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        filters = "categoryPageId: Men's Clothing",
+        hitsPerPage = 50,
+        analyticsTags = listOf("mens-clothing"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSearchSynonyms() {
-    // >SEPARATOR searchSynonyms default
+    // >SEPARATOR searchSynonyms searchSynonyms with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.searchSynonyms(
       indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSynonyms1() {
+    // >SEPARATOR searchSynonyms searchSynonyms with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSynonyms(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchSynonymsParams = SearchSynonymsParams(
+        query = "myQuery",
+        type = SynonymType.entries.first { it.value == "altcorrection1" },
+        page = 10,
+        hitsPerPage = 10,
+      ),
     )
 
     // >LOG
@@ -2205,7 +5252,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSetDictionarySettings() {
-    // >SEPARATOR setDictionarySettings default
+    // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2226,8 +5273,930 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSetDictionarySettings1() {
+    // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setDictionarySettings(
+      dictionarySettingsParams = DictionarySettingsParams(
+        disableStandardEntries = StandardEntries(
+          plurals = mapOf("fr" to false, "en" to false, "ru" to true),
+          stopwords = mapOf("fr" to false),
+          compounds = mapOf("ru" to true),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSetSettings() {
-    // >SEPARATOR setSettings default
+    // >SEPARATOR setSettings minimal parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        paginationLimitedTo = 10,
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings1() {
+    // >SEPARATOR setSettings boolean typoTolerance
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        typoTolerance = TypoTolerance.of(true),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings2() {
+    // >SEPARATOR setSettings enum typoTolerance
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" },
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings3() {
+    // >SEPARATOR setSettings ignorePlurals
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        ignorePlurals = IgnorePlurals.of(true),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings4() {
+    // >SEPARATOR setSettings list of string ignorePlurals
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        ignorePlurals = IgnorePlurals.of(listOf(SupportedLanguage.entries.first { it.value == "fr" })),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings5() {
+    // >SEPARATOR setSettings removeStopWords boolean
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        removeStopWords = RemoveStopWords.of(true),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings6() {
+    // >SEPARATOR setSettings removeStopWords list of string
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        removeStopWords = RemoveStopWords.of(listOf(SupportedLanguage.entries.first { it.value == "fr" })),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings7() {
+    // >SEPARATOR setSettings boolean distinct
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        distinct = Distinct.of(true),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings8() {
+    // >SEPARATOR setSettings integer distinct
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        distinct = Distinct.of(1),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings9() {
+    // >SEPARATOR setSettings distinct company
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributeForDistinct = "company",
+        distinct = Distinct.of(true),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings10() {
+    // >SEPARATOR setSettings distinct design
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributeForDistinct = "design",
+        distinct = Distinct.of(true),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings11() {
+    // >SEPARATOR setSettings distinct true
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        distinct = Distinct.of(true),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings12() {
+    // >SEPARATOR setSettings distinct section
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributeForDistinct = "section",
+        distinct = Distinct.of(true),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings13() {
+    // >SEPARATOR setSettings attributesForFaceting allergens
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = listOf("allergens"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings14() {
+    // >SEPARATOR setSettings attributesForFaceting categoryPageId
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = listOf("searchable(categoryPageId)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings15() {
+    // >SEPARATOR setSettings unretrievableAttributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        unretrievableAttributes = listOf("visible_by"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings16() {
+    // >SEPARATOR setSettings attributesForFaceting user restricted data
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = listOf("filterOnly(visible_by)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings17() {
+    // >SEPARATOR setSettings attributesForFaceting optional filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = listOf("can_deliver_quickly", "restaurant"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings18() {
+    // >SEPARATOR setSettings attributesForFaceting redirect index
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = listOf("query_terms"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings19() {
+    // >SEPARATOR setSettings attributesForFaceting multiple consequences
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = listOf("director"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings20() {
+    // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = listOf("filterOnly(brand)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings21() {
+    // >SEPARATOR setSettings mode neuralSearch
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        mode = Mode.entries.first { it.value == "neuralSearch" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings22() {
+    // >SEPARATOR setSettings mode keywordSearch
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        mode = Mode.entries.first { it.value == "keywordSearch" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings23() {
+    // >SEPARATOR setSettings searchableAttributes same priority
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("title,comments", "ingredients"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings24() {
+    // >SEPARATOR setSettings searchableAttributes higher priority
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("title", "ingredients"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings25() {
+    // >SEPARATOR setSettings customRanking retweets
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("desc(retweets)", "desc(likes)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings26() {
+    // >SEPARATOR setSettings customRanking boosted
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("desc(boosted)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings27() {
+    // >SEPARATOR setSettings customRanking pageviews
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("desc(pageviews)", "desc(comments)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings28() {
+    // >SEPARATOR setSettings customRanking applying search parameters for a specific query
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("desc(nb_airline_liaisons)"),
+        attributesForFaceting = listOf("city, country"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings29() {
+    // >SEPARATOR setSettings customRanking rounded pageviews
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("desc(rounded_pageviews)", "desc(comments)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings30() {
+    // >SEPARATOR setSettings customRanking price
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("desc(price)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings31() {
+    // >SEPARATOR setSettings ranking exhaustive
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        ranking = listOf("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings32() {
+    // >SEPARATOR setSettings ranking standard replica
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        ranking = listOf("desc(post_date_timestamp)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings33() {
+    // >SEPARATOR setSettings ranking virtual replica
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("desc(post_date_timestamp)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings34() {
+    // >SEPARATOR setSettings customRanking and ranking sort alphabetically
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("asc(textual_attribute)"),
+        ranking = listOf("custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings35() {
+    // >SEPARATOR setSettings relevancyStrictness
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        customRanking = listOf("asc(textual_attribute)"),
+        relevancyStrictness = 0,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings36() {
+    // >SEPARATOR setSettings create replica index
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        replicas = listOf("products_price_desc"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings37() {
+    // >SEPARATOR setSettings create virtual replica index
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        replicas = listOf("virtual(products_price_desc)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings38() {
+    // >SEPARATOR setSettings unlink replica index
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        replicas = listOf(""),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings39() {
+    // >SEPARATOR setSettings forwardToReplicas
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("name", "description"),
+      ),
+      forwardToReplicas = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings40() {
+    // >SEPARATOR setSettings maxValuesPerFacet
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        maxValuesPerFacet = 1000,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings41() {
+    // >SEPARATOR setSettings maxFacetHits
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        maxFacetHits = 1000,
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings42() {
+    // >SEPARATOR setSettings attributesForFaceting complex
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2236,6 +6205,389 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       indexSettings = IndexSettings(
         attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings43() {
+    // >SEPARATOR setSettings ranking closest dates
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        ranking = listOf("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings44() {
+    // >SEPARATOR setSettings searchableAttributes item variation
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("design", "type", "color"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings45() {
+    // >SEPARATOR setSettings searchableAttributes around location
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("name", "country", "code", "iata_code"),
+        customRanking = listOf("desc(links_count)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings46() {
+    // >SEPARATOR setSettings searchableAttributes around location
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("name", "country", "code", "iata_code"),
+        customRanking = listOf("desc(links_count)"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings47() {
+    // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        disableTypoToleranceOnAttributes = listOf("serial_number"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings48() {
+    // >SEPARATOR setSettings everything
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        advancedSyntax = true,
+        advancedSyntaxFeatures = listOf(AdvancedSyntaxFeatures.entries.first { it.value == "exactPhrase" }),
+        allowCompressionOfIntegerArray = true,
+        allowTyposOnNumericTokens = true,
+        alternativesAsExact = listOf(AlternativesAsExact.entries.first { it.value == "singleWordSynonym" }),
+        attributeCriteriaComputedByMinProximity = true,
+        attributeForDistinct = "test",
+        attributesForFaceting = listOf("algolia"),
+        attributesToHighlight = listOf("algolia"),
+        attributesToRetrieve = listOf("algolia"),
+        attributesToSnippet = listOf("algolia"),
+        attributesToTransliterate = listOf("algolia"),
+        camelCaseAttributes = listOf("algolia"),
+        customNormalization = mapOf("algolia" to mapOf("aloglia" to "aglolia")),
+        customRanking = listOf("algolia"),
+        decompoundQuery = false,
+        decompoundedAttributes = buildJsonObject {
+          put(
+            "algolia",
+            JsonPrimitive("aloglia"),
+          )
+        },
+        disableExactOnAttributes = listOf("algolia"),
+        disablePrefixOnAttributes = listOf("algolia"),
+        disableTypoToleranceOnAttributes = listOf("algolia"),
+        disableTypoToleranceOnWords = listOf("algolia"),
+        distinct = Distinct.of(3),
+        enablePersonalization = true,
+        enableReRanking = false,
+        enableRules = true,
+        exactOnSingleWordQuery = ExactOnSingleWordQuery.entries.first { it.value == "attribute" },
+        highlightPreTag = "<span>",
+        highlightPostTag = "</span>",
+        hitsPerPage = 10,
+        ignorePlurals = IgnorePlurals.of(false),
+        indexLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
+        keepDiacriticsOnCharacters = "abc",
+        maxFacetHits = 20,
+        maxValuesPerFacet = 30,
+        minProximity = 6,
+        minWordSizefor1Typo = 5,
+        minWordSizefor2Typos = 11,
+        mode = Mode.entries.first { it.value == "neuralSearch" },
+        numericAttributesForFiltering = listOf("algolia"),
+        optionalWords = OptionalWords.of(listOf("myspace")),
+        paginationLimitedTo = 0,
+        queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
+        queryType = QueryType.entries.first { it.value == "prefixLast" },
+        ranking = listOf("geo"),
+        reRankingApplyFilter = ReRankingApplyFilter.of("mySearch:filters"),
+        relevancyStrictness = 10,
+        removeStopWords = RemoveStopWords.of(false),
+        removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "lastWords" },
+        renderingContent = RenderingContent(
+          facetOrdering = FacetOrdering(
+            facets = Facets(
+              order = listOf("a", "b"),
+            ),
+            values = mapOf(
+              "a" to Value(
+                order = listOf("b"),
+                sortRemainingBy = SortRemainingBy.entries.first { it.value == "count" },
+              ),
+            ),
+          ),
+        ),
+        replaceSynonymsInHighlight = true,
+        replicas = listOf(""),
+        responseFields = listOf("algolia"),
+        restrictHighlightAndSnippetArrays = true,
+        searchableAttributes = listOf("foo"),
+        semanticSearch = SemanticSearch(
+          eventSources = listOf("foo"),
+        ),
+        separatorsToIndex = "bar",
+        snippetEllipsisText = "---",
+        sortFacetValuesBy = "date",
+        typoTolerance = TypoTolerance.of(false),
+        unretrievableAttributes = listOf("foo"),
+        userData = buildJsonObject {
+          put(
+            "user",
+            JsonPrimitive("data"),
+          )
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings49() {
+    // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("brand", "name", "categories", "unordered(description)"),
+        customRanking = listOf("desc(popularity)"),
+        attributesForFaceting = listOf("searchable(brand)", "type", "categories", "price"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings50() {
+    // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("name", "product_reference", "product_reference_suffixes"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings51() {
+    // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "en" }),
+        ignorePlurals = IgnorePlurals.of(true),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings52() {
+    // >SEPARATOR setSettings searchableAttributesInMovies
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("title_eng", "title_fr", "title_es"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings53() {
+    // >SEPARATOR setSettings disablePrefixOnAttributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        disablePrefixOnAttributes = listOf("serial_number"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings54() {
+    // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        disableTypoToleranceOnAttributes = listOf("serial_number"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings55() {
+    // >SEPARATOR setSettings searchableAttributesSimpleExample
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("serial_number"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetSettings56() {
+    // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        searchableAttributes = listOf("serial_number", "serial_number_suffixes"),
       ),
     )
 

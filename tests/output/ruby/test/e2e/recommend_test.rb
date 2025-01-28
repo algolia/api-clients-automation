@@ -22,7 +22,7 @@ class TestRecommendClientE2E < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::RelatedQuery.new(
             index_name: "cts_e2e_browse",
-            object_id: "Æon Flux",
+            algolia_object_id: "Æon Flux",
             model: "related-products",
             threshold: 20.0,
             max_recommendations: 2
@@ -37,7 +37,7 @@ class TestRecommendClientE2E < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::RelatedQuery.new(
             index_name: "cts_e2e_browse",
-            object_id: "Æon Flux",
+            algolia_object_id: "Æon Flux",
             model: "related-products",
             threshold: 20.0,
             max_recommendations: 2

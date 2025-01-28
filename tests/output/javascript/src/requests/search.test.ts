@@ -64,17 +64,17 @@ describe('appendSource', () => {
 });
 
 describe('assignUserId', () => {
-  test('assignUserId', async () => {
+  test('simple', async () => {
     const req = (await client.assignUserId({
-      xAlgoliaUserID: 'userID',
-      assignUserIdParams: { cluster: 'theCluster' },
+      xAlgoliaUserID: 'user42',
+      assignUserIdParams: { cluster: 'd4242-eu' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ cluster: 'theCluster' });
+    expect(req.data).toEqual({ cluster: 'd4242-eu' });
     expect(req.searchParams).toStrictEqual(undefined);
-    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-user-id': 'userID' }));
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-user-id': 'user42' }));
   });
 
   test('it should not encode the userID', async () => {
@@ -1083,6 +1083,19 @@ describe('partialUpdateObject', () => {
     expect(req.data).toEqual({ attributeId: { nested: 'value' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('with visible_by filter', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: { visible_by: ['Angela', 'group/Finance', 'group/Shareholders'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ visible_by: ['Angela', 'group/Finance', 'group/Shareholders'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('removeUserId', () => {
@@ -1219,6 +1232,432 @@ describe('saveRule', () => {
     });
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
+
+  test('b2b catalog', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'article-rule',
+      rule: {
+        objectID: 'article-rule',
+        conditions: [{ pattern: 'article', anchoring: 'startsWith' }],
+        consequence: {
+          params: {
+            query: { edits: [{ type: 'remove', delete: 'article' }] },
+            restrictSearchableAttributes: ['title', 'book_id'],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/article-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'article-rule',
+      conditions: [{ pattern: 'article', anchoring: 'startsWith' }],
+      consequence: {
+        params: {
+          query: { edits: [{ type: 'remove', delete: 'article' }] },
+          restrictSearchableAttributes: ['title', 'book_id'],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('merchandising and promoting', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'director-rule',
+      rule: {
+        objectID: 'director-rule',
+        conditions: [{ pattern: '{facet:director} director', anchoring: 'contains' }],
+        consequence: {
+          params: {
+            restrictSearchableAttributes: ['title', 'book_id'],
+            automaticFacetFilters: [{ facet: 'director' }],
+            query: { edits: [{ type: 'remove', delete: 'director' }] },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/director-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'director-rule',
+      conditions: [{ pattern: '{facet:director} director', anchoring: 'contains' }],
+      consequence: {
+        params: {
+          restrictSearchableAttributes: ['title', 'book_id'],
+          automaticFacetFilters: [{ facet: 'director' }],
+          query: { edits: [{ type: 'remove', delete: 'director' }] },
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('harry potter', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'harry-potter-rule',
+      rule: {
+        objectID: 'harry-potter-rule',
+        conditions: [{ pattern: 'harry potter', anchoring: 'contains' }],
+        consequence: { userData: { promo_content: '20% OFF on all Harry Potter books!' } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/harry-potter-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'harry-potter-rule',
+      conditions: [{ pattern: 'harry potter', anchoring: 'contains' }],
+      consequence: { userData: { promo_content: '20% OFF on all Harry Potter books!' } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('merchandising empty query', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'clearance-category-filter',
+      rule: {
+        objectID: 'clearance-category-filter',
+        conditions: [{ pattern: '', anchoring: 'is', context: 'landing' }],
+        consequence: { params: { optionalFilters: 'clearance:true' } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/clearance-category-filter');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'clearance-category-filter',
+      conditions: [{ pattern: '', anchoring: 'is', context: 'landing' }],
+      consequence: { params: { optionalFilters: 'clearance:true' } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('redirect', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'redirect-help-rule',
+      rule: {
+        objectID: 'redirect-help-rule',
+        conditions: [{ pattern: 'help', anchoring: 'contains' }],
+        consequence: { userData: { redirect: 'https://www.algolia.com/support' } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/redirect-help-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'redirect-help-rule',
+      conditions: [{ pattern: 'help', anchoring: 'contains' }],
+      consequence: { userData: { redirect: 'https://www.algolia.com/support' } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('promote some results over others', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'tomato-fruit',
+      rule: {
+        objectID: 'tomato-fruit',
+        conditions: [{ pattern: 'tomato', anchoring: 'contains' }],
+        consequence: { params: { optionalFilters: 'food_group:fruit' } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/tomato-fruit');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'tomato-fruit',
+      conditions: [{ pattern: 'tomato', anchoring: 'contains' }],
+      consequence: { params: { optionalFilters: 'food_group:fruit' } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('promote several hits', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'Promote-Apple-Newest',
+      rule: {
+        objectID: 'Promote-Apple-Newest',
+        conditions: [{ pattern: 'apple', anchoring: 'is' }],
+        consequence: { promote: [{ objectIDs: ['iPhone-12345', 'watch-123'], position: 0 }] },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/Promote-Apple-Newest');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'Promote-Apple-Newest',
+      conditions: [{ pattern: 'apple', anchoring: 'is' }],
+      consequence: { promote: [{ objectIDs: ['iPhone-12345', 'watch-123'], position: 0 }] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('promote newest release', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'Promote-iPhone-X',
+      rule: {
+        objectID: 'Promote-iPhone-X',
+        conditions: [{ pattern: 'iPhone', anchoring: 'contains' }],
+        consequence: { promote: [{ objectID: 'iPhone-12345', position: 0 }] },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/Promote-iPhone-X');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'Promote-iPhone-X',
+      conditions: [{ pattern: 'iPhone', anchoring: 'contains' }],
+      consequence: { promote: [{ objectID: 'iPhone-12345', position: 0 }] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('promote single item', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'promote-harry-potter-box-set',
+      rule: {
+        objectID: 'promote-harry-potter-box-set',
+        conditions: [{ pattern: 'Harry Potter', anchoring: 'contains' }],
+        consequence: { promote: [{ objectID: 'HP-12345', position: 0 }] },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/promote-harry-potter-box-set');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'promote-harry-potter-box-set',
+      conditions: [{ pattern: 'Harry Potter', anchoring: 'contains' }],
+      consequence: { promote: [{ objectID: 'HP-12345', position: 0 }] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('limit search results', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'article-rule',
+      rule: {
+        objectID: 'article-rule',
+        conditions: [{ pattern: 'article', anchoring: 'startsWith' }],
+        consequence: {
+          params: {
+            query: { edits: [{ type: 'remove', delete: 'article' }] },
+            restrictSearchableAttributes: ['title', 'book_id'],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/article-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'article-rule',
+      conditions: [{ pattern: 'article', anchoring: 'startsWith' }],
+      consequence: {
+        params: {
+          query: { edits: [{ type: 'remove', delete: 'article' }] },
+          restrictSearchableAttributes: ['title', 'book_id'],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('query match', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'tagged-brand-rule',
+      rule: {
+        conditions: [{ pattern: 'brand: {facet:brand}', anchoring: 'contains', alternatives: false }],
+        consequence: {
+          params: { automaticFacetFilters: [{ facet: 'brand' }], query: { remove: ['brand:', '{facet:brand}'] } },
+        },
+        description: 'filter on brand: {brand}',
+        objectID: 'tagged-brand-rule',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/tagged-brand-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      conditions: [{ pattern: 'brand: {facet:brand}', anchoring: 'contains', alternatives: false }],
+      consequence: {
+        params: { automaticFacetFilters: [{ facet: 'brand' }], query: { remove: ['brand:', '{facet:brand}'] } },
+      },
+      description: 'filter on brand: {brand}',
+      objectID: 'tagged-brand-rule',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('dynamic filtering', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'color-facets',
+      rule: {
+        objectID: 'color-facets',
+        conditions: [{ pattern: '{facet:color}' }],
+        consequence: { params: { automaticFacetFilters: [{ facet: 'color' }] } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/color-facets');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'color-facets',
+      conditions: [{ pattern: '{facet:color}' }],
+      consequence: { params: { automaticFacetFilters: [{ facet: 'color' }] } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('hide hits', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'hide-12345',
+      rule: {
+        objectID: 'hide-12345',
+        conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+        consequence: { hide: [{ objectID: 'to-hide-12345' }] },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/hide-12345');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'hide-12345',
+      conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+      consequence: { hide: [{ objectID: 'to-hide-12345' }] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('one rule per facet', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'red-color',
+      rule: {
+        objectID: 'red-color',
+        conditions: [{ pattern: 'red', anchoring: 'contains' }],
+        consequence: { params: { query: { remove: ['red'] }, filters: 'color:red' } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/red-color');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'red-color',
+      conditions: [{ pattern: 'red', anchoring: 'contains' }],
+      consequence: { params: { query: { remove: ['red'] }, filters: 'color:red' } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('numerical filters', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'cheap',
+      rule: {
+        objectID: 'cheap',
+        conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+        consequence: { params: { query: { remove: ['cheap'] }, filters: 'price < 10' } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/cheap');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'cheap',
+      conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+      consequence: { params: { query: { remove: ['cheap'] }, filters: 'price < 10' } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('negative filters', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'gluten-free-rule',
+      rule: {
+        objectID: 'gluten-free-rule',
+        conditions: [{ pattern: 'gluten-free', anchoring: 'contains' }],
+        consequence: {
+          params: { filters: 'NOT allergens:gluten', query: { edits: [{ type: 'remove', delete: 'gluten-free' }] } },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/gluten-free-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'gluten-free-rule',
+      conditions: [{ pattern: 'gluten-free', anchoring: 'contains' }],
+      consequence: {
+        params: { filters: 'NOT allergens:gluten', query: { edits: [{ type: 'remove', delete: 'gluten-free' }] } },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('positive filters', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'diet-rule',
+      rule: {
+        objectID: 'diet-rule',
+        conditions: [{ pattern: 'diet', anchoring: 'contains' }],
+        consequence: {
+          params: { filters: "'low-carb' OR 'low-fat'", query: { edits: [{ type: 'remove', delete: 'diet' }] } },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/diet-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'diet-rule',
+      conditions: [{ pattern: 'diet', anchoring: 'contains' }],
+      consequence: {
+        params: { filters: "'low-carb' OR 'low-fat'", query: { edits: [{ type: 'remove', delete: 'diet' }] } },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('conditionless', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'diet-rule',
+      rule: {
+        objectID: 'diet-rule',
+        consequence: {
+          params: { filters: "'low-carb' OR 'low-fat'", query: { edits: [{ type: 'remove', delete: 'diet' }] } },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/diet-rule');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'diet-rule',
+      consequence: {
+        params: { filters: "'low-carb' OR 'low-fat'", query: { edits: [{ type: 'remove', delete: 'diet' }] } },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('saveRules', () => {
@@ -1324,6 +1763,74 @@ describe('saveRules', () => {
       },
     ]);
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true', clearExistingRules: 'true' });
+  });
+
+  test('dynamic filtering', async () => {
+    const req = (await client.saveRules({
+      indexName: '<YOUR_INDEX_NAME>',
+      rules: [
+        {
+          objectID: 'toaster',
+          conditions: [{ pattern: 'toaster', anchoring: 'contains' }],
+          consequence: { params: { query: { remove: ['toaster'] }, filters: 'product_type:toaster' } },
+        },
+        {
+          objectID: 'cheap',
+          conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+          consequence: { params: { query: { remove: ['cheap'] }, filters: 'price < 15' } },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual([
+      {
+        objectID: 'toaster',
+        conditions: [{ pattern: 'toaster', anchoring: 'contains' }],
+        consequence: { params: { query: { remove: ['toaster'] }, filters: 'product_type:toaster' } },
+      },
+      {
+        objectID: 'cheap',
+        conditions: [{ pattern: 'cheap', anchoring: 'contains' }],
+        consequence: { params: { query: { remove: ['cheap'] }, filters: 'price < 15' } },
+      },
+    ]);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enhance search results', async () => {
+    const req = (await client.saveRules({
+      indexName: '<YOUR_INDEX_NAME>',
+      rules: [
+        {
+          objectID: 'country',
+          conditions: [{ pattern: '{facet:country}', anchoring: 'contains' }],
+          consequence: { params: { aroundLatLngViaIP: false } },
+        },
+        {
+          objectID: 'city',
+          conditions: [{ pattern: '{facet:city}', anchoring: 'contains' }],
+          consequence: { params: { aroundLatLngViaIP: false } },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual([
+      {
+        objectID: 'country',
+        conditions: [{ pattern: '{facet:country}', anchoring: 'contains' }],
+        consequence: { params: { aroundLatLngViaIP: false } },
+      },
+      {
+        objectID: 'city',
+        conditions: [{ pattern: '{facet:city}', anchoring: 'contains' }],
+        consequence: { params: { aroundLatLngViaIP: false } },
+      },
+    ]);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
@@ -1922,6 +2429,19 @@ describe('searchForFacetValues', () => {
     expect(req.data).toEqual({ params: "query=foo&facetFilters=['bar']", facetQuery: 'foo', maxFacetHits: 42 });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('facetName and facetQuery', async () => {
+    const req = (await client.searchForFacetValues({
+      indexName: 'indexName',
+      facetName: 'author',
+      searchForFacetValuesRequest: { facetQuery: 'stephen king' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/facets/author/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facetQuery: 'stephen king' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('searchRules', () => {
@@ -1985,6 +2505,455 @@ describe('searchSingleIndex', () => {
       query: 'batman mask of the phantasm',
       attributesToRetrieve: ['*'],
       attributesToSnippet: ['*:20'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('query', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'phone' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'phone' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'country:US AND price.gross < 2.0' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'country:US AND price.gross < 2.0' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('distinct', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { distinct: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ distinct: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersNumeric', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'price < 10' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'price < 10' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersTimestamp', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'NOT date_timestamp:1514764800 TO 1546300799' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'NOT date_timestamp:1514764800 TO 1546300799' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersSumOrFiltersScoresFalse', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+        sumOrFiltersScores: false,
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+      sumOrFiltersScores: false,
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersSumOrFiltersScoresTrue', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+        sumOrFiltersScores: true,
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+      sumOrFiltersScores: true,
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersStephenKing', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'author:"Stephen King"' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'author:"Stephen King"' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersNotTags', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'NOT _tags:non-fiction' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'NOT _tags:non-fiction' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facetFiltersList', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { facetFilters: ['publisher:Penguin', ['author:Stephen King', 'genre:Horror']] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facetFilters: ['publisher:Penguin', ['author:Stephen King', 'genre:Horror']] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facetFiltersNeg', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { facetFilters: 'category:-Ebook' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facetFilters: 'category:-Ebook' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersAndFacetFilters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: '(author:"Stephen King" OR genre:"Horror")', facetFilters: ['publisher:Penguin'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      filters: '(author:"Stephen King" OR genre:"Horror")',
+      facetFilters: ['publisher:Penguin'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facet author genre', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { facets: ['author', 'genre'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facets: ['author', 'genre'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facet wildcard', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { facets: ['*'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facets: ['*'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('maxValuesPerFacet', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { maxValuesPerFacet: 1000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ maxValuesPerFacet: 1000 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('aroundLatLng', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { aroundLatLng: '40.71, -74.01' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ aroundLatLng: '40.71, -74.01' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('aroundLatLngViaIP', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { aroundLatLngViaIP: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ aroundLatLngViaIP: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('aroundRadius', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { aroundLatLng: '40.71, -74.01', aroundRadius: 1000000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ aroundLatLng: '40.71, -74.01', aroundRadius: 1000000 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('insideBoundingBox', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { insideBoundingBox: [[49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875]] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      insideBoundingBox: [[49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875]],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('insidePolygon', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        insidePolygon: [
+          [
+            42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+            31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+            -117.54828125,
+          ],
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      insidePolygon: [
+        [
+          42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+          31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+          -117.54828125,
+        ],
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('insidePolygon', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        insidePolygon: [
+          [
+            42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+            31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+            -117.54828125,
+          ],
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      insidePolygon: [
+        [
+          42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+          31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+          -117.54828125,
+        ],
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('optionalFilters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { optionalFilters: ['can_deliver_quickly:true'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ optionalFilters: ['can_deliver_quickly:true'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('optionalFiltersMany', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { optionalFilters: ['brand:Apple<score=3>', 'brand:Samsung<score=2>', 'brand:-Huawei'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ optionalFilters: ['brand:Apple<score=3>', 'brand:Samsung<score=2>', 'brand:-Huawei'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('optionalFiltersSimple', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { optionalFilters: ['brand:Apple<score=2>', 'type:tablet'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ optionalFilters: ['brand:Apple<score=2>', 'type:tablet'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('restrictSearchableAttributes', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { restrictSearchableAttributes: ['title_fr'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ restrictSearchableAttributes: ['title_fr'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('getRankingInfo', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { getRankingInfo: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ getRankingInfo: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('clickAnalytics', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { clickAnalytics: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ clickAnalytics: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('clickAnalyticsUserToken', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { clickAnalytics: true, userToken: 'user-1' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ clickAnalytics: true, userToken: 'user-1' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enablePersonalization', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { enablePersonalization: true, userToken: 'user-1' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ enablePersonalization: true, userToken: 'user-1' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('userToken', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { userToken: 'user-1' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ userToken: 'user-1' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('analyticsTag', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { analyticsTags: ['YOUR_ANALYTICS_TAG'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ analyticsTags: ['YOUR_ANALYTICS_TAG'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facetFiltersUsers', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { facetFilters: ['user:user42', 'user:public'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ facetFilters: ['user:user42', 'user:public'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('buildTheQuery', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: "categoryPageId: Men's Clothing", hitsPerPage: 50, analyticsTags: ['mens-clothing'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      filters: "categoryPageId: Men's Clothing",
+      hitsPerPage: 50,
+      analyticsTags: ['mens-clothing'],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -2064,19 +3033,7 @@ describe('setDictionarySettings', () => {
 });
 
 describe('setSettings', () => {
-  test('setSettingsAttributesForFaceting', async () => {
-    const req = (await client.setSettings({
-      indexName: '<YOUR_INDEX_NAME>',
-      indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
-    expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('setSettings with minimal parameters', async () => {
+  test('minimal parameters', async () => {
     const req = (await client.setSettings({
       indexName: 'cts_e2e_settings',
       indexSettings: { paginationLimitedTo: 10 },
@@ -2089,7 +3046,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow boolean `typoTolerance`', async () => {
+  test('boolean typoTolerance', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { typoTolerance: true },
@@ -2102,7 +3059,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow enum `typoTolerance`', async () => {
+  test('enum typoTolerance', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { typoTolerance: 'min' },
@@ -2115,7 +3072,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow boolean `ignorePlurals`', async () => {
+  test('ignorePlurals', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { ignorePlurals: true },
@@ -2128,7 +3085,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow list of string `ignorePlurals`', async () => {
+  test('list of string ignorePlurals', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { ignorePlurals: ['fr'] },
@@ -2141,7 +3098,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow boolean `removeStopWords`', async () => {
+  test('removeStopWords boolean', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { removeStopWords: true },
@@ -2154,7 +3111,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow list of string `removeStopWords`', async () => {
+  test('removeStopWords list of string', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { removeStopWords: ['fr'] },
@@ -2167,7 +3124,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow boolean `distinct`', async () => {
+  test('boolean distinct', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { distinct: true },
@@ -2180,7 +3137,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow integers for `distinct`', async () => {
+  test('integer distinct', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { distinct: 1 },
@@ -2193,7 +3150,515 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
-  test('setSettings allow all `indexSettings`', async () => {
+  test('distinct company', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributeForDistinct: 'company', distinct: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributeForDistinct: 'company', distinct: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('distinct design', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributeForDistinct: 'design', distinct: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributeForDistinct: 'design', distinct: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('distinct true', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { distinct: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ distinct: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('distinct section', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributeForDistinct: 'section', distinct: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributeForDistinct: 'section', distinct: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting allergens', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['allergens'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['allergens'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting categoryPageId', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['searchable(categoryPageId)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['searchable(categoryPageId)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('unretrievableAttributes', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { unretrievableAttributes: ['visible_by'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ unretrievableAttributes: ['visible_by'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting user restricted data', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['filterOnly(visible_by)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['filterOnly(visible_by)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting optional filters', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['can_deliver_quickly', 'restaurant'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['can_deliver_quickly', 'restaurant'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting redirect index', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['query_terms'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['query_terms'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting multiple consequences', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['director'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['director'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting in-depth optional filters', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['filterOnly(brand)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['filterOnly(brand)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('mode neuralSearch', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { mode: 'neuralSearch' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ mode: 'neuralSearch' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('mode keywordSearch', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { mode: 'keywordSearch' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ mode: 'keywordSearch' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributes same priority', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['title,comments', 'ingredients'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['title,comments', 'ingredients'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributes higher priority', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['title', 'ingredients'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['title', 'ingredients'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking retweets', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(retweets)', 'desc(likes)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(retweets)', 'desc(likes)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking boosted', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(boosted)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(boosted)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking pageviews', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(pageviews)', 'desc(comments)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(pageviews)', 'desc(comments)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking applying search parameters for a specific query', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(nb_airline_liaisons)'], attributesForFaceting: ['city, country'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      customRanking: ['desc(nb_airline_liaisons)'],
+      attributesForFaceting: ['city, country'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking rounded pageviews', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(rounded_pageviews)', 'desc(comments)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(rounded_pageviews)', 'desc(comments)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking price', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(price)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(price)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('ranking exhaustive', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('ranking standard replica', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { ranking: ['desc(post_date_timestamp)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ ranking: ['desc(post_date_timestamp)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('ranking virtual replica', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(post_date_timestamp)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(post_date_timestamp)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRanking and ranking sort alphabetically', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        customRanking: ['asc(textual_attribute)'],
+        ranking: ['custom', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      customRanking: ['asc(textual_attribute)'],
+      ranking: ['custom', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('relevancyStrictness', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['asc(textual_attribute)'], relevancyStrictness: 0 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['asc(textual_attribute)'], relevancyStrictness: 0 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('create replica index', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { replicas: ['products_price_desc'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ replicas: ['products_price_desc'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('create virtual replica index', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { replicas: ['virtual(products_price_desc)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ replicas: ['virtual(products_price_desc)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('unlink replica index', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { replicas: [''] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ replicas: [''] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('forwardToReplicas', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['name', 'description'] },
+      forwardToReplicas: true,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['name', 'description'] });
+    expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
+  });
+
+  test('maxValuesPerFacet', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { maxValuesPerFacet: 1000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ maxValuesPerFacet: 1000 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('maxFacetHits', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { maxFacetHits: 1000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ maxFacetHits: 1000 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesForFaceting complex', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('ranking closest dates', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        ranking: [
+          'asc(date_timestamp)',
+          'typo',
+          'geo',
+          'words',
+          'filters',
+          'proximity',
+          'attribute',
+          'exact',
+          'custom',
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      ranking: ['asc(date_timestamp)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributes item variation', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['design', 'type', 'color'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['design', 'type', 'color'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributes around location', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        searchableAttributes: ['name', 'country', 'code', 'iata_code'],
+        customRanking: ['desc(links_count)'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      searchableAttributes: ['name', 'country', 'code', 'iata_code'],
+      customRanking: ['desc(links_count)'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributes around location', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        searchableAttributes: ['name', 'country', 'code', 'iata_code'],
+        customRanking: ['desc(links_count)'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      searchableAttributes: ['name', 'country', 'code', 'iata_code'],
+      customRanking: ['desc(links_count)'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disableTypoToleranceOnAttributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { disableTypoToleranceOnAttributes: ['serial_number'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ disableTypoToleranceOnAttributes: ['serial_number'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('everything', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: {
@@ -2330,6 +3795,110 @@ describe('setSettings', () => {
       unretrievableAttributes: ['foo'],
       userData: { user: 'data' },
     });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributesWithCustomRankingsAndAttributesForFaceting', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        searchableAttributes: ['brand', 'name', 'categories', 'unordered(description)'],
+        customRanking: ['desc(popularity)'],
+        attributesForFaceting: ['searchable(brand)', 'type', 'categories', 'price'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      searchableAttributes: ['brand', 'name', 'categories', 'unordered(description)'],
+      customRanking: ['desc(popularity)'],
+      attributesForFaceting: ['searchable(brand)', 'type', 'categories', 'price'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributesProductReferenceSuffixes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['name', 'product_reference', 'product_reference_suffixes'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['name', 'product_reference', 'product_reference_suffixes'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('queryLanguageAndIgnorePlurals', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { queryLanguages: ['en'], ignorePlurals: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ queryLanguages: ['en'], ignorePlurals: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributesInMovies', async () => {
+    const req = (await client.setSettings({
+      indexName: 'movies',
+      indexSettings: { searchableAttributes: ['title_eng', 'title_fr', 'title_es'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/movies/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['title_eng', 'title_fr', 'title_es'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disablePrefixOnAttributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { disablePrefixOnAttributes: ['serial_number'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ disablePrefixOnAttributes: ['serial_number'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disableTypoToleranceOnAttributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { disableTypoToleranceOnAttributes: ['serial_number'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ disableTypoToleranceOnAttributes: ['serial_number'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributesSimpleExample', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['serial_number'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['serial_number'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('searchableAttributesSimpleExampleAlt', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['serial_number', 'serial_number_suffixes'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['serial_number', 'serial_number_suffixes'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

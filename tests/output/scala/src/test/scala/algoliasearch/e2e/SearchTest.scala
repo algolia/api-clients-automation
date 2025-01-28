@@ -272,7 +272,7 @@ class SearchTestE2E extends AnyFunSuite {
     )
   }
 
-  test("setSettings with minimal parameters1") {
+  test("minimal parameters") {
     val client = testClient()
     val future = client.setSettings(
       indexName = "cts_e2e_settings",

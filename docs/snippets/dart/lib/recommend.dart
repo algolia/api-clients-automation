@@ -25,7 +25,7 @@ void snippetForbatchRecommendRules() async {
 //
 // allow del method for a custom path with minimal parameters
 void snippetForcustomDelete() async {
-  // >SEPARATOR customDelete default
+  // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -38,11 +38,31 @@ void snippetForcustomDelete() async {
   // SEPARATOR<
 }
 
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with all parameters
+void snippetForcustomDelete1() async {
+  // >SEPARATOR customDelete allow del method for a custom path with all parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customDelete(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 void snippetForcustomGet() async {
-  // >SEPARATOR customGet default
+  // >SEPARATOR customGet allow get method for a custom path with minimal parameters
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -55,11 +75,63 @@ void snippetForcustomGet() async {
   // SEPARATOR<
 }
 
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with all parameters
+void snippetForcustomGet1() async {
+  // >SEPARATOR customGet allow get method for a custom path with all parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "parameters with space",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// requestOptions should be escaped too
+void snippetForcustomGet2() async {
+  // >SEPARATOR customGet requestOptions should be escaped too
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "to be overriden",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-header-1': 'spaces are left alone',
+      },
+      urlParameters: {
+        'query': "parameters with space",
+        'and an array': [
+          "array",
+          "with spaces",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 void snippetForcustomPost() async {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -72,11 +144,296 @@ void snippetForcustomPost() async {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+void snippetForcustomPost1() async {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+void snippetForcustomPost2() async {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+void snippetForcustomPost3() async {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query2': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+void snippetForcustomPost4() async {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+void snippetForcustomPost5() async {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+void snippetForcustomPost6() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'isItWorking': true,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+void snippetForcustomPost7() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': 2,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+void snippetForcustomPost8() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          "b and c",
+          "d",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+void snippetForcustomPost9() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          true,
+          true,
+          false,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+void snippetForcustomPost10() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          1,
+          2,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 void snippetForcustomPut() async {
-  // >SEPARATOR customPut default
+  // >SEPARATOR customPut allow put method for a custom path with minimal parameters
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -84,6 +441,29 @@ void snippetForcustomPut() async {
   // Call the API
   final response = await client.customPut(
     path: "test/minimal",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with all parameters
+void snippetForcustomPut1() async {
+  // >SEPARATOR customPut allow put method for a custom path with all parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPut(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
   );
   // >LOG
   // SEPARATOR<
@@ -150,7 +530,7 @@ void snippetForgetRecommendStatus() async {
 //
 // get recommendations for recommend model with minimal parameters
 void snippetForgetRecommendations() async {
-  // >SEPARATOR getRecommendations default
+  // >SEPARATOR getRecommendations get recommendations for recommend model with minimal parameters
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -164,6 +544,255 @@ void snippetForgetRecommendations() async {
           objectID: "objectID",
           model: RelatedModel.fromJson("related-products"),
           threshold: 42.1,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations with e2e to check oneOf model
+void snippetForgetRecommendations1() async {
+  // >SEPARATOR getRecommendations get recommendations with e2e to check oneOf model
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "Æon Flux",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 20.0,
+          maxRecommendations: 2,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for recommend model with all parameters
+void snippetForgetRecommendations2() async {
+  // >SEPARATOR getRecommendations get recommendations for recommend model with all parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 42.1,
+          maxRecommendations: 10,
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback",
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for trending model with minimal parameters
+void snippetForgetRecommendations3() async {
+  // >SEPARATOR getRecommendations get recommendations for trending model with minimal parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        TrendingItemsQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          model: TrendingItemsModel.fromJson("trending-items"),
+          threshold: 42.1,
+          facetName: "facet",
+          facetValue: "value",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for trending model with all parameters
+void snippetForgetRecommendations4() async {
+  // >SEPARATOR getRecommendations get recommendations for trending model with all parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        TrendingItemsQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          model: TrendingItemsModel.fromJson("trending-items"),
+          threshold: 42.1,
+          maxRecommendations: 10,
+          facetName: "myFacetName",
+          facetValue: "myFacetValue",
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback",
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get multiple recommendations with minimal parameters
+void snippetForgetRecommendations5() async {
+  // >SEPARATOR getRecommendations get multiple recommendations with minimal parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID1",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+        ),
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID2",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get multiple recommendations with all parameters
+void snippetForgetRecommendations6() async {
+  // >SEPARATOR getRecommendations get multiple recommendations with all parameters
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID1",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+          maxRecommendations: 10,
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query1",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback1",
+            ],
+          ),
+        ),
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID2",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+          maxRecommendations: 10,
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query2",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback2",
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get frequently bought together recommendations
+void snippetForgetRecommendations7() async {
+  // >SEPARATOR getRecommendations get frequently bought together recommendations
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        BoughtTogetherQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID1",
+          model: FbtModel.fromJson("bought-together"),
+          threshold: 42.7,
         ),
       ],
     ),

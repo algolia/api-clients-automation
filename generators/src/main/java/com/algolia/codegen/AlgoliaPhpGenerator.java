@@ -22,7 +22,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     return "algolia-php";
   }
 
-  public static String getClientName(String client) {
+  public String getClientName(String client) {
     return Helpers.createClientName(client, "php");
   }
 
@@ -56,7 +56,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
-    additionalProperties.put("isSearchClient", client.equals("search"));
+    additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put("configClassname", getClientName(client) + "Config");
 
     try {

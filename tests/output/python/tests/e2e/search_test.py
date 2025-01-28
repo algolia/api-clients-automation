@@ -444,9 +444,9 @@ class TestSearchClientE2E:
             == _expected_body
         )
 
-    async def test_set_settings_1(self):
+    async def test_set_settings_(self):
         """
-        setSettings with minimal parameters
+        minimal parameters
         """
         raw_resp = await SearchClient(
             self._e2e_app_id, self._e2e_api_key
@@ -895,9 +895,9 @@ class TestSearchClientSyncE2E:
             == _expected_body
         )
 
-    def test_set_settings_1(self):
+    def test_set_settings_(self):
         """
-        setSettings with minimal parameters
+        minimal parameters
         """
         raw_resp = SearchClientSync(
             self._e2e_app_id, self._e2e_api_key

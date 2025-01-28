@@ -1,4 +1,5 @@
 import com.algolia.api.IngestionClient;
+import com.algolia.config.*;
 import com.algolia.model.ingestion.*;
 import com.fasterxml.jackson.databind.*;
 import java.io.File;

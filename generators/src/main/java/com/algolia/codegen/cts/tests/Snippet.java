@@ -12,7 +12,6 @@ import org.openapitools.codegen.CodegenResponse;
 public class Snippet {
 
   public String testName;
-  public boolean isSnippet;
 
   public String method;
   public Map<String, Object> parameters;
@@ -21,7 +20,6 @@ public class Snippet {
   public Snippet(String method, String testName, Map<String, Object> parameters) {
     this.method = method;
     this.testName = testName;
-    this.isSnippet = true;
     this.parameters = parameters;
   }
 
@@ -32,7 +30,6 @@ public class Snippet {
     StringBuilder sb = new StringBuilder();
     sb.append("class Request {\n");
     sb.append("    testName: ").append(testName).append("\n");
-    sb.append("    isSnippet").append(isSnippet).append("\n");
     sb.append("    method: ").append(method).append("\n");
     sb.append("    parameters: ").append(parameters).append("\n");
     sb.append("    requestOptions: ").append(requestOptions).append("\n");

@@ -230,7 +230,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.11.0\\).*";
+      String regexp = "^Algolia for Java \\(4.12.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -266,7 +266,7 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("generate secured api key basic")
+  @DisplayName("api key basic")
   void generateSecuredApiKeyTest0() {
     SearchClient client = createClient();
 
@@ -284,7 +284,7 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("generate secured api key with searchParams")
+  @DisplayName("with searchParams")
   void generateSecuredApiKeyTest1() {
     SearchClient client = createClient();
 
@@ -312,6 +312,42 @@ class SearchClientClientTests {
         "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
         res
       );
+    });
+  }
+
+  @Test
+  @DisplayName("with filters")
+  void generateSecuredApiKeyTest2() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public AND (visible_by:John OR" + " visible_by:group/Finance)")
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("with visible_by filter")
+  void generateSecuredApiKeyTest3() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions().setFilters("visible_by:group/Finance")
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("with userID")
+  void generateSecuredApiKeyTest4() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey("2640659426d5107b6e47d75db9cbaef8", new SecuredApiKeyRestrictions().setUserToken("user42"));
     });
   }
 
@@ -826,6 +862,79 @@ class SearchClientClientTests {
       });
       assertEquals("Status Code: 403 - {\"message\":\"Invalid Application-ID or API key\",\"status\":403}", exception.getMessage());
     }
+  }
+
+  @Test
+  @DisplayName("saveObjectsPlaylist")
+  void saveObjectsTest2() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    assertDoesNotThrow(() -> {
+      List res = client.saveObjects(
+        "playlists",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("visibility", "public");
+              put("name", "Hot 100 Billboard Charts");
+              put("playlistId", "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f");
+              put("createdAt", "1500240452");
+            }
+          }
+        )
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("saveObjectsPublicUser")
+  void saveObjectsTest3() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    assertDoesNotThrow(() -> {
+      List res = client.saveObjects(
+        "playlists",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("visibility", "public");
+              put("name", "Hot 100 Billboard Charts");
+              put("playlistId", "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f");
+              put("createdAt", "1500240452");
+            }
+          }
+        ),
+        new RequestOptions().addExtraHeader("X-Algolia-User-ID", "*")
+      );
+    });
   }
 
   @Test

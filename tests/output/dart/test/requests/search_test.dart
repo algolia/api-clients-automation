@@ -84,7 +84,7 @@ void main() {
 
   // assignUserId
   test(
-    'assignUserId',
+    'simple',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -92,16 +92,16 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.assignUserId(
-        xAlgoliaUserID: "userID",
+        xAlgoliaUserID: "user42",
         assignUserIdParams: AssignUserIdParams(
-          cluster: "theCluster",
+          cluster: "d4242-eu",
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/clusters/mapping');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-user-id":"userID"}""");
-        expectBody(request.body, """{"cluster":"theCluster"}""");
+        expectHeaders(request.headers, """{"x-algolia-user-id":"user42"}""");
+        expectBody(request.body, """{"cluster":"d4242-eu"}""");
       },
     ),
   );
@@ -2058,6 +2058,35 @@ void main() {
     ),
   );
 
+  // partialUpdateObject
+  test(
+    'with visible_by filter',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.partialUpdateObject(
+        indexName: "theIndexName",
+        objectID: "uniqueID",
+        attributesToUpdate: {
+          'visible_by': [
+            "Angela",
+            "group/Finance",
+            "group/Shareholders",
+          ],
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/uniqueID/partial');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"visible_by":["Angela","group/Finance","group/Shareholders"]}""");
+      },
+    ),
+  );
+
   // removeUserId
   test(
     'removeUserId',
@@ -2234,7 +2263,7 @@ void main() {
             ],
             filterPromotes: false,
             userData: {
-              'algolia': 'aloglia',
+              'algolia': "aloglia",
             },
             promote: [
               PromoteObjectID(
@@ -2268,6 +2297,756 @@ void main() {
             request.queryParameters, """{"forwardToReplicas":"true"}""");
         expectBody(request.body,
             """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'b2b catalog',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "article-rule",
+        rule: Rule(
+          objectID: "article-rule",
+          conditions: [
+            Condition(
+              pattern: "article",
+              anchoring: Anchoring.fromJson("startsWith"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              query: ConsequenceQueryObject(
+                edits: [
+                  Edit(
+                    type: EditType.fromJson("remove"),
+                    delete: "article",
+                  ),
+                ],
+              ),
+              restrictSearchableAttributes: [
+                "title",
+                "book_id",
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/article-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'merchandising and promoting',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "director-rule",
+        rule: Rule(
+          objectID: "director-rule",
+          conditions: [
+            Condition(
+              pattern: "{facet:director} director",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              restrictSearchableAttributes: [
+                "title",
+                "book_id",
+              ],
+              automaticFacetFilters: [
+                AutomaticFacetFilter(
+                  facet: "director",
+                ),
+              ],
+              query: ConsequenceQueryObject(
+                edits: [
+                  Edit(
+                    type: EditType.fromJson("remove"),
+                    delete: "director",
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/director-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"director-rule","conditions":[{"pattern":"{facet:director} director","anchoring":"contains"}],"consequence":{"params":{"restrictSearchableAttributes":["title","book_id"],"automaticFacetFilters":[{"facet":"director"}],"query":{"edits":[{"type":"remove","delete":"director"}]}}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'harry potter',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "harry-potter-rule",
+        rule: Rule(
+          objectID: "harry-potter-rule",
+          conditions: [
+            Condition(
+              pattern: "harry potter",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            userData: {
+              'promo_content': "20% OFF on all Harry Potter books!",
+            },
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/indexName/rules/harry-potter-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"harry-potter-rule","conditions":[{"pattern":"harry potter","anchoring":"contains"}],"consequence":{"userData":{"promo_content":"20% OFF on all Harry Potter books!"}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'merchandising empty query',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "clearance-category-filter",
+        rule: Rule(
+          objectID: "clearance-category-filter",
+          conditions: [
+            Condition(
+              pattern: "",
+              anchoring: Anchoring.fromJson("is"),
+              context: "landing",
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              optionalFilters: "clearance:true",
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/rules/clearance-category-filter');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"clearance-category-filter","conditions":[{"pattern":"","anchoring":"is","context":"landing"}],"consequence":{"params":{"optionalFilters":"clearance:true"}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'redirect',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "redirect-help-rule",
+        rule: Rule(
+          objectID: "redirect-help-rule",
+          conditions: [
+            Condition(
+              pattern: "help",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            userData: {
+              'redirect': "https://www.algolia.com/support",
+            },
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/indexName/rules/redirect-help-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"redirect-help-rule","conditions":[{"pattern":"help","anchoring":"contains"}],"consequence":{"userData":{"redirect":"https://www.algolia.com/support"}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'promote some results over others',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "tomato-fruit",
+        rule: Rule(
+          objectID: "tomato-fruit",
+          conditions: [
+            Condition(
+              pattern: "tomato",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              optionalFilters: "food_group:fruit",
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/tomato-fruit');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"tomato-fruit","conditions":[{"pattern":"tomato","anchoring":"contains"}],"consequence":{"params":{"optionalFilters":"food_group:fruit"}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'promote several hits',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "Promote-Apple-Newest",
+        rule: Rule(
+          objectID: "Promote-Apple-Newest",
+          conditions: [
+            Condition(
+              pattern: "apple",
+              anchoring: Anchoring.fromJson("is"),
+            ),
+          ],
+          consequence: Consequence(
+            promote: [
+              PromoteObjectIDs(
+                objectIDs: [
+                  "iPhone-12345",
+                  "watch-123",
+                ],
+                position: 0,
+              ),
+            ],
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/indexName/rules/Promote-Apple-Newest');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"Promote-Apple-Newest","conditions":[{"pattern":"apple","anchoring":"is"}],"consequence":{"promote":[{"objectIDs":["iPhone-12345","watch-123"],"position":0}]}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'promote newest release',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "Promote-iPhone-X",
+        rule: Rule(
+          objectID: "Promote-iPhone-X",
+          conditions: [
+            Condition(
+              pattern: "iPhone",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            promote: [
+              PromoteObjectID(
+                objectID: "iPhone-12345",
+                position: 0,
+              ),
+            ],
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/Promote-iPhone-X');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"Promote-iPhone-X","conditions":[{"pattern":"iPhone","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"iPhone-12345","position":0}]}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'promote single item',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "promote-harry-potter-box-set",
+        rule: Rule(
+          objectID: "promote-harry-potter-box-set",
+          conditions: [
+            Condition(
+              pattern: "Harry Potter",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            promote: [
+              PromoteObjectID(
+                objectID: "HP-12345",
+                position: 0,
+              ),
+            ],
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/rules/promote-harry-potter-box-set');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"promote-harry-potter-box-set","conditions":[{"pattern":"Harry Potter","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"HP-12345","position":0}]}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'limit search results',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "article-rule",
+        rule: Rule(
+          objectID: "article-rule",
+          conditions: [
+            Condition(
+              pattern: "article",
+              anchoring: Anchoring.fromJson("startsWith"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              query: ConsequenceQueryObject(
+                edits: [
+                  Edit(
+                    type: EditType.fromJson("remove"),
+                    delete: "article",
+                  ),
+                ],
+              ),
+              restrictSearchableAttributes: [
+                "title",
+                "book_id",
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/article-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'query match',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "tagged-brand-rule",
+        rule: Rule(
+          conditions: [
+            Condition(
+              pattern: "brand: {facet:brand}",
+              anchoring: Anchoring.fromJson("contains"),
+              alternatives: false,
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              automaticFacetFilters: [
+                AutomaticFacetFilter(
+                  facet: "brand",
+                ),
+              ],
+              query: ConsequenceQueryObject(
+                remove: [
+                  "brand:",
+                  "{facet:brand}",
+                ],
+              ),
+            ),
+          ),
+          description: "filter on brand: {brand}",
+          objectID: "tagged-brand-rule",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/indexName/rules/tagged-brand-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"conditions":[{"pattern":"brand: {facet:brand}","anchoring":"contains","alternatives":false}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"brand"}],"query":{"remove":["brand:","{facet:brand}"]}}},"description":"filter on brand: {brand}","objectID":"tagged-brand-rule"}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'dynamic filtering',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "color-facets",
+        rule: Rule(
+          objectID: "color-facets",
+          conditions: [
+            Condition(
+              pattern: "{facet:color}",
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              automaticFacetFilters: [
+                AutomaticFacetFilter(
+                  facet: "color",
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/color-facets');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"color-facets","conditions":[{"pattern":"{facet:color}"}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"color"}]}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'hide hits',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "hide-12345",
+        rule: Rule(
+          objectID: "hide-12345",
+          conditions: [
+            Condition(
+              pattern: "cheap",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            hide: [
+              ConsequenceHide(
+                objectID: "to-hide-12345",
+              ),
+            ],
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/hide-12345');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"hide-12345","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"hide":[{"objectID":"to-hide-12345"}]}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'one rule per facet',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "red-color",
+        rule: Rule(
+          objectID: "red-color",
+          conditions: [
+            Condition(
+              pattern: "red",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              query: ConsequenceQueryObject(
+                remove: [
+                  "red",
+                ],
+              ),
+              filters: "color:red",
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/red-color');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"red-color","conditions":[{"pattern":"red","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["red"]},"filters":"color:red"}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'numerical filters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "cheap",
+        rule: Rule(
+          objectID: "cheap",
+          conditions: [
+            Condition(
+              pattern: "cheap",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              query: ConsequenceQueryObject(
+                remove: [
+                  "cheap",
+                ],
+              ),
+              filters: "price < 10",
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/cheap');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 10"}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'negative filters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "gluten-free-rule",
+        rule: Rule(
+          objectID: "gluten-free-rule",
+          conditions: [
+            Condition(
+              pattern: "gluten-free",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              filters: "NOT allergens:gluten",
+              query: ConsequenceQueryObject(
+                edits: [
+                  Edit(
+                    type: EditType.fromJson("remove"),
+                    delete: "gluten-free",
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/gluten-free-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"gluten-free-rule","conditions":[{"pattern":"gluten-free","anchoring":"contains"}],"consequence":{"params":{"filters":"NOT allergens:gluten","query":{"edits":[{"type":"remove","delete":"gluten-free"}]}}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'positive filters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "diet-rule",
+        rule: Rule(
+          objectID: "diet-rule",
+          conditions: [
+            Condition(
+              pattern: "diet",
+              anchoring: Anchoring.fromJson("contains"),
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              filters: "'low-carb' OR 'low-fat'",
+              query: ConsequenceQueryObject(
+                edits: [
+                  Edit(
+                    type: EditType.fromJson("remove"),
+                    delete: "diet",
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/diet-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"diet-rule","conditions":[{"pattern":"diet","anchoring":"contains"}],"consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'conditionless',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "diet-rule",
+        rule: Rule(
+          objectID: "diet-rule",
+          consequence: Consequence(
+            params: ConsequenceParams(
+              filters: "'low-carb' OR 'low-fat'",
+              query: ConsequenceQueryObject(
+                edits: [
+                  Edit(
+                    type: EditType.fromJson("remove"),
+                    delete: "diet",
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/diet-rule');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"diet-rule","consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}""");
       },
     ),
   );
@@ -2378,7 +3157,7 @@ void main() {
               ],
               filterPromotes: false,
               userData: {
-                'algolia': 'aloglia',
+                'algolia': "aloglia",
               },
               promote: [
                 PromoteObjectID(
@@ -2415,6 +3194,120 @@ void main() {
             """{"forwardToReplicas":"true","clearExistingRules":"true"}""");
         expectBody(request.body,
             """[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'dynamic filtering',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        indexName: "<YOUR_INDEX_NAME>",
+        rules: [
+          Rule(
+            objectID: "toaster",
+            conditions: [
+              Condition(
+                pattern: "toaster",
+                anchoring: Anchoring.fromJson("contains"),
+              ),
+            ],
+            consequence: Consequence(
+              params: ConsequenceParams(
+                query: ConsequenceQueryObject(
+                  remove: [
+                    "toaster",
+                  ],
+                ),
+                filters: "product_type:toaster",
+              ),
+            ),
+          ),
+          Rule(
+            objectID: "cheap",
+            conditions: [
+              Condition(
+                pattern: "cheap",
+                anchoring: Anchoring.fromJson("contains"),
+              ),
+            ],
+            consequence: Consequence(
+              params: ConsequenceParams(
+                query: ConsequenceQueryObject(
+                  remove: [
+                    "cheap",
+                  ],
+                ),
+                filters: "price < 15",
+              ),
+            ),
+          ),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """[{"objectID":"toaster","conditions":[{"pattern":"toaster","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["toaster"]},"filters":"product_type:toaster"}}},{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 15"}}}]""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'enhance search results',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        indexName: "<YOUR_INDEX_NAME>",
+        rules: [
+          Rule(
+            objectID: "country",
+            conditions: [
+              Condition(
+                pattern: "{facet:country}",
+                anchoring: Anchoring.fromJson("contains"),
+              ),
+            ],
+            consequence: Consequence(
+              params: ConsequenceParams(
+                aroundLatLngViaIP: false,
+              ),
+            ),
+          ),
+          Rule(
+            objectID: "city",
+            conditions: [
+              Condition(
+                pattern: "{facet:city}",
+                anchoring: Anchoring.fromJson("contains"),
+              ),
+            ],
+            consequence: Consequence(
+              params: ConsequenceParams(
+                aroundLatLngViaIP: false,
+              ),
+            ),
+          ),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """[{"objectID":"country","conditions":[{"pattern":"{facet:country}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}},{"objectID":"city","conditions":[{"pattern":"{facet:city}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}}]""");
       },
     ),
   );
@@ -3324,6 +4217,30 @@ void main() {
     ),
   );
 
+  // searchForFacetValues
+  test(
+    'facetName and facetQuery',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchForFacetValues(
+        indexName: "indexName",
+        facetName: "author",
+        searchForFacetValuesRequest: SearchForFacetValuesRequest(
+          facetQuery: "stephen king",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/facets/author/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"facetQuery":"stephen king"}""");
+      },
+    ),
+  );
+
   // searchRules
   test(
     'searchRules',
@@ -3440,6 +4357,862 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'query',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          query: "phone",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"query":"phone"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "country:US AND price.gross < 2.0",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(
+            request.body, """{"filters":"country:US AND price.gross < 2.0"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'distinct',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          distinct: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"distinct":true}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filtersNumeric',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "price < 10",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"filters":"price < 10"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filtersTimestamp',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "NOT date_timestamp:1514764800 TO 1546300799",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"filters":"NOT date_timestamp:1514764800 TO 1546300799"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filtersSumOrFiltersScoresFalse',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters:
+              "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+          sumOrFiltersScores: false,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":false}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filtersSumOrFiltersScoresTrue',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters:
+              "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+          sumOrFiltersScores: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":true}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filtersStephenKing',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "author:\"Stephen King\"",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"filters":"author:\\"Stephen King\\""}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filtersNotTags',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "NOT _tags:non-fiction",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"filters":"NOT _tags:non-fiction"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'facetFiltersList',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          facetFilters: [
+            "publisher:Penguin",
+            [
+              "author:Stephen King",
+              "genre:Horror",
+            ],
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"facetFilters":["publisher:Penguin",["author:Stephen King","genre:Horror"]]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'facetFiltersNeg',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          facetFilters: "category:-Ebook",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"facetFilters":"category:-Ebook"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filtersAndFacetFilters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "(author:\"Stephen King\" OR genre:\"Horror\")",
+          facetFilters: [
+            "publisher:Penguin",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"filters":"(author:\\"Stephen King\\" OR genre:\\"Horror\\")","facetFilters":["publisher:Penguin"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'facet author genre',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          facets: [
+            "author",
+            "genre",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"facets":["author","genre"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'facet wildcard',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          facets: [
+            "*",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"facets":["*"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'maxValuesPerFacet',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          maxValuesPerFacet: 1000,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"maxValuesPerFacet":1000}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'aroundLatLng',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          aroundLatLng: "40.71, -74.01",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"aroundLatLng":"40.71, -74.01"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'aroundLatLngViaIP',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          aroundLatLngViaIP: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"aroundLatLngViaIP":true}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'aroundRadius',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          aroundLatLng: "40.71, -74.01",
+          aroundRadius: 1000000,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"aroundLatLng":"40.71, -74.01","aroundRadius":1000000}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'insideBoundingBox',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          insideBoundingBox: [
+            [
+              49.067996905313834,
+              65.73828125,
+              25.905859247243498,
+              128.8046875,
+            ],
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'insidePolygon',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          insidePolygon: [
+            [
+              42.01,
+              -124.31,
+              48.835509470063045,
+              -124.40453125000005,
+              45.01082951668149,
+              -65.95726562500005,
+              31.247243545293433,
+              -81.06578125000004,
+              25.924152577235226,
+              -97.68234374999997,
+              32.300311895879545,
+              -117.54828125,
+            ],
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'insidePolygon',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          insidePolygon: [
+            [
+              42.01,
+              -124.31,
+              48.835509470063045,
+              -124.40453125000005,
+              45.01082951668149,
+              -65.95726562500005,
+              31.247243545293433,
+              -81.06578125000004,
+              25.924152577235226,
+              -97.68234374999997,
+              32.300311895879545,
+              -117.54828125,
+            ],
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'optionalFilters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          optionalFilters: [
+            "can_deliver_quickly:true",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"optionalFilters":["can_deliver_quickly:true"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'optionalFiltersMany',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          optionalFilters: [
+            "brand:Apple<score=3>",
+            "brand:Samsung<score=2>",
+            "brand:-Huawei",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'optionalFiltersSimple',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          optionalFilters: [
+            "brand:Apple<score=2>",
+            "type:tablet",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'restrictSearchableAttributes',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          restrictSearchableAttributes: [
+            "title_fr",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(
+            request.body, """{"restrictSearchableAttributes":["title_fr"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'getRankingInfo',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          getRankingInfo: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"getRankingInfo":true}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'clickAnalytics',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          clickAnalytics: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"clickAnalytics":true}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'clickAnalyticsUserToken',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          clickAnalytics: true,
+          userToken: "user-1",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(
+            request.body, """{"clickAnalytics":true,"userToken":"user-1"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'enablePersonalization',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          enablePersonalization: true,
+          userToken: "user-1",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"enablePersonalization":true,"userToken":"user-1"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'userToken',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          userToken: "user-1",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"userToken":"user-1"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'analyticsTag',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          analyticsTags: [
+            "YOUR_ANALYTICS_TAG",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(
+            request.body, """{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'facetFiltersUsers',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          facetFilters: [
+            "user:user42",
+            "user:public",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(
+            request.body, """{"facetFilters":["user:user42","user:public"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'buildTheQuery',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "categoryPageId: Men's Clothing",
+          hitsPerPage: 50,
+          analyticsTags: [
+            "mens-clothing",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"filters":"categoryPageId: Men's Clothing","hitsPerPage":50,"analyticsTags":["mens-clothing"]}""");
       },
     ),
   );
@@ -3583,35 +5356,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettingsAttributesForFaceting',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.setSettings(
-        indexName: "<YOUR_INDEX_NAME>",
-        indexSettings: IndexSettings(
-          attributesForFaceting: [
-            "actor",
-            "filterOnly(category)",
-            "searchable(publisher)",
-          ],
-        ),
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
-        expect(request.method, 'put');
-        expectBody(request.body,
-            """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}""");
-      },
-    ),
-  );
-
-  // setSettings
-  test(
-    'setSettings with minimal parameters',
+    'minimal parameters',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3637,7 +5382,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow boolean `typoTolerance`',
+    'boolean typoTolerance',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3663,7 +5408,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow enum `typoTolerance`',
+    'enum typoTolerance',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3689,7 +5434,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow boolean `ignorePlurals`',
+    'ignorePlurals',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3715,7 +5460,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow list of string `ignorePlurals`',
+    'list of string ignorePlurals',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3743,7 +5488,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow boolean `removeStopWords`',
+    'removeStopWords boolean',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3769,7 +5514,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow list of string `removeStopWords`',
+    'removeStopWords list of string',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3797,7 +5542,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow boolean `distinct`',
+    'boolean distinct',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3823,7 +5568,7 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow integers for `distinct`',
+    'integer distinct',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3849,7 +5594,1053 @@ void main() {
 
   // setSettings
   test(
-    'setSettings allow all `indexSettings`',
+    'distinct company',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          attributeForDistinct: "company",
+          distinct: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributeForDistinct":"company","distinct":true}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'distinct design',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          attributeForDistinct: "design",
+          distinct: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributeForDistinct":"design","distinct":true}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'distinct true',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          distinct: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"distinct":true}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'distinct section',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          attributeForDistinct: "section",
+          distinct: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributeForDistinct":"section","distinct":true}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting allergens',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "allergens",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"attributesForFaceting":["allergens"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting categoryPageId',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "searchable(categoryPageId)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesForFaceting":["searchable(categoryPageId)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'unretrievableAttributes',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          unretrievableAttributes: [
+            "visible_by",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"unretrievableAttributes":["visible_by"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting user restricted data',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "filterOnly(visible_by)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesForFaceting":["filterOnly(visible_by)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting optional filters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "can_deliver_quickly",
+            "restaurant",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesForFaceting":["can_deliver_quickly","restaurant"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting redirect index',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "query_terms",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"attributesForFaceting":["query_terms"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting multiple consequences',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "director",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"attributesForFaceting":["director"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting in-depth optional filters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "filterOnly(brand)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesForFaceting":["filterOnly(brand)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'mode neuralSearch',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          mode: Mode.fromJson("neuralSearch"),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"mode":"neuralSearch"}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'mode keywordSearch',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          mode: Mode.fromJson("keywordSearch"),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"mode":"keywordSearch"}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributes same priority',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "title,comments",
+            "ingredients",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["title,comments","ingredients"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributes higher priority',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "title",
+            "ingredients",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["title","ingredients"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking retweets',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(retweets)",
+            "desc(likes)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(retweets)","desc(likes)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking boosted',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(boosted)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"customRanking":["desc(boosted)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking pageviews',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(pageviews)",
+            "desc(comments)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(pageviews)","desc(comments)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking applying search parameters for a specific query',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(nb_airline_liaisons)",
+          ],
+          attributesForFaceting: [
+            "city, country",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(nb_airline_liaisons)"],"attributesForFaceting":["city, country"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking rounded pageviews',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(rounded_pageviews)",
+            "desc(comments)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking price',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(price)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"customRanking":["desc(price)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking exhaustive',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          ranking: [
+            "desc(price)",
+            "typo",
+            "geo",
+            "words",
+            "filters",
+            "proximity",
+            "attribute",
+            "exact",
+            "custom",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking standard replica',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          ranking: [
+            "desc(post_date_timestamp)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"ranking":["desc(post_date_timestamp)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking virtual replica',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "desc(post_date_timestamp)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["desc(post_date_timestamp)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'customRanking and ranking sort alphabetically',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "asc(textual_attribute)",
+          ],
+          ranking: [
+            "custom",
+            "typo",
+            "geo",
+            "words",
+            "filters",
+            "proximity",
+            "attribute",
+            "exact",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["asc(textual_attribute)"],"ranking":["custom","typo","geo","words","filters","proximity","attribute","exact"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'relevancyStrictness',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          customRanking: [
+            "asc(textual_attribute)",
+          ],
+          relevancyStrictness: 0,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"customRanking":["asc(textual_attribute)"],"relevancyStrictness":0}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'create replica index',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          replicas: [
+            "products_price_desc",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"replicas":["products_price_desc"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'create virtual replica index',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          replicas: [
+            "virtual(products_price_desc)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"replicas":["virtual(products_price_desc)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'unlink replica index',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          replicas: [
+            "",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"replicas":[""]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'forwardToReplicas',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "name",
+            "description",
+          ],
+        ),
+        forwardToReplicas: true,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectParams(
+            request.queryParameters, """{"forwardToReplicas":"true"}""");
+        expectBody(request.body,
+            """{"searchableAttributes":["name","description"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'maxValuesPerFacet',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          maxValuesPerFacet: 1000,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"maxValuesPerFacet":1000}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'maxFacetHits',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          maxFacetHits: 1000,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"maxFacetHits":1000}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesForFaceting complex',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "actor",
+            "filterOnly(category)",
+            "searchable(publisher)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking closest dates',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          ranking: [
+            "asc(date_timestamp)",
+            "typo",
+            "geo",
+            "words",
+            "filters",
+            "proximity",
+            "attribute",
+            "exact",
+            "custom",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"ranking":["asc(date_timestamp)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributes item variation',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "design",
+            "type",
+            "color",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["design","type","color"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributes around location',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "name",
+            "country",
+            "code",
+            "iata_code",
+          ],
+          customRanking: [
+            "desc(links_count)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributes around location',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "name",
+            "country",
+            "code",
+            "iata_code",
+          ],
+          customRanking: [
+            "desc(links_count)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'disableTypoToleranceOnAttributes',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          disableTypoToleranceOnAttributes: [
+            "serial_number",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"disableTypoToleranceOnAttributes":["serial_number"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'everything',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -4000,6 +6791,232 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributesWithCustomRankingsAndAttributesForFaceting',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "brand",
+            "name",
+            "categories",
+            "unordered(description)",
+          ],
+          customRanking: [
+            "desc(popularity)",
+          ],
+          attributesForFaceting: [
+            "searchable(brand)",
+            "type",
+            "categories",
+            "price",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributesProductReferenceSuffixes',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "name",
+            "product_reference",
+            "product_reference_suffixes",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'queryLanguageAndIgnorePlurals',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          queryLanguages: [
+            SupportedLanguage.fromJson("en"),
+          ],
+          ignorePlurals: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"queryLanguages":["en"],"ignorePlurals":true}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributesInMovies',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "movies",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "title_eng",
+            "title_fr",
+            "title_es",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/movies/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["title_eng","title_fr","title_es"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'disablePrefixOnAttributes',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          disablePrefixOnAttributes: [
+            "serial_number",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"disablePrefixOnAttributes":["serial_number"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'disableTypoToleranceOnAttributes',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          disableTypoToleranceOnAttributes: [
+            "serial_number",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"disableTypoToleranceOnAttributes":["serial_number"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributesSimpleExample',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "serial_number",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"searchableAttributes":["serial_number"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'searchableAttributesSimpleExampleAlt',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          searchableAttributes: [
+            "serial_number",
+            "serial_number_suffixes",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"searchableAttributes":["serial_number","serial_number_suffixes"]}""");
       },
     ),
   );

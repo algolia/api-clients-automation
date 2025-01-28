@@ -1,5 +1,7 @@
 package org.example
 import com.algolia.client.api.SearchClient
+import com.algolia.client.configuration.*
+import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
 
 import kotlinx.serialization.builtins.ListSerializer
@@ -8,7 +10,7 @@ import kotlinx.serialization.json.JsonObject
 import java.net.URI
 
 suspend fun main() {
-  val url = URI.create("https://dashboard.algolia.com/sample_datasets/movie.json")
+  val url = URI.create("https://dashboard.algolia.com/api/1/sample_datasets?type=movie")
   val json = url.toURL().readText()
   val movies: List<JsonObject> = Json.decodeFromString(ListSerializer(JsonObject.serializer()), json)
 

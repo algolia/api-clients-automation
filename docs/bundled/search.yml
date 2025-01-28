@@ -339,9 +339,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -585,9 +583,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -831,9 +827,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1072,9 +1066,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1300,18 +1292,8 @@ paths:
 
             // Call the API
 
-            var response = await client.SearchSingleIndexAsync<Hit>(
-              "<YOUR_INDEX_NAME>",
-              new SearchParams(
-                new SearchParamsObject
-                {
-                  Query = "myQuery",
-                  FacetFilters = new FacetFilters(
-                    new List<FacetFilters> { new FacetFilters("tags:algolia") }
-                  ),
-                }
-              )
-            );
+            var response = await
+            client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
 
             // >LOG
         - lang: dart
@@ -1324,12 +1306,6 @@ paths:
             // Call the API
             final response = await client.searchSingleIndex(
               indexName: "<YOUR_INDEX_NAME>",
-              searchParams: SearchParamsObject(
-                query: "myQuery",
-                facetFilters: [
-                  "tags:algolia",
-                ],
-              ),
             );
             // >LOG
         - lang: go
@@ -1350,10 +1326,7 @@ paths:
 
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-              "<YOUR_INDEX_NAME>",
-            ).WithSearchParams(search.SearchParamsObjectAsSearchParams(
-              search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-                []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1376,11 +1349,7 @@ paths:
 
             // Call the API
 
-            client.searchSingleIndex(
-              "<YOUR_INDEX_NAME>",
-              new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
-              Hit.class
-            );
+            client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
 
             // >LOG
         - lang: javascript
@@ -1396,10 +1365,8 @@ paths:
 
             // Call the API
 
-            const response = await client.searchSingleIndex({
-              indexName: 'indexName',
-              searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
-            });
+            const response = await client.searchSingleIndex({ indexName:
+            'indexName' });
 
 
             // >LOG
@@ -1420,10 +1387,6 @@ paths:
 
             var response = client.searchSingleIndex(
               indexName = "<YOUR_INDEX_NAME>",
-              searchParams = SearchParamsObject(
-                query = "myQuery",
-                facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
-              ),
             )
 
 
@@ -1445,11 +1408,6 @@ paths:
 
             $response = $client->searchSingleIndex(
                 '<YOUR_INDEX_NAME>',
-                ['query' => 'myQuery',
-                    'facetFilters' => [
-                        'tags:algolia',
-                    ],
-                ],
             );
 
 
@@ -1474,12 +1432,6 @@ paths:
 
             response = client.search_single_index(
                 index_name="<YOUR_INDEX_NAME>",
-                search_params={
-                    "query": "myQuery",
-                    "facetFilters": [
-                        "tags:algolia",
-                    ],
-                },
             )
 
 
@@ -1499,10 +1451,7 @@ paths:
 
             # Call the API
 
-            response = client.search_single_index(
-              "<YOUR_INDEX_NAME>",
-              Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
-            )
+            response = client.search_single_index("<YOUR_INDEX_NAME>")
 
 
             # >LOG
@@ -1527,13 +1476,7 @@ paths:
             // Call the API
 
             val response = client.searchSingleIndex(
-              indexName = "<YOUR_INDEX_NAME>",
-              searchParams = Some(
-                SearchParamsObject(
-                  query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
-                )
-              )
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -1554,13 +1497,7 @@ paths:
             // Call the API
 
             let response: SearchResponse<Hit> = try await
-            client.searchSingleIndex(
-                indexName: "<YOUR_INDEX_NAME>",
-                searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
-                    query: "myQuery",
-                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
-                ))
-            )
+            client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
 
             // >LOG
         - lang: cURL
@@ -1710,9 +1647,7 @@ paths:
 
               search.NewEmptySearchMethodParams().SetRequests(
                 []search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-                  search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}),
-            ))
-
+                  search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2047,9 +1982,7 @@ paths:
 
             response, err :=
             client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-              "<YOUR_INDEX_NAME>", "facetName",
-            ))
-
+              "<YOUR_INDEX_NAME>", "facetName"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2352,9 +2285,7 @@ paths:
             // Call the API
 
             response, err := client.Browse(client.NewApiBrowseRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2661,9 +2592,7 @@ paths:
             // Call the API
 
             response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-              "<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"},
-            ))
-
+              "<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2960,9 +2889,7 @@ paths:
             // Call the API
 
             response, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3253,8 +3180,7 @@ paths:
             // Call the API
 
             response, err := client.GetObject(client.NewApiGetObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID",
-            ).WithAttributesToRetrieve(
+              "<YOUR_INDEX_NAME>", "uniqueID").WithAttributesToRetrieve(
               []string{"attr1", "attr2"}))
             if err != nil {
               // handle the eventual error
@@ -3627,9 +3553,7 @@ paths:
 
             response, err := client.DeleteBy(client.NewApiDeleteByRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
-            ))
-
+              search.NewEmptyDeleteByParams().SetFilters("brand:brandName")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3900,9 +3824,7 @@ paths:
 
             response, err :=
             client.ClearObjects(client.NewApiClearObjectsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4233,9 +4155,7 @@ paths:
 
             response, err :=
             client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"},
-            ))
-
+              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4568,9 +4488,7 @@ paths:
             response, err := client.Batch(client.NewApiBatchRequest(
               "<YOUR_INDEX_NAME>",
               search.NewEmptyBatchWriteParams().SetRequests(
-                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
-            ))
-
+                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5038,9 +4956,7 @@ paths:
             client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
               search.NewEmptyBatchParams().SetRequests(
-                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")}),
-            ))
-
+                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5454,9 +5370,7 @@ paths:
 
               search.NewEmptyGetObjectsParams().SetRequests(
                 []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
-            ))
-
+                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5627,7 +5541,7 @@ paths:
                 requests: [
                   Algolia::Search::GetObjectsRequest.new(
                     attributes_to_retrieve: ["attr1", "attr2"],
-                    object_id: "uniqueID",
+                    algolia_object_id: "uniqueID",
                     index_name: "<YOUR_INDEX_NAME>"
                   )
                 ]
@@ -5772,9 +5686,7 @@ paths:
             // Call the API
 
             response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6008,15 +5920,8 @@ paths:
 
             var response = await client.SetSettingsAsync(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings
-              {
-                AttributesForFaceting = new List<string>
-                {
-                  "actor",
-                  "filterOnly(category)",
-                  "searchable(publisher)",
-                },
-              }
+              new IndexSettings { PaginationLimitedTo = 10 },
+              true
             );
 
             // >LOG
@@ -6031,12 +5936,9 @@ paths:
             final response = await client.setSettings(
               indexName: "<YOUR_INDEX_NAME>",
               indexSettings: IndexSettings(
-                attributesForFaceting: [
-                  "actor",
-                  "filterOnly(category)",
-                  "searchable(publisher)",
-                ],
+                paginationLimitedTo: 10,
               ),
+              forwardToReplicas: true,
             );
             // >LOG
         - lang: go
@@ -6057,10 +5959,7 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetAttributesForFaceting(
-                []string{"actor", "filterOnly(category)", "searchable(publisher)"}),
-            ))
-
+              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6083,10 +5982,8 @@ paths:
 
             // Call the API
 
-            client.setSettings(
-              "<YOUR_INDEX_NAME>",
-              new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
-            );
+            client.setSettings("<YOUR_INDEX_NAME>", new
+            IndexSettings().setPaginationLimitedTo(10), true);
 
             // >LOG
         - lang: javascript
@@ -6103,8 +6000,9 @@ paths:
             // Call the API
 
             const response = await client.setSettings({
-              indexName: '<YOUR_INDEX_NAME>',
-              indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
+              indexName: 'cts_e2e_settings',
+              indexSettings: { paginationLimitedTo: 10 },
+              forwardToReplicas: true,
             });
 
 
@@ -6127,8 +6025,9 @@ paths:
             var response = client.setSettings(
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
-                attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)"),
+                paginationLimitedTo = 10,
               ),
+              forwardToReplicas = true,
             )
 
 
@@ -6150,14 +6049,9 @@ paths:
 
             $response = $client->setSettings(
                 '<YOUR_INDEX_NAME>',
-                ['attributesForFaceting' => [
-                    'actor',
-
-                    'filterOnly(category)',
-
-                    'searchable(publisher)',
+                ['paginationLimitedTo' => 10,
                 ],
-                ],
+                true,
             );
 
 
@@ -6183,12 +6077,9 @@ paths:
             response = client.set_settings(
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
-                    "attributesForFaceting": [
-                        "actor",
-                        "filterOnly(category)",
-                        "searchable(publisher)",
-                    ],
+                    "paginationLimitedTo": 10,
                 },
+                forward_to_replicas=True,
             )
 
 
@@ -6210,9 +6101,8 @@ paths:
 
             response = client.set_settings(
               "<YOUR_INDEX_NAME>",
-              Algolia::Search::IndexSettings.new(
-                attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
-              )
+              Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+              true
             )
 
 
@@ -6240,8 +6130,9 @@ paths:
             val response = client.setSettings(
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
-                attributesForFaceting = Some(Seq("actor", "filterOnly(category)", "searchable(publisher)"))
-              )
+                paginationLimitedTo = Some(10)
+              ),
+              forwardToReplicas = Some(true)
             )
 
 
@@ -6263,11 +6154,8 @@ paths:
 
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
-                indexSettings: IndexSettings(attributesForFaceting: [
-                    "actor",
-                    "filterOnly(category)",
-                    "searchable(publisher)",
-                ])
+                indexSettings: IndexSettings(paginationLimitedTo: 10),
+                forwardToReplicas: true
             )
 
             // >LOG
@@ -6355,9 +6243,7 @@ paths:
             // Call the API
 
             response, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-            ))
-
+              "<YOUR_INDEX_NAME>", "id1"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6743,9 +6629,7 @@ paths:
               "<YOUR_INDEX_NAME>",
               []search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
                 []string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
-                []string{"ephone", "aphone", "yphone"})},
-            ).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
-
+                []string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6956,9 +6840,9 @@ paths:
             response = client.save_synonyms(
               "<YOUR_INDEX_NAME>",
               [
-                Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+                Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
                 Algolia::Search::SynonymHit.new(
-                  object_id: "id2",
+                  algolia_object_id: "id2",
                   type: "onewaysynonym",
                   input: "iphone",
                   synonyms: ["ephone", "aphone", "yphone"]
@@ -7120,9 +7004,7 @@ paths:
 
             response, err :=
             client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7395,9 +7277,7 @@ paths:
 
             response, err :=
             client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7926,9 +7806,7 @@ paths:
             response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
               search.NewEmptyApiKey().SetAcl(
-                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
-            ))
-
+                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8243,9 +8121,7 @@ paths:
             // Call the API
 
             response, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
-              "myTestApiKey",
-            ))
-
+              "myTestApiKey"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8574,9 +8450,7 @@ paths:
 
             response, err :=
             client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-              "ALGOLIA_API_KEY",
-            ))
-
+              "ALGOLIA_API_KEY"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8827,9 +8701,7 @@ paths:
             // Call the API
 
             response, err := client.GetRule(client.NewApiGetRuleRequest(
-              "<YOUR_INDEX_NAME>", "qr-1725004648916",
-            ))
-
+              "<YOUR_INDEX_NAME>", "qr-1725004648916"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9228,9 +9100,7 @@ paths:
                   search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
                 []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
                 search.NewEmptyConsequence().SetParams(
-                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
-            ).WithForwardToReplicas(false).WithClearExistingRules(true))
-
+                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}).WithForwardToReplicas(false).WithClearExistingRules(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9477,14 +9347,14 @@ paths:
               "<YOUR_INDEX_NAME>",
               [
                 Algolia::Search::Rule.new(
-                  object_id: "a-rule-id",
+                  algolia_object_id: "a-rule-id",
                   conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
                   consequence: Algolia::Search::Consequence.new(
                     params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
                   )
                 ),
                 Algolia::Search::Rule.new(
-                  object_id: "a-second-rule-id",
+                  algolia_object_id: "a-second-rule-id",
                   conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
                   consequence: Algolia::Search::Consequence.new(
                     params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
@@ -9674,9 +9544,7 @@ paths:
             // Call the API
 
             response, err := client.ClearRules(client.NewApiClearRulesRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9988,8 +9856,7 @@ paths:
             // Call the API
 
             response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-              "<YOUR_INDEX_NAME>",
-            ).WithSearchRulesParams(
+              "<YOUR_INDEX_NAME>").WithSearchRulesParams(
               search.NewEmptySearchRulesParams().SetQuery("zorro")))
             if err != nil {
               // handle the eventual error
@@ -10342,9 +10209,7 @@ paths:
                 []search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
                   search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
                     []string{"believe", "algolia"}).SetDecomposition(
-                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
-            ))
-
+                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10572,7 +10437,7 @@ paths:
                   Algolia::Search::BatchDictionaryEntriesRequest.new(
                     action: "addEntry",
                     body: Algolia::Search::DictionaryEntry.new(
-                      object_id: "1",
+                      algolia_object_id: "1",
                       language: "en",
                       word: "fancy",
                       words: ["believe", "algolia"],
@@ -10762,9 +10627,7 @@ paths:
             response, err :=
             client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
               search.DictionaryType("stopwords"),
-              search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
-            ))
-
+              search.NewEmptySearchDictionaryEntriesParams().SetQuery("about")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10779,6 +10642,8 @@ paths:
         - lang: java
           label: Java
           source: >
+            // parameters
+
             // Initialize the client
 
             SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
@@ -11311,9 +11176,7 @@ paths:
             client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
               search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true})),
-            ))
-
+                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11844,8 +11707,8 @@ paths:
             // Call the API
 
             var response = await client.AssignUserIdAsync(
-              "userID",
-              new AssignUserIdParams { Cluster = "theCluster" }
+              "user42",
+              new AssignUserIdParams { Cluster = "d4242-eu" }
             );
 
             // >LOG
@@ -11858,9 +11721,9 @@ paths:
 
             // Call the API
             final response = await client.assignUserId(
-              xAlgoliaUserID: "userID",
+              xAlgoliaUserID: "user42",
               assignUserIdParams: AssignUserIdParams(
-                cluster: "theCluster",
+                cluster: "d4242-eu",
               ),
             );
             // >LOG
@@ -11882,10 +11745,8 @@ paths:
 
             response, err :=
             client.AssignUserId(client.NewApiAssignUserIdRequest(
-              "userID",
-              search.NewEmptyAssignUserIdParams().SetCluster("theCluster"),
-            ))
-
+              "user42",
+              search.NewEmptyAssignUserIdParams().SetCluster("d4242-eu")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11908,8 +11769,8 @@ paths:
 
             // Call the API
 
-            client.assignUserId("userID", new
-            AssignUserIdParams().setCluster("theCluster"));
+            client.assignUserId("user42", new
+            AssignUserIdParams().setCluster("d4242-eu"));
 
             // >LOG
         - lang: javascript
@@ -11925,10 +11786,8 @@ paths:
 
             // Call the API
 
-            const response = await client.assignUserId({
-              xAlgoliaUserID: 'userID',
-              assignUserIdParams: { cluster: 'theCluster' },
-            });
+            const response = await client.assignUserId({ xAlgoliaUserID:
+            'user42', assignUserIdParams: { cluster: 'd4242-eu' } });
 
 
             // >LOG
@@ -11948,9 +11807,9 @@ paths:
             // Call the API
 
             var response = client.assignUserId(
-              xAlgoliaUserID = "userID",
+              xAlgoliaUserID = "user42",
               assignUserIdParams = AssignUserIdParams(
-                cluster = "theCluster",
+                cluster = "d4242-eu",
               ),
             )
 
@@ -11972,8 +11831,8 @@ paths:
             // Call the API
 
             $response = $client->assignUserId(
-                'userID',
-                ['cluster' => 'theCluster',
+                'user42',
+                ['cluster' => 'd4242-eu',
                 ],
             );
 
@@ -11998,9 +11857,9 @@ paths:
             # Call the API
 
             response = client.assign_user_id(
-                x_algolia_user_id="userID",
+                x_algolia_user_id="user42",
                 assign_user_id_params={
-                    "cluster": "theCluster",
+                    "cluster": "d4242-eu",
                 },
             )
 
@@ -12021,8 +11880,8 @@ paths:
 
             # Call the API
 
-            response = client.assign_user_id("userID",
-            Algolia::Search::AssignUserIdParams.new(cluster: "theCluster"))
+            response = client.assign_user_id("user42",
+            Algolia::Search::AssignUserIdParams.new(cluster: "d4242-eu"))
 
 
             # >LOG
@@ -12047,9 +11906,9 @@ paths:
             // Call the API
 
             val response = client.assignUserId(
-              xAlgoliaUserID = "userID",
+              xAlgoliaUserID = "user42",
               assignUserIdParams = AssignUserIdParams(
-                cluster = "theCluster"
+                cluster = "d4242-eu"
               )
             )
 
@@ -12071,8 +11930,8 @@ paths:
             // Call the API
 
             let response = try await client.assignUserId(
-                xAlgoliaUserID: "userID",
-                assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
+                xAlgoliaUserID: "user42",
+                assignUserIdParams: AssignUserIdParams(cluster: "d4242-eu")
             )
 
             // >LOG
@@ -12460,9 +12319,7 @@ paths:
             client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
               "userID",
               search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
-                []string{"user1", "user2"}),
-            ))
-
+                []string{"user1", "user2"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13021,9 +12878,7 @@ paths:
             // Call the API
 
             response, err := client.GetUserId(client.NewApiGetUserIdRequest(
-              "uniqueID",
-            ))
-
+              "uniqueID"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13656,9 +13511,7 @@ paths:
             response, err :=
             client.SearchUserIds(client.NewApiSearchUserIdsRequest(
 
-              search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10),
-            ))
-
+              search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10)))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14477,9 +14330,7 @@ paths:
             response, err :=
             client.ReplaceSources(client.NewApiReplaceSourcesRequest(
 
-              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")},
-            ))
-
+              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14764,9 +14615,7 @@ paths:
             response, err :=
             client.AppendSource(client.NewApiAppendSourceRequest(
 
-              search.NewEmptySource().SetSource("theSource").SetDescription("theDescription"),
-            ))
-
+              search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15049,9 +14898,7 @@ paths:
 
             response, err :=
             client.DeleteSource(client.NewApiDeleteSourceRequest(
-              "theSource",
-            ))
-
+              "theSource"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15721,9 +15568,7 @@ paths:
             // Call the API
 
             response, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
-              123,
-            ))
-
+              123))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15987,9 +15832,7 @@ paths:
             // Call the API
 
             response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "<YOUR_INDEX_NAME>", 123,
-            ))
-
+              "<YOUR_INDEX_NAME>", 123))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -16334,9 +16177,7 @@ paths:
             client.OperationIndex(client.NewApiOperationIndexRequest(
               "<SOURCE_INDEX_NAME>",
               search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>").SetScope(
-                []search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")}),
-            ))
-
+                []search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -18535,25 +18376,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:
@@ -20486,6 +20337,7 @@ components:
             required:
               - objectID
         userData:
+          type: object
           description: >
             A JSON object with custom data that will be appended to the
             `userData` array in the response.
@@ -20702,6 +20554,7 @@ components:
             type: boolean
         - type: 'null'
     standardEntries:
+      type: object
       description: >
         Key-value pairs of [supported language ISO
         codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
@@ -20783,6 +20636,7 @@ components:
       description: Data size taken by all the users assigned to the cluster.
       example: 481
     source:
+      type: object
       description: Source.
       required:
         - source

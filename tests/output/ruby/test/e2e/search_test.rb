@@ -262,8 +262,8 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
-  # setSettings with minimal parameters
-  def test_set_settings1
+  # minimal parameters
+  def test_set_settings
     res = @client.set_settings_with_http_info(
       "cts_e2e_settings",
       Algolia::Search::IndexSettings.new(pagination_limited_to: 10),

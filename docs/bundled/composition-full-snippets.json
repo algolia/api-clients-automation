@@ -1,0 +1,76 @@
+{
+  "csharp": {},
+  "dart": {},
+  "go": {},
+  "java": {},
+  "javascript": {
+    "import": {
+      "default": "import { compositionClient } from '@algolia/client-composition';"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
+      "allow del method for a custom path with all parameters": "const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "const response = await client.customGet({ path: 'test/minimal' });",
+      "allow get method for a custom path with all parameters": "const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });",
+      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overriden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "const response = await client.customPost({ path: 'test/minimal' });",
+      "allow post method for a custom path with all parameters": "const response = await client.customPost({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});",
+      "requestOptions can override default query parameters": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query: 'myQueryParameter' },\n  },\n);",
+      "requestOptions merges query parameters with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query2: 'myQueryParameter' },\n  },\n);",
+      "requestOptions can override default headers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions merges headers with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions queryParameters accepts booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { isItWorking: true },\n  },\n);",
+      "requestOptions queryParameters accepts integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: 2 },\n  },\n);",
+      "requestOptions queryParameters accepts list of string": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: ['b and c', 'd'] },\n  },\n);",
+      "requestOptions queryParameters accepts list of booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [true, true, false] },\n  },\n);",
+      "requestOptions queryParameters accepts list of integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [1, 2] },\n  },\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "const response = await client.customPut({ path: 'test/minimal' });",
+      "allow put method for a custom path with all parameters": "const response = await client.customPut({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});"
+    },
+    "getComposition": {
+      "default": "const response = await client.getComposition({ compositionID: 'foo' });"
+    },
+    "getRule": {
+      "default": "const response = await client.getRule({ compositionID: 'foo', objectID: '123' });"
+    },
+    "getTask": {
+      "default": "const response = await client.getTask({ compositionID: 'foo', taskID: 42 });"
+    },
+    "listCompositions": {
+      "listCompositions": "const response = await client.listCompositions();"
+    },
+    "multipleBatch": {
+      "default": "const response = await client.multipleBatch({\n  requests: [\n    {\n      action: 'upsert',\n      body: {\n        objectID: 'foo',\n        name: 'my first composition',\n        behavior: { injection: { main: { source: { search: { index: 'bar' } } }, injectedItems: [] } },\n      },\n    },\n    { action: 'delete', body: { objectID: 'baz' } },\n  ],\n});"
+    },
+    "saveRules": {
+      "default": "const response = await client.saveRules({\n  compositionID: 'foo',\n  rules: {\n    requests: [\n      {\n        action: 'upsert',\n        body: {\n          objectID: '123',\n          conditions: [{ pattern: 'a' }],\n          consequence: { behavior: { injection: { main: { source: { search: { index: '<YOUR_INDEX_NAME>' } } } } } },\n        },\n      },\n    ],\n  },\n});"
+    },
+    "search": {
+      "default": "const response = await client.search({ compositionID: 'foo', requestBody: { params: { query: 'batman' } } });"
+    },
+    "searchCompositionRules": {
+      "default": "const response = await client.searchCompositionRules({\n  compositionID: 'foo',\n  searchCompositionRulesParams: { query: 'batman' },\n});"
+    },
+    "searchForFacetValues": {
+      "default": "const response = await client.searchForFacetValues({\n  compositionID: 'foo',\n  facetName: 'brand',\n  searchForFacetValuesRequest: { params: { maxFacetHits: 10 } },\n});"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "init": {
+      "default": "//\nconst client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+    }
+  },
+  "kotlin": {},
+  "php": {},
+  "python": {},
+  "ruby": {},
+  "scala": {},
+  "swift": {}
+}

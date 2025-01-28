@@ -94,18 +94,42 @@ class SnippetSearchClient
     /**
      * Snippet for the AssignUserId method.
      *
-     * assignUserId
+     * simple
      */
     public function snippetForAssignUserId(): void
     {
-        // >SEPARATOR assignUserId default
+        // >SEPARATOR assignUserId simple
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->assignUserId(
-            'userID',
-            ['cluster' => 'theCluster',
+            'user42',
+            ['cluster' => 'd4242-eu',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the AssignUserId method.
+     *
+     * it should not encode the userID
+     */
+    public function snippetForAssignUserId1(): void
+    {
+        // >SEPARATOR assignUserId it should not encode the userID
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->assignUserId(
+            'user id with spaces',
+            ['cluster' => 'cluster with spaces',
             ],
         );
 
@@ -465,13 +489,64 @@ class SnippetSearchClient
      */
     public function snippetForBrowse(): void
     {
-        // >SEPARATOR browse default
+        // >SEPARATOR browse browse with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->browse(
             '<YOUR_INDEX_NAME>',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Browse method.
+     *
+     * browse with search parameters
+     */
+    public function snippetForBrowse1(): void
+    {
+        // >SEPARATOR browse browse with search parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->browse(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'myQuery',
+                'facetFilters' => [
+                    'tags:algolia',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Browse method.
+     *
+     * browse allow a cursor in parameters
+     */
+    public function snippetForBrowse2(): void
+    {
+        // >SEPARATOR browse browse allow a cursor in parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->browse(
+            '<YOUR_INDEX_NAME>',
+            ['cursor' => 'test',
+            ],
         );
 
         // >LOG
@@ -553,7 +628,7 @@ class SnippetSearchClient
      */
     public function snippetForCustomDelete(): void
     {
-        // >SEPARATOR customDelete default
+        // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -569,13 +644,37 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the CustomDelete method.
+     *
+     * allow del method for a custom path with all parameters
+     */
+    public function snippetForCustomDelete1(): void
+    {
+        // >SEPARATOR customDelete allow del method for a custom path with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customDelete(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomGet method.
      *
      * allow get method for a custom path with minimal parameters
      */
     public function snippetForCustomGet(): void
     {
-        // >SEPARATOR customGet default
+        // >SEPARATOR customGet allow get method for a custom path with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -591,13 +690,71 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the CustomGet method.
+     *
+     * allow get method for a custom path with all parameters
+     */
+    public function snippetForCustomGet1(): void
+    {
+        // >SEPARATOR customGet allow get method for a custom path with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'parameters with space',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomGet method.
+     *
+     * requestOptions should be escaped too
+     */
+    public function snippetForCustomGet2(): void
+    {
+        // >SEPARATOR customGet requestOptions should be escaped too
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'to be overriden',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'parameters with space',
+                    'and an array' => ['array', 'with spaces',
+                    ],
+                ],
+                'headers' => [
+                    'x-header-1' => 'spaces are left alone',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomPost method.
      *
      * allow post method for a custom path with minimal parameters
      */
     public function snippetForCustomPost(): void
     {
-        // >SEPARATOR customPost default
+        // >SEPARATOR customPost allow post method for a custom path with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -613,19 +770,346 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the CustomPost method.
+     *
+     * allow post method for a custom path with all parameters
+     */
+    public function snippetForCustomPost1(): void
+    {
+        // >SEPARATOR customPost allow post method for a custom path with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default query parameters
+     */
+    public function snippetForCustomPost2(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default query parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges query parameters with default ones
+     */
+    public function snippetForCustomPost3(): void
+    {
+        // >SEPARATOR customPost requestOptions merges query parameters with default ones
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query2' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default headers
+     */
+    public function snippetForCustomPost4(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default headers
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges headers with default ones
+     */
+    public function snippetForCustomPost5(): void
+    {
+        // >SEPARATOR customPost requestOptions merges headers with default ones
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts booleans
+     */
+    public function snippetForCustomPost6(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'isItWorking' => true,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts integers
+     */
+    public function snippetForCustomPost7(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts integers
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => 2,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of string
+     */
+    public function snippetForCustomPost8(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => ['b and c', 'd',
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of booleans
+     */
+    public function snippetForCustomPost9(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [true, true, false,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of integers
+     */
+    public function snippetForCustomPost10(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [1, 2,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomPut method.
      *
      * allow put method for a custom path with minimal parameters
      */
     public function snippetForCustomPut(): void
     {
-        // >SEPARATOR customPut default
+        // >SEPARATOR customPut allow put method for a custom path with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customPut(
             'test/minimal',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPut method.
+     *
+     * allow put method for a custom path with all parameters
+     */
+    public function snippetForCustomPut1(): void
+    {
+        // >SEPARATOR customPut allow put method for a custom path with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPut(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
         );
 
         // >LOG
@@ -759,7 +1243,7 @@ class SnippetSearchClient
      */
     public function snippetForDeleteRule(): void
     {
-        // >SEPARATOR deleteRule default
+        // >SEPARATOR deleteRule delete rule simple case
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -767,6 +1251,29 @@ class SnippetSearchClient
         $response = $client->deleteRule(
             '<YOUR_INDEX_NAME>',
             'id1',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the DeleteRule method.
+     *
+     * delete rule with simple characters to encode in objectID
+     */
+    public function snippetForDeleteRule1(): void
+    {
+        // >SEPARATOR deleteRule delete rule with simple characters to encode in objectID
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->deleteRule(
+            '<YOUR_INDEX_NAME>',
+            'test/with/slash',
         );
 
         // >LOG
@@ -823,11 +1330,11 @@ class SnippetSearchClient
     /**
      * Snippet for the GenerateSecuredApiKey method.
      *
-     * generate secured api key basic
+     * api key basic
      */
     public function snippetForGenerateSecuredApiKey(): void
     {
-        // >SEPARATOR generateSecuredApiKey generate secured api key basic
+        // >SEPARATOR generateSecuredApiKey api key basic
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -850,11 +1357,11 @@ class SnippetSearchClient
     /**
      * Snippet for the GenerateSecuredApiKey method.
      *
-     * generate secured api key with searchParams
+     * with searchParams
      */
     public function snippetForGenerateSecuredApiKey1(): void
     {
-        // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+        // >SEPARATOR generateSecuredApiKey with searchParams
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -881,6 +1388,78 @@ class SnippetSearchClient
                         'two',
                     ],
                 ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GenerateSecuredApiKey method.
+     *
+     * with filters
+     */
+    public function snippetForGenerateSecuredApiKey2(): void
+    {
+        // >SEPARATOR generateSecuredApiKey with filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['filters' => 'user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GenerateSecuredApiKey method.
+     *
+     * with visible_by filter
+     */
+    public function snippetForGenerateSecuredApiKey3(): void
+    {
+        // >SEPARATOR generateSecuredApiKey with visible_by filter
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['filters' => 'visible_by:group/Finance',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GenerateSecuredApiKey method.
+     *
+     * with userID
+     */
+    public function snippetForGenerateSecuredApiKey4(): void
+    {
+        // >SEPARATOR generateSecuredApiKey with userID
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['userToken' => 'user42',
             ],
         );
 
@@ -981,12 +1560,37 @@ class SnippetSearchClient
      */
     public function snippetForGetLogs(): void
     {
-        // >SEPARATOR getLogs default
+        // >SEPARATOR getLogs getLogs with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getLogs();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetLogs method.
+     *
+     * getLogs with parameters
+     */
+    public function snippetForGetLogs1(): void
+    {
+        // >SEPARATOR getLogs getLogs with parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getLogs(
+            5,
+            10,
+            '<YOUR_INDEX_NAME>',
+            'all',
+        );
 
         // >LOG
         // play with the response
@@ -1001,7 +1605,7 @@ class SnippetSearchClient
      */
     public function snippetForGetObject(): void
     {
-        // >SEPARATOR getObject default
+        // >SEPARATOR getObject getObject
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1014,6 +1618,29 @@ class SnippetSearchClient
 
                 'attr2',
             ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetObject method.
+     *
+     * search with a real object
+     */
+    public function snippetForGetObject1(): void
+    {
+        // >SEPARATOR getObject search with a real object
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getObject(
+            '<YOUR_INDEX_NAME>',
+            'Batman and Robin',
         );
 
         // >LOG
@@ -1214,12 +1841,34 @@ class SnippetSearchClient
      */
     public function snippetForHasPendingMappings(): void
     {
-        // >SEPARATOR hasPendingMappings default
+        // >SEPARATOR hasPendingMappings hasPendingMappings with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->hasPendingMappings();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the HasPendingMappings method.
+     *
+     * hasPendingMappings with parameters
+     */
+    public function snippetForHasPendingMappings1(): void
+    {
+        // >SEPARATOR hasPendingMappings hasPendingMappings with parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->hasPendingMappings(
+            true,
+        );
 
         // >LOG
         // play with the response
@@ -1340,12 +1989,35 @@ class SnippetSearchClient
      */
     public function snippetForListIndices(): void
     {
-        // >SEPARATOR listIndices default
+        // >SEPARATOR listIndices listIndices with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->listIndices();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListIndices method.
+     *
+     * listIndices with parameters
+     */
+    public function snippetForListIndices1(): void
+    {
+        // >SEPARATOR listIndices listIndices with parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->listIndices(
+            8,
+            3,
+        );
 
         // >LOG
         // play with the response
@@ -1360,12 +2032,35 @@ class SnippetSearchClient
      */
     public function snippetForListUserIds(): void
     {
-        // >SEPARATOR listUserIds default
+        // >SEPARATOR listUserIds listUserIds with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->listUserIds();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListUserIds method.
+     *
+     * listUserIds with parameters
+     */
+    public function snippetForListUserIds1(): void
+    {
+        // >SEPARATOR listUserIds listUserIds with parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->listUserIds(
+            8,
+            100,
+        );
 
         // >LOG
         // play with the response
@@ -1489,7 +2184,7 @@ class SnippetSearchClient
      */
     public function snippetForPartialUpdateObject(): void
     {
-        // >SEPARATOR partialUpdateObject default
+        // >SEPARATOR partialUpdateObject Partial update with a new value for a string attribute
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1498,6 +2193,144 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
             'uniqueID',
             ['attributeId' => 'new value',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PartialUpdateObject method.
+     *
+     * Partial update with a new value for an integer attribute
+     */
+    public function snippetForPartialUpdateObject1(): void
+    {
+        // >SEPARATOR partialUpdateObject Partial update with a new value for an integer attribute
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->partialUpdateObject(
+            '<YOUR_INDEX_NAME>',
+            'uniqueID',
+            ['attributeId' => 1,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PartialUpdateObject method.
+     *
+     * Partial update with a new value for a boolean attribute
+     */
+    public function snippetForPartialUpdateObject2(): void
+    {
+        // >SEPARATOR partialUpdateObject Partial update with a new value for a boolean attribute
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->partialUpdateObject(
+            '<YOUR_INDEX_NAME>',
+            'uniqueID',
+            ['attributeId' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PartialUpdateObject method.
+     *
+     * Partial update with a new value for an array attribute
+     */
+    public function snippetForPartialUpdateObject3(): void
+    {
+        // >SEPARATOR partialUpdateObject Partial update with a new value for an array attribute
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->partialUpdateObject(
+            '<YOUR_INDEX_NAME>',
+            'uniqueID',
+            ['attributeId' => [
+                'one',
+
+                'two',
+
+                'three',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PartialUpdateObject method.
+     *
+     * Partial update with a new value for an object attribute
+     */
+    public function snippetForPartialUpdateObject4(): void
+    {
+        // >SEPARATOR partialUpdateObject Partial update with a new value for an object attribute
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->partialUpdateObject(
+            '<YOUR_INDEX_NAME>',
+            'uniqueID',
+            ['attributeId' => ['nested' => 'value',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PartialUpdateObject method.
+     *
+     * with visible_by filter
+     */
+    public function snippetForPartialUpdateObject5(): void
+    {
+        // >SEPARATOR partialUpdateObject with visible_by filter
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->partialUpdateObject(
+            '<YOUR_INDEX_NAME>',
+            'uniqueID',
+            ['visible_by' => [
+                'Angela',
+
+                'group/Finance',
+
+                'group/Shareholders',
+            ],
             ],
         );
 
@@ -1861,13 +2694,73 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SaveObjects method.
+     *
+     * saveObjectsPlaylist
+     */
+    public function snippetForSaveObjects2(): void
+    {
+        // >SEPARATOR saveObjects saveObjectsPlaylist
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'visibility' => 'public',
+                    'name' => 'Hot 100 Billboard Charts',
+                    'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+                    'createdAt' => '1500240452',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveObjects method.
+     *
+     * saveObjectsPublicUser
+     */
+    public function snippetForSaveObjects3(): void
+    {
+        // >SEPARATOR saveObjects saveObjectsPublicUser
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'visibility' => 'public',
+                    'name' => 'Hot 100 Billboard Charts',
+                    'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+                    'createdAt' => '1500240452',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SaveRule method.
      *
      * saveRule with minimal parameters
      */
     public function snippetForSaveRule(): void
     {
-        // >SEPARATOR saveRule default
+        // >SEPARATOR saveRule saveRule with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1894,13 +2787,769 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SaveRule method.
+     *
+     * saveRule with all parameters
+     */
+    public function snippetForSaveRule1(): void
+    {
+        // >SEPARATOR saveRule saveRule with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'id1',
+            ['objectID' => 'id1',
+                'conditions' => [
+                    ['pattern' => 'apple',
+                        'anchoring' => 'contains',
+                        'alternatives' => false,
+                        'context' => 'search',
+                    ],
+                ],
+                'consequence' => ['params' => ['filters' => 'brand:apple',
+                    'query' => ['remove' => [
+                        'algolia',
+                    ],
+                        'edits' => [
+                            ['type' => 'remove',
+                                'delete' => 'abc',
+                                'insert' => 'cde',
+                            ],
+
+                            ['type' => 'replace',
+                                'delete' => 'abc',
+                                'insert' => 'cde',
+                            ],
+                        ],
+                    ],
+                ],
+                    'hide' => [
+                        ['objectID' => '321',
+                        ],
+                    ],
+                    'filterPromotes' => false,
+                    'userData' => ['algolia' => 'aloglia',
+                    ],
+                    'promote' => [
+                        ['objectID' => 'abc',
+                            'position' => 3,
+                        ],
+
+                        ['objectIDs' => [
+                            'abc',
+
+                            'def',
+                        ],
+                            'position' => 1,
+                        ],
+                    ],
+                ],
+                'description' => 'test',
+                'enabled' => true,
+                'validity' => [
+                    ['from' => 1656670273,
+                        'until' => 1656670277,
+                    ],
+                ],
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * b2b catalog
+     */
+    public function snippetForSaveRule2(): void
+    {
+        // >SEPARATOR saveRule b2b catalog
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'article-rule',
+            ['objectID' => 'article-rule',
+                'conditions' => [
+                    ['pattern' => 'article',
+                        'anchoring' => 'startsWith',
+                    ],
+                ],
+                'consequence' => ['params' => ['query' => ['edits' => [
+                    ['type' => 'remove',
+                        'delete' => 'article',
+                    ],
+                ],
+                ],
+                    'restrictSearchableAttributes' => [
+                        'title',
+
+                        'book_id',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * merchandising and promoting
+     */
+    public function snippetForSaveRule3(): void
+    {
+        // >SEPARATOR saveRule merchandising and promoting
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'director-rule',
+            ['objectID' => 'director-rule',
+                'conditions' => [
+                    ['pattern' => '{facet:director} director',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['params' => ['restrictSearchableAttributes' => [
+                    'title',
+
+                    'book_id',
+                ],
+                    'automaticFacetFilters' => [
+                        ['facet' => 'director',
+                        ],
+                    ],
+                    'query' => ['edits' => [
+                        ['type' => 'remove',
+                            'delete' => 'director',
+                        ],
+                    ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * harry potter
+     */
+    public function snippetForSaveRule4(): void
+    {
+        // >SEPARATOR saveRule harry potter
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'harry-potter-rule',
+            ['objectID' => 'harry-potter-rule',
+                'conditions' => [
+                    ['pattern' => 'harry potter',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['userData' => ['promo_content' => '20% OFF on all Harry Potter books!',
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * merchandising empty query
+     */
+    public function snippetForSaveRule5(): void
+    {
+        // >SEPARATOR saveRule merchandising empty query
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'clearance-category-filter',
+            ['objectID' => 'clearance-category-filter',
+                'conditions' => [
+                    ['pattern' => '',
+                        'anchoring' => 'is',
+                        'context' => 'landing',
+                    ],
+                ],
+                'consequence' => ['params' => ['optionalFilters' => 'clearance:true',
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * redirect
+     */
+    public function snippetForSaveRule6(): void
+    {
+        // >SEPARATOR saveRule redirect
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'redirect-help-rule',
+            ['objectID' => 'redirect-help-rule',
+                'conditions' => [
+                    ['pattern' => 'help',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['userData' => ['redirect' => 'https://www.algolia.com/support',
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * promote some results over others
+     */
+    public function snippetForSaveRule7(): void
+    {
+        // >SEPARATOR saveRule promote some results over others
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'tomato-fruit',
+            ['objectID' => 'tomato-fruit',
+                'conditions' => [
+                    ['pattern' => 'tomato',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['params' => ['optionalFilters' => 'food_group:fruit',
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * promote several hits
+     */
+    public function snippetForSaveRule8(): void
+    {
+        // >SEPARATOR saveRule promote several hits
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'Promote-Apple-Newest',
+            ['objectID' => 'Promote-Apple-Newest',
+                'conditions' => [
+                    ['pattern' => 'apple',
+                        'anchoring' => 'is',
+                    ],
+                ],
+                'consequence' => ['promote' => [
+                    ['objectIDs' => [
+                        'iPhone-12345',
+
+                        'watch-123',
+                    ],
+                        'position' => 0,
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * promote newest release
+     */
+    public function snippetForSaveRule9(): void
+    {
+        // >SEPARATOR saveRule promote newest release
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'Promote-iPhone-X',
+            ['objectID' => 'Promote-iPhone-X',
+                'conditions' => [
+                    ['pattern' => 'iPhone',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['promote' => [
+                    ['objectID' => 'iPhone-12345',
+                        'position' => 0,
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * promote single item
+     */
+    public function snippetForSaveRule10(): void
+    {
+        // >SEPARATOR saveRule promote single item
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'promote-harry-potter-box-set',
+            ['objectID' => 'promote-harry-potter-box-set',
+                'conditions' => [
+                    ['pattern' => 'Harry Potter',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['promote' => [
+                    ['objectID' => 'HP-12345',
+                        'position' => 0,
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * limit search results
+     */
+    public function snippetForSaveRule11(): void
+    {
+        // >SEPARATOR saveRule limit search results
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'article-rule',
+            ['objectID' => 'article-rule',
+                'conditions' => [
+                    ['pattern' => 'article',
+                        'anchoring' => 'startsWith',
+                    ],
+                ],
+                'consequence' => ['params' => ['query' => ['edits' => [
+                    ['type' => 'remove',
+                        'delete' => 'article',
+                    ],
+                ],
+                ],
+                    'restrictSearchableAttributes' => [
+                        'title',
+
+                        'book_id',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * query match
+     */
+    public function snippetForSaveRule12(): void
+    {
+        // >SEPARATOR saveRule query match
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'tagged-brand-rule',
+            ['conditions' => [
+                ['pattern' => 'brand: {facet:brand}',
+                    'anchoring' => 'contains',
+                    'alternatives' => false,
+                ],
+            ],
+                'consequence' => ['params' => ['automaticFacetFilters' => [
+                    ['facet' => 'brand',
+                    ],
+                ],
+                    'query' => ['remove' => [
+                        'brand:',
+
+                        '{facet:brand}',
+                    ],
+                    ],
+                ],
+                ],
+                'description' => 'filter on brand: {brand}',
+                'objectID' => 'tagged-brand-rule',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * dynamic filtering
+     */
+    public function snippetForSaveRule13(): void
+    {
+        // >SEPARATOR saveRule dynamic filtering
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'color-facets',
+            ['objectID' => 'color-facets',
+                'conditions' => [
+                    ['pattern' => '{facet:color}',
+                    ],
+                ],
+                'consequence' => ['params' => ['automaticFacetFilters' => [
+                    ['facet' => 'color',
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * hide hits
+     */
+    public function snippetForSaveRule14(): void
+    {
+        // >SEPARATOR saveRule hide hits
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'hide-12345',
+            ['objectID' => 'hide-12345',
+                'conditions' => [
+                    ['pattern' => 'cheap',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['hide' => [
+                    ['objectID' => 'to-hide-12345',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * one rule per facet
+     */
+    public function snippetForSaveRule15(): void
+    {
+        // >SEPARATOR saveRule one rule per facet
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'red-color',
+            ['objectID' => 'red-color',
+                'conditions' => [
+                    ['pattern' => 'red',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['params' => ['query' => ['remove' => [
+                    'red',
+                ],
+                ],
+                    'filters' => 'color:red',
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * numerical filters
+     */
+    public function snippetForSaveRule16(): void
+    {
+        // >SEPARATOR saveRule numerical filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'cheap',
+            ['objectID' => 'cheap',
+                'conditions' => [
+                    ['pattern' => 'cheap',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['params' => ['query' => ['remove' => [
+                    'cheap',
+                ],
+                ],
+                    'filters' => 'price < 10',
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * negative filters
+     */
+    public function snippetForSaveRule17(): void
+    {
+        // >SEPARATOR saveRule negative filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'gluten-free-rule',
+            ['objectID' => 'gluten-free-rule',
+                'conditions' => [
+                    ['pattern' => 'gluten-free',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['params' => ['filters' => 'NOT allergens:gluten',
+                    'query' => ['edits' => [
+                        ['type' => 'remove',
+                            'delete' => 'gluten-free',
+                        ],
+                    ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * positive filters
+     */
+    public function snippetForSaveRule18(): void
+    {
+        // >SEPARATOR saveRule positive filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'diet-rule',
+            ['objectID' => 'diet-rule',
+                'conditions' => [
+                    ['pattern' => 'diet',
+                        'anchoring' => 'contains',
+                    ],
+                ],
+                'consequence' => ['params' => ['filters' => "'low-carb' OR 'low-fat'",
+                    'query' => ['edits' => [
+                        ['type' => 'remove',
+                            'delete' => 'diet',
+                        ],
+                    ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * conditionless
+     */
+    public function snippetForSaveRule19(): void
+    {
+        // >SEPARATOR saveRule conditionless
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'diet-rule',
+            ['objectID' => 'diet-rule',
+                'consequence' => ['params' => ['filters' => "'low-carb' OR 'low-fat'",
+                    'query' => ['edits' => [
+                        ['type' => 'remove',
+                            'delete' => 'diet',
+                        ],
+                    ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SaveRules method.
      *
      * saveRules with minimal parameters
      */
     public function snippetForSaveRules(): void
     {
-        // >SEPARATOR saveRules default
+        // >SEPARATOR saveRules saveRules with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1932,6 +3581,184 @@ class SnippetSearchClient
             ],
             false,
             true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules with all parameters
+     */
+    public function snippetForSaveRules1(): void
+    {
+        // >SEPARATOR saveRules saveRules with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => 'id1',
+                    'conditions' => [
+                        ['pattern' => 'apple',
+                            'anchoring' => 'contains',
+                            'alternatives' => false,
+                            'context' => 'search',
+                        ],
+                    ],
+                    'consequence' => ['params' => ['filters' => 'brand:apple',
+                        'query' => ['remove' => [
+                            'algolia',
+                        ],
+                            'edits' => [
+                                ['type' => 'remove',
+                                    'delete' => 'abc',
+                                    'insert' => 'cde',
+                                ],
+
+                                ['type' => 'replace',
+                                    'delete' => 'abc',
+                                    'insert' => 'cde',
+                                ],
+                            ],
+                        ],
+                    ],
+                        'hide' => [
+                            ['objectID' => '321',
+                            ],
+                        ],
+                        'filterPromotes' => false,
+                        'userData' => ['algolia' => 'aloglia',
+                        ],
+                        'promote' => [
+                            ['objectID' => 'abc',
+                                'position' => 3,
+                            ],
+
+                            ['objectIDs' => [
+                                'abc',
+
+                                'def',
+                            ],
+                                'position' => 1,
+                            ],
+                        ],
+                    ],
+                    'description' => 'test',
+                    'enabled' => true,
+                    'validity' => [
+                        ['from' => 1656670273,
+                            'until' => 1656670277,
+                        ],
+                    ],
+                ],
+            ],
+            true,
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * dynamic filtering
+     */
+    public function snippetForSaveRules2(): void
+    {
+        // >SEPARATOR saveRules dynamic filtering
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => 'toaster',
+                    'conditions' => [
+                        ['pattern' => 'toaster',
+                            'anchoring' => 'contains',
+                        ],
+                    ],
+                    'consequence' => ['params' => ['query' => ['remove' => [
+                        'toaster',
+                    ],
+                    ],
+                        'filters' => 'product_type:toaster',
+                    ],
+                    ],
+                ],
+
+                ['objectID' => 'cheap',
+                    'conditions' => [
+                        ['pattern' => 'cheap',
+                            'anchoring' => 'contains',
+                        ],
+                    ],
+                    'consequence' => ['params' => ['query' => ['remove' => [
+                        'cheap',
+                    ],
+                    ],
+                        'filters' => 'price < 15',
+                    ],
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * enhance search results
+     */
+    public function snippetForSaveRules3(): void
+    {
+        // >SEPARATOR saveRules enhance search results
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => 'country',
+                    'conditions' => [
+                        ['pattern' => '{facet:country}',
+                            'anchoring' => 'contains',
+                        ],
+                    ],
+                    'consequence' => ['params' => ['aroundLatLngViaIP' => false,
+                    ],
+                    ],
+                ],
+
+                ['objectID' => 'city',
+                    'conditions' => [
+                        ['pattern' => '{facet:city}',
+                            'anchoring' => 'contains',
+                        ],
+                    ],
+                    'consequence' => ['params' => ['aroundLatLngViaIP' => false,
+                    ],
+                    ],
+                ],
+            ],
         );
 
         // >LOG
@@ -2137,9 +3964,71 @@ class SnippetSearchClient
     /**
      * Snippet for the Search method.
      *
-     * retrieveFacets
+     * search for a single hits request with minimal parameters
      */
     public function snippetForSearch4(): void
+    {
+        // >SEPARATOR search search for a single hits request with minimal parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search with highlight and snippet results
+     */
+    public function snippetForSearch5(): void
+    {
+        // >SEPARATOR search search with highlight and snippet results
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'query' => 'vim',
+                    'attributesToSnippet' => [
+                        '*:20',
+                    ],
+                    'attributesToHighlight' => [
+                        '*',
+                    ],
+                    'attributesToRetrieve' => [
+                        '*',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * retrieveFacets
+     */
+    public function snippetForSearch6(): void
     {
         // >SEPARATOR search retrieveFacets
         // Initialize the client
@@ -2171,7 +4060,7 @@ class SnippetSearchClient
      *
      * retrieveFacetsWildcard
      */
-    public function snippetForSearch5(): void
+    public function snippetForSearch7(): void
     {
         // >SEPARATOR search retrieveFacetsWildcard
         // Initialize the client
@@ -2197,13 +4086,510 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the Search method.
+     *
+     * search for a single facet request with minimal parameters
+     */
+    public function snippetForSearch8(): void
+    {
+        // >SEPARATOR search search for a single facet request with minimal parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'type' => 'facet',
+                    'facet' => 'editor',
+                ],
+            ],
+                'strategy' => 'stopIfEnoughMatches',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search for a single hits request with all parameters
+     */
+    public function snippetForSearch9(): void
+    {
+        // >SEPARATOR search search for a single hits request with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'query' => 'myQuery',
+                    'hitsPerPage' => 50,
+                    'type' => 'default',
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search for a single facet request with all parameters
+     */
+    public function snippetForSearch10(): void
+    {
+        // >SEPARATOR search search for a single facet request with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'type' => 'facet',
+                    'facet' => 'theFacet',
+                    'facetQuery' => 'theFacetQuery',
+                    'query' => 'theQuery',
+                    'maxFacetHits' => 50,
+                ],
+            ],
+                'strategy' => 'stopIfEnoughMatches',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search for multiple mixed requests in multiple indices with minimal parameters
+     */
+    public function snippetForSearch11(): void
+    {
+        // >SEPARATOR search search for multiple mixed requests in multiple indices with minimal parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                ],
+
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'type' => 'facet',
+                    'facet' => 'theFacet',
+                ],
+
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'type' => 'default',
+                ],
+            ],
+                'strategy' => 'stopIfEnoughMatches',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search for multiple mixed requests in multiple indices with all parameters
+     */
+    public function snippetForSearch12(): void
+    {
+        // >SEPARATOR search search for multiple mixed requests in multiple indices with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'type' => 'facet',
+                    'facet' => 'theFacet',
+                    'facetQuery' => 'theFacetQuery',
+                    'query' => 'theQuery',
+                    'maxFacetHits' => 50,
+                ],
+
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'query' => 'myQuery',
+                    'hitsPerPage' => 50,
+                    'type' => 'default',
+                ],
+            ],
+                'strategy' => 'stopIfEnoughMatches',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search filters accept all of the possible shapes
+     */
+    public function snippetForSearch13(): void
+    {
+        // >SEPARATOR search search filters accept all of the possible shapes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'facetFilters' => 'mySearch:filters',
+                    'reRankingApplyFilter' => 'mySearch:filters',
+                    'tagFilters' => 'mySearch:filters',
+                    'numericFilters' => 'mySearch:filters',
+                    'optionalFilters' => 'mySearch:filters',
+                ],
+
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'facetFilters' => [
+                        'mySearch:filters',
+
+                        [
+                            'mySearch:filters',
+
+                            [
+                                'mySearch:filters',
+                            ],
+                        ],
+                    ],
+                    'reRankingApplyFilter' => [
+                        'mySearch:filters',
+
+                        [
+                            'mySearch:filters',
+                        ],
+                    ],
+                    'tagFilters' => [
+                        'mySearch:filters',
+
+                        [
+                            'mySearch:filters',
+                        ],
+                    ],
+                    'numericFilters' => [
+                        'mySearch:filters',
+
+                        [
+                            'mySearch:filters',
+                        ],
+                    ],
+                    'optionalFilters' => [
+                        'mySearch:filters',
+
+                        [
+                            'mySearch:filters',
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search filters end to end
+     */
+    public function snippetForSearch14(): void
+    {
+        // >SEPARATOR search search filters end to end
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'filters' => "editor:'visual studio' OR editor:neovim",
+                ],
+
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'facetFilters' => [
+                        "editor:'visual studio'",
+
+                        'editor:neovim',
+                    ],
+                ],
+
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'facetFilters' => [
+                        "editor:'visual studio'",
+
+                        [
+                            'editor:neovim',
+                        ],
+                    ],
+                ],
+
+                ['indexName' => '<YOUR_INDEX_NAME>',
+                    'facetFilters' => [
+                        "editor:'visual studio'",
+
+                        [
+                            'editor:neovim',
+
+                            [
+                                'editor:goland',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search with all search parameters
+     */
+    public function snippetForSearch15(): void
+    {
+        // >SEPARATOR search search with all search parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            ['requests' => [
+                ['advancedSyntax' => true,
+                    'advancedSyntaxFeatures' => [
+                        'exactPhrase',
+                    ],
+                    'allowTyposOnNumericTokens' => true,
+                    'alternativesAsExact' => [
+                        'multiWordsSynonym',
+                    ],
+                    'analytics' => true,
+                    'analyticsTags' => [
+                        '',
+                    ],
+                    'aroundLatLng' => '',
+                    'aroundLatLngViaIP' => true,
+                    'aroundPrecision' => 0,
+                    'aroundRadius' => 'all',
+                    'attributeCriteriaComputedByMinProximity' => true,
+                    'attributesToHighlight' => [
+                        '',
+                    ],
+                    'attributesToRetrieve' => [
+                        '',
+                    ],
+                    'attributesToSnippet' => [
+                        '',
+                    ],
+                    'clickAnalytics' => true,
+                    'decompoundQuery' => true,
+                    'disableExactOnAttributes' => [
+                        '',
+                    ],
+                    'disableTypoToleranceOnAttributes' => [
+                        '',
+                    ],
+                    'distinct' => 0,
+                    'enableABTest' => true,
+                    'enablePersonalization' => true,
+                    'enableReRanking' => true,
+                    'enableRules' => true,
+                    'exactOnSingleWordQuery' => 'attribute',
+                    'facetFilters' => [
+                        '',
+                    ],
+                    'facetingAfterDistinct' => true,
+                    'facets' => [
+                        '',
+                    ],
+                    'filters' => '',
+                    'getRankingInfo' => true,
+                    'highlightPostTag' => '',
+                    'highlightPreTag' => '',
+                    'hitsPerPage' => 1,
+                    'ignorePlurals' => false,
+                    'indexName' => '<YOUR_INDEX_NAME>',
+                    'insideBoundingBox' => [
+                        [
+                            47.3165,
+
+                            4.9665,
+
+                            47.3424,
+
+                            5.0201,
+                        ],
+
+                        [
+                            40.9234,
+
+                            2.1185,
+
+                            38.643,
+
+                            1.9916,
+                        ],
+                    ],
+                    'insidePolygon' => [
+                        [
+                            47.3165,
+
+                            4.9665,
+
+                            47.3424,
+
+                            5.0201,
+
+                            47.32,
+
+                            4.9,
+                        ],
+
+                        [
+                            40.9234,
+
+                            2.1185,
+
+                            38.643,
+
+                            1.9916,
+
+                            39.2587,
+
+                            2.0104,
+                        ],
+                    ],
+                    'length' => 1,
+                    'maxValuesPerFacet' => 0,
+                    'minProximity' => 1,
+                    'minWordSizefor1Typo' => 0,
+                    'minWordSizefor2Typos' => 0,
+                    'minimumAroundRadius' => 1,
+                    'naturalLanguages' => [
+                        'fr',
+                    ],
+                    'numericFilters' => [
+                        '',
+                    ],
+                    'offset' => 0,
+                    'optionalFilters' => [
+                        '',
+                    ],
+                    'optionalWords' => [
+                        '',
+                    ],
+                    'page' => 0,
+                    'percentileComputation' => true,
+                    'personalizationImpact' => 0,
+                    'query' => '',
+                    'queryLanguages' => [
+                        'fr',
+                    ],
+                    'queryType' => 'prefixAll',
+                    'ranking' => [
+                        '',
+                    ],
+                    'reRankingApplyFilter' => [
+                        '',
+                    ],
+                    'relevancyStrictness' => 0,
+                    'removeStopWords' => true,
+                    'removeWordsIfNoResults' => 'allOptional',
+                    'renderingContent' => ['facetOrdering' => ['facets' => ['order' => [
+                        'a',
+
+                        'b',
+                    ],
+                    ],
+                        'values' => ['a' => ['order' => [
+                            'b',
+                        ],
+                            'sortRemainingBy' => 'count',
+                        ],
+                        ],
+                    ],
+                    ],
+                    'replaceSynonymsInHighlight' => true,
+                    'responseFields' => [
+                        '',
+                    ],
+                    'restrictHighlightAndSnippetArrays' => true,
+                    'restrictSearchableAttributes' => [
+                        '',
+                    ],
+                    'ruleContexts' => [
+                        '',
+                    ],
+                    'similarQuery' => '',
+                    'snippetEllipsisText' => '',
+                    'sortFacetValuesBy' => '',
+                    'sumOrFiltersScores' => true,
+                    'synonyms' => true,
+                    'tagFilters' => [
+                        '',
+                    ],
+                    'type' => 'default',
+                    'typoTolerance' => 'min',
+                    'userToken' => '',
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchDictionaryEntries method.
      *
      * get searchDictionaryEntries results with minimal parameters
      */
     public function snippetForSearchDictionaryEntries(): void
     {
-        // >SEPARATOR searchDictionaryEntries default
+        // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -2221,13 +4607,40 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SearchDictionaryEntries method.
+     *
+     * get searchDictionaryEntries results with all parameters
+     */
+    public function snippetForSearchDictionaryEntries1(): void
+    {
+        // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchDictionaryEntries(
+            'compounds',
+            ['query' => 'foo',
+                'page' => 4,
+                'hitsPerPage' => 2,
+                'language' => 'fr',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchForFacetValues method.
      *
      * get searchForFacetValues results with minimal parameters
      */
     public function snippetForSearchForFacetValues(): void
     {
-        // >SEPARATOR searchForFacetValues default
+        // >SEPARATOR searchForFacetValues get searchForFacetValues results with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -2235,6 +4648,58 @@ class SnippetSearchClient
         $response = $client->searchForFacetValues(
             '<YOUR_INDEX_NAME>',
             'facetName',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchForFacetValues method.
+     *
+     * get searchForFacetValues results with all parameters
+     */
+    public function snippetForSearchForFacetValues1(): void
+    {
+        // >SEPARATOR searchForFacetValues get searchForFacetValues results with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchForFacetValues(
+            '<YOUR_INDEX_NAME>',
+            'facetName',
+            ['params' => "query=foo&facetFilters=['bar']",
+                'facetQuery' => 'foo',
+                'maxFacetHits' => 42,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchForFacetValues method.
+     *
+     * facetName and facetQuery
+     */
+    public function snippetForSearchForFacetValues2(): void
+    {
+        // >SEPARATOR searchForFacetValues facetName and facetQuery
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchForFacetValues(
+            '<YOUR_INDEX_NAME>',
+            'author',
+            ['facetQuery' => 'stephen king',
+            ],
         );
 
         // >LOG
@@ -2270,11 +4735,55 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
-     * search with searchParams
+     * search with minimal parameters
      */
     public function snippetForSearchSingleIndex(): void
     {
-        // >SEPARATOR searchSingleIndex default
+        // >SEPARATOR searchSingleIndex search with minimal parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * search with special characters in indexName
+     */
+    public function snippetForSearchSingleIndex1(): void
+    {
+        // >SEPARATOR searchSingleIndex search with special characters in indexName
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * search with searchParams
+     */
+    public function snippetForSearchSingleIndex2(): void
+    {
+        // >SEPARATOR searchSingleIndex search with searchParams
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -2295,19 +4804,976 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * single search retrieve snippets
+     */
+    public function snippetForSearchSingleIndex3(): void
+    {
+        // >SEPARATOR searchSingleIndex single search retrieve snippets
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'batman mask of the phantasm',
+                'attributesToRetrieve' => [
+                    '*',
+                ],
+                'attributesToSnippet' => [
+                    '*:20',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * query
+     */
+    public function snippetForSearchSingleIndex4(): void
+    {
+        // >SEPARATOR searchSingleIndex query
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'phone',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filters
+     */
+    public function snippetForSearchSingleIndex5(): void
+    {
+        // >SEPARATOR searchSingleIndex filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => 'country:US AND price.gross < 2.0',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * distinct
+     */
+    public function snippetForSearchSingleIndex6(): void
+    {
+        // >SEPARATOR searchSingleIndex distinct
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['distinct' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersNumeric
+     */
+    public function snippetForSearchSingleIndex7(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersNumeric
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => 'price < 10',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersTimestamp
+     */
+    public function snippetForSearchSingleIndex8(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersTimestamp
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => 'NOT date_timestamp:1514764800 TO 1546300799',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersSumOrFiltersScoresFalse
+     */
+    public function snippetForSearchSingleIndex9(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+                'sumOrFiltersScores' => false,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersSumOrFiltersScoresTrue
+     */
+    public function snippetForSearchSingleIndex10(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+                'sumOrFiltersScores' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersStephenKing
+     */
+    public function snippetForSearchSingleIndex11(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersStephenKing
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => 'author:"Stephen King"',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersNotTags
+     */
+    public function snippetForSearchSingleIndex12(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersNotTags
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => 'NOT _tags:non-fiction',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * facetFiltersList
+     */
+    public function snippetForSearchSingleIndex13(): void
+    {
+        // >SEPARATOR searchSingleIndex facetFiltersList
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['facetFilters' => [
+                'publisher:Penguin',
+
+                [
+                    'author:Stephen King',
+
+                    'genre:Horror',
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * facetFiltersNeg
+     */
+    public function snippetForSearchSingleIndex14(): void
+    {
+        // >SEPARATOR searchSingleIndex facetFiltersNeg
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['facetFilters' => 'category:-Ebook',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersAndFacetFilters
+     */
+    public function snippetForSearchSingleIndex15(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersAndFacetFilters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => '(author:"Stephen King" OR genre:"Horror")',
+                'facetFilters' => [
+                    'publisher:Penguin',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * facet author genre
+     */
+    public function snippetForSearchSingleIndex16(): void
+    {
+        // >SEPARATOR searchSingleIndex facet author genre
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['facets' => [
+                'author',
+
+                'genre',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * facet wildcard
+     */
+    public function snippetForSearchSingleIndex17(): void
+    {
+        // >SEPARATOR searchSingleIndex facet wildcard
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['facets' => [
+                '*',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * maxValuesPerFacet
+     */
+    public function snippetForSearchSingleIndex18(): void
+    {
+        // >SEPARATOR searchSingleIndex maxValuesPerFacet
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['maxValuesPerFacet' => 1000,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * aroundLatLng
+     */
+    public function snippetForSearchSingleIndex19(): void
+    {
+        // >SEPARATOR searchSingleIndex aroundLatLng
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['aroundLatLng' => '40.71, -74.01',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * aroundLatLngViaIP
+     */
+    public function snippetForSearchSingleIndex20(): void
+    {
+        // >SEPARATOR searchSingleIndex aroundLatLngViaIP
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['aroundLatLngViaIP' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * aroundRadius
+     */
+    public function snippetForSearchSingleIndex21(): void
+    {
+        // >SEPARATOR searchSingleIndex aroundRadius
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['aroundLatLng' => '40.71, -74.01',
+                'aroundRadius' => 1000000,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * insideBoundingBox
+     */
+    public function snippetForSearchSingleIndex22(): void
+    {
+        // >SEPARATOR searchSingleIndex insideBoundingBox
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['insideBoundingBox' => [
+                [
+                    49.067996905313834,
+
+                    65.73828125,
+
+                    25.905859247243498,
+
+                    128.8046875,
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * insidePolygon
+     */
+    public function snippetForSearchSingleIndex23(): void
+    {
+        // >SEPARATOR searchSingleIndex insidePolygon
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['insidePolygon' => [
+                [
+                    42.01,
+
+                    -124.31,
+
+                    48.835509470063045,
+
+                    -124.40453125000005,
+
+                    45.01082951668149,
+
+                    -65.95726562500005,
+
+                    31.247243545293433,
+
+                    -81.06578125000004,
+
+                    25.924152577235226,
+
+                    -97.68234374999997,
+
+                    32.300311895879545,
+
+                    -117.54828125,
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * insidePolygon
+     */
+    public function snippetForSearchSingleIndex24(): void
+    {
+        // >SEPARATOR searchSingleIndex insidePolygon
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['insidePolygon' => [
+                [
+                    42.01,
+
+                    -124.31,
+
+                    48.835509470063045,
+
+                    -124.40453125000005,
+
+                    45.01082951668149,
+
+                    -65.95726562500005,
+
+                    31.247243545293433,
+
+                    -81.06578125000004,
+
+                    25.924152577235226,
+
+                    -97.68234374999997,
+
+                    32.300311895879545,
+
+                    -117.54828125,
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * optionalFilters
+     */
+    public function snippetForSearchSingleIndex25(): void
+    {
+        // >SEPARATOR searchSingleIndex optionalFilters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['optionalFilters' => [
+                'can_deliver_quickly:true',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * optionalFiltersMany
+     */
+    public function snippetForSearchSingleIndex26(): void
+    {
+        // >SEPARATOR searchSingleIndex optionalFiltersMany
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['optionalFilters' => [
+                'brand:Apple<score=3>',
+
+                'brand:Samsung<score=2>',
+
+                'brand:-Huawei',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * optionalFiltersSimple
+     */
+    public function snippetForSearchSingleIndex27(): void
+    {
+        // >SEPARATOR searchSingleIndex optionalFiltersSimple
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['optionalFilters' => [
+                'brand:Apple<score=2>',
+
+                'type:tablet',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * restrictSearchableAttributes
+     */
+    public function snippetForSearchSingleIndex28(): void
+    {
+        // >SEPARATOR searchSingleIndex restrictSearchableAttributes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['restrictSearchableAttributes' => [
+                'title_fr',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * getRankingInfo
+     */
+    public function snippetForSearchSingleIndex29(): void
+    {
+        // >SEPARATOR searchSingleIndex getRankingInfo
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['getRankingInfo' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * clickAnalytics
+     */
+    public function snippetForSearchSingleIndex30(): void
+    {
+        // >SEPARATOR searchSingleIndex clickAnalytics
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['clickAnalytics' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * clickAnalyticsUserToken
+     */
+    public function snippetForSearchSingleIndex31(): void
+    {
+        // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['clickAnalytics' => true,
+                'userToken' => 'user-1',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * enablePersonalization
+     */
+    public function snippetForSearchSingleIndex32(): void
+    {
+        // >SEPARATOR searchSingleIndex enablePersonalization
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['enablePersonalization' => true,
+                'userToken' => 'user-1',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * userToken
+     */
+    public function snippetForSearchSingleIndex33(): void
+    {
+        // >SEPARATOR searchSingleIndex userToken
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['userToken' => 'user-1',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * analyticsTag
+     */
+    public function snippetForSearchSingleIndex34(): void
+    {
+        // >SEPARATOR searchSingleIndex analyticsTag
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['analyticsTags' => [
+                'YOUR_ANALYTICS_TAG',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * facetFiltersUsers
+     */
+    public function snippetForSearchSingleIndex35(): void
+    {
+        // >SEPARATOR searchSingleIndex facetFiltersUsers
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['facetFilters' => [
+                'user:user42',
+
+                'user:public',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * buildTheQuery
+     */
+    public function snippetForSearchSingleIndex36(): void
+    {
+        // >SEPARATOR searchSingleIndex buildTheQuery
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => "categoryPageId: Men's Clothing",
+                'hitsPerPage' => 50,
+                'analyticsTags' => [
+                    'mens-clothing',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchSynonyms method.
      *
      * searchSynonyms with minimal parameters
      */
     public function snippetForSearchSynonyms(): void
     {
-        // >SEPARATOR searchSynonyms default
+        // >SEPARATOR searchSynonyms searchSynonyms with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->searchSynonyms(
             '<YOUR_INDEX_NAME>',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSynonyms method.
+     *
+     * searchSynonyms with all parameters
+     */
+    public function snippetForSearchSynonyms1(): void
+    {
+        // >SEPARATOR searchSynonyms searchSynonyms with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSynonyms(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'myQuery',
+                'type' => 'altcorrection1',
+                'page' => 10,
+                'hitsPerPage' => 10,
+            ],
         );
 
         // >LOG
@@ -2369,7 +5835,7 @@ class SnippetSearchClient
      */
     public function snippetForSetDictionarySettings(): void
     {
-        // >SEPARATOR setDictionarySettings default
+        // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -2390,13 +5856,1170 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SetDictionarySettings method.
+     *
+     * get setDictionarySettings results with all parameters
+     */
+    public function snippetForSetDictionarySettings1(): void
+    {
+        // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setDictionarySettings(
+            ['disableStandardEntries' => ['plurals' => ['fr' => false,
+                'en' => false,
+                'ru' => true,
+            ],
+                'stopwords' => ['fr' => false,
+                ],
+                'compounds' => ['ru' => true,
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SetSettings method.
      *
-     * setSettingsAttributesForFaceting
+     * minimal parameters
      */
     public function snippetForSetSettings(): void
     {
-        // >SEPARATOR setSettings default
+        // >SEPARATOR setSettings minimal parameters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['paginationLimitedTo' => 10,
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * boolean typoTolerance
+     */
+    public function snippetForSetSettings1(): void
+    {
+        // >SEPARATOR setSettings boolean typoTolerance
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['typoTolerance' => true,
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * enum typoTolerance
+     */
+    public function snippetForSetSettings2(): void
+    {
+        // >SEPARATOR setSettings enum typoTolerance
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['typoTolerance' => 'min',
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ignorePlurals
+     */
+    public function snippetForSetSettings3(): void
+    {
+        // >SEPARATOR setSettings ignorePlurals
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['ignorePlurals' => true,
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * list of string ignorePlurals
+     */
+    public function snippetForSetSettings4(): void
+    {
+        // >SEPARATOR setSettings list of string ignorePlurals
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['ignorePlurals' => [
+                'fr',
+            ],
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * removeStopWords boolean
+     */
+    public function snippetForSetSettings5(): void
+    {
+        // >SEPARATOR setSettings removeStopWords boolean
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['removeStopWords' => true,
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * removeStopWords list of string
+     */
+    public function snippetForSetSettings6(): void
+    {
+        // >SEPARATOR setSettings removeStopWords list of string
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['removeStopWords' => [
+                'fr',
+            ],
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * boolean distinct
+     */
+    public function snippetForSetSettings7(): void
+    {
+        // >SEPARATOR setSettings boolean distinct
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['distinct' => true,
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * integer distinct
+     */
+    public function snippetForSetSettings8(): void
+    {
+        // >SEPARATOR setSettings integer distinct
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['distinct' => 1,
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * distinct company
+     */
+    public function snippetForSetSettings9(): void
+    {
+        // >SEPARATOR setSettings distinct company
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributeForDistinct' => 'company',
+                'distinct' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * distinct design
+     */
+    public function snippetForSetSettings10(): void
+    {
+        // >SEPARATOR setSettings distinct design
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributeForDistinct' => 'design',
+                'distinct' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * distinct true
+     */
+    public function snippetForSetSettings11(): void
+    {
+        // >SEPARATOR setSettings distinct true
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['distinct' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * distinct section
+     */
+    public function snippetForSetSettings12(): void
+    {
+        // >SEPARATOR setSettings distinct section
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributeForDistinct' => 'section',
+                'distinct' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting allergens
+     */
+    public function snippetForSetSettings13(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting allergens
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'allergens',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting categoryPageId
+     */
+    public function snippetForSetSettings14(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting categoryPageId
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'searchable(categoryPageId)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * unretrievableAttributes
+     */
+    public function snippetForSetSettings15(): void
+    {
+        // >SEPARATOR setSettings unretrievableAttributes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['unretrievableAttributes' => [
+                'visible_by',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting user restricted data
+     */
+    public function snippetForSetSettings16(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting user restricted data
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'filterOnly(visible_by)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting optional filters
+     */
+    public function snippetForSetSettings17(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting optional filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'can_deliver_quickly',
+
+                'restaurant',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting redirect index
+     */
+    public function snippetForSetSettings18(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting redirect index
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'query_terms',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting multiple consequences
+     */
+    public function snippetForSetSettings19(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting multiple consequences
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'director',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting in-depth optional filters
+     */
+    public function snippetForSetSettings20(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'filterOnly(brand)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * mode neuralSearch
+     */
+    public function snippetForSetSettings21(): void
+    {
+        // >SEPARATOR setSettings mode neuralSearch
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['mode' => 'neuralSearch',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * mode keywordSearch
+     */
+    public function snippetForSetSettings22(): void
+    {
+        // >SEPARATOR setSettings mode keywordSearch
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['mode' => 'keywordSearch',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributes same priority
+     */
+    public function snippetForSetSettings23(): void
+    {
+        // >SEPARATOR setSettings searchableAttributes same priority
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'title,comments',
+
+                'ingredients',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributes higher priority
+     */
+    public function snippetForSetSettings24(): void
+    {
+        // >SEPARATOR setSettings searchableAttributes higher priority
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'title',
+
+                'ingredients',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking retweets
+     */
+    public function snippetForSetSettings25(): void
+    {
+        // >SEPARATOR setSettings customRanking retweets
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(retweets)',
+
+                'desc(likes)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking boosted
+     */
+    public function snippetForSetSettings26(): void
+    {
+        // >SEPARATOR setSettings customRanking boosted
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(boosted)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking pageviews
+     */
+    public function snippetForSetSettings27(): void
+    {
+        // >SEPARATOR setSettings customRanking pageviews
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(pageviews)',
+
+                'desc(comments)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking applying search parameters for a specific query
+     */
+    public function snippetForSetSettings28(): void
+    {
+        // >SEPARATOR setSettings customRanking applying search parameters for a specific query
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(nb_airline_liaisons)',
+            ],
+                'attributesForFaceting' => [
+                    'city, country',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking rounded pageviews
+     */
+    public function snippetForSetSettings29(): void
+    {
+        // >SEPARATOR setSettings customRanking rounded pageviews
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(rounded_pageviews)',
+
+                'desc(comments)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking price
+     */
+    public function snippetForSetSettings30(): void
+    {
+        // >SEPARATOR setSettings customRanking price
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(price)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ranking exhaustive
+     */
+    public function snippetForSetSettings31(): void
+    {
+        // >SEPARATOR setSettings ranking exhaustive
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['ranking' => [
+                'desc(price)',
+
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'proximity',
+
+                'attribute',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ranking standard replica
+     */
+    public function snippetForSetSettings32(): void
+    {
+        // >SEPARATOR setSettings ranking standard replica
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['ranking' => [
+                'desc(post_date_timestamp)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ranking virtual replica
+     */
+    public function snippetForSetSettings33(): void
+    {
+        // >SEPARATOR setSettings ranking virtual replica
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'desc(post_date_timestamp)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * customRanking and ranking sort alphabetically
+     */
+    public function snippetForSetSettings34(): void
+    {
+        // >SEPARATOR setSettings customRanking and ranking sort alphabetically
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'asc(textual_attribute)',
+            ],
+                'ranking' => [
+                    'custom',
+
+                    'typo',
+
+                    'geo',
+
+                    'words',
+
+                    'filters',
+
+                    'proximity',
+
+                    'attribute',
+
+                    'exact',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * relevancyStrictness
+     */
+    public function snippetForSetSettings35(): void
+    {
+        // >SEPARATOR setSettings relevancyStrictness
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['customRanking' => [
+                'asc(textual_attribute)',
+            ],
+                'relevancyStrictness' => 0,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * create replica index
+     */
+    public function snippetForSetSettings36(): void
+    {
+        // >SEPARATOR setSettings create replica index
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['replicas' => [
+                'products_price_desc',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * create virtual replica index
+     */
+    public function snippetForSetSettings37(): void
+    {
+        // >SEPARATOR setSettings create virtual replica index
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['replicas' => [
+                'virtual(products_price_desc)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * unlink replica index
+     */
+    public function snippetForSetSettings38(): void
+    {
+        // >SEPARATOR setSettings unlink replica index
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['replicas' => [
+                '',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * forwardToReplicas
+     */
+    public function snippetForSetSettings39(): void
+    {
+        // >SEPARATOR setSettings forwardToReplicas
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'name',
+
+                'description',
+            ],
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * maxValuesPerFacet
+     */
+    public function snippetForSetSettings40(): void
+    {
+        // >SEPARATOR setSettings maxValuesPerFacet
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['maxValuesPerFacet' => 1000,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * maxFacetHits
+     */
+    public function snippetForSetSettings41(): void
+    {
+        // >SEPARATOR setSettings maxFacetHits
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['maxFacetHits' => 1000,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesForFaceting complex
+     */
+    public function snippetForSetSettings42(): void
+    {
+        // >SEPARATOR setSettings attributesForFaceting complex
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -2409,6 +7032,559 @@ class SnippetSearchClient
                 'filterOnly(category)',
 
                 'searchable(publisher)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * ranking closest dates
+     */
+    public function snippetForSetSettings43(): void
+    {
+        // >SEPARATOR setSettings ranking closest dates
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['ranking' => [
+                'asc(date_timestamp)',
+
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'proximity',
+
+                'attribute',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributes item variation
+     */
+    public function snippetForSetSettings44(): void
+    {
+        // >SEPARATOR setSettings searchableAttributes item variation
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'design',
+
+                'type',
+
+                'color',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributes around location
+     */
+    public function snippetForSetSettings45(): void
+    {
+        // >SEPARATOR setSettings searchableAttributes around location
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'name',
+
+                'country',
+
+                'code',
+
+                'iata_code',
+            ],
+                'customRanking' => [
+                    'desc(links_count)',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributes around location
+     */
+    public function snippetForSetSettings46(): void
+    {
+        // >SEPARATOR setSettings searchableAttributes around location
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'name',
+
+                'country',
+
+                'code',
+
+                'iata_code',
+            ],
+                'customRanking' => [
+                    'desc(links_count)',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * disableTypoToleranceOnAttributes
+     */
+    public function snippetForSetSettings47(): void
+    {
+        // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['disableTypoToleranceOnAttributes' => [
+                'serial_number',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * everything
+     */
+    public function snippetForSetSettings48(): void
+    {
+        // >SEPARATOR setSettings everything
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['advancedSyntax' => true,
+                'advancedSyntaxFeatures' => [
+                    'exactPhrase',
+                ],
+                'allowCompressionOfIntegerArray' => true,
+                'allowTyposOnNumericTokens' => true,
+                'alternativesAsExact' => [
+                    'singleWordSynonym',
+                ],
+                'attributeCriteriaComputedByMinProximity' => true,
+                'attributeForDistinct' => 'test',
+                'attributesForFaceting' => [
+                    'algolia',
+                ],
+                'attributesToHighlight' => [
+                    'algolia',
+                ],
+                'attributesToRetrieve' => [
+                    'algolia',
+                ],
+                'attributesToSnippet' => [
+                    'algolia',
+                ],
+                'attributesToTransliterate' => [
+                    'algolia',
+                ],
+                'camelCaseAttributes' => [
+                    'algolia',
+                ],
+                'customNormalization' => ['algolia' => ['aloglia' => 'aglolia',
+                ],
+                ],
+                'customRanking' => [
+                    'algolia',
+                ],
+                'decompoundQuery' => false,
+                'decompoundedAttributes' => ['algolia' => 'aloglia',
+                ],
+                'disableExactOnAttributes' => [
+                    'algolia',
+                ],
+                'disablePrefixOnAttributes' => [
+                    'algolia',
+                ],
+                'disableTypoToleranceOnAttributes' => [
+                    'algolia',
+                ],
+                'disableTypoToleranceOnWords' => [
+                    'algolia',
+                ],
+                'distinct' => 3,
+                'enablePersonalization' => true,
+                'enableReRanking' => false,
+                'enableRules' => true,
+                'exactOnSingleWordQuery' => 'attribute',
+                'highlightPreTag' => '<span>',
+                'highlightPostTag' => '</span>',
+                'hitsPerPage' => 10,
+                'ignorePlurals' => false,
+                'indexLanguages' => [
+                    'fr',
+                ],
+                'keepDiacriticsOnCharacters' => 'abc',
+                'maxFacetHits' => 20,
+                'maxValuesPerFacet' => 30,
+                'minProximity' => 6,
+                'minWordSizefor1Typo' => 5,
+                'minWordSizefor2Typos' => 11,
+                'mode' => 'neuralSearch',
+                'numericAttributesForFiltering' => [
+                    'algolia',
+                ],
+                'optionalWords' => [
+                    'myspace',
+                ],
+                'paginationLimitedTo' => 0,
+                'queryLanguages' => [
+                    'fr',
+                ],
+                'queryType' => 'prefixLast',
+                'ranking' => [
+                    'geo',
+                ],
+                'reRankingApplyFilter' => 'mySearch:filters',
+                'relevancyStrictness' => 10,
+                'removeStopWords' => false,
+                'removeWordsIfNoResults' => 'lastWords',
+                'renderingContent' => ['facetOrdering' => ['facets' => ['order' => [
+                    'a',
+
+                    'b',
+                ],
+                ],
+                    'values' => ['a' => ['order' => [
+                        'b',
+                    ],
+                        'sortRemainingBy' => 'count',
+                    ],
+                    ],
+                ],
+                ],
+                'replaceSynonymsInHighlight' => true,
+                'replicas' => [
+                    '',
+                ],
+                'responseFields' => [
+                    'algolia',
+                ],
+                'restrictHighlightAndSnippetArrays' => true,
+                'searchableAttributes' => [
+                    'foo',
+                ],
+                'semanticSearch' => ['eventSources' => [
+                    'foo',
+                ],
+                ],
+                'separatorsToIndex' => 'bar',
+                'snippetEllipsisText' => '---',
+                'sortFacetValuesBy' => 'date',
+                'typoTolerance' => false,
+                'unretrievableAttributes' => [
+                    'foo',
+                ],
+                'userData' => ['user' => 'data',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributesWithCustomRankingsAndAttributesForFaceting
+     */
+    public function snippetForSetSettings49(): void
+    {
+        // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'brand',
+
+                'name',
+
+                'categories',
+
+                'unordered(description)',
+            ],
+                'customRanking' => [
+                    'desc(popularity)',
+                ],
+                'attributesForFaceting' => [
+                    'searchable(brand)',
+
+                    'type',
+
+                    'categories',
+
+                    'price',
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributesProductReferenceSuffixes
+     */
+    public function snippetForSetSettings50(): void
+    {
+        // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'name',
+
+                'product_reference',
+
+                'product_reference_suffixes',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * queryLanguageAndIgnorePlurals
+     */
+    public function snippetForSetSettings51(): void
+    {
+        // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['queryLanguages' => [
+                'en',
+            ],
+                'ignorePlurals' => true,
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributesInMovies
+     */
+    public function snippetForSetSettings52(): void
+    {
+        // >SEPARATOR setSettings searchableAttributesInMovies
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'title_eng',
+
+                'title_fr',
+
+                'title_es',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * disablePrefixOnAttributes
+     */
+    public function snippetForSetSettings53(): void
+    {
+        // >SEPARATOR setSettings disablePrefixOnAttributes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['disablePrefixOnAttributes' => [
+                'serial_number',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * disableTypoToleranceOnAttributes
+     */
+    public function snippetForSetSettings54(): void
+    {
+        // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['disableTypoToleranceOnAttributes' => [
+                'serial_number',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributesSimpleExample
+     */
+    public function snippetForSetSettings55(): void
+    {
+        // >SEPARATOR setSettings searchableAttributesSimpleExample
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'serial_number',
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * searchableAttributesSimpleExampleAlt
+     */
+    public function snippetForSetSettings56(): void
+    {
+        // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['searchableAttributes' => [
+                'serial_number',
+
+                'serial_number_suffixes',
             ],
             ],
         );

@@ -211,9 +211,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -454,9 +452,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -697,9 +693,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -935,9 +929,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1236,9 +1228,7 @@ paths:
 
               recommend.NewEmptyGetRecommendationsParams().SetRequests(
                 []recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-                  recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
-            ))
-
+                  recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1405,7 +1395,7 @@ paths:
                 requests: [
                   Algolia::Recommend::RelatedQuery.new(
                     index_name: "<YOUR_INDEX_NAME>",
-                    object_id: "objectID",
+                    algolia_object_id: "objectID",
                     model: "related-products",
                     threshold: 42.1
                   )
@@ -1564,9 +1554,7 @@ paths:
 
             response, err :=
             client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1877,9 +1865,7 @@ paths:
 
             response, err :=
             client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345,
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2215,9 +2201,7 @@ paths:
 
             response, err :=
             client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2445,7 +2429,6 @@ paths:
               title: rules
               type: array
               description: Recommend rules.
-              additionalProperties: false
               items:
                 $ref: '#/components/schemas/RecommendRule'
       responses:
@@ -2499,9 +2482,7 @@ paths:
 
             response, err :=
             client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4686,25 +4667,34 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of `search` and `browse`
-        requests.
+        Properties to include in the API response of search and browse requests.
 
 
         By default, all response properties are included.
 
-        To reduce the response size, you can select, which attributes should be
+        To reduce the response size, you can select which properties should be
         included.
+
+
+        An empty list may lead to an empty API response (except properties you
+        can't exclude).
 
 
         You can't exclude these properties:
 
-        `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+        `message`, `warning`, `cursor`, `abTestVariantID`,
 
-        `abTestVariantID`, `parsedQuery`, or any property triggered by the
-        `getRankingInfo` parameter.
+        or any property added by setting `getRankingInfo` to true.
 
 
-        Don't exclude properties that you might need in your search UI.
+        Your search depends on the `hits` field. If you omit this field,
+        searches won't return any results.
+
+        Your UI might also depend on other properties, for example, for
+        pagination.
+
+        Before restricting the response size, check the impact on your search
+        experience.
       default:
         - '*'
       x-categories:
@@ -5171,6 +5161,7 @@ components:
       type: object
       properties:
         facetName:
+          type: string
           description: Facet attribute for which to retrieve trending facet values.
         model:
           $ref: '#/components/schemas/trendingFacetsModel'

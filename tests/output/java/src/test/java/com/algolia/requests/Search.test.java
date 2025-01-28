@@ -101,19 +101,19 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("assignUserId")
+  @DisplayName("simple")
   void assignUserIdTest() {
     assertDoesNotThrow(() -> {
-      client.assignUserId("userID", new AssignUserIdParams().setCluster("theCluster"));
+      client.assignUserId("user42", new AssignUserIdParams().setCluster("d4242-eu"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/clusters/mapping", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"cluster\":\"theCluster\"}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"cluster\":\"d4242-eu\"}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-user-id\":\"userID\"}",
+        "{\"x-algolia-user-id\":\"user42\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -1888,6 +1888,28 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("with visible_by filter")
+  void partialUpdateObjectTest5() {
+    assertDoesNotThrow(() -> {
+      client.partialUpdateObject(
+        "theIndexName",
+        "uniqueID",
+        new HashMap() {
+          {
+            put("visible_by", Arrays.asList("Angela", "group/Finance", "group/Shareholders"));
+          }
+        }
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"visible_by\":[\"Angela\",\"group/Finance\",\"group/Shareholders\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
   @DisplayName("removeUserId")
   void removeUserIdTest() {
     assertDoesNotThrow(() -> {
@@ -2048,6 +2070,563 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("b2b catalog")
+  void saveRuleTest2() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "article-rule",
+        new Rule()
+          .setObjectID("article-rule")
+          .setConditions(Arrays.asList(new Condition().setPattern("article").setAnchoring(Anchoring.STARTS_WITH)))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("article"))))
+                  .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/article-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("merchandising and promoting")
+  void saveRuleTest3() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "director-rule",
+        new Rule()
+          .setObjectID("director-rule")
+          .setConditions(Arrays.asList(new Condition().setPattern("{facet:director} director").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
+                  .setAutomaticFacetFilters(
+                    AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("director")))
+                  )
+                  .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("director"))))
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/director-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"director-rule\",\"conditions\":[{\"pattern\":\"{facet:director}" +
+        " director\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"restrictSearchableAttributes\":[\"title\",\"book_id\"],\"automaticFacetFilters\":[{\"facet\":\"director\"}],\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"director\"}]}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("harry potter")
+  void saveRuleTest4() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "harry-potter-rule",
+        new Rule()
+          .setObjectID("harry-potter-rule")
+          .setConditions(Arrays.asList(new Condition().setPattern("harry potter").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(
+            new Consequence()
+              .setUserData(
+                new HashMap() {
+                  {
+                    put("promo_content", "20% OFF on all Harry Potter books!");
+                  }
+                }
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/harry-potter-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"harry-potter-rule\",\"conditions\":[{\"pattern\":\"harry" +
+        " potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"promo_content\":\"20%" +
+        " OFF on all Harry Potter books!\"}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("merchandising empty query")
+  void saveRuleTest5() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "clearance-category-filter",
+        new Rule()
+          .setObjectID("clearance-category-filter")
+          .setConditions(Arrays.asList(new Condition().setPattern("").setAnchoring(Anchoring.IS).setContext("landing")))
+          .setConsequence(new Consequence().setParams(new ConsequenceParams().setOptionalFilters(OptionalFilters.of("clearance:true"))))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/clearance-category-filter", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"clearance-category-filter\",\"conditions\":[{\"pattern\":\"\",\"anchoring\":\"is\",\"context\":\"landing\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"clearance:true\"}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("redirect")
+  void saveRuleTest6() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "redirect-help-rule",
+        new Rule()
+          .setObjectID("redirect-help-rule")
+          .setConditions(Arrays.asList(new Condition().setPattern("help").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(
+            new Consequence()
+              .setUserData(
+                new HashMap() {
+                  {
+                    put("redirect", "https://www.algolia.com/support");
+                  }
+                }
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/redirect-help-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"redirect-help-rule\",\"conditions\":[{\"pattern\":\"help\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"redirect\":\"https://www.algolia.com/support\"}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("promote some results over others")
+  void saveRuleTest7() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "tomato-fruit",
+        new Rule()
+          .setObjectID("tomato-fruit")
+          .setConditions(Arrays.asList(new Condition().setPattern("tomato").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(new Consequence().setParams(new ConsequenceParams().setOptionalFilters(OptionalFilters.of("food_group:fruit"))))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/tomato-fruit", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"tomato-fruit\",\"conditions\":[{\"pattern\":\"tomato\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"food_group:fruit\"}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("promote several hits")
+  void saveRuleTest8() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "Promote-Apple-Newest",
+        new Rule()
+          .setObjectID("Promote-Apple-Newest")
+          .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.IS)))
+          .setConsequence(
+            new Consequence()
+              .setPromote(Arrays.asList(new PromoteObjectIDs().setObjectIDs(Arrays.asList("iPhone-12345", "watch-123")).setPosition(0)))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/Promote-Apple-Newest", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"Promote-Apple-Newest\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"is\"}],\"consequence\":{\"promote\":[{\"objectIDs\":[\"iPhone-12345\",\"watch-123\"],\"position\":0}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("promote newest release")
+  void saveRuleTest9() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "Promote-iPhone-X",
+        new Rule()
+          .setObjectID("Promote-iPhone-X")
+          .setConditions(Arrays.asList(new Condition().setPattern("iPhone").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(new Consequence().setPromote(Arrays.asList(new PromoteObjectID().setObjectID("iPhone-12345").setPosition(0))))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/Promote-iPhone-X", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"Promote-iPhone-X\",\"conditions\":[{\"pattern\":\"iPhone\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"iPhone-12345\",\"position\":0}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("promote single item")
+  void saveRuleTest10() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "promote-harry-potter-box-set",
+        new Rule()
+          .setObjectID("promote-harry-potter-box-set")
+          .setConditions(Arrays.asList(new Condition().setPattern("Harry Potter").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(new Consequence().setPromote(Arrays.asList(new PromoteObjectID().setObjectID("HP-12345").setPosition(0))))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/promote-harry-potter-box-set", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"promote-harry-potter-box-set\",\"conditions\":[{\"pattern\":\"Harry" +
+        " Potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"HP-12345\",\"position\":0}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("limit search results")
+  void saveRuleTest11() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "article-rule",
+        new Rule()
+          .setObjectID("article-rule")
+          .setConditions(Arrays.asList(new Condition().setPattern("article").setAnchoring(Anchoring.STARTS_WITH)))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("article"))))
+                  .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/article-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("query match")
+  void saveRuleTest12() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "tagged-brand-rule",
+        new Rule()
+          .setConditions(
+            Arrays.asList(new Condition().setPattern("brand: {facet:brand}").setAnchoring(Anchoring.CONTAINS).setAlternatives(false))
+          )
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setAutomaticFacetFilters(
+                    AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("brand")))
+                  )
+                  .setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("brand:", "{facet:brand}")))
+              )
+          )
+          .setDescription("filter on brand: {brand}")
+          .setObjectID("tagged-brand-rule")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/tagged-brand-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"conditions\":[{\"pattern\":\"brand:" +
+        " {facet:brand}\",\"anchoring\":\"contains\",\"alternatives\":false}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"brand\"}],\"query\":{\"remove\":[\"brand:\",\"{facet:brand}\"]}}},\"description\":\"filter" +
+        " on brand: {brand}\",\"objectID\":\"tagged-brand-rule\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("dynamic filtering")
+  void saveRuleTest13() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "color-facets",
+        new Rule()
+          .setObjectID("color-facets")
+          .setConditions(Arrays.asList(new Condition().setPattern("{facet:color}")))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setAutomaticFacetFilters(
+                    AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("color")))
+                  )
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/color-facets", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"color-facets\",\"conditions\":[{\"pattern\":\"{facet:color}\"}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"color\"}]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("hide hits")
+  void saveRuleTest14() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "hide-12345",
+        new Rule()
+          .setObjectID("hide-12345")
+          .setConditions(Arrays.asList(new Condition().setPattern("cheap").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(new Consequence().setHide(Arrays.asList(new ConsequenceHide().setObjectID("to-hide-12345"))))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/hide-12345", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"hide-12345\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"hide\":[{\"objectID\":\"to-hide-12345\"}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("one rule per facet")
+  void saveRuleTest15() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "red-color",
+        new Rule()
+          .setObjectID("red-color")
+          .setConditions(Arrays.asList(new Condition().setPattern("red").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("red"))).setFilters("color:red")
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/red-color", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"red-color\",\"conditions\":[{\"pattern\":\"red\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"red\"]},\"filters\":\"color:red\"}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("numerical filters")
+  void saveRuleTest16() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "cheap",
+        new Rule()
+          .setObjectID("cheap")
+          .setConditions(Arrays.asList(new Condition().setPattern("cheap").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("cheap"))).setFilters("price < 10")
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/cheap", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price" +
+        " < 10\"}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("negative filters")
+  void saveRuleTest17() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "gluten-free-rule",
+        new Rule()
+          .setObjectID("gluten-free-rule")
+          .setConditions(Arrays.asList(new Condition().setPattern("gluten-free").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setFilters("NOT allergens:gluten")
+                  .setQuery(
+                    new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("gluten-free")))
+                  )
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/gluten-free-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"gluten-free-rule\",\"conditions\":[{\"pattern\":\"gluten-free\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"NOT" +
+        " allergens:gluten\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"gluten-free\"}]}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("positive filters")
+  void saveRuleTest18() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "diet-rule",
+        new Rule()
+          .setObjectID("diet-rule")
+          .setConditions(Arrays.asList(new Condition().setPattern("diet").setAnchoring(Anchoring.CONTAINS)))
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setFilters("'low-carb' OR 'low-fat'")
+                  .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("diet"))))
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/diet-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"diet-rule\",\"conditions\":[{\"pattern\":\"diet\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"'low-carb'" +
+        " OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("conditionless")
+  void saveRuleTest19() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "diet-rule",
+        new Rule()
+          .setObjectID("diet-rule")
+          .setConsequence(
+            new Consequence()
+              .setParams(
+                new ConsequenceParams()
+                  .setFilters("'low-carb' OR 'low-fat'")
+                  .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("diet"))))
+              )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/diet-rule", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb'" +
+        " OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("saveRules with minimal parameters")
   void saveRulesTest() {
     assertDoesNotThrow(() -> {
@@ -2173,6 +2752,79 @@ class SearchClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+  }
+
+  @Test
+  @DisplayName("dynamic filtering")
+  void saveRulesTest2() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "<YOUR_INDEX_NAME>",
+        Arrays.asList(
+          new Rule()
+            .setObjectID("toaster")
+            .setConditions(Arrays.asList(new Condition().setPattern("toaster").setAnchoring(Anchoring.CONTAINS)))
+            .setConsequence(
+              new Consequence()
+                .setParams(
+                  new ConsequenceParams()
+                    .setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("toaster")))
+                    .setFilters("product_type:toaster")
+                )
+            ),
+          new Rule()
+            .setObjectID("cheap")
+            .setConditions(Arrays.asList(new Condition().setPattern("cheap").setAnchoring(Anchoring.CONTAINS)))
+            .setConsequence(
+              new Consequence()
+                .setParams(
+                  new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("cheap"))).setFilters("price < 15")
+                )
+            )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "[{\"objectID\":\"toaster\",\"conditions\":[{\"pattern\":\"toaster\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"toaster\"]},\"filters\":\"product_type:toaster\"}}},{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price" +
+        " < 15\"}}}]",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("enhance search results")
+  void saveRulesTest3() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "<YOUR_INDEX_NAME>",
+        Arrays.asList(
+          new Rule()
+            .setObjectID("country")
+            .setConditions(Arrays.asList(new Condition().setPattern("{facet:country}").setAnchoring(Anchoring.CONTAINS)))
+            .setConsequence(new Consequence().setParams(new ConsequenceParams().setAroundLatLngViaIP(false))),
+          new Rule()
+            .setObjectID("city")
+            .setConditions(Arrays.asList(new Condition().setPattern("{facet:city}").setAnchoring(Anchoring.CONTAINS)))
+            .setConsequence(new Consequence().setParams(new ConsequenceParams().setAroundLatLngViaIP(false)))
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "[{\"objectID\":\"country\",\"conditions\":[{\"pattern\":\"{facet:country}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}},{\"objectID\":\"city\",\"conditions\":[{\"pattern\":\"{facet:city}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}}]",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
   }
 
   @Test
@@ -2926,6 +3578,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("facetName and facetQuery")
+  void searchForFacetValuesTest2() {
+    assertDoesNotThrow(() -> {
+      client.searchForFacetValues("indexName", "author", new SearchForFacetValuesRequest().setFacetQuery("stephen king"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/facets/author/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facetQuery\":\"stephen king\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("searchRules")
   void searchRulesTest() {
     assertDoesNotThrow(() -> {
@@ -2998,6 +3662,594 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"query\":\"batman mask of the" + " phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("query")
+  void searchSingleIndexTest4() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setQuery("phone"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"phone\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("filters")
+  void searchSingleIndexTest5() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFilters("country:US AND price.gross < 2.0"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"filters\":\"country:US AND price.gross < 2.0\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("distinct")
+  void searchSingleIndexTest6() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setDistinct(Distinct.of(true)), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"distinct\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("filtersNumeric")
+  void searchSingleIndexTest7() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFilters("price < 10"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"filters\":\"price < 10\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("filtersTimestamp")
+  void searchSingleIndexTest8() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFilters("NOT date_timestamp:1514764800 TO 1546300799"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"filters\":\"NOT date_timestamp:1514764800 TO 1546300799\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("filtersSumOrFiltersScoresFalse")
+  void searchSingleIndexTest9() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setFilters("(company:Google<score=3> OR company:Amazon<score=2> OR" + " company:Facebook<score=1>)")
+          .setSumOrFiltersScores(false),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR" +
+        " company:Facebook<score=1>)\",\"sumOrFiltersScores\":false}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("filtersSumOrFiltersScoresTrue")
+  void searchSingleIndexTest10() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setFilters("(company:Google<score=3> OR company:Amazon<score=2> OR" + " company:Facebook<score=1>)")
+          .setSumOrFiltersScores(true),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR" +
+        " company:Facebook<score=1>)\",\"sumOrFiltersScores\":true}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("filtersStephenKing")
+  void searchSingleIndexTest11() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFilters("author:\"Stephen King\""), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"filters\":\"author:\\\"Stephen King\\\"\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("filtersNotTags")
+  void searchSingleIndexTest12() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFilters("NOT _tags:non-fiction"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"filters\":\"NOT _tags:non-fiction\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("facetFiltersList")
+  void searchSingleIndexTest13() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setFacetFilters(
+            FacetFilters.of(
+              Arrays.asList(
+                FacetFilters.of("publisher:Penguin"),
+                FacetFilters.of(Arrays.asList(FacetFilters.of("author:Stephen King"), FacetFilters.of("genre:Horror")))
+              )
+            )
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"facetFilters\":[\"publisher:Penguin\",[\"author:Stephen" + " King\",\"genre:Horror\"]]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("facetFiltersNeg")
+  void searchSingleIndexTest14() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFacetFilters(FacetFilters.of("category:-Ebook")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facetFilters\":\"category:-Ebook\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("filtersAndFacetFilters")
+  void searchSingleIndexTest15() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setFilters("(author:\"Stephen King\" OR genre:\"Horror\")")
+          .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("publisher:Penguin")))),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"filters\":\"(author:\\\"Stephen King\\\" OR" + " genre:\\\"Horror\\\")\",\"facetFilters\":[\"publisher:Penguin\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("facet author genre")
+  void searchSingleIndexTest16() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFacets(Arrays.asList("author", "genre")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facets\":[\"author\",\"genre\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("facet wildcard")
+  void searchSingleIndexTest17() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setFacets(Arrays.asList("*")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facets\":[\"*\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("maxValuesPerFacet")
+  void searchSingleIndexTest18() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setMaxValuesPerFacet(1000), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"maxValuesPerFacet\":1000}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("aroundLatLng")
+  void searchSingleIndexTest19() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setAroundLatLng("40.71, -74.01"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"aroundLatLng\":\"40.71, -74.01\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("aroundLatLngViaIP")
+  void searchSingleIndexTest20() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setAroundLatLngViaIP(true), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"aroundLatLngViaIP\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("aroundRadius")
+  void searchSingleIndexTest21() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject().setAroundLatLng("40.71, -74.01").setAroundRadius(AroundRadius.of(1000000)),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"aroundLatLng\":\"40.71, -74.01\",\"aroundRadius\":1000000}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("insideBoundingBox")
+  void searchSingleIndexTest22() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setInsideBoundingBox(
+            InsideBoundingBox.of(Arrays.asList(Arrays.asList(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875)))
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"insideBoundingBox\":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("insidePolygon")
+  void searchSingleIndexTest23() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setInsidePolygon(
+            Arrays.asList(
+              Arrays.asList(
+                42.01,
+                -124.31,
+                48.835509470063045,
+                -124.40453125000005,
+                45.01082951668149,
+                -65.95726562500005,
+                31.247243545293433,
+                -81.06578125000004,
+                25.924152577235226,
+                -97.68234374999997,
+                32.300311895879545,
+                -117.54828125
+              )
+            )
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("insidePolygon")
+  void searchSingleIndexTest24() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setInsidePolygon(
+            Arrays.asList(
+              Arrays.asList(
+                42.01,
+                -124.31,
+                48.835509470063045,
+                -124.40453125000005,
+                45.01082951668149,
+                -65.95726562500005,
+                31.247243545293433,
+                -81.06578125000004,
+                25.924152577235226,
+                -97.68234374999997,
+                32.300311895879545,
+                -117.54828125
+              )
+            )
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("optionalFilters")
+  void searchSingleIndexTest25() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject().setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("can_deliver_quickly:true")))),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"optionalFilters\":[\"can_deliver_quickly:true\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("optionalFiltersMany")
+  void searchSingleIndexTest26() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setOptionalFilters(
+            OptionalFilters.of(
+              Arrays.asList(
+                OptionalFilters.of("brand:Apple<score=3>"),
+                OptionalFilters.of("brand:Samsung<score=2>"),
+                OptionalFilters.of("brand:-Huawei")
+              )
+            )
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"optionalFilters\":[\"brand:Apple<score=3>\",\"brand:Samsung<score=2>\",\"brand:-Huawei\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("optionalFiltersSimple")
+  void searchSingleIndexTest27() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setOptionalFilters(
+            OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:Apple<score=2>"), OptionalFilters.of("type:tablet")))
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"optionalFilters\":[\"brand:Apple<score=2>\",\"type:tablet\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("restrictSearchableAttributes")
+  void searchSingleIndexTest28() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setRestrictSearchableAttributes(Arrays.asList("title_fr")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"restrictSearchableAttributes\":[\"title_fr\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("getRankingInfo")
+  void searchSingleIndexTest29() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setGetRankingInfo(true), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"getRankingInfo\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("clickAnalytics")
+  void searchSingleIndexTest30() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setClickAnalytics(true), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"clickAnalytics\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("clickAnalyticsUserToken")
+  void searchSingleIndexTest31() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setClickAnalytics(true).setUserToken("user-1"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"clickAnalytics\":true,\"userToken\":\"user-1\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("enablePersonalization")
+  void searchSingleIndexTest32() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setEnablePersonalization(true).setUserToken("user-1"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"enablePersonalization\":true,\"userToken\":\"user-1\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("userToken")
+  void searchSingleIndexTest33() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setUserToken("user-1"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"userToken\":\"user-1\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("analyticsTag")
+  void searchSingleIndexTest34() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex("indexName", new SearchParamsObject().setAnalyticsTags(Arrays.asList("YOUR_ANALYTICS_TAG")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"analyticsTags\":[\"YOUR_ANALYTICS_TAG\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("facetFiltersUsers")
+  void searchSingleIndexTest35() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("user:user42"), FacetFilters.of("user:public")))),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"facetFilters\":[\"user:user42\",\"user:public\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("buildTheQuery")
+  void searchSingleIndexTest36() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject()
+          .setFilters("categoryPageId: Men's Clothing")
+          .setHitsPerPage(50)
+          .setAnalyticsTags(Arrays.asList("mens-clothing")),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"filters\":\"categoryPageId: Men's" + " Clothing\",\"hitsPerPage\":50,\"analyticsTags\":[\"mens-clothing\"]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -3134,29 +4386,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettingsAttributesForFaceting")
+  @DisplayName("minimal parameters")
   void setSettingsTest() {
-    assertDoesNotThrow(() -> {
-      client.setSettings(
-        "<YOUR_INDEX_NAME>",
-        new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
-      );
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
-    assertEquals("PUT", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}",
-        req.body,
-        JSONCompareMode.STRICT
-      )
-    );
-  }
-
-  @Test
-  @DisplayName("setSettings with minimal parameters")
-  void setSettingsTest1() {
     assertDoesNotThrow(() -> {
       client.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
     });
@@ -3182,8 +4413,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow boolean `typoTolerance`")
-  void setSettingsTest2() {
+  @DisplayName("boolean typoTolerance")
+  void setSettingsTest1() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoTolerance.of(true)), true);
     });
@@ -3209,8 +4440,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow enum `typoTolerance`")
-  void setSettingsTest3() {
+  @DisplayName("enum typoTolerance")
+  void setSettingsTest2() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoToleranceEnum.MIN), true);
     });
@@ -3236,8 +4467,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow boolean `ignorePlurals`")
-  void setSettingsTest4() {
+  @DisplayName("ignorePlurals")
+  void setSettingsTest3() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(true)), true);
     });
@@ -3263,8 +4494,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow list of string `ignorePlurals`")
-  void setSettingsTest5() {
+  @DisplayName("list of string ignorePlurals")
+  void setSettingsTest4() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(Arrays.asList(SupportedLanguage.FR))), true);
     });
@@ -3290,8 +4521,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow boolean `removeStopWords`")
-  void setSettingsTest6() {
+  @DisplayName("removeStopWords boolean")
+  void setSettingsTest5() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setRemoveStopWords(RemoveStopWords.of(true)), true);
     });
@@ -3317,8 +4548,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow list of string `removeStopWords`")
-  void setSettingsTest7() {
+  @DisplayName("removeStopWords list of string")
+  void setSettingsTest6() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -3348,8 +4579,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow boolean `distinct`")
-  void setSettingsTest8() {
+  @DisplayName("boolean distinct")
+  void setSettingsTest7() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDistinct(Distinct.of(true)), true);
     });
@@ -3375,8 +4606,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow integers for `distinct`")
-  void setSettingsTest9() {
+  @DisplayName("integer distinct")
+  void setSettingsTest8() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDistinct(Distinct.of(1)), true);
     });
@@ -3402,8 +4633,609 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("setSettings allow all `indexSettings`")
+  @DisplayName("distinct company")
+  void setSettingsTest9() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setAttributeForDistinct("company").setDistinct(Distinct.of(true)));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributeForDistinct\":\"company\",\"distinct\":true}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("distinct design")
   void setSettingsTest10() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setAttributeForDistinct("design").setDistinct(Distinct.of(true)));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributeForDistinct\":\"design\",\"distinct\":true}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("distinct true")
+  void setSettingsTest11() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setDistinct(Distinct.of(true)));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"distinct\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("distinct section")
+  void setSettingsTest12() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setAttributeForDistinct("section").setDistinct(Distinct.of(true)));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributeForDistinct\":\"section\",\"distinct\":true}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting allergens")
+  void setSettingsTest13() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("allergens")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributesForFaceting\":[\"allergens\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting categoryPageId")
+  void setSettingsTest14() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("searchable(categoryPageId)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributesForFaceting\":[\"searchable(categoryPageId)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("unretrievableAttributes")
+  void setSettingsTest15() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setUnretrievableAttributes(Arrays.asList("visible_by")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"unretrievableAttributes\":[\"visible_by\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting user restricted data")
+  void setSettingsTest16() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(visible_by)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributesForFaceting\":[\"filterOnly(visible_by)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting optional filters")
+  void setSettingsTest17() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "<YOUR_INDEX_NAME>",
+        new IndexSettings().setAttributesForFaceting(Arrays.asList("can_deliver_quickly", "restaurant"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributesForFaceting\":[\"can_deliver_quickly\",\"restaurant\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting redirect index")
+  void setSettingsTest18() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("query_terms")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributesForFaceting\":[\"query_terms\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting multiple consequences")
+  void setSettingsTest19() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("director")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributesForFaceting\":[\"director\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting in-depth optional filters")
+  void setSettingsTest20() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(brand)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributesForFaceting\":[\"filterOnly(brand)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("mode neuralSearch")
+  void setSettingsTest21() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"mode\":\"neuralSearch\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("mode keywordSearch")
+  void setSettingsTest22() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"mode\":\"keywordSearch\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("searchableAttributes same priority")
+  void setSettingsTest23() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("title,comments", "ingredients")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"title,comments\",\"ingredients\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributes higher priority")
+  void setSettingsTest24() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("title", "ingredients")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"title\",\"ingredients\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking retweets")
+  void setSettingsTest25() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(retweets)", "desc(likes)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(retweets)\",\"desc(likes)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking boosted")
+  void setSettingsTest26() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(boosted)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"customRanking\":[\"desc(boosted)\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("customRanking pageviews")
+  void setSettingsTest27() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(pageviews)", "desc(comments)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(pageviews)\",\"desc(comments)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking applying search parameters for a specific query")
+  void setSettingsTest28() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setCustomRanking(Arrays.asList("desc(nb_airline_liaisons)"))
+          .setAttributesForFaceting(Arrays.asList("city, country"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"customRanking\":[\"desc(nb_airline_liaisons)\"],\"attributesForFaceting\":[\"city," + " country\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking rounded pageviews")
+  void setSettingsTest29() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(rounded_pageviews)", "desc(comments)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking price")
+  void setSettingsTest30() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(price)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"customRanking\":[\"desc(price)\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("ranking exhaustive")
+  void setSettingsTest31() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setRanking(Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("ranking standard replica")
+  void setSettingsTest32() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setRanking(Arrays.asList("desc(post_date_timestamp)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"ranking\":[\"desc(post_date_timestamp)\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("ranking virtual replica")
+  void setSettingsTest33() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(post_date_timestamp)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"customRanking\":[\"desc(post_date_timestamp)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("customRanking and ranking sort alphabetically")
+  void setSettingsTest34() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setCustomRanking(Arrays.asList("asc(textual_attribute)"))
+          .setRanking(Arrays.asList("custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"customRanking\":[\"asc(textual_attribute)\"],\"ranking\":[\"custom\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("relevancyStrictness")
+  void setSettingsTest35() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings().setCustomRanking(Arrays.asList("asc(textual_attribute)")).setRelevancyStrictness(0)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"customRanking\":[\"asc(textual_attribute)\"],\"relevancyStrictness\":0}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("create replica index")
+  void setSettingsTest36() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setReplicas(Arrays.asList("products_price_desc")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"replicas\":[\"products_price_desc\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("create virtual replica index")
+  void setSettingsTest37() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setReplicas(Arrays.asList("virtual(products_price_desc)")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"replicas\":[\"virtual(products_price_desc)\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("unlink replica index")
+  void setSettingsTest38() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setReplicas(Arrays.asList("")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"replicas\":[\"\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("forwardToReplicas")
+  void setSettingsTest39() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("name", "description")), true);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"name\",\"description\"]}", req.body, JSONCompareMode.STRICT)
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"forwardToReplicas\":\"true\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("maxValuesPerFacet")
+  void setSettingsTest40() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setMaxValuesPerFacet(1000));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"maxValuesPerFacet\":1000}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("maxFacetHits")
+  void setSettingsTest41() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setMaxFacetHits(1000));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"maxFacetHits\":1000}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("attributesForFaceting complex")
+  void setSettingsTest42() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "<YOUR_INDEX_NAME>",
+        new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("ranking closest dates")
+  void setSettingsTest43() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setRanking(Arrays.asList("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"ranking\":[\"asc(date_timestamp)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributes item variation")
+  void setSettingsTest44() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("design", "type", "color")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"design\",\"type\",\"color\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributes around location")
+  void setSettingsTest45() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setSearchableAttributes(Arrays.asList("name", "country", "code", "iata_code"))
+          .setCustomRanking(Arrays.asList("desc(links_count)"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributes around location")
+  void setSettingsTest46() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setSearchableAttributes(Arrays.asList("name", "country", "code", "iata_code"))
+          .setCustomRanking(Arrays.asList("desc(links_count)"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("disableTypoToleranceOnAttributes")
+  void setSettingsTest47() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("everything")
+  void setSettingsTest48() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -3518,6 +5350,139 @@ class SearchClientRequestsTests {
         req.body,
         JSONCompareMode.STRICT
       )
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributesWithCustomRankingsAndAttributesForFaceting")
+  void setSettingsTest49() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setSearchableAttributes(Arrays.asList("brand", "name", "categories", "unordered(description)"))
+          .setCustomRanking(Arrays.asList("desc(popularity)"))
+          .setAttributesForFaceting(Arrays.asList("searchable(brand)", "type", "categories", "price"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"searchableAttributes\":[\"brand\",\"name\",\"categories\",\"unordered(description)\"],\"customRanking\":[\"desc(popularity)\"],\"attributesForFaceting\":[\"searchable(brand)\",\"type\",\"categories\",\"price\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributesProductReferenceSuffixes")
+  void setSettingsTest50() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings().setSearchableAttributes(Arrays.asList("name", "product_reference", "product_reference_suffixes"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"searchableAttributes\":[\"name\",\"product_reference\",\"product_reference_suffixes\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("queryLanguageAndIgnorePlurals")
+  void setSettingsTest51() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings().setQueryLanguages(Arrays.asList(SupportedLanguage.EN)).setIgnorePlurals(IgnorePlurals.of(true))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"queryLanguages\":[\"en\"],\"ignorePlurals\":true}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributesInMovies")
+  void setSettingsTest52() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("movies", new IndexSettings().setSearchableAttributes(Arrays.asList("title_eng", "title_fr", "title_es")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/movies/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"title_eng\",\"title_fr\",\"title_es\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("disablePrefixOnAttributes")
+  void setSettingsTest53() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("serial_number")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"disablePrefixOnAttributes\":[\"serial_number\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("disableTypoToleranceOnAttributes")
+  void setSettingsTest54() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("searchableAttributesSimpleExample")
+  void setSettingsTest55() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("serial_number")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"searchableAttributes\":[\"serial_number\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("searchableAttributesSimpleExampleAlt")
+  void setSettingsTest56() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings().setSearchableAttributes(Arrays.asList("serial_number", "serial_number_suffixes"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"searchableAttributes\":[\"serial_number\",\"serial_number_suffixes\"]}", req.body, JSONCompareMode.STRICT)
     );
   }
 

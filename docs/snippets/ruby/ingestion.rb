@@ -8,7 +8,7 @@ require "algolia"
 #
 # createAuthenticationOAuth
 def snippet_for_create_authentication
-  # >SEPARATOR createAuthentication default
+  # >SEPARATOR createAuthentication createAuthenticationOAuth
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -30,11 +30,37 @@ def snippet_for_create_authentication
   # SEPARATOR<
 end
 
+# Snippet for the createAuthentication method.
+#
+# createAuthenticationAlgolia
+def snippet_for_create_authentication1
+  # >SEPARATOR createAuthentication createAuthenticationAlgolia
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_authentication(
+    Algolia::Ingestion::AuthenticationCreate.new(
+      type: "algolia",
+      name: "authName",
+      input: Algolia::Ingestion::AuthAlgolia.new(app_id: "ALGOLIA_APPLICATION_ID", api_key: "ALGOLIA_API_KEY")
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the createDestination method.
 #
 # createDestination
 def snippet_for_create_destination
-  # >SEPARATOR createDestination default
+  # >SEPARATOR createDestination createDestination
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -57,11 +83,38 @@ def snippet_for_create_destination
   # SEPARATOR<
 end
 
+# Snippet for the createDestination method.
+#
+# with transformationIDs
+def snippet_for_create_destination1
+  # >SEPARATOR createDestination with transformationIDs
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_destination(
+    Algolia::Ingestion::DestinationCreate.new(
+      type: "search",
+      name: "destinationName",
+      input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+      transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the createSource method.
 #
 # createSource
 def snippet_for_create_source
-  # >SEPARATOR createSource default
+  # >SEPARATOR createSource createSource
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -89,11 +142,31 @@ def snippet_for_create_source
   # SEPARATOR<
 end
 
+# Snippet for the createSource method.
+#
+# push
+def snippet_for_create_source1
+  # >SEPARATOR createSource push
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_source(Algolia::Ingestion::SourceCreate.new(type: "push", name: "pushezpourentrer"))
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the createTask method.
 #
 # task without cron
 def snippet_for_create_task
-  # >SEPARATOR createTask default
+  # >SEPARATOR createTask task without cron
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -111,11 +184,72 @@ def snippet_for_create_task
   # SEPARATOR<
 end
 
+# Snippet for the createTask method.
+#
+# task with cron
+def snippet_for_create_task1
+  # >SEPARATOR createTask task with cron
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_task(
+    Algolia::Ingestion::TaskCreate.new(
+      source_id: "search",
+      destination_id: "destinationName",
+      cron: "* * * * *",
+      action: "replace",
+      notifications: Algolia::Ingestion::Notifications.new(
+        email: Algolia::Ingestion::EmailNotifications.new(enabled: true)
+      ),
+      policies: Algolia::Ingestion::Policies.new(critical_threshold: 8)
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the createTask method.
+#
+# task shopify
+def snippet_for_create_task2
+  # >SEPARATOR createTask task shopify
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_task(
+    Algolia::Ingestion::TaskCreate.new(
+      source_id: "search",
+      destination_id: "destinationName",
+      cron: "* * * * *",
+      action: "replace",
+      input: Algolia::Ingestion::DockerStreamsInput.new(
+        streams: [Algolia::Ingestion::DockerStreams.new(name: "foo", sync_mode: "incremental")]
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the createTaskV1 method.
 #
 # createTaskOnDemand
 def snippet_for_create_task_v1
-  # >SEPARATOR createTaskV1 default
+  # >SEPARATOR createTaskV1 createTaskOnDemand
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -126,6 +260,90 @@ def snippet_for_create_task_v1
       destination_id: "destinationName",
       trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: "onDemand"),
       action: "replace"
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the createTaskV1 method.
+#
+# createTaskSchedule
+def snippet_for_create_task_v11
+  # >SEPARATOR createTaskV1 createTaskSchedule
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_task_v1(
+    Algolia::Ingestion::TaskCreateV1.new(
+      source_id: "search",
+      destination_id: "destinationName",
+      trigger: Algolia::Ingestion::ScheduleTriggerInput.new(type: "schedule", cron: "* * * * *"),
+      action: "replace"
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the createTaskV1 method.
+#
+# createTaskSubscription
+def snippet_for_create_task_v12
+  # >SEPARATOR createTaskV1 createTaskSubscription
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_task_v1(
+    Algolia::Ingestion::TaskCreateV1.new(
+      source_id: "search",
+      destination_id: "destinationName",
+      trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: "onDemand"),
+      action: "replace"
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the createTaskV1 method.
+#
+# task shopify
+def snippet_for_create_task_v13
+  # >SEPARATOR createTaskV1 task shopify
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.create_task_v1(
+    Algolia::Ingestion::TaskCreateV1.new(
+      source_id: "search",
+      destination_id: "destinationName",
+      trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: "onDemand"),
+      action: "replace",
+      input: Algolia::Ingestion::DockerStreamsInput.new(
+        streams: [Algolia::Ingestion::DockerStreams.new(name: "foo", sync_mode: "incremental")]
+      )
     )
   )
 
@@ -164,7 +382,7 @@ end
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
-  # >SEPARATOR customDelete default
+  # >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -180,11 +398,31 @@ def snippet_for_custom_delete
   # SEPARATOR<
 end
 
+# Snippet for the customDelete method.
+#
+# allow del method for a custom path with all parameters
+def snippet_for_custom_delete1
+  # >SEPARATOR customDelete allow del method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_delete("test/all", {query: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
-  # >SEPARATOR customGet default
+  # >SEPARATOR customGet allow get method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -200,11 +438,61 @@ def snippet_for_custom_get
   # SEPARATOR<
 end
 
+# Snippet for the customGet method.
+#
+# allow get method for a custom path with all parameters
+def snippet_for_custom_get1
+  # >SEPARATOR customGet allow get method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_get("test/all", {query: "parameters with space"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customGet method.
+#
+# requestOptions should be escaped too
+def snippet_for_custom_get2
+  # >SEPARATOR customGet requestOptions should be escaped too
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_get(
+    "test/all",
+    {query: "to be overriden"},
+    {
+      :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+      :query_params => JSON.parse(
+        "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
+        :symbolize_names => true
+      )
+    }
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
-  # >SEPARATOR customPost default
+  # >SEPARATOR customPost allow post method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -220,16 +508,281 @@ def snippet_for_custom_post
   # SEPARATOR<
 end
 
+# Snippet for the customPost method.
+#
+# allow post method for a custom path with all parameters
+def snippet_for_custom_post1
+  # >SEPARATOR customPost allow post method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions can override default query parameters
+def snippet_for_custom_post2
+  # >SEPARATOR customPost requestOptions can override default query parameters
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"query\":\"myQueryParameter\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions merges query parameters with default ones
+def snippet_for_custom_post3
+  # >SEPARATOR customPost requestOptions merges query parameters with default ones
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"query2\":\"myQueryParameter\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions can override default headers
+def snippet_for_custom_post4
+  # >SEPARATOR customPost requestOptions can override default headers
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions merges headers with default ones
+def snippet_for_custom_post5
+  # >SEPARATOR customPost requestOptions merges headers with default ones
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts booleans
+def snippet_for_custom_post6
+  # >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"isItWorking\":true}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts integers
+def snippet_for_custom_post7
+  # >SEPARATOR customPost requestOptions queryParameters accepts integers
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":2}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of string
+def snippet_for_custom_post8
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[\"b and c\",\"d\"]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of booleans
+def snippet_for_custom_post9
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[true,true,false]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of integers
+def snippet_for_custom_post10
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[1,2]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
-  # >SEPARATOR customPut default
+  # >SEPARATOR customPut allow put method for a custom path with minimal parameters
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_put("test/minimal")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPut method.
+#
+# allow put method for a custom path with all parameters
+def snippet_for_custom_put1
+  # >SEPARATOR customPut allow put method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
   # use the class directly
@@ -604,12 +1157,32 @@ end
 #
 # getAuthentications
 def snippet_for_list_authentications
-  # >SEPARATOR listAuthentications default
+  # >SEPARATOR listAuthentications getAuthentications
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_authentications
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listAuthentications method.
+#
+# getAuthentications with query params
+def snippet_for_list_authentications1
+  # >SEPARATOR listAuthentications getAuthentications with query params
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.list_authentications(2, 1, ["basic", "algolia"], ["none"], "createdAt", "asc")
 
   # >LOG
   # use the class directly
@@ -764,7 +1337,7 @@ end
 #
 # pushTask
 def snippet_for_push_task
-  # >SEPARATOR pushTask default
+  # >SEPARATOR pushTask pushTask
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -774,10 +1347,40 @@ def snippet_for_push_task
     Algolia::Ingestion::PushTaskPayload.new(
       action: "addObject",
       records: [
-        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
       ]
     )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the pushTask method.
+#
+# allows for watch query parameter
+def snippet_for_push_task1
+  # >SEPARATOR pushTask allows for watch query parameter
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.push_task(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+      ]
+    ),
+    true
   )
 
   # >LOG
@@ -1050,7 +1653,7 @@ end
 #
 # tryTransformation
 def snippet_for_try_transformation
-  # >SEPARATOR tryTransformation default
+  # >SEPARATOR tryTransformation tryTransformation
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -1068,11 +1671,47 @@ def snippet_for_try_transformation
   # SEPARATOR<
 end
 
+# Snippet for the tryTransformation method.
+#
+# with authentications
+def snippet_for_try_transformation1
+  # >SEPARATOR tryTransformation with authentications
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.try_transformation(
+    Algolia::Ingestion::TransformationTry.new(
+      code: "foo",
+      sample_record: {bar: "baz"},
+      authentications: [
+        Algolia::Ingestion::AuthenticationCreate.new(
+          type: "oauth",
+          name: "authName",
+          input: Algolia::Ingestion::AuthOAuth.new(
+            url: "http://test.oauth",
+            client_id: "myID",
+            client_secret: "mySecret"
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the tryTransformationBeforeUpdate method.
 #
 # tryTransformationBeforeUpdate
 def snippet_for_try_transformation_before_update
-  # >SEPARATOR tryTransformationBeforeUpdate default
+  # >SEPARATOR tryTransformationBeforeUpdate tryTransformationBeforeUpdate
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -1080,6 +1719,43 @@ def snippet_for_try_transformation_before_update
   response = client.try_transformation_before_update(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the tryTransformationBeforeUpdate method.
+#
+# existing with authentications
+def snippet_for_try_transformation_before_update1
+  # >SEPARATOR tryTransformationBeforeUpdate existing with authentications
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.try_transformation_before_update(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::TransformationTry.new(
+      code: "foo",
+      sample_record: {bar: "baz"},
+      authentications: [
+        Algolia::Ingestion::AuthenticationCreate.new(
+          type: "oauth",
+          name: "authName",
+          input: Algolia::Ingestion::AuthOAuth.new(
+            url: "http://test.oauth",
+            client_id: "myID",
+            client_secret: "mySecret"
+          )
+        )
+      ]
+    )
   )
 
   # >LOG

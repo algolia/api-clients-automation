@@ -7,7 +7,7 @@ import Core
 {{> snippets/import}}
 
 func saveObjectsMovies() async throws {
-    let url = URL(string: "https://dashboard.algolia.com/sample_datasets/movie.json")!
+    let url = URL(string: "https://dashboard.algolia.com/api/1/sample_datasets?type=movie")!
     var data: Data? = nil
     #if os(Linux) // For linux interop
         (data, _) = try await URLSession.shared.asyncData(for: URLRequest(url: url))

@@ -1,7 +1,9 @@
 package com.algolia.codegen.cts.manager;
 
+import com.algolia.codegen.AlgoliaScalaGenerator;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.Helpers;
+import com.samskivert.mustache.Mustache.Lambda;
 import java.util.List;
 import java.util.Map;
 import org.openapitools.codegen.SupportingFile;
@@ -34,5 +36,10 @@ public class ScalaCTSManager implements CTSManager {
     supportingFiles.add(new SupportingFile("snippets/build.mustache", output + "/scala", "build.sbt"));
     supportingFiles.add(new SupportingFile("snippets/build.properties.mustache", output + "/scala", "project/build.properties"));
     supportingFiles.add(new SupportingFile("snippets/plugins.mustache", output + "/scala", "project/plugins.sbt"));
+  }
+
+  @Override
+  public void addMustacheLambdas(Map<String, Lambda> lambdas) {
+    lambdas.put("identifier", (fragment, writer) -> writer.write(AlgoliaScalaGenerator.formatIdentifier(fragment.execute())));
   }
 }

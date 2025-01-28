@@ -23,8 +23,7 @@ func SnippetForBatchRecommendRulesOfRecommend() {
 
 	// Call the API
 	response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -42,7 +41,7 @@ func SnippetForCustomDeleteOfRecommend() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customDelete default
+	// >SEPARATOR customDelete allow del method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -52,8 +51,35 @@ func SnippetForCustomDeleteOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomDeleteOfRecommend1() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with all parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -71,7 +97,7 @@ func SnippetForCustomGetOfRecommend() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customGet default
+	// >SEPARATOR customGet allow get method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -81,8 +107,64 @@ func SnippetForCustomGetOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfRecommend1() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with all parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfRecommend2() {
+	/*
+	   Snippet for the customGet method.
+
+	   requestOptions should be escaped too
+	*/
+
+	// >SEPARATOR customGet requestOptions should be escaped too
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), recommend.WithQueryParam("query", "parameters with space"), recommend.WithQueryParam("and an array",
+		[]string{"array", "with spaces"}), recommend.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -100,7 +182,7 @@ func SnippetForCustomPostOfRecommend() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPost default
+	// >SEPARATOR customPost allow post method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -110,8 +192,290 @@ func SnippetForCustomPostOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend1() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with all parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend2() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default query parameters
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default query parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend3() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges query parameters with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges query parameters with default ones
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query2", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend4() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default headers
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default headers
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend5() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges headers with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges headers with default ones
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend6() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts booleans
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("isItWorking", true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend7() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts integers
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam", 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend8() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of string
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of string
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+		[]string{"b and c", "d"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend9() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+		[]bool{true, true, false}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfRecommend10() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -129,7 +493,7 @@ func SnippetForCustomPutOfRecommend() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPut default
+	// >SEPARATOR customPut allow put method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -139,8 +503,35 @@ func SnippetForCustomPutOfRecommend() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPutOfRecommend1() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with all parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -168,8 +559,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 
 	// Call the API
 	response, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -197,8 +587,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 
 	// Call the API
 	response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -226,8 +615,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 
 	// Call the API
 	response, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345,
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -245,7 +633,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 	   get recommendations for recommend model with minimal parameters
 	*/
 
-	// >SEPARATOR getRecommendations default
+	// >SEPARATOR getRecommendations get recommendations for recommend model with minimal parameters
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -258,8 +646,242 @@ func SnippetForGetRecommendationsOfRecommend() {
 
 		recommend.NewEmptyGetRecommendationsParams().SetRequests(
 			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
-	))
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRecommendationsOfRecommend1() {
+	/*
+	   Snippet for the getRecommendations method.
+
+	   get recommendations with e2e to check oneOf model
+	*/
+
+	// >SEPARATOR getRecommendations get recommendations with e2e to check oneOf model
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+		recommend.NewEmptyGetRecommendationsParams().SetRequests(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRecommendationsOfRecommend2() {
+	/*
+	   Snippet for the getRecommendations method.
+
+	   get recommendations for recommend model with all parameters
+	*/
+
+	// >SEPARATOR getRecommendations get recommendations for recommend model with all parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+		recommend.NewEmptyGetRecommendationsParams().SetRequests(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1).SetMaxRecommendations(10).SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRecommendationsOfRecommend3() {
+	/*
+	   Snippet for the getRecommendations method.
+
+	   get recommendations for trending model with minimal parameters
+	*/
+
+	// >SEPARATOR getRecommendations get recommendations for trending model with minimal parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+		recommend.NewEmptyGetRecommendationsParams().SetRequests(
+			[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
+				recommend.NewEmptyTrendingItemsQuery().SetIndexName("<YOUR_INDEX_NAME>").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetFacetName("facet").SetFacetValue("value"))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRecommendationsOfRecommend4() {
+	/*
+	   Snippet for the getRecommendations method.
+
+	   get recommendations for trending model with all parameters
+	*/
+
+	// >SEPARATOR getRecommendations get recommendations for trending model with all parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+		recommend.NewEmptyGetRecommendationsParams().SetRequests(
+			[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
+				recommend.NewEmptyTrendingItemsQuery().SetIndexName("<YOUR_INDEX_NAME>").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRecommendationsOfRecommend5() {
+	/*
+	   Snippet for the getRecommendations method.
+
+	   get multiple recommendations with minimal parameters
+	*/
+
+	// >SEPARATOR getRecommendations get multiple recommendations with minimal parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+		recommend.NewEmptyGetRecommendationsParams().SetRequests(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7)), *recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRecommendationsOfRecommend6() {
+	/*
+	   Snippet for the getRecommendations method.
+
+	   get multiple recommendations with all parameters
+	*/
+
+	// >SEPARATOR getRecommendations get multiple recommendations with all parameters
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+		recommend.NewEmptyGetRecommendationsParams().SetRequests(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query1")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback1")})))), *recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query2")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRecommendationsOfRecommend7() {
+	/*
+	   Snippet for the getRecommendations method.
+
+	   get frequently bought together recommendations
+	*/
+
+	// >SEPARATOR getRecommendations get frequently bought together recommendations
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+		recommend.NewEmptyGetRecommendationsParams().SetRequests(
+			[]recommend.RecommendationsRequest{*recommend.BoughtTogetherQueryAsRecommendationsRequest(
+				recommend.NewEmptyBoughtTogetherQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID1").SetModel(recommend.FbtModel("bought-together")).SetThreshold(42.7))})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -287,8 +909,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 
 	// Call the API
 	response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-	))
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -316,8 +937,7 @@ func SnippetForSetClientApiKeyOfRecommend() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)
