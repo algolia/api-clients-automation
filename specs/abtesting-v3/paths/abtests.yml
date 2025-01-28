@@ -25,7 +25,7 @@ post:
                 $ref: "../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant"
             metrics:
               type: array
-              description: A/B test metrics to retrieve.
+              description: A/B test metrics involved in the test. Only these metrics will be considered when calculating results. 
               items:
                 $ref: "../common/parameters.yml#/metric"
             configuration:
