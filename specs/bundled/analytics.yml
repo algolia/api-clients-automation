@@ -2480,14 +2480,12 @@ components:
           items:
             $ref: '#/components/schemas/getTopFiltersNoResultsValues'
     updatedAtNullable:
-      default: null
       oneOf:
         - type: string
+          default: null
+          description: Date and time when the object was updated, in RFC 3339 format.
           example: '2023-07-04T12:49:15Z'
-          description: |
-            Date and time when the object was updated, in RFC 3339 format.
         - type: 'null'
-          description: If null, this object wasn't updated yet.
   responses:
     BadRequest:
       description: Bad request or request arguments.
