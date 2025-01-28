@@ -2,12 +2,12 @@ import { runClassic } from 'eslint-vitest-rule-tester';
 import yamlParser from 'yaml-eslint-parser';
 import { noBigInt } from '../src/rules/noBigInt.js';
 
-
 runClassic(
   'no-big-int',
   noBigInt,
   {
-    valid: [`
+    valid: [
+      `
 type: object
 properties:
   id:
@@ -16,11 +16,13 @@ properties:
   url:
     type: string
     format: uri
-`, `
+`,
+      `
 prop:
   type: integer
   format: int32
-`],
+`,
+    ],
     invalid: [
       {
         code: `

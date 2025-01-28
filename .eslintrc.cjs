@@ -54,6 +54,7 @@ module.exports = {
             'automation-custom/no-big-int': 'error',
             'automation-custom/no-final-dot': 'error',
             'automation-custom/single-quote-ref': 'error',
+            'automation-custom/has-type': 'error',
           },
           overrides: [
             {
