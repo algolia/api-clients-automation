@@ -301,7 +301,7 @@ jobs:
           path: clients-javascript.zip
 
   client_gen:
-    timeout-minutes: 15
+    timeout-minutes: 20 # swift CTS is excruciatingly slow
     runs-on: ubuntu-22.04
     needs:
       - setup
@@ -381,6 +381,7 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }} --language-version ${{ matrix.client.version }}
 
       - name: Run unit CTS
+        if: ${{ matrix.client.language != 'swift' || startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-e2e
 
       - name: Run e2e CTS
