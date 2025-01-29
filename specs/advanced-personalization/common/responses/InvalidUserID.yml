@@ -1,4 +1,4 @@
-description: Invalid user token.
+description: Invalid user ID.
 content:
   application/json:
     schema:
