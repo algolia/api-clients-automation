@@ -2,4 +2,5 @@ description: Bad request.
 content:
   application/json:
     schema:
-      $ref: './BaseResponse.yml'
+      $ref: '../schemas/ErrorResponses.yml#/badRequest'
+

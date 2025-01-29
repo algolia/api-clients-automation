@@ -1,0 +1,55 @@
+badRequest:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/badRequest'
+    message:
+      $ref: './ErrorMessages.yml#/badRequest'
+
+badUserID:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/badRequest'
+    message:
+       $ref: './ErrorMessages.yml#/badUserID'
+
+unauthorized:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/unauthorized'
+    message:
+      $ref: './ErrorMessages.yml#/unauthorized'
+
+genericNotFound:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/notFound'
+    message:
+      $ref: './ErrorMessages.yml#/genericNotFound'
+
+genericUnprocessableEntity:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/unprocessableEntity'
+    message:
+      $ref: './ErrorMessages.yml#/genericUnprocessableEntity'
+
+invalidUserID:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/unprocessableEntity'
+    message:
+      $ref: './ErrorMessages.yml#/invalidUserID'
+
+internalServerError:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/internalServerError'
+    message:
+      $ref: './ErrorMessages.yml#/internalServerError'
