@@ -387,7 +387,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && (matrix.client.language != 'swift' || startsWith(github.head_ref, 'chore/prepare-release-')) }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
