@@ -22,7 +22,7 @@ get:
     '401':
       $ref: '../common/responses/Unauthorized.yml'
     '404':
-      $ref: '../common/responses/UserNotFound.yml'
+      $ref: '../common/responses/GenericNotFound.yml'
     '422':
       $ref: '../common/responses/InvalidUserID.yml'
     '500':
