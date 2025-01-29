@@ -789,6 +789,26 @@
     }
   },
   {
+    "testName": "create replica index articles",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "replicas": [
+          "articles_date_desc"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "replicas": [
+          "articles_date_desc"
+        ]
+      }
+    }
+  },
+  {
     "testName": "create virtual replica index",
     "parameters": {
       "indexName": "theIndexName",
