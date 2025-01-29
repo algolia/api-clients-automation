@@ -2,4 +2,4 @@ description: Not found.
 content:
   application/json:
     schema:
-      - $ref: '../schemas/ErrorResponses.yml#/genericNotFound'
+      $ref: '../schemas/ErrorResponses.yml#/genericNotFound'

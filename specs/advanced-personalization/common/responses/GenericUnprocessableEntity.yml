@@ -2,4 +2,4 @@ description: Unprocessable entity.
 content:
   application/json:
     schema:
-      - $ref: '../schemas/ErrorResponses.yml#/genericUnprocessableEntity'
+      $ref: '../schemas/ErrorResponses.yml#/genericUnprocessableEntity'

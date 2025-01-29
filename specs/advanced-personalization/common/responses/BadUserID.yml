@@ -2,4 +2,4 @@ description: Bad user ID.
 content:
   application/json:
     schema:
-      - $ref: '../schemas/ErrorResponses.yml#/badUserID'
+      $ref: '../schemas/ErrorResponses.yml#/badUserID'

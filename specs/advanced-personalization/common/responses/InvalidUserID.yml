@@ -2,4 +2,4 @@ description: Invalid user ID format.
 content:
   application/json:
     schema:
-      - $ref: '../schemas/ErrorResponses.yml#/invalidUserID'
+      $ref: '../schemas/ErrorResponses.yml#/invalidUserID'
