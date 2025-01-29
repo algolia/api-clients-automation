@@ -32,5 +32,3 @@ internalServerError:
   type: string
   description: Details about the response, such as error messages.
   enum: [Internal Server Error]
-
-

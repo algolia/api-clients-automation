@@ -12,7 +12,7 @@ badUserID:
     status:
       $ref: './ErrorCodes.yml#/badRequest'
     message:
-       $ref: './ErrorMessages.yml#/badUserID'
+      $ref: './ErrorMessages.yml#/badUserID'
 
 unauthorized:
   type: object
