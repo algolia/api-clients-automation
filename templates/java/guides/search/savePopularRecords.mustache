@@ -1,0 +1,34 @@
+package com.algolia;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+{{> snippets/import}}
+
+public class savePopularRecords {
+
+  public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+      List<Map<String, Object>> records = new ArrayList<>();
+
+      client.browseObjects("<YOUR_INDEX_NAME>", Hit.class).forEach(hit -> {
+        Map<String, Object> props = hit.getAdditionalProperties();
+        int nbFollowers = (int) props.get("nbFollowers");
+
+        Map<String, Object> record = new HashMap<>();
+        record.put("twitterHandle", props.get("twitterHandle"));
+        record.put("nbFollowers", nbFollowers);
+        record.put("isPopular", nbFollowers >= 1_000_000);
+
+        records.add(record);
+      });
+
+      {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}
