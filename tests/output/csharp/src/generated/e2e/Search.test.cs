@@ -9,6 +9,7 @@ using dotenv.net;
 using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
+using Range = Algolia.Search.Models.Search.Range;
 
 namespace Algolia.Search.e2e;
 
