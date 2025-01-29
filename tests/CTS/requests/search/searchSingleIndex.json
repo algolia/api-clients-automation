@@ -1013,6 +1013,24 @@
     }
   },
   {
+    "testName": "api_filtering_range_example",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "books",
+        "filters": "price:10 TO 20"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "books",
+        "filters": "price:10 TO 20"
+      }
+    }
+  },
+  {
     "testName": "search_a_query",
     "parameters": {
       "indexName": "indexName",
