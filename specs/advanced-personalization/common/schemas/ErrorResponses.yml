@@ -2,7 +2,7 @@ badRequest:
   type: object
   properties:
     status:
-      $ref: './ErrorCodes.yml#/errorCodeBadRequest'
+      $ref: './ErrorCodes.yml#/badRequest'
     message:
       $ref: './ErrorMessages.yml#/badRequest'
 
