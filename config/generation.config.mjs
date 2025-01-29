@@ -127,6 +127,9 @@ export const patterns = [
   '!tests/output/python/**/__init__.py',
   'tests/output/python/requirements.txt',
 
+  'docs/guides/python/**',
+  '!docs/guides/python/pyproject.toml',
+
   // Ruby
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
