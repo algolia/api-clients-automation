@@ -5,6 +5,7 @@ using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 // IMPORT<
 using Action = Algolia.Search.Models.Search.Action;
+using Range = Algolia.Search.Models.Search.Range;
 
 public class SnippetSearchClient
 {
@@ -4636,9 +4637,144 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SearchSingleIndex method.
   ///
-  /// facetFiltersNeg
+  /// facetFiltersBook
   /// </summary>
   public async Task SnippetForSearchClientSearchSingleIndex14()
+  {
+    // >SEPARATOR searchSingleIndex facetFiltersBook
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters> { new FacetFilters("category:Book") }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// facetFiltersAND
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex15()
+  {
+    // >SEPARATOR searchSingleIndex facetFiltersAND
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters>
+            {
+              new FacetFilters("category:Book"),
+              new FacetFilters("author:John Doe"),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// facetFiltersOR
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex16()
+  {
+    // >SEPARATOR searchSingleIndex facetFiltersOR
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters>
+            {
+              new FacetFilters(
+                new List<FacetFilters>
+                {
+                  new FacetFilters("category:Book"),
+                  new FacetFilters("author:John Doe"),
+                }
+              ),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// facetFiltersCombined
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex17()
+  {
+    // >SEPARATOR searchSingleIndex facetFiltersCombined
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters>
+            {
+              new FacetFilters("author:John Doe"),
+              new FacetFilters(
+                new List<FacetFilters>
+                {
+                  new FacetFilters("category:Book"),
+                  new FacetFilters("category:Movie"),
+                }
+              ),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// facetFiltersNeg
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex18()
   {
     // >SEPARATOR searchSingleIndex facetFiltersNeg
     // Initialize the client
@@ -4660,7 +4796,7 @@ public class SnippetSearchClient
   ///
   /// filtersAndFacetFilters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex15()
+  public async Task SnippetForSearchClientSearchSingleIndex19()
   {
     // >SEPARATOR searchSingleIndex filtersAndFacetFilters
     // Initialize the client
@@ -4688,7 +4824,7 @@ public class SnippetSearchClient
   ///
   /// facet author genre
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex16()
+  public async Task SnippetForSearchClientSearchSingleIndex20()
   {
     // >SEPARATOR searchSingleIndex facet author genre
     // Initialize the client
@@ -4713,7 +4849,7 @@ public class SnippetSearchClient
   ///
   /// facet wildcard
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex17()
+  public async Task SnippetForSearchClientSearchSingleIndex21()
   {
     // >SEPARATOR searchSingleIndex facet wildcard
     // Initialize the client
@@ -4733,7 +4869,7 @@ public class SnippetSearchClient
   ///
   /// maxValuesPerFacet
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex18()
+  public async Task SnippetForSearchClientSearchSingleIndex22()
   {
     // >SEPARATOR searchSingleIndex maxValuesPerFacet
     // Initialize the client
@@ -4753,7 +4889,7 @@ public class SnippetSearchClient
   ///
   /// aroundLatLng
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex19()
+  public async Task SnippetForSearchClientSearchSingleIndex23()
   {
     // >SEPARATOR searchSingleIndex aroundLatLng
     // Initialize the client
@@ -4773,7 +4909,7 @@ public class SnippetSearchClient
   ///
   /// aroundLatLngViaIP
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex20()
+  public async Task SnippetForSearchClientSearchSingleIndex24()
   {
     // >SEPARATOR searchSingleIndex aroundLatLngViaIP
     // Initialize the client
@@ -4793,7 +4929,7 @@ public class SnippetSearchClient
   ///
   /// aroundRadius
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex21()
+  public async Task SnippetForSearchClientSearchSingleIndex25()
   {
     // >SEPARATOR searchSingleIndex aroundRadius
     // Initialize the client
@@ -4819,7 +4955,7 @@ public class SnippetSearchClient
   ///
   /// insideBoundingBox
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex22()
+  public async Task SnippetForSearchClientSearchSingleIndex26()
   {
     // >SEPARATOR searchSingleIndex insideBoundingBox
     // Initialize the client
@@ -4849,7 +4985,7 @@ public class SnippetSearchClient
   ///
   /// insidePolygon
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex23()
+  public async Task SnippetForSearchClientSearchSingleIndex27()
   {
     // >SEPARATOR searchSingleIndex insidePolygon
     // Initialize the client
@@ -4891,7 +5027,7 @@ public class SnippetSearchClient
   ///
   /// insidePolygon
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex24()
+  public async Task SnippetForSearchClientSearchSingleIndex28()
   {
     // >SEPARATOR searchSingleIndex insidePolygon
     // Initialize the client
@@ -4933,7 +5069,7 @@ public class SnippetSearchClient
   ///
   /// optionalFilters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex25()
+  public async Task SnippetForSearchClientSearchSingleIndex29()
   {
     // >SEPARATOR searchSingleIndex optionalFilters
     // Initialize the client
@@ -4960,7 +5096,7 @@ public class SnippetSearchClient
   ///
   /// optionalFiltersMany
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex26()
+  public async Task SnippetForSearchClientSearchSingleIndex30()
   {
     // >SEPARATOR searchSingleIndex optionalFiltersMany
     // Initialize the client
@@ -4992,7 +5128,7 @@ public class SnippetSearchClient
   ///
   /// optionalFiltersSimple
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex27()
+  public async Task SnippetForSearchClientSearchSingleIndex31()
   {
     // >SEPARATOR searchSingleIndex optionalFiltersSimple
     // Initialize the client
@@ -5023,7 +5159,7 @@ public class SnippetSearchClient
   ///
   /// restrictSearchableAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex28()
+  public async Task SnippetForSearchClientSearchSingleIndex32()
   {
     // >SEPARATOR searchSingleIndex restrictSearchableAttributes
     // Initialize the client
@@ -5045,7 +5181,7 @@ public class SnippetSearchClient
   ///
   /// getRankingInfo
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex29()
+  public async Task SnippetForSearchClientSearchSingleIndex33()
   {
     // >SEPARATOR searchSingleIndex getRankingInfo
     // Initialize the client
@@ -5065,7 +5201,7 @@ public class SnippetSearchClient
   ///
   /// clickAnalytics
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex30()
+  public async Task SnippetForSearchClientSearchSingleIndex34()
   {
     // >SEPARATOR searchSingleIndex clickAnalytics
     // Initialize the client
@@ -5085,7 +5221,7 @@ public class SnippetSearchClient
   ///
   /// clickAnalyticsUserToken
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex31()
+  public async Task SnippetForSearchClientSearchSingleIndex35()
   {
     // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
     // Initialize the client
@@ -5105,7 +5241,7 @@ public class SnippetSearchClient
   ///
   /// enablePersonalization
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex32()
+  public async Task SnippetForSearchClientSearchSingleIndex36()
   {
     // >SEPARATOR searchSingleIndex enablePersonalization
     // Initialize the client
@@ -5127,7 +5263,7 @@ public class SnippetSearchClient
   ///
   /// userToken
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex33()
+  public async Task SnippetForSearchClientSearchSingleIndex37()
   {
     // >SEPARATOR searchSingleIndex userToken
     // Initialize the client
@@ -5145,9 +5281,29 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SearchSingleIndex method.
   ///
+  /// userToken1234
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex38()
+  {
+    // >SEPARATOR searchSingleIndex userToken1234
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", UserToken = "user-1234" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
   /// analyticsTag
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex34()
+  public async Task SnippetForSearchClientSearchSingleIndex39()
   {
     // >SEPARATOR searchSingleIndex analyticsTag
     // Initialize the client
@@ -5169,7 +5325,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersUsers
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex35()
+  public async Task SnippetForSearchClientSearchSingleIndex40()
   {
     // >SEPARATOR searchSingleIndex facetFiltersUsers
     // Initialize the client
@@ -5200,7 +5356,7 @@ public class SnippetSearchClient
   ///
   /// buildTheQuery
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex36()
+  public async Task SnippetForSearchClientSearchSingleIndex41()
   {
     // >SEPARATOR searchSingleIndex buildTheQuery
     // Initialize the client
@@ -5217,6 +5373,2080 @@ public class SnippetSearchClient
           AnalyticsTags = new List<string> { "mens-clothing" },
         }
       )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// attributesToHighlightOverride
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex42()
+  {
+    // >SEPARATOR searchSingleIndex attributesToHighlightOverride
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AttributesToHighlight = new List<string> { "title", "content" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// disableTypoToleranceOnAttributes
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex43()
+  {
+    // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          DisableTypoToleranceOnAttributes = new List<string> { "serial_number" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_a_query
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex44()
+  {
+    // >SEPARATOR searchSingleIndex search_a_query
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "shirt" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_everything
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex45()
+  {
+    // >SEPARATOR searchSingleIndex search_everything
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// api_filtering_range_example
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex46()
+  {
+    // >SEPARATOR searchSingleIndex api_filtering_range_example
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "books", Filters = "price:10 TO 20" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_a_query
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex47()
+  {
+    // >SEPARATOR searchSingleIndex search_a_query
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "",
+          SimilarQuery = "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+          Filters = "year:1991 TO 2001",
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_retrievable_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex48()
+  {
+    // >SEPARATOR searchSingleIndex override_retrievable_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AttributesToRetrieve = new List<string> { "title", "content" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// restrict_searchable_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex49()
+  {
+    // >SEPARATOR searchSingleIndex restrict_searchable_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RestrictSearchableAttributes = new List<string> { "title", "author" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_relevancy
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex50()
+  {
+    // >SEPARATOR searchSingleIndex override_default_relevancy
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", RelevancyStrictness = 70 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// apply_filters
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex51()
+  {
+    // >SEPARATOR searchSingleIndex apply_filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Filters = "(category:Book OR category:Ebook) AND _tags:published",
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// apply_all_filters
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex52()
+  {
+    // >SEPARATOR searchSingleIndex apply_all_filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Filters =
+            "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\"",
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// escape_spaces
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex53()
+  {
+    // >SEPARATOR searchSingleIndex escape_spaces
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", Filters = "category:\"Books and Comics\"" }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// escape_keywords
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex54()
+  {
+    // >SEPARATOR searchSingleIndex escape_keywords
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", Filters = "keyword:\"OR\"" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// escape_single_quotes
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex55()
+  {
+    // >SEPARATOR searchSingleIndex escape_single_quotes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", Filters = "content:\"It's a wonderful day\"" }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// escape_double_quotes
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex56()
+  {
+    // >SEPARATOR searchSingleIndex escape_double_quotes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", Filters = "content:\"She said \"Hello World\"" }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// apply_filters
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex57()
+  {
+    // >SEPARATOR searchSingleIndex apply_filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          OptionalFilters = new OptionalFilters(
+            new List<OptionalFilters>
+            {
+              new OptionalFilters("category:Book"),
+              new OptionalFilters("author:John Doe"),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// apply_negative_filters
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex58()
+  {
+    // >SEPARATOR searchSingleIndex apply_negative_filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          OptionalFilters = new OptionalFilters(
+            new List<OptionalFilters>
+            {
+              new OptionalFilters("category:Book"),
+              new OptionalFilters("author:-John Doe"),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// apply_numeric_filters
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex59()
+  {
+    // >SEPARATOR searchSingleIndex apply_numeric_filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          NumericFilters = new NumericFilters(
+            new List<NumericFilters>
+            {
+              new NumericFilters("price < 1000"),
+              new NumericFilters(
+                new List<NumericFilters>
+                {
+                  new NumericFilters("inStock = 1"),
+                  new NumericFilters("deliveryDate < 1441755506"),
+                }
+              ),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// apply_tag_filters
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex60()
+  {
+    // >SEPARATOR searchSingleIndex apply_tag_filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          TagFilters = new TagFilters(
+            new List<TagFilters>
+            {
+              new TagFilters("SciFi"),
+              new TagFilters(
+                new List<TagFilters> { new TagFilters("Book"), new TagFilters("Movie") }
+              ),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// apply_filters
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex61()
+  {
+    // >SEPARATOR searchSingleIndex apply_filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", SumOrFiltersScores = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// facets_all
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex62()
+  {
+    // >SEPARATOR searchSingleIndex facets_all
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Facets = new List<string> { "*" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// retrieve_only_some_facets
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex63()
+  {
+    // >SEPARATOR searchSingleIndex retrieve_only_some_facets
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Facets = new List<string> { "category", "author" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_max_values_per_facet
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex64()
+  {
+    // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", MaxValuesPerFacet = 20 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_faceting_after_distinct
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex65()
+  {
+    // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", FacetingAfterDistinct = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// sort_facet_values_alphabetically
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex66()
+  {
+    // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", SortFacetValuesBy = "count" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_attributes_to_snippet
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex67()
+  {
+    // >SEPARATOR searchSingleIndex override_attributes_to_snippet
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AttributesToSnippet = new List<string> { "title", "content:80" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_highlight_pre_tag
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex68()
+  {
+    // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", HighlightPreTag = "<strong>" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_highlight_post_tag
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex69()
+  {
+    // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", HighlightPostTag = "</strong>" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_snippet_ellipsis_text
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex70()
+  {
+    // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", SnippetEllipsisText = "" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_restrict_highlight_and_snippet_arrays
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex71()
+  {
+    // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", RestrictHighlightAndSnippetArrays = false }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// access_page
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex72()
+  {
+    // >SEPARATOR searchSingleIndex access_page
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", Page = 0 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_hits_per_page
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex73()
+  {
+    // >SEPARATOR searchSingleIndex override_default_hits_per_page
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", HitsPerPage = 10 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// get_nth_hit
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex74()
+  {
+    // >SEPARATOR searchSingleIndex get_nth_hit
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", Offset = 4 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// get_n_results
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex75()
+  {
+    // >SEPARATOR searchSingleIndex get_n_results
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", Length = 4 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_min_word_size_for_one_typo
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex76()
+  {
+    // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", MinWordSizefor1Typo = 2 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_min_word_size_for_two_typos
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex77()
+  {
+    // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", MinWordSizefor2Typos = 2 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_typo_tolerance_mode
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex78()
+  {
+    // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", TypoTolerance = new TypoTolerance(false) }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// disable_typos_on_numeric_tokens_at_search_time
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex79()
+  {
+    // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", AllowTyposOnNumericTokens = false }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_around_a_position
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex80()
+  {
+    // >SEPARATOR searchSingleIndex search_around_a_position
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", AroundLatLng = "40.71, -74.01" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_around_server_ip
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex81()
+  {
+    // >SEPARATOR searchSingleIndex search_around_server_ip
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", AroundLatLngViaIP = true }),
+      new RequestOptionBuilder()
+        .AddExtraHeader(
+          "x-forwarded-for",
+          "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+        )
+        .Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_around_radius
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex82()
+  {
+    // >SEPARATOR searchSingleIndex set_around_radius
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", AroundRadius = new AroundRadius(1000) }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// disable_automatic_radius
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex83()
+  {
+    // >SEPARATOR searchSingleIndex disable_automatic_radius
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_geo_search_precision
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex84()
+  {
+    // >SEPARATOR searchSingleIndex set_geo_search_precision
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", AroundPrecision = new AroundPrecision(100) }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_geo_search_precision_non_linear
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex85()
+  {
+    // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AroundPrecision = new AroundPrecision(
+            new List<Range>
+            {
+              new Range { From = 0, Value = 25 },
+              new Range { From = 2000, Value = 1000 },
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_minimum_geo_search_radius
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex86()
+  {
+    // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", MinimumAroundRadius = 1000 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_inside_rectangular_area
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex87()
+  {
+    // >SEPARATOR searchSingleIndex search_inside_rectangular_area
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsideBoundingBox = new InsideBoundingBox(
+            new List<List<Double>>
+            {
+              new List<Double> { 46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625 },
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_inside_multiple_rectangular_areas
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex88()
+  {
+    // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsideBoundingBox = new InsideBoundingBox(
+            new List<List<Double>>
+            {
+              new List<Double> { 46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625 },
+              new List<Double> { 49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875 },
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_inside_polygon_area
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex89()
+  {
+    // >SEPARATOR searchSingleIndex search_inside_polygon_area
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsidePolygon = new List<List<Double>>
+          {
+            new List<Double>
+            {
+              46.650828100116044,
+              7.123046875,
+              45.17210966999772,
+              1.009765625,
+              49.62625916704081,
+              4.6181640625,
+            },
+          },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// search_inside_multiple_polygon_areas
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex90()
+  {
+    // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsidePolygon = new List<List<Double>>
+          {
+            new List<Double>
+            {
+              46.650828100116044,
+              7.123046875,
+              45.17210966999772,
+              1.009765625,
+              49.62625916704081,
+              4.6181640625,
+            },
+            new List<Double>
+            {
+              49.62625916704081,
+              4.6181640625,
+              47.715070300900194,
+              0.482421875,
+              45.17210966999772,
+              1.009765625,
+              50.62626704081,
+              4.6181640625,
+            },
+          },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_querylanguages_override
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex91()
+  {
+    // >SEPARATOR searchSingleIndex set_querylanguages_override
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          IgnorePlurals = new IgnorePlurals(
+            new List<SupportedLanguage>
+            {
+              Enum.Parse<SupportedLanguage>("Ca"),
+              Enum.Parse<SupportedLanguage>("Es"),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_querylanguages_override
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex92()
+  {
+    // >SEPARATOR searchSingleIndex set_querylanguages_override
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RemoveStopWords = new RemoveStopWords(
+            new List<SupportedLanguage>
+            {
+              Enum.Parse<SupportedLanguage>("Ca"),
+              Enum.Parse<SupportedLanguage>("Es"),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_querylanguages_override
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex93()
+  {
+    // >SEPARATOR searchSingleIndex set_querylanguages_override
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RemoveStopWords = new RemoveStopWords(
+            new List<SupportedLanguage>
+            {
+              Enum.Parse<SupportedLanguage>("Ca"),
+              Enum.Parse<SupportedLanguage>("Es"),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_querylanguages_with_japanese_query
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex94()
+  {
+    // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          QueryLanguages = new List<SupportedLanguage>
+          {
+            Enum.Parse<SupportedLanguage>("Ja"),
+            Enum.Parse<SupportedLanguage>("En"),
+          },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_natural_languages
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex95()
+  {
+    // >SEPARATOR searchSingleIndex set_natural_languages
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "",
+          NaturalLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_natural_languages_with_query
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex96()
+  {
+    // >SEPARATOR searchSingleIndex override_natural_languages_with_query
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "",
+          NaturalLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
+          RemoveWordsIfNoResults = Enum.Parse<RemoveWordsIfNoResults>("FirstWords"),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_decompound_query_search_time
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex97()
+  {
+    // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", DecompoundQuery = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_rules_search_time
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex98()
+  {
+    // >SEPARATOR searchSingleIndex enable_rules_search_time
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", EnableRules = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_rule_contexts
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex99()
+  {
+    // >SEPARATOR searchSingleIndex set_rule_contexts
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RuleContexts = new List<string> { "front_end", "website2" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_personalization
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex100()
+  {
+    // >SEPARATOR searchSingleIndex enable_personalization
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", EnablePersonalization = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_personalization_with_user_token
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex101()
+  {
+    // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          EnablePersonalization = true,
+          UserToken = "123456",
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// personalization_impact
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex102()
+  {
+    // >SEPARATOR searchSingleIndex personalization_impact
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", PersonalizationImpact = 20 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_user_token
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex103()
+  {
+    // >SEPARATOR searchSingleIndex set_user_token
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", UserToken = "123456" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_user_token_with_personalization
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex104()
+  {
+    // >SEPARATOR searchSingleIndex set_user_token_with_personalization
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          EnablePersonalization = true,
+          UserToken = "123456",
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_query_type
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex105()
+  {
+    // >SEPARATOR searchSingleIndex override_default_query_type
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", QueryType = Enum.Parse<QueryType>("PrefixAll") }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_remove_words_if_no_results
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex106()
+  {
+    // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RemoveWordsIfNoResults = Enum.Parse<RemoveWordsIfNoResults>("LastWords"),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_advanced_syntax_search_time
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex107()
+  {
+    // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", AdvancedSyntax = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// overide_default_optional_words
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex108()
+  {
+    // >SEPARATOR searchSingleIndex overide_default_optional_words
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          OptionalWords = new OptionalWords(new List<string> { "toyota", "2020 2021" }),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// disabling_exact_for_some_attributes_search_time
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex109()
+  {
+    // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          DisableExactOnAttributes = new List<string> { "description" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_exact_single_word_query
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex110()
+  {
+    // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          ExactOnSingleWordQuery = Enum.Parse<ExactOnSingleWordQuery>("None"),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_aternative_as_exact
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex111()
+  {
+    // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AlternativesAsExact = new List<AlternativesAsExact>
+          {
+            Enum.Parse<AlternativesAsExact>("MultiWordsSynonym"),
+          },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_advanced_syntax_exact_phrase
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex112()
+  {
+    // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AdvancedSyntax = true,
+          AdvancedSyntaxFeatures = new List<AdvancedSyntaxFeatures>
+          {
+            Enum.Parse<AdvancedSyntaxFeatures>("ExactPhrase"),
+          },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_advanced_syntax_exclude_words
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex113()
+  {
+    // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AdvancedSyntax = true,
+          AdvancedSyntaxFeatures = new List<AdvancedSyntaxFeatures>
+          {
+            Enum.Parse<AdvancedSyntaxFeatures>("ExcludeWords"),
+          },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_distinct
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex114()
+  {
+    // >SEPARATOR searchSingleIndex override_distinct
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", Distinct = new Distinct(0) })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// get_ranking_info
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex115()
+  {
+    // >SEPARATOR searchSingleIndex get_ranking_info
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", GetRankingInfo = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// disable_click_analytics
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex116()
+  {
+    // >SEPARATOR searchSingleIndex disable_click_analytics
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", ClickAnalytics = false })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// enable_click_analytics
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex117()
+  {
+    // >SEPARATOR searchSingleIndex enable_click_analytics
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", ClickAnalytics = true })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// disable_analytics
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex118()
+  {
+    // >SEPARATOR searchSingleIndex disable_analytics
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", Analytics = false })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// add_analytics_tags
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex119()
+  {
+    // >SEPARATOR searchSingleIndex add_analytics_tags
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AnalyticsTags = new List<string> { "front_end", "website2" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// disable_synonyms
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex120()
+  {
+    // >SEPARATOR searchSingleIndex disable_synonyms
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", Synonyms = false })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_replace_synonyms_in_highlights
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex121()
+  {
+    // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", ReplaceSynonymsInHighlight = true }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_min_proximity
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex122()
+  {
+    // >SEPARATOR searchSingleIndex override_min_proximity
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", MinProximity = 2 })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_default_field
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex123()
+  {
+    // >SEPARATOR searchSingleIndex override_default_field
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          ResponseFields = new List<string> { "hits", "facets" },
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// override_percentile_computation
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex124()
+  {
+    // >SEPARATOR searchSingleIndex override_percentile_computation
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", PercentileComputation = false })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_ab_test
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex125()
+  {
+    // >SEPARATOR searchSingleIndex set_ab_test
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", EnableABTest = false })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// set_enable_re_ranking
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex126()
+  {
+    // >SEPARATOR searchSingleIndex set_enable_re_ranking
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query", EnableReRanking = false })
     );
     // >LOG
     // SEPARATOR<
@@ -5671,9 +7901,78 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
-  /// attributesForFaceting categoryPageId
+  /// api_attributes_for_faceting
   /// </summary>
   public async Task SnippetForSearchClientSetSettings14()
+  {
+    // >SEPARATOR setSettings api_attributes_for_faceting
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string> { "genre", "author" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// api_attributes_for_faceting_searchable
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings15()
+  {
+    // >SEPARATOR setSettings api_attributes_for_faceting_searchable
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string> { "genre", "searchable(author)" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// api_attributes_for_filter_only
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings16()
+  {
+    // >SEPARATOR setSettings api_attributes_for_filter_only
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string> { "filterOnly(genre)", "author" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// attributesForFaceting categoryPageId
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings17()
   {
     // >SEPARATOR setSettings attributesForFaceting categoryPageId
     // Initialize the client
@@ -5696,7 +7995,7 @@ public class SnippetSearchClient
   ///
   /// unretrievableAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings15()
+  public async Task SnippetForSearchClientSetSettings18()
   {
     // >SEPARATOR setSettings unretrievableAttributes
     // Initialize the client
@@ -5716,7 +8015,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting user restricted data
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings16()
+  public async Task SnippetForSearchClientSetSettings19()
   {
     // >SEPARATOR setSettings attributesForFaceting user restricted data
     // Initialize the client
@@ -5736,7 +8035,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting optional filters
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings17()
+  public async Task SnippetForSearchClientSetSettings20()
   {
     // >SEPARATOR setSettings attributesForFaceting optional filters
     // Initialize the client
@@ -5759,7 +8058,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting redirect index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings18()
+  public async Task SnippetForSearchClientSetSettings21()
   {
     // >SEPARATOR setSettings attributesForFaceting redirect index
     // Initialize the client
@@ -5779,7 +8078,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting multiple consequences
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings19()
+  public async Task SnippetForSearchClientSetSettings22()
   {
     // >SEPARATOR setSettings attributesForFaceting multiple consequences
     // Initialize the client
@@ -5799,7 +8098,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting in-depth optional filters
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings20()
+  public async Task SnippetForSearchClientSetSettings23()
   {
     // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
     // Initialize the client
@@ -5819,7 +8118,7 @@ public class SnippetSearchClient
   ///
   /// mode neuralSearch
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings21()
+  public async Task SnippetForSearchClientSetSettings24()
   {
     // >SEPARATOR setSettings mode neuralSearch
     // Initialize the client
@@ -5839,7 +8138,7 @@ public class SnippetSearchClient
   ///
   /// mode keywordSearch
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings22()
+  public async Task SnippetForSearchClientSetSettings25()
   {
     // >SEPARATOR setSettings mode keywordSearch
     // Initialize the client
@@ -5859,7 +8158,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes same priority
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings23()
+  public async Task SnippetForSearchClientSetSettings26()
   {
     // >SEPARATOR setSettings searchableAttributes same priority
     // Initialize the client
@@ -5882,7 +8181,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes higher priority
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings24()
+  public async Task SnippetForSearchClientSetSettings27()
   {
     // >SEPARATOR setSettings searchableAttributes higher priority
     // Initialize the client
@@ -5905,7 +8204,7 @@ public class SnippetSearchClient
   ///
   /// customRanking retweets
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings25()
+  public async Task SnippetForSearchClientSetSettings28()
   {
     // >SEPARATOR setSettings customRanking retweets
     // Initialize the client
@@ -5928,7 +8227,7 @@ public class SnippetSearchClient
   ///
   /// customRanking boosted
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings26()
+  public async Task SnippetForSearchClientSetSettings29()
   {
     // >SEPARATOR setSettings customRanking boosted
     // Initialize the client
@@ -5948,7 +8247,7 @@ public class SnippetSearchClient
   ///
   /// customRanking pageviews
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings27()
+  public async Task SnippetForSearchClientSetSettings30()
   {
     // >SEPARATOR setSettings customRanking pageviews
     // Initialize the client
@@ -5971,7 +8270,7 @@ public class SnippetSearchClient
   ///
   /// customRanking applying search parameters for a specific query
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings28()
+  public async Task SnippetForSearchClientSetSettings31()
   {
     // >SEPARATOR setSettings customRanking applying search parameters for a specific query
     // Initialize the client
@@ -5995,7 +8294,7 @@ public class SnippetSearchClient
   ///
   /// customRanking rounded pageviews
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings29()
+  public async Task SnippetForSearchClientSetSettings32()
   {
     // >SEPARATOR setSettings customRanking rounded pageviews
     // Initialize the client
@@ -6018,7 +8317,7 @@ public class SnippetSearchClient
   ///
   /// customRanking price
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings30()
+  public async Task SnippetForSearchClientSetSettings33()
   {
     // >SEPARATOR setSettings customRanking price
     // Initialize the client
@@ -6038,7 +8337,7 @@ public class SnippetSearchClient
   ///
   /// ranking exhaustive
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings31()
+  public async Task SnippetForSearchClientSetSettings34()
   {
     // >SEPARATOR setSettings ranking exhaustive
     // Initialize the client
@@ -6072,7 +8371,7 @@ public class SnippetSearchClient
   ///
   /// ranking standard replica
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings32()
+  public async Task SnippetForSearchClientSetSettings35()
   {
     // >SEPARATOR setSettings ranking standard replica
     // Initialize the client
@@ -6092,7 +8391,7 @@ public class SnippetSearchClient
   ///
   /// ranking virtual replica
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings33()
+  public async Task SnippetForSearchClientSetSettings36()
   {
     // >SEPARATOR setSettings ranking virtual replica
     // Initialize the client
@@ -6112,7 +8411,7 @@ public class SnippetSearchClient
   ///
   /// customRanking and ranking sort alphabetically
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings34()
+  public async Task SnippetForSearchClientSetSettings37()
   {
     // >SEPARATOR setSettings customRanking and ranking sort alphabetically
     // Initialize the client
@@ -6146,7 +8445,7 @@ public class SnippetSearchClient
   ///
   /// relevancyStrictness
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings35()
+  public async Task SnippetForSearchClientSetSettings38()
   {
     // >SEPARATOR setSettings relevancyStrictness
     // Initialize the client
@@ -6170,7 +8469,7 @@ public class SnippetSearchClient
   ///
   /// create replica index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings36()
+  public async Task SnippetForSearchClientSetSettings39()
   {
     // >SEPARATOR setSettings create replica index
     // Initialize the client
@@ -6188,9 +8487,29 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
+  /// create replica index articles
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings40()
+  {
+    // >SEPARATOR setSettings create replica index articles
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { Replicas = new List<string> { "articles_date_desc" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
   /// create virtual replica index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings37()
+  public async Task SnippetForSearchClientSetSettings41()
   {
     // >SEPARATOR setSettings create virtual replica index
     // Initialize the client
@@ -6210,7 +8529,7 @@ public class SnippetSearchClient
   ///
   /// unlink replica index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings38()
+  public async Task SnippetForSearchClientSetSettings42()
   {
     // >SEPARATOR setSettings unlink replica index
     // Initialize the client
@@ -6230,7 +8549,7 @@ public class SnippetSearchClient
   ///
   /// forwardToReplicas
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings39()
+  public async Task SnippetForSearchClientSetSettings43()
   {
     // >SEPARATOR setSettings forwardToReplicas
     // Initialize the client
@@ -6254,7 +8573,7 @@ public class SnippetSearchClient
   ///
   /// maxValuesPerFacet
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings40()
+  public async Task SnippetForSearchClientSetSettings44()
   {
     // >SEPARATOR setSettings maxValuesPerFacet
     // Initialize the client
@@ -6274,7 +8593,7 @@ public class SnippetSearchClient
   ///
   /// maxFacetHits
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings41()
+  public async Task SnippetForSearchClientSetSettings45()
   {
     // >SEPARATOR setSettings maxFacetHits
     // Initialize the client
@@ -6294,7 +8613,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting complex
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings42()
+  public async Task SnippetForSearchClientSetSettings46()
   {
     // >SEPARATOR setSettings attributesForFaceting complex
     // Initialize the client
@@ -6322,7 +8641,7 @@ public class SnippetSearchClient
   ///
   /// ranking closest dates
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings43()
+  public async Task SnippetForSearchClientSetSettings47()
   {
     // >SEPARATOR setSettings ranking closest dates
     // Initialize the client
@@ -6356,7 +8675,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes item variation
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings44()
+  public async Task SnippetForSearchClientSetSettings48()
   {
     // >SEPARATOR setSettings searchableAttributes item variation
     // Initialize the client
@@ -6379,7 +8698,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes around location
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings45()
+  public async Task SnippetForSearchClientSetSettings49()
   {
     // >SEPARATOR setSettings searchableAttributes around location
     // Initialize the client
@@ -6401,11 +8720,11 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
-  /// searchableAttributes around location
+  /// attributesToHighlight
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings46()
+  public async Task SnippetForSearchClientSetSettings50()
   {
-    // >SEPARATOR setSettings searchableAttributes around location
+    // >SEPARATOR setSettings attributesToHighlight
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -6414,8 +8733,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new IndexSettings
       {
-        SearchableAttributes = new List<string> { "name", "country", "code", "iata_code" },
-        CustomRanking = new List<string> { "desc(links_count)" },
+        AttributesToHighlight = new List<string> { "author", "title", "content" },
       }
     );
     // >LOG
@@ -6425,18 +8743,18 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
-  /// disableTypoToleranceOnAttributes
+  /// attributesToHighlightStar
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings47()
+  public async Task SnippetForSearchClientSetSettings51()
   {
-    // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+    // >SEPARATOR setSettings attributesToHighlightStar
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
     var response = await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings { DisableTypoToleranceOnAttributes = new List<string> { "serial_number" } }
+      new IndexSettings { AttributesToHighlight = new List<string> { "*" } }
     );
     // >LOG
     // SEPARATOR<
@@ -6447,7 +8765,7 @@ public class SnippetSearchClient
   ///
   /// everything
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings48()
+  public async Task SnippetForSearchClientSetSettings52()
   {
     // >SEPARATOR setSettings everything
     // Initialize the client
@@ -6562,7 +8880,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesWithCustomRankingsAndAttributesForFaceting
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings49()
+  public async Task SnippetForSearchClientSetSettings53()
   {
     // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
     // Initialize the client
@@ -6597,9 +8915,32 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
+  /// searchableAttributesOrdering
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings54()
+  {
+    // >SEPARATOR setSettings searchableAttributesOrdering
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string> { "unordered(title)", "cast" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
   /// searchableAttributesProductReferenceSuffixes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings50()
+  public async Task SnippetForSearchClientSetSettings55()
   {
     // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
     // Initialize the client
@@ -6627,7 +8968,7 @@ public class SnippetSearchClient
   ///
   /// queryLanguageAndIgnorePlurals
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings51()
+  public async Task SnippetForSearchClientSetSettings56()
   {
     // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
     // Initialize the client
@@ -6651,7 +8992,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesInMovies
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings52()
+  public async Task SnippetForSearchClientSetSettings57()
   {
     // >SEPARATOR setSettings searchableAttributesInMovies
     // Initialize the client
@@ -6674,7 +9015,7 @@ public class SnippetSearchClient
   ///
   /// disablePrefixOnAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings53()
+  public async Task SnippetForSearchClientSetSettings58()
   {
     // >SEPARATOR setSettings disablePrefixOnAttributes
     // Initialize the client
@@ -6694,7 +9035,7 @@ public class SnippetSearchClient
   ///
   /// disableTypoToleranceOnAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings54()
+  public async Task SnippetForSearchClientSetSettings59()
   {
     // >SEPARATOR setSettings disableTypoToleranceOnAttributes
     // Initialize the client
@@ -6714,7 +9055,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesSimpleExample
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings55()
+  public async Task SnippetForSearchClientSetSettings60()
   {
     // >SEPARATOR setSettings searchableAttributesSimpleExample
     // Initialize the client
@@ -6734,7 +9075,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesSimpleExampleAlt
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings56()
+  public async Task SnippetForSearchClientSetSettings61()
   {
     // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
     // Initialize the client
@@ -6746,6 +9087,1449 @@ public class SnippetSearchClient
       new IndexSettings
       {
         SearchableAttributes = new List<string> { "serial_number", "serial_number_suffixes" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_searchable_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings62()
+  {
+    // >SEPARATOR setSettings set_searchable_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string>
+        {
+          "title,alternative_title",
+          "author",
+          "unordered(text)",
+          "emails.personal",
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_searchable_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings63()
+  {
+    // >SEPARATOR setSettings set_searchable_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string>
+        {
+          "author",
+          "filterOnly(isbn)",
+          "searchable(edition)",
+          "afterDistinct(category)",
+          "afterDistinct(searchable(publisher))",
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// unretrievable_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings64()
+  {
+    // >SEPARATOR setSettings unretrievable_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { UnretrievableAttributes = new List<string> { "total_number_of_sales" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_retrievable_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings65()
+  {
+    // >SEPARATOR setSettings set_retrievable_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesToRetrieve = new List<string> { "author", "title", "content" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_all_attributes_as_retrievable
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings66()
+  {
+    // >SEPARATOR setSettings set_all_attributes_as_retrievable
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AttributesToRetrieve = new List<string> { "*" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// specify_attributes_not_to_retrieve
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings67()
+  {
+    // >SEPARATOR setSettings specify_attributes_not_to_retrieve
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesToRetrieve = new List<string> { "*", "-SKU", "-internal_desc" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// neural_search
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings68()
+  {
+    // >SEPARATOR setSettings neural_search
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { Mode = Enum.Parse<Mode>("NeuralSearch") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// keyword_search
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings69()
+  {
+    // >SEPARATOR setSettings keyword_search
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { Mode = Enum.Parse<Mode>("KeywordSearch") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_ranking
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings70()
+  {
+    // >SEPARATOR setSettings set_default_ranking
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "attribute",
+          "proximity",
+          "exact",
+          "custom",
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_ranking_by_attribute_asc
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings71()
+  {
+    // >SEPARATOR setSettings set_ranking_by_attribute_asc
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "asc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom",
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_ranking_by_attribute_desc
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings72()
+  {
+    // >SEPARATOR setSettings set_ranking_by_attribute_desc
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom",
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// restrict_searchable_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings73()
+  {
+    // >SEPARATOR setSettings restrict_searchable_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(popularity)", "asc(price)" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_relevancy
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings74()
+  {
+    // >SEPARATOR setSettings set_default_relevancy
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { RelevancyStrictness = 90 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_replicas
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings75()
+  {
+    // >SEPARATOR setSettings set_replicas
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        Replicas = new List<string> { "name_of_replica_index1", "name_of_replica_index2" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_max_values_per_facet
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings76()
+  {
+    // >SEPARATOR setSettings set_default_max_values_per_facet
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { MaxValuesPerFacet = 100 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_sort_facet_values_by
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings77()
+  {
+    // >SEPARATOR setSettings set_default_sort_facet_values_by
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { SortFacetValuesBy = "alpha" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_attributes_to_snippet
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings78()
+  {
+    // >SEPARATOR setSettings set_attributes_to_snippet
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesToSnippet = new List<string> { "content:80", "description" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_all_attributes_to_snippet
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings79()
+  {
+    // >SEPARATOR setSettings set_all_attributes_to_snippet
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AttributesToSnippet = new List<string> { "*:80" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_highlight_pre_tag
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings80()
+  {
+    // >SEPARATOR setSettings set_default_highlight_pre_tag
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { HighlightPreTag = "<em>" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_highlight_post_tag
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings81()
+  {
+    // >SEPARATOR setSettings set_default_highlight_post_tag
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { HighlightPostTag = "</em>" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_snippet_ellipsis_text
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings82()
+  {
+    // >SEPARATOR setSettings set_default_snippet_ellipsis_text
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { SnippetEllipsisText = "…" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// enable_restrict_highlight_and_snippet_arrays_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings83()
+  {
+    // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { RestrictHighlightAndSnippetArrays = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_hits_per_page
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings84()
+  {
+    // >SEPARATOR setSettings set_default_hits_per_page
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { HitsPerPage = 20 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_pagination_limit
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings85()
+  {
+    // >SEPARATOR setSettings set_pagination_limit
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { PaginationLimitedTo = 1000 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_min_word_size_for_one_typo
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings86()
+  {
+    // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { MinWordSizefor1Typo = 4 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_min_word_size_for_two_typos
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings87()
+  {
+    // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { MinWordSizefor2Typos = 4 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_typo_tolerance_mode
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings88()
+  {
+    // >SEPARATOR setSettings set_default_typo_tolerance_mode
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { TypoTolerance = new TypoTolerance(true) }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// disable_typos_on_numeric_tokens_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings89()
+  {
+    // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AllowTyposOnNumericTokens = false }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// disable_typo_tolerance_for_words
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings90()
+  {
+    // >SEPARATOR setSettings disable_typo_tolerance_for_words
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        DisableTypoToleranceOnWords = new List<string> { "wheel", "1X2BCD" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_separators_to_index
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings91()
+  {
+    // >SEPARATOR setSettings set_separators_to_index
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { SeparatorsToIndex = "+#" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_languages_using_querylanguages
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings92()
+  {
+    // >SEPARATOR setSettings set_languages_using_querylanguages
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Es") },
+        IgnorePlurals = new IgnorePlurals(true),
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_attributes_to_transliterate
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings93()
+  {
+    // >SEPARATOR setSettings set_attributes_to_transliterate
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        IndexLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Ja") },
+        AttributesToTransliterate = new List<string> { "name", "description" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_languages_using_querylanguages
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings94()
+  {
+    // >SEPARATOR setSettings set_languages_using_querylanguages
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Es") },
+        RemoveStopWords = new RemoveStopWords(true),
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_camel_case_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings95()
+  {
+    // >SEPARATOR setSettings set_camel_case_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { CamelCaseAttributes = new List<string> { "description" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_decompounded_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings96()
+  {
+    // >SEPARATOR setSettings set_decompounded_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        DecompoundedAttributes = new Dictionary<string, List<string>>
+        {
+          {
+            "de",
+            new List<string> { "name" }
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_decompounded_multiple_attributes
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings97()
+  {
+    // >SEPARATOR setSettings set_decompounded_multiple_attributes
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        DecompoundedAttributes = new Dictionary<string, List<string>>
+        {
+          {
+            "de",
+            new List<string> { "name_de", "description_de" }
+          },
+          {
+            "fi",
+            new List<string> { "name_fi", "description_fi" }
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_keep_diacritics_on_characters
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings98()
+  {
+    // >SEPARATOR setSettings set_keep_diacritics_on_characters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { KeepDiacriticsOnCharacters = "øé" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_custom_normalization
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings99()
+  {
+    // >SEPARATOR setSettings set_custom_normalization
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        CustomNormalization = new Dictionary<string, Dictionary<string, string>>
+        {
+          {
+            "default",
+            new Dictionary<string, string> { { "ä", "ae" } }
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_languages_using_querylanguages
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings100()
+  {
+    // >SEPARATOR setSettings set_languages_using_querylanguages
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Es") },
+        RemoveStopWords = new RemoveStopWords(true),
+        IgnorePlurals = new IgnorePlurals(true),
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_indexlanguages
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings101()
+  {
+    // >SEPARATOR setSettings set_indexlanguages
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        IndexLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Ja") },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// enable_decompound_query_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings102()
+  {
+    // >SEPARATOR setSettings enable_decompound_query_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { DecompoundQuery = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// enable_rules_syntax_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings103()
+  {
+    // >SEPARATOR setSettings enable_rules_syntax_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { EnableRules = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// enable_personalization_settings
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings104()
+  {
+    // >SEPARATOR setSettings enable_personalization_settings
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { EnablePersonalization = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_query_type
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings105()
+  {
+    // >SEPARATOR setSettings set_default_query_type
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { QueryType = Enum.Parse<QueryType>("PrefixLast") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_remove_words_if_no_result
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings106()
+  {
+    // >SEPARATOR setSettings set_default_remove_words_if_no_result
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { RemoveWordsIfNoResults = Enum.Parse<RemoveWordsIfNoResults>("None") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// enable_advanced_syntax_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings107()
+  {
+    // >SEPARATOR setSettings enable_advanced_syntax_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AdvancedSyntax = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_optional_words
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings108()
+  {
+    // >SEPARATOR setSettings set_default_optional_words
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        OptionalWords = new OptionalWords(new List<string> { "blue", "iphone case" }),
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// disabling_prefix_search_for_some_attributes_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings109()
+  {
+    // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { DisablePrefixOnAttributes = new List<string> { "sku" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// disabling_exact_for_some_attributes_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings110()
+  {
+    // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { DisableExactOnAttributes = new List<string> { "description" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_exact_single_word_query
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings111()
+  {
+    // >SEPARATOR setSettings set_default_exact_single_word_query
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { ExactOnSingleWordQuery = Enum.Parse<ExactOnSingleWordQuery>("Attribute") }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_aternative_as_exact
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings112()
+  {
+    // >SEPARATOR setSettings set_default_aternative_as_exact
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AlternativesAsExact = new List<AlternativesAsExact>
+        {
+          Enum.Parse<AlternativesAsExact>("IgnorePlurals"),
+          Enum.Parse<AlternativesAsExact>("SingleWordSynonym"),
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// enable_advanced_syntax_by_default
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings113()
+  {
+    // >SEPARATOR setSettings enable_advanced_syntax_by_default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AdvancedSyntax = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_numeric_attributes_for_filtering
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings114()
+  {
+    // >SEPARATOR setSettings set_numeric_attributes_for_filtering
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        NumericAttributesForFiltering = new List<string> { "quantity", "popularity" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// enable_compression_of_integer_array
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings115()
+  {
+    // >SEPARATOR setSettings enable_compression_of_integer_array
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AllowCompressionOfIntegerArray = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_attributes_for_distinct
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings116()
+  {
+    // >SEPARATOR setSettings set_attributes_for_distinct
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AttributeForDistinct = "url" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_distinct
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings117()
+  {
+    // >SEPARATOR setSettings set_distinct
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { Distinct = new Distinct(1), AttributeForDistinct = "url" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_replace_synonyms_in_highlights
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings118()
+  {
+    // >SEPARATOR setSettings set_replace_synonyms_in_highlights
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { ReplaceSynonymsInHighlight = false }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_min_proximity
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings119()
+  {
+    // >SEPARATOR setSettings set_min_proximity
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { MinProximity = 1 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_default_field
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings120()
+  {
+    // >SEPARATOR setSettings set_default_field
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        ResponseFields = new List<string> { "hits", "hitsPerPage", "nbPages", "page" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_max_facet_hits
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings121()
+  {
+    // >SEPARATOR setSettings set_max_facet_hits
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { MaxFacetHits = 10 }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_attribute_criteria_computed_by_min_proximity
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings122()
+  {
+    // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings { AttributeCriteriaComputedByMinProximity = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_user_data
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings123()
+  {
+    // >SEPARATOR setSettings set_user_data
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        UserData = new Dictionary<string, string>
+        {
+          { "extraData", "This is the custom data that you want to store in your index" },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// set_rendering_content
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings124()
+  {
+    // >SEPARATOR setSettings set_rendering_content
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        RenderingContent = new RenderingContent
+        {
+          FacetOrdering = new FacetOrdering
+          {
+            Facets = new Facets
+            {
+              Order = new List<string> { "size", "brand" },
+            },
+            Values = new Dictionary<string, Value>
+            {
+              {
+                "brand",
+                new Value
+                {
+                  Order = new List<string> { "uniqlo" },
+                  Hide = new List<string> { "muji" },
+                  SortRemainingBy = Enum.Parse<SortRemainingBy>("Count"),
+                }
+              },
+              {
+                "size",
+                new Value
+                {
+                  Order = new List<string> { "S", "M", "L" },
+                  SortRemainingBy = Enum.Parse<SortRemainingBy>("Hidden"),
+                }
+              },
+            },
+          },
+        },
       }
     );
     // >LOG
