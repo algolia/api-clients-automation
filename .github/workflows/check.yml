@@ -407,6 +407,10 @@ jobs:
       - name: Generate code guides
         run: yarn cli guides ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
+      - name: print the file
+        if: ${{ matrix.client.language == 'kotlin' }}
+        run: cat docs/guides/kotlin/src/main/kotlin/com/algolia/snippets/deleteMultipleIndices.kt
+
       - name: Build the guides to check validity
         run: yarn cli build guides ${{ matrix.client.language }}
 

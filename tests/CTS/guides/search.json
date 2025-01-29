@@ -15,9 +15,7 @@
   },
   "listIndicesSimple": {
     "method": "listIndices",
-    "parameters": {
-      "hitsPerPage": 100
-    }
+    "parameters": {}
   },
   "deleteMultipleIndicesPrimary": {
     "method": "multipleBatch",
