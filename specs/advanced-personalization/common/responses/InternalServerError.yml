@@ -3,12 +3,15 @@ content:
   application/json:
     schema:
       type: object
+      title: InternalServerError
       properties:
         status:
           type: integer
           description: HTTP status code.
-          enum: [500]
+          enum:
+            - 500
         message:
           type: string
           description: Details about the response, such as error messages.
-          enum: ["Internal Server Error"]
+          enum:
+            - "Internal Server Error"

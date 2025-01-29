@@ -3,12 +3,15 @@ content:
   application/json:
     schema:
       type: object
+      title: GenericUnprocessableEntity
       properties:
         status:
           type: integer
           description: HTTP status code.
-          enum: [422]
+          enum:
+            - 422
         message:
           type: string
           description: Details about the response, such as error messages.
-          enum: ["Unprocessable Entity"]
+          enum:
+            - "Unprocessable Entity"

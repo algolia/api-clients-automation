@@ -2,11 +2,16 @@ description: User not found.
 content:
   application/json:
     schema:
-      status:
-        type: integer
-        description: HTTP status code.
-        enum: [404]
-      message:
-        type: string
-        description: Details about the response, such as error messages.
-        enum: ["Not Found"]
+      type: object
+      title: UserNotFound
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          enum:
+            - 404
+        message:
+          type: string
+          description: Details about the response, such as error messages.
+          enum:
+            - "Not Found"

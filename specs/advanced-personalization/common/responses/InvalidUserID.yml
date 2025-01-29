@@ -3,12 +3,15 @@ content:
   application/json:
     schema:
       type: object
+      title: InvalidUserID
       properties:
         status:
           type: integer
           description: HTTP status code.
-          enum: [422]
+          enum:
+            - 422
         message:
           type: string
           description: Details about the response, such as error messages.
-          enum: ["UserID must contain only alphanumeric, equal, plus, slash, hyphen, or underscore characters, and be between 1 and 129 characters long"]
+          enum:
+            - "UserID must contain only alphanumeric, equal, plus, slash, hyphen, or underscore characters, and be between 1 and 129 characters long"

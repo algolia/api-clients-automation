@@ -3,12 +3,15 @@ content:
   application/json:
     schema:
       type: object
+      title: BadUserID
       properties:
         status:
           type: integer
           description: HTTP status code.
-          enum: [400]
+          enum:
+            - 400
         message:
           type: string
           description: Details about the response, such as error messages.
-          enum: ["Invalid userID format"]
+          enum:
+            - "Invalid userID format"
