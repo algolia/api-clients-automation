@@ -2,16 +2,4 @@ description: Not found.
 content:
   application/json:
     schema:
-      title: userNotFound
-      type: object
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          enum:
-            - 404
-        message:
-          type: string
-          description: Details about the response, such as error messages.
-          enum:
-            - Not Found
+      - $ref: '../schemas/ErrorResponses.yml#/genericNotFound'

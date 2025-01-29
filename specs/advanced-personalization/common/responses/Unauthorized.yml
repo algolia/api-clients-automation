@@ -2,16 +2,4 @@ description: Not authorized to access this resource.
 content:
   application/json:
     schema:
-      title: unauthorized
-      type: object
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          enum:
-            - 401
-        message:
-          type: string
-          description: Details about the response, such as error messages.
-          enum:
-            - Unauthorized
+      - $ref: '../schemas/ErrorResponses.yml#/unauthorized'

@@ -2,16 +2,4 @@ description: Unprocessable entity.
 content:
   application/json:
     schema:
-      title: genericUnprocessableEntity
-      type: object
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          enum:
-            - 422
-        message:
-          type: string
-          description: Details about the response, such as error messages.
-          enum:
-            - Unprocessable Entity
+      - $ref: '../schemas/ErrorResponses.yml#/genericUnprocessableEntity'

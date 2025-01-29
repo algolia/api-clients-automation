@@ -2,16 +2,5 @@ description: Bad request.
 content:
   application/json:
     schema:
-      title: badRequest
-      type: object
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          enum:
-            - 400
-        message:
-          type: string
-          description: Details about the response, such as error messages.
-          enum:
-            - Invalid request body
+      - $ref: '../schemas/ErrorResponses.yml#/badRequest'
+

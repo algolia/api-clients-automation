@@ -2,16 +2,4 @@ description: Invalid user ID format.
 content:
   application/json:
     schema:
-      title: badUserID
-      type: object
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          enum:
-            - 400
-        message:
-          type: string
-          description: Details about the response, such as error messages.
-          enum:
-            - Invalid userID format
+      - $ref: '../schemas/ErrorResponses.yml#/badUserID'

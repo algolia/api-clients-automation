@@ -2,16 +2,4 @@ description: Internal server error.
 content:
   application/json:
     schema:
-      title: internalServerError
-      type: object
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          enum:
-            - 500
-        message:
-          type: string
-          description: Details about the response, such as error messages.
-          enum:
-            - Internal Server Error
+      - $ref: '../schemas/ErrorResponses.yml#/internalServerError'

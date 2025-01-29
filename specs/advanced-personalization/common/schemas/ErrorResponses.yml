@@ -1,0 +1,97 @@
+badRequest:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: HTTP status code.
+      enum:
+        - 400
+    message:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Invalid request body
+
+badUserID:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: HTTP status code.
+      enum:
+        - 400
+    message:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Invalid userID format
+
+genericNotFound:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: HTTP status code.
+      enum:
+        - 404
+    message:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Not Found
+
+genericUnprocessableEntity:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: HTTP status code.
+      enum:
+        - 422
+    message:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Unprocessable Entity
+
+internalServerError:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: HTTP status code.
+      enum:
+        - 500
+    message:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Internal Server Error
+
+invalidUserID:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: HTTP status code.
+      enum:
+        - 422
+    message:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - UserID must contain only alphanumeric, equal, plus, slash, hyphen, or underscore characters, and be between 1 and 129 characters long
+
+unauthorized:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: HTTP status code.
+      enum:
+        - 401
+    message:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Unauthorized
