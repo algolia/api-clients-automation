@@ -18,7 +18,7 @@ get:
           schema:
             $ref: '../common/schemas/User.yml#/user'
     '400':
-      $ref: '../common/responses/BadRequest.yml'
+      $ref: '../common/responses/BadUserID.yml'
     '401':
       $ref: '../common/responses/Unauthorized.yml'
     '404':
@@ -60,11 +60,9 @@ delete:
               deletedAt:
                 type: string
     '400':
-      $ref: '../common/responses/BadRequest.yml'
+      $ref: '../common/responses/BadUserID.yml'
     '401':
       $ref: '../common/responses/Unauthorized.yml'
-    '404':
-      $ref: '../common/responses/UserNotFound.yml'
     '422':
       $ref: '../common/responses/InvalidUserID.yml'
     '500':

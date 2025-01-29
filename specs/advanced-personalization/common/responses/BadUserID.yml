@@ -1,4 +1,4 @@
-description: Internal server error.
+description: Invalid user ID format.
 content:
   application/json:
     schema:
@@ -7,8 +7,8 @@ content:
         status:
           type: integer
           description: HTTP status code.
-          enum: [500]
+          enum: [400]
         message:
           type: string
           description: Details about the response, such as error messages.
-          enum: ["Internal Server Error"]
+          enum: ["Invalid userID format"]

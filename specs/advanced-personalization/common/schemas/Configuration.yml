@@ -72,3 +72,5 @@ status:
       type: array
       items:
         $ref: '../enums.yml#/errorCodes'
+    lastUpdatedAt:
+      type: string
