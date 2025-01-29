@@ -2,8 +2,8 @@ description: Not authorized to access this resource.
 content:
   application/json:
     schema:
+      title: unauthorized
       type: object
-      title: Unauthorized
       properties:
         status:
           type: integer
@@ -14,4 +14,4 @@ content:
           type: string
           description: Details about the response, such as error messages.
           enum:
-            - "Unauthorized"
+            - Unauthorized

@@ -2,8 +2,8 @@ description: Unprocessable entity.
 content:
   application/json:
     schema:
+      title: genericUnprocessableEntity
       type: object
-      title: GenericUnprocessableEntity
       properties:
         status:
           type: integer
@@ -14,4 +14,4 @@ content:
           type: string
           description: Details about the response, such as error messages.
           enum:
-            - "Unprocessable Entity"
+            - Unprocessable Entity

@@ -2,8 +2,8 @@ description: Bad request.
 content:
   application/json:
     schema:
+      title: badRequest
       type: object
-      title: BadRequest
       properties:
         status:
           type: integer
@@ -14,4 +14,4 @@ content:
           type: string
           description: Details about the response, such as error messages.
           enum:
-            - "Invalid request body"
+            - Invalid request body

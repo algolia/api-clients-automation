@@ -2,8 +2,8 @@ description: Invalid user ID format.
 content:
   application/json:
     schema:
+      title: badUserID
       type: object
-      title: BadUserID
       properties:
         status:
           type: integer
@@ -14,4 +14,4 @@ content:
           type: string
           description: Details about the response, such as error messages.
           enum:
-            - "Invalid userID format"
+            - Invalid userID format

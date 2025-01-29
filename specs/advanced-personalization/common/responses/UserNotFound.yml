@@ -2,8 +2,8 @@ description: User not found.
 content:
   application/json:
     schema:
+      title: userNotFound
       type: object
-      title: UserNotFound
       properties:
         status:
           type: integer
@@ -14,4 +14,4 @@ content:
           type: string
           description: Details about the response, such as error messages.
           enum:
-            - "Not Found"
+            - Not Found

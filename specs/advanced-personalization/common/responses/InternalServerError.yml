@@ -2,8 +2,8 @@ description: Internal server error.
 content:
   application/json:
     schema:
+      title: internalServerError
       type: object
-      title: InternalServerError
       properties:
         status:
           type: integer
@@ -14,4 +14,4 @@ content:
           type: string
           description: Details about the response, such as error messages.
           enum:
-            - "Internal Server Error"
+            - Internal Server Error
