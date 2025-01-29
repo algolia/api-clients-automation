@@ -82,7 +82,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       break;
     case 'python':
       // there is no type checking for the snippets
-      if (buildType === 'playground') {
+      if (buildType === 'playground' || buildType === 'guides') {
         await formatter(language, cwd); // ruff can detect some types issues.
       }
       if (buildType === 'client') {
