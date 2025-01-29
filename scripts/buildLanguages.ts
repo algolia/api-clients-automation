@@ -57,9 +57,6 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
 
       if (buildType !== 'guides') {
         fileNames = gens.reduce((prev, curr) => `${prev} ${createClientName(curr.client, curr.language)}.ts`, '');
-      } else if (!fileNames.includes('search')) {
-        // only search is needed for guides right now, if it's not being built, no need to validate guides
-        break;
       }
 
       await run(`yarn tsc ${fileNames} --noEmit`, {

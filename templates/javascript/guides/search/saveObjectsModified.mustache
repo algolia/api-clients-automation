@@ -3,6 +3,7 @@
 try {
   {{> snippets/init}}
 
+  // @ts-ignore
   const { default: products } = await import('./actors.json');
 
   const records = products.map((product) => {

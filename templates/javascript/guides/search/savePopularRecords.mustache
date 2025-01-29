@@ -3,7 +3,7 @@
 try {
   {{> snippets/init}}
 
-  const records: Record<string, any> = [];
+  const records: Array<Record<string, any>> = [];
 
   await client.browseObjects<Record<string, any>>({ indexName: "<YOUR_INDEX_NAME>", browseParams: undefined, aggregator: (res) =>
       records.push(

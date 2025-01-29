@@ -3,6 +3,7 @@
 try {
   {{> snippets/init}}
 
+  // @ts-ignore
   const { default: records } = await import('./actors.json');
 
   const chunkSize = 10000
