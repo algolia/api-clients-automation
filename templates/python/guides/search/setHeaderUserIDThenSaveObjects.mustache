@@ -1,0 +1,14 @@
+{{> snippets/import}}
+
+
+if __name__ == '__main__':
+  playlists = [] # Your records
+
+  try:
+    _{{> snippets/init}}
+
+    for playlist in playlists:
+      playlist_user_id = playlist['userID']
+      {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+  except Exception as e:
+    print(f"Error: {e}")

@@ -1,8 +1,7 @@
-import asyncio
 {{> snippets/import}}
 
 
-async def main():
+if __name__ == '__main__':
   try:
     # You need an API key with `deleteIndex`
     _{{> snippets/init}}
@@ -29,4 +28,3 @@ async def main():
   except Exception as e:
     print(f"Error: {e}")
 
-asyncio.run(main())

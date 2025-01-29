@@ -1,9 +1,8 @@
-import asyncio
 import json
 {{> snippets/import}}
 
 
-async def main():
+if __name__ == '__main__':
     # use the region matching your applicationID
     _{{> snippets/init}}
 
@@ -14,5 +13,3 @@ async def main():
         resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
         print(resp)
-
-asyncio.run(main())
