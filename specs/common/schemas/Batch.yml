@@ -25,6 +25,20 @@ batchWriteParams:
           - body
   required:
     - requests
+  example:
+    batch:
+      requests:
+        - action: addObject
+          body:
+            name: Betty Jane McCamey
+            company: Vita Foods Inc.
+            email: betty@mccamey.com
+        - action: addObject
+          body:
+            name: Gayla geimer
+            company: Ortman McCain Co.
+            email: gayla@geimer.com
+
 action:
   type: string
   enum:
