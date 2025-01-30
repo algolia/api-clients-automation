@@ -4792,7 +4792,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"batch":{"summary":"Batch indexing request","value":{"requests":[{"action":"addObject","body":{"name":"Betty Jane McCamey","company":"Vita Foods Inc.","email":"betty@mccamey.com"}},{"action":"addObject","body":{"name":"Gayla geimer","company":"Ortman McCain Co.","email":"gayla@geimer.com"}}]}}}'
+              --data '{"requests":[{"action":"addObject","body":{"name":"Betty Jane McCamey","company":"Vita Foods Inc.","email":"betty@mccamey.com"}},{"action":"addObject","body":{"name":"Gayla geimer","company":"Ortman McCain Co.","email":"gayla@geimer.com"}}]}'
   /1/indexes/*/batch:
     post:
       tags:
@@ -19262,20 +19262,17 @@ components:
       required:
         - requests
       example:
-        batch:
-          summary: Batch indexing request
-          value:
-            requests:
-              - action: addObject
-                body:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-              - action: addObject
-                body:
-                  name: Gayla geimer
-                  company: Ortman McCain Co.
-                  email: gayla@geimer.com
+        requests:
+          - action: addObject
+            body:
+              name: Betty Jane McCamey
+              company: Vita Foods Inc.
+              email: betty@mccamey.com
+          - action: addObject
+            body:
+              name: Gayla geimer
+              company: Ortman McCain Co.
+              email: gayla@geimer.com
     objectIDs:
       type: array
       items:
