@@ -38,7 +38,6 @@
       "facetName": "facetName",
       "searchForFacetValuesRequest": {
         "params": {
-          "query": "foo",
           "facetFilters": ["bar"]
         },
         "facetQuery": "foo",
@@ -49,7 +48,9 @@
       "path": "/1/indexes/indexName/facets/facetName/query",
       "method": "POST",
       "body": {
-        "params": "query=foo&facetFilters=['bar']",
+        "params": {
+          "facetFilters": ["bar"]
+        },
         "facetQuery": "foo",
         "maxFacetHits": 42
       }
