@@ -27,7 +27,7 @@ public class deleteMultipleIndices {
 
       // Now, delete replica indices
       if (!replicaIndices.isEmpty()) {
-          List<MultipleBatchRequest> requests = primaryIndices.stream().map(index -> new MultipleBatchRequest().setAction(Action.DELETE).setIndexName(index.getName())).toList();
+          List<MultipleBatchRequest> requests = replicaIndices.stream().map(index -> new MultipleBatchRequest().setAction(Action.DELETE).setIndexName(index.getName())).toList();
           {{#dynamicSnippet}}deleteMultipleIndicesReplica{{/dynamicSnippet}};
           System.out.println("Deleted replica indices.");
       }

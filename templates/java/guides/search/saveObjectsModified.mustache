@@ -17,7 +17,7 @@ public class saveObjectsModified {
 
     try ({{> snippets/init}}) {
 
-      JsonNode content = new ObjectMapper().readTree(new File("actors.json"));
+      JsonNode content = new ObjectMapper().readTree(new File("products.json"));
       List<Map<String, Object>> products =
         new ObjectMapper().readerForListOf(Map.class).readValue(content);
 
