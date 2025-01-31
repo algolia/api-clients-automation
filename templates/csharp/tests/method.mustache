@@ -3,7 +3,7 @@
     .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
 {{/requestOptions.queryParameters.parametersWithDataType}}
 {{#requestOptions.headers.parametersWithDataType}}
-    .AddExtraHeader("{{{key}}}", "{{{value}}}")
+    .AddExtraHeader("{{{key}}}", {{#isVerbatim}}{{{value}}}{{/isVerbatim}}{{^isVerbatim}}"{{{value}}}"{{/isVerbatim}})
 {{/requestOptions.headers.parametersWithDataType}}
 {{#requestOptions.timeouts.connect}}
     .SetConnectTimeout(TimeSpan.FromMilliseconds({{.}}))
