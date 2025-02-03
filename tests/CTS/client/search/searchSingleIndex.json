@@ -1,0 +1,32 @@
+[
+  {
+    "testName": "with algolia user id",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6686
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "searchSingleIndex",
+        "parameters": {
+          "indexName": "playlists"
+        },
+        "requestOptions": {
+          "headers": {
+            "X-Algolia-User-ID": "user1234"
+          }
+        }
+      }
+    ]
+  }
+]
