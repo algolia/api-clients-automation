@@ -70,7 +70,7 @@ delete:
     - $ref: '#/components/parameters/CrawlerIdParameter'
   responses:
     '200':
-      $ref: '#/components/responses/ActionAcknowledged'
+      $ref: '../common/schemas/responses.yml#/ActionAcknowledged'
     '400':
       $ref: '#/components/responses/InvalidRequest'
     '401':
