@@ -17,57 +17,24 @@ function addRoutes(app: Express): void {
       status: 'published',
     });
   });
-  app.get('/1/indexes/indexName/query', (req, res) => {
+  app.post('/1/indexes/:indexName/query', (req, res) => {
     res.json({
-      nbHits: 1,
-      hits: [
-        {
-          _snippetResult: {
-            genres: [
-              {
-                value: 'Animated',
-                matchLevel: 'none',
-              },
-              {
-                value: 'Superhero',
-                matchLevel: 'none',
-              },
-              {
-                value: 'Romance',
-                matchLevel: 'none',
-              },
-            ],
-            year: {
-              value: '1993',
-              matchLevel: 'none',
-            },
-          },
-          _highlightResult: {
-            genres: [
-              {
-                value: 'Animated',
-                matchLevel: 'none',
-                matchedWords: [],
-              },
-              {
-                value: 'Superhero',
-                matchLevel: 'none',
-                matchedWords: [],
-              },
-              {
-                value: 'Romance',
-                matchLevel: 'none',
-                matchedWords: [],
-              },
-            ],
-            year: {
-              value: '1993',
-              matchLevel: 'none',
-              matchedWords: [],
-            },
-          },
-        },
-      ],
+      hits: [],
+      page: 0,
+      nbHits: 0,
+      nbPages: 0,
+      hitsPerPage: 20,
+      exhaustiveNbHits: true,
+      exhaustiveTypo: true,
+      exhaustive: {
+        nbHits: true,
+        typo: true,
+      },
+      query: '',
+      params: '',
+      index: 'playlists',
+      renderingContent: {},
+      processingTimeMS: 0,
     });
   });
 }
