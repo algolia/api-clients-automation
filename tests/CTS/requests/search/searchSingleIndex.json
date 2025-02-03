@@ -947,7 +947,7 @@
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "headers": {
-        "X-Algolia-User-ID": "user123"
+        "x-algolia-user-id": "user123"
       }
     }
   },
