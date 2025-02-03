@@ -1,5 +1,0 @@
-description: Configuration not found.
-content:
-  application/json:
-    schema:
-      $ref: './BaseResponse.yml'

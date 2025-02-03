@@ -6,7 +6,6 @@
     "build:actions": "cd ci/actions/restore-artifacts && esbuild --bundle --format=cjs --minify --platform=node --outfile=builddir/index.cjs --log-level=error src/index.ts",
     "createGitHubReleases": "yarn runScript ci/codegen/createGitHubReleases.ts",
     "createMatrix": "yarn runScript ci/githubActions/createMatrix.ts",
-    "lint": "yarn start format javascript scripts",
     "lint:deadcode": "knip",
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
     "pushGeneratedCode": "yarn runScript ci/codegen/pushGeneratedCode.ts",
@@ -29,7 +28,7 @@
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "22.10.7",
+    "@types/node": "22.10.10",
     "@types/semver": "7.5.8",
     "@types/spinnies": "0.5.3",
     "chai": "5.1.2",
@@ -46,9 +45,9 @@
     "js-yaml": "4.1.0",
     "knip": "5.42.0",
     "micromatch": "4.0.8",
-    "semver": "7.6.3",
+    "semver": "7.7.0",
     "spinnies": "0.5.1",
     "typescript": "5.7.3",
-    "vitest": "3.0.2"
+    "vitest": "3.0.4"
   }
 }

@@ -231,7 +231,7 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "distinct": true 
+        "distinct": true
       }
     },
     "request": {
@@ -276,6 +276,72 @@
       "body": {
         "attributesForFaceting": [
           "allergens"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "api_attributes_for_faceting",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "genre",
+          "author"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "genre",
+          "author"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "api_attributes_for_faceting_searchable",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "genre",
+          "searchable(author)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "genre",
+          "searchable(author)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "api_attributes_for_filter_only",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "filterOnly(genre)",
+          "author"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "filterOnly(genre)",
+          "author"
         ]
       }
     }
@@ -525,14 +591,18 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "customRanking": [ "desc(boosted)" ]
+        "customRanking": [
+          "desc(boosted)"
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "customRanking": [ "desc(boosted)" ]
+        "customRanking": [
+          "desc(boosted)"
+        ]
       }
     }
   },
@@ -541,7 +611,7 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "customRanking": [ 
+        "customRanking": [
           "desc(pageviews)",
           "desc(comments)"
         ]
@@ -551,7 +621,7 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "customRanking": [ 
+        "customRanking": [
           "desc(pageviews)",
           "desc(comments)"
         ]
@@ -564,9 +634,11 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "customRanking": [
-            "desc(nb_airline_liaisons)"
-          ],
-        "attributesForFaceting": ["city, country"]
+          "desc(nb_airline_liaisons)"
+        ],
+        "attributesForFaceting": [
+          "city, country"
+        ]
       }
     },
     "request": {
@@ -574,9 +646,11 @@
       "method": "PUT",
       "body": {
         "customRanking": [
-            "desc(nb_airline_liaisons)"
-          ],
-        "attributesForFaceting": ["city, country"]
+          "desc(nb_airline_liaisons)"
+        ],
+        "attributesForFaceting": [
+          "city, country"
+        ]
       }
     }
   },
@@ -585,7 +659,7 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "customRanking": [ 
+        "customRanking": [
           "desc(rounded_pageviews)",
           "desc(comments)"
         ]
@@ -595,7 +669,7 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "customRanking": [ 
+        "customRanking": [
           "desc(rounded_pageviews)",
           "desc(comments)"
         ]
@@ -607,7 +681,7 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "customRanking": [ 
+        "customRanking": [
           "desc(price)"
         ]
       }
@@ -616,7 +690,7 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "customRanking": [ 
+        "customRanking": [
           "desc(price)"
         ]
       }
@@ -704,7 +778,7 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "customRanking": [
-            "asc(textual_attribute)"
+          "asc(textual_attribute)"
         ],
         "ranking": [
           "custom",
@@ -723,7 +797,7 @@
       "method": "PUT",
       "body": {
         "customRanking": [
-            "asc(textual_attribute)"
+          "asc(textual_attribute)"
         ],
         "ranking": [
           "custom",
@@ -744,7 +818,7 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "customRanking": [
-            "asc(textual_attribute)"
+          "asc(textual_attribute)"
         ],
         "relevancyStrictness": 0
       }
@@ -754,7 +828,7 @@
       "method": "PUT",
       "body": {
         "customRanking": [
-            "asc(textual_attribute)"
+          "asc(textual_attribute)"
         ],
         "relevancyStrictness": 0
       }
@@ -766,7 +840,7 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "replicas": [
-            "products_price_desc"
+          "products_price_desc"
         ]
       }
     },
@@ -775,7 +849,27 @@
       "method": "PUT",
       "body": {
         "replicas": [
-            "products_price_desc"
+          "products_price_desc"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "create replica index articles",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "replicas": [
+          "articles_date_desc"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "replicas": [
+          "articles_date_desc"
         ]
       }
     }
@@ -786,7 +880,7 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "replicas": [
-            "virtual(products_price_desc)"
+          "virtual(products_price_desc)"
         ]
       }
     },
@@ -795,7 +889,7 @@
       "method": "PUT",
       "body": {
         "replicas": [
-            "virtual(products_price_desc)"
+          "virtual(products_price_desc)"
         ]
       }
     }
@@ -805,14 +899,18 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "replicas": [""]
+        "replicas": [
+          ""
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "replicas": [""]
+        "replicas": [
+          ""
+        ]
       }
     }
   },
@@ -821,7 +919,10 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "searchableAttributes": ["name", "description"]
+        "searchableAttributes": [
+          "name",
+          "description"
+        ]
       },
       "forwardToReplicas": true
     },
@@ -829,11 +930,14 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "searchableAttributes": ["name", "description"]
+        "searchableAttributes": [
+          "name",
+          "description"
+        ]
       },
-        "queryParameters": {
-          "forwardToReplicas": "true"
-        }
+      "queryParameters": {
+        "forwardToReplicas": "true"
+      }
     }
   },
   {
@@ -933,22 +1037,22 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-          "searchableAttributes": [
-            "design",
-            "type",
-            "color"
-          ]
+        "searchableAttributes": [
+          "design",
+          "type",
+          "color"
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-          "searchableAttributes": [
-            "design",
-            "type",
-            "color"
-          ]
+        "searchableAttributes": [
+          "design",
+          "type",
+          "color"
+        ]
       }
     }
   },
@@ -957,74 +1061,74 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-          "searchableAttributes": [
-            "name",
-            "country",
-            "code",
-            "iata_code"
-          ],
-          "customRanking": ["desc(links_count)"]
+        "searchableAttributes": [
+          "name",
+          "country",
+          "code",
+          "iata_code"
+        ],
+        "customRanking": [
+          "desc(links_count)"
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-          "searchableAttributes": [
-            "name",
-            "country",
-            "code",
-            "iata_code"
-          ],
-          "customRanking": ["desc(links_count)"]
+        "searchableAttributes": [
+          "name",
+          "country",
+          "code",
+          "iata_code"
+        ],
+        "customRanking": [
+          "desc(links_count)"
+        ]
       }
     }
   },
   {
-    "testName": "searchableAttributes around location",
+    "testName": "attributesToHighlight",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-          "searchableAttributes": [
-            "name",
-            "country",
-            "code",
-            "iata_code"
-          ],
-          "customRanking": ["desc(links_count)"]
+        "attributesToHighlight": [
+          "author",
+          "title",
+          "content"
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-          "searchableAttributes": [
-            "name",
-            "country",
-            "code",
-            "iata_code"
-          ],
-          "customRanking": ["desc(links_count)"]
+        "attributesToHighlight": [
+          "author",
+          "title",
+          "content"
+        ]
       }
     }
   },
   {
-    "testName": "disableTypoToleranceOnAttributes",
+    "testName": "attributesToHighlightStar",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-          "disableTypoToleranceOnAttributes": [
-            "serial_number"
-          ]
+        "attributesToHighlight": [
+          "*"
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-          "disableTypoToleranceOnAttributes": [
-            "serial_number"
-          ]
+        "attributesToHighlight": [
+          "*"
+        ]
       }
     }
   },
@@ -1336,21 +1440,44 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-          "searchableAttributes": [
-            "brand",
-            "name",
-            "categories",
-            "unordered(description)"
-          ],
-          "customRanking": [
-            "desc(popularity)"
-          ],
-          "attributesForFaceting": [
-            "searchable(brand)",
-            "type",
-            "categories",
-            "price"
-          ]
+        "searchableAttributes": [
+          "brand",
+          "name",
+          "categories",
+          "unordered(description)"
+        ],
+        "customRanking": [
+          "desc(popularity)"
+        ],
+        "attributesForFaceting": [
+          "searchable(brand)",
+          "type",
+          "categories",
+          "price"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "searchableAttributesOrdering",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "unordered(title)",
+          "cast"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "searchableAttributes": [
+          "unordered(title)",
+          "cast"
+        ]
       }
     }
   },
@@ -1370,11 +1497,11 @@
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-          "searchableAttributes": [
-            "name",
-            "product_reference",
-            "product_reference_suffixes"
-          ]
+        "searchableAttributes": [
+          "name",
+          "product_reference",
+          "product_reference_suffixes"
+        ]
       }
     }
   },
@@ -1406,7 +1533,9 @@
       "indexName": "movies",
       "indexSettings": {
         "searchableAttributes": [
-          "title_eng", "title_fr", "title_es"
+          "title_eng",
+          "title_fr",
+          "title_es"
         ]
       }
     },
@@ -1415,7 +1544,9 @@
       "method": "PUT",
       "body": {
         "searchableAttributes": [
-          "title_eng", "title_fr", "title_es"
+          "title_eng",
+          "title_fr",
+          "title_es"
         ]
       }
     }
@@ -1499,6 +1630,1318 @@
           "serial_number",
           "serial_number_suffixes"
         ]
+      }
+    }
+  },
+  {
+    "testName": "set_searchable_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "searchableAttributes": [
+          "title,alternative_title",
+          "author",
+          "unordered(text)",
+          "emails.personal"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "searchableAttributes": [
+          "title,alternative_title",
+          "author",
+          "unordered(text)",
+          "emails.personal"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_searchable_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "author",
+          "filterOnly(isbn)",
+          "searchable(edition)",
+          "afterDistinct(category)",
+          "afterDistinct(searchable(publisher))"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "author",
+          "filterOnly(isbn)",
+          "searchable(edition)",
+          "afterDistinct(category)",
+          "afterDistinct(searchable(publisher))"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "unretrievable_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "unretrievableAttributes": [
+          "total_number_of_sales"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "unretrievableAttributes": [
+          "total_number_of_sales"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_retrievable_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributesToRetrieve": [
+          "author",
+          "title",
+          "content"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributesToRetrieve": [
+          "author",
+          "title",
+          "content"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_all_attributes_as_retrievable",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributesToRetrieve": [
+          "*"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributesToRetrieve": [
+          "*"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "specify_attributes_not_to_retrieve",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributesToRetrieve": [
+          "*",
+          "-SKU",
+          "-internal_desc"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributesToRetrieve": [
+          "*",
+          "-SKU",
+          "-internal_desc"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "neural_search",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "mode": "neuralSearch"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "mode": "neuralSearch"
+      }
+    }
+  },
+  {
+    "testName": "keyword_search",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "mode": "keywordSearch"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "mode": "keywordSearch"
+      }
+    }
+  },
+  {
+    "testName": "set_default_ranking",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "attribute",
+          "proximity",
+          "exact",
+          "custom"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "attribute",
+          "proximity",
+          "exact",
+          "custom"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_ranking_by_attribute_asc",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "asc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "asc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_ranking_by_attribute_desc",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "restrict_searchable_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customRanking": [
+          "desc(popularity)",
+          "asc(price)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customRanking": [
+          "desc(popularity)",
+          "asc(price)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_default_relevancy",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "relevancyStrictness": 90
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "relevancyStrictness": 90
+      }
+    }
+  },
+  {
+    "testName": "set_replicas",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "replicas": [
+          "name_of_replica_index1",
+          "name_of_replica_index2"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "replicas": [
+          "name_of_replica_index1",
+          "name_of_replica_index2"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_default_max_values_per_facet",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "maxValuesPerFacet": 100
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "maxValuesPerFacet": 100
+      }
+    }
+  },
+  {
+    "testName": "set_default_sort_facet_values_by",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "sortFacetValuesBy": "alpha"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "sortFacetValuesBy": "alpha"
+      }
+    }
+  },
+  {
+    "testName": "set_attributes_to_snippet",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributesToSnippet": [
+          "content:80",
+          "description"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributesToSnippet": [
+          "content:80",
+          "description"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_all_attributes_to_snippet",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributesToSnippet": [
+          "*:80"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributesToSnippet": [
+          "*:80"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_default_highlight_pre_tag",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "highlightPreTag": "<em>"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "highlightPreTag": "<em>"
+      }
+    }
+  },
+  {
+    "testName": "set_default_highlight_post_tag",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "highlightPostTag": "</em>"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "highlightPostTag": "</em>"
+      }
+    }
+  },
+  {
+    "testName": "set_default_snippet_ellipsis_text",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "snippetEllipsisText": "…"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "snippetEllipsisText": "…"
+      }
+    }
+  },
+  {
+    "testName": "enable_restrict_highlight_and_snippet_arrays_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "restrictHighlightAndSnippetArrays": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "restrictHighlightAndSnippetArrays": true
+      }
+    }
+  },
+  {
+    "testName": "set_default_hits_per_page",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "hitsPerPage": 20
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "hitsPerPage": 20
+      }
+    }
+  },
+  {
+    "testName": "set_pagination_limit",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "paginationLimitedTo": 1000
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "paginationLimitedTo": 1000
+      }
+    }
+  },
+  {
+    "testName": "set_default_min_word_size_for_one_typo",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "minWordSizefor1Typo": 4
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "minWordSizefor1Typo": 4
+      }
+    }
+  },
+  {
+    "testName": "set_default_min_word_size_for_two_typos",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "minWordSizefor2Typos": 4
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "minWordSizefor2Typos": 4
+      }
+    }
+  },
+  {
+    "testName": "set_default_typo_tolerance_mode",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "typoTolerance": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "typoTolerance": true
+      }
+    }
+  },
+  {
+    "testName": "disable_typos_on_numeric_tokens_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "allowTyposOnNumericTokens": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "allowTyposOnNumericTokens": false
+      }
+    }
+  },
+  {
+    "testName": "disable_typo_tolerance_for_words",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "disableTypoToleranceOnWords": [
+          "wheel",
+          "1X2BCD"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "disableTypoToleranceOnWords": [
+          "wheel",
+          "1X2BCD"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_separators_to_index",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "separatorsToIndex": "+#"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "separatorsToIndex": "+#"
+      }
+    }
+  },
+  {
+    "testName": "set_languages_using_querylanguages",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "queryLanguages": [
+          "es"
+        ],
+        "ignorePlurals": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "queryLanguages": [
+          "es"
+        ],
+        "ignorePlurals": true
+      }
+    }
+  },
+  {
+    "testName": "set_attributes_to_transliterate",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "indexLanguages": [
+          "ja"
+        ],
+        "attributesToTransliterate": [
+          "name",
+          "description"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "indexLanguages": [
+          "ja"
+        ],
+        "attributesToTransliterate": [
+          "name",
+          "description"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_languages_using_querylanguages",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "queryLanguages": [
+          "es"
+        ],
+        "removeStopWords": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "queryLanguages": [
+          "es"
+        ],
+        "removeStopWords": true
+      }
+    }
+  },
+  {
+    "testName": "set_camel_case_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "camelCaseAttributes": [
+          "description"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "camelCaseAttributes": [
+          "description"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_decompounded_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "decompoundedAttributes": {
+          "de": [
+            "name"
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "decompoundedAttributes": {
+          "de": [
+            "name"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "testName": "set_decompounded_multiple_attributes",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "decompoundedAttributes": {
+          "de": [
+            "name_de",
+            "description_de"
+          ],
+          "fi": [
+            "name_fi",
+            "description_fi"
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "decompoundedAttributes": {
+          "de": [
+            "name_de",
+            "description_de"
+          ],
+          "fi": [
+            "name_fi",
+            "description_fi"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "testName": "set_keep_diacritics_on_characters",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "keepDiacriticsOnCharacters": "øé"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "keepDiacriticsOnCharacters": "øé"
+      }
+    }
+  },
+  {
+    "testName": "set_custom_normalization",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "customNormalization": {
+          "default": {
+            "ä": "ae"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "customNormalization": {
+          "default": {
+            "ä": "ae"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "set_languages_using_querylanguages",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "queryLanguages": [
+          "es"
+        ],
+        "removeStopWords": true,
+        "ignorePlurals": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "queryLanguages": [
+          "es"
+        ],
+        "removeStopWords": true,
+        "ignorePlurals": true
+      }
+    }
+  },
+  {
+    "testName": "set_indexlanguages",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "indexLanguages": [
+          "ja"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "indexLanguages": [
+          "ja"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "enable_decompound_query_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "decompoundQuery": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "decompoundQuery": true
+      }
+    }
+  },
+  {
+    "testName": "enable_rules_syntax_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "enableRules": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "enableRules": true
+      }
+    }
+  },
+  {
+    "testName": "enable_personalization_settings",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "enablePersonalization": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "enablePersonalization": true
+      }
+    }
+  },
+  {
+    "testName": "set_default_query_type",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "queryType": "prefixLast"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "queryType": "prefixLast"
+      }
+    }
+  },
+  {
+    "testName": "set_default_remove_words_if_no_result",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "removeWordsIfNoResults": "none"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "removeWordsIfNoResults": "none"
+      }
+    }
+  },
+  {
+    "testName": "enable_advanced_syntax_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "advancedSyntax": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "advancedSyntax": true
+      }
+    }
+  },
+  {
+    "testName": "set_default_optional_words",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "optionalWords": [
+          "blue",
+          "iphone case"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "optionalWords": [
+          "blue",
+          "iphone case"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "disabling_prefix_search_for_some_attributes_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "disablePrefixOnAttributes": [
+          "sku"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "disablePrefixOnAttributes": [
+          "sku"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "disabling_exact_for_some_attributes_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "disableExactOnAttributes": [
+          "description"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "disableExactOnAttributes": [
+          "description"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_default_exact_single_word_query",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "exactOnSingleWordQuery": "attribute"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "exactOnSingleWordQuery": "attribute"
+      }
+    }
+  },
+  {
+    "testName": "set_default_aternative_as_exact",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "alternativesAsExact": [
+          "ignorePlurals",
+          "singleWordSynonym"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "alternativesAsExact": [
+          "ignorePlurals",
+          "singleWordSynonym"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "enable_advanced_syntax_by_default",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "advancedSyntax": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "advancedSyntax": true
+      }
+    }
+  },
+  {
+    "testName": "set_numeric_attributes_for_filtering",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "numericAttributesForFiltering": [
+          "quantity",
+          "popularity"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "numericAttributesForFiltering": [
+          "quantity",
+          "popularity"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "enable_compression_of_integer_array",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "allowCompressionOfIntegerArray": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "allowCompressionOfIntegerArray": true
+      }
+    }
+  },
+  {
+    "testName": "set_attributes_for_distinct",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributeForDistinct": "url"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributeForDistinct": "url"
+      }
+    }
+  },
+  {
+    "testName": "set_distinct",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "distinct": 1,
+        "attributeForDistinct": "url"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "distinct": 1,
+        "attributeForDistinct": "url"
+      }
+    }
+  },
+  {
+    "testName": "set_replace_synonyms_in_highlights",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "replaceSynonymsInHighlight": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "replaceSynonymsInHighlight": false
+      }
+    }
+  },
+  {
+    "testName": "set_min_proximity",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "minProximity": 1
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "minProximity": 1
+      }
+    }
+  },
+  {
+    "testName": "set_default_field",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "responseFields": [
+          "hits",
+          "hitsPerPage",
+          "nbPages",
+          "page"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "responseFields": [
+          "hits",
+          "hitsPerPage",
+          "nbPages",
+          "page"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_max_facet_hits",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "maxFacetHits": 10
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "maxFacetHits": 10
+      }
+    }
+  },
+  {
+    "testName": "set_attribute_criteria_computed_by_min_proximity",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributeCriteriaComputedByMinProximity": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributeCriteriaComputedByMinProximity": true
+      }
+    }
+  },
+  {
+    "testName": "set_user_data",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "userData": {
+          "extraData": "This is the custom data that you want to store in your index"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "userData": {
+          "extraData": "This is the custom data that you want to store in your index"
+        }
+      }
+    }
+  },
+  {
+    "testName": "set_rendering_content",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "renderingContent": {
+          "facetOrdering": {
+            "facets": {
+              "order": [
+                "size",
+                "brand"
+              ]
+            },
+            "values": {
+              "brand": {
+                "order": [
+                  "uniqlo"
+                ],
+                "hide": [
+                  "muji"
+                ],
+                "sortRemainingBy": "count"
+              },
+              "size": {
+                "order": [
+                  "S",
+                  "M",
+                  "L"
+                ],
+                "sortRemainingBy": "hidden"
+              }
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "renderingContent": {
+          "facetOrdering": {
+            "facets": {
+              "order": [
+                "size",
+                "brand"
+              ]
+            },
+            "values": {
+              "brand": {
+                "order": [
+                  "uniqlo"
+                ],
+                "hide": [
+                  "muji"
+                ],
+                "sortRemainingBy": "count"
+              },
+              "size": {
+                "order": [
+                  "S",
+                  "M",
+                  "L"
+                ],
+                "sortRemainingBy": "hidden"
+              }
+            }
+          }
+        }
       }
     }
   }

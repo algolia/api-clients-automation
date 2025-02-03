@@ -542,6 +542,8 @@ public class ParametersWithDataType {
             return "Array";
           case "Object":
             return "map[string]any";
+          case "range":
+            return "ModelRange"; // range is a reserved keyword
         }
         break;
       case "swift":
