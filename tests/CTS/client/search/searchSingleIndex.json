@@ -19,7 +19,10 @@
         "type": "method",
         "method": "searchSingleIndex",
         "parameters": {
-          "indexName": "playlists"
+          "indexName": "playlists",
+          "searchParams": {
+            "query": "foo"
+          }
         },
         "requestOptions": {
           "headers": {
