@@ -67,7 +67,11 @@ Action:
     recordExtractor:
       title: recordExtractor
       type: object
-      description: Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
+      description: |
+        Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
+        The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor` property.
+
+        For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor).
       properties:
         __type:
           $ref: '#/configurationRecordExtractorType'
@@ -75,10 +79,6 @@ Action:
           type: string
           description: |
             A JavaScript function (as a string) that returns one or more Algolia records for each crawled page.
-
-            For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor).
-
-            The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor` property.
     selectorsToMatch:
       type: array
       description: |
