@@ -934,24 +934,6 @@
     }
   },
   {
-    "testName": "with algolia user id",
-    "parameters": {
-      "indexName": "indexName"
-    },
-    "requestOptions": {
-      "headers": {
-        "X-Algolia-User-ID": "user123"
-      }
-    },
-    "request": {
-      "path": "/1/indexes/indexName/query",
-      "method": "POST",
-      "headers": {
-        "x-algolia-user-id": "user123"
-      }
-    }
-  },
-  {
     "testName": "attributesToHighlightOverride",
     "isSnippet": true,
     "parameters": {
