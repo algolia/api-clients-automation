@@ -159,6 +159,22 @@
     }
   },
   {
+    "testName": "filters boolean",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "is_available:true"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "is_available:true"
+      }
+    }
+  },
+  {
     "testName": "distinct",
     "parameters": {
       "indexName": "indexName",
