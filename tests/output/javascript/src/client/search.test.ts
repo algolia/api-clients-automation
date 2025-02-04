@@ -648,6 +648,28 @@ describe('saveObjects', () => {
   }, 15000);
 });
 
+describe('searchSingleIndex', () => {
+  test('with algolia user id', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.searchSingleIndex(
+      { indexName: 'playlists', searchParams: { query: 'foo' } },
+      {
+        headers: { 'X-Algolia-User-ID': 'user1234' },
+      },
+    );
+  }, 15000);
+});
+
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {

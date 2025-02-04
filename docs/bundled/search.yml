@@ -5316,12 +5316,7 @@ paths:
               {
                 Requests = new List<GetObjectsRequest>
                 {
-                  new GetObjectsRequest
-                  {
-                    AttributesToRetrieve = new List<string> { "attr1", "attr2" },
-                    ObjectID = "uniqueID",
-                    IndexName = "<YOUR_INDEX_NAME>",
-                  },
+                  new GetObjectsRequest { ObjectID = "uniqueID", IndexName = "<YOUR_INDEX_NAME>" },
                 },
               }
             );
@@ -5339,10 +5334,6 @@ paths:
               getObjectsParams: GetObjectsParams(
                 requests: [
                   GetObjectsRequest(
-                    attributesToRetrieve: [
-                      "attr1",
-                      "attr2",
-                    ],
                     objectID: "uniqueID",
                     indexName: "<YOUR_INDEX_NAME>",
                   ),
@@ -5369,8 +5360,7 @@ paths:
             response, err := client.GetObjects(client.NewApiGetObjectsRequest(
 
               search.NewEmptyGetObjectsParams().SetRequests(
-                []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
+                []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5394,15 +5384,7 @@ paths:
             // Call the API
 
             client.getObjects(
-              new GetObjectsParams()
-                .setRequests(
-                  Arrays.asList(
-                    new GetObjectsRequest()
-                      .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
-                      .setObjectID("uniqueID")
-                      .setIndexName("<YOUR_INDEX_NAME>")
-                  )
-                ),
+              new GetObjectsParams().setRequests(Arrays.asList(new GetObjectsRequest().setObjectID("uniqueID").setIndexName("<YOUR_INDEX_NAME>"))),
               Hit.class
             );
 
@@ -5420,9 +5402,8 @@ paths:
 
             // Call the API
 
-            const response = await client.getObjects({
-              requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
-            });
+            const response = await client.getObjects({ requests: [{ objectID:
+            'uniqueID', indexName: 'theIndexName' }] });
 
 
             // >LOG
@@ -5445,7 +5426,6 @@ paths:
               getObjectsParams = GetObjectsParams(
                 requests = listOf(
                   GetObjectsRequest(
-                    attributesToRetrieve = listOf("attr1", "attr2"),
                     objectID = "uniqueID",
                     indexName = "<YOUR_INDEX_NAME>",
                   ),
@@ -5472,12 +5452,7 @@ paths:
 
             $response = $client->getObjects(
                 ['requests' => [
-                    ['attributesToRetrieve' => [
-                        'attr1',
-
-                        'attr2',
-                    ],
-                        'objectID' => 'uniqueID',
+                    ['objectID' => 'uniqueID',
                         'indexName' => '<YOUR_INDEX_NAME>',
                     ],
                 ],
@@ -5508,10 +5483,6 @@ paths:
                 get_objects_params={
                     "requests": [
                         {
-                            "attributesToRetrieve": [
-                                "attr1",
-                                "attr2",
-                            ],
                             "objectID": "uniqueID",
                             "indexName": "<YOUR_INDEX_NAME>",
                         },
@@ -5538,13 +5509,7 @@ paths:
 
             response = client.get_objects(
               Algolia::Search::GetObjectsParams.new(
-                requests: [
-                  Algolia::Search::GetObjectsRequest.new(
-                    attributes_to_retrieve: ["attr1", "attr2"],
-                    algolia_object_id: "uniqueID",
-                    index_name: "<YOUR_INDEX_NAME>"
-                  )
-                ]
+                requests: [Algolia::Search::GetObjectsRequest.new(algolia_object_id: "uniqueID", index_name: "<YOUR_INDEX_NAME>")]
               )
             )
 
@@ -5574,7 +5539,6 @@ paths:
               getObjectsParams = GetObjectsParams(
                 requests = Seq(
                   GetObjectsRequest(
-                    attributesToRetrieve = Some(Seq("attr1", "attr2")),
                     objectID = "uniqueID",
                     indexName = "<YOUR_INDEX_NAME>"
                   )
@@ -5601,7 +5565,6 @@ paths:
 
             let response: GetObjectsResponse<Hit> = try await client
                 .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
-                    attributesToRetrieve: ["attr1", "attr2"],
                     objectID: "uniqueID",
                     indexName: "<YOUR_INDEX_NAME>"
                 )]))
@@ -7759,9 +7722,6 @@ paths:
               {
                 Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
                 Description = "my new api key",
-                Validity = 300,
-                MaxQueriesPerIPPerHour = 100,
-                MaxHitsPerQuery = 20,
               }
             );
 
@@ -7781,9 +7741,6 @@ paths:
                   Acl.fromJson("addObject"),
                 ],
                 description: "my new api key",
-                validity: 300,
-                maxQueriesPerIPPerHour: 100,
-                maxHitsPerQuery: 20,
               ),
             );
             // >LOG
@@ -7806,7 +7763,7 @@ paths:
             response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
               search.NewEmptyApiKey().SetAcl(
-                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
+                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7829,14 +7786,8 @@ paths:
 
             // Call the API
 
-            client.addApiKey(
-              new ApiKey()
-                .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
-                .setDescription("my new api key")
-                .setValidity(300)
-                .setMaxQueriesPerIPPerHour(100)
-                .setMaxHitsPerQuery(20)
-            );
+            client.addApiKey(new ApiKey().setAcl(Arrays.asList(Acl.SEARCH,
+            Acl.ADD_OBJECT)).setDescription("my new api key"));
 
             // >LOG
         - lang: javascript
@@ -7852,13 +7803,8 @@ paths:
 
             // Call the API
 
-            const response = await client.addApiKey({
-              acl: ['search', 'addObject'],
-              description: 'my new api key',
-              validity: 300,
-              maxQueriesPerIPPerHour: 100,
-              maxHitsPerQuery: 20,
-            });
+            const response = await client.addApiKey({ acl: ['search',
+            'addObject'], description: 'my new api key' });
 
 
             // >LOG
@@ -7881,9 +7827,6 @@ paths:
               apiKey = ApiKey(
                 acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
                 description = "my new api key",
-                validity = 300,
-                maxQueriesPerIPPerHour = 100,
-                maxHitsPerQuery = 20,
               ),
             )
 
@@ -7911,9 +7854,6 @@ paths:
                     'addObject',
                 ],
                     'description' => 'my new api key',
-                    'validity' => 300,
-                    'maxQueriesPerIPPerHour' => 100,
-                    'maxHitsPerQuery' => 20,
                 ],
             );
 
@@ -7944,9 +7884,6 @@ paths:
                         "addObject",
                     ],
                     "description": "my new api key",
-                    "validity": 300,
-                    "maxQueriesPerIPPerHour": 100,
-                    "maxHitsPerQuery": 20,
                 },
             )
 
@@ -7968,13 +7905,7 @@ paths:
             # Call the API
 
             response = client.add_api_key(
-              Algolia::Search::ApiKey.new(
-                acl: ["search", "addObject"],
-                description: "my new api key",
-                validity: 300,
-                max_queries_per_ip_per_hour: 100,
-                max_hits_per_query: 20
-              )
+              Algolia::Search::ApiKey.new(acl: ["search", "addObject"], description: "my new api key")
             )
 
 
@@ -8002,10 +7933,7 @@ paths:
             val response = client.addApiKey(
               apiKey = ApiKey(
                 acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
-                description = Some("my new api key"),
-                validity = Some(300),
-                maxQueriesPerIPPerHour = Some(100),
-                maxHitsPerQuery = Some(20)
+                description = Some("my new api key")
               )
             )
 
@@ -8028,10 +7956,7 @@ paths:
 
             let response = try await client.addApiKey(apiKey: ApiKey(
                 acl: [Acl.search, Acl.addObject],
-                description: "my new api key",
-                maxHitsPerQuery: 20,
-                maxQueriesPerIPPerHour: 100,
-                validity: 300
+                description: "my new api key"
             ))
 
             // >LOG

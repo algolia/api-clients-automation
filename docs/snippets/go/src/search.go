@@ -10,10 +10,40 @@ func SnippetForAddApiKeyOfSearch() {
 	/*
 	   Snippet for the addApiKey method.
 
-	   addApiKey
+	   minimal
 	*/
 
-	// >SEPARATOR addApiKey default
+	// >SEPARATOR addApiKey minimal
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
+
+		search.NewEmptyApiKey().SetAcl(
+			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForAddApiKeyOfSearch1() {
+	/*
+	   Snippet for the addApiKey method.
+
+	   all
+	*/
+
+	// >SEPARATOR addApiKey all
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1793,10 +1823,70 @@ func SnippetForGetObjectsOfSearch() {
 	/*
 	   Snippet for the getObjects method.
 
-	   getObjects
+	   by ID
 	*/
 
-	// >SEPARATOR getObjects default
+	// >SEPARATOR getObjects by ID
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetObjects(client.NewApiGetObjectsRequest(
+
+		search.NewEmptyGetObjectsParams().SetRequests(
+			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetObjectsOfSearch1() {
+	/*
+	   Snippet for the getObjects method.
+
+	   multiple IDs
+	*/
+
+	// >SEPARATOR getObjects multiple IDs
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetObjects(client.NewApiGetObjectsRequest(
+
+		search.NewEmptyGetObjectsParams().SetRequests(
+			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID1").SetIndexName("<YOUR_INDEX_NAME>"), *search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID2").SetIndexName("<YOUR_INDEX_NAME>")})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetObjectsOfSearch2() {
+	/*
+	   Snippet for the getObjects method.
+
+	   with attributesToRetrieve
+	*/
+
+	// >SEPARATOR getObjects with attributesToRetrieve
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -4769,6 +4859,35 @@ func SnippetForSearchSingleIndexOfSearch6() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
+	   filters boolean
+	*/
+
+	// >SEPARATOR searchSingleIndex filters boolean
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetFilters("is_available:true"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch7() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
 	   distinct
 	*/
 
@@ -4794,7 +4913,7 @@ func SnippetForSearchSingleIndexOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch7() {
+func SnippetForSearchSingleIndexOfSearch8() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -4823,7 +4942,7 @@ func SnippetForSearchSingleIndexOfSearch7() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch8() {
+func SnippetForSearchSingleIndexOfSearch9() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -4852,7 +4971,7 @@ func SnippetForSearchSingleIndexOfSearch8() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch9() {
+func SnippetForSearchSingleIndexOfSearch10() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -4881,7 +5000,7 @@ func SnippetForSearchSingleIndexOfSearch9() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch10() {
+func SnippetForSearchSingleIndexOfSearch11() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -4910,7 +5029,7 @@ func SnippetForSearchSingleIndexOfSearch10() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch11() {
+func SnippetForSearchSingleIndexOfSearch12() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -4939,7 +5058,7 @@ func SnippetForSearchSingleIndexOfSearch11() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch12() {
+func SnippetForSearchSingleIndexOfSearch13() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -4968,7 +5087,7 @@ func SnippetForSearchSingleIndexOfSearch12() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch13() {
+func SnippetForSearchSingleIndexOfSearch14() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -4999,7 +5118,7 @@ func SnippetForSearchSingleIndexOfSearch13() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch14() {
+func SnippetForSearchSingleIndexOfSearch15() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5029,7 +5148,7 @@ func SnippetForSearchSingleIndexOfSearch14() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch15() {
+func SnippetForSearchSingleIndexOfSearch16() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5059,7 +5178,7 @@ func SnippetForSearchSingleIndexOfSearch15() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch16() {
+func SnippetForSearchSingleIndexOfSearch17() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5090,7 +5209,7 @@ func SnippetForSearchSingleIndexOfSearch16() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch17() {
+func SnippetForSearchSingleIndexOfSearch18() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5121,7 +5240,7 @@ func SnippetForSearchSingleIndexOfSearch17() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch18() {
+func SnippetForSearchSingleIndexOfSearch19() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5150,7 +5269,7 @@ func SnippetForSearchSingleIndexOfSearch18() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch19() {
+func SnippetForSearchSingleIndexOfSearch20() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5180,7 +5299,7 @@ func SnippetForSearchSingleIndexOfSearch19() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch20() {
+func SnippetForSearchSingleIndexOfSearch21() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5210,7 +5329,7 @@ func SnippetForSearchSingleIndexOfSearch20() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch21() {
+func SnippetForSearchSingleIndexOfSearch22() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5240,7 +5359,7 @@ func SnippetForSearchSingleIndexOfSearch21() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch22() {
+func SnippetForSearchSingleIndexOfSearch23() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5269,7 +5388,7 @@ func SnippetForSearchSingleIndexOfSearch22() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch23() {
+func SnippetForSearchSingleIndexOfSearch24() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5298,7 +5417,7 @@ func SnippetForSearchSingleIndexOfSearch23() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch24() {
+func SnippetForSearchSingleIndexOfSearch25() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5327,7 +5446,7 @@ func SnippetForSearchSingleIndexOfSearch24() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch25() {
+func SnippetForSearchSingleIndexOfSearch26() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5356,7 +5475,7 @@ func SnippetForSearchSingleIndexOfSearch25() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch26() {
+func SnippetForSearchSingleIndexOfSearch27() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5377,37 +5496,6 @@ func SnippetForSearchSingleIndexOfSearch26() {
 		search.NewEmptySearchParamsObject().SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 			[][]float64{
 				[]float64{49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875}})))))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// >LOG
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
-func SnippetForSearchSingleIndexOfSearch27() {
-	/*
-	   Snippet for the searchSingleIndex method.
-
-	   insidePolygon
-	*/
-
-	// >SEPARATOR searchSingleIndex insidePolygon
-	// Initialize the client
-	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetInsidePolygon(
-			[][]float64{
-				[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -5453,6 +5541,37 @@ func SnippetForSearchSingleIndexOfSearch29() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
+	   insidePolygon
+	*/
+
+	// >SEPARATOR searchSingleIndex insidePolygon
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetInsidePolygon(
+			[][]float64{
+				[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch30() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
 	   optionalFilters
 	*/
 
@@ -5479,7 +5598,7 @@ func SnippetForSearchSingleIndexOfSearch29() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch30() {
+func SnippetForSearchSingleIndexOfSearch31() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5509,7 +5628,7 @@ func SnippetForSearchSingleIndexOfSearch30() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch31() {
+func SnippetForSearchSingleIndexOfSearch32() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5539,7 +5658,7 @@ func SnippetForSearchSingleIndexOfSearch31() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch32() {
+func SnippetForSearchSingleIndexOfSearch33() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5569,7 +5688,7 @@ func SnippetForSearchSingleIndexOfSearch32() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch33() {
+func SnippetForSearchSingleIndexOfSearch34() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5598,7 +5717,7 @@ func SnippetForSearchSingleIndexOfSearch33() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch34() {
+func SnippetForSearchSingleIndexOfSearch35() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5627,7 +5746,7 @@ func SnippetForSearchSingleIndexOfSearch34() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch35() {
+func SnippetForSearchSingleIndexOfSearch36() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5656,7 +5775,7 @@ func SnippetForSearchSingleIndexOfSearch35() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch36() {
+func SnippetForSearchSingleIndexOfSearch37() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5685,7 +5804,7 @@ func SnippetForSearchSingleIndexOfSearch36() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch37() {
+func SnippetForSearchSingleIndexOfSearch38() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5714,7 +5833,7 @@ func SnippetForSearchSingleIndexOfSearch37() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch38() {
+func SnippetForSearchSingleIndexOfSearch39() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5743,7 +5862,7 @@ func SnippetForSearchSingleIndexOfSearch38() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch39() {
+func SnippetForSearchSingleIndexOfSearch40() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5773,7 +5892,7 @@ func SnippetForSearchSingleIndexOfSearch39() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch40() {
+func SnippetForSearchSingleIndexOfSearch41() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5803,7 +5922,7 @@ func SnippetForSearchSingleIndexOfSearch40() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch41() {
+func SnippetForSearchSingleIndexOfSearch42() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5833,7 +5952,7 @@ func SnippetForSearchSingleIndexOfSearch41() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch42() {
+func SnippetForSearchSingleIndexOfSearch43() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5863,7 +5982,7 @@ func SnippetForSearchSingleIndexOfSearch42() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch43() {
+func SnippetForSearchSingleIndexOfSearch44() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5893,7 +6012,7 @@ func SnippetForSearchSingleIndexOfSearch43() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch44() {
+func SnippetForSearchSingleIndexOfSearch45() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5922,7 +6041,7 @@ func SnippetForSearchSingleIndexOfSearch44() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch45() {
+func SnippetForSearchSingleIndexOfSearch46() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5951,7 +6070,7 @@ func SnippetForSearchSingleIndexOfSearch45() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch46() {
+func SnippetForSearchSingleIndexOfSearch47() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -5980,7 +6099,7 @@ func SnippetForSearchSingleIndexOfSearch46() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch47() {
+func SnippetForSearchSingleIndexOfSearch48() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6009,7 +6128,7 @@ func SnippetForSearchSingleIndexOfSearch47() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch48() {
+func SnippetForSearchSingleIndexOfSearch49() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6039,7 +6158,7 @@ func SnippetForSearchSingleIndexOfSearch48() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch49() {
+func SnippetForSearchSingleIndexOfSearch50() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6069,7 +6188,7 @@ func SnippetForSearchSingleIndexOfSearch49() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch50() {
+func SnippetForSearchSingleIndexOfSearch51() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6098,7 +6217,7 @@ func SnippetForSearchSingleIndexOfSearch50() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch51() {
+func SnippetForSearchSingleIndexOfSearch52() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6127,7 +6246,7 @@ func SnippetForSearchSingleIndexOfSearch51() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch52() {
+func SnippetForSearchSingleIndexOfSearch53() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6156,7 +6275,7 @@ func SnippetForSearchSingleIndexOfSearch52() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch53() {
+func SnippetForSearchSingleIndexOfSearch54() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6185,7 +6304,7 @@ func SnippetForSearchSingleIndexOfSearch53() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch54() {
+func SnippetForSearchSingleIndexOfSearch55() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6214,7 +6333,7 @@ func SnippetForSearchSingleIndexOfSearch54() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch55() {
+func SnippetForSearchSingleIndexOfSearch56() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6243,7 +6362,7 @@ func SnippetForSearchSingleIndexOfSearch55() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch56() {
+func SnippetForSearchSingleIndexOfSearch57() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6272,7 +6391,7 @@ func SnippetForSearchSingleIndexOfSearch56() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch57() {
+func SnippetForSearchSingleIndexOfSearch58() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6302,7 +6421,7 @@ func SnippetForSearchSingleIndexOfSearch57() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch58() {
+func SnippetForSearchSingleIndexOfSearch59() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6332,7 +6451,7 @@ func SnippetForSearchSingleIndexOfSearch58() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch59() {
+func SnippetForSearchSingleIndexOfSearch60() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6363,7 +6482,7 @@ func SnippetForSearchSingleIndexOfSearch59() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch60() {
+func SnippetForSearchSingleIndexOfSearch61() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6394,7 +6513,7 @@ func SnippetForSearchSingleIndexOfSearch60() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch61() {
+func SnippetForSearchSingleIndexOfSearch62() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6423,7 +6542,7 @@ func SnippetForSearchSingleIndexOfSearch61() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch62() {
+func SnippetForSearchSingleIndexOfSearch63() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6453,7 +6572,7 @@ func SnippetForSearchSingleIndexOfSearch62() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch63() {
+func SnippetForSearchSingleIndexOfSearch64() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6483,7 +6602,7 @@ func SnippetForSearchSingleIndexOfSearch63() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch64() {
+func SnippetForSearchSingleIndexOfSearch65() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6512,7 +6631,7 @@ func SnippetForSearchSingleIndexOfSearch64() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch65() {
+func SnippetForSearchSingleIndexOfSearch66() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6541,7 +6660,7 @@ func SnippetForSearchSingleIndexOfSearch65() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch66() {
+func SnippetForSearchSingleIndexOfSearch67() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6570,7 +6689,7 @@ func SnippetForSearchSingleIndexOfSearch66() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch67() {
+func SnippetForSearchSingleIndexOfSearch68() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6600,7 +6719,7 @@ func SnippetForSearchSingleIndexOfSearch67() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch68() {
+func SnippetForSearchSingleIndexOfSearch69() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6629,7 +6748,7 @@ func SnippetForSearchSingleIndexOfSearch68() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch69() {
+func SnippetForSearchSingleIndexOfSearch70() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6658,7 +6777,7 @@ func SnippetForSearchSingleIndexOfSearch69() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch70() {
+func SnippetForSearchSingleIndexOfSearch71() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6687,7 +6806,7 @@ func SnippetForSearchSingleIndexOfSearch70() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch71() {
+func SnippetForSearchSingleIndexOfSearch72() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6716,7 +6835,7 @@ func SnippetForSearchSingleIndexOfSearch71() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch72() {
+func SnippetForSearchSingleIndexOfSearch73() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6745,7 +6864,7 @@ func SnippetForSearchSingleIndexOfSearch72() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch73() {
+func SnippetForSearchSingleIndexOfSearch74() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6774,7 +6893,7 @@ func SnippetForSearchSingleIndexOfSearch73() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch74() {
+func SnippetForSearchSingleIndexOfSearch75() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6803,7 +6922,7 @@ func SnippetForSearchSingleIndexOfSearch74() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch75() {
+func SnippetForSearchSingleIndexOfSearch76() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6832,7 +6951,7 @@ func SnippetForSearchSingleIndexOfSearch75() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch76() {
+func SnippetForSearchSingleIndexOfSearch77() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6861,7 +6980,7 @@ func SnippetForSearchSingleIndexOfSearch76() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch77() {
+func SnippetForSearchSingleIndexOfSearch78() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6890,7 +7009,7 @@ func SnippetForSearchSingleIndexOfSearch77() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch78() {
+func SnippetForSearchSingleIndexOfSearch79() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6919,7 +7038,7 @@ func SnippetForSearchSingleIndexOfSearch78() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch79() {
+func SnippetForSearchSingleIndexOfSearch80() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6948,7 +7067,7 @@ func SnippetForSearchSingleIndexOfSearch79() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch80() {
+func SnippetForSearchSingleIndexOfSearch81() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -6977,7 +7096,7 @@ func SnippetForSearchSingleIndexOfSearch80() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch81() {
+func SnippetForSearchSingleIndexOfSearch82() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7006,7 +7125,7 @@ func SnippetForSearchSingleIndexOfSearch81() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch82() {
+func SnippetForSearchSingleIndexOfSearch83() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7035,7 +7154,7 @@ func SnippetForSearchSingleIndexOfSearch82() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch83() {
+func SnippetForSearchSingleIndexOfSearch84() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7064,7 +7183,7 @@ func SnippetForSearchSingleIndexOfSearch83() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch84() {
+func SnippetForSearchSingleIndexOfSearch85() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7093,7 +7212,7 @@ func SnippetForSearchSingleIndexOfSearch84() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch85() {
+func SnippetForSearchSingleIndexOfSearch86() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7123,7 +7242,7 @@ func SnippetForSearchSingleIndexOfSearch85() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch86() {
+func SnippetForSearchSingleIndexOfSearch87() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7152,7 +7271,7 @@ func SnippetForSearchSingleIndexOfSearch86() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch87() {
+func SnippetForSearchSingleIndexOfSearch88() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7183,7 +7302,7 @@ func SnippetForSearchSingleIndexOfSearch87() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch88() {
+func SnippetForSearchSingleIndexOfSearch89() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7215,7 +7334,7 @@ func SnippetForSearchSingleIndexOfSearch88() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch89() {
+func SnippetForSearchSingleIndexOfSearch90() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7246,7 +7365,7 @@ func SnippetForSearchSingleIndexOfSearch89() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch90() {
+func SnippetForSearchSingleIndexOfSearch91() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7278,36 +7397,6 @@ func SnippetForSearchSingleIndexOfSearch90() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch91() {
-	/*
-	   Snippet for the searchSingleIndex method.
-
-	   set_querylanguages_override
-	*/
-
-	// >SEPARATOR searchSingleIndex set_querylanguages_override
-	// Initialize the client
-	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetQuery("query").SetIgnorePlurals(search.ArrayOfSupportedLanguageAsIgnorePlurals(
-			[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// >LOG
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
 func SnippetForSearchSingleIndexOfSearch92() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7326,7 +7415,7 @@ func SnippetForSearchSingleIndexOfSearch92() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
+		search.NewEmptySearchParamsObject().SetQuery("query").SetIgnorePlurals(search.ArrayOfSupportedLanguageAsIgnorePlurals(
 			[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
 	if err != nil {
 		// handle the eventual error
@@ -7372,6 +7461,36 @@ func SnippetForSearchSingleIndexOfSearch94() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
+	   set_querylanguages_override
+	*/
+
+	// >SEPARATOR searchSingleIndex set_querylanguages_override
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
+			[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch95() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
 	   set_querylanguages_with_japanese_query
 	*/
 
@@ -7398,7 +7517,7 @@ func SnippetForSearchSingleIndexOfSearch94() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch95() {
+func SnippetForSearchSingleIndexOfSearch96() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7428,7 +7547,7 @@ func SnippetForSearchSingleIndexOfSearch95() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch96() {
+func SnippetForSearchSingleIndexOfSearch97() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7458,7 +7577,7 @@ func SnippetForSearchSingleIndexOfSearch96() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch97() {
+func SnippetForSearchSingleIndexOfSearch98() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7487,7 +7606,7 @@ func SnippetForSearchSingleIndexOfSearch97() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch98() {
+func SnippetForSearchSingleIndexOfSearch99() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7516,7 +7635,7 @@ func SnippetForSearchSingleIndexOfSearch98() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch99() {
+func SnippetForSearchSingleIndexOfSearch100() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7546,7 +7665,7 @@ func SnippetForSearchSingleIndexOfSearch99() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch100() {
+func SnippetForSearchSingleIndexOfSearch101() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7575,7 +7694,7 @@ func SnippetForSearchSingleIndexOfSearch100() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch101() {
+func SnippetForSearchSingleIndexOfSearch102() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7604,7 +7723,7 @@ func SnippetForSearchSingleIndexOfSearch101() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch102() {
+func SnippetForSearchSingleIndexOfSearch103() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7633,7 +7752,7 @@ func SnippetForSearchSingleIndexOfSearch102() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch103() {
+func SnippetForSearchSingleIndexOfSearch104() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7662,7 +7781,7 @@ func SnippetForSearchSingleIndexOfSearch103() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch104() {
+func SnippetForSearchSingleIndexOfSearch105() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7691,7 +7810,7 @@ func SnippetForSearchSingleIndexOfSearch104() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch105() {
+func SnippetForSearchSingleIndexOfSearch106() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7720,7 +7839,7 @@ func SnippetForSearchSingleIndexOfSearch105() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch106() {
+func SnippetForSearchSingleIndexOfSearch107() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7749,7 +7868,7 @@ func SnippetForSearchSingleIndexOfSearch106() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch107() {
+func SnippetForSearchSingleIndexOfSearch108() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7778,7 +7897,7 @@ func SnippetForSearchSingleIndexOfSearch107() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch108() {
+func SnippetForSearchSingleIndexOfSearch109() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7808,7 +7927,7 @@ func SnippetForSearchSingleIndexOfSearch108() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch109() {
+func SnippetForSearchSingleIndexOfSearch110() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7838,7 +7957,7 @@ func SnippetForSearchSingleIndexOfSearch109() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch110() {
+func SnippetForSearchSingleIndexOfSearch111() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7867,7 +7986,7 @@ func SnippetForSearchSingleIndexOfSearch110() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch111() {
+func SnippetForSearchSingleIndexOfSearch112() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7897,7 +8016,7 @@ func SnippetForSearchSingleIndexOfSearch111() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch112() {
+func SnippetForSearchSingleIndexOfSearch113() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7927,7 +8046,7 @@ func SnippetForSearchSingleIndexOfSearch112() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch113() {
+func SnippetForSearchSingleIndexOfSearch114() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7957,7 +8076,7 @@ func SnippetForSearchSingleIndexOfSearch113() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch114() {
+func SnippetForSearchSingleIndexOfSearch115() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -7986,7 +8105,7 @@ func SnippetForSearchSingleIndexOfSearch114() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch115() {
+func SnippetForSearchSingleIndexOfSearch116() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8015,7 +8134,7 @@ func SnippetForSearchSingleIndexOfSearch115() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch116() {
+func SnippetForSearchSingleIndexOfSearch117() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8044,7 +8163,7 @@ func SnippetForSearchSingleIndexOfSearch116() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch117() {
+func SnippetForSearchSingleIndexOfSearch118() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8073,7 +8192,7 @@ func SnippetForSearchSingleIndexOfSearch117() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch118() {
+func SnippetForSearchSingleIndexOfSearch119() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8102,7 +8221,7 @@ func SnippetForSearchSingleIndexOfSearch118() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch119() {
+func SnippetForSearchSingleIndexOfSearch120() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8132,7 +8251,7 @@ func SnippetForSearchSingleIndexOfSearch119() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch120() {
+func SnippetForSearchSingleIndexOfSearch121() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8161,7 +8280,7 @@ func SnippetForSearchSingleIndexOfSearch120() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch121() {
+func SnippetForSearchSingleIndexOfSearch122() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8190,7 +8309,7 @@ func SnippetForSearchSingleIndexOfSearch121() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch122() {
+func SnippetForSearchSingleIndexOfSearch123() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8219,7 +8338,7 @@ func SnippetForSearchSingleIndexOfSearch122() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch123() {
+func SnippetForSearchSingleIndexOfSearch124() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8249,7 +8368,7 @@ func SnippetForSearchSingleIndexOfSearch123() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch124() {
+func SnippetForSearchSingleIndexOfSearch125() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8278,7 +8397,7 @@ func SnippetForSearchSingleIndexOfSearch124() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch125() {
+func SnippetForSearchSingleIndexOfSearch126() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
@@ -8307,7 +8426,7 @@ func SnippetForSearchSingleIndexOfSearch125() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchSingleIndexOfSearch126() {
+func SnippetForSearchSingleIndexOfSearch127() {
 	/*
 	   Snippet for the searchSingleIndex method.
 

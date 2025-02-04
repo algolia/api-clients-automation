@@ -12,7 +12,19 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = algoliasearch(appId, apiKey, { requester: nodeEchoRequester() });
 
 describe('addApiKey', () => {
-  test('addApiKey', async () => {
+  test('minimal', async () => {
+    const req = (await client.addApiKey({
+      acl: ['search', 'addObject'],
+      description: 'my new api key',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/keys');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ acl: ['search', 'addObject'], description: 'my new api key' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('all', async () => {
     const req = (await client.addApiKey({
       acl: ['search', 'addObject'],
       description: 'my new api key',
@@ -781,7 +793,37 @@ describe('getObject', () => {
 });
 
 describe('getObjects', () => {
-  test('getObjects', async () => {
+  test('by ID', async () => {
+    const req = (await client.getObjects({
+      requests: [{ objectID: 'uniqueID', indexName: 'theIndexName' }],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/objects');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ requests: [{ objectID: 'uniqueID', indexName: 'theIndexName' }] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('multiple IDs', async () => {
+    const req = (await client.getObjects({
+      requests: [
+        { objectID: 'uniqueID1', indexName: 'theIndexName1' },
+        { objectID: 'uniqueID2', indexName: 'theIndexName2' },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/objects');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        { objectID: 'uniqueID1', indexName: 'theIndexName1' },
+        { objectID: 'uniqueID2', indexName: 'theIndexName2' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('with attributesToRetrieve', async () => {
     const req = (await client.getObjects({
       requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
     })) as unknown as EchoResponse;
@@ -2530,6 +2572,18 @@ describe('searchSingleIndex', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ filters: 'country:US AND price.gross < 2.0' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filters boolean', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'is_available:true' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'is_available:true' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 

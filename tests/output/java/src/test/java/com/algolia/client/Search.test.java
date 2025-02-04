@@ -938,6 +938,32 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("with algolia user id")
+  void searchSingleIndexTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    SearchResponse res = client.searchSingleIndex(
+      "playlists",
+      new SearchParamsObject().setQuery("foo"),
+      Hit.class,
+      new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user1234")
+    );
+  }
+
+  @Test
   @DisplayName("switch API key")
   void setClientApiKeyTest0() {
     SearchClient client = new SearchClient(

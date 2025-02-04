@@ -6,9 +6,31 @@ require "algolia"
 
 # Snippet for the addApiKey method.
 #
-# addApiKey
+# minimal
 def snippet_for_add_api_key
-  # >SEPARATOR addApiKey default
+  # >SEPARATOR addApiKey minimal
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.add_api_key(
+    Algolia::Search::ApiKey.new(acl: ["search", "addObject"], description: "my new api key")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the addApiKey method.
+#
+# all
+def snippet_for_add_api_key1
+  # >SEPARATOR addApiKey all
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -1426,9 +1448,60 @@ end
 
 # Snippet for the getObjects method.
 #
-# getObjects
+# by ID
 def snippet_for_get_objects
-  # >SEPARATOR getObjects default
+  # >SEPARATOR getObjects by ID
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_objects(
+    Algolia::Search::GetObjectsParams.new(
+      requests: [Algolia::Search::GetObjectsRequest.new(algolia_object_id: "uniqueID", index_name: "<YOUR_INDEX_NAME>")]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getObjects method.
+#
+# multiple IDs
+def snippet_for_get_objects1
+  # >SEPARATOR getObjects multiple IDs
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_objects(
+    Algolia::Search::GetObjectsParams.new(
+      requests: [
+        Algolia::Search::GetObjectsRequest.new(algolia_object_id: "uniqueID1", index_name: "<YOUR_INDEX_NAME>"),
+        Algolia::Search::GetObjectsRequest.new(algolia_object_id: "uniqueID2", index_name: "<YOUR_INDEX_NAME>")
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getObjects method.
+#
+# with attributesToRetrieve
+def snippet_for_get_objects2
+  # >SEPARATOR getObjects with attributesToRetrieve
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -4111,8 +4184,31 @@ end
 
 # Snippet for the searchSingleIndex method.
 #
-# distinct
+# filters boolean
 def snippet_for_search_single_index6
+  # >SEPARATOR searchSingleIndex filters boolean
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(filters: "is_available:true")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# distinct
+def snippet_for_search_single_index7
   # >SEPARATOR searchSingleIndex distinct
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4132,7 +4228,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # filtersNumeric
-def snippet_for_search_single_index7
+def snippet_for_search_single_index8
   # >SEPARATOR searchSingleIndex filtersNumeric
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4155,7 +4251,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # filtersTimestamp
-def snippet_for_search_single_index8
+def snippet_for_search_single_index9
   # >SEPARATOR searchSingleIndex filtersTimestamp
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4178,7 +4274,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # filtersSumOrFiltersScoresFalse
-def snippet_for_search_single_index9
+def snippet_for_search_single_index10
   # >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4204,7 +4300,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # filtersSumOrFiltersScoresTrue
-def snippet_for_search_single_index10
+def snippet_for_search_single_index11
   # >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4230,7 +4326,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # filtersStephenKing
-def snippet_for_search_single_index11
+def snippet_for_search_single_index12
   # >SEPARATOR searchSingleIndex filtersStephenKing
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4253,7 +4349,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # filtersNotTags
-def snippet_for_search_single_index12
+def snippet_for_search_single_index13
   # >SEPARATOR searchSingleIndex filtersNotTags
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4276,7 +4372,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facetFiltersList
-def snippet_for_search_single_index13
+def snippet_for_search_single_index14
   # >SEPARATOR searchSingleIndex facetFiltersList
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4301,7 +4397,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facetFiltersBook
-def snippet_for_search_single_index14
+def snippet_for_search_single_index15
   # >SEPARATOR searchSingleIndex facetFiltersBook
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4324,7 +4420,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facetFiltersAND
-def snippet_for_search_single_index15
+def snippet_for_search_single_index16
   # >SEPARATOR searchSingleIndex facetFiltersAND
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4347,7 +4443,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facetFiltersOR
-def snippet_for_search_single_index16
+def snippet_for_search_single_index17
   # >SEPARATOR searchSingleIndex facetFiltersOR
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4370,7 +4466,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facetFiltersCombined
-def snippet_for_search_single_index17
+def snippet_for_search_single_index18
   # >SEPARATOR searchSingleIndex facetFiltersCombined
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4396,7 +4492,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facetFiltersNeg
-def snippet_for_search_single_index18
+def snippet_for_search_single_index19
   # >SEPARATOR searchSingleIndex facetFiltersNeg
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4419,7 +4515,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # filtersAndFacetFilters
-def snippet_for_search_single_index19
+def snippet_for_search_single_index20
   # >SEPARATOR searchSingleIndex filtersAndFacetFilters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4445,7 +4541,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facet author genre
-def snippet_for_search_single_index20
+def snippet_for_search_single_index21
   # >SEPARATOR searchSingleIndex facet author genre
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4468,7 +4564,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facet wildcard
-def snippet_for_search_single_index21
+def snippet_for_search_single_index22
   # >SEPARATOR searchSingleIndex facet wildcard
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4488,7 +4584,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # maxValuesPerFacet
-def snippet_for_search_single_index22
+def snippet_for_search_single_index23
   # >SEPARATOR searchSingleIndex maxValuesPerFacet
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4511,7 +4607,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # aroundLatLng
-def snippet_for_search_single_index23
+def snippet_for_search_single_index24
   # >SEPARATOR searchSingleIndex aroundLatLng
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4534,7 +4630,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # aroundLatLngViaIP
-def snippet_for_search_single_index24
+def snippet_for_search_single_index25
   # >SEPARATOR searchSingleIndex aroundLatLngViaIP
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4557,7 +4653,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # aroundRadius
-def snippet_for_search_single_index25
+def snippet_for_search_single_index26
   # >SEPARATOR searchSingleIndex aroundRadius
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4580,7 +4676,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # insideBoundingBox
-def snippet_for_search_single_index26
+def snippet_for_search_single_index27
   # >SEPARATOR searchSingleIndex insideBoundingBox
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4590,46 +4686,6 @@ def snippet_for_search_single_index26
     "<YOUR_INDEX_NAME>",
     Algolia::Search::SearchParamsObject.new(
       inside_bounding_box: [[49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875]]
-    )
-  )
-
-  # >LOG
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
-# Snippet for the searchSingleIndex method.
-#
-# insidePolygon
-def snippet_for_search_single_index27
-  # >SEPARATOR searchSingleIndex insidePolygon
-  # Initialize the client
-  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-  # Call the API
-  response = client.search_single_index(
-    "<YOUR_INDEX_NAME>",
-    Algolia::Search::SearchParamsObject.new(
-      inside_polygon: [
-        [
-          42.01,
-          -124.31,
-          48.835509470063045,
-          -124.40453125000005,
-          45.01082951668149,
-          -65.95726562500005,
-          31.247243545293433,
-          -81.06578125000004,
-          25.924152577235226,
-          -97.68234374999997,
-          32.300311895879545,
-          -117.54828125
-        ]
-      ]
     )
   )
 
@@ -4684,8 +4740,48 @@ end
 
 # Snippet for the searchSingleIndex method.
 #
-# optionalFilters
+# insidePolygon
 def snippet_for_search_single_index29
+  # >SEPARATOR searchSingleIndex insidePolygon
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(
+      inside_polygon: [
+        [
+          42.01,
+          -124.31,
+          48.835509470063045,
+          -124.40453125000005,
+          45.01082951668149,
+          -65.95726562500005,
+          31.247243545293433,
+          -81.06578125000004,
+          25.924152577235226,
+          -97.68234374999997,
+          32.300311895879545,
+          -117.54828125
+        ]
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# optionalFilters
+def snippet_for_search_single_index30
   # >SEPARATOR searchSingleIndex optionalFilters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4708,7 +4804,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # optionalFiltersMany
-def snippet_for_search_single_index30
+def snippet_for_search_single_index31
   # >SEPARATOR searchSingleIndex optionalFiltersMany
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4733,7 +4829,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # optionalFiltersSimple
-def snippet_for_search_single_index31
+def snippet_for_search_single_index32
   # >SEPARATOR searchSingleIndex optionalFiltersSimple
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4756,7 +4852,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # restrictSearchableAttributes
-def snippet_for_search_single_index32
+def snippet_for_search_single_index33
   # >SEPARATOR searchSingleIndex restrictSearchableAttributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4779,7 +4875,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # getRankingInfo
-def snippet_for_search_single_index33
+def snippet_for_search_single_index34
   # >SEPARATOR searchSingleIndex getRankingInfo
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4802,7 +4898,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # clickAnalytics
-def snippet_for_search_single_index34
+def snippet_for_search_single_index35
   # >SEPARATOR searchSingleIndex clickAnalytics
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4825,7 +4921,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # clickAnalyticsUserToken
-def snippet_for_search_single_index35
+def snippet_for_search_single_index36
   # >SEPARATOR searchSingleIndex clickAnalyticsUserToken
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4848,7 +4944,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enablePersonalization
-def snippet_for_search_single_index36
+def snippet_for_search_single_index37
   # >SEPARATOR searchSingleIndex enablePersonalization
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4871,7 +4967,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # userToken
-def snippet_for_search_single_index37
+def snippet_for_search_single_index38
   # >SEPARATOR searchSingleIndex userToken
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4894,7 +4990,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # userToken1234
-def snippet_for_search_single_index38
+def snippet_for_search_single_index39
   # >SEPARATOR searchSingleIndex userToken1234
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4917,7 +5013,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # analyticsTag
-def snippet_for_search_single_index39
+def snippet_for_search_single_index40
   # >SEPARATOR searchSingleIndex analyticsTag
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4940,7 +5036,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facetFiltersUsers
-def snippet_for_search_single_index40
+def snippet_for_search_single_index41
   # >SEPARATOR searchSingleIndex facetFiltersUsers
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4963,7 +5059,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # buildTheQuery
-def snippet_for_search_single_index41
+def snippet_for_search_single_index42
   # >SEPARATOR searchSingleIndex buildTheQuery
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4990,7 +5086,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # attributesToHighlightOverride
-def snippet_for_search_single_index42
+def snippet_for_search_single_index43
   # >SEPARATOR searchSingleIndex attributesToHighlightOverride
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5013,7 +5109,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # disableTypoToleranceOnAttributes
-def snippet_for_search_single_index43
+def snippet_for_search_single_index44
   # >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5036,7 +5132,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_a_query
-def snippet_for_search_single_index44
+def snippet_for_search_single_index45
   # >SEPARATOR searchSingleIndex search_a_query
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5056,7 +5152,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_everything
-def snippet_for_search_single_index45
+def snippet_for_search_single_index46
   # >SEPARATOR searchSingleIndex search_everything
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5076,7 +5172,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # api_filtering_range_example
-def snippet_for_search_single_index46
+def snippet_for_search_single_index47
   # >SEPARATOR searchSingleIndex api_filtering_range_example
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5099,7 +5195,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_a_query
-def snippet_for_search_single_index47
+def snippet_for_search_single_index48
   # >SEPARATOR searchSingleIndex search_a_query
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5126,7 +5222,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_retrievable_attributes
-def snippet_for_search_single_index48
+def snippet_for_search_single_index49
   # >SEPARATOR searchSingleIndex override_retrievable_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5149,7 +5245,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # restrict_searchable_attributes
-def snippet_for_search_single_index49
+def snippet_for_search_single_index50
   # >SEPARATOR searchSingleIndex restrict_searchable_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5172,7 +5268,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_relevancy
-def snippet_for_search_single_index50
+def snippet_for_search_single_index51
   # >SEPARATOR searchSingleIndex override_default_relevancy
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5195,7 +5291,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # apply_filters
-def snippet_for_search_single_index51
+def snippet_for_search_single_index52
   # >SEPARATOR searchSingleIndex apply_filters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5221,7 +5317,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # apply_all_filters
-def snippet_for_search_single_index52
+def snippet_for_search_single_index53
   # >SEPARATOR searchSingleIndex apply_all_filters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5247,7 +5343,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # escape_spaces
-def snippet_for_search_single_index53
+def snippet_for_search_single_index54
   # >SEPARATOR searchSingleIndex escape_spaces
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5270,7 +5366,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # escape_keywords
-def snippet_for_search_single_index54
+def snippet_for_search_single_index55
   # >SEPARATOR searchSingleIndex escape_keywords
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5293,7 +5389,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # escape_single_quotes
-def snippet_for_search_single_index55
+def snippet_for_search_single_index56
   # >SEPARATOR searchSingleIndex escape_single_quotes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5316,7 +5412,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # escape_double_quotes
-def snippet_for_search_single_index56
+def snippet_for_search_single_index57
   # >SEPARATOR searchSingleIndex escape_double_quotes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5339,7 +5435,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # apply_filters
-def snippet_for_search_single_index57
+def snippet_for_search_single_index58
   # >SEPARATOR searchSingleIndex apply_filters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5362,7 +5458,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # apply_negative_filters
-def snippet_for_search_single_index58
+def snippet_for_search_single_index59
   # >SEPARATOR searchSingleIndex apply_negative_filters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5385,7 +5481,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # apply_numeric_filters
-def snippet_for_search_single_index59
+def snippet_for_search_single_index60
   # >SEPARATOR searchSingleIndex apply_numeric_filters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5411,7 +5507,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # apply_tag_filters
-def snippet_for_search_single_index60
+def snippet_for_search_single_index61
   # >SEPARATOR searchSingleIndex apply_tag_filters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5434,7 +5530,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # apply_filters
-def snippet_for_search_single_index61
+def snippet_for_search_single_index62
   # >SEPARATOR searchSingleIndex apply_filters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5457,7 +5553,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # facets_all
-def snippet_for_search_single_index62
+def snippet_for_search_single_index63
   # >SEPARATOR searchSingleIndex facets_all
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5480,7 +5576,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # retrieve_only_some_facets
-def snippet_for_search_single_index63
+def snippet_for_search_single_index64
   # >SEPARATOR searchSingleIndex retrieve_only_some_facets
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5503,7 +5599,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_max_values_per_facet
-def snippet_for_search_single_index64
+def snippet_for_search_single_index65
   # >SEPARATOR searchSingleIndex override_default_max_values_per_facet
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5526,7 +5622,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_faceting_after_distinct
-def snippet_for_search_single_index65
+def snippet_for_search_single_index66
   # >SEPARATOR searchSingleIndex enable_faceting_after_distinct
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5549,7 +5645,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # sort_facet_values_alphabetically
-def snippet_for_search_single_index66
+def snippet_for_search_single_index67
   # >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5572,7 +5668,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_attributes_to_snippet
-def snippet_for_search_single_index67
+def snippet_for_search_single_index68
   # >SEPARATOR searchSingleIndex override_attributes_to_snippet
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5595,7 +5691,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_highlight_pre_tag
-def snippet_for_search_single_index68
+def snippet_for_search_single_index69
   # >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5618,7 +5714,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_highlight_post_tag
-def snippet_for_search_single_index69
+def snippet_for_search_single_index70
   # >SEPARATOR searchSingleIndex override_default_highlight_post_tag
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5641,7 +5737,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_snippet_ellipsis_text
-def snippet_for_search_single_index70
+def snippet_for_search_single_index71
   # >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5664,7 +5760,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_restrict_highlight_and_snippet_arrays
-def snippet_for_search_single_index71
+def snippet_for_search_single_index72
   # >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5687,7 +5783,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # access_page
-def snippet_for_search_single_index72
+def snippet_for_search_single_index73
   # >SEPARATOR searchSingleIndex access_page
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5710,7 +5806,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_hits_per_page
-def snippet_for_search_single_index73
+def snippet_for_search_single_index74
   # >SEPARATOR searchSingleIndex override_default_hits_per_page
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5733,7 +5829,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # get_nth_hit
-def snippet_for_search_single_index74
+def snippet_for_search_single_index75
   # >SEPARATOR searchSingleIndex get_nth_hit
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5756,7 +5852,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # get_n_results
-def snippet_for_search_single_index75
+def snippet_for_search_single_index76
   # >SEPARATOR searchSingleIndex get_n_results
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5779,7 +5875,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_min_word_size_for_one_typo
-def snippet_for_search_single_index76
+def snippet_for_search_single_index77
   # >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5802,7 +5898,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_min_word_size_for_two_typos
-def snippet_for_search_single_index77
+def snippet_for_search_single_index78
   # >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5825,7 +5921,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_typo_tolerance_mode
-def snippet_for_search_single_index78
+def snippet_for_search_single_index79
   # >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5848,7 +5944,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # disable_typos_on_numeric_tokens_at_search_time
-def snippet_for_search_single_index79
+def snippet_for_search_single_index80
   # >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5871,7 +5967,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_around_a_position
-def snippet_for_search_single_index80
+def snippet_for_search_single_index81
   # >SEPARATOR searchSingleIndex search_around_a_position
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5894,7 +5990,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_around_server_ip
-def snippet_for_search_single_index81
+def snippet_for_search_single_index82
   # >SEPARATOR searchSingleIndex search_around_server_ip
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5923,7 +6019,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_around_radius
-def snippet_for_search_single_index82
+def snippet_for_search_single_index83
   # >SEPARATOR searchSingleIndex set_around_radius
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5946,7 +6042,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # disable_automatic_radius
-def snippet_for_search_single_index83
+def snippet_for_search_single_index84
   # >SEPARATOR searchSingleIndex disable_automatic_radius
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5969,7 +6065,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_geo_search_precision
-def snippet_for_search_single_index84
+def snippet_for_search_single_index85
   # >SEPARATOR searchSingleIndex set_geo_search_precision
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5992,7 +6088,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_geo_search_precision_non_linear
-def snippet_for_search_single_index85
+def snippet_for_search_single_index86
   # >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6021,7 +6117,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_minimum_geo_search_radius
-def snippet_for_search_single_index86
+def snippet_for_search_single_index87
   # >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6044,7 +6140,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_inside_rectangular_area
-def snippet_for_search_single_index87
+def snippet_for_search_single_index88
   # >SEPARATOR searchSingleIndex search_inside_rectangular_area
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6070,7 +6166,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_inside_multiple_rectangular_areas
-def snippet_for_search_single_index88
+def snippet_for_search_single_index89
   # >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6099,7 +6195,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_inside_polygon_area
-def snippet_for_search_single_index89
+def snippet_for_search_single_index90
   # >SEPARATOR searchSingleIndex search_inside_polygon_area
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6127,7 +6223,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # search_inside_multiple_polygon_areas
-def snippet_for_search_single_index90
+def snippet_for_search_single_index91
   # >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6165,29 +6261,6 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_querylanguages_override
-def snippet_for_search_single_index91
-  # >SEPARATOR searchSingleIndex set_querylanguages_override
-  # Initialize the client
-  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-  # Call the API
-  response = client.search_single_index(
-    "<YOUR_INDEX_NAME>",
-    Algolia::Search::SearchParamsObject.new(query: "query", ignore_plurals: ["ca", "es"])
-  )
-
-  # >LOG
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
-# Snippet for the searchSingleIndex method.
-#
-# set_querylanguages_override
 def snippet_for_search_single_index92
   # >SEPARATOR searchSingleIndex set_querylanguages_override
   # Initialize the client
@@ -6196,7 +6269,7 @@ def snippet_for_search_single_index92
   # Call the API
   response = client.search_single_index(
     "<YOUR_INDEX_NAME>",
-    Algolia::Search::SearchParamsObject.new(query: "query", remove_stop_words: ["ca", "es"])
+    Algolia::Search::SearchParamsObject.new(query: "query", ignore_plurals: ["ca", "es"])
   )
 
   # >LOG
@@ -6233,8 +6306,31 @@ end
 
 # Snippet for the searchSingleIndex method.
 #
-# set_querylanguages_with_japanese_query
+# set_querylanguages_override
 def snippet_for_search_single_index94
+  # >SEPARATOR searchSingleIndex set_querylanguages_override
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(query: "query", remove_stop_words: ["ca", "es"])
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# set_querylanguages_with_japanese_query
+def snippet_for_search_single_index95
   # >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6257,7 +6353,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_natural_languages
-def snippet_for_search_single_index95
+def snippet_for_search_single_index96
   # >SEPARATOR searchSingleIndex set_natural_languages
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6280,7 +6376,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_natural_languages_with_query
-def snippet_for_search_single_index96
+def snippet_for_search_single_index97
   # >SEPARATOR searchSingleIndex override_natural_languages_with_query
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6307,7 +6403,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_decompound_query_search_time
-def snippet_for_search_single_index97
+def snippet_for_search_single_index98
   # >SEPARATOR searchSingleIndex enable_decompound_query_search_time
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6330,7 +6426,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_rules_search_time
-def snippet_for_search_single_index98
+def snippet_for_search_single_index99
   # >SEPARATOR searchSingleIndex enable_rules_search_time
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6353,7 +6449,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_rule_contexts
-def snippet_for_search_single_index99
+def snippet_for_search_single_index100
   # >SEPARATOR searchSingleIndex set_rule_contexts
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6376,7 +6472,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_personalization
-def snippet_for_search_single_index100
+def snippet_for_search_single_index101
   # >SEPARATOR searchSingleIndex enable_personalization
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6399,7 +6495,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_personalization_with_user_token
-def snippet_for_search_single_index101
+def snippet_for_search_single_index102
   # >SEPARATOR searchSingleIndex enable_personalization_with_user_token
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6422,7 +6518,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # personalization_impact
-def snippet_for_search_single_index102
+def snippet_for_search_single_index103
   # >SEPARATOR searchSingleIndex personalization_impact
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6445,7 +6541,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_user_token
-def snippet_for_search_single_index103
+def snippet_for_search_single_index104
   # >SEPARATOR searchSingleIndex set_user_token
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6468,7 +6564,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_user_token_with_personalization
-def snippet_for_search_single_index104
+def snippet_for_search_single_index105
   # >SEPARATOR searchSingleIndex set_user_token_with_personalization
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6491,7 +6587,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_query_type
-def snippet_for_search_single_index105
+def snippet_for_search_single_index106
   # >SEPARATOR searchSingleIndex override_default_query_type
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6514,7 +6610,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_remove_words_if_no_results
-def snippet_for_search_single_index106
+def snippet_for_search_single_index107
   # >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6537,7 +6633,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_advanced_syntax_search_time
-def snippet_for_search_single_index107
+def snippet_for_search_single_index108
   # >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6560,7 +6656,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # overide_default_optional_words
-def snippet_for_search_single_index108
+def snippet_for_search_single_index109
   # >SEPARATOR searchSingleIndex overide_default_optional_words
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6583,7 +6679,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # disabling_exact_for_some_attributes_search_time
-def snippet_for_search_single_index109
+def snippet_for_search_single_index110
   # >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6606,7 +6702,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_exact_single_word_query
-def snippet_for_search_single_index110
+def snippet_for_search_single_index111
   # >SEPARATOR searchSingleIndex override_default_exact_single_word_query
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6629,7 +6725,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_aternative_as_exact
-def snippet_for_search_single_index111
+def snippet_for_search_single_index112
   # >SEPARATOR searchSingleIndex override_default_aternative_as_exact
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6652,7 +6748,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_advanced_syntax_exact_phrase
-def snippet_for_search_single_index112
+def snippet_for_search_single_index113
   # >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6679,7 +6775,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_advanced_syntax_exclude_words
-def snippet_for_search_single_index113
+def snippet_for_search_single_index114
   # >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6706,7 +6802,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_distinct
-def snippet_for_search_single_index114
+def snippet_for_search_single_index115
   # >SEPARATOR searchSingleIndex override_distinct
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6729,7 +6825,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # get_ranking_info
-def snippet_for_search_single_index115
+def snippet_for_search_single_index116
   # >SEPARATOR searchSingleIndex get_ranking_info
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6752,7 +6848,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # disable_click_analytics
-def snippet_for_search_single_index116
+def snippet_for_search_single_index117
   # >SEPARATOR searchSingleIndex disable_click_analytics
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6775,7 +6871,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # enable_click_analytics
-def snippet_for_search_single_index117
+def snippet_for_search_single_index118
   # >SEPARATOR searchSingleIndex enable_click_analytics
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6798,7 +6894,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # disable_analytics
-def snippet_for_search_single_index118
+def snippet_for_search_single_index119
   # >SEPARATOR searchSingleIndex disable_analytics
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6821,7 +6917,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # add_analytics_tags
-def snippet_for_search_single_index119
+def snippet_for_search_single_index120
   # >SEPARATOR searchSingleIndex add_analytics_tags
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6844,7 +6940,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # disable_synonyms
-def snippet_for_search_single_index120
+def snippet_for_search_single_index121
   # >SEPARATOR searchSingleIndex disable_synonyms
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6867,7 +6963,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_replace_synonyms_in_highlights
-def snippet_for_search_single_index121
+def snippet_for_search_single_index122
   # >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6890,7 +6986,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_min_proximity
-def snippet_for_search_single_index122
+def snippet_for_search_single_index123
   # >SEPARATOR searchSingleIndex override_min_proximity
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6913,7 +7009,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_default_field
-def snippet_for_search_single_index123
+def snippet_for_search_single_index124
   # >SEPARATOR searchSingleIndex override_default_field
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6936,7 +7032,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # override_percentile_computation
-def snippet_for_search_single_index124
+def snippet_for_search_single_index125
   # >SEPARATOR searchSingleIndex override_percentile_computation
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6959,7 +7055,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_ab_test
-def snippet_for_search_single_index125
+def snippet_for_search_single_index126
   # >SEPARATOR searchSingleIndex set_ab_test
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6982,7 +7078,7 @@ end
 # Snippet for the searchSingleIndex method.
 #
 # set_enable_re_ranking
-def snippet_for_search_single_index126
+def snippet_for_search_single_index127
   # >SEPARATOR searchSingleIndex set_enable_re_ranking
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

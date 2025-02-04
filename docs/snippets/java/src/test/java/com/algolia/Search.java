@@ -11,9 +11,23 @@ class SnippetSearchClient {
 
   // Snippet for the addApiKey method.
   //
-  // addApiKey
+  // minimal
   void snippetForAddApiKey() throws Exception {
-    // >SEPARATOR addApiKey default
+    // >SEPARATOR addApiKey minimal
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.addApiKey(new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setDescription("my new api key"));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the addApiKey method.
+  //
+  // all
+  void snippetForAddApiKey1() throws Exception {
+    // >SEPARATOR addApiKey all
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
@@ -1253,9 +1267,49 @@ class SnippetSearchClient {
 
   // Snippet for the getObjects method.
   //
-  // getObjects
+  // by ID
   void snippetForGetObjects() throws Exception {
-    // >SEPARATOR getObjects default
+    // >SEPARATOR getObjects by ID
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.getObjects(
+      new GetObjectsParams().setRequests(Arrays.asList(new GetObjectsRequest().setObjectID("uniqueID").setIndexName("<YOUR_INDEX_NAME>"))),
+      Hit.class
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the getObjects method.
+  //
+  // multiple IDs
+  void snippetForGetObjects1() throws Exception {
+    // >SEPARATOR getObjects multiple IDs
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.getObjects(
+      new GetObjectsParams()
+        .setRequests(
+          Arrays.asList(
+            new GetObjectsRequest().setObjectID("uniqueID1").setIndexName("<YOUR_INDEX_NAME>"),
+            new GetObjectsRequest().setObjectID("uniqueID2").setIndexName("<YOUR_INDEX_NAME>")
+          )
+        ),
+      Hit.class
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the getObjects method.
+  //
+  // with attributesToRetrieve
+  void snippetForGetObjects2() throws Exception {
+    // >SEPARATOR getObjects with attributesToRetrieve
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
@@ -3601,8 +3655,22 @@ class SnippetSearchClient {
 
   // Snippet for the searchSingleIndex method.
   //
-  // distinct
+  // filters boolean
   void snippetForSearchSingleIndex6() throws Exception {
+    // >SEPARATOR searchSingleIndex filters boolean
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFilters("is_available:true"), Hit.class);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchSingleIndex method.
+  //
+  // distinct
+  void snippetForSearchSingleIndex7() throws Exception {
     // >SEPARATOR searchSingleIndex distinct
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3616,7 +3684,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // filtersNumeric
-  void snippetForSearchSingleIndex7() throws Exception {
+  void snippetForSearchSingleIndex8() throws Exception {
     // >SEPARATOR searchSingleIndex filtersNumeric
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3630,7 +3698,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // filtersTimestamp
-  void snippetForSearchSingleIndex8() throws Exception {
+  void snippetForSearchSingleIndex9() throws Exception {
     // >SEPARATOR searchSingleIndex filtersTimestamp
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3648,7 +3716,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // filtersSumOrFiltersScoresFalse
-  void snippetForSearchSingleIndex9() throws Exception {
+  void snippetForSearchSingleIndex10() throws Exception {
     // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3668,7 +3736,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // filtersSumOrFiltersScoresTrue
-  void snippetForSearchSingleIndex10() throws Exception {
+  void snippetForSearchSingleIndex11() throws Exception {
     // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3688,7 +3756,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // filtersStephenKing
-  void snippetForSearchSingleIndex11() throws Exception {
+  void snippetForSearchSingleIndex12() throws Exception {
     // >SEPARATOR searchSingleIndex filtersStephenKing
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3702,7 +3770,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // filtersNotTags
-  void snippetForSearchSingleIndex12() throws Exception {
+  void snippetForSearchSingleIndex13() throws Exception {
     // >SEPARATOR searchSingleIndex filtersNotTags
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3716,7 +3784,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facetFiltersList
-  void snippetForSearchSingleIndex13() throws Exception {
+  void snippetForSearchSingleIndex14() throws Exception {
     // >SEPARATOR searchSingleIndex facetFiltersList
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3742,7 +3810,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facetFiltersBook
-  void snippetForSearchSingleIndex14() throws Exception {
+  void snippetForSearchSingleIndex15() throws Exception {
     // >SEPARATOR searchSingleIndex facetFiltersBook
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3760,7 +3828,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facetFiltersAND
-  void snippetForSearchSingleIndex15() throws Exception {
+  void snippetForSearchSingleIndex16() throws Exception {
     // >SEPARATOR searchSingleIndex facetFiltersAND
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3780,7 +3848,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facetFiltersOR
-  void snippetForSearchSingleIndex16() throws Exception {
+  void snippetForSearchSingleIndex17() throws Exception {
     // >SEPARATOR searchSingleIndex facetFiltersOR
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3804,7 +3872,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facetFiltersCombined
-  void snippetForSearchSingleIndex17() throws Exception {
+  void snippetForSearchSingleIndex18() throws Exception {
     // >SEPARATOR searchSingleIndex facetFiltersCombined
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3831,7 +3899,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facetFiltersNeg
-  void snippetForSearchSingleIndex18() throws Exception {
+  void snippetForSearchSingleIndex19() throws Exception {
     // >SEPARATOR searchSingleIndex facetFiltersNeg
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3845,7 +3913,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // filtersAndFacetFilters
-  void snippetForSearchSingleIndex19() throws Exception {
+  void snippetForSearchSingleIndex20() throws Exception {
     // >SEPARATOR searchSingleIndex filtersAndFacetFilters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3865,7 +3933,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facet author genre
-  void snippetForSearchSingleIndex20() throws Exception {
+  void snippetForSearchSingleIndex21() throws Exception {
     // >SEPARATOR searchSingleIndex facet author genre
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3879,7 +3947,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facet wildcard
-  void snippetForSearchSingleIndex21() throws Exception {
+  void snippetForSearchSingleIndex22() throws Exception {
     // >SEPARATOR searchSingleIndex facet wildcard
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3893,7 +3961,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // maxValuesPerFacet
-  void snippetForSearchSingleIndex22() throws Exception {
+  void snippetForSearchSingleIndex23() throws Exception {
     // >SEPARATOR searchSingleIndex maxValuesPerFacet
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3907,7 +3975,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // aroundLatLng
-  void snippetForSearchSingleIndex23() throws Exception {
+  void snippetForSearchSingleIndex24() throws Exception {
     // >SEPARATOR searchSingleIndex aroundLatLng
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3921,7 +3989,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // aroundLatLngViaIP
-  void snippetForSearchSingleIndex24() throws Exception {
+  void snippetForSearchSingleIndex25() throws Exception {
     // >SEPARATOR searchSingleIndex aroundLatLngViaIP
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3935,7 +4003,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // aroundRadius
-  void snippetForSearchSingleIndex25() throws Exception {
+  void snippetForSearchSingleIndex26() throws Exception {
     // >SEPARATOR searchSingleIndex aroundRadius
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3953,7 +4021,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // insideBoundingBox
-  void snippetForSearchSingleIndex26() throws Exception {
+  void snippetForSearchSingleIndex27() throws Exception {
     // >SEPARATOR searchSingleIndex insideBoundingBox
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -3964,42 +4032,6 @@ class SnippetSearchClient {
       new SearchParamsObject()
         .setInsideBoundingBox(
           InsideBoundingBox.of(Arrays.asList(Arrays.asList(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875)))
-        ),
-      Hit.class
-    );
-    // >LOG
-    // SEPARATOR<
-  }
-
-  // Snippet for the searchSingleIndex method.
-  //
-  // insidePolygon
-  void snippetForSearchSingleIndex27() throws Exception {
-    // >SEPARATOR searchSingleIndex insidePolygon
-    // Initialize the client
-    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
-
-    // Call the API
-    client.searchSingleIndex(
-      "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setInsidePolygon(
-          Arrays.asList(
-            Arrays.asList(
-              42.01,
-              -124.31,
-              48.835509470063045,
-              -124.40453125000005,
-              45.01082951668149,
-              -65.95726562500005,
-              31.247243545293433,
-              -81.06578125000004,
-              25.924152577235226,
-              -97.68234374999997,
-              32.300311895879545,
-              -117.54828125
-            )
-          )
         ),
       Hit.class
     );
@@ -4045,8 +4077,44 @@ class SnippetSearchClient {
 
   // Snippet for the searchSingleIndex method.
   //
-  // optionalFilters
+  // insidePolygon
   void snippetForSearchSingleIndex29() throws Exception {
+    // >SEPARATOR searchSingleIndex insidePolygon
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject()
+        .setInsidePolygon(
+          Arrays.asList(
+            Arrays.asList(
+              42.01,
+              -124.31,
+              48.835509470063045,
+              -124.40453125000005,
+              45.01082951668149,
+              -65.95726562500005,
+              31.247243545293433,
+              -81.06578125000004,
+              25.924152577235226,
+              -97.68234374999997,
+              32.300311895879545,
+              -117.54828125
+            )
+          )
+        ),
+      Hit.class
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchSingleIndex method.
+  //
+  // optionalFilters
+  void snippetForSearchSingleIndex30() throws Exception {
     // >SEPARATOR searchSingleIndex optionalFilters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4064,7 +4132,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // optionalFiltersMany
-  void snippetForSearchSingleIndex30() throws Exception {
+  void snippetForSearchSingleIndex31() throws Exception {
     // >SEPARATOR searchSingleIndex optionalFiltersMany
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4091,7 +4159,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // optionalFiltersSimple
-  void snippetForSearchSingleIndex31() throws Exception {
+  void snippetForSearchSingleIndex32() throws Exception {
     // >SEPARATOR searchSingleIndex optionalFiltersSimple
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4112,7 +4180,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // restrictSearchableAttributes
-  void snippetForSearchSingleIndex32() throws Exception {
+  void snippetForSearchSingleIndex33() throws Exception {
     // >SEPARATOR searchSingleIndex restrictSearchableAttributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4130,7 +4198,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // getRankingInfo
-  void snippetForSearchSingleIndex33() throws Exception {
+  void snippetForSearchSingleIndex34() throws Exception {
     // >SEPARATOR searchSingleIndex getRankingInfo
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4144,7 +4212,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // clickAnalytics
-  void snippetForSearchSingleIndex34() throws Exception {
+  void snippetForSearchSingleIndex35() throws Exception {
     // >SEPARATOR searchSingleIndex clickAnalytics
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4158,7 +4226,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // clickAnalyticsUserToken
-  void snippetForSearchSingleIndex35() throws Exception {
+  void snippetForSearchSingleIndex36() throws Exception {
     // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4172,7 +4240,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enablePersonalization
-  void snippetForSearchSingleIndex36() throws Exception {
+  void snippetForSearchSingleIndex37() throws Exception {
     // >SEPARATOR searchSingleIndex enablePersonalization
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4190,7 +4258,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // userToken
-  void snippetForSearchSingleIndex37() throws Exception {
+  void snippetForSearchSingleIndex38() throws Exception {
     // >SEPARATOR searchSingleIndex userToken
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4204,7 +4272,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // userToken1234
-  void snippetForSearchSingleIndex38() throws Exception {
+  void snippetForSearchSingleIndex39() throws Exception {
     // >SEPARATOR searchSingleIndex userToken1234
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4218,7 +4286,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // analyticsTag
-  void snippetForSearchSingleIndex39() throws Exception {
+  void snippetForSearchSingleIndex40() throws Exception {
     // >SEPARATOR searchSingleIndex analyticsTag
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4236,7 +4304,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facetFiltersUsers
-  void snippetForSearchSingleIndex40() throws Exception {
+  void snippetForSearchSingleIndex41() throws Exception {
     // >SEPARATOR searchSingleIndex facetFiltersUsers
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4255,7 +4323,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // buildTheQuery
-  void snippetForSearchSingleIndex41() throws Exception {
+  void snippetForSearchSingleIndex42() throws Exception {
     // >SEPARATOR searchSingleIndex buildTheQuery
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4276,7 +4344,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // attributesToHighlightOverride
-  void snippetForSearchSingleIndex42() throws Exception {
+  void snippetForSearchSingleIndex43() throws Exception {
     // >SEPARATOR searchSingleIndex attributesToHighlightOverride
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4294,7 +4362,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // disableTypoToleranceOnAttributes
-  void snippetForSearchSingleIndex43() throws Exception {
+  void snippetForSearchSingleIndex44() throws Exception {
     // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4312,7 +4380,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_a_query
-  void snippetForSearchSingleIndex44() throws Exception {
+  void snippetForSearchSingleIndex45() throws Exception {
     // >SEPARATOR searchSingleIndex search_a_query
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4326,7 +4394,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_everything
-  void snippetForSearchSingleIndex45() throws Exception {
+  void snippetForSearchSingleIndex46() throws Exception {
     // >SEPARATOR searchSingleIndex search_everything
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4340,7 +4408,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // api_filtering_range_example
-  void snippetForSearchSingleIndex46() throws Exception {
+  void snippetForSearchSingleIndex47() throws Exception {
     // >SEPARATOR searchSingleIndex api_filtering_range_example
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4354,7 +4422,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_a_query
-  void snippetForSearchSingleIndex47() throws Exception {
+  void snippetForSearchSingleIndex48() throws Exception {
     // >SEPARATOR searchSingleIndex search_a_query
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4375,7 +4443,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_retrievable_attributes
-  void snippetForSearchSingleIndex48() throws Exception {
+  void snippetForSearchSingleIndex49() throws Exception {
     // >SEPARATOR searchSingleIndex override_retrievable_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4393,7 +4461,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // restrict_searchable_attributes
-  void snippetForSearchSingleIndex49() throws Exception {
+  void snippetForSearchSingleIndex50() throws Exception {
     // >SEPARATOR searchSingleIndex restrict_searchable_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4411,7 +4479,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_relevancy
-  void snippetForSearchSingleIndex50() throws Exception {
+  void snippetForSearchSingleIndex51() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_relevancy
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4425,7 +4493,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // apply_filters
-  void snippetForSearchSingleIndex51() throws Exception {
+  void snippetForSearchSingleIndex52() throws Exception {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4443,7 +4511,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // apply_all_filters
-  void snippetForSearchSingleIndex52() throws Exception {
+  void snippetForSearchSingleIndex53() throws Exception {
     // >SEPARATOR searchSingleIndex apply_all_filters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4467,7 +4535,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // escape_spaces
-  void snippetForSearchSingleIndex53() throws Exception {
+  void snippetForSearchSingleIndex54() throws Exception {
     // >SEPARATOR searchSingleIndex escape_spaces
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4485,7 +4553,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // escape_keywords
-  void snippetForSearchSingleIndex54() throws Exception {
+  void snippetForSearchSingleIndex55() throws Exception {
     // >SEPARATOR searchSingleIndex escape_keywords
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4499,7 +4567,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // escape_single_quotes
-  void snippetForSearchSingleIndex55() throws Exception {
+  void snippetForSearchSingleIndex56() throws Exception {
     // >SEPARATOR searchSingleIndex escape_single_quotes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4517,7 +4585,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // escape_double_quotes
-  void snippetForSearchSingleIndex56() throws Exception {
+  void snippetForSearchSingleIndex57() throws Exception {
     // >SEPARATOR searchSingleIndex escape_double_quotes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4535,7 +4603,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // apply_filters
-  void snippetForSearchSingleIndex57() throws Exception {
+  void snippetForSearchSingleIndex58() throws Exception {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4555,7 +4623,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // apply_negative_filters
-  void snippetForSearchSingleIndex58() throws Exception {
+  void snippetForSearchSingleIndex59() throws Exception {
     // >SEPARATOR searchSingleIndex apply_negative_filters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4575,7 +4643,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // apply_numeric_filters
-  void snippetForSearchSingleIndex59() throws Exception {
+  void snippetForSearchSingleIndex60() throws Exception {
     // >SEPARATOR searchSingleIndex apply_numeric_filters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4602,7 +4670,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // apply_tag_filters
-  void snippetForSearchSingleIndex60() throws Exception {
+  void snippetForSearchSingleIndex61() throws Exception {
     // >SEPARATOR searchSingleIndex apply_tag_filters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4624,7 +4692,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // apply_filters
-  void snippetForSearchSingleIndex61() throws Exception {
+  void snippetForSearchSingleIndex62() throws Exception {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4638,7 +4706,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // facets_all
-  void snippetForSearchSingleIndex62() throws Exception {
+  void snippetForSearchSingleIndex63() throws Exception {
     // >SEPARATOR searchSingleIndex facets_all
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4652,7 +4720,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // retrieve_only_some_facets
-  void snippetForSearchSingleIndex63() throws Exception {
+  void snippetForSearchSingleIndex64() throws Exception {
     // >SEPARATOR searchSingleIndex retrieve_only_some_facets
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4670,7 +4738,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_max_values_per_facet
-  void snippetForSearchSingleIndex64() throws Exception {
+  void snippetForSearchSingleIndex65() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4684,7 +4752,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_faceting_after_distinct
-  void snippetForSearchSingleIndex65() throws Exception {
+  void snippetForSearchSingleIndex66() throws Exception {
     // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4698,7 +4766,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // sort_facet_values_alphabetically
-  void snippetForSearchSingleIndex66() throws Exception {
+  void snippetForSearchSingleIndex67() throws Exception {
     // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4712,7 +4780,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_attributes_to_snippet
-  void snippetForSearchSingleIndex67() throws Exception {
+  void snippetForSearchSingleIndex68() throws Exception {
     // >SEPARATOR searchSingleIndex override_attributes_to_snippet
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4730,7 +4798,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_highlight_pre_tag
-  void snippetForSearchSingleIndex68() throws Exception {
+  void snippetForSearchSingleIndex69() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4744,7 +4812,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_highlight_post_tag
-  void snippetForSearchSingleIndex69() throws Exception {
+  void snippetForSearchSingleIndex70() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4758,7 +4826,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_snippet_ellipsis_text
-  void snippetForSearchSingleIndex70() throws Exception {
+  void snippetForSearchSingleIndex71() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4772,7 +4840,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_restrict_highlight_and_snippet_arrays
-  void snippetForSearchSingleIndex71() throws Exception {
+  void snippetForSearchSingleIndex72() throws Exception {
     // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4790,7 +4858,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // access_page
-  void snippetForSearchSingleIndex72() throws Exception {
+  void snippetForSearchSingleIndex73() throws Exception {
     // >SEPARATOR searchSingleIndex access_page
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4804,7 +4872,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_hits_per_page
-  void snippetForSearchSingleIndex73() throws Exception {
+  void snippetForSearchSingleIndex74() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_hits_per_page
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4818,7 +4886,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // get_nth_hit
-  void snippetForSearchSingleIndex74() throws Exception {
+  void snippetForSearchSingleIndex75() throws Exception {
     // >SEPARATOR searchSingleIndex get_nth_hit
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4832,7 +4900,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // get_n_results
-  void snippetForSearchSingleIndex75() throws Exception {
+  void snippetForSearchSingleIndex76() throws Exception {
     // >SEPARATOR searchSingleIndex get_n_results
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4846,7 +4914,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_min_word_size_for_one_typo
-  void snippetForSearchSingleIndex76() throws Exception {
+  void snippetForSearchSingleIndex77() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4860,7 +4928,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_min_word_size_for_two_typos
-  void snippetForSearchSingleIndex77() throws Exception {
+  void snippetForSearchSingleIndex78() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4874,7 +4942,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_typo_tolerance_mode
-  void snippetForSearchSingleIndex78() throws Exception {
+  void snippetForSearchSingleIndex79() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4892,7 +4960,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // disable_typos_on_numeric_tokens_at_search_time
-  void snippetForSearchSingleIndex79() throws Exception {
+  void snippetForSearchSingleIndex80() throws Exception {
     // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4910,7 +4978,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_around_a_position
-  void snippetForSearchSingleIndex80() throws Exception {
+  void snippetForSearchSingleIndex81() throws Exception {
     // >SEPARATOR searchSingleIndex search_around_a_position
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4924,7 +4992,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_around_server_ip
-  void snippetForSearchSingleIndex81() throws Exception {
+  void snippetForSearchSingleIndex82() throws Exception {
     // >SEPARATOR searchSingleIndex search_around_server_ip
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4944,7 +5012,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_around_radius
-  void snippetForSearchSingleIndex82() throws Exception {
+  void snippetForSearchSingleIndex83() throws Exception {
     // >SEPARATOR searchSingleIndex set_around_radius
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4962,7 +5030,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // disable_automatic_radius
-  void snippetForSearchSingleIndex83() throws Exception {
+  void snippetForSearchSingleIndex84() throws Exception {
     // >SEPARATOR searchSingleIndex disable_automatic_radius
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4980,7 +5048,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_geo_search_precision
-  void snippetForSearchSingleIndex84() throws Exception {
+  void snippetForSearchSingleIndex85() throws Exception {
     // >SEPARATOR searchSingleIndex set_geo_search_precision
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -4998,7 +5066,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_geo_search_precision_non_linear
-  void snippetForSearchSingleIndex85() throws Exception {
+  void snippetForSearchSingleIndex86() throws Exception {
     // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5020,7 +5088,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_minimum_geo_search_radius
-  void snippetForSearchSingleIndex86() throws Exception {
+  void snippetForSearchSingleIndex87() throws Exception {
     // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5034,7 +5102,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_inside_rectangular_area
-  void snippetForSearchSingleIndex87() throws Exception {
+  void snippetForSearchSingleIndex88() throws Exception {
     // >SEPARATOR searchSingleIndex search_inside_rectangular_area
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5056,7 +5124,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_inside_multiple_rectangular_areas
-  void snippetForSearchSingleIndex88() throws Exception {
+  void snippetForSearchSingleIndex89() throws Exception {
     // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5083,7 +5151,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_inside_polygon_area
-  void snippetForSearchSingleIndex89() throws Exception {
+  void snippetForSearchSingleIndex90() throws Exception {
     // >SEPARATOR searchSingleIndex search_inside_polygon_area
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5105,7 +5173,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // search_inside_multiple_polygon_areas
-  void snippetForSearchSingleIndex90() throws Exception {
+  void snippetForSearchSingleIndex91() throws Exception {
     // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5139,26 +5207,6 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_querylanguages_override
-  void snippetForSearchSingleIndex91() throws Exception {
-    // >SEPARATOR searchSingleIndex set_querylanguages_override
-    // Initialize the client
-    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
-
-    // Call the API
-    client.searchSingleIndex(
-      "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setQuery("query")
-        .setIgnorePlurals(IgnorePlurals.of(Arrays.asList(SupportedLanguage.CA, SupportedLanguage.ES))),
-      Hit.class
-    );
-    // >LOG
-    // SEPARATOR<
-  }
-
-  // Snippet for the searchSingleIndex method.
-  //
-  // set_querylanguages_override
   void snippetForSearchSingleIndex92() throws Exception {
     // >SEPARATOR searchSingleIndex set_querylanguages_override
     // Initialize the client
@@ -5169,7 +5217,7 @@ class SnippetSearchClient {
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
-        .setRemoveStopWords(RemoveStopWords.of(Arrays.asList(SupportedLanguage.CA, SupportedLanguage.ES))),
+        .setIgnorePlurals(IgnorePlurals.of(Arrays.asList(SupportedLanguage.CA, SupportedLanguage.ES))),
       Hit.class
     );
     // >LOG
@@ -5198,8 +5246,28 @@ class SnippetSearchClient {
 
   // Snippet for the searchSingleIndex method.
   //
-  // set_querylanguages_with_japanese_query
+  // set_querylanguages_override
   void snippetForSearchSingleIndex94() throws Exception {
+    // >SEPARATOR searchSingleIndex set_querylanguages_override
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject()
+        .setQuery("query")
+        .setRemoveStopWords(RemoveStopWords.of(Arrays.asList(SupportedLanguage.CA, SupportedLanguage.ES))),
+      Hit.class
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchSingleIndex method.
+  //
+  // set_querylanguages_with_japanese_query
+  void snippetForSearchSingleIndex95() throws Exception {
     // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5217,7 +5285,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_natural_languages
-  void snippetForSearchSingleIndex95() throws Exception {
+  void snippetForSearchSingleIndex96() throws Exception {
     // >SEPARATOR searchSingleIndex set_natural_languages
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5235,7 +5303,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_natural_languages_with_query
-  void snippetForSearchSingleIndex96() throws Exception {
+  void snippetForSearchSingleIndex97() throws Exception {
     // >SEPARATOR searchSingleIndex override_natural_languages_with_query
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5256,7 +5324,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_decompound_query_search_time
-  void snippetForSearchSingleIndex97() throws Exception {
+  void snippetForSearchSingleIndex98() throws Exception {
     // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5270,7 +5338,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_rules_search_time
-  void snippetForSearchSingleIndex98() throws Exception {
+  void snippetForSearchSingleIndex99() throws Exception {
     // >SEPARATOR searchSingleIndex enable_rules_search_time
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5284,7 +5352,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_rule_contexts
-  void snippetForSearchSingleIndex99() throws Exception {
+  void snippetForSearchSingleIndex100() throws Exception {
     // >SEPARATOR searchSingleIndex set_rule_contexts
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5302,7 +5370,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_personalization
-  void snippetForSearchSingleIndex100() throws Exception {
+  void snippetForSearchSingleIndex101() throws Exception {
     // >SEPARATOR searchSingleIndex enable_personalization
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5316,7 +5384,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_personalization_with_user_token
-  void snippetForSearchSingleIndex101() throws Exception {
+  void snippetForSearchSingleIndex102() throws Exception {
     // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5334,7 +5402,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // personalization_impact
-  void snippetForSearchSingleIndex102() throws Exception {
+  void snippetForSearchSingleIndex103() throws Exception {
     // >SEPARATOR searchSingleIndex personalization_impact
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5348,7 +5416,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_user_token
-  void snippetForSearchSingleIndex103() throws Exception {
+  void snippetForSearchSingleIndex104() throws Exception {
     // >SEPARATOR searchSingleIndex set_user_token
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5362,7 +5430,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_user_token_with_personalization
-  void snippetForSearchSingleIndex104() throws Exception {
+  void snippetForSearchSingleIndex105() throws Exception {
     // >SEPARATOR searchSingleIndex set_user_token_with_personalization
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5380,7 +5448,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_query_type
-  void snippetForSearchSingleIndex105() throws Exception {
+  void snippetForSearchSingleIndex106() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_query_type
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5394,7 +5462,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_remove_words_if_no_results
-  void snippetForSearchSingleIndex106() throws Exception {
+  void snippetForSearchSingleIndex107() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5412,7 +5480,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_advanced_syntax_search_time
-  void snippetForSearchSingleIndex107() throws Exception {
+  void snippetForSearchSingleIndex108() throws Exception {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5426,7 +5494,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // overide_default_optional_words
-  void snippetForSearchSingleIndex108() throws Exception {
+  void snippetForSearchSingleIndex109() throws Exception {
     // >SEPARATOR searchSingleIndex overide_default_optional_words
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5444,7 +5512,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // disabling_exact_for_some_attributes_search_time
-  void snippetForSearchSingleIndex109() throws Exception {
+  void snippetForSearchSingleIndex110() throws Exception {
     // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5462,7 +5530,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_exact_single_word_query
-  void snippetForSearchSingleIndex110() throws Exception {
+  void snippetForSearchSingleIndex111() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5480,7 +5548,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_aternative_as_exact
-  void snippetForSearchSingleIndex111() throws Exception {
+  void snippetForSearchSingleIndex112() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5498,7 +5566,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_advanced_syntax_exact_phrase
-  void snippetForSearchSingleIndex112() throws Exception {
+  void snippetForSearchSingleIndex113() throws Exception {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5519,7 +5587,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_advanced_syntax_exclude_words
-  void snippetForSearchSingleIndex113() throws Exception {
+  void snippetForSearchSingleIndex114() throws Exception {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5540,7 +5608,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_distinct
-  void snippetForSearchSingleIndex114() throws Exception {
+  void snippetForSearchSingleIndex115() throws Exception {
     // >SEPARATOR searchSingleIndex override_distinct
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5554,7 +5622,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // get_ranking_info
-  void snippetForSearchSingleIndex115() throws Exception {
+  void snippetForSearchSingleIndex116() throws Exception {
     // >SEPARATOR searchSingleIndex get_ranking_info
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5568,7 +5636,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // disable_click_analytics
-  void snippetForSearchSingleIndex116() throws Exception {
+  void snippetForSearchSingleIndex117() throws Exception {
     // >SEPARATOR searchSingleIndex disable_click_analytics
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5582,7 +5650,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // enable_click_analytics
-  void snippetForSearchSingleIndex117() throws Exception {
+  void snippetForSearchSingleIndex118() throws Exception {
     // >SEPARATOR searchSingleIndex enable_click_analytics
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5596,7 +5664,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // disable_analytics
-  void snippetForSearchSingleIndex118() throws Exception {
+  void snippetForSearchSingleIndex119() throws Exception {
     // >SEPARATOR searchSingleIndex disable_analytics
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5610,7 +5678,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // add_analytics_tags
-  void snippetForSearchSingleIndex119() throws Exception {
+  void snippetForSearchSingleIndex120() throws Exception {
     // >SEPARATOR searchSingleIndex add_analytics_tags
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5628,7 +5696,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // disable_synonyms
-  void snippetForSearchSingleIndex120() throws Exception {
+  void snippetForSearchSingleIndex121() throws Exception {
     // >SEPARATOR searchSingleIndex disable_synonyms
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5642,7 +5710,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_replace_synonyms_in_highlights
-  void snippetForSearchSingleIndex121() throws Exception {
+  void snippetForSearchSingleIndex122() throws Exception {
     // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5660,7 +5728,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_min_proximity
-  void snippetForSearchSingleIndex122() throws Exception {
+  void snippetForSearchSingleIndex123() throws Exception {
     // >SEPARATOR searchSingleIndex override_min_proximity
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5674,7 +5742,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_default_field
-  void snippetForSearchSingleIndex123() throws Exception {
+  void snippetForSearchSingleIndex124() throws Exception {
     // >SEPARATOR searchSingleIndex override_default_field
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5692,7 +5760,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // override_percentile_computation
-  void snippetForSearchSingleIndex124() throws Exception {
+  void snippetForSearchSingleIndex125() throws Exception {
     // >SEPARATOR searchSingleIndex override_percentile_computation
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5706,7 +5774,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_ab_test
-  void snippetForSearchSingleIndex125() throws Exception {
+  void snippetForSearchSingleIndex126() throws Exception {
     // >SEPARATOR searchSingleIndex set_ab_test
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -5720,7 +5788,7 @@ class SnippetSearchClient {
   // Snippet for the searchSingleIndex method.
   //
   // set_enable_re_ranking
-  void snippetForSearchSingleIndex126() throws Exception {
+  void snippetForSearchSingleIndex127() throws Exception {
     // >SEPARATOR searchSingleIndex set_enable_re_ranking
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");

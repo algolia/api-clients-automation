@@ -301,6 +301,45 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("with algolia user id") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.searchSingleIndex(
+        indexName = "playlists",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("foo")
+          )
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("X-Algolia-User-ID", "user1234")
+            .build()
+        )
+      ),
+      Duration.Inf
+    )
+  }
+
   test("switch API key") {
 
     val client = SearchClient(

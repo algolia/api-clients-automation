@@ -6,7 +6,34 @@ import 'package:test/test.dart';
 void main() {
   // addApiKey
   test(
-    'addApiKey',
+    'minimal',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.addApiKey(
+        apiKey: ApiKey(
+          acl: [
+            Acl.fromJson("search"),
+            Acl.fromJson("addObject"),
+          ],
+          description: "my new api key",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/keys');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"acl":["search","addObject"],"description":"my new api key"}""");
+      },
+    ),
+  );
+
+  // addApiKey
+  test(
+    'all',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1492,7 +1519,67 @@ void main() {
 
   // getObjects
   test(
-    'getObjects',
+    'by ID',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getObjects(
+        getObjectsParams: GetObjectsParams(
+          requests: [
+            GetObjectsRequest(
+              objectID: "uniqueID",
+              indexName: "theIndexName",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/objects');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"objectID":"uniqueID","indexName":"theIndexName"}]}""");
+      },
+    ),
+  );
+
+  // getObjects
+  test(
+    'multiple IDs',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getObjects(
+        getObjectsParams: GetObjectsParams(
+          requests: [
+            GetObjectsRequest(
+              objectID: "uniqueID1",
+              indexName: "theIndexName1",
+            ),
+            GetObjectsRequest(
+              objectID: "uniqueID2",
+              indexName: "theIndexName2",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/objects');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"objectID":"uniqueID1","indexName":"theIndexName1"},{"objectID":"uniqueID2","indexName":"theIndexName2"}]}""");
+      },
+    ),
+  );
+
+  // getObjects
+  test(
+    'with attributesToRetrieve',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -4404,6 +4491,29 @@ void main() {
         expect(request.method, 'post');
         expectBody(
             request.body, """{"filters":"country:US AND price.gross < 2.0"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filters boolean',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          filters: "is_available:true",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"filters":"is_available:true"}""");
       },
     ),
   );

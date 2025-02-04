@@ -9,9 +9,37 @@ def snippet_for_add_api_key():
     """
     Snippet for the addApiKey method.
 
-    addApiKey
+    minimal
     """
-    # >SEPARATOR addApiKey default
+    # >SEPARATOR addApiKey minimal
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.add_api_key(
+        api_key={
+            "acl": [
+                "search",
+                "addObject",
+            ],
+            "description": "my new api key",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_add_api_key1():
+    """
+    Snippet for the addApiKey method.
+
+    all
+    """
+    # >SEPARATOR addApiKey all
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1692,9 +1720,71 @@ def snippet_for_get_objects():
     """
     Snippet for the getObjects method.
 
-    getObjects
+    by ID
     """
-    # >SEPARATOR getObjects default
+    # >SEPARATOR getObjects by ID
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_objects(
+        get_objects_params={
+            "requests": [
+                {
+                    "objectID": "uniqueID",
+                    "indexName": "<YOUR_INDEX_NAME>",
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_objects1():
+    """
+    Snippet for the getObjects method.
+
+    multiple IDs
+    """
+    # >SEPARATOR getObjects multiple IDs
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_objects(
+        get_objects_params={
+            "requests": [
+                {
+                    "objectID": "uniqueID1",
+                    "indexName": "<YOUR_INDEX_NAME>",
+                },
+                {
+                    "objectID": "uniqueID2",
+                    "indexName": "<YOUR_INDEX_NAME>",
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_objects2():
+    """
+    Snippet for the getObjects method.
+
+    with attributesToRetrieve
+    """
+    # >SEPARATOR getObjects with attributesToRetrieve
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5084,6 +5174,31 @@ def snippet_for_search_single_index6():
     """
     Snippet for the searchSingleIndex method.
 
+    filters boolean
+    """
+    # >SEPARATOR searchSingleIndex filters boolean
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "filters": "is_available:true",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index7():
+    """
+    Snippet for the searchSingleIndex method.
+
     distinct
     """
     # >SEPARATOR searchSingleIndex distinct
@@ -5105,7 +5220,7 @@ def snippet_for_search_single_index6():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index7():
+def snippet_for_search_single_index8():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5130,7 +5245,7 @@ def snippet_for_search_single_index7():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index8():
+def snippet_for_search_single_index9():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5155,7 +5270,7 @@ def snippet_for_search_single_index8():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index9():
+def snippet_for_search_single_index10():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5181,7 +5296,7 @@ def snippet_for_search_single_index9():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index10():
+def snippet_for_search_single_index11():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5207,7 +5322,7 @@ def snippet_for_search_single_index10():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index11():
+def snippet_for_search_single_index12():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5232,7 +5347,7 @@ def snippet_for_search_single_index11():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index12():
+def snippet_for_search_single_index13():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5257,7 +5372,7 @@ def snippet_for_search_single_index12():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index13():
+def snippet_for_search_single_index14():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5288,7 +5403,7 @@ def snippet_for_search_single_index13():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index14():
+def snippet_for_search_single_index15():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5316,7 +5431,7 @@ def snippet_for_search_single_index14():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index15():
+def snippet_for_search_single_index16():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5345,7 +5460,7 @@ def snippet_for_search_single_index15():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index16():
+def snippet_for_search_single_index17():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5376,7 +5491,7 @@ def snippet_for_search_single_index16():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index17():
+def snippet_for_search_single_index18():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5408,7 +5523,7 @@ def snippet_for_search_single_index17():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index18():
+def snippet_for_search_single_index19():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5433,7 +5548,7 @@ def snippet_for_search_single_index18():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index19():
+def snippet_for_search_single_index20():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5461,7 +5576,7 @@ def snippet_for_search_single_index19():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index20():
+def snippet_for_search_single_index21():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5489,7 +5604,7 @@ def snippet_for_search_single_index20():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index21():
+def snippet_for_search_single_index22():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5516,7 +5631,7 @@ def snippet_for_search_single_index21():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index22():
+def snippet_for_search_single_index23():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5541,7 +5656,7 @@ def snippet_for_search_single_index22():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index23():
+def snippet_for_search_single_index24():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5566,7 +5681,7 @@ def snippet_for_search_single_index23():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index24():
+def snippet_for_search_single_index25():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5591,7 +5706,7 @@ def snippet_for_search_single_index24():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index25():
+def snippet_for_search_single_index26():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5617,7 +5732,7 @@ def snippet_for_search_single_index25():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index26():
+def snippet_for_search_single_index27():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5638,46 +5753,6 @@ def snippet_for_search_single_index26():
                     65.73828125,
                     25.905859247243498,
                     128.8046875,
-                ],
-            ],
-        },
-    )
-
-    # >LOG
-    # use the class directly
-    print(response)
-    # SEPARATOR<
-
-
-def snippet_for_search_single_index27():
-    """
-    Snippet for the searchSingleIndex method.
-
-    insidePolygon
-    """
-    # >SEPARATOR searchSingleIndex insidePolygon
-    # Initialize the client
-    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
-    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-    # Call the API
-    response = client.search_single_index(
-        index_name="<YOUR_INDEX_NAME>",
-        search_params={
-            "insidePolygon": [
-                [
-                    42.01,
-                    -124.31,
-                    48.835509470063045,
-                    -124.40453125000005,
-                    45.01082951668149,
-                    -65.95726562500005,
-                    31.247243545293433,
-                    -81.06578125000004,
-                    25.924152577235226,
-                    -97.68234374999997,
-                    32.300311895879545,
-                    -117.54828125,
                 ],
             ],
         },
@@ -5733,6 +5808,46 @@ def snippet_for_search_single_index29():
     """
     Snippet for the searchSingleIndex method.
 
+    insidePolygon
+    """
+    # >SEPARATOR searchSingleIndex insidePolygon
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "insidePolygon": [
+                [
+                    42.01,
+                    -124.31,
+                    48.835509470063045,
+                    -124.40453125000005,
+                    45.01082951668149,
+                    -65.95726562500005,
+                    31.247243545293433,
+                    -81.06578125000004,
+                    25.924152577235226,
+                    -97.68234374999997,
+                    32.300311895879545,
+                    -117.54828125,
+                ],
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index30():
+    """
+    Snippet for the searchSingleIndex method.
+
     optionalFilters
     """
     # >SEPARATOR searchSingleIndex optionalFilters
@@ -5756,7 +5871,7 @@ def snippet_for_search_single_index29():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index30():
+def snippet_for_search_single_index31():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5785,7 +5900,7 @@ def snippet_for_search_single_index30():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index31():
+def snippet_for_search_single_index32():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5813,7 +5928,7 @@ def snippet_for_search_single_index31():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index32():
+def snippet_for_search_single_index33():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5840,7 +5955,7 @@ def snippet_for_search_single_index32():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index33():
+def snippet_for_search_single_index34():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5865,7 +5980,7 @@ def snippet_for_search_single_index33():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index34():
+def snippet_for_search_single_index35():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5890,7 +6005,7 @@ def snippet_for_search_single_index34():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index35():
+def snippet_for_search_single_index36():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5916,7 +6031,7 @@ def snippet_for_search_single_index35():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index36():
+def snippet_for_search_single_index37():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5942,7 +6057,7 @@ def snippet_for_search_single_index36():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index37():
+def snippet_for_search_single_index38():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5967,7 +6082,7 @@ def snippet_for_search_single_index37():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index38():
+def snippet_for_search_single_index39():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5993,7 +6108,7 @@ def snippet_for_search_single_index38():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index39():
+def snippet_for_search_single_index40():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6020,7 +6135,7 @@ def snippet_for_search_single_index39():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index40():
+def snippet_for_search_single_index41():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6048,7 +6163,7 @@ def snippet_for_search_single_index40():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index41():
+def snippet_for_search_single_index42():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6077,7 +6192,7 @@ def snippet_for_search_single_index41():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index42():
+def snippet_for_search_single_index43():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6106,7 +6221,7 @@ def snippet_for_search_single_index42():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index43():
+def snippet_for_search_single_index44():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6134,7 +6249,7 @@ def snippet_for_search_single_index43():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index44():
+def snippet_for_search_single_index45():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6159,7 +6274,7 @@ def snippet_for_search_single_index44():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index45():
+def snippet_for_search_single_index46():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6184,7 +6299,7 @@ def snippet_for_search_single_index45():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index46():
+def snippet_for_search_single_index47():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6210,7 +6325,7 @@ def snippet_for_search_single_index46():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index47():
+def snippet_for_search_single_index48():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6237,7 +6352,7 @@ def snippet_for_search_single_index47():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index48():
+def snippet_for_search_single_index49():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6266,7 +6381,7 @@ def snippet_for_search_single_index48():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index49():
+def snippet_for_search_single_index50():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6295,7 +6410,7 @@ def snippet_for_search_single_index49():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index50():
+def snippet_for_search_single_index51():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6321,7 +6436,7 @@ def snippet_for_search_single_index50():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index51():
+def snippet_for_search_single_index52():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6347,7 +6462,7 @@ def snippet_for_search_single_index51():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index52():
+def snippet_for_search_single_index53():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6373,7 +6488,7 @@ def snippet_for_search_single_index52():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index53():
+def snippet_for_search_single_index54():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6399,7 +6514,7 @@ def snippet_for_search_single_index53():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index54():
+def snippet_for_search_single_index55():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6425,7 +6540,7 @@ def snippet_for_search_single_index54():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index55():
+def snippet_for_search_single_index56():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6451,7 +6566,7 @@ def snippet_for_search_single_index55():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index56():
+def snippet_for_search_single_index57():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6477,7 +6592,7 @@ def snippet_for_search_single_index56():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index57():
+def snippet_for_search_single_index58():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6506,7 +6621,7 @@ def snippet_for_search_single_index57():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index58():
+def snippet_for_search_single_index59():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6535,7 +6650,7 @@ def snippet_for_search_single_index58():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index59():
+def snippet_for_search_single_index60():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6567,7 +6682,7 @@ def snippet_for_search_single_index59():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index60():
+def snippet_for_search_single_index61():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6599,7 +6714,7 @@ def snippet_for_search_single_index60():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index61():
+def snippet_for_search_single_index62():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6625,7 +6740,7 @@ def snippet_for_search_single_index61():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index62():
+def snippet_for_search_single_index63():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6653,7 +6768,7 @@ def snippet_for_search_single_index62():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index63():
+def snippet_for_search_single_index64():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6682,7 +6797,7 @@ def snippet_for_search_single_index63():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index64():
+def snippet_for_search_single_index65():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6708,7 +6823,7 @@ def snippet_for_search_single_index64():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index65():
+def snippet_for_search_single_index66():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6734,7 +6849,7 @@ def snippet_for_search_single_index65():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index66():
+def snippet_for_search_single_index67():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6760,7 +6875,7 @@ def snippet_for_search_single_index66():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index67():
+def snippet_for_search_single_index68():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6789,7 +6904,7 @@ def snippet_for_search_single_index67():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index68():
+def snippet_for_search_single_index69():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6815,7 +6930,7 @@ def snippet_for_search_single_index68():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index69():
+def snippet_for_search_single_index70():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6841,7 +6956,7 @@ def snippet_for_search_single_index69():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index70():
+def snippet_for_search_single_index71():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6867,7 +6982,7 @@ def snippet_for_search_single_index70():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index71():
+def snippet_for_search_single_index72():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6893,7 +7008,7 @@ def snippet_for_search_single_index71():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index72():
+def snippet_for_search_single_index73():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6919,7 +7034,7 @@ def snippet_for_search_single_index72():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index73():
+def snippet_for_search_single_index74():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6945,7 +7060,7 @@ def snippet_for_search_single_index73():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index74():
+def snippet_for_search_single_index75():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6971,7 +7086,7 @@ def snippet_for_search_single_index74():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index75():
+def snippet_for_search_single_index76():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6997,7 +7112,7 @@ def snippet_for_search_single_index75():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index76():
+def snippet_for_search_single_index77():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7023,7 +7138,7 @@ def snippet_for_search_single_index76():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index77():
+def snippet_for_search_single_index78():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7049,7 +7164,7 @@ def snippet_for_search_single_index77():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index78():
+def snippet_for_search_single_index79():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7075,7 +7190,7 @@ def snippet_for_search_single_index78():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index79():
+def snippet_for_search_single_index80():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7101,7 +7216,7 @@ def snippet_for_search_single_index79():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index80():
+def snippet_for_search_single_index81():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7127,7 +7242,7 @@ def snippet_for_search_single_index80():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index81():
+def snippet_for_search_single_index82():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7158,7 +7273,7 @@ def snippet_for_search_single_index81():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index82():
+def snippet_for_search_single_index83():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7184,7 +7299,7 @@ def snippet_for_search_single_index82():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index83():
+def snippet_for_search_single_index84():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7210,7 +7325,7 @@ def snippet_for_search_single_index83():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index84():
+def snippet_for_search_single_index85():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7236,7 +7351,7 @@ def snippet_for_search_single_index84():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index85():
+def snippet_for_search_single_index86():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7271,7 +7386,7 @@ def snippet_for_search_single_index85():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index86():
+def snippet_for_search_single_index87():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7297,7 +7412,7 @@ def snippet_for_search_single_index86():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index87():
+def snippet_for_search_single_index88():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7330,7 +7445,7 @@ def snippet_for_search_single_index87():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index88():
+def snippet_for_search_single_index89():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7369,7 +7484,7 @@ def snippet_for_search_single_index88():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index89():
+def snippet_for_search_single_index90():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7404,7 +7519,7 @@ def snippet_for_search_single_index89():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index90():
+def snippet_for_search_single_index91():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7449,35 +7564,6 @@ def snippet_for_search_single_index90():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index91():
-    """
-    Snippet for the searchSingleIndex method.
-
-    set_querylanguages_override
-    """
-    # >SEPARATOR searchSingleIndex set_querylanguages_override
-    # Initialize the client
-    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
-    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-    # Call the API
-    response = client.search_single_index(
-        index_name="<YOUR_INDEX_NAME>",
-        search_params={
-            "query": "query",
-            "ignorePlurals": [
-                "ca",
-                "es",
-            ],
-        },
-    )
-
-    # >LOG
-    # use the class directly
-    print(response)
-    # SEPARATOR<
-
-
 def snippet_for_search_single_index92():
     """
     Snippet for the searchSingleIndex method.
@@ -7494,7 +7580,7 @@ def snippet_for_search_single_index92():
         index_name="<YOUR_INDEX_NAME>",
         search_params={
             "query": "query",
-            "removeStopWords": [
+            "ignorePlurals": [
                 "ca",
                 "es",
             ],
@@ -7540,6 +7626,35 @@ def snippet_for_search_single_index94():
     """
     Snippet for the searchSingleIndex method.
 
+    set_querylanguages_override
+    """
+    # >SEPARATOR searchSingleIndex set_querylanguages_override
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "query",
+            "removeStopWords": [
+                "ca",
+                "es",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index95():
+    """
+    Snippet for the searchSingleIndex method.
+
     set_querylanguages_with_japanese_query
     """
     # >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
@@ -7565,7 +7680,7 @@ def snippet_for_search_single_index94():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index95():
+def snippet_for_search_single_index96():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7593,7 +7708,7 @@ def snippet_for_search_single_index95():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index96():
+def snippet_for_search_single_index97():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7622,7 +7737,7 @@ def snippet_for_search_single_index96():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index97():
+def snippet_for_search_single_index98():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7648,7 +7763,7 @@ def snippet_for_search_single_index97():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index98():
+def snippet_for_search_single_index99():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7674,7 +7789,7 @@ def snippet_for_search_single_index98():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index99():
+def snippet_for_search_single_index100():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7703,7 +7818,7 @@ def snippet_for_search_single_index99():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index100():
+def snippet_for_search_single_index101():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7729,7 +7844,7 @@ def snippet_for_search_single_index100():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index101():
+def snippet_for_search_single_index102():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7756,7 +7871,7 @@ def snippet_for_search_single_index101():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index102():
+def snippet_for_search_single_index103():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7782,7 +7897,7 @@ def snippet_for_search_single_index102():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index103():
+def snippet_for_search_single_index104():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7808,7 +7923,7 @@ def snippet_for_search_single_index103():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index104():
+def snippet_for_search_single_index105():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7835,7 +7950,7 @@ def snippet_for_search_single_index104():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index105():
+def snippet_for_search_single_index106():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7861,7 +7976,7 @@ def snippet_for_search_single_index105():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index106():
+def snippet_for_search_single_index107():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7887,7 +8002,7 @@ def snippet_for_search_single_index106():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index107():
+def snippet_for_search_single_index108():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7913,7 +8028,7 @@ def snippet_for_search_single_index107():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index108():
+def snippet_for_search_single_index109():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7942,7 +8057,7 @@ def snippet_for_search_single_index108():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index109():
+def snippet_for_search_single_index110():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7970,7 +8085,7 @@ def snippet_for_search_single_index109():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index110():
+def snippet_for_search_single_index111():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7996,7 +8111,7 @@ def snippet_for_search_single_index110():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index111():
+def snippet_for_search_single_index112():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8024,7 +8139,7 @@ def snippet_for_search_single_index111():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index112():
+def snippet_for_search_single_index113():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8053,7 +8168,7 @@ def snippet_for_search_single_index112():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index113():
+def snippet_for_search_single_index114():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8082,7 +8197,7 @@ def snippet_for_search_single_index113():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index114():
+def snippet_for_search_single_index115():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8108,7 +8223,7 @@ def snippet_for_search_single_index114():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index115():
+def snippet_for_search_single_index116():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8134,7 +8249,7 @@ def snippet_for_search_single_index115():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index116():
+def snippet_for_search_single_index117():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8160,7 +8275,7 @@ def snippet_for_search_single_index116():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index117():
+def snippet_for_search_single_index118():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8186,7 +8301,7 @@ def snippet_for_search_single_index117():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index118():
+def snippet_for_search_single_index119():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8212,7 +8327,7 @@ def snippet_for_search_single_index118():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index119():
+def snippet_for_search_single_index120():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8241,7 +8356,7 @@ def snippet_for_search_single_index119():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index120():
+def snippet_for_search_single_index121():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8267,7 +8382,7 @@ def snippet_for_search_single_index120():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index121():
+def snippet_for_search_single_index122():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8293,7 +8408,7 @@ def snippet_for_search_single_index121():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index122():
+def snippet_for_search_single_index123():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8319,7 +8434,7 @@ def snippet_for_search_single_index122():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index123():
+def snippet_for_search_single_index124():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8348,7 +8463,7 @@ def snippet_for_search_single_index123():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index124():
+def snippet_for_search_single_index125():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8374,7 +8489,7 @@ def snippet_for_search_single_index124():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index125():
+def snippet_for_search_single_index126():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8400,7 +8515,7 @@ def snippet_for_search_single_index125():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index126():
+def snippet_for_search_single_index127():
     """
     Snippet for the searchSingleIndex method.
 

@@ -780,6 +780,30 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
+  # with algolia user id
+  def test_search_single_index0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.search_single_index(
+      "playlists",
+      Algolia::Search::SearchParamsObject.new(query: "foo"),
+      {:header_params => JSON.parse("{\"X-Algolia-User-ID\":\"user1234\"}", :symbolize_names => true)}
+    )
+  end
+
   # switch API key
   def test_set_client_api_key0
     client = Algolia::SearchClient.create_with_config(

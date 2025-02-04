@@ -4,7 +4,8 @@
       "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;\nusing Algolia.Search.Models.Search;"
     },
     "addApiKey": {
-      "default": "var response = await client.AddApiKeyAsync(\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Description = \"my new api key\",\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
+      "minimal": "var response = await client.AddApiKeyAsync(\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Description = \"my new api key\",\n  }\n);",
+      "all": "var response = await client.AddApiKeyAsync(\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Description = \"my new api key\",\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
     },
     "addOrUpdateObject": {
       "default": "var response = await client.AddOrUpdateObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new Dictionary<string, string> { { \"key\", \"value\" } }\n);"
@@ -126,7 +127,9 @@
       "search with a real object": "var response = await client.GetObjectAsync(\"<YOUR_INDEX_NAME>\", \"Batman and Robin\");"
     },
     "getObjects": {
-      "default": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest\n      {\n        AttributesToRetrieve = new List<string> { \"attr1\", \"attr2\" },\n        ObjectID = \"uniqueID\",\n        IndexName = \"<YOUR_INDEX_NAME>\",\n      },\n    },\n  }\n);"
+      "by ID": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest { ObjectID = \"uniqueID\", IndexName = \"<YOUR_INDEX_NAME>\" },\n    },\n  }\n);",
+      "multiple IDs": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest { ObjectID = \"uniqueID1\", IndexName = \"<YOUR_INDEX_NAME>\" },\n      new GetObjectsRequest { ObjectID = \"uniqueID2\", IndexName = \"<YOUR_INDEX_NAME>\" },\n    },\n  }\n);",
+      "with attributesToRetrieve": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest\n      {\n        AttributesToRetrieve = new List<string> { \"attr1\", \"attr2\" },\n        ObjectID = \"uniqueID\",\n        IndexName = \"<YOUR_INDEX_NAME>\",\n      },\n    },\n  }\n);"
     },
     "getRule": {
       "default": "var response = await client.GetRuleAsync(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
@@ -286,6 +289,7 @@
       "single search retrieve snippets": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(\n    new SearchParamsObject\n    {\n      Query = \"batman mask of the phantasm\",\n      AttributesToRetrieve = new List<string> { \"*\" },\n      AttributesToSnippet = new List<string> { \"*:20\" },\n    }\n  )\n);",
       "query": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Query = \"phone\" })\n);",
       "filters": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Filters = \"country:US AND price.gross < 2.0\" })\n);",
+      "filters boolean": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Filters = \"is_available:true\" })\n);",
       "distinct": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Distinct = new Distinct(true) })\n);",
       "filtersNumeric": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Filters = \"price < 10\" })\n);",
       "filtersTimestamp": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(\n    new SearchParamsObject { Filters = \"NOT date_timestamp:1514764800 TO 1546300799\" }\n  )\n);",
@@ -562,7 +566,8 @@
       "default": "import 'package:algolia_client_search/algolia_client_search.dart';"
     },
     "addApiKey": {
-      "default": "final response = await client.addApiKey(\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    description: \"my new api key\",\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  ),\n);"
+      "minimal": "final response = await client.addApiKey(\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    description: \"my new api key\",\n  ),\n);",
+      "all": "final response = await client.addApiKey(\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    description: \"my new api key\",\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  ),\n);"
     },
     "addOrUpdateObject": {
       "default": "final response = await client.addOrUpdateObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"uniqueID\",\n  body: {\n    'key': \"value\",\n  },\n);"
@@ -684,7 +689,9 @@
       "search with a real object": "final response = await client.getObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"Batman and Robin\",\n);"
     },
     "getObjects": {
-      "default": "final response = await client.getObjects(\n  getObjectsParams: GetObjectsParams(\n    requests: [\n      GetObjectsRequest(\n        attributesToRetrieve: [\n          \"attr1\",\n          \"attr2\",\n        ],\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\",\n      ),\n    ],\n  ),\n);"
+      "by ID": "final response = await client.getObjects(\n  getObjectsParams: GetObjectsParams(\n    requests: [\n      GetObjectsRequest(\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\",\n      ),\n    ],\n  ),\n);",
+      "multiple IDs": "final response = await client.getObjects(\n  getObjectsParams: GetObjectsParams(\n    requests: [\n      GetObjectsRequest(\n        objectID: \"uniqueID1\",\n        indexName: \"<YOUR_INDEX_NAME>\",\n      ),\n      GetObjectsRequest(\n        objectID: \"uniqueID2\",\n        indexName: \"<YOUR_INDEX_NAME>\",\n      ),\n    ],\n  ),\n);",
+      "with attributesToRetrieve": "final response = await client.getObjects(\n  getObjectsParams: GetObjectsParams(\n    requests: [\n      GetObjectsRequest(\n        attributesToRetrieve: [\n          \"attr1\",\n          \"attr2\",\n        ],\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\",\n      ),\n    ],\n  ),\n);"
     },
     "getRule": {
       "default": "final response = await client.getRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"qr-1725004648916\",\n);"
@@ -844,6 +851,7 @@
       "single search retrieve snippets": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"batman mask of the phantasm\",\n    attributesToRetrieve: [\n      \"*\",\n    ],\n    attributesToSnippet: [\n      \"*:20\",\n    ],\n  ),\n);",
       "query": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"phone\",\n  ),\n);",
       "filters": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    filters: \"country:US AND price.gross < 2.0\",\n  ),\n);",
+      "filters boolean": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    filters: \"is_available:true\",\n  ),\n);",
       "distinct": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    distinct: true,\n  ),\n);",
       "filtersNumeric": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    filters: \"price < 10\",\n  ),\n);",
       "filtersTimestamp": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    filters: \"NOT date_timestamp:1514764800 TO 1546300799\",\n  ),\n);",
@@ -1120,7 +1128,8 @@
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/search\""
     },
     "addApiKey": {
-      "default": "response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(\n\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetDescription(\"my new api key\").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "minimal": "response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(\n\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetDescription(\"my new api key\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "all": "response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(\n\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetDescription(\"my new api key\").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "addOrUpdateObject": {
       "default": "response, err := client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(\n  \"<YOUR_INDEX_NAME>\", \"uniqueID\", map[string]any{\"key\": \"value\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -1242,7 +1251,9 @@
       "search with a real object": "response, err := client.GetObject(client.NewApiGetObjectRequest(\n  \"<YOUR_INDEX_NAME>\", \"Batman and Robin\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getObjects": {
-      "default": "response, err := client.GetObjects(client.NewApiGetObjectsRequest(\n\n  search.NewEmptyGetObjectsParams().SetRequests(\n    []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(\n      []string{\"attr1\", \"attr2\"}).SetObjectID(\"uniqueID\").SetIndexName(\"<YOUR_INDEX_NAME>\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "by ID": "response, err := client.GetObjects(client.NewApiGetObjectsRequest(\n\n  search.NewEmptyGetObjectsParams().SetRequests(\n    []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID(\"uniqueID\").SetIndexName(\"<YOUR_INDEX_NAME>\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "multiple IDs": "response, err := client.GetObjects(client.NewApiGetObjectsRequest(\n\n  search.NewEmptyGetObjectsParams().SetRequests(\n    []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID(\"uniqueID1\").SetIndexName(\"<YOUR_INDEX_NAME>\"), *search.NewEmptyGetObjectsRequest().SetObjectID(\"uniqueID2\").SetIndexName(\"<YOUR_INDEX_NAME>\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "with attributesToRetrieve": "response, err := client.GetObjects(client.NewApiGetObjectsRequest(\n\n  search.NewEmptyGetObjectsParams().SetRequests(\n    []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(\n      []string{\"attr1\", \"attr2\"}).SetObjectID(\"uniqueID\").SetIndexName(\"<YOUR_INDEX_NAME>\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRule": {
       "default": "response, err := client.GetRule(client.NewApiGetRuleRequest(\n  \"<YOUR_INDEX_NAME>\", \"qr-1725004648916\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -1402,6 +1413,7 @@
       "single search retrieve snippets": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"batman mask of the phantasm\").SetAttributesToRetrieve(\n    []string{\"*\"}).SetAttributesToSnippet(\n    []string{\"*:20\"}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "query": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"phone\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "filters": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetFilters(\"country:US AND price.gross < 2.0\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "filters boolean": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetFilters(\"is_available:true\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "distinct": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetDistinct(search.BoolAsDistinct(true)))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "filtersNumeric": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetFilters(\"price < 10\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "filtersTimestamp": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetFilters(\"NOT date_timestamp:1514764800 TO 1546300799\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -1678,7 +1690,8 @@
       "default": "import com.algolia.api.SearchClient;\nimport com.algolia.config.*;"
     },
     "addApiKey": {
-      "default": "client.addApiKey(\n  new ApiKey()\n    .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))\n    .setDescription(\"my new api key\")\n    .setValidity(300)\n    .setMaxQueriesPerIPPerHour(100)\n    .setMaxHitsPerQuery(20)\n);"
+      "minimal": "client.addApiKey(new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setDescription(\"my new api key\"));",
+      "all": "client.addApiKey(\n  new ApiKey()\n    .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))\n    .setDescription(\"my new api key\")\n    .setValidity(300)\n    .setMaxQueriesPerIPPerHour(100)\n    .setMaxHitsPerQuery(20)\n);"
     },
     "addOrUpdateObject": {
       "default": "client.addOrUpdateObject(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new HashMap() {\n    {\n      put(\"key\", \"value\");\n    }\n  }\n);"
@@ -1800,7 +1813,9 @@
       "search with a real object": "client.getObject(\"<YOUR_INDEX_NAME>\", \"Batman and Robin\");"
     },
     "getObjects": {
-      "default": "client.getObjects(\n  new GetObjectsParams()\n    .setRequests(\n      Arrays.asList(\n        new GetObjectsRequest()\n          .setAttributesToRetrieve(Arrays.asList(\"attr1\", \"attr2\"))\n          .setObjectID(\"uniqueID\")\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n      )\n    ),\n  Hit.class\n);"
+      "by ID": "client.getObjects(\n  new GetObjectsParams().setRequests(Arrays.asList(new GetObjectsRequest().setObjectID(\"uniqueID\").setIndexName(\"<YOUR_INDEX_NAME>\"))),\n  Hit.class\n);",
+      "multiple IDs": "client.getObjects(\n  new GetObjectsParams()\n    .setRequests(\n      Arrays.asList(\n        new GetObjectsRequest().setObjectID(\"uniqueID1\").setIndexName(\"<YOUR_INDEX_NAME>\"),\n        new GetObjectsRequest().setObjectID(\"uniqueID2\").setIndexName(\"<YOUR_INDEX_NAME>\")\n      )\n    ),\n  Hit.class\n);",
+      "with attributesToRetrieve": "client.getObjects(\n  new GetObjectsParams()\n    .setRequests(\n      Arrays.asList(\n        new GetObjectsRequest()\n          .setAttributesToRetrieve(Arrays.asList(\"attr1\", \"attr2\"))\n          .setObjectID(\"uniqueID\")\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n      )\n    ),\n  Hit.class\n);"
     },
     "getRule": {
       "default": "client.getRule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
@@ -1960,6 +1975,7 @@
       "single search retrieve snippets": "client.searchSingleIndex(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParamsObject()\n    .setQuery(\"batman mask of the phantasm\")\n    .setAttributesToRetrieve(Arrays.asList(\"*\"))\n    .setAttributesToSnippet(Arrays.asList(\"*:20\")),\n  Hit.class\n);",
       "query": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setQuery(\"phone\"), Hit.class);",
       "filters": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setFilters(\"country:US AND price.gross < 2.0\"), Hit.class);",
+      "filters boolean": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setFilters(\"is_available:true\"), Hit.class);",
       "distinct": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setDistinct(Distinct.of(true)), Hit.class);",
       "filtersNumeric": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setFilters(\"price < 10\"), Hit.class);",
       "filtersTimestamp": "client.searchSingleIndex(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParamsObject().setFilters(\"NOT date_timestamp:1514764800 TO 1546300799\"),\n  Hit.class\n);",
@@ -2236,7 +2252,8 @@
       "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "addApiKey": {
-      "default": "const response = await client.addApiKey({\n  acl: ['search', 'addObject'],\n  description: 'my new api key',\n  validity: 300,\n  maxQueriesPerIPPerHour: 100,\n  maxHitsPerQuery: 20,\n});"
+      "minimal": "const response = await client.addApiKey({ acl: ['search', 'addObject'], description: 'my new api key' });",
+      "all": "const response = await client.addApiKey({\n  acl: ['search', 'addObject'],\n  description: 'my new api key',\n  validity: 300,\n  maxQueriesPerIPPerHour: 100,\n  maxHitsPerQuery: 20,\n});"
     },
     "addOrUpdateObject": {
       "default": "const response = await client.addOrUpdateObject({\n  indexName: 'indexName',\n  objectID: 'uniqueID',\n  body: { key: 'value' },\n});"
@@ -2358,7 +2375,9 @@
       "search with a real object": "const response = await client.getObject({ indexName: 'cts_e2e_browse', objectID: 'Batman and Robin' });"
     },
     "getObjects": {
-      "default": "const response = await client.getObjects({\n  requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],\n});"
+      "by ID": "const response = await client.getObjects({ requests: [{ objectID: 'uniqueID', indexName: 'theIndexName' }] });",
+      "multiple IDs": "const response = await client.getObjects({\n  requests: [\n    { objectID: 'uniqueID1', indexName: 'theIndexName1' },\n    { objectID: 'uniqueID2', indexName: 'theIndexName2' },\n  ],\n});",
+      "with attributesToRetrieve": "const response = await client.getObjects({\n  requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],\n});"
     },
     "getRule": {
       "default": "const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });"
@@ -2518,6 +2537,7 @@
       "single search retrieve snippets": "const response = await client.searchSingleIndex({\n  indexName: 'cts_e2e_browse',\n  searchParams: { query: 'batman mask of the phantasm', attributesToRetrieve: ['*'], attributesToSnippet: ['*:20'] },\n});",
       "query": "const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { query: 'phone' } });",
       "filters": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { filters: 'country:US AND price.gross < 2.0' },\n});",
+      "filters boolean": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { filters: 'is_available:true' },\n});",
       "distinct": "const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { distinct: true } });",
       "filtersNumeric": "const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { filters: 'price < 10' } });",
       "filtersTimestamp": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { filters: 'NOT date_timestamp:1514764800 TO 1546300799' },\n});",
@@ -2794,7 +2814,8 @@
       "default": "import com.algolia.client.api.SearchClient\nimport com.algolia.client.configuration.*\nimport com.algolia.client.transport.*\nimport com.algolia.client.extensions.*"
     },
     "addApiKey": {
-      "default": "var response = client.addApiKey(\n  apiKey = ApiKey(\n    acl = listOf(Acl.entries.first { it.value == \"search\" }, Acl.entries.first { it.value == \"addObject\" }),\n    description = \"my new api key\",\n    validity = 300,\n    maxQueriesPerIPPerHour = 100,\n    maxHitsPerQuery = 20,\n  ),\n)"
+      "minimal": "var response = client.addApiKey(\n  apiKey = ApiKey(\n    acl = listOf(Acl.entries.first { it.value == \"search\" }, Acl.entries.first { it.value == \"addObject\" }),\n    description = \"my new api key\",\n  ),\n)",
+      "all": "var response = client.addApiKey(\n  apiKey = ApiKey(\n    acl = listOf(Acl.entries.first { it.value == \"search\" }, Acl.entries.first { it.value == \"addObject\" }),\n    description = \"my new api key\",\n    validity = 300,\n    maxQueriesPerIPPerHour = 100,\n    maxHitsPerQuery = 20,\n  ),\n)"
     },
     "addOrUpdateObject": {
       "default": "var response = client.addOrUpdateObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"uniqueID\",\n  body = buildJsonObject {\n    put(\n      \"key\",\n      JsonPrimitive(\"value\"),\n    )\n  },\n)"
@@ -2916,7 +2937,9 @@
       "search with a real object": "var response = client.getObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"Batman and Robin\",\n)"
     },
     "getObjects": {
-      "default": "var response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = listOf(\n      GetObjectsRequest(\n        attributesToRetrieve = listOf(\"attr1\", \"attr2\"),\n        objectID = \"uniqueID\",\n        indexName = \"<YOUR_INDEX_NAME>\",\n      ),\n    ),\n  ),\n)"
+      "by ID": "var response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = listOf(\n      GetObjectsRequest(\n        objectID = \"uniqueID\",\n        indexName = \"<YOUR_INDEX_NAME>\",\n      ),\n    ),\n  ),\n)",
+      "multiple IDs": "var response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = listOf(\n      GetObjectsRequest(\n        objectID = \"uniqueID1\",\n        indexName = \"<YOUR_INDEX_NAME>\",\n      ),\n      GetObjectsRequest(\n        objectID = \"uniqueID2\",\n        indexName = \"<YOUR_INDEX_NAME>\",\n      ),\n    ),\n  ),\n)",
+      "with attributesToRetrieve": "var response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = listOf(\n      GetObjectsRequest(\n        attributesToRetrieve = listOf(\"attr1\", \"attr2\"),\n        objectID = \"uniqueID\",\n        indexName = \"<YOUR_INDEX_NAME>\",\n      ),\n    ),\n  ),\n)"
     },
     "getRule": {
       "default": "var response = client.getRule(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"qr-1725004648916\",\n)"
@@ -3076,6 +3099,7 @@
       "single search retrieve snippets": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"batman mask of the phantasm\",\n    attributesToRetrieve = listOf(\"*\"),\n    attributesToSnippet = listOf(\"*:20\"),\n  ),\n)",
       "query": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"phone\",\n  ),\n)",
       "filters": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    filters = \"country:US AND price.gross < 2.0\",\n  ),\n)",
+      "filters boolean": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    filters = \"is_available:true\",\n  ),\n)",
       "distinct": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    distinct = Distinct.of(true),\n  ),\n)",
       "filtersNumeric": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    filters = \"price < 10\",\n  ),\n)",
       "filtersTimestamp": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    filters = \"NOT date_timestamp:1514764800 TO 1546300799\",\n  ),\n)",
@@ -3352,7 +3376,8 @@
       "default": "use Algolia\\AlgoliaSearch\\Api\\SearchClient;"
     },
     "addApiKey": {
-      "default": "$response = $client->addApiKey(\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'description' => 'my new api key',\n        'validity' => 300,\n        'maxQueriesPerIPPerHour' => 100,\n        'maxHitsPerQuery' => 20,\n    ],\n);"
+      "minimal": "$response = $client->addApiKey(\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'description' => 'my new api key',\n    ],\n);",
+      "all": "$response = $client->addApiKey(\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'description' => 'my new api key',\n        'validity' => 300,\n        'maxQueriesPerIPPerHour' => 100,\n        'maxHitsPerQuery' => 20,\n    ],\n);"
     },
     "addOrUpdateObject": {
       "default": "$response = $client->addOrUpdateObject(\n    '<YOUR_INDEX_NAME>',\n    'uniqueID',\n    ['key' => 'value',\n    ],\n);"
@@ -3474,7 +3499,9 @@
       "search with a real object": "$response = $client->getObject(\n    '<YOUR_INDEX_NAME>',\n    'Batman and Robin',\n);"
     },
     "getObjects": {
-      "default": "$response = $client->getObjects(\n    ['requests' => [\n        ['attributesToRetrieve' => [\n            'attr1',\n\n            'attr2',\n        ],\n            'objectID' => 'uniqueID',\n            'indexName' => '<YOUR_INDEX_NAME>',\n        ],\n    ],\n    ],\n);"
+      "by ID": "$response = $client->getObjects(\n    ['requests' => [\n        ['objectID' => 'uniqueID',\n            'indexName' => '<YOUR_INDEX_NAME>',\n        ],\n    ],\n    ],\n);",
+      "multiple IDs": "$response = $client->getObjects(\n    ['requests' => [\n        ['objectID' => 'uniqueID1',\n            'indexName' => '<YOUR_INDEX_NAME>',\n        ],\n\n        ['objectID' => 'uniqueID2',\n            'indexName' => '<YOUR_INDEX_NAME>',\n        ],\n    ],\n    ],\n);",
+      "with attributesToRetrieve": "$response = $client->getObjects(\n    ['requests' => [\n        ['attributesToRetrieve' => [\n            'attr1',\n\n            'attr2',\n        ],\n            'objectID' => 'uniqueID',\n            'indexName' => '<YOUR_INDEX_NAME>',\n        ],\n    ],\n    ],\n);"
     },
     "getRule": {
       "default": "$response = $client->getRule(\n    '<YOUR_INDEX_NAME>',\n    'qr-1725004648916',\n);"
@@ -3634,6 +3661,7 @@
       "single search retrieve snippets": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'batman mask of the phantasm',\n        'attributesToRetrieve' => [\n            '*',\n        ],\n        'attributesToSnippet' => [\n            '*:20',\n        ],\n    ],\n);",
       "query": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'phone',\n    ],\n);",
       "filters": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['filters' => 'country:US AND price.gross < 2.0',\n    ],\n);",
+      "filters boolean": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['filters' => 'is_available:true',\n    ],\n);",
       "distinct": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['distinct' => true,\n    ],\n);",
       "filtersNumeric": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['filters' => 'price < 10',\n    ],\n);",
       "filtersTimestamp": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['filters' => 'NOT date_timestamp:1514764800 TO 1546300799',\n    ],\n);",
@@ -3910,7 +3938,8 @@
       "default": "from algoliasearch.search.client import SearchClientSync\nfrom json import loads"
     },
     "addApiKey": {
-      "default": "response = client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)"
+      "minimal": "response = client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n    },\n)",
+      "all": "response = client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)"
     },
     "addOrUpdateObject": {
       "default": "response = client.add_or_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    body={\n        \"key\": \"value\",\n    },\n)"
@@ -4032,7 +4061,9 @@
       "search with a real object": "response = client.get_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"Batman and Robin\",\n)"
     },
     "getObjects": {
-      "default": "response = client.get_objects(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"attributesToRetrieve\": [\n                    \"attr1\",\n                    \"attr2\",\n                ],\n                \"objectID\": \"uniqueID\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)"
+      "by ID": "response = client.get_objects(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"objectID\": \"uniqueID\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)",
+      "multiple IDs": "response = client.get_objects(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"objectID\": \"uniqueID1\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n            {\n                \"objectID\": \"uniqueID2\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)",
+      "with attributesToRetrieve": "response = client.get_objects(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"attributesToRetrieve\": [\n                    \"attr1\",\n                    \"attr2\",\n                ],\n                \"objectID\": \"uniqueID\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)"
     },
     "getRule": {
       "default": "response = client.get_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"qr-1725004648916\",\n)"
@@ -4192,6 +4223,7 @@
       "single search retrieve snippets": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"batman mask of the phantasm\",\n        \"attributesToRetrieve\": [\n            \"*\",\n        ],\n        \"attributesToSnippet\": [\n            \"*:20\",\n        ],\n    },\n)",
       "query": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"phone\",\n    },\n)",
       "filters": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"filters\": \"country:US AND price.gross < 2.0\",\n    },\n)",
+      "filters boolean": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"filters\": \"is_available:true\",\n    },\n)",
       "distinct": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"distinct\": True,\n    },\n)",
       "filtersNumeric": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"filters\": \"price < 10\",\n    },\n)",
       "filtersTimestamp": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"filters\": \"NOT date_timestamp:1514764800 TO 1546300799\",\n    },\n)",
@@ -4468,7 +4500,8 @@
       "default": "require \"algolia\""
     },
     "addApiKey": {
-      "default": "response = client.add_api_key(\n  Algolia::Search::ApiKey.new(\n    acl: [\"search\", \"addObject\"],\n    description: \"my new api key\",\n    validity: 300,\n    max_queries_per_ip_per_hour: 100,\n    max_hits_per_query: 20\n  )\n)"
+      "minimal": "response = client.add_api_key(\n  Algolia::Search::ApiKey.new(acl: [\"search\", \"addObject\"], description: \"my new api key\")\n)",
+      "all": "response = client.add_api_key(\n  Algolia::Search::ApiKey.new(\n    acl: [\"search\", \"addObject\"],\n    description: \"my new api key\",\n    validity: 300,\n    max_queries_per_ip_per_hour: 100,\n    max_hits_per_query: 20\n  )\n)"
     },
     "addOrUpdateObject": {
       "default": "response = client.add_or_update_object(\"<YOUR_INDEX_NAME>\", \"uniqueID\", {key: \"value\"})"
@@ -4590,7 +4623,9 @@
       "search with a real object": "response = client.get_object(\"<YOUR_INDEX_NAME>\", \"Batman and Robin\")"
     },
     "getObjects": {
-      "default": "response = client.get_objects(\n  Algolia::Search::GetObjectsParams.new(\n    requests: [\n      Algolia::Search::GetObjectsRequest.new(\n        attributes_to_retrieve: [\"attr1\", \"attr2\"],\n        algolia_object_id: \"uniqueID\",\n        index_name: \"<YOUR_INDEX_NAME>\"\n      )\n    ]\n  )\n)"
+      "by ID": "response = client.get_objects(\n  Algolia::Search::GetObjectsParams.new(\n    requests: [Algolia::Search::GetObjectsRequest.new(algolia_object_id: \"uniqueID\", index_name: \"<YOUR_INDEX_NAME>\")]\n  )\n)",
+      "multiple IDs": "response = client.get_objects(\n  Algolia::Search::GetObjectsParams.new(\n    requests: [\n      Algolia::Search::GetObjectsRequest.new(algolia_object_id: \"uniqueID1\", index_name: \"<YOUR_INDEX_NAME>\"),\n      Algolia::Search::GetObjectsRequest.new(algolia_object_id: \"uniqueID2\", index_name: \"<YOUR_INDEX_NAME>\")\n    ]\n  )\n)",
+      "with attributesToRetrieve": "response = client.get_objects(\n  Algolia::Search::GetObjectsParams.new(\n    requests: [\n      Algolia::Search::GetObjectsRequest.new(\n        attributes_to_retrieve: [\"attr1\", \"attr2\"],\n        algolia_object_id: \"uniqueID\",\n        index_name: \"<YOUR_INDEX_NAME>\"\n      )\n    ]\n  )\n)"
     },
     "getRule": {
       "default": "response = client.get_rule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\")"
@@ -4750,6 +4785,7 @@
       "single search retrieve snippets": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(\n    query: \"batman mask of the phantasm\",\n    attributes_to_retrieve: [\"*\"],\n    attributes_to_snippet: [\"*:20\"]\n  )\n)",
       "query": "response = client.search_single_index(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchParamsObject.new(query: \"phone\"))",
       "filters": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(filters: \"country:US AND price.gross < 2.0\")\n)",
+      "filters boolean": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(filters: \"is_available:true\")\n)",
       "distinct": "response = client.search_single_index(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchParamsObject.new(distinct: true))",
       "filtersNumeric": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(filters: \"price < 10\")\n)",
       "filtersTimestamp": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(filters: \"NOT date_timestamp:1514764800 TO 1546300799\")\n)",
@@ -5026,7 +5062,8 @@
       "default": "import algoliasearch.api.SearchClient\nimport algoliasearch.config.*\nimport algoliasearch.extension.SearchClientExtensions"
     },
     "addApiKey": {
-      "default": "val response = client.addApiKey(\n  apiKey = ApiKey(\n    acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n    description = Some(\"my new api key\"),\n    validity = Some(300),\n    maxQueriesPerIPPerHour = Some(100),\n    maxHitsPerQuery = Some(20)\n  )\n)"
+      "minimal": "val response = client.addApiKey(\n  apiKey = ApiKey(\n    acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n    description = Some(\"my new api key\")\n  )\n)",
+      "all": "val response = client.addApiKey(\n  apiKey = ApiKey(\n    acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n    description = Some(\"my new api key\"),\n    validity = Some(300),\n    maxQueriesPerIPPerHour = Some(100),\n    maxHitsPerQuery = Some(20)\n  )\n)"
     },
     "addOrUpdateObject": {
       "default": "val response = client.addOrUpdateObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"uniqueID\",\n  body = JObject(List(JField(\"key\", JString(\"value\"))))\n)"
@@ -5138,7 +5175,9 @@
       "search with a real object": "val response = client.getObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"Batman and Robin\"\n)"
     },
     "getObjects": {
-      "default": "val response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = Seq(\n      GetObjectsRequest(\n        attributesToRetrieve = Some(Seq(\"attr1\", \"attr2\")),\n        objectID = \"uniqueID\",\n        indexName = \"<YOUR_INDEX_NAME>\"\n      )\n    )\n  )\n)"
+      "by ID": "val response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = Seq(\n      GetObjectsRequest(\n        objectID = \"uniqueID\",\n        indexName = \"<YOUR_INDEX_NAME>\"\n      )\n    )\n  )\n)",
+      "multiple IDs": "val response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = Seq(\n      GetObjectsRequest(\n        objectID = \"uniqueID1\",\n        indexName = \"<YOUR_INDEX_NAME>\"\n      ),\n      GetObjectsRequest(\n        objectID = \"uniqueID2\",\n        indexName = \"<YOUR_INDEX_NAME>\"\n      )\n    )\n  )\n)",
+      "with attributesToRetrieve": "val response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = Seq(\n      GetObjectsRequest(\n        attributesToRetrieve = Some(Seq(\"attr1\", \"attr2\")),\n        objectID = \"uniqueID\",\n        indexName = \"<YOUR_INDEX_NAME>\"\n      )\n    )\n  )\n)"
     },
     "getRule": {
       "default": "val response = client.getRule(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"qr-1725004648916\"\n)"
@@ -5278,6 +5317,7 @@
       "single search retrieve snippets": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"batman mask of the phantasm\"),\n      attributesToRetrieve = Some(Seq(\"*\")),\n      attributesToSnippet = Some(Seq(\"*:20\"))\n    )\n  )\n)",
       "query": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"phone\")\n    )\n  )\n)",
       "filters": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      filters = Some(\"country:US AND price.gross < 2.0\")\n    )\n  )\n)",
+      "filters boolean": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      filters = Some(\"is_available:true\")\n    )\n  )\n)",
       "distinct": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      distinct = Some(Distinct(true))\n    )\n  )\n)",
       "filtersNumeric": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      filters = Some(\"price < 10\")\n    )\n  )\n)",
       "filtersTimestamp": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      filters = Some(\"NOT date_timestamp:1514764800 TO 1546300799\")\n    )\n  )\n)",
@@ -5540,7 +5580,8 @@
       "default": "import Search"
     },
     "addApiKey": {
-      "default": "let response = try await client.addApiKey(apiKey: ApiKey(\n    acl: [Acl.search, Acl.addObject],\n    description: \"my new api key\",\n    maxHitsPerQuery: 20,\n    maxQueriesPerIPPerHour: 100,\n    validity: 300\n))"
+      "minimal": "let response = try await client.addApiKey(apiKey: ApiKey(\n    acl: [Acl.search, Acl.addObject],\n    description: \"my new api key\"\n))",
+      "all": "let response = try await client.addApiKey(apiKey: ApiKey(\n    acl: [Acl.search, Acl.addObject],\n    description: \"my new api key\",\n    maxHitsPerQuery: 20,\n    maxQueriesPerIPPerHour: 100,\n    validity: 300\n))"
     },
     "addOrUpdateObject": {
       "default": "let response = try await client.addOrUpdateObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    objectID: \"uniqueID\",\n    body: [\"key\": \"value\"]\n)"
@@ -5662,7 +5703,9 @@
       "search with a real object": "let response = try await client.getObject(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"Batman and Robin\")"
     },
     "getObjects": {
-      "default": "let response: GetObjectsResponse<Hit> = try await client\n    .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(\n        attributesToRetrieve: [\"attr1\", \"attr2\"],\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\"\n    )]))"
+      "by ID": "let response: GetObjectsResponse<Hit> = try await client\n    .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\"\n    )]))",
+      "multiple IDs": "let response: GetObjectsResponse<Hit> = try await client\n    .getObjects(getObjectsParams: GetObjectsParams(requests: [\n        GetObjectsRequest(objectID: \"uniqueID1\", indexName: \"<YOUR_INDEX_NAME>\"),\n        GetObjectsRequest(objectID: \"uniqueID2\", indexName: \"<YOUR_INDEX_NAME>\"),\n    ]))",
+      "with attributesToRetrieve": "let response: GetObjectsResponse<Hit> = try await client\n    .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(\n        attributesToRetrieve: [\"attr1\", \"attr2\"],\n        objectID: \"uniqueID\",\n        indexName: \"<YOUR_INDEX_NAME>\"\n    )]))"
     },
     "getRule": {
       "default": "let response = try await client.getRule(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"qr-1725004648916\")"
@@ -5822,6 +5865,7 @@
       "single search retrieve snippets": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"batman mask of the phantasm\",\n        attributesToRetrieve: [\"*\"],\n        attributesToSnippet: [\"*:20\"]\n    ))\n)",
       "query": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: \"phone\"))\n)",
       "filters": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams\n        .searchSearchParamsObject(SearchSearchParamsObject(filters: \"country:US AND price.gross < 2.0\"))\n)",
+      "filters boolean": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams\n        .searchSearchParamsObject(SearchSearchParamsObject(filters: \"is_available:true\"))\n)",
       "distinct": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams\n        .searchSearchParamsObject(SearchSearchParamsObject(distinct: SearchDistinct.bool(true)))\n)",
       "filtersNumeric": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(filters: \"price < 10\"))\n)",
       "filtersTimestamp": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams\n        .searchSearchParamsObject(\n            SearchSearchParamsObject(filters: \"NOT date_timestamp:1514764800 TO 1546300799\")\n        )\n)",

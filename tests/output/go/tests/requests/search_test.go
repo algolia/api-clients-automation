@@ -36,7 +36,20 @@ func TestSearch_AddApiKey(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("addApiKey", func(t *testing.T) {
+	t.Run("minimal", func(t *testing.T) {
+		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
+
+			search.NewEmptyApiKey().SetAcl(
+				[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/keys", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"acl":["search","addObject"],"description":"my new api key"}`)
+	})
+	t.Run("all", func(t *testing.T) {
 		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
 			search.NewEmptyApiKey().SetAcl(
@@ -960,7 +973,33 @@ func TestSearch_GetObjects(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getObjects", func(t *testing.T) {
+	t.Run("by ID", func(t *testing.T) {
+		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
+
+			search.NewEmptyGetObjectsParams().SetRequests(
+				[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("theIndexName")})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/objects", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"objectID":"uniqueID","indexName":"theIndexName"}]}`)
+	})
+	t.Run("multiple IDs", func(t *testing.T) {
+		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
+
+			search.NewEmptyGetObjectsParams().SetRequests(
+				[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID1").SetIndexName("theIndexName1"), *search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID2").SetIndexName("theIndexName2")})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/objects", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"objectID":"uniqueID1","indexName":"theIndexName1"},{"objectID":"uniqueID2","indexName":"theIndexName2"}]}`)
+	})
+	t.Run("with attributesToRetrieve", func(t *testing.T) {
 		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
 
 			search.NewEmptyGetObjectsParams().SetRequests(
@@ -2360,6 +2399,18 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"filters":"country:US AND price.gross < 2.0"}`)
+	})
+	t.Run("filters boolean", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("is_available:true"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"filters":"is_available:true"}`)
 	})
 	t.Run("distinct", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(

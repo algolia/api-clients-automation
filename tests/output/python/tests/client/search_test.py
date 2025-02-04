@@ -843,6 +843,34 @@ class TestSearchClient:
             },
         )
 
+    async def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+            },
+        )
+
     async def test_set_client_api_key_0(self):
         """
         switch API key
@@ -1881,6 +1909,34 @@ class TestSearchClientSync:
             ],
             request_options={
                 "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+            },
+        )
+
+    def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
             },
         )
 
