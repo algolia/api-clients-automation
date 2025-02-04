@@ -1460,7 +1460,6 @@
   },
   {
     "testName": "searchableAttributesOrdering",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
