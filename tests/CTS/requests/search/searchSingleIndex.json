@@ -320,7 +320,6 @@
   },
   {
     "testName": "facetFiltersBook",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -343,7 +342,6 @@
   },
   {
     "testName": "facetFiltersAND",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -368,7 +366,6 @@
   },
   {
     "testName": "facetFiltersOR",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -397,7 +394,6 @@
   },
   {
     "testName": "facetFiltersCombined",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -866,7 +862,6 @@
   },
   {
     "testName": "userToken1234",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -951,7 +946,6 @@
   },
   {
     "testName": "attributesToHighlightOverride",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -2753,6 +2747,27 @@
       "body": {
         "query": "query",
         "enableReRanking": false
+      }
+    }
+  },
+  {
+    "testName": "with algolia user id",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query"
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "user1234"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query"
       }
     }
   }
