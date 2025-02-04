@@ -7098,6 +7098,30 @@ def snippet_for_search_single_index127
   # SEPARATOR<
 end
 
+# Snippet for the searchSingleIndex method.
+#
+# with algolia user id
+def snippet_for_search_single_index128
+  # >SEPARATOR searchSingleIndex with algolia user id
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(query: "query"),
+    {:header_params => JSON.parse("{\"X-Algolia-User-ID\":\"user1234\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the searchSynonyms method.
 #
 # searchSynonyms with minimal parameters

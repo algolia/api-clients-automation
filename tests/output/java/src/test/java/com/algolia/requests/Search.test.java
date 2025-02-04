@@ -5925,6 +5925,23 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("with algolia user id")
+  void searchSingleIndexTest128() {
+    assertDoesNotThrow(() -> {
+      client.searchSingleIndex(
+        "indexName",
+        new SearchParamsObject().setQuery("query"),
+        Hit.class,
+        new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user1234")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/query", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"query\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("searchSynonyms with minimal parameters")
   void searchSynonymsTest() {
     assertDoesNotThrow(() -> {

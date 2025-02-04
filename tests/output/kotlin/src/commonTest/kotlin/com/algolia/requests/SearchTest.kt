@@ -6246,6 +6246,30 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `with algolia user id128`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+          ),
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("X-Algolia-User-ID", "user1234")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query"}""", it.body)
+      },
+    )
+  }
+
   // searchSynonyms
 
   @Test

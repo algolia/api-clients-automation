@@ -6286,6 +6286,29 @@ export async function snippetForSearchSingleIndex127(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the searchSingleIndex method.
+//
+// with algolia user id
+export async function snippetForSearchSingleIndex128(): Promise<void> {
+  // >SEPARATOR searchSingleIndex with algolia user id
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex(
+    { indexName: 'indexName', searchParams: { query: 'query' } },
+    {
+      headers: { 'X-Algolia-User-ID': 'user1234' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchSynonyms method.
 //
 // searchSynonyms with minimal parameters

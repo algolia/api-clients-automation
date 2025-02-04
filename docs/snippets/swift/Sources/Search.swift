@@ -5823,6 +5823,26 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the searchSingleIndex method.
+    ///
+    /// with algolia user id
+    func snippetForSearchSingleIndex128() async throws {
+        // >SEPARATOR searchSingleIndex with algolia user id
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "query")),
+            requestOptions: RequestOptions(
+                headers: ["X-Algolia-User-ID": "user1234"]
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the searchSynonyms method.
     ///
     /// searchSynonyms with minimal parameters

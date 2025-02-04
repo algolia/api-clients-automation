@@ -7165,6 +7165,31 @@ void snippetForsearchSingleIndex127() async {
   // SEPARATOR<
 }
 
+// Snippet for the searchSingleIndex method.
+//
+// with algolia user id
+void snippetForsearchSingleIndex128() async {
+  // >SEPARATOR searchSingleIndex with algolia user id
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+    ),
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': 'user1234',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the searchSynonyms method.
 //
 // searchSynonyms with minimal parameters

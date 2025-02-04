@@ -7266,6 +7266,32 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSearchSingleIndex128() {
+    // >SEPARATOR searchSingleIndex with algolia user id
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        query = "query",
+      ),
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("X-Algolia-User-ID", "user1234")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSearchSynonyms() {
     // >SEPARATOR searchSynonyms searchSynonyms with minimal parameters
     // Initialize the client

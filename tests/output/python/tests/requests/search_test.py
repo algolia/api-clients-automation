@@ -6225,6 +6225,26 @@ class TestSearchClient:
             """{"query":"query","enableReRanking":false}"""
         )
 
+    async def test_search_single_index_128(self):
+        """
+        with algolia user id
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query"}""")
+
     async def test_search_synonyms_(self):
         """
         searchSynonyms with minimal parameters
@@ -15301,6 +15321,26 @@ class TestSearchClientSync:
         assert loads(_req.data) == loads(
             """{"query":"query","enableReRanking":false}"""
         )
+
+    def test_search_single_index_128(self):
+        """
+        with algolia user id
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query"}""")
 
     def test_search_synonyms_(self):
         """

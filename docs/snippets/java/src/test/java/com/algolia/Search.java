@@ -5799,6 +5799,25 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the searchSingleIndex method.
+  //
+  // with algolia user id
+  void snippetForSearchSingleIndex128() throws Exception {
+    // >SEPARATOR searchSingleIndex with algolia user id
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query"),
+      Hit.class,
+      new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user1234")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the searchSynonyms method.
   //
   // searchSynonyms with minimal parameters

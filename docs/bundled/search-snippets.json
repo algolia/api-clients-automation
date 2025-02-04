@@ -404,7 +404,8 @@
       "override_default_field": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(\n    new SearchParamsObject\n    {\n      Query = \"query\",\n      ResponseFields = new List<string> { \"hits\", \"facets\" },\n    }\n  )\n);",
       "override_percentile_computation": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Query = \"query\", PercentileComputation = false })\n);",
       "set_ab_test": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Query = \"query\", EnableABTest = false })\n);",
-      "set_enable_re_ranking": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Query = \"query\", EnableReRanking = false })\n);"
+      "set_enable_re_ranking": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Query = \"query\", EnableReRanking = false })\n);",
+      "with algolia user id": "var response = await client.SearchSingleIndexAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParams(new SearchParamsObject { Query = \"query\" }),\n  new RequestOptionBuilder().AddExtraHeader(\"X-Algolia-User-ID\", \"user1234\").Build()\n);"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "var response = await client.SearchSynonymsAsync(\"<YOUR_INDEX_NAME>\");",
@@ -966,7 +967,8 @@
       "override_default_field": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"query\",\n    responseFields: [\n      \"hits\",\n      \"facets\",\n    ],\n  ),\n);",
       "override_percentile_computation": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"query\",\n    percentileComputation: false,\n  ),\n);",
       "set_ab_test": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"query\",\n    enableABTest: false,\n  ),\n);",
-      "set_enable_re_ranking": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"query\",\n    enableReRanking: false,\n  ),\n);"
+      "set_enable_re_ranking": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"query\",\n    enableReRanking: false,\n  ),\n);",
+      "with algolia user id": "final response = await client.searchSingleIndex(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  searchParams: SearchParamsObject(\n    query: \"query\",\n  ),\n  requestOptions: RequestOptions(\n    headers: {\n      'X-Algolia-User-ID': 'user1234',\n    },\n  ),\n);"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "final response = await client.searchSynonyms(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
@@ -1528,7 +1530,8 @@
       "override_default_field": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"query\").SetResponseFields(\n    []string{\"hits\", \"facets\"}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "override_percentile_computation": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"query\").SetPercentileComputation(false))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "set_ab_test": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"query\").SetEnableABTest(false))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "set_enable_re_ranking": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"query\").SetEnableReRanking(false))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "set_enable_re_ranking": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"query\").SetEnableReRanking(false))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "with algolia user id": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"<YOUR_INDEX_NAME>\").WithSearchParams(search.SearchParamsObjectAsSearchParams(\n  search.NewEmptySearchParamsObject().SetQuery(\"query\"))), search.WithHeaderParam(\"X-Algolia-User-ID\", \"user1234\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "response, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -2090,7 +2093,8 @@
       "override_default_field": "client.searchSingleIndex(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParamsObject().setQuery(\"query\").setResponseFields(Arrays.asList(\"hits\", \"facets\")),\n  Hit.class\n);",
       "override_percentile_computation": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setQuery(\"query\").setPercentileComputation(false), Hit.class);",
       "set_ab_test": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setQuery(\"query\").setEnableABTest(false), Hit.class);",
-      "set_enable_re_ranking": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setQuery(\"query\").setEnableReRanking(false), Hit.class);"
+      "set_enable_re_ranking": "client.searchSingleIndex(\"<YOUR_INDEX_NAME>\", new SearchParamsObject().setQuery(\"query\").setEnableReRanking(false), Hit.class);",
+      "with algolia user id": "client.searchSingleIndex(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchParamsObject().setQuery(\"query\"),\n  Hit.class,\n  new RequestOptions().addExtraHeader(\"X-Algolia-User-ID\", \"user1234\")\n);"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "client.searchSynonyms(\"<YOUR_INDEX_NAME>\");",
@@ -2652,7 +2656,8 @@
       "override_default_field": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'query', responseFields: ['hits', 'facets'] },\n});",
       "override_percentile_computation": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'query', percentileComputation: false },\n});",
       "set_ab_test": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'query', enableABTest: false },\n});",
-      "set_enable_re_ranking": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'query', enableReRanking: false },\n});"
+      "set_enable_re_ranking": "const response = await client.searchSingleIndex({\n  indexName: 'indexName',\n  searchParams: { query: 'query', enableReRanking: false },\n});",
+      "with algolia user id": "const response = await client.searchSingleIndex(\n  { indexName: 'indexName', searchParams: { query: 'query' } },\n  {\n    headers: { 'X-Algolia-User-ID': 'user1234' },\n  },\n);"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "const response = await client.searchSynonyms({ indexName: 'indexName' });",
@@ -3214,7 +3219,8 @@
       "override_default_field": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"query\",\n    responseFields = listOf(\"hits\", \"facets\"),\n  ),\n)",
       "override_percentile_computation": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"query\",\n    percentileComputation = false,\n  ),\n)",
       "set_ab_test": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"query\",\n    enableABTest = false,\n  ),\n)",
-      "set_enable_re_ranking": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"query\",\n    enableReRanking = false,\n  ),\n)"
+      "set_enable_re_ranking": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"query\",\n    enableReRanking = false,\n  ),\n)",
+      "with algolia user id": "var response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = SearchParamsObject(\n    query = \"query\",\n  ),\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"X-Algolia-User-ID\", \"user1234\")\n    },\n  ),\n)"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "var response = client.searchSynonyms(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)",
@@ -3776,7 +3782,8 @@
       "override_default_field": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'query',\n        'responseFields' => [\n            'hits',\n\n            'facets',\n        ],\n    ],\n);",
       "override_percentile_computation": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'query',\n        'percentileComputation' => false,\n    ],\n);",
       "set_ab_test": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'query',\n        'enableABTest' => false,\n    ],\n);",
-      "set_enable_re_ranking": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'query',\n        'enableReRanking' => false,\n    ],\n);"
+      "set_enable_re_ranking": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'query',\n        'enableReRanking' => false,\n    ],\n);",
+      "with algolia user id": "$response = $client->searchSingleIndex(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'query',\n    ],\n    [\n        'headers' => [\n            'X-Algolia-User-ID' => 'user1234',\n        ],\n    ]\n);"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "$response = $client->searchSynonyms(\n    '<YOUR_INDEX_NAME>',\n);",
@@ -4338,7 +4345,8 @@
       "override_default_field": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"query\",\n        \"responseFields\": [\n            \"hits\",\n            \"facets\",\n        ],\n    },\n)",
       "override_percentile_computation": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"query\",\n        \"percentileComputation\": False,\n    },\n)",
       "set_ab_test": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"query\",\n        \"enableABTest\": False,\n    },\n)",
-      "set_enable_re_ranking": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"query\",\n        \"enableReRanking\": False,\n    },\n)"
+      "set_enable_re_ranking": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"query\",\n        \"enableReRanking\": False,\n    },\n)",
+      "with algolia user id": "response = client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_params={\n        \"query\": \"query\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"X-Algolia-User-ID\":\"user1234\"}\"\"\"),\n    },\n)"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "response = client.search_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)",
@@ -4900,7 +4908,8 @@
       "override_default_field": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"query\", response_fields: [\"hits\", \"facets\"])\n)",
       "override_percentile_computation": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"query\", percentile_computation: false)\n)",
       "set_ab_test": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"query\", enable_ab_test: false)\n)",
-      "set_enable_re_ranking": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"query\", enable_re_ranking: false)\n)"
+      "set_enable_re_ranking": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"query\", enable_re_ranking: false)\n)",
+      "with algolia user id": "response = client.search_single_index(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::SearchParamsObject.new(query: \"query\"),\n  {:header_params => JSON.parse(\"{\\\"X-Algolia-User-ID\\\":\\\"user1234\\\"}\", :symbolize_names => true)}\n)"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "response = client.search_synonyms(\"<YOUR_INDEX_NAME>\")",
@@ -5432,7 +5441,8 @@
       "override_default_field": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"query\"),\n      responseFields = Some(Seq(\"hits\", \"facets\"))\n    )\n  )\n)",
       "override_percentile_computation": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"query\"),\n      percentileComputation = Some(false)\n    )\n  )\n)",
       "set_ab_test": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"query\"),\n      enableABTest = Some(false)\n    )\n  )\n)",
-      "set_enable_re_ranking": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"query\"),\n      enableReRanking = Some(false)\n    )\n  )\n)"
+      "set_enable_re_ranking": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"query\"),\n      enableReRanking = Some(false)\n    )\n  )\n)",
+      "with algolia user id": "val response = client.searchSingleIndex(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  searchParams = Some(\n    SearchParamsObject(\n      query = Some(\"query\")\n    )\n  ),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withHeader(\"X-Algolia-User-ID\", \"user1234\")\n      .build()\n  )\n)"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "val response = client.searchSynonyms(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)",
@@ -5980,7 +5990,8 @@
       "override_default_field": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"query\",\n        responseFields: [\"hits\", \"facets\"]\n    ))\n)",
       "override_percentile_computation": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"query\",\n        percentileComputation: false\n    ))\n)",
       "set_ab_test": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"query\",\n        enableABTest: false\n    ))\n)",
-      "set_enable_re_ranking": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"query\",\n        enableReRanking: false\n    ))\n)"
+      "set_enable_re_ranking": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(\n        query: \"query\",\n        enableReRanking: false\n    ))\n)",
+      "with algolia user id": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: \"query\")),\n    requestOptions: RequestOptions(\n        headers: [\"X-Algolia-User-ID\": \"user1234\"]\n    )\n)"
     },
     "searchSynonyms": {
       "searchSynonyms with minimal parameters": "let response = try await client.searchSynonyms(indexName: \"<YOUR_INDEX_NAME>\")",

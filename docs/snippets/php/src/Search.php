@@ -8299,6 +8299,35 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * with algolia user id
+     */
+    public function snippetForSearchSingleIndex128(): void
+    {
+        // >SEPARATOR searchSingleIndex with algolia user id
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'query',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user1234',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchSynonyms method.
      *
      * searchSynonyms with minimal parameters

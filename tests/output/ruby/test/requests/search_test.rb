@@ -4805,6 +4805,21 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"query\":\"query\",\"enableReRanking\":false}"), JSON.parse(req.body))
   end
 
+  # with algolia user id
+  def test_search_single_index128
+    req = @client.search_single_index_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsObject.new(query: "query"),
+      {:header_params => JSON.parse("{\"X-Algolia-User-ID\":\"user1234\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"query\":\"query\"}"), JSON.parse(req.body))
+  end
+
   # searchSynonyms with minimal parameters
   def test_search_synonyms
     req = @client.search_synonyms_with_http_info("indexName")

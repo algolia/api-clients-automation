@@ -8541,6 +8541,34 @@ def snippet_for_search_single_index127():
     # SEPARATOR<
 
 
+def snippet_for_search_single_index128():
+    """
+    Snippet for the searchSingleIndex method.
+
+    with algolia user id
+    """
+    # >SEPARATOR searchSingleIndex with algolia user id
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "query",
+        },
+        request_options={
+            "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_search_synonyms():
     """
     Snippet for the searchSynonyms method.

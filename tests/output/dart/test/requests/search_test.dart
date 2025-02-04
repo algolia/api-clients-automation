@@ -7715,6 +7715,34 @@ void main() {
     ),
   );
 
+  // searchSingleIndex
+  test(
+    'with algolia user id',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          query: "query",
+        ),
+        requestOptions: RequestOptions(
+          headers: {
+            'X-Algolia-User-ID': 'user1234',
+          },
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"query":"query"}""");
+      },
+    ),
+  );
+
   // searchSynonyms
   test(
     'searchSynonyms with minimal parameters',

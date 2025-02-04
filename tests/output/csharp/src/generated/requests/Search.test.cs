@@ -6697,6 +6697,21 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "with algolia user id")]
+  public async Task SearchSingleIndexTest128()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"query\":\"query\"}", req.Body, new JsonDiffConfig(false));
+  }
+
   [Fact(DisplayName = "searchSynonyms with minimal parameters")]
   public async Task SearchSynonymsTest()
   {

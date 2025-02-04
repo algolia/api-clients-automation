@@ -4180,6 +4180,20 @@ describe('searchSingleIndex', () => {
     expect(req.data).toEqual({ query: 'query', enableReRanking: false });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('with algolia user id', async () => {
+    const req = (await client.searchSingleIndex(
+      { indexName: 'indexName', searchParams: { query: 'query' } },
+      {
+        headers: { 'X-Algolia-User-ID': 'user1234' },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('searchSynonyms', () => {

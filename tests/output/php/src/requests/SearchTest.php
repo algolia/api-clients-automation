@@ -6471,6 +6471,30 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('with algolia user id')]
+    public function testSearchSingleIndex128(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user1234',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('searchSynonyms with minimal parameters')]
     public function testSearchSynonyms(): void
     {

@@ -8455,6 +8455,35 @@ func SnippetForSearchSingleIndexOfSearch127() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForSearchSingleIndexOfSearch128() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   with algolia user id
+	*/
+
+	// >SEPARATOR searchSingleIndex with algolia user id
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("query"))), search.WithHeaderParam("X-Algolia-User-ID", "user1234"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForSearchSynonymsOfSearch() {
 	/*
 	   Snippet for the searchSynonyms method.

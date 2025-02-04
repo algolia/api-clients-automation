@@ -7547,6 +7547,27 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// with algolia user id
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex128()
+  {
+    // >SEPARATOR searchSingleIndex with algolia user id
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the SearchSynonyms method.
   ///
   /// searchSynonyms with minimal parameters
