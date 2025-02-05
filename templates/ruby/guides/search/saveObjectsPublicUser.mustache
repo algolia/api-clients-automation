@@ -1,0 +1,11 @@
+{{> snippets/import}}
+
+playlists = [] # Your records
+
+begin
+  {{> snippets/init}}
+
+  {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
+rescue Exception => e
+  puts("An error occurred: #{e}")
+end
