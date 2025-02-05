@@ -975,7 +975,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/indexName/rules/diet-rule",
+      "path": "/1/indexes/indexName/rules/a-rule-id",
       "method": "PUT",
       "body": {
         "objectID": "a-rule-id",

@@ -126,7 +126,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "path": "/1/indexes/theIndexName/productId/partial",
       "method": "POST",
       "body": {
         "categoryPageId": {
@@ -149,7 +149,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "path": "/1/indexes/theIndexName/productId/partial",
       "method": "POST",
       "body": {
         "categoryPageId": {
