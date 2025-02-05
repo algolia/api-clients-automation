@@ -1919,6 +1919,70 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `add men pant6`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "productId",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "categoryPageId",
+              buildJsonObject {
+                put(
+                  "_operation",
+                  JsonPrimitive("Add"),
+                )
+                put(
+                  "value",
+                  JsonPrimitive("men-clothing-pants"),
+                )
+              },
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/productId/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"categoryPageId":{"_operation":"Add","value":"men-clothing-pants"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `remove men pant7`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "productId",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "categoryPageId",
+              buildJsonObject {
+                put(
+                  "_operation",
+                  JsonPrimitive("Remove"),
+                )
+                put(
+                  "value",
+                  JsonPrimitive("men-clothing-pants"),
+                )
+              },
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/productId/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"categoryPageId":{"_operation":"Remove","value":"men-clothing-pants"}}""", it.body)
+      },
+    )
+  }
+
   // removeUserId
 
   @Test
@@ -1988,12 +2052,20 @@ class SearchTest {
           indexName = "<YOUR_INDEX_NAME>",
           body = buildJsonObject {
             put(
-              "objectID",
-              JsonPrimitive("id"),
+              "name",
+              JsonPrimitive("Black T-shirt"),
             )
             put(
-              "test",
-              JsonPrimitive("val"),
+              "color",
+              JsonPrimitive("#000000||black"),
+            )
+            put(
+              "availableIn",
+              JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
+            )
+            put(
+              "objectID",
+              JsonPrimitive("myID"),
             )
           },
         )
@@ -2001,7 +2073,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"objectID":"id","test":"val"}""", it.body)
+        assertJsonBody("""{"name":"Black T-shirt","color":"#000000||black","availableIn":"https://source.unsplash.com/100x100/?paris||Paris","objectID":"myID"}""", it.body)
       },
     )
   }
@@ -2762,6 +2834,36 @@ class SearchTest {
         assertEquals("/1/indexes/indexName/rules/diet-rule".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody("""{"objectID":"diet-rule","consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `contextual20`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "a-rule-id",
+          rule = Rule(
+            objectID = "a-rule-id",
+            conditions = listOf(
+              Condition(
+                context = "mobile",
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                filters = "release_date >= 1577836800",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/a-rule-id".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}""", it.body)
       },
     )
   }
@@ -3663,14 +3765,14 @@ class SearchTest {
           indexName = "indexName",
           facetName = "author",
           searchForFacetValuesRequest = SearchForFacetValuesRequest(
-            facetQuery = "stephen king",
+            facetQuery = "stephen",
           ),
         )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/facets/author/query".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"facetQuery":"stephen king"}""", it.body)
+        assertJsonBody("""{"facetQuery":"stephen"}""", it.body)
       },
     )
   }
@@ -3810,7 +3912,27 @@ class SearchTest {
   }
 
   @Test
-  fun `filters boolean6`() = runTest {
+  fun `filters for stores6`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "ben",
+            filters = "categories:politics AND store:Gibert Joseph Saint-Michel",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filters boolean7`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3829,7 +3951,7 @@ class SearchTest {
   }
 
   @Test
-  fun `distinct7`() = runTest {
+  fun `distinct8`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3848,7 +3970,7 @@ class SearchTest {
   }
 
   @Test
-  fun `filtersNumeric8`() = runTest {
+  fun `filtersNumeric9`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3867,7 +3989,7 @@ class SearchTest {
   }
 
   @Test
-  fun `filtersTimestamp9`() = runTest {
+  fun `filtersTimestamp10`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3886,7 +4008,7 @@ class SearchTest {
   }
 
   @Test
-  fun `filtersSumOrFiltersScoresFalse10`() = runTest {
+  fun `filtersSumOrFiltersScoresFalse11`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3906,7 +4028,7 @@ class SearchTest {
   }
 
   @Test
-  fun `filtersSumOrFiltersScoresTrue11`() = runTest {
+  fun `filtersSumOrFiltersScoresTrue12`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3926,7 +4048,7 @@ class SearchTest {
   }
 
   @Test
-  fun `filtersStephenKing12`() = runTest {
+  fun `filtersStephenKing13`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3945,26 +4067,27 @@ class SearchTest {
   }
 
   @Test
-  fun `filtersNotTags13`() = runTest {
+  fun `filtersNotTags14`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
           indexName = "indexName",
           searchParams = SearchParamsObject(
-            filters = "NOT _tags:non-fiction",
+            query = "harry",
+            filters = "_tags:non-fiction",
           ),
         )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"filters":"NOT _tags:non-fiction"}""", it.body)
+        assertJsonBody("""{"query":"harry","filters":"_tags:non-fiction"}""", it.body)
       },
     )
   }
 
   @Test
-  fun `facetFiltersList14`() = runTest {
+  fun `facetFiltersList15`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -3983,7 +4106,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facetFiltersBook15`() = runTest {
+  fun `facetFiltersBook16`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4003,7 +4126,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facetFiltersAND16`() = runTest {
+  fun `facetFiltersAND17`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4023,7 +4146,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facetFiltersOR17`() = runTest {
+  fun `facetFiltersOR18`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4043,7 +4166,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facetFiltersCombined18`() = runTest {
+  fun `facetFiltersCombined19`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4063,7 +4186,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facetFiltersNeg19`() = runTest {
+  fun `facetFiltersNeg20`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4082,7 +4205,7 @@ class SearchTest {
   }
 
   @Test
-  fun `filtersAndFacetFilters20`() = runTest {
+  fun `filtersAndFacetFilters21`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4102,7 +4225,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facet author genre21`() = runTest {
+  fun `facet author genre22`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4121,7 +4244,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facet wildcard22`() = runTest {
+  fun `facet wildcard23`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4140,7 +4263,7 @@ class SearchTest {
   }
 
   @Test
-  fun `maxValuesPerFacet23`() = runTest {
+  fun `maxValuesPerFacet24`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4159,7 +4282,7 @@ class SearchTest {
   }
 
   @Test
-  fun `aroundLatLng24`() = runTest {
+  fun `aroundLatLng25`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4178,7 +4301,7 @@ class SearchTest {
   }
 
   @Test
-  fun `aroundLatLngViaIP25`() = runTest {
+  fun `aroundLatLngViaIP26`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4197,7 +4320,7 @@ class SearchTest {
   }
 
   @Test
-  fun `aroundRadius26`() = runTest {
+  fun `aroundRadius27`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4217,7 +4340,7 @@ class SearchTest {
   }
 
   @Test
-  fun `insideBoundingBox27`() = runTest {
+  fun `insideBoundingBox28`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4231,25 +4354,6 @@ class SearchTest {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}""", it.body)
-      },
-    )
-  }
-
-  @Test
-  fun `insidePolygon28`() = runTest {
-    client.runTest(
-      call = {
-        searchSingleIndex(
-          indexName = "indexName",
-          searchParams = SearchParamsObject(
-            insidePolygon = listOf(listOf(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125)),
-          ),
-        )
-      },
-      intercept = {
-        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}""", it.body)
       },
     )
   }
@@ -4274,7 +4378,26 @@ class SearchTest {
   }
 
   @Test
-  fun `optionalFilters30`() = runTest {
+  fun `insidePolygon30`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            insidePolygon = listOf(listOf(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125)),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `optionalFilters31`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4293,7 +4416,7 @@ class SearchTest {
   }
 
   @Test
-  fun `optionalFiltersMany31`() = runTest {
+  fun `optionalFiltersMany32`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4312,7 +4435,7 @@ class SearchTest {
   }
 
   @Test
-  fun `optionalFiltersSimple32`() = runTest {
+  fun `optionalFiltersSimple33`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4331,7 +4454,7 @@ class SearchTest {
   }
 
   @Test
-  fun `restrictSearchableAttributes33`() = runTest {
+  fun `restrictSearchableAttributes34`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4350,7 +4473,7 @@ class SearchTest {
   }
 
   @Test
-  fun `getRankingInfo34`() = runTest {
+  fun `getRankingInfo35`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4369,7 +4492,7 @@ class SearchTest {
   }
 
   @Test
-  fun `clickAnalytics35`() = runTest {
+  fun `clickAnalytics36`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4388,7 +4511,7 @@ class SearchTest {
   }
 
   @Test
-  fun `clickAnalyticsUserToken36`() = runTest {
+  fun `clickAnalyticsUserToken37`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4408,7 +4531,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enablePersonalization37`() = runTest {
+  fun `enablePersonalization38`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4428,7 +4551,7 @@ class SearchTest {
   }
 
   @Test
-  fun `userToken38`() = runTest {
+  fun `userToken39`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4447,7 +4570,7 @@ class SearchTest {
   }
 
   @Test
-  fun `userToken123439`() = runTest {
+  fun `userToken123440`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4467,7 +4590,7 @@ class SearchTest {
   }
 
   @Test
-  fun `analyticsTag40`() = runTest {
+  fun `analyticsTag41`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4486,7 +4609,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facetFiltersUsers41`() = runTest {
+  fun `facetFiltersUsers42`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4505,7 +4628,7 @@ class SearchTest {
   }
 
   @Test
-  fun `buildTheQuery42`() = runTest {
+  fun `buildTheQuery43`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4526,7 +4649,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesToHighlightOverride43`() = runTest {
+  fun `attributesToHighlightOverride44`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4546,7 +4669,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disableTypoToleranceOnAttributes44`() = runTest {
+  fun `disableTypoToleranceOnAttributes45`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4566,7 +4689,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_a_query45`() = runTest {
+  fun `search_a_query46`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4585,7 +4708,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_everything46`() = runTest {
+  fun `search_everything47`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4604,7 +4727,7 @@ class SearchTest {
   }
 
   @Test
-  fun `api_filtering_range_example47`() = runTest {
+  fun `api_filtering_range_example48`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4624,7 +4747,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_a_query48`() = runTest {
+  fun `search_a_query49`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4645,7 +4768,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_retrievable_attributes49`() = runTest {
+  fun `override_retrievable_attributes50`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4665,7 +4788,7 @@ class SearchTest {
   }
 
   @Test
-  fun `restrict_searchable_attributes50`() = runTest {
+  fun `restrict_searchable_attributes51`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4685,7 +4808,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_relevancy51`() = runTest {
+  fun `override_default_relevancy52`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4705,7 +4828,7 @@ class SearchTest {
   }
 
   @Test
-  fun `apply_filters52`() = runTest {
+  fun `apply_filters53`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4725,7 +4848,7 @@ class SearchTest {
   }
 
   @Test
-  fun `apply_all_filters53`() = runTest {
+  fun `apply_all_filters54`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4745,7 +4868,7 @@ class SearchTest {
   }
 
   @Test
-  fun `escape_spaces54`() = runTest {
+  fun `escape_spaces55`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4765,7 +4888,7 @@ class SearchTest {
   }
 
   @Test
-  fun `escape_keywords55`() = runTest {
+  fun `escape_keywords56`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4785,7 +4908,7 @@ class SearchTest {
   }
 
   @Test
-  fun `escape_single_quotes56`() = runTest {
+  fun `escape_single_quotes57`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4805,7 +4928,7 @@ class SearchTest {
   }
 
   @Test
-  fun `escape_double_quotes57`() = runTest {
+  fun `escape_double_quotes58`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4825,7 +4948,7 @@ class SearchTest {
   }
 
   @Test
-  fun `apply_filters58`() = runTest {
+  fun `apply_filters59`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4845,7 +4968,7 @@ class SearchTest {
   }
 
   @Test
-  fun `apply_negative_filters59`() = runTest {
+  fun `apply_negative_filters60`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4865,7 +4988,27 @@ class SearchTest {
   }
 
   @Test
-  fun `apply_numeric_filters60`() = runTest {
+  fun `apply_negative_filters_restaurants61`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("restaurant:-Bert's Inn"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_numeric_filters62`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4885,7 +5028,7 @@ class SearchTest {
   }
 
   @Test
-  fun `apply_tag_filters61`() = runTest {
+  fun `apply_tag_filters63`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4905,7 +5048,7 @@ class SearchTest {
   }
 
   @Test
-  fun `apply_filters62`() = runTest {
+  fun `apply_filters64`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4925,7 +5068,7 @@ class SearchTest {
   }
 
   @Test
-  fun `facets_all63`() = runTest {
+  fun `facets_all65`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4945,7 +5088,7 @@ class SearchTest {
   }
 
   @Test
-  fun `retrieve_only_some_facets64`() = runTest {
+  fun `retrieve_only_some_facets66`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4965,7 +5108,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_max_values_per_facet65`() = runTest {
+  fun `override_default_max_values_per_facet67`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4985,7 +5128,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_faceting_after_distinct66`() = runTest {
+  fun `enable_faceting_after_distinct68`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5005,7 +5148,7 @@ class SearchTest {
   }
 
   @Test
-  fun `sort_facet_values_alphabetically67`() = runTest {
+  fun `sort_facet_values_alphabetically69`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5025,7 +5168,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_attributes_to_snippet68`() = runTest {
+  fun `override_attributes_to_snippet70`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5045,7 +5188,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_highlight_pre_tag69`() = runTest {
+  fun `override_default_highlight_pre_tag71`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5065,7 +5208,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_highlight_post_tag70`() = runTest {
+  fun `override_default_highlight_post_tag72`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5085,7 +5228,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_snippet_ellipsis_text71`() = runTest {
+  fun `override_default_snippet_ellipsis_text73`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5105,7 +5248,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_restrict_highlight_and_snippet_arrays72`() = runTest {
+  fun `enable_restrict_highlight_and_snippet_arrays74`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5125,7 +5268,7 @@ class SearchTest {
   }
 
   @Test
-  fun `access_page73`() = runTest {
+  fun `access_page75`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5145,7 +5288,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_hits_per_page74`() = runTest {
+  fun `override_default_hits_per_page76`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5165,7 +5308,7 @@ class SearchTest {
   }
 
   @Test
-  fun `get_nth_hit75`() = runTest {
+  fun `get_nth_hit77`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5185,7 +5328,7 @@ class SearchTest {
   }
 
   @Test
-  fun `get_n_results76`() = runTest {
+  fun `get_n_results78`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5205,7 +5348,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_min_word_size_for_one_typo77`() = runTest {
+  fun `override_default_min_word_size_for_one_typo79`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5225,7 +5368,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_min_word_size_for_two_typos78`() = runTest {
+  fun `override_default_min_word_size_for_two_typos80`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5245,7 +5388,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_typo_tolerance_mode79`() = runTest {
+  fun `override_default_typo_tolerance_mode81`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5265,7 +5408,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disable_typos_on_numeric_tokens_at_search_time80`() = runTest {
+  fun `disable_typos_on_numeric_tokens_at_search_time82`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5285,7 +5428,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_around_a_position81`() = runTest {
+  fun `search_around_a_position83`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5305,7 +5448,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_around_server_ip82`() = runTest {
+  fun `search_around_server_ip84`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5331,7 +5474,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_around_radius83`() = runTest {
+  fun `set_around_radius85`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5351,7 +5494,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disable_automatic_radius84`() = runTest {
+  fun `disable_automatic_radius86`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5371,7 +5514,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_geo_search_precision85`() = runTest {
+  fun `set_geo_search_precision87`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5391,7 +5534,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_geo_search_precision_non_linear86`() = runTest {
+  fun `set_geo_search_precision_non_linear88`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5422,7 +5565,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_minimum_geo_search_radius87`() = runTest {
+  fun `set_minimum_geo_search_radius89`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5442,7 +5585,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_inside_rectangular_area88`() = runTest {
+  fun `search_inside_rectangular_area90`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5462,7 +5605,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_inside_multiple_rectangular_areas89`() = runTest {
+  fun `search_inside_multiple_rectangular_areas91`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5482,7 +5625,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_inside_polygon_area90`() = runTest {
+  fun `search_inside_polygon_area92`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5502,7 +5645,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_inside_multiple_polygon_areas91`() = runTest {
+  fun `search_inside_multiple_polygon_areas93`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5522,7 +5665,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_querylanguages_override92`() = runTest {
+  fun `set_querylanguages_override94`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5542,7 +5685,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_querylanguages_override93`() = runTest {
+  fun `set_querylanguages_override95`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5562,7 +5705,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_querylanguages_override94`() = runTest {
+  fun `set_querylanguages_override96`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5582,7 +5725,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_querylanguages_with_japanese_query95`() = runTest {
+  fun `set_querylanguages_with_japanese_query97`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5602,7 +5745,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_natural_languages96`() = runTest {
+  fun `set_natural_languages98`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5622,7 +5765,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_natural_languages_with_query97`() = runTest {
+  fun `override_natural_languages_with_query99`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5643,7 +5786,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_decompound_query_search_time98`() = runTest {
+  fun `enable_decompound_query_search_time100`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5663,7 +5806,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_rules_search_time99`() = runTest {
+  fun `enable_rules_search_time101`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5683,7 +5826,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_rule_contexts100`() = runTest {
+  fun `set_rule_contexts102`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5703,7 +5846,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_personalization101`() = runTest {
+  fun `enable_personalization103`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5723,7 +5866,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_personalization_with_user_token102`() = runTest {
+  fun `enable_personalization_with_user_token104`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5744,7 +5887,7 @@ class SearchTest {
   }
 
   @Test
-  fun `personalization_impact103`() = runTest {
+  fun `personalization_impact105`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5764,7 +5907,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_user_token104`() = runTest {
+  fun `set_user_token106`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5784,7 +5927,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_user_token_with_personalization105`() = runTest {
+  fun `set_user_token_with_personalization107`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5805,7 +5948,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_query_type106`() = runTest {
+  fun `override_default_query_type108`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5825,7 +5968,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_remove_words_if_no_results107`() = runTest {
+  fun `override_default_remove_words_if_no_results109`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5845,7 +5988,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_advanced_syntax_search_time108`() = runTest {
+  fun `enable_advanced_syntax_search_time110`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5865,7 +6008,7 @@ class SearchTest {
   }
 
   @Test
-  fun `overide_default_optional_words109`() = runTest {
+  fun `overide_default_optional_words111`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5885,7 +6028,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disabling_exact_for_some_attributes_search_time110`() = runTest {
+  fun `disabling_exact_for_some_attributes_search_time112`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5905,7 +6048,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_exact_single_word_query111`() = runTest {
+  fun `override_default_exact_single_word_query113`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5925,7 +6068,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_aternative_as_exact112`() = runTest {
+  fun `override_default_aternative_as_exact114`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5945,7 +6088,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_advanced_syntax_exact_phrase113`() = runTest {
+  fun `enable_advanced_syntax_exact_phrase115`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5966,7 +6109,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_advanced_syntax_exclude_words114`() = runTest {
+  fun `enable_advanced_syntax_exclude_words116`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -5987,7 +6130,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_distinct115`() = runTest {
+  fun `override_distinct117`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6007,7 +6150,7 @@ class SearchTest {
   }
 
   @Test
-  fun `get_ranking_info116`() = runTest {
+  fun `get_ranking_info118`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6027,7 +6170,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disable_click_analytics117`() = runTest {
+  fun `disable_click_analytics119`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6047,7 +6190,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_click_analytics118`() = runTest {
+  fun `enable_click_analytics120`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6067,7 +6210,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disable_analytics119`() = runTest {
+  fun `disable_analytics121`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6087,7 +6230,7 @@ class SearchTest {
   }
 
   @Test
-  fun `add_analytics_tags120`() = runTest {
+  fun `add_analytics_tags122`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6107,7 +6250,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disable_synonyms121`() = runTest {
+  fun `disable_synonyms123`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6127,7 +6270,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_replace_synonyms_in_highlights122`() = runTest {
+  fun `override_replace_synonyms_in_highlights124`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6147,7 +6290,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_min_proximity123`() = runTest {
+  fun `override_min_proximity125`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6167,7 +6310,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_default_field124`() = runTest {
+  fun `override_default_field126`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6187,7 +6330,7 @@ class SearchTest {
   }
 
   @Test
-  fun `override_percentile_computation125`() = runTest {
+  fun `override_percentile_computation127`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6207,7 +6350,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_ab_test126`() = runTest {
+  fun `set_ab_test128`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6227,7 +6370,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_enable_re_ranking127`() = runTest {
+  fun `set_enable_re_ranking129`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6247,7 +6390,7 @@ class SearchTest {
   }
 
   @Test
-  fun `with algolia user id128`() = runTest {
+  fun `with algolia user id130`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -6667,7 +6810,26 @@ class SearchTest {
   }
 
   @Test
-  fun `api_attributes_for_faceting14`() = runTest {
+  fun `attributesForFaceting availableIn14`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("color", "availableIn"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["color","availableIn"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `api_attributes_for_faceting15`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6686,7 +6848,7 @@ class SearchTest {
   }
 
   @Test
-  fun `api_attributes_for_faceting_searchable15`() = runTest {
+  fun `api_attributes_for_faceting_searchable16`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6705,7 +6867,7 @@ class SearchTest {
   }
 
   @Test
-  fun `api_attributes_for_filter_only16`() = runTest {
+  fun `api_attributes_for_filter_only17`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6724,7 +6886,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesForFaceting categoryPageId17`() = runTest {
+  fun `attributesForFaceting categoryPageId18`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6743,7 +6905,7 @@ class SearchTest {
   }
 
   @Test
-  fun `unretrievableAttributes18`() = runTest {
+  fun `unretrievableAttributes19`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6762,7 +6924,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesForFaceting user restricted data19`() = runTest {
+  fun `attributesForFaceting user restricted data20`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6781,7 +6943,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesForFaceting optional filters20`() = runTest {
+  fun `attributesForFaceting optional filters21`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6800,7 +6962,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesForFaceting redirect index21`() = runTest {
+  fun `attributesForFaceting redirect index22`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6819,7 +6981,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesForFaceting multiple consequences22`() = runTest {
+  fun `attributesForFaceting multiple consequences23`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6838,7 +7000,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesForFaceting in-depth optional filters23`() = runTest {
+  fun `attributesForFaceting in-depth optional filters24`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6857,7 +7019,7 @@ class SearchTest {
   }
 
   @Test
-  fun `mode neuralSearch24`() = runTest {
+  fun `mode neuralSearch25`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6876,7 +7038,7 @@ class SearchTest {
   }
 
   @Test
-  fun `mode keywordSearch25`() = runTest {
+  fun `mode keywordSearch26`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6895,7 +7057,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributes same priority26`() = runTest {
+  fun `searchableAttributes same priority27`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6914,7 +7076,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributes higher priority27`() = runTest {
+  fun `searchableAttributes higher priority28`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6933,7 +7095,7 @@ class SearchTest {
   }
 
   @Test
-  fun `customRanking retweets28`() = runTest {
+  fun `customRanking retweets29`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6952,7 +7114,7 @@ class SearchTest {
   }
 
   @Test
-  fun `customRanking boosted29`() = runTest {
+  fun `customRanking boosted30`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6971,7 +7133,7 @@ class SearchTest {
   }
 
   @Test
-  fun `customRanking pageviews30`() = runTest {
+  fun `customRanking pageviews31`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -6990,7 +7152,7 @@ class SearchTest {
   }
 
   @Test
-  fun `customRanking applying search parameters for a specific query31`() = runTest {
+  fun `customRanking applying search parameters for a specific query32`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7010,7 +7172,7 @@ class SearchTest {
   }
 
   @Test
-  fun `customRanking rounded pageviews32`() = runTest {
+  fun `customRanking rounded pageviews33`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7029,7 +7191,7 @@ class SearchTest {
   }
 
   @Test
-  fun `customRanking price33`() = runTest {
+  fun `customRanking price34`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7048,7 +7210,7 @@ class SearchTest {
   }
 
   @Test
-  fun `ranking exhaustive34`() = runTest {
+  fun `ranking exhaustive (price)35`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7067,7 +7229,26 @@ class SearchTest {
   }
 
   @Test
-  fun `ranking standard replica35`() = runTest {
+  fun `ranking exhaustive (is_popular)36`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["desc(is_popular)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking standard replica37`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7086,7 +7267,7 @@ class SearchTest {
   }
 
   @Test
-  fun `ranking virtual replica36`() = runTest {
+  fun `ranking virtual replica38`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7105,7 +7286,7 @@ class SearchTest {
   }
 
   @Test
-  fun `customRanking and ranking sort alphabetically37`() = runTest {
+  fun `customRanking and ranking sort alphabetically39`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7125,7 +7306,7 @@ class SearchTest {
   }
 
   @Test
-  fun `relevancyStrictness38`() = runTest {
+  fun `relevancyStrictness40`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7145,7 +7326,7 @@ class SearchTest {
   }
 
   @Test
-  fun `create replica index39`() = runTest {
+  fun `create replica index41`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7164,7 +7345,7 @@ class SearchTest {
   }
 
   @Test
-  fun `create replica index articles40`() = runTest {
+  fun `create replica index articles42`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7183,7 +7364,7 @@ class SearchTest {
   }
 
   @Test
-  fun `create virtual replica index41`() = runTest {
+  fun `create virtual replica index43`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7202,7 +7383,7 @@ class SearchTest {
   }
 
   @Test
-  fun `unlink replica index42`() = runTest {
+  fun `unlink replica index44`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7221,7 +7402,7 @@ class SearchTest {
   }
 
   @Test
-  fun `forwardToReplicas43`() = runTest {
+  fun `forwardToReplicas45`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7242,7 +7423,7 @@ class SearchTest {
   }
 
   @Test
-  fun `maxValuesPerFacet44`() = runTest {
+  fun `maxValuesPerFacet46`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7261,26 +7442,26 @@ class SearchTest {
   }
 
   @Test
-  fun `maxFacetHits45`() = runTest {
+  fun `maxFacetHits47`() = runTest {
     client.runTest(
       call = {
         setSettings(
           indexName = "theIndexName",
           indexSettings = IndexSettings(
-            maxFacetHits = 1000,
+            maxFacetHits = 100,
           ),
         )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"maxFacetHits":1000}""", it.body)
+        assertJsonBody("""{"maxFacetHits":100}""", it.body)
       },
     )
   }
 
   @Test
-  fun `attributesForFaceting complex46`() = runTest {
+  fun `attributesForFaceting complex48`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7299,7 +7480,7 @@ class SearchTest {
   }
 
   @Test
-  fun `ranking closest dates47`() = runTest {
+  fun `ranking closest dates49`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7318,7 +7499,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributes item variation48`() = runTest {
+  fun `searchableAttributes item variation50`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7337,13 +7518,13 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributes around location49`() = runTest {
+  fun `searchableAttributes around location51`() = runTest {
     client.runTest(
       call = {
         setSettings(
           indexName = "theIndexName",
           indexSettings = IndexSettings(
-            searchableAttributes = listOf("name", "country", "code", "iata_code"),
+            searchableAttributes = listOf("name", "country", "city", "iata_code"),
             customRanking = listOf("desc(links_count)"),
           ),
         )
@@ -7351,13 +7532,13 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}""", it.body)
+        assertJsonBody("""{"searchableAttributes":["name","country","city","iata_code"],"customRanking":["desc(links_count)"]}""", it.body)
       },
     )
   }
 
   @Test
-  fun `attributesToHighlight50`() = runTest {
+  fun `attributesToHighlight52`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7376,7 +7557,7 @@ class SearchTest {
   }
 
   @Test
-  fun `attributesToHighlightStar51`() = runTest {
+  fun `attributesToHighlightStar53`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7395,7 +7576,7 @@ class SearchTest {
   }
 
   @Test
-  fun `everything52`() = runTest {
+  fun `everything54`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7498,7 +7679,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesWithCustomRankingsAndAttributesForFaceting53`() = runTest {
+  fun `searchableAttributesWithCustomRankingsAndAttributesForFaceting55`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7519,7 +7700,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesOrdering54`() = runTest {
+  fun `searchableAttributesOrdering56`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7538,7 +7719,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesProductReferenceSuffixes55`() = runTest {
+  fun `searchableAttributesProductReferenceSuffixes57`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7557,7 +7738,7 @@ class SearchTest {
   }
 
   @Test
-  fun `queryLanguageAndIgnorePlurals56`() = runTest {
+  fun `queryLanguageAndIgnorePlurals58`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7577,7 +7758,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesInMovies57`() = runTest {
+  fun `searchableAttributesInMovies59`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7596,7 +7777,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disablePrefixOnAttributes58`() = runTest {
+  fun `disablePrefixOnAttributes60`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7615,7 +7796,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disableTypoToleranceOnAttributes59`() = runTest {
+  fun `disableTypoToleranceOnAttributes61`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7634,7 +7815,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesSimpleExample60`() = runTest {
+  fun `searchableAttributesSimpleExample62`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7653,7 +7834,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchableAttributesSimpleExampleAlt61`() = runTest {
+  fun `searchableAttributesSimpleExampleAlt63`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7672,7 +7853,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_searchable_attributes62`() = runTest {
+  fun `set_searchable_attributes64`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7691,7 +7872,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_searchable_attributes63`() = runTest {
+  fun `set_searchable_attributes65`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7710,7 +7891,7 @@ class SearchTest {
   }
 
   @Test
-  fun `unretrievable_attributes64`() = runTest {
+  fun `unretrievable_attributes66`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7729,7 +7910,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_retrievable_attributes65`() = runTest {
+  fun `set_retrievable_attributes67`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7748,7 +7929,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_all_attributes_as_retrievable66`() = runTest {
+  fun `set_all_attributes_as_retrievable68`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7767,7 +7948,7 @@ class SearchTest {
   }
 
   @Test
-  fun `specify_attributes_not_to_retrieve67`() = runTest {
+  fun `specify_attributes_not_to_retrieve69`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7786,7 +7967,7 @@ class SearchTest {
   }
 
   @Test
-  fun `neural_search68`() = runTest {
+  fun `neural_search70`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7805,7 +7986,7 @@ class SearchTest {
   }
 
   @Test
-  fun `keyword_search69`() = runTest {
+  fun `keyword_search71`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7824,7 +8005,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_ranking70`() = runTest {
+  fun `set_default_ranking72`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7843,7 +8024,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_ranking_by_attribute_asc71`() = runTest {
+  fun `set_ranking_by_attribute_asc73`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7862,7 +8043,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_ranking_by_attribute_desc72`() = runTest {
+  fun `set_ranking_by_attribute_desc74`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7881,7 +8062,7 @@ class SearchTest {
   }
 
   @Test
-  fun `restrict_searchable_attributes73`() = runTest {
+  fun `restrict_searchable_attributes75`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7900,7 +8081,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_relevancy74`() = runTest {
+  fun `set_default_relevancy76`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7919,7 +8100,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_replicas75`() = runTest {
+  fun `set_replicas77`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7938,7 +8119,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_max_values_per_facet76`() = runTest {
+  fun `set_default_max_values_per_facet78`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7957,7 +8138,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_sort_facet_values_by77`() = runTest {
+  fun `set_default_sort_facet_values_by79`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7976,7 +8157,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_attributes_to_snippet78`() = runTest {
+  fun `set_attributes_to_snippet80`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -7995,7 +8176,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_all_attributes_to_snippet79`() = runTest {
+  fun `set_all_attributes_to_snippet81`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8014,7 +8195,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_highlight_pre_tag80`() = runTest {
+  fun `set_default_highlight_pre_tag82`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8033,7 +8214,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_highlight_post_tag81`() = runTest {
+  fun `set_default_highlight_post_tag83`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8052,7 +8233,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_snippet_ellipsis_text82`() = runTest {
+  fun `set_default_snippet_ellipsis_text84`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8071,7 +8252,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_restrict_highlight_and_snippet_arrays_by_default83`() = runTest {
+  fun `enable_restrict_highlight_and_snippet_arrays_by_default85`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8090,7 +8271,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_hits_per_page84`() = runTest {
+  fun `set_default_hits_per_page86`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8109,7 +8290,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_pagination_limit85`() = runTest {
+  fun `set_pagination_limit87`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8128,7 +8309,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_min_word_size_for_one_typo86`() = runTest {
+  fun `set_default_min_word_size_for_one_typo88`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8147,7 +8328,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_min_word_size_for_two_typos87`() = runTest {
+  fun `set_default_min_word_size_for_two_typos89`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8166,7 +8347,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_typo_tolerance_mode88`() = runTest {
+  fun `set_default_typo_tolerance_mode90`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8185,7 +8366,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disable_typos_on_numeric_tokens_by_default89`() = runTest {
+  fun `disable_typos_on_numeric_tokens_by_default91`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8204,7 +8385,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disable_typo_tolerance_for_words90`() = runTest {
+  fun `disable_typo_tolerance_for_words92`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8223,7 +8404,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_separators_to_index91`() = runTest {
+  fun `set_separators_to_index93`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8242,7 +8423,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_languages_using_querylanguages92`() = runTest {
+  fun `set_languages_using_querylanguages94`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8262,7 +8443,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_attributes_to_transliterate93`() = runTest {
+  fun `set_attributes_to_transliterate95`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8282,7 +8463,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_languages_using_querylanguages94`() = runTest {
+  fun `set_languages_using_querylanguages96`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8302,7 +8483,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_camel_case_attributes95`() = runTest {
+  fun `set_camel_case_attributes97`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8321,7 +8502,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_decompounded_attributes96`() = runTest {
+  fun `set_decompounded_attributes98`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8349,7 +8530,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_decompounded_multiple_attributes97`() = runTest {
+  fun `set_decompounded_multiple_attributes99`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8387,7 +8568,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_keep_diacritics_on_characters98`() = runTest {
+  fun `set_keep_diacritics_on_characters100`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8406,7 +8587,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_custom_normalization99`() = runTest {
+  fun `set_custom_normalization101`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8425,7 +8606,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_languages_using_querylanguages100`() = runTest {
+  fun `set_languages_using_querylanguages102`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8446,7 +8627,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_indexlanguages101`() = runTest {
+  fun `set_indexlanguages103`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8465,7 +8646,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_decompound_query_by_default102`() = runTest {
+  fun `enable_decompound_query_by_default104`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8484,7 +8665,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_rules_syntax_by_default103`() = runTest {
+  fun `enable_rules_syntax_by_default105`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8503,7 +8684,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_personalization_settings104`() = runTest {
+  fun `enable_personalization_settings106`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8522,7 +8703,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_query_type105`() = runTest {
+  fun `set_default_query_type107`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8541,7 +8722,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_remove_words_if_no_result106`() = runTest {
+  fun `set_default_remove_words_if_no_result108`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8560,7 +8741,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_advanced_syntax_by_default107`() = runTest {
+  fun `enable_advanced_syntax_by_default109`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8579,7 +8760,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_optional_words108`() = runTest {
+  fun `set_default_optional_words110`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8598,7 +8779,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disabling_prefix_search_for_some_attributes_by_default109`() = runTest {
+  fun `disabling_prefix_search_for_some_attributes_by_default111`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8617,7 +8798,7 @@ class SearchTest {
   }
 
   @Test
-  fun `disabling_exact_for_some_attributes_by_default110`() = runTest {
+  fun `disabling_exact_for_some_attributes_by_default112`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8636,7 +8817,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_exact_single_word_query111`() = runTest {
+  fun `set_default_exact_single_word_query113`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8655,7 +8836,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_aternative_as_exact112`() = runTest {
+  fun `set_default_aternative_as_exact114`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8674,7 +8855,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_advanced_syntax_by_default113`() = runTest {
+  fun `enable_advanced_syntax_by_default115`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8693,7 +8874,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_numeric_attributes_for_filtering114`() = runTest {
+  fun `set_numeric_attributes_for_filtering116`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8712,7 +8893,7 @@ class SearchTest {
   }
 
   @Test
-  fun `enable_compression_of_integer_array115`() = runTest {
+  fun `enable_compression_of_integer_array117`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8731,7 +8912,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_attributes_for_distinct116`() = runTest {
+  fun `set_attributes_for_distinct118`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8750,7 +8931,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_distinct117`() = runTest {
+  fun `set_distinct119`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8770,7 +8951,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_replace_synonyms_in_highlights118`() = runTest {
+  fun `set_replace_synonyms_in_highlights120`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8789,7 +8970,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_min_proximity119`() = runTest {
+  fun `set_min_proximity121`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8808,7 +8989,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_default_field120`() = runTest {
+  fun `set_default_field122`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8827,7 +9008,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_max_facet_hits121`() = runTest {
+  fun `set_max_facet_hits123`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8846,7 +9027,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_attribute_criteria_computed_by_min_proximity122`() = runTest {
+  fun `set_attribute_criteria_computed_by_min_proximity124`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8865,7 +9046,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_user_data123`() = runTest {
+  fun `set_user_data125`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -8889,7 +9070,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_rendering_content124`() = runTest {
+  fun `set_rendering_content126`() = runTest {
     client.runTest(
       call = {
         setSettings(

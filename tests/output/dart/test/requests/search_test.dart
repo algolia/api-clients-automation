@@ -2174,6 +2174,62 @@ void main() {
     ),
   );
 
+  // partialUpdateObject
+  test(
+    'add men pant',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.partialUpdateObject(
+        indexName: "theIndexName",
+        objectID: "productId",
+        attributesToUpdate: {
+          'categoryPageId': {
+            '_operation': "Add",
+            'value': "men-clothing-pants",
+          },
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/productId/partial');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"categoryPageId":{"_operation":"Add","value":"men-clothing-pants"}}""");
+      },
+    ),
+  );
+
+  // partialUpdateObject
+  test(
+    'remove men pant',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.partialUpdateObject(
+        indexName: "theIndexName",
+        objectID: "productId",
+        attributesToUpdate: {
+          'categoryPageId': {
+            '_operation': "Remove",
+            'value': "men-clothing-pants",
+          },
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/productId/partial');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"categoryPageId":{"_operation":"Remove","value":"men-clothing-pants"}}""");
+      },
+    ),
+  );
+
   // removeUserId
   test(
     'removeUserId',
@@ -2252,14 +2308,17 @@ void main() {
       call: (client) => client.saveObject(
         indexName: "<YOUR_INDEX_NAME>",
         body: {
-          'objectID': "id",
-          'test': "val",
+          'name': "Black T-shirt",
+          'color': "#000000||black",
+          'availableIn': "https://source.unsplash.com/100x100/?paris||Paris",
+          'objectID': "myID",
         },
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E');
         expect(request.method, 'post');
-        expectBody(request.body, """{"objectID":"id","test":"val"}""");
+        expectBody(request.body,
+            """{"name":"Black T-shirt","color":"#000000||black","availableIn":"https://source.unsplash.com/100x100/?paris||Paris","objectID":"myID"}""");
       },
     ),
   );
@@ -3134,6 +3193,41 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"objectID":"diet-rule","consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}""");
+      },
+    ),
+  );
+
+  // saveRule
+  test(
+    'contextual',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "a-rule-id",
+        rule: Rule(
+          objectID: "a-rule-id",
+          conditions: [
+            Condition(
+              context: "mobile",
+            ),
+          ],
+          consequence: Consequence(
+            params: ConsequenceParams(
+              filters: "release_date >= 1577836800",
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/a-rule-id');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}""");
       },
     ),
   );
@@ -4317,13 +4411,13 @@ void main() {
         indexName: "indexName",
         facetName: "author",
         searchForFacetValuesRequest: SearchForFacetValuesRequest(
-          facetQuery: "stephen king",
+          facetQuery: "stephen",
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/facets/author/query');
         expect(request.method, 'post');
-        expectBody(request.body, """{"facetQuery":"stephen king"}""");
+        expectBody(request.body, """{"facetQuery":"stephen"}""");
       },
     ),
   );
@@ -4491,6 +4585,31 @@ void main() {
         expect(request.method, 'post');
         expectBody(
             request.body, """{"filters":"country:US AND price.gross < 2.0"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'filters for stores',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          query: "ben",
+          filters: "categories:politics AND store:Gibert Joseph Saint-Michel",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}""");
       },
     ),
   );
@@ -4675,13 +4794,15 @@ void main() {
       call: (client) => client.searchSingleIndex(
         indexName: "indexName",
         searchParams: SearchParamsObject(
-          filters: "NOT _tags:non-fiction",
+          query: "harry",
+          filters: "_tags:non-fiction",
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/query');
         expect(request.method, 'post');
-        expectBody(request.body, """{"filters":"NOT _tags:non-fiction"}""");
+        expectBody(request.body,
+            """{"query":"harry","filters":"_tags:non-fiction"}""");
       },
     ),
   );
@@ -5905,6 +6026,33 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'apply_negative_filters_restaurants',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+        indexName: "indexName",
+        searchParams: SearchParamsObject(
+          query: "query",
+          optionalFilters: [
+            "restaurant:-Bert's Inn",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/query');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}""");
       },
     ),
   );
@@ -8243,6 +8391,33 @@ void main() {
 
   // setSettings
   test(
+    'attributesForFaceting availableIn',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "color",
+            "availableIn",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesForFaceting":["color","availableIn"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
     'api_attributes_for_faceting',
     () => runTest(
       builder: (requester) => SearchClient(
@@ -8766,7 +8941,7 @@ void main() {
 
   // setSettings
   test(
-    'ranking exhaustive',
+    'ranking exhaustive (price)',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -8794,6 +8969,40 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'ranking exhaustive (is_popular)',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          ranking: [
+            "desc(is_popular)",
+            "typo",
+            "geo",
+            "words",
+            "filters",
+            "proximity",
+            "attribute",
+            "exact",
+            "custom",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"ranking":["desc(is_popular)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""");
       },
     ),
   );
@@ -9079,13 +9288,13 @@ void main() {
       call: (client) => client.setSettings(
         indexName: "theIndexName",
         indexSettings: IndexSettings(
-          maxFacetHits: 1000,
+          maxFacetHits: 100,
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/theIndexName/settings');
         expect(request.method, 'put');
-        expectBody(request.body, """{"maxFacetHits":1000}""");
+        expectBody(request.body, """{"maxFacetHits":100}""");
       },
     ),
   );
@@ -9195,7 +9404,7 @@ void main() {
           searchableAttributes: [
             "name",
             "country",
-            "code",
+            "city",
             "iata_code",
           ],
           customRanking: [
@@ -9207,7 +9416,7 @@ void main() {
         expectPath(request.path, '/1/indexes/theIndexName/settings');
         expect(request.method, 'put');
         expectBody(request.body,
-            """{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}""");
+            """{"searchableAttributes":["name","country","city","iata_code"],"customRanking":["desc(links_count)"]}""");
       },
     ),
   );

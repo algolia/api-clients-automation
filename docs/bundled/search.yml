@@ -2555,7 +2555,13 @@ paths:
 
             var response = await client.SaveObjectAsync(
               "<YOUR_INDEX_NAME>",
-              new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
+              new Dictionary<string, string>
+              {
+                { "name", "Black T-shirt" },
+                { "color", "#000000||black" },
+                { "availableIn", "https://source.unsplash.com/100x100/?paris||Paris" },
+                { "objectID", "myID" },
+              }
             );
 
             // >LOG
@@ -2570,8 +2576,10 @@ paths:
             final response = await client.saveObject(
               indexName: "<YOUR_INDEX_NAME>",
               body: {
-                'objectID': "id",
-                'test': "val",
+                'name': "Black T-shirt",
+                'color': "#000000||black",
+                'availableIn': "https://source.unsplash.com/100x100/?paris||Paris",
+                'objectID': "myID",
               },
             );
             // >LOG
@@ -2592,7 +2600,7 @@ paths:
             // Call the API
 
             response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-              "<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"}))
+              "<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt", "color": "#000000||black", "availableIn": "https://source.unsplash.com/100x100/?paris||Paris", "objectID": "myID"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2619,8 +2627,10 @@ paths:
               "<YOUR_INDEX_NAME>",
               new HashMap() {
                 {
-                  put("objectID", "id");
-                  put("test", "val");
+                  put("name", "Black T-shirt");
+                  put("color", "#000000||black");
+                  put("availableIn", "https://source.unsplash.com/100x100/?paris||Paris");
+                  put("objectID", "myID");
                 }
               }
             );
@@ -2639,8 +2649,15 @@ paths:
 
             // Call the API
 
-            const response = await client.saveObject({ indexName:
-            '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
+            const response = await client.saveObject({
+              indexName: '<YOUR_INDEX_NAME>',
+              body: {
+                name: 'Black T-shirt',
+                color: '#000000||black',
+                availableIn: 'https://source.unsplash.com/100x100/?paris||Paris',
+                objectID: 'myID',
+              },
+            });
 
 
             // >LOG
@@ -2663,12 +2680,20 @@ paths:
               indexName = "<YOUR_INDEX_NAME>",
               body = buildJsonObject {
                 put(
-                  "objectID",
-                  JsonPrimitive("id"),
+                  "name",
+                  JsonPrimitive("Black T-shirt"),
                 )
                 put(
-                  "test",
-                  JsonPrimitive("val"),
+                  "color",
+                  JsonPrimitive("#000000||black"),
+                )
+                put(
+                  "availableIn",
+                  JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
+                )
+                put(
+                  "objectID",
+                  JsonPrimitive("myID"),
                 )
               },
             )
@@ -2692,8 +2717,10 @@ paths:
 
             $response = $client->saveObject(
                 '<YOUR_INDEX_NAME>',
-                ['objectID' => 'id',
-                    'test' => 'val',
+                ['name' => 'Black T-shirt',
+                    'color' => '#000000||black',
+                    'availableIn' => 'https://source.unsplash.com/100x100/?paris||Paris',
+                    'objectID' => 'myID',
                 ],
             );
 
@@ -2720,8 +2747,10 @@ paths:
             response = client.save_object(
                 index_name="<YOUR_INDEX_NAME>",
                 body={
-                    "objectID": "id",
-                    "test": "val",
+                    "name": "Black T-shirt",
+                    "color": "#000000||black",
+                    "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                    "objectID": "myID",
                 },
             )
 
@@ -2742,8 +2771,15 @@ paths:
 
             # Call the API
 
-            response = client.save_object("<YOUR_INDEX_NAME>", {objectID: "id",
-            test: "val"})
+            response = client.save_object(
+              "<YOUR_INDEX_NAME>",
+              {
+                name: "Black T-shirt",
+                color: "#000000||black",
+                availableIn: "https://source.unsplash.com/100x100/?paris||Paris",
+                objectID: "myID"
+              }
+            )
 
 
             # >LOG
@@ -2769,7 +2805,14 @@ paths:
 
             val response = client.saveObject(
               indexName = "<YOUR_INDEX_NAME>",
-              body = JObject(List(JField("objectID", JString("id")), JField("test", JString("val"))))
+              body = JObject(
+                List(
+                  JField("name", JString("Black T-shirt")),
+                  JField("color", JString("#000000||black")),
+                  JField("availableIn", JString("https://source.unsplash.com/100x100/?paris||Paris")),
+                  JField("objectID", JString("myID"))
+                )
+              )
             )
 
 
@@ -2791,7 +2834,12 @@ paths:
 
             let response = try await client.saveObject(
                 indexName: "<YOUR_INDEX_NAME>",
-                body: ["objectID": "id", "test": "val"]
+                body: [
+                    "name": "Black T-shirt",
+                    "color": "#000000||black",
+                    "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                    "objectID": "myID",
+                ]
             )
 
             // >LOG

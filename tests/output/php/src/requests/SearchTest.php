@@ -1811,6 +1811,50 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('add men pant')]
+    public function testPartialUpdateObject6(): void
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'productId',
+            ['categoryPageId' => ['_operation' => 'Add',
+                'value' => 'men-clothing-pants',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/productId/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"categoryPageId":{"_operation":"Add","value":"men-clothing-pants"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('remove men pant')]
+    public function testPartialUpdateObject7(): void
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'productId',
+            ['categoryPageId' => ['_operation' => 'Remove',
+                'value' => 'men-clothing-pants',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/productId/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"categoryPageId":{"_operation":"Remove","value":"men-clothing-pants"}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('removeUserId')]
     public function testRemoveUserId(): void
     {
@@ -1872,8 +1916,10 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->saveObject(
             '<YOUR_INDEX_NAME>',
-            ['objectID' => 'id',
-                'test' => 'val',
+            ['name' => 'Black T-shirt',
+                'color' => '#000000||black',
+                'availableIn' => 'https://source.unsplash.com/100x100/?paris||Paris',
+                'objectID' => 'myID',
             ],
         );
 
@@ -1881,7 +1927,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/%3CYOUR_INDEX_NAME%3E',
                 'method' => 'POST',
-                'body' => json_decode('{"objectID":"id","test":"val"}'),
+                'body' => json_decode('{"name":"Black T-shirt","color":"#000000||black","availableIn":"https://source.unsplash.com/100x100/?paris||Paris","objectID":"myID"}'),
             ],
         ]);
     }
@@ -2572,6 +2618,33 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/indexName/rules/diet-rule',
                 'method' => 'PUT',
                 'body' => json_decode("{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"),
+            ],
+        ]);
+    }
+
+    #[TestDox('contextual')]
+    public function testSaveRule20(): void
+    {
+        $client = $this->getClient();
+        $client->saveRule(
+            'indexName',
+            'a-rule-id',
+            ['objectID' => 'a-rule-id',
+                'conditions' => [
+                    ['context' => 'mobile',
+                    ],
+                ],
+                'consequence' => ['params' => ['filters' => 'release_date >= 1577836800',
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/rules/a-rule-id',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}'),
             ],
         ]);
     }
@@ -3598,7 +3671,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->searchForFacetValues(
             'indexName',
             'author',
-            ['facetQuery' => 'stephen king',
+            ['facetQuery' => 'stephen',
             ],
         );
 
@@ -3606,7 +3679,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/indexName/facets/author/query',
                 'method' => 'POST',
-                'body' => json_decode('{"facetQuery":"stephen king"}'),
+                'body' => json_decode('{"facetQuery":"stephen"}'),
             ],
         ]);
     }
@@ -3749,8 +3822,28 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('filters boolean')]
+    #[TestDox('filters for stores')]
     public function testSearchSingleIndex6(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'ben',
+                'filters' => 'categories:politics AND store:Gibert Joseph Saint-Michel',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('filters boolean')]
+    public function testSearchSingleIndex7(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3769,7 +3862,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('distinct')]
-    public function testSearchSingleIndex7(): void
+    public function testSearchSingleIndex8(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3788,7 +3881,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersNumeric')]
-    public function testSearchSingleIndex8(): void
+    public function testSearchSingleIndex9(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3807,7 +3900,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersTimestamp')]
-    public function testSearchSingleIndex9(): void
+    public function testSearchSingleIndex10(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3826,7 +3919,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersSumOrFiltersScoresFalse')]
-    public function testSearchSingleIndex10(): void
+    public function testSearchSingleIndex11(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3846,7 +3939,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersSumOrFiltersScoresTrue')]
-    public function testSearchSingleIndex11(): void
+    public function testSearchSingleIndex12(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3866,7 +3959,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersStephenKing')]
-    public function testSearchSingleIndex12(): void
+    public function testSearchSingleIndex13(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3885,12 +3978,13 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersNotTags')]
-    public function testSearchSingleIndex13(): void
+    public function testSearchSingleIndex14(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
             'indexName',
-            ['filters' => 'NOT _tags:non-fiction',
+            ['query' => 'harry',
+                'filters' => '_tags:non-fiction',
             ],
         );
 
@@ -3898,13 +3992,13 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/indexName/query',
                 'method' => 'POST',
-                'body' => json_decode('{"filters":"NOT _tags:non-fiction"}'),
+                'body' => json_decode('{"query":"harry","filters":"_tags:non-fiction"}'),
             ],
         ]);
     }
 
     #[TestDox('facetFiltersList')]
-    public function testSearchSingleIndex14(): void
+    public function testSearchSingleIndex15(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3931,7 +4025,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersBook')]
-    public function testSearchSingleIndex15(): void
+    public function testSearchSingleIndex16(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3953,7 +4047,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersAND')]
-    public function testSearchSingleIndex16(): void
+    public function testSearchSingleIndex17(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3977,7 +4071,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersOR')]
-    public function testSearchSingleIndex17(): void
+    public function testSearchSingleIndex18(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4003,7 +4097,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersCombined')]
-    public function testSearchSingleIndex18(): void
+    public function testSearchSingleIndex19(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4031,7 +4125,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersNeg')]
-    public function testSearchSingleIndex19(): void
+    public function testSearchSingleIndex20(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4050,7 +4144,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersAndFacetFilters')]
-    public function testSearchSingleIndex20(): void
+    public function testSearchSingleIndex21(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4072,7 +4166,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facet author genre')]
-    public function testSearchSingleIndex21(): void
+    public function testSearchSingleIndex22(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4095,7 +4189,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facet wildcard')]
-    public function testSearchSingleIndex22(): void
+    public function testSearchSingleIndex23(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4116,7 +4210,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('maxValuesPerFacet')]
-    public function testSearchSingleIndex23(): void
+    public function testSearchSingleIndex24(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4135,7 +4229,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('aroundLatLng')]
-    public function testSearchSingleIndex24(): void
+    public function testSearchSingleIndex25(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4154,7 +4248,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('aroundLatLngViaIP')]
-    public function testSearchSingleIndex25(): void
+    public function testSearchSingleIndex26(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4173,7 +4267,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('aroundRadius')]
-    public function testSearchSingleIndex26(): void
+    public function testSearchSingleIndex27(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4193,7 +4287,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('insideBoundingBox')]
-    public function testSearchSingleIndex27(): void
+    public function testSearchSingleIndex28(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4217,51 +4311,6 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/indexName/query',
                 'method' => 'POST',
                 'body' => json_decode('{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('insidePolygon')]
-    public function testSearchSingleIndex28(): void
-    {
-        $client = $this->getClient();
-        $client->searchSingleIndex(
-            'indexName',
-            ['insidePolygon' => [
-                [
-                    42.01,
-
-                    -124.31,
-
-                    48.835509470063045,
-
-                    -124.40453125000005,
-
-                    45.01082951668149,
-
-                    -65.95726562500005,
-
-                    31.247243545293433,
-
-                    -81.06578125000004,
-
-                    25.924152577235226,
-
-                    -97.68234374999997,
-
-                    32.300311895879545,
-
-                    -117.54828125,
-                ],
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/indexes/indexName/query',
-                'method' => 'POST',
-                'body' => json_decode('{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}'),
             ],
         ]);
     }
@@ -4311,8 +4360,53 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('optionalFilters')]
+    #[TestDox('insidePolygon')]
     public function testSearchSingleIndex30(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['insidePolygon' => [
+                [
+                    42.01,
+
+                    -124.31,
+
+                    48.835509470063045,
+
+                    -124.40453125000005,
+
+                    45.01082951668149,
+
+                    -65.95726562500005,
+
+                    31.247243545293433,
+
+                    -81.06578125000004,
+
+                    25.924152577235226,
+
+                    -97.68234374999997,
+
+                    32.300311895879545,
+
+                    -117.54828125,
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('optionalFilters')]
+    public function testSearchSingleIndex31(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4333,7 +4427,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('optionalFiltersMany')]
-    public function testSearchSingleIndex31(): void
+    public function testSearchSingleIndex32(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4358,7 +4452,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('optionalFiltersSimple')]
-    public function testSearchSingleIndex32(): void
+    public function testSearchSingleIndex33(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4381,7 +4475,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('restrictSearchableAttributes')]
-    public function testSearchSingleIndex33(): void
+    public function testSearchSingleIndex34(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4402,7 +4496,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getRankingInfo')]
-    public function testSearchSingleIndex34(): void
+    public function testSearchSingleIndex35(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4421,7 +4515,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clickAnalytics')]
-    public function testSearchSingleIndex35(): void
+    public function testSearchSingleIndex36(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4440,7 +4534,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clickAnalyticsUserToken')]
-    public function testSearchSingleIndex36(): void
+    public function testSearchSingleIndex37(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4460,7 +4554,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enablePersonalization')]
-    public function testSearchSingleIndex37(): void
+    public function testSearchSingleIndex38(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4480,7 +4574,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('userToken')]
-    public function testSearchSingleIndex38(): void
+    public function testSearchSingleIndex39(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4499,7 +4593,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('userToken1234')]
-    public function testSearchSingleIndex39(): void
+    public function testSearchSingleIndex40(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4519,7 +4613,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('analyticsTag')]
-    public function testSearchSingleIndex40(): void
+    public function testSearchSingleIndex41(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4540,7 +4634,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersUsers')]
-    public function testSearchSingleIndex41(): void
+    public function testSearchSingleIndex42(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4563,7 +4657,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('buildTheQuery')]
-    public function testSearchSingleIndex42(): void
+    public function testSearchSingleIndex43(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4586,7 +4680,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesToHighlightOverride')]
-    public function testSearchSingleIndex43(): void
+    public function testSearchSingleIndex44(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4610,7 +4704,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disableTypoToleranceOnAttributes')]
-    public function testSearchSingleIndex44(): void
+    public function testSearchSingleIndex45(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4632,7 +4726,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_a_query')]
-    public function testSearchSingleIndex45(): void
+    public function testSearchSingleIndex46(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4651,7 +4745,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_everything')]
-    public function testSearchSingleIndex46(): void
+    public function testSearchSingleIndex47(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4670,7 +4764,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('api_filtering_range_example')]
-    public function testSearchSingleIndex47(): void
+    public function testSearchSingleIndex48(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4690,7 +4784,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_a_query')]
-    public function testSearchSingleIndex48(): void
+    public function testSearchSingleIndex49(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4711,7 +4805,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_retrievable_attributes')]
-    public function testSearchSingleIndex49(): void
+    public function testSearchSingleIndex50(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4735,7 +4829,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('restrict_searchable_attributes')]
-    public function testSearchSingleIndex50(): void
+    public function testSearchSingleIndex51(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4759,7 +4853,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_relevancy')]
-    public function testSearchSingleIndex51(): void
+    public function testSearchSingleIndex52(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4779,7 +4873,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('apply_filters')]
-    public function testSearchSingleIndex52(): void
+    public function testSearchSingleIndex53(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4799,7 +4893,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('apply_all_filters')]
-    public function testSearchSingleIndex53(): void
+    public function testSearchSingleIndex54(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4819,7 +4913,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('escape_spaces')]
-    public function testSearchSingleIndex54(): void
+    public function testSearchSingleIndex55(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4839,7 +4933,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('escape_keywords')]
-    public function testSearchSingleIndex55(): void
+    public function testSearchSingleIndex56(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4859,7 +4953,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('escape_single_quotes')]
-    public function testSearchSingleIndex56(): void
+    public function testSearchSingleIndex57(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4879,7 +4973,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('escape_double_quotes')]
-    public function testSearchSingleIndex57(): void
+    public function testSearchSingleIndex58(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4899,7 +4993,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('apply_filters')]
-    public function testSearchSingleIndex58(): void
+    public function testSearchSingleIndex59(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4923,7 +5017,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('apply_negative_filters')]
-    public function testSearchSingleIndex59(): void
+    public function testSearchSingleIndex60(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4946,8 +5040,30 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('apply_negative_filters_restaurants')]
+    public function testSearchSingleIndex61(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'optionalFilters' => [
+                    "restaurant:-Bert's Inn",
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode("{\"query\":\"query\",\"optionalFilters\":[\"restaurant:-Bert's Inn\"]}"),
+            ],
+        ]);
+    }
+
     #[TestDox('apply_numeric_filters')]
-    public function testSearchSingleIndex60(): void
+    public function testSearchSingleIndex62(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4975,7 +5091,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('apply_tag_filters')]
-    public function testSearchSingleIndex61(): void
+    public function testSearchSingleIndex63(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5003,7 +5119,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('apply_filters')]
-    public function testSearchSingleIndex62(): void
+    public function testSearchSingleIndex64(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5023,7 +5139,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facets_all')]
-    public function testSearchSingleIndex63(): void
+    public function testSearchSingleIndex65(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5045,7 +5161,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('retrieve_only_some_facets')]
-    public function testSearchSingleIndex64(): void
+    public function testSearchSingleIndex66(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5069,7 +5185,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_max_values_per_facet')]
-    public function testSearchSingleIndex65(): void
+    public function testSearchSingleIndex67(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5089,7 +5205,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_faceting_after_distinct')]
-    public function testSearchSingleIndex66(): void
+    public function testSearchSingleIndex68(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5109,7 +5225,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('sort_facet_values_alphabetically')]
-    public function testSearchSingleIndex67(): void
+    public function testSearchSingleIndex69(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5129,7 +5245,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_attributes_to_snippet')]
-    public function testSearchSingleIndex68(): void
+    public function testSearchSingleIndex70(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5153,7 +5269,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_highlight_pre_tag')]
-    public function testSearchSingleIndex69(): void
+    public function testSearchSingleIndex71(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5173,7 +5289,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_highlight_post_tag')]
-    public function testSearchSingleIndex70(): void
+    public function testSearchSingleIndex72(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5193,7 +5309,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_snippet_ellipsis_text')]
-    public function testSearchSingleIndex71(): void
+    public function testSearchSingleIndex73(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5213,7 +5329,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_restrict_highlight_and_snippet_arrays')]
-    public function testSearchSingleIndex72(): void
+    public function testSearchSingleIndex74(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5233,7 +5349,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('access_page')]
-    public function testSearchSingleIndex73(): void
+    public function testSearchSingleIndex75(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5253,7 +5369,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_hits_per_page')]
-    public function testSearchSingleIndex74(): void
+    public function testSearchSingleIndex76(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5273,7 +5389,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get_nth_hit')]
-    public function testSearchSingleIndex75(): void
+    public function testSearchSingleIndex77(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5293,7 +5409,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get_n_results')]
-    public function testSearchSingleIndex76(): void
+    public function testSearchSingleIndex78(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5313,7 +5429,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_min_word_size_for_one_typo')]
-    public function testSearchSingleIndex77(): void
+    public function testSearchSingleIndex79(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5333,7 +5449,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_min_word_size_for_two_typos')]
-    public function testSearchSingleIndex78(): void
+    public function testSearchSingleIndex80(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5353,7 +5469,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_typo_tolerance_mode')]
-    public function testSearchSingleIndex79(): void
+    public function testSearchSingleIndex81(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5373,7 +5489,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disable_typos_on_numeric_tokens_at_search_time')]
-    public function testSearchSingleIndex80(): void
+    public function testSearchSingleIndex82(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5393,7 +5509,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_around_a_position')]
-    public function testSearchSingleIndex81(): void
+    public function testSearchSingleIndex83(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5413,7 +5529,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_around_server_ip')]
-    public function testSearchSingleIndex82(): void
+    public function testSearchSingleIndex84(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5439,7 +5555,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_around_radius')]
-    public function testSearchSingleIndex83(): void
+    public function testSearchSingleIndex85(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5459,7 +5575,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disable_automatic_radius')]
-    public function testSearchSingleIndex84(): void
+    public function testSearchSingleIndex86(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5479,7 +5595,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_geo_search_precision')]
-    public function testSearchSingleIndex85(): void
+    public function testSearchSingleIndex87(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5499,7 +5615,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_geo_search_precision_non_linear')]
-    public function testSearchSingleIndex86(): void
+    public function testSearchSingleIndex88(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5527,7 +5643,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_minimum_geo_search_radius')]
-    public function testSearchSingleIndex87(): void
+    public function testSearchSingleIndex89(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5547,7 +5663,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_inside_rectangular_area')]
-    public function testSearchSingleIndex88(): void
+    public function testSearchSingleIndex90(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5577,7 +5693,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_inside_multiple_rectangular_areas')]
-    public function testSearchSingleIndex89(): void
+    public function testSearchSingleIndex91(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5617,7 +5733,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_inside_polygon_area')]
-    public function testSearchSingleIndex90(): void
+    public function testSearchSingleIndex92(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5651,7 +5767,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search_inside_multiple_polygon_areas')]
-    public function testSearchSingleIndex91(): void
+    public function testSearchSingleIndex93(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5703,7 +5819,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_querylanguages_override')]
-    public function testSearchSingleIndex92(): void
+    public function testSearchSingleIndex94(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5727,7 +5843,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_querylanguages_override')]
-    public function testSearchSingleIndex93(): void
+    public function testSearchSingleIndex95(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5751,7 +5867,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_querylanguages_override')]
-    public function testSearchSingleIndex94(): void
+    public function testSearchSingleIndex96(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5775,7 +5891,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_querylanguages_with_japanese_query')]
-    public function testSearchSingleIndex95(): void
+    public function testSearchSingleIndex97(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5799,7 +5915,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_natural_languages')]
-    public function testSearchSingleIndex96(): void
+    public function testSearchSingleIndex98(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5821,7 +5937,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_natural_languages_with_query')]
-    public function testSearchSingleIndex97(): void
+    public function testSearchSingleIndex99(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5844,7 +5960,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_decompound_query_search_time')]
-    public function testSearchSingleIndex98(): void
+    public function testSearchSingleIndex100(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5864,7 +5980,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_rules_search_time')]
-    public function testSearchSingleIndex99(): void
+    public function testSearchSingleIndex101(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5884,7 +6000,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_rule_contexts')]
-    public function testSearchSingleIndex100(): void
+    public function testSearchSingleIndex102(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5908,7 +6024,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_personalization')]
-    public function testSearchSingleIndex101(): void
+    public function testSearchSingleIndex103(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5928,7 +6044,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_personalization_with_user_token')]
-    public function testSearchSingleIndex102(): void
+    public function testSearchSingleIndex104(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5949,7 +6065,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('personalization_impact')]
-    public function testSearchSingleIndex103(): void
+    public function testSearchSingleIndex105(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5969,7 +6085,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_user_token')]
-    public function testSearchSingleIndex104(): void
+    public function testSearchSingleIndex106(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -5989,7 +6105,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_user_token_with_personalization')]
-    public function testSearchSingleIndex105(): void
+    public function testSearchSingleIndex107(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6010,7 +6126,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_query_type')]
-    public function testSearchSingleIndex106(): void
+    public function testSearchSingleIndex108(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6030,7 +6146,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_remove_words_if_no_results')]
-    public function testSearchSingleIndex107(): void
+    public function testSearchSingleIndex109(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6050,7 +6166,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_advanced_syntax_search_time')]
-    public function testSearchSingleIndex108(): void
+    public function testSearchSingleIndex110(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6070,7 +6186,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('overide_default_optional_words')]
-    public function testSearchSingleIndex109(): void
+    public function testSearchSingleIndex111(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6094,7 +6210,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disabling_exact_for_some_attributes_search_time')]
-    public function testSearchSingleIndex110(): void
+    public function testSearchSingleIndex112(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6116,7 +6232,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_exact_single_word_query')]
-    public function testSearchSingleIndex111(): void
+    public function testSearchSingleIndex113(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6136,7 +6252,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_aternative_as_exact')]
-    public function testSearchSingleIndex112(): void
+    public function testSearchSingleIndex114(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6158,7 +6274,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_advanced_syntax_exact_phrase')]
-    public function testSearchSingleIndex113(): void
+    public function testSearchSingleIndex115(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6181,7 +6297,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_advanced_syntax_exclude_words')]
-    public function testSearchSingleIndex114(): void
+    public function testSearchSingleIndex116(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6204,7 +6320,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_distinct')]
-    public function testSearchSingleIndex115(): void
+    public function testSearchSingleIndex117(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6224,7 +6340,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get_ranking_info')]
-    public function testSearchSingleIndex116(): void
+    public function testSearchSingleIndex118(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6244,7 +6360,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disable_click_analytics')]
-    public function testSearchSingleIndex117(): void
+    public function testSearchSingleIndex119(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6264,7 +6380,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_click_analytics')]
-    public function testSearchSingleIndex118(): void
+    public function testSearchSingleIndex120(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6284,7 +6400,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disable_analytics')]
-    public function testSearchSingleIndex119(): void
+    public function testSearchSingleIndex121(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6304,7 +6420,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('add_analytics_tags')]
-    public function testSearchSingleIndex120(): void
+    public function testSearchSingleIndex122(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6328,7 +6444,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disable_synonyms')]
-    public function testSearchSingleIndex121(): void
+    public function testSearchSingleIndex123(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6348,7 +6464,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_replace_synonyms_in_highlights')]
-    public function testSearchSingleIndex122(): void
+    public function testSearchSingleIndex124(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6368,7 +6484,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_min_proximity')]
-    public function testSearchSingleIndex123(): void
+    public function testSearchSingleIndex125(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6388,7 +6504,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_default_field')]
-    public function testSearchSingleIndex124(): void
+    public function testSearchSingleIndex126(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6412,7 +6528,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('override_percentile_computation')]
-    public function testSearchSingleIndex125(): void
+    public function testSearchSingleIndex127(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6432,7 +6548,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_ab_test')]
-    public function testSearchSingleIndex126(): void
+    public function testSearchSingleIndex128(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6452,7 +6568,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_enable_re_ranking')]
-    public function testSearchSingleIndex127(): void
+    public function testSearchSingleIndex129(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6472,7 +6588,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('with algolia user id')]
-    public function testSearchSingleIndex128(): void
+    public function testSearchSingleIndex130(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -6896,8 +7012,31 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('api_attributes_for_faceting')]
+    #[TestDox('attributesForFaceting availableIn')]
     public function testSetSettings14(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'color',
+
+                'availableIn',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesForFaceting":["color","availableIn"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('api_attributes_for_faceting')]
+    public function testSetSettings15(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -6920,7 +7059,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('api_attributes_for_faceting_searchable')]
-    public function testSetSettings15(): void
+    public function testSetSettings16(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -6943,7 +7082,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('api_attributes_for_filter_only')]
-    public function testSetSettings16(): void
+    public function testSetSettings17(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -6966,7 +7105,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting categoryPageId')]
-    public function testSetSettings17(): void
+    public function testSetSettings18(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -6987,7 +7126,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('unretrievableAttributes')]
-    public function testSetSettings18(): void
+    public function testSetSettings19(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7008,7 +7147,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting user restricted data')]
-    public function testSetSettings19(): void
+    public function testSetSettings20(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7029,7 +7168,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting optional filters')]
-    public function testSetSettings20(): void
+    public function testSetSettings21(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7052,7 +7191,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting redirect index')]
-    public function testSetSettings21(): void
+    public function testSetSettings22(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7073,7 +7212,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting multiple consequences')]
-    public function testSetSettings22(): void
+    public function testSetSettings23(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7094,7 +7233,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting in-depth optional filters')]
-    public function testSetSettings23(): void
+    public function testSetSettings24(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7115,7 +7254,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('mode neuralSearch')]
-    public function testSetSettings24(): void
+    public function testSetSettings25(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7134,7 +7273,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('mode keywordSearch')]
-    public function testSetSettings25(): void
+    public function testSetSettings26(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7153,7 +7292,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes same priority')]
-    public function testSetSettings26(): void
+    public function testSetSettings27(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7176,7 +7315,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes higher priority')]
-    public function testSetSettings27(): void
+    public function testSetSettings28(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7199,7 +7338,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking retweets')]
-    public function testSetSettings28(): void
+    public function testSetSettings29(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7222,7 +7361,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking boosted')]
-    public function testSetSettings29(): void
+    public function testSetSettings30(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7243,7 +7382,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking pageviews')]
-    public function testSetSettings30(): void
+    public function testSetSettings31(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7266,7 +7405,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking applying search parameters for a specific query')]
-    public function testSetSettings31(): void
+    public function testSetSettings32(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7290,7 +7429,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking rounded pageviews')]
-    public function testSetSettings32(): void
+    public function testSetSettings33(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7313,7 +7452,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking price')]
-    public function testSetSettings33(): void
+    public function testSetSettings34(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7333,8 +7472,8 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('ranking exhaustive')]
-    public function testSetSettings34(): void
+    #[TestDox('ranking exhaustive (price)')]
+    public function testSetSettings35(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7370,8 +7509,45 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('ranking exhaustive (is_popular)')]
+    public function testSetSettings36(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['ranking' => [
+                'desc(is_popular)',
+
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'proximity',
+
+                'attribute',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"ranking":["desc(is_popular)","typo","geo","words","filters","proximity","attribute","exact","custom"]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('ranking standard replica')]
-    public function testSetSettings35(): void
+    public function testSetSettings37(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7392,7 +7568,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('ranking virtual replica')]
-    public function testSetSettings36(): void
+    public function testSetSettings38(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7413,7 +7589,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking and ranking sort alphabetically')]
-    public function testSetSettings37(): void
+    public function testSetSettings39(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7451,7 +7627,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('relevancyStrictness')]
-    public function testSetSettings38(): void
+    public function testSetSettings40(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7473,7 +7649,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('create replica index')]
-    public function testSetSettings39(): void
+    public function testSetSettings41(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7494,7 +7670,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('create replica index articles')]
-    public function testSetSettings40(): void
+    public function testSetSettings42(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7515,7 +7691,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('create virtual replica index')]
-    public function testSetSettings41(): void
+    public function testSetSettings43(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7536,7 +7712,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('unlink replica index')]
-    public function testSetSettings42(): void
+    public function testSetSettings44(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7557,7 +7733,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('forwardToReplicas')]
-    public function testSetSettings43(): void
+    public function testSetSettings45(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7582,7 +7758,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('maxValuesPerFacet')]
-    public function testSetSettings44(): void
+    public function testSetSettings46(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7601,12 +7777,12 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('maxFacetHits')]
-    public function testSetSettings45(): void
+    public function testSetSettings47(): void
     {
         $client = $this->getClient();
         $client->setSettings(
             'theIndexName',
-            ['maxFacetHits' => 1000,
+            ['maxFacetHits' => 100,
             ],
         );
 
@@ -7614,13 +7790,13 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/theIndexName/settings',
                 'method' => 'PUT',
-                'body' => json_decode('{"maxFacetHits":1000}'),
+                'body' => json_decode('{"maxFacetHits":100}'),
             ],
         ]);
     }
 
     #[TestDox('attributesForFaceting complex')]
-    public function testSetSettings46(): void
+    public function testSetSettings48(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7645,7 +7821,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('ranking closest dates')]
-    public function testSetSettings47(): void
+    public function testSetSettings49(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7682,7 +7858,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes item variation')]
-    public function testSetSettings48(): void
+    public function testSetSettings50(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7707,7 +7883,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes around location')]
-    public function testSetSettings49(): void
+    public function testSetSettings51(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7717,7 +7893,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
                 'country',
 
-                'code',
+                'city',
 
                 'iata_code',
             ],
@@ -7731,13 +7907,13 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/theIndexName/settings',
                 'method' => 'PUT',
-                'body' => json_decode('{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}'),
+                'body' => json_decode('{"searchableAttributes":["name","country","city","iata_code"],"customRanking":["desc(links_count)"]}'),
             ],
         ]);
     }
 
     #[TestDox('attributesToHighlight')]
-    public function testSetSettings50(): void
+    public function testSetSettings52(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7762,7 +7938,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesToHighlightStar')]
-    public function testSetSettings51(): void
+    public function testSetSettings53(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7783,7 +7959,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('everything')]
-    public function testSetSettings52(): void
+    public function testSetSettings54(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7926,7 +8102,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesWithCustomRankingsAndAttributesForFaceting')]
-    public function testSetSettings53(): void
+    public function testSetSettings55(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7965,7 +8141,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesOrdering')]
-    public function testSetSettings54(): void
+    public function testSetSettings56(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -7988,7 +8164,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesProductReferenceSuffixes')]
-    public function testSetSettings55(): void
+    public function testSetSettings57(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8013,7 +8189,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('queryLanguageAndIgnorePlurals')]
-    public function testSetSettings56(): void
+    public function testSetSettings58(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8035,7 +8211,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesInMovies')]
-    public function testSetSettings57(): void
+    public function testSetSettings59(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8060,7 +8236,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disablePrefixOnAttributes')]
-    public function testSetSettings58(): void
+    public function testSetSettings60(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8081,7 +8257,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disableTypoToleranceOnAttributes')]
-    public function testSetSettings59(): void
+    public function testSetSettings61(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8102,7 +8278,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesSimpleExample')]
-    public function testSetSettings60(): void
+    public function testSetSettings62(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8123,7 +8299,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesSimpleExampleAlt')]
-    public function testSetSettings61(): void
+    public function testSetSettings63(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8146,7 +8322,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_searchable_attributes')]
-    public function testSetSettings62(): void
+    public function testSetSettings64(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8173,7 +8349,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_searchable_attributes')]
-    public function testSetSettings63(): void
+    public function testSetSettings65(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8202,7 +8378,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('unretrievable_attributes')]
-    public function testSetSettings64(): void
+    public function testSetSettings66(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8223,7 +8399,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_retrievable_attributes')]
-    public function testSetSettings65(): void
+    public function testSetSettings67(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8248,7 +8424,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_all_attributes_as_retrievable')]
-    public function testSetSettings66(): void
+    public function testSetSettings68(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8269,7 +8445,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('specify_attributes_not_to_retrieve')]
-    public function testSetSettings67(): void
+    public function testSetSettings69(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8294,7 +8470,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('neural_search')]
-    public function testSetSettings68(): void
+    public function testSetSettings70(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8313,7 +8489,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('keyword_search')]
-    public function testSetSettings69(): void
+    public function testSetSettings71(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8332,7 +8508,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_ranking')]
-    public function testSetSettings70(): void
+    public function testSetSettings72(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8367,7 +8543,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_ranking_by_attribute_asc')]
-    public function testSetSettings71(): void
+    public function testSetSettings73(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8404,7 +8580,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_ranking_by_attribute_desc')]
-    public function testSetSettings72(): void
+    public function testSetSettings74(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8441,7 +8617,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('restrict_searchable_attributes')]
-    public function testSetSettings73(): void
+    public function testSetSettings75(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8464,7 +8640,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_relevancy')]
-    public function testSetSettings74(): void
+    public function testSetSettings76(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8483,7 +8659,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_replicas')]
-    public function testSetSettings75(): void
+    public function testSetSettings77(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8506,7 +8682,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_max_values_per_facet')]
-    public function testSetSettings76(): void
+    public function testSetSettings78(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8525,7 +8701,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_sort_facet_values_by')]
-    public function testSetSettings77(): void
+    public function testSetSettings79(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8544,7 +8720,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_attributes_to_snippet')]
-    public function testSetSettings78(): void
+    public function testSetSettings80(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8567,7 +8743,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_all_attributes_to_snippet')]
-    public function testSetSettings79(): void
+    public function testSetSettings81(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8588,7 +8764,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_highlight_pre_tag')]
-    public function testSetSettings80(): void
+    public function testSetSettings82(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8607,7 +8783,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_highlight_post_tag')]
-    public function testSetSettings81(): void
+    public function testSetSettings83(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8626,7 +8802,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_snippet_ellipsis_text')]
-    public function testSetSettings82(): void
+    public function testSetSettings84(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8645,7 +8821,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_restrict_highlight_and_snippet_arrays_by_default')]
-    public function testSetSettings83(): void
+    public function testSetSettings85(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8664,7 +8840,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_hits_per_page')]
-    public function testSetSettings84(): void
+    public function testSetSettings86(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8683,7 +8859,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_pagination_limit')]
-    public function testSetSettings85(): void
+    public function testSetSettings87(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8702,7 +8878,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_min_word_size_for_one_typo')]
-    public function testSetSettings86(): void
+    public function testSetSettings88(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8721,7 +8897,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_min_word_size_for_two_typos')]
-    public function testSetSettings87(): void
+    public function testSetSettings89(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8740,7 +8916,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_typo_tolerance_mode')]
-    public function testSetSettings88(): void
+    public function testSetSettings90(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8759,7 +8935,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disable_typos_on_numeric_tokens_by_default')]
-    public function testSetSettings89(): void
+    public function testSetSettings91(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8778,7 +8954,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disable_typo_tolerance_for_words')]
-    public function testSetSettings90(): void
+    public function testSetSettings92(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8801,7 +8977,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_separators_to_index')]
-    public function testSetSettings91(): void
+    public function testSetSettings93(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8820,7 +8996,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_languages_using_querylanguages')]
-    public function testSetSettings92(): void
+    public function testSetSettings94(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8842,7 +9018,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_attributes_to_transliterate')]
-    public function testSetSettings93(): void
+    public function testSetSettings95(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8868,7 +9044,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_languages_using_querylanguages')]
-    public function testSetSettings94(): void
+    public function testSetSettings96(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8890,7 +9066,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_camel_case_attributes')]
-    public function testSetSettings95(): void
+    public function testSetSettings97(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8911,7 +9087,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_decompounded_attributes')]
-    public function testSetSettings96(): void
+    public function testSetSettings98(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8933,7 +9109,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_decompounded_multiple_attributes')]
-    public function testSetSettings97(): void
+    public function testSetSettings99(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8962,7 +9138,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_keep_diacritics_on_characters')]
-    public function testSetSettings98(): void
+    public function testSetSettings100(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -8981,7 +9157,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_custom_normalization')]
-    public function testSetSettings99(): void
+    public function testSetSettings101(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9002,7 +9178,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_languages_using_querylanguages')]
-    public function testSetSettings100(): void
+    public function testSetSettings102(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9025,7 +9201,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_indexlanguages')]
-    public function testSetSettings101(): void
+    public function testSetSettings103(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9046,7 +9222,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_decompound_query_by_default')]
-    public function testSetSettings102(): void
+    public function testSetSettings104(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9065,7 +9241,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_rules_syntax_by_default')]
-    public function testSetSettings103(): void
+    public function testSetSettings105(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9084,7 +9260,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_personalization_settings')]
-    public function testSetSettings104(): void
+    public function testSetSettings106(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9103,7 +9279,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_query_type')]
-    public function testSetSettings105(): void
+    public function testSetSettings107(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9122,7 +9298,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_remove_words_if_no_result')]
-    public function testSetSettings106(): void
+    public function testSetSettings108(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9141,7 +9317,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_advanced_syntax_by_default')]
-    public function testSetSettings107(): void
+    public function testSetSettings109(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9160,7 +9336,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_optional_words')]
-    public function testSetSettings108(): void
+    public function testSetSettings110(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9183,7 +9359,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disabling_prefix_search_for_some_attributes_by_default')]
-    public function testSetSettings109(): void
+    public function testSetSettings111(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9204,7 +9380,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disabling_exact_for_some_attributes_by_default')]
-    public function testSetSettings110(): void
+    public function testSetSettings112(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9225,7 +9401,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_exact_single_word_query')]
-    public function testSetSettings111(): void
+    public function testSetSettings113(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9244,7 +9420,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_aternative_as_exact')]
-    public function testSetSettings112(): void
+    public function testSetSettings114(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9267,7 +9443,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_advanced_syntax_by_default')]
-    public function testSetSettings113(): void
+    public function testSetSettings115(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9286,7 +9462,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_numeric_attributes_for_filtering')]
-    public function testSetSettings114(): void
+    public function testSetSettings116(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9309,7 +9485,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enable_compression_of_integer_array')]
-    public function testSetSettings115(): void
+    public function testSetSettings117(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9328,7 +9504,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_attributes_for_distinct')]
-    public function testSetSettings116(): void
+    public function testSetSettings118(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9347,7 +9523,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_distinct')]
-    public function testSetSettings117(): void
+    public function testSetSettings119(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9367,7 +9543,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_replace_synonyms_in_highlights')]
-    public function testSetSettings118(): void
+    public function testSetSettings120(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9386,7 +9562,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_min_proximity')]
-    public function testSetSettings119(): void
+    public function testSetSettings121(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9405,7 +9581,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_default_field')]
-    public function testSetSettings120(): void
+    public function testSetSettings122(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9432,7 +9608,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_max_facet_hits')]
-    public function testSetSettings121(): void
+    public function testSetSettings123(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9451,7 +9627,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_attribute_criteria_computed_by_min_proximity')]
-    public function testSetSettings122(): void
+    public function testSetSettings124(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9470,7 +9646,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_user_data')]
-    public function testSetSettings123(): void
+    public function testSetSettings125(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -9490,7 +9666,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('set_rendering_content')]
-    public function testSetSettings124(): void
+    public function testSetSettings126(): void
     {
         $client = $this->getClient();
         $client->setSettings(

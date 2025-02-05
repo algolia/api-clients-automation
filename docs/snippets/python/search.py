@@ -2478,6 +2478,64 @@ def snippet_for_partial_update_object5():
     # SEPARATOR<
 
 
+def snippet_for_partial_update_object6():
+    """
+    Snippet for the partialUpdateObject method.
+
+    add men pant
+    """
+    # >SEPARATOR partialUpdateObject add men pant
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.partial_update_object(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="productId",
+        attributes_to_update={
+            "categoryPageId": {
+                "_operation": "Add",
+                "value": "men-clothing-pants",
+            },
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_partial_update_object7():
+    """
+    Snippet for the partialUpdateObject method.
+
+    remove men pant
+    """
+    # >SEPARATOR partialUpdateObject remove men pant
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.partial_update_object(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="productId",
+        attributes_to_update={
+            "categoryPageId": {
+                "_operation": "Remove",
+                "value": "men-clothing-pants",
+            },
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_partial_update_objects():
     """
     Snippet for the partialUpdateObjects method.
@@ -2764,8 +2822,10 @@ def snippet_for_save_object():
     response = client.save_object(
         index_name="<YOUR_INDEX_NAME>",
         body={
-            "objectID": "id",
-            "test": "val",
+            "name": "Black T-shirt",
+            "color": "#000000||black",
+            "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+            "objectID": "myID",
         },
     )
 
@@ -3776,6 +3836,42 @@ def snippet_for_save_rule19():
                             },
                         ],
                     },
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_rule20():
+    """
+    Snippet for the saveRule method.
+
+    contextual
+    """
+    # >SEPARATOR saveRule contextual
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_rule(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="a-rule-id",
+        rule={
+            "objectID": "a-rule-id",
+            "conditions": [
+                {
+                    "context": "mobile",
+                },
+            ],
+            "consequence": {
+                "params": {
+                    "filters": "release_date >= 1577836800",
                 },
             },
         },
@@ -4982,7 +5078,7 @@ def snippet_for_search_for_facet_values2():
         index_name="<YOUR_INDEX_NAME>",
         facet_name="author",
         search_for_facet_values_request={
-            "facetQuery": "stephen king",
+            "facetQuery": "stephen",
         },
     )
 
@@ -5174,6 +5270,32 @@ def snippet_for_search_single_index6():
     """
     Snippet for the searchSingleIndex method.
 
+    filters for stores
+    """
+    # >SEPARATOR searchSingleIndex filters for stores
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "ben",
+            "filters": "categories:politics AND store:Gibert Joseph Saint-Michel",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index7():
+    """
+    Snippet for the searchSingleIndex method.
+
     filters boolean
     """
     # >SEPARATOR searchSingleIndex filters boolean
@@ -5195,7 +5317,7 @@ def snippet_for_search_single_index6():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index7():
+def snippet_for_search_single_index8():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5220,7 +5342,7 @@ def snippet_for_search_single_index7():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index8():
+def snippet_for_search_single_index9():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5245,7 +5367,7 @@ def snippet_for_search_single_index8():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index9():
+def snippet_for_search_single_index10():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5270,7 +5392,7 @@ def snippet_for_search_single_index9():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index10():
+def snippet_for_search_single_index11():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5296,7 +5418,7 @@ def snippet_for_search_single_index10():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index11():
+def snippet_for_search_single_index12():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5322,7 +5444,7 @@ def snippet_for_search_single_index11():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index12():
+def snippet_for_search_single_index13():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5347,7 +5469,7 @@ def snippet_for_search_single_index12():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index13():
+def snippet_for_search_single_index14():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5362,7 +5484,8 @@ def snippet_for_search_single_index13():
     response = client.search_single_index(
         index_name="<YOUR_INDEX_NAME>",
         search_params={
-            "filters": "NOT _tags:non-fiction",
+            "query": "harry",
+            "filters": "_tags:non-fiction",
         },
     )
 
@@ -5372,7 +5495,7 @@ def snippet_for_search_single_index13():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index14():
+def snippet_for_search_single_index15():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5403,7 +5526,7 @@ def snippet_for_search_single_index14():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index15():
+def snippet_for_search_single_index16():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5431,7 +5554,7 @@ def snippet_for_search_single_index15():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index16():
+def snippet_for_search_single_index17():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5460,7 +5583,7 @@ def snippet_for_search_single_index16():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index17():
+def snippet_for_search_single_index18():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5491,7 +5614,7 @@ def snippet_for_search_single_index17():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index18():
+def snippet_for_search_single_index19():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5523,7 +5646,7 @@ def snippet_for_search_single_index18():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index19():
+def snippet_for_search_single_index20():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5548,7 +5671,7 @@ def snippet_for_search_single_index19():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index20():
+def snippet_for_search_single_index21():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5576,7 +5699,7 @@ def snippet_for_search_single_index20():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index21():
+def snippet_for_search_single_index22():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5604,7 +5727,7 @@ def snippet_for_search_single_index21():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index22():
+def snippet_for_search_single_index23():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5631,7 +5754,7 @@ def snippet_for_search_single_index22():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index23():
+def snippet_for_search_single_index24():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5656,7 +5779,7 @@ def snippet_for_search_single_index23():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index24():
+def snippet_for_search_single_index25():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5681,7 +5804,7 @@ def snippet_for_search_single_index24():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index25():
+def snippet_for_search_single_index26():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5706,7 +5829,7 @@ def snippet_for_search_single_index25():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index26():
+def snippet_for_search_single_index27():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5732,7 +5855,7 @@ def snippet_for_search_single_index26():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index27():
+def snippet_for_search_single_index28():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5753,46 +5876,6 @@ def snippet_for_search_single_index27():
                     65.73828125,
                     25.905859247243498,
                     128.8046875,
-                ],
-            ],
-        },
-    )
-
-    # >LOG
-    # use the class directly
-    print(response)
-    # SEPARATOR<
-
-
-def snippet_for_search_single_index28():
-    """
-    Snippet for the searchSingleIndex method.
-
-    insidePolygon
-    """
-    # >SEPARATOR searchSingleIndex insidePolygon
-    # Initialize the client
-    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
-    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-    # Call the API
-    response = client.search_single_index(
-        index_name="<YOUR_INDEX_NAME>",
-        search_params={
-            "insidePolygon": [
-                [
-                    42.01,
-                    -124.31,
-                    48.835509470063045,
-                    -124.40453125000005,
-                    45.01082951668149,
-                    -65.95726562500005,
-                    31.247243545293433,
-                    -81.06578125000004,
-                    25.924152577235226,
-                    -97.68234374999997,
-                    32.300311895879545,
-                    -117.54828125,
                 ],
             ],
         },
@@ -5848,6 +5931,46 @@ def snippet_for_search_single_index30():
     """
     Snippet for the searchSingleIndex method.
 
+    insidePolygon
+    """
+    # >SEPARATOR searchSingleIndex insidePolygon
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "insidePolygon": [
+                [
+                    42.01,
+                    -124.31,
+                    48.835509470063045,
+                    -124.40453125000005,
+                    45.01082951668149,
+                    -65.95726562500005,
+                    31.247243545293433,
+                    -81.06578125000004,
+                    25.924152577235226,
+                    -97.68234374999997,
+                    32.300311895879545,
+                    -117.54828125,
+                ],
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index31():
+    """
+    Snippet for the searchSingleIndex method.
+
     optionalFilters
     """
     # >SEPARATOR searchSingleIndex optionalFilters
@@ -5871,7 +5994,7 @@ def snippet_for_search_single_index30():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index31():
+def snippet_for_search_single_index32():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5900,7 +6023,7 @@ def snippet_for_search_single_index31():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index32():
+def snippet_for_search_single_index33():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5928,7 +6051,7 @@ def snippet_for_search_single_index32():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index33():
+def snippet_for_search_single_index34():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5955,7 +6078,7 @@ def snippet_for_search_single_index33():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index34():
+def snippet_for_search_single_index35():
     """
     Snippet for the searchSingleIndex method.
 
@@ -5980,7 +6103,7 @@ def snippet_for_search_single_index34():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index35():
+def snippet_for_search_single_index36():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6005,7 +6128,7 @@ def snippet_for_search_single_index35():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index36():
+def snippet_for_search_single_index37():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6031,7 +6154,7 @@ def snippet_for_search_single_index36():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index37():
+def snippet_for_search_single_index38():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6057,7 +6180,7 @@ def snippet_for_search_single_index37():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index38():
+def snippet_for_search_single_index39():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6082,7 +6205,7 @@ def snippet_for_search_single_index38():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index39():
+def snippet_for_search_single_index40():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6108,7 +6231,7 @@ def snippet_for_search_single_index39():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index40():
+def snippet_for_search_single_index41():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6135,7 +6258,7 @@ def snippet_for_search_single_index40():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index41():
+def snippet_for_search_single_index42():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6163,7 +6286,7 @@ def snippet_for_search_single_index41():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index42():
+def snippet_for_search_single_index43():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6192,7 +6315,7 @@ def snippet_for_search_single_index42():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index43():
+def snippet_for_search_single_index44():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6221,7 +6344,7 @@ def snippet_for_search_single_index43():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index44():
+def snippet_for_search_single_index45():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6249,7 +6372,7 @@ def snippet_for_search_single_index44():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index45():
+def snippet_for_search_single_index46():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6274,7 +6397,7 @@ def snippet_for_search_single_index45():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index46():
+def snippet_for_search_single_index47():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6299,7 +6422,7 @@ def snippet_for_search_single_index46():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index47():
+def snippet_for_search_single_index48():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6325,7 +6448,7 @@ def snippet_for_search_single_index47():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index48():
+def snippet_for_search_single_index49():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6352,7 +6475,7 @@ def snippet_for_search_single_index48():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index49():
+def snippet_for_search_single_index50():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6381,7 +6504,7 @@ def snippet_for_search_single_index49():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index50():
+def snippet_for_search_single_index51():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6410,7 +6533,7 @@ def snippet_for_search_single_index50():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index51():
+def snippet_for_search_single_index52():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6436,7 +6559,7 @@ def snippet_for_search_single_index51():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index52():
+def snippet_for_search_single_index53():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6462,7 +6585,7 @@ def snippet_for_search_single_index52():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index53():
+def snippet_for_search_single_index54():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6488,7 +6611,7 @@ def snippet_for_search_single_index53():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index54():
+def snippet_for_search_single_index55():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6514,7 +6637,7 @@ def snippet_for_search_single_index54():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index55():
+def snippet_for_search_single_index56():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6540,7 +6663,7 @@ def snippet_for_search_single_index55():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index56():
+def snippet_for_search_single_index57():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6566,7 +6689,7 @@ def snippet_for_search_single_index56():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index57():
+def snippet_for_search_single_index58():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6592,7 +6715,7 @@ def snippet_for_search_single_index57():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index58():
+def snippet_for_search_single_index59():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6621,7 +6744,7 @@ def snippet_for_search_single_index58():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index59():
+def snippet_for_search_single_index60():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6650,7 +6773,35 @@ def snippet_for_search_single_index59():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index60():
+def snippet_for_search_single_index61():
+    """
+    Snippet for the searchSingleIndex method.
+
+    apply_negative_filters_restaurants
+    """
+    # >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "query",
+            "optionalFilters": [
+                "restaurant:-Bert's Inn",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index62():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6682,7 +6833,7 @@ def snippet_for_search_single_index60():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index61():
+def snippet_for_search_single_index63():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6714,7 +6865,7 @@ def snippet_for_search_single_index61():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index62():
+def snippet_for_search_single_index64():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6740,7 +6891,7 @@ def snippet_for_search_single_index62():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index63():
+def snippet_for_search_single_index65():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6768,7 +6919,7 @@ def snippet_for_search_single_index63():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index64():
+def snippet_for_search_single_index66():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6797,7 +6948,7 @@ def snippet_for_search_single_index64():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index65():
+def snippet_for_search_single_index67():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6823,7 +6974,7 @@ def snippet_for_search_single_index65():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index66():
+def snippet_for_search_single_index68():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6849,7 +7000,7 @@ def snippet_for_search_single_index66():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index67():
+def snippet_for_search_single_index69():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6875,7 +7026,7 @@ def snippet_for_search_single_index67():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index68():
+def snippet_for_search_single_index70():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6904,7 +7055,7 @@ def snippet_for_search_single_index68():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index69():
+def snippet_for_search_single_index71():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6930,7 +7081,7 @@ def snippet_for_search_single_index69():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index70():
+def snippet_for_search_single_index72():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6956,7 +7107,7 @@ def snippet_for_search_single_index70():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index71():
+def snippet_for_search_single_index73():
     """
     Snippet for the searchSingleIndex method.
 
@@ -6982,7 +7133,7 @@ def snippet_for_search_single_index71():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index72():
+def snippet_for_search_single_index74():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7008,7 +7159,7 @@ def snippet_for_search_single_index72():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index73():
+def snippet_for_search_single_index75():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7034,7 +7185,7 @@ def snippet_for_search_single_index73():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index74():
+def snippet_for_search_single_index76():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7060,7 +7211,7 @@ def snippet_for_search_single_index74():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index75():
+def snippet_for_search_single_index77():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7086,7 +7237,7 @@ def snippet_for_search_single_index75():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index76():
+def snippet_for_search_single_index78():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7112,7 +7263,7 @@ def snippet_for_search_single_index76():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index77():
+def snippet_for_search_single_index79():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7138,7 +7289,7 @@ def snippet_for_search_single_index77():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index78():
+def snippet_for_search_single_index80():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7164,7 +7315,7 @@ def snippet_for_search_single_index78():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index79():
+def snippet_for_search_single_index81():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7190,7 +7341,7 @@ def snippet_for_search_single_index79():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index80():
+def snippet_for_search_single_index82():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7216,7 +7367,7 @@ def snippet_for_search_single_index80():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index81():
+def snippet_for_search_single_index83():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7242,7 +7393,7 @@ def snippet_for_search_single_index81():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index82():
+def snippet_for_search_single_index84():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7273,7 +7424,7 @@ def snippet_for_search_single_index82():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index83():
+def snippet_for_search_single_index85():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7299,7 +7450,7 @@ def snippet_for_search_single_index83():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index84():
+def snippet_for_search_single_index86():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7325,7 +7476,7 @@ def snippet_for_search_single_index84():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index85():
+def snippet_for_search_single_index87():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7351,7 +7502,7 @@ def snippet_for_search_single_index85():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index86():
+def snippet_for_search_single_index88():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7386,7 +7537,7 @@ def snippet_for_search_single_index86():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index87():
+def snippet_for_search_single_index89():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7412,7 +7563,7 @@ def snippet_for_search_single_index87():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index88():
+def snippet_for_search_single_index90():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7445,7 +7596,7 @@ def snippet_for_search_single_index88():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index89():
+def snippet_for_search_single_index91():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7484,7 +7635,7 @@ def snippet_for_search_single_index89():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index90():
+def snippet_for_search_single_index92():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7519,7 +7670,7 @@ def snippet_for_search_single_index90():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index91():
+def snippet_for_search_single_index93():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7564,7 +7715,7 @@ def snippet_for_search_single_index91():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index92():
+def snippet_for_search_single_index94():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7593,65 +7744,65 @@ def snippet_for_search_single_index92():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index93():
-    """
-    Snippet for the searchSingleIndex method.
-
-    set_querylanguages_override
-    """
-    # >SEPARATOR searchSingleIndex set_querylanguages_override
-    # Initialize the client
-    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
-    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-    # Call the API
-    response = client.search_single_index(
-        index_name="<YOUR_INDEX_NAME>",
-        search_params={
-            "query": "query",
-            "removeStopWords": [
-                "ca",
-                "es",
-            ],
-        },
-    )
-
-    # >LOG
-    # use the class directly
-    print(response)
-    # SEPARATOR<
-
-
-def snippet_for_search_single_index94():
-    """
-    Snippet for the searchSingleIndex method.
-
-    set_querylanguages_override
-    """
-    # >SEPARATOR searchSingleIndex set_querylanguages_override
-    # Initialize the client
-    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
-    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-    # Call the API
-    response = client.search_single_index(
-        index_name="<YOUR_INDEX_NAME>",
-        search_params={
-            "query": "query",
-            "removeStopWords": [
-                "ca",
-                "es",
-            ],
-        },
-    )
-
-    # >LOG
-    # use the class directly
-    print(response)
-    # SEPARATOR<
-
-
 def snippet_for_search_single_index95():
+    """
+    Snippet for the searchSingleIndex method.
+
+    set_querylanguages_override
+    """
+    # >SEPARATOR searchSingleIndex set_querylanguages_override
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "query",
+            "removeStopWords": [
+                "ca",
+                "es",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index96():
+    """
+    Snippet for the searchSingleIndex method.
+
+    set_querylanguages_override
+    """
+    # >SEPARATOR searchSingleIndex set_querylanguages_override
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "query",
+            "removeStopWords": [
+                "ca",
+                "es",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index97():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7680,7 +7831,7 @@ def snippet_for_search_single_index95():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index96():
+def snippet_for_search_single_index98():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7708,7 +7859,7 @@ def snippet_for_search_single_index96():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index97():
+def snippet_for_search_single_index99():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7737,7 +7888,7 @@ def snippet_for_search_single_index97():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index98():
+def snippet_for_search_single_index100():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7763,7 +7914,7 @@ def snippet_for_search_single_index98():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index99():
+def snippet_for_search_single_index101():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7789,7 +7940,7 @@ def snippet_for_search_single_index99():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index100():
+def snippet_for_search_single_index102():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7818,7 +7969,7 @@ def snippet_for_search_single_index100():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index101():
+def snippet_for_search_single_index103():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7844,7 +7995,7 @@ def snippet_for_search_single_index101():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index102():
+def snippet_for_search_single_index104():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7871,7 +8022,7 @@ def snippet_for_search_single_index102():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index103():
+def snippet_for_search_single_index105():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7897,7 +8048,7 @@ def snippet_for_search_single_index103():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index104():
+def snippet_for_search_single_index106():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7923,7 +8074,7 @@ def snippet_for_search_single_index104():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index105():
+def snippet_for_search_single_index107():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7950,7 +8101,7 @@ def snippet_for_search_single_index105():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index106():
+def snippet_for_search_single_index108():
     """
     Snippet for the searchSingleIndex method.
 
@@ -7976,7 +8127,7 @@ def snippet_for_search_single_index106():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index107():
+def snippet_for_search_single_index109():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8002,7 +8153,7 @@ def snippet_for_search_single_index107():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index108():
+def snippet_for_search_single_index110():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8028,7 +8179,7 @@ def snippet_for_search_single_index108():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index109():
+def snippet_for_search_single_index111():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8057,7 +8208,7 @@ def snippet_for_search_single_index109():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index110():
+def snippet_for_search_single_index112():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8085,7 +8236,7 @@ def snippet_for_search_single_index110():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index111():
+def snippet_for_search_single_index113():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8111,7 +8262,7 @@ def snippet_for_search_single_index111():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index112():
+def snippet_for_search_single_index114():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8139,7 +8290,7 @@ def snippet_for_search_single_index112():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index113():
+def snippet_for_search_single_index115():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8168,7 +8319,7 @@ def snippet_for_search_single_index113():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index114():
+def snippet_for_search_single_index116():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8197,7 +8348,7 @@ def snippet_for_search_single_index114():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index115():
+def snippet_for_search_single_index117():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8223,7 +8374,7 @@ def snippet_for_search_single_index115():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index116():
+def snippet_for_search_single_index118():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8249,7 +8400,7 @@ def snippet_for_search_single_index116():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index117():
+def snippet_for_search_single_index119():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8275,7 +8426,7 @@ def snippet_for_search_single_index117():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index118():
+def snippet_for_search_single_index120():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8301,7 +8452,7 @@ def snippet_for_search_single_index118():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index119():
+def snippet_for_search_single_index121():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8327,7 +8478,7 @@ def snippet_for_search_single_index119():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index120():
+def snippet_for_search_single_index122():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8356,7 +8507,7 @@ def snippet_for_search_single_index120():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index121():
+def snippet_for_search_single_index123():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8382,7 +8533,7 @@ def snippet_for_search_single_index121():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index122():
+def snippet_for_search_single_index124():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8408,7 +8559,7 @@ def snippet_for_search_single_index122():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index123():
+def snippet_for_search_single_index125():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8434,7 +8585,7 @@ def snippet_for_search_single_index123():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index124():
+def snippet_for_search_single_index126():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8463,7 +8614,7 @@ def snippet_for_search_single_index124():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index125():
+def snippet_for_search_single_index127():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8489,7 +8640,7 @@ def snippet_for_search_single_index125():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index126():
+def snippet_for_search_single_index128():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8515,7 +8666,7 @@ def snippet_for_search_single_index126():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index127():
+def snippet_for_search_single_index129():
     """
     Snippet for the searchSingleIndex method.
 
@@ -8541,7 +8692,7 @@ def snippet_for_search_single_index127():
     # SEPARATOR<
 
 
-def snippet_for_search_single_index128():
+def snippet_for_search_single_index130():
     """
     Snippet for the searchSingleIndex method.
 
@@ -9104,6 +9255,34 @@ def snippet_for_set_settings14():
     """
     Snippet for the setSettings method.
 
+    attributesForFaceting availableIn
+    """
+    # >SEPARATOR setSettings attributesForFaceting availableIn
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "attributesForFaceting": [
+                "color",
+                "availableIn",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings15():
+    """
+    Snippet for the setSettings method.
+
     api_attributes_for_faceting
     """
     # >SEPARATOR setSettings api_attributes_for_faceting
@@ -9128,7 +9307,7 @@ def snippet_for_set_settings14():
     # SEPARATOR<
 
 
-def snippet_for_set_settings15():
+def snippet_for_set_settings16():
     """
     Snippet for the setSettings method.
 
@@ -9156,7 +9335,7 @@ def snippet_for_set_settings15():
     # SEPARATOR<
 
 
-def snippet_for_set_settings16():
+def snippet_for_set_settings17():
     """
     Snippet for the setSettings method.
 
@@ -9184,7 +9363,7 @@ def snippet_for_set_settings16():
     # SEPARATOR<
 
 
-def snippet_for_set_settings17():
+def snippet_for_set_settings18():
     """
     Snippet for the setSettings method.
 
@@ -9211,7 +9390,7 @@ def snippet_for_set_settings17():
     # SEPARATOR<
 
 
-def snippet_for_set_settings18():
+def snippet_for_set_settings19():
     """
     Snippet for the setSettings method.
 
@@ -9238,7 +9417,7 @@ def snippet_for_set_settings18():
     # SEPARATOR<
 
 
-def snippet_for_set_settings19():
+def snippet_for_set_settings20():
     """
     Snippet for the setSettings method.
 
@@ -9265,7 +9444,7 @@ def snippet_for_set_settings19():
     # SEPARATOR<
 
 
-def snippet_for_set_settings20():
+def snippet_for_set_settings21():
     """
     Snippet for the setSettings method.
 
@@ -9293,7 +9472,7 @@ def snippet_for_set_settings20():
     # SEPARATOR<
 
 
-def snippet_for_set_settings21():
+def snippet_for_set_settings22():
     """
     Snippet for the setSettings method.
 
@@ -9320,7 +9499,7 @@ def snippet_for_set_settings21():
     # SEPARATOR<
 
 
-def snippet_for_set_settings22():
+def snippet_for_set_settings23():
     """
     Snippet for the setSettings method.
 
@@ -9347,7 +9526,7 @@ def snippet_for_set_settings22():
     # SEPARATOR<
 
 
-def snippet_for_set_settings23():
+def snippet_for_set_settings24():
     """
     Snippet for the setSettings method.
 
@@ -9374,7 +9553,7 @@ def snippet_for_set_settings23():
     # SEPARATOR<
 
 
-def snippet_for_set_settings24():
+def snippet_for_set_settings25():
     """
     Snippet for the setSettings method.
 
@@ -9399,7 +9578,7 @@ def snippet_for_set_settings24():
     # SEPARATOR<
 
 
-def snippet_for_set_settings25():
+def snippet_for_set_settings26():
     """
     Snippet for the setSettings method.
 
@@ -9424,7 +9603,7 @@ def snippet_for_set_settings25():
     # SEPARATOR<
 
 
-def snippet_for_set_settings26():
+def snippet_for_set_settings27():
     """
     Snippet for the setSettings method.
 
@@ -9452,7 +9631,7 @@ def snippet_for_set_settings26():
     # SEPARATOR<
 
 
-def snippet_for_set_settings27():
+def snippet_for_set_settings28():
     """
     Snippet for the setSettings method.
 
@@ -9480,7 +9659,7 @@ def snippet_for_set_settings27():
     # SEPARATOR<
 
 
-def snippet_for_set_settings28():
+def snippet_for_set_settings29():
     """
     Snippet for the setSettings method.
 
@@ -9508,7 +9687,7 @@ def snippet_for_set_settings28():
     # SEPARATOR<
 
 
-def snippet_for_set_settings29():
+def snippet_for_set_settings30():
     """
     Snippet for the setSettings method.
 
@@ -9535,7 +9714,7 @@ def snippet_for_set_settings29():
     # SEPARATOR<
 
 
-def snippet_for_set_settings30():
+def snippet_for_set_settings31():
     """
     Snippet for the setSettings method.
 
@@ -9563,7 +9742,7 @@ def snippet_for_set_settings30():
     # SEPARATOR<
 
 
-def snippet_for_set_settings31():
+def snippet_for_set_settings32():
     """
     Snippet for the setSettings method.
 
@@ -9593,7 +9772,7 @@ def snippet_for_set_settings31():
     # SEPARATOR<
 
 
-def snippet_for_set_settings32():
+def snippet_for_set_settings33():
     """
     Snippet for the setSettings method.
 
@@ -9621,7 +9800,7 @@ def snippet_for_set_settings32():
     # SEPARATOR<
 
 
-def snippet_for_set_settings33():
+def snippet_for_set_settings34():
     """
     Snippet for the setSettings method.
 
@@ -9648,13 +9827,13 @@ def snippet_for_set_settings33():
     # SEPARATOR<
 
 
-def snippet_for_set_settings34():
+def snippet_for_set_settings35():
     """
     Snippet for the setSettings method.
 
-    ranking exhaustive
+    ranking exhaustive (price)
     """
-    # >SEPARATOR setSettings ranking exhaustive
+    # >SEPARATOR setSettings ranking exhaustive (price)
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9683,7 +9862,42 @@ def snippet_for_set_settings34():
     # SEPARATOR<
 
 
-def snippet_for_set_settings35():
+def snippet_for_set_settings36():
+    """
+    Snippet for the setSettings method.
+
+    ranking exhaustive (is_popular)
+    """
+    # >SEPARATOR setSettings ranking exhaustive (is_popular)
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "ranking": [
+                "desc(is_popular)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings37():
     """
     Snippet for the setSettings method.
 
@@ -9710,7 +9924,7 @@ def snippet_for_set_settings35():
     # SEPARATOR<
 
 
-def snippet_for_set_settings36():
+def snippet_for_set_settings38():
     """
     Snippet for the setSettings method.
 
@@ -9737,7 +9951,7 @@ def snippet_for_set_settings36():
     # SEPARATOR<
 
 
-def snippet_for_set_settings37():
+def snippet_for_set_settings39():
     """
     Snippet for the setSettings method.
 
@@ -9774,7 +9988,7 @@ def snippet_for_set_settings37():
     # SEPARATOR<
 
 
-def snippet_for_set_settings38():
+def snippet_for_set_settings40():
     """
     Snippet for the setSettings method.
 
@@ -9802,7 +10016,7 @@ def snippet_for_set_settings38():
     # SEPARATOR<
 
 
-def snippet_for_set_settings39():
+def snippet_for_set_settings41():
     """
     Snippet for the setSettings method.
 
@@ -9829,7 +10043,7 @@ def snippet_for_set_settings39():
     # SEPARATOR<
 
 
-def snippet_for_set_settings40():
+def snippet_for_set_settings42():
     """
     Snippet for the setSettings method.
 
@@ -9856,7 +10070,7 @@ def snippet_for_set_settings40():
     # SEPARATOR<
 
 
-def snippet_for_set_settings41():
+def snippet_for_set_settings43():
     """
     Snippet for the setSettings method.
 
@@ -9883,7 +10097,7 @@ def snippet_for_set_settings41():
     # SEPARATOR<
 
 
-def snippet_for_set_settings42():
+def snippet_for_set_settings44():
     """
     Snippet for the setSettings method.
 
@@ -9910,7 +10124,7 @@ def snippet_for_set_settings42():
     # SEPARATOR<
 
 
-def snippet_for_set_settings43():
+def snippet_for_set_settings45():
     """
     Snippet for the setSettings method.
 
@@ -9939,7 +10153,7 @@ def snippet_for_set_settings43():
     # SEPARATOR<
 
 
-def snippet_for_set_settings44():
+def snippet_for_set_settings46():
     """
     Snippet for the setSettings method.
 
@@ -9964,7 +10178,7 @@ def snippet_for_set_settings44():
     # SEPARATOR<
 
 
-def snippet_for_set_settings45():
+def snippet_for_set_settings47():
     """
     Snippet for the setSettings method.
 
@@ -9979,7 +10193,7 @@ def snippet_for_set_settings45():
     response = client.set_settings(
         index_name="<YOUR_INDEX_NAME>",
         index_settings={
-            "maxFacetHits": 1000,
+            "maxFacetHits": 100,
         },
     )
 
@@ -9989,7 +10203,7 @@ def snippet_for_set_settings45():
     # SEPARATOR<
 
 
-def snippet_for_set_settings46():
+def snippet_for_set_settings48():
     """
     Snippet for the setSettings method.
 
@@ -10018,7 +10232,7 @@ def snippet_for_set_settings46():
     # SEPARATOR<
 
 
-def snippet_for_set_settings47():
+def snippet_for_set_settings49():
     """
     Snippet for the setSettings method.
 
@@ -10053,7 +10267,7 @@ def snippet_for_set_settings47():
     # SEPARATOR<
 
 
-def snippet_for_set_settings48():
+def snippet_for_set_settings50():
     """
     Snippet for the setSettings method.
 
@@ -10082,7 +10296,7 @@ def snippet_for_set_settings48():
     # SEPARATOR<
 
 
-def snippet_for_set_settings49():
+def snippet_for_set_settings51():
     """
     Snippet for the setSettings method.
 
@@ -10100,7 +10314,7 @@ def snippet_for_set_settings49():
             "searchableAttributes": [
                 "name",
                 "country",
-                "code",
+                "city",
                 "iata_code",
             ],
             "customRanking": [
@@ -10115,7 +10329,7 @@ def snippet_for_set_settings49():
     # SEPARATOR<
 
 
-def snippet_for_set_settings50():
+def snippet_for_set_settings52():
     """
     Snippet for the setSettings method.
 
@@ -10144,7 +10358,7 @@ def snippet_for_set_settings50():
     # SEPARATOR<
 
 
-def snippet_for_set_settings51():
+def snippet_for_set_settings53():
     """
     Snippet for the setSettings method.
 
@@ -10171,7 +10385,7 @@ def snippet_for_set_settings51():
     # SEPARATOR<
 
 
-def snippet_for_set_settings52():
+def snippet_for_set_settings54():
     """
     Snippet for the setSettings method.
 
@@ -10329,7 +10543,7 @@ def snippet_for_set_settings52():
     # SEPARATOR<
 
 
-def snippet_for_set_settings53():
+def snippet_for_set_settings55():
     """
     Snippet for the setSettings method.
 
@@ -10368,7 +10582,7 @@ def snippet_for_set_settings53():
     # SEPARATOR<
 
 
-def snippet_for_set_settings54():
+def snippet_for_set_settings56():
     """
     Snippet for the setSettings method.
 
@@ -10396,7 +10610,7 @@ def snippet_for_set_settings54():
     # SEPARATOR<
 
 
-def snippet_for_set_settings55():
+def snippet_for_set_settings57():
     """
     Snippet for the setSettings method.
 
@@ -10425,7 +10639,7 @@ def snippet_for_set_settings55():
     # SEPARATOR<
 
 
-def snippet_for_set_settings56():
+def snippet_for_set_settings58():
     """
     Snippet for the setSettings method.
 
@@ -10453,7 +10667,7 @@ def snippet_for_set_settings56():
     # SEPARATOR<
 
 
-def snippet_for_set_settings57():
+def snippet_for_set_settings59():
     """
     Snippet for the setSettings method.
 
@@ -10482,7 +10696,7 @@ def snippet_for_set_settings57():
     # SEPARATOR<
 
 
-def snippet_for_set_settings58():
+def snippet_for_set_settings60():
     """
     Snippet for the setSettings method.
 
@@ -10509,7 +10723,7 @@ def snippet_for_set_settings58():
     # SEPARATOR<
 
 
-def snippet_for_set_settings59():
+def snippet_for_set_settings61():
     """
     Snippet for the setSettings method.
 
@@ -10536,7 +10750,7 @@ def snippet_for_set_settings59():
     # SEPARATOR<
 
 
-def snippet_for_set_settings60():
+def snippet_for_set_settings62():
     """
     Snippet for the setSettings method.
 
@@ -10563,7 +10777,7 @@ def snippet_for_set_settings60():
     # SEPARATOR<
 
 
-def snippet_for_set_settings61():
+def snippet_for_set_settings63():
     """
     Snippet for the setSettings method.
 
@@ -10591,7 +10805,7 @@ def snippet_for_set_settings61():
     # SEPARATOR<
 
 
-def snippet_for_set_settings62():
+def snippet_for_set_settings64():
     """
     Snippet for the setSettings method.
 
@@ -10621,7 +10835,7 @@ def snippet_for_set_settings62():
     # SEPARATOR<
 
 
-def snippet_for_set_settings63():
+def snippet_for_set_settings65():
     """
     Snippet for the setSettings method.
 
@@ -10652,7 +10866,7 @@ def snippet_for_set_settings63():
     # SEPARATOR<
 
 
-def snippet_for_set_settings64():
+def snippet_for_set_settings66():
     """
     Snippet for the setSettings method.
 
@@ -10679,7 +10893,7 @@ def snippet_for_set_settings64():
     # SEPARATOR<
 
 
-def snippet_for_set_settings65():
+def snippet_for_set_settings67():
     """
     Snippet for the setSettings method.
 
@@ -10708,7 +10922,7 @@ def snippet_for_set_settings65():
     # SEPARATOR<
 
 
-def snippet_for_set_settings66():
+def snippet_for_set_settings68():
     """
     Snippet for the setSettings method.
 
@@ -10735,7 +10949,7 @@ def snippet_for_set_settings66():
     # SEPARATOR<
 
 
-def snippet_for_set_settings67():
+def snippet_for_set_settings69():
     """
     Snippet for the setSettings method.
 
@@ -10764,7 +10978,7 @@ def snippet_for_set_settings67():
     # SEPARATOR<
 
 
-def snippet_for_set_settings68():
+def snippet_for_set_settings70():
     """
     Snippet for the setSettings method.
 
@@ -10789,7 +11003,7 @@ def snippet_for_set_settings68():
     # SEPARATOR<
 
 
-def snippet_for_set_settings69():
+def snippet_for_set_settings71():
     """
     Snippet for the setSettings method.
 
@@ -10814,7 +11028,7 @@ def snippet_for_set_settings69():
     # SEPARATOR<
 
 
-def snippet_for_set_settings70():
+def snippet_for_set_settings72():
     """
     Snippet for the setSettings method.
 
@@ -10848,7 +11062,7 @@ def snippet_for_set_settings70():
     # SEPARATOR<
 
 
-def snippet_for_set_settings71():
+def snippet_for_set_settings73():
     """
     Snippet for the setSettings method.
 
@@ -10883,7 +11097,7 @@ def snippet_for_set_settings71():
     # SEPARATOR<
 
 
-def snippet_for_set_settings72():
+def snippet_for_set_settings74():
     """
     Snippet for the setSettings method.
 
@@ -10918,7 +11132,7 @@ def snippet_for_set_settings72():
     # SEPARATOR<
 
 
-def snippet_for_set_settings73():
+def snippet_for_set_settings75():
     """
     Snippet for the setSettings method.
 
@@ -10946,7 +11160,7 @@ def snippet_for_set_settings73():
     # SEPARATOR<
 
 
-def snippet_for_set_settings74():
+def snippet_for_set_settings76():
     """
     Snippet for the setSettings method.
 
@@ -10971,7 +11185,7 @@ def snippet_for_set_settings74():
     # SEPARATOR<
 
 
-def snippet_for_set_settings75():
+def snippet_for_set_settings77():
     """
     Snippet for the setSettings method.
 
@@ -10999,7 +11213,7 @@ def snippet_for_set_settings75():
     # SEPARATOR<
 
 
-def snippet_for_set_settings76():
+def snippet_for_set_settings78():
     """
     Snippet for the setSettings method.
 
@@ -11024,7 +11238,7 @@ def snippet_for_set_settings76():
     # SEPARATOR<
 
 
-def snippet_for_set_settings77():
+def snippet_for_set_settings79():
     """
     Snippet for the setSettings method.
 
@@ -11049,7 +11263,7 @@ def snippet_for_set_settings77():
     # SEPARATOR<
 
 
-def snippet_for_set_settings78():
+def snippet_for_set_settings80():
     """
     Snippet for the setSettings method.
 
@@ -11077,7 +11291,7 @@ def snippet_for_set_settings78():
     # SEPARATOR<
 
 
-def snippet_for_set_settings79():
+def snippet_for_set_settings81():
     """
     Snippet for the setSettings method.
 
@@ -11104,7 +11318,7 @@ def snippet_for_set_settings79():
     # SEPARATOR<
 
 
-def snippet_for_set_settings80():
+def snippet_for_set_settings82():
     """
     Snippet for the setSettings method.
 
@@ -11129,7 +11343,7 @@ def snippet_for_set_settings80():
     # SEPARATOR<
 
 
-def snippet_for_set_settings81():
+def snippet_for_set_settings83():
     """
     Snippet for the setSettings method.
 
@@ -11154,7 +11368,7 @@ def snippet_for_set_settings81():
     # SEPARATOR<
 
 
-def snippet_for_set_settings82():
+def snippet_for_set_settings84():
     """
     Snippet for the setSettings method.
 
@@ -11179,7 +11393,7 @@ def snippet_for_set_settings82():
     # SEPARATOR<
 
 
-def snippet_for_set_settings83():
+def snippet_for_set_settings85():
     """
     Snippet for the setSettings method.
 
@@ -11204,7 +11418,7 @@ def snippet_for_set_settings83():
     # SEPARATOR<
 
 
-def snippet_for_set_settings84():
+def snippet_for_set_settings86():
     """
     Snippet for the setSettings method.
 
@@ -11229,7 +11443,7 @@ def snippet_for_set_settings84():
     # SEPARATOR<
 
 
-def snippet_for_set_settings85():
+def snippet_for_set_settings87():
     """
     Snippet for the setSettings method.
 
@@ -11254,7 +11468,7 @@ def snippet_for_set_settings85():
     # SEPARATOR<
 
 
-def snippet_for_set_settings86():
+def snippet_for_set_settings88():
     """
     Snippet for the setSettings method.
 
@@ -11279,7 +11493,7 @@ def snippet_for_set_settings86():
     # SEPARATOR<
 
 
-def snippet_for_set_settings87():
+def snippet_for_set_settings89():
     """
     Snippet for the setSettings method.
 
@@ -11304,7 +11518,7 @@ def snippet_for_set_settings87():
     # SEPARATOR<
 
 
-def snippet_for_set_settings88():
+def snippet_for_set_settings90():
     """
     Snippet for the setSettings method.
 
@@ -11329,7 +11543,7 @@ def snippet_for_set_settings88():
     # SEPARATOR<
 
 
-def snippet_for_set_settings89():
+def snippet_for_set_settings91():
     """
     Snippet for the setSettings method.
 
@@ -11354,7 +11568,7 @@ def snippet_for_set_settings89():
     # SEPARATOR<
 
 
-def snippet_for_set_settings90():
+def snippet_for_set_settings92():
     """
     Snippet for the setSettings method.
 
@@ -11382,7 +11596,7 @@ def snippet_for_set_settings90():
     # SEPARATOR<
 
 
-def snippet_for_set_settings91():
+def snippet_for_set_settings93():
     """
     Snippet for the setSettings method.
 
@@ -11407,7 +11621,7 @@ def snippet_for_set_settings91():
     # SEPARATOR<
 
 
-def snippet_for_set_settings92():
+def snippet_for_set_settings94():
     """
     Snippet for the setSettings method.
 
@@ -11435,7 +11649,7 @@ def snippet_for_set_settings92():
     # SEPARATOR<
 
 
-def snippet_for_set_settings93():
+def snippet_for_set_settings95():
     """
     Snippet for the setSettings method.
 
@@ -11466,7 +11680,7 @@ def snippet_for_set_settings93():
     # SEPARATOR<
 
 
-def snippet_for_set_settings94():
+def snippet_for_set_settings96():
     """
     Snippet for the setSettings method.
 
@@ -11494,7 +11708,7 @@ def snippet_for_set_settings94():
     # SEPARATOR<
 
 
-def snippet_for_set_settings95():
+def snippet_for_set_settings97():
     """
     Snippet for the setSettings method.
 
@@ -11521,7 +11735,7 @@ def snippet_for_set_settings95():
     # SEPARATOR<
 
 
-def snippet_for_set_settings96():
+def snippet_for_set_settings98():
     """
     Snippet for the setSettings method.
 
@@ -11550,7 +11764,7 @@ def snippet_for_set_settings96():
     # SEPARATOR<
 
 
-def snippet_for_set_settings97():
+def snippet_for_set_settings99():
     """
     Snippet for the setSettings method.
 
@@ -11584,7 +11798,7 @@ def snippet_for_set_settings97():
     # SEPARATOR<
 
 
-def snippet_for_set_settings98():
+def snippet_for_set_settings100():
     """
     Snippet for the setSettings method.
 
@@ -11609,7 +11823,7 @@ def snippet_for_set_settings98():
     # SEPARATOR<
 
 
-def snippet_for_set_settings99():
+def snippet_for_set_settings101():
     """
     Snippet for the setSettings method.
 
@@ -11638,7 +11852,7 @@ def snippet_for_set_settings99():
     # SEPARATOR<
 
 
-def snippet_for_set_settings100():
+def snippet_for_set_settings102():
     """
     Snippet for the setSettings method.
 
@@ -11667,7 +11881,7 @@ def snippet_for_set_settings100():
     # SEPARATOR<
 
 
-def snippet_for_set_settings101():
+def snippet_for_set_settings103():
     """
     Snippet for the setSettings method.
 
@@ -11694,7 +11908,7 @@ def snippet_for_set_settings101():
     # SEPARATOR<
 
 
-def snippet_for_set_settings102():
+def snippet_for_set_settings104():
     """
     Snippet for the setSettings method.
 
@@ -11719,7 +11933,7 @@ def snippet_for_set_settings102():
     # SEPARATOR<
 
 
-def snippet_for_set_settings103():
+def snippet_for_set_settings105():
     """
     Snippet for the setSettings method.
 
@@ -11744,7 +11958,7 @@ def snippet_for_set_settings103():
     # SEPARATOR<
 
 
-def snippet_for_set_settings104():
+def snippet_for_set_settings106():
     """
     Snippet for the setSettings method.
 
@@ -11769,7 +11983,7 @@ def snippet_for_set_settings104():
     # SEPARATOR<
 
 
-def snippet_for_set_settings105():
+def snippet_for_set_settings107():
     """
     Snippet for the setSettings method.
 
@@ -11794,7 +12008,7 @@ def snippet_for_set_settings105():
     # SEPARATOR<
 
 
-def snippet_for_set_settings106():
+def snippet_for_set_settings108():
     """
     Snippet for the setSettings method.
 
@@ -11819,7 +12033,7 @@ def snippet_for_set_settings106():
     # SEPARATOR<
 
 
-def snippet_for_set_settings107():
+def snippet_for_set_settings109():
     """
     Snippet for the setSettings method.
 
@@ -11844,7 +12058,7 @@ def snippet_for_set_settings107():
     # SEPARATOR<
 
 
-def snippet_for_set_settings108():
+def snippet_for_set_settings110():
     """
     Snippet for the setSettings method.
 
@@ -11872,7 +12086,7 @@ def snippet_for_set_settings108():
     # SEPARATOR<
 
 
-def snippet_for_set_settings109():
+def snippet_for_set_settings111():
     """
     Snippet for the setSettings method.
 
@@ -11899,7 +12113,7 @@ def snippet_for_set_settings109():
     # SEPARATOR<
 
 
-def snippet_for_set_settings110():
+def snippet_for_set_settings112():
     """
     Snippet for the setSettings method.
 
@@ -11926,7 +12140,7 @@ def snippet_for_set_settings110():
     # SEPARATOR<
 
 
-def snippet_for_set_settings111():
+def snippet_for_set_settings113():
     """
     Snippet for the setSettings method.
 
@@ -11951,7 +12165,7 @@ def snippet_for_set_settings111():
     # SEPARATOR<
 
 
-def snippet_for_set_settings112():
+def snippet_for_set_settings114():
     """
     Snippet for the setSettings method.
 
@@ -11979,7 +12193,7 @@ def snippet_for_set_settings112():
     # SEPARATOR<
 
 
-def snippet_for_set_settings113():
+def snippet_for_set_settings115():
     """
     Snippet for the setSettings method.
 
@@ -12004,7 +12218,7 @@ def snippet_for_set_settings113():
     # SEPARATOR<
 
 
-def snippet_for_set_settings114():
+def snippet_for_set_settings116():
     """
     Snippet for the setSettings method.
 
@@ -12032,7 +12246,7 @@ def snippet_for_set_settings114():
     # SEPARATOR<
 
 
-def snippet_for_set_settings115():
+def snippet_for_set_settings117():
     """
     Snippet for the setSettings method.
 
@@ -12057,7 +12271,7 @@ def snippet_for_set_settings115():
     # SEPARATOR<
 
 
-def snippet_for_set_settings116():
+def snippet_for_set_settings118():
     """
     Snippet for the setSettings method.
 
@@ -12082,7 +12296,7 @@ def snippet_for_set_settings116():
     # SEPARATOR<
 
 
-def snippet_for_set_settings117():
+def snippet_for_set_settings119():
     """
     Snippet for the setSettings method.
 
@@ -12108,7 +12322,7 @@ def snippet_for_set_settings117():
     # SEPARATOR<
 
 
-def snippet_for_set_settings118():
+def snippet_for_set_settings120():
     """
     Snippet for the setSettings method.
 
@@ -12133,7 +12347,7 @@ def snippet_for_set_settings118():
     # SEPARATOR<
 
 
-def snippet_for_set_settings119():
+def snippet_for_set_settings121():
     """
     Snippet for the setSettings method.
 
@@ -12158,7 +12372,7 @@ def snippet_for_set_settings119():
     # SEPARATOR<
 
 
-def snippet_for_set_settings120():
+def snippet_for_set_settings122():
     """
     Snippet for the setSettings method.
 
@@ -12188,7 +12402,7 @@ def snippet_for_set_settings120():
     # SEPARATOR<
 
 
-def snippet_for_set_settings121():
+def snippet_for_set_settings123():
     """
     Snippet for the setSettings method.
 
@@ -12213,7 +12427,7 @@ def snippet_for_set_settings121():
     # SEPARATOR<
 
 
-def snippet_for_set_settings122():
+def snippet_for_set_settings124():
     """
     Snippet for the setSettings method.
 
@@ -12238,7 +12452,7 @@ def snippet_for_set_settings122():
     # SEPARATOR<
 
 
-def snippet_for_set_settings123():
+def snippet_for_set_settings125():
     """
     Snippet for the setSettings method.
 
@@ -12265,7 +12479,7 @@ def snippet_for_set_settings123():
     # SEPARATOR<
 
 
-def snippet_for_set_settings124():
+def snippet_for_set_settings126():
     """
     Snippet for the setSettings method.
 
