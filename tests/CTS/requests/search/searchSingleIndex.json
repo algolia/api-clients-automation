@@ -159,6 +159,24 @@
     }
   },
   {
+    "testName": "filters for stores",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    }
+  },
+  {
     "testName": "filters boolean",
     "parameters": {
       "indexName": "indexName",
@@ -279,14 +297,16 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     }
   },
@@ -1278,6 +1298,28 @@
         "optionalFilters": [
           "category:Book",
           "author:-John Doe"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "apply_negative_filters_restaurants",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
         ]
       }
     }
