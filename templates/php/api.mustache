@@ -509,7 +509,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     * @param array  $requestOptions Request options
     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     */
-    public function saveObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [], $waitForTasks = false) {
+    public function saveObjects($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
       return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
     }
 
