@@ -697,7 +697,7 @@
     }
   },
   {
-    "testName": "ranking exhaustive",
+    "testName": "ranking exhaustive (price)",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -728,6 +728,26 @@
           "attribute",
           "exact",
           "custom"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "ranking exhaustive (is_popular)",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"
         ]
       }
     }
