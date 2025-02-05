@@ -281,6 +281,28 @@
     }
   },
   {
+    "testName": "attributesForFaceting availableIn",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "color",
+          "availableIn"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "color",
+          "availableIn"
+        ]
+      }
+    }
+  },
+  {
     "testName": "api_attributes_for_faceting",
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",

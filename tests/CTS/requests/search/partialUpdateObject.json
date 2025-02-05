@@ -135,5 +135,28 @@
         }
       }
     }
+  },
+  {
+    "testName": "remove men pant",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "productId",
+      "attributesToUpdate": {
+        "categoryPageId": {
+          "_operation": "Remove",
+          "value": "men-clothing-pants"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "categoryPageId": {
+          "_operation": "Add",
+          "value": "men-clothing-pants"
+        }
+      }
+    }
   }
 ]
