@@ -37,7 +37,7 @@
       "indexName": "indexName",
       "facetName": "author",
       "searchForFacetValuesRequest": {
-        "facetQuery": "stephen king"
+        "facetQuery": "stephen"
       }
     },
     "request": {
