@@ -917,6 +917,36 @@ public class SearchClientTests
     }
   }
 
+  [Fact(DisplayName = "with algolia user id")]
+  public async Task SearchSingleIndexTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6686,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.SearchSingleIndexAsync<Hit>(
+      "playlists",
+      new SearchParams(new SearchParamsObject { Query = "foo" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+    );
+  }
+
   [Fact(DisplayName = "switch API key")]
   public async Task SetClientApiKeyTest0()
   {

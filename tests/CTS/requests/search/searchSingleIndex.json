@@ -159,6 +159,22 @@
     }
   },
   {
+    "testName": "filters boolean",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "is_available:true"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "is_available:true"
+      }
+    }
+  },
+  {
     "testName": "distinct",
     "parameters": {
       "indexName": "indexName",
@@ -304,7 +320,6 @@
   },
   {
     "testName": "facetFiltersBook",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -327,7 +342,6 @@
   },
   {
     "testName": "facetFiltersAND",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -352,7 +366,6 @@
   },
   {
     "testName": "facetFiltersOR",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -381,7 +394,6 @@
   },
   {
     "testName": "facetFiltersCombined",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -850,7 +862,6 @@
   },
   {
     "testName": "userToken1234",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -935,7 +946,6 @@
   },
   {
     "testName": "attributesToHighlightOverride",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -1009,6 +1019,24 @@
       "method": "POST",
       "body": {
         "query": ""
+      }
+    }
+  },
+  {
+    "testName": "api_filtering_range_example",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "books",
+        "filters": "price:10 TO 20"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "books",
+        "filters": "price:10 TO 20"
       }
     }
   },
@@ -2719,6 +2747,27 @@
       "body": {
         "query": "query",
         "enableReRanking": false
+      }
+    }
+  },
+  {
+    "testName": "with algolia user id",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query"
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "user1234"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query"
       }
     }
   }

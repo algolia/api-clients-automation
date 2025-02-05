@@ -1,5 +1,60 @@
 [
   {
+    "testName": "by ID",
+    "parameters": {
+      "requests": [
+        {
+          "objectID": "uniqueID",
+          "indexName": "theIndexName"
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/objects",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "objectID": "uniqueID",
+            "indexName": "theIndexName"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "multiple IDs",
+    "parameters": {
+      "requests": [
+        {
+          "objectID": "uniqueID1",
+          "indexName": "theIndexName1"
+        },
+        {
+          "objectID": "uniqueID2",
+          "indexName": "theIndexName2"
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/objects",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "objectID": "uniqueID1",
+            "indexName": "theIndexName1"
+          },
+          {
+            "objectID": "uniqueID2",
+            "indexName": "theIndexName2"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "with attributesToRetrieve",
     "parameters": {
       "requests": [
         {

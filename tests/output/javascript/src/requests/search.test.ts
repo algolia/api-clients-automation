@@ -12,7 +12,19 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 const client = algoliasearch(appId, apiKey, { requester: nodeEchoRequester() });
 
 describe('addApiKey', () => {
-  test('addApiKey', async () => {
+  test('minimal', async () => {
+    const req = (await client.addApiKey({
+      acl: ['search', 'addObject'],
+      description: 'my new api key',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/keys');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ acl: ['search', 'addObject'], description: 'my new api key' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('all', async () => {
     const req = (await client.addApiKey({
       acl: ['search', 'addObject'],
       description: 'my new api key',
@@ -781,7 +793,37 @@ describe('getObject', () => {
 });
 
 describe('getObjects', () => {
-  test('getObjects', async () => {
+  test('by ID', async () => {
+    const req = (await client.getObjects({
+      requests: [{ objectID: 'uniqueID', indexName: 'theIndexName' }],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/objects');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ requests: [{ objectID: 'uniqueID', indexName: 'theIndexName' }] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('multiple IDs', async () => {
+    const req = (await client.getObjects({
+      requests: [
+        { objectID: 'uniqueID1', indexName: 'theIndexName1' },
+        { objectID: 'uniqueID2', indexName: 'theIndexName2' },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/objects');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        { objectID: 'uniqueID1', indexName: 'theIndexName1' },
+        { objectID: 'uniqueID2', indexName: 'theIndexName2' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('with attributesToRetrieve', async () => {
     const req = (await client.getObjects({
       requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
     })) as unknown as EchoResponse;
@@ -2533,6 +2575,18 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('filters boolean', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'is_available:true' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'is_available:true' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('distinct', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
@@ -2638,6 +2692,57 @@ describe('searchSingleIndex', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facetFilters: ['publisher:Penguin', ['author:Stephen King', 'genre:Horror']] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facetFiltersBook', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', facetFilters: ['category:Book'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', facetFilters: ['category:Book'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facetFiltersAND', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', facetFilters: ['category:Book', 'author:John Doe'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', facetFilters: ['category:Book', 'author:John Doe'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facetFiltersOR', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', facetFilters: [['category:Book', 'author:John Doe']] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', facetFilters: [['category:Book', 'author:John Doe']] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facetFiltersCombined', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', facetFilters: ['author:John Doe', ['category:Book', 'category:Movie']] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      facetFilters: ['author:John Doe', ['category:Book', 'category:Movie']],
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -2918,6 +3023,18 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('userToken1234', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', userToken: 'user-1234' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', userToken: 'user-1234' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('analyticsTag', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
@@ -2955,6 +3072,1126 @@ describe('searchSingleIndex', () => {
       hitsPerPage: 50,
       analyticsTags: ['mens-clothing'],
     });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesToHighlightOverride', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', attributesToHighlight: ['title', 'content'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', attributesToHighlight: ['title', 'content'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disableTypoToleranceOnAttributes', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', disableTypoToleranceOnAttributes: ['serial_number'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', disableTypoToleranceOnAttributes: ['serial_number'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_a_query', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'shirt' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'shirt' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_everything', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: '' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: '' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('api_filtering_range_example', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'books', filters: 'price:10 TO 20' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'books', filters: 'price:10 TO 20' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_a_query', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: '',
+        similarQuery: 'Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen',
+        filters: 'year:1991 TO 2001',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: '',
+      similarQuery: 'Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen',
+      filters: 'year:1991 TO 2001',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_retrievable_attributes', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', attributesToRetrieve: ['title', 'content'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', attributesToRetrieve: ['title', 'content'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('restrict_searchable_attributes', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', restrictSearchableAttributes: ['title', 'author'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', restrictSearchableAttributes: ['title', 'author'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_relevancy', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', relevancyStrictness: 70 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', relevancyStrictness: 70 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('apply_filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', filters: '(category:Book OR category:Ebook) AND _tags:published' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', filters: '(category:Book OR category:Ebook) AND _tags:published' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('apply_all_filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: 'query',
+        filters:
+          'available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe"',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      filters:
+        'available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe"',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('escape_spaces', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', filters: 'category:"Books and Comics"' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', filters: 'category:"Books and Comics"' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('escape_keywords', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', filters: 'keyword:"OR"' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', filters: 'keyword:"OR"' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('escape_single_quotes', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', filters: 'content:"It\'s a wonderful day"' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', filters: 'content:"It\'s a wonderful day"' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('escape_double_quotes', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', filters: 'content:"She said "Hello World"' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', filters: 'content:"She said "Hello World"' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('apply_filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', optionalFilters: ['category:Book', 'author:John Doe'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', optionalFilters: ['category:Book', 'author:John Doe'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('apply_negative_filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', optionalFilters: ['category:Book', 'author:-John Doe'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', optionalFilters: ['category:Book', 'author:-John Doe'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('apply_numeric_filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', numericFilters: ['price < 1000', ['inStock = 1', 'deliveryDate < 1441755506']] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      numericFilters: ['price < 1000', ['inStock = 1', 'deliveryDate < 1441755506']],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('apply_tag_filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', tagFilters: ['SciFi', ['Book', 'Movie']] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', tagFilters: ['SciFi', ['Book', 'Movie']] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('apply_filters', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', sumOrFiltersScores: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', sumOrFiltersScores: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('facets_all', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', facets: ['*'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', facets: ['*'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('retrieve_only_some_facets', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', facets: ['category', 'author'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', facets: ['category', 'author'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_max_values_per_facet', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', maxValuesPerFacet: 20 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', maxValuesPerFacet: 20 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_faceting_after_distinct', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', facetingAfterDistinct: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', facetingAfterDistinct: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('sort_facet_values_alphabetically', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', sortFacetValuesBy: 'count' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', sortFacetValuesBy: 'count' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_attributes_to_snippet', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', attributesToSnippet: ['title', 'content:80'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', attributesToSnippet: ['title', 'content:80'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_highlight_pre_tag', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', highlightPreTag: '<strong>' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', highlightPreTag: '<strong>' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_highlight_post_tag', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', highlightPostTag: '</strong>' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', highlightPostTag: '</strong>' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_snippet_ellipsis_text', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', snippetEllipsisText: '' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', snippetEllipsisText: '' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_restrict_highlight_and_snippet_arrays', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', restrictHighlightAndSnippetArrays: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', restrictHighlightAndSnippetArrays: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('access_page', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', page: 0 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', page: 0 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_hits_per_page', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', hitsPerPage: 10 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', hitsPerPage: 10 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('get_nth_hit', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', offset: 4 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', offset: 4 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('get_n_results', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', length: 4 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', length: 4 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_min_word_size_for_one_typo', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', minWordSizefor1Typo: 2 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', minWordSizefor1Typo: 2 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_min_word_size_for_two_typos', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', minWordSizefor2Typos: 2 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', minWordSizefor2Typos: 2 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_typo_tolerance_mode', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', typoTolerance: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', typoTolerance: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disable_typos_on_numeric_tokens_at_search_time', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', allowTyposOnNumericTokens: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', allowTyposOnNumericTokens: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_around_a_position', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', aroundLatLng: '40.71, -74.01' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', aroundLatLng: '40.71, -74.01' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_around_server_ip', async () => {
+    const req = (await client.searchSingleIndex(
+      { indexName: 'indexName', searchParams: { query: 'query', aroundLatLngViaIP: true } },
+      {
+        headers: {
+          'x-forwarded-for': '94.228.178.246 // should be replaced with the actual IP you would like to search around',
+        },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', aroundLatLngViaIP: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.headers).toEqual(
+      expect.objectContaining({
+        'x-forwarded-for': '94.228.178.246 // should be replaced with the actual IP you would like to search around',
+      }),
+    );
+  });
+
+  test('set_around_radius', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', aroundRadius: 1000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', aroundRadius: 1000 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disable_automatic_radius', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', aroundRadius: 'all' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', aroundRadius: 'all' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_geo_search_precision', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', aroundPrecision: 100 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', aroundPrecision: 100 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_geo_search_precision_non_linear', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: 'query',
+        aroundPrecision: [
+          { from: 0, value: 25 },
+          { from: 2000, value: 1000 },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      aroundPrecision: [
+        { from: 0, value: 25 },
+        { from: 2000, value: 1000 },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_minimum_geo_search_radius', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', minimumAroundRadius: 1000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', minimumAroundRadius: 1000 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_inside_rectangular_area', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: 'query',
+        insideBoundingBox: [[46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625]],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      insideBoundingBox: [[46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625]],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_inside_multiple_rectangular_areas', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: 'query',
+        insideBoundingBox: [
+          [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625],
+          [49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875],
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      insideBoundingBox: [
+        [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625],
+        [49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875],
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_inside_polygon_area', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: 'query',
+        insidePolygon: [
+          [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625],
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      insidePolygon: [
+        [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625],
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search_inside_multiple_polygon_areas', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: 'query',
+        insidePolygon: [
+          [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625],
+          [
+            49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625,
+            50.62626704081, 4.6181640625,
+          ],
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'query',
+      insidePolygon: [
+        [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625],
+        [
+          49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625,
+          50.62626704081, 4.6181640625,
+        ],
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_querylanguages_override', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', ignorePlurals: ['ca', 'es'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', ignorePlurals: ['ca', 'es'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_querylanguages_override', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', removeStopWords: ['ca', 'es'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', removeStopWords: ['ca', 'es'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_querylanguages_override', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', removeStopWords: ['ca', 'es'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', removeStopWords: ['ca', 'es'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_querylanguages_with_japanese_query', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', queryLanguages: ['ja', 'en'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', queryLanguages: ['ja', 'en'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_natural_languages', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: '', naturalLanguages: ['fr'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: '', naturalLanguages: ['fr'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_natural_languages_with_query', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: '', naturalLanguages: ['fr'], removeWordsIfNoResults: 'firstWords' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: '', naturalLanguages: ['fr'], removeWordsIfNoResults: 'firstWords' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_decompound_query_search_time', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', decompoundQuery: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', decompoundQuery: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_rules_search_time', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', enableRules: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', enableRules: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_rule_contexts', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', ruleContexts: ['front_end', 'website2'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', ruleContexts: ['front_end', 'website2'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_personalization', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', enablePersonalization: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', enablePersonalization: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_personalization_with_user_token', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', enablePersonalization: true, userToken: '123456' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', enablePersonalization: true, userToken: '123456' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('personalization_impact', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', personalizationImpact: 20 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', personalizationImpact: 20 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_user_token', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', userToken: '123456' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', userToken: '123456' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_user_token_with_personalization', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', enablePersonalization: true, userToken: '123456' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', enablePersonalization: true, userToken: '123456' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_query_type', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', queryType: 'prefixAll' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', queryType: 'prefixAll' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_remove_words_if_no_results', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', removeWordsIfNoResults: 'lastWords' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', removeWordsIfNoResults: 'lastWords' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_advanced_syntax_search_time', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', advancedSyntax: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', advancedSyntax: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('overide_default_optional_words', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', optionalWords: ['toyota', '2020 2021'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', optionalWords: ['toyota', '2020 2021'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disabling_exact_for_some_attributes_search_time', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', disableExactOnAttributes: ['description'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', disableExactOnAttributes: ['description'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_exact_single_word_query', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', exactOnSingleWordQuery: 'none' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', exactOnSingleWordQuery: 'none' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_aternative_as_exact', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', alternativesAsExact: ['multiWordsSynonym'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', alternativesAsExact: ['multiWordsSynonym'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_advanced_syntax_exact_phrase', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', advancedSyntax: true, advancedSyntaxFeatures: ['exactPhrase'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', advancedSyntax: true, advancedSyntaxFeatures: ['exactPhrase'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_advanced_syntax_exclude_words', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', advancedSyntax: true, advancedSyntaxFeatures: ['excludeWords'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', advancedSyntax: true, advancedSyntaxFeatures: ['excludeWords'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_distinct', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', distinct: 0 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', distinct: 0 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('get_ranking_info', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', getRankingInfo: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', getRankingInfo: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disable_click_analytics', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', clickAnalytics: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', clickAnalytics: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_click_analytics', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', clickAnalytics: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', clickAnalytics: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disable_analytics', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', analytics: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', analytics: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('add_analytics_tags', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', analyticsTags: ['front_end', 'website2'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', analyticsTags: ['front_end', 'website2'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disable_synonyms', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', synonyms: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', synonyms: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_replace_synonyms_in_highlights', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', replaceSynonymsInHighlight: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', replaceSynonymsInHighlight: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_min_proximity', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', minProximity: 2 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', minProximity: 2 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_default_field', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', responseFields: ['hits', 'facets'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', responseFields: ['hits', 'facets'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('override_percentile_computation', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', percentileComputation: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', percentileComputation: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_ab_test', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', enableABTest: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', enableABTest: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_enable_re_ranking', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', enableReRanking: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', enableReRanking: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('with algolia user id', async () => {
+    const req = (await client.searchSingleIndex(
+      { indexName: 'indexName', searchParams: { query: 'query' } },
+      {
+        headers: { 'X-Algolia-User-ID': 'user1234' },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -3207,6 +4444,42 @@ describe('setSettings', () => {
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ attributesForFaceting: ['allergens'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('api_attributes_for_faceting', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['genre', 'author'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['genre', 'author'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('api_attributes_for_faceting_searchable', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['genre', 'searchable(author)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['genre', 'searchable(author)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('api_attributes_for_filter_only', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: { attributesForFaceting: ['filterOnly(genre)', 'author'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesForFaceting: ['filterOnly(genre)', 'author'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -3499,6 +4772,18 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('create replica index articles', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { replicas: ['articles_date_desc'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ replicas: ['articles_date_desc'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('create virtual replica index', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
@@ -3628,33 +4913,27 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('searchableAttributes around location', async () => {
+  test('attributesToHighlight', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
-      indexSettings: {
-        searchableAttributes: ['name', 'country', 'code', 'iata_code'],
-        customRanking: ['desc(links_count)'],
-      },
+      indexSettings: { attributesToHighlight: ['author', 'title', 'content'] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({
-      searchableAttributes: ['name', 'country', 'code', 'iata_code'],
-      customRanking: ['desc(links_count)'],
-    });
+    expect(req.data).toEqual({ attributesToHighlight: ['author', 'title', 'content'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('disableTypoToleranceOnAttributes', async () => {
+  test('attributesToHighlightStar', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
-      indexSettings: { disableTypoToleranceOnAttributes: ['serial_number'] },
+      indexSettings: { attributesToHighlight: ['*'] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ disableTypoToleranceOnAttributes: ['serial_number'] });
+    expect(req.data).toEqual({ attributesToHighlight: ['*'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -3818,6 +5097,18 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('searchableAttributesOrdering', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { searchableAttributes: ['unordered(title)', 'cast'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ searchableAttributes: ['unordered(title)', 'cast'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('searchableAttributesProductReferenceSuffixes', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
@@ -3899,6 +5190,818 @@ describe('setSettings', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ searchableAttributes: ['serial_number', 'serial_number_suffixes'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_searchable_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        searchableAttributes: ['title,alternative_title', 'author', 'unordered(text)', 'emails.personal'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      searchableAttributes: ['title,alternative_title', 'author', 'unordered(text)', 'emails.personal'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_searchable_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        attributesForFaceting: [
+          'author',
+          'filterOnly(isbn)',
+          'searchable(edition)',
+          'afterDistinct(category)',
+          'afterDistinct(searchable(publisher))',
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      attributesForFaceting: [
+        'author',
+        'filterOnly(isbn)',
+        'searchable(edition)',
+        'afterDistinct(category)',
+        'afterDistinct(searchable(publisher))',
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('unretrievable_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { unretrievableAttributes: ['total_number_of_sales'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ unretrievableAttributes: ['total_number_of_sales'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_retrievable_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributesToRetrieve: ['author', 'title', 'content'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesToRetrieve: ['author', 'title', 'content'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_all_attributes_as_retrievable', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributesToRetrieve: ['*'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesToRetrieve: ['*'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('specify_attributes_not_to_retrieve', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributesToRetrieve: ['*', '-SKU', '-internal_desc'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesToRetrieve: ['*', '-SKU', '-internal_desc'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('neural_search', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { mode: 'neuralSearch' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ mode: 'neuralSearch' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('keyword_search', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { mode: 'keywordSearch' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ mode: 'keywordSearch' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_ranking', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { ranking: ['typo', 'geo', 'words', 'filters', 'attribute', 'proximity', 'exact', 'custom'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      ranking: ['typo', 'geo', 'words', 'filters', 'attribute', 'proximity', 'exact', 'custom'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_ranking_by_attribute_asc', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        ranking: ['asc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      ranking: ['asc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_ranking_by_attribute_desc', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      ranking: ['desc(price)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('restrict_searchable_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customRanking: ['desc(popularity)', 'asc(price)'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customRanking: ['desc(popularity)', 'asc(price)'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_relevancy', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { relevancyStrictness: 90 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ relevancyStrictness: 90 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_replicas', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { replicas: ['name_of_replica_index1', 'name_of_replica_index2'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ replicas: ['name_of_replica_index1', 'name_of_replica_index2'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_max_values_per_facet', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { maxValuesPerFacet: 100 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ maxValuesPerFacet: 100 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_sort_facet_values_by', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { sortFacetValuesBy: 'alpha' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ sortFacetValuesBy: 'alpha' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_attributes_to_snippet', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributesToSnippet: ['content:80', 'description'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesToSnippet: ['content:80', 'description'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_all_attributes_to_snippet', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributesToSnippet: ['*:80'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesToSnippet: ['*:80'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_highlight_pre_tag', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { highlightPreTag: '<em>' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ highlightPreTag: '<em>' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_highlight_post_tag', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { highlightPostTag: '</em>' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ highlightPostTag: '</em>' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_snippet_ellipsis_text', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { snippetEllipsisText: '…' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ snippetEllipsisText: '…' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_restrict_highlight_and_snippet_arrays_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { restrictHighlightAndSnippetArrays: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ restrictHighlightAndSnippetArrays: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_hits_per_page', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { hitsPerPage: 20 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ hitsPerPage: 20 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_pagination_limit', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { paginationLimitedTo: 1000 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ paginationLimitedTo: 1000 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_min_word_size_for_one_typo', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { minWordSizefor1Typo: 4 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ minWordSizefor1Typo: 4 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_min_word_size_for_two_typos', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { minWordSizefor2Typos: 4 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ minWordSizefor2Typos: 4 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_typo_tolerance_mode', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { typoTolerance: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ typoTolerance: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disable_typos_on_numeric_tokens_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { allowTyposOnNumericTokens: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ allowTyposOnNumericTokens: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disable_typo_tolerance_for_words', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { disableTypoToleranceOnWords: ['wheel', '1X2BCD'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ disableTypoToleranceOnWords: ['wheel', '1X2BCD'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_separators_to_index', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { separatorsToIndex: '+#' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ separatorsToIndex: '+#' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_languages_using_querylanguages', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { queryLanguages: ['es'], ignorePlurals: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ queryLanguages: ['es'], ignorePlurals: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_attributes_to_transliterate', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { indexLanguages: ['ja'], attributesToTransliterate: ['name', 'description'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ indexLanguages: ['ja'], attributesToTransliterate: ['name', 'description'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_languages_using_querylanguages', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { queryLanguages: ['es'], removeStopWords: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ queryLanguages: ['es'], removeStopWords: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_camel_case_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { camelCaseAttributes: ['description'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ camelCaseAttributes: ['description'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_decompounded_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { decompoundedAttributes: { de: ['name'] } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ decompoundedAttributes: { de: ['name'] } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_decompounded_multiple_attributes', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        decompoundedAttributes: { de: ['name_de', 'description_de'], fi: ['name_fi', 'description_fi'] },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      decompoundedAttributes: { de: ['name_de', 'description_de'], fi: ['name_fi', 'description_fi'] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_keep_diacritics_on_characters', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { keepDiacriticsOnCharacters: 'øé' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ keepDiacriticsOnCharacters: 'øé' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_custom_normalization', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { customNormalization: { default: { ä: 'ae' } } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ customNormalization: { default: { ä: 'ae' } } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_languages_using_querylanguages', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { queryLanguages: ['es'], removeStopWords: true, ignorePlurals: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ queryLanguages: ['es'], removeStopWords: true, ignorePlurals: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_indexlanguages', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { indexLanguages: ['ja'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ indexLanguages: ['ja'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_decompound_query_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { decompoundQuery: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ decompoundQuery: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_rules_syntax_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { enableRules: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ enableRules: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_personalization_settings', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { enablePersonalization: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ enablePersonalization: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_query_type', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { queryType: 'prefixLast' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ queryType: 'prefixLast' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_remove_words_if_no_result', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { removeWordsIfNoResults: 'none' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ removeWordsIfNoResults: 'none' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_advanced_syntax_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { advancedSyntax: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ advancedSyntax: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_optional_words', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { optionalWords: ['blue', 'iphone case'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ optionalWords: ['blue', 'iphone case'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disabling_prefix_search_for_some_attributes_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { disablePrefixOnAttributes: ['sku'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ disablePrefixOnAttributes: ['sku'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('disabling_exact_for_some_attributes_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { disableExactOnAttributes: ['description'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ disableExactOnAttributes: ['description'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_exact_single_word_query', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { exactOnSingleWordQuery: 'attribute' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ exactOnSingleWordQuery: 'attribute' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_aternative_as_exact', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_advanced_syntax_by_default', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { advancedSyntax: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ advancedSyntax: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_numeric_attributes_for_filtering', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { numericAttributesForFiltering: ['quantity', 'popularity'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ numericAttributesForFiltering: ['quantity', 'popularity'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('enable_compression_of_integer_array', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { allowCompressionOfIntegerArray: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ allowCompressionOfIntegerArray: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_attributes_for_distinct', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributeForDistinct: 'url' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributeForDistinct: 'url' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_distinct', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { distinct: 1, attributeForDistinct: 'url' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ distinct: 1, attributeForDistinct: 'url' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_replace_synonyms_in_highlights', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { replaceSynonymsInHighlight: false },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ replaceSynonymsInHighlight: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_min_proximity', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { minProximity: 1 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ minProximity: 1 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_default_field', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { responseFields: ['hits', 'hitsPerPage', 'nbPages', 'page'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ responseFields: ['hits', 'hitsPerPage', 'nbPages', 'page'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_max_facet_hits', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { maxFacetHits: 10 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ maxFacetHits: 10 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_attribute_criteria_computed_by_min_proximity', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributeCriteriaComputedByMinProximity: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributeCriteriaComputedByMinProximity: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_user_data', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { userData: { extraData: 'This is the custom data that you want to store in your index' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      userData: { extraData: 'This is the custom data that you want to store in your index' },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('set_rendering_content', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        renderingContent: {
+          facetOrdering: {
+            facets: { order: ['size', 'brand'] },
+            values: {
+              brand: { order: ['uniqlo'], hide: ['muji'], sortRemainingBy: 'count' },
+              size: { order: ['S', 'M', 'L'], sortRemainingBy: 'hidden' },
+            },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      renderingContent: {
+        facetOrdering: {
+          facets: { order: ['size', 'brand'] },
+          values: {
+            brand: { order: ['uniqlo'], hide: ['muji'], sortRemainingBy: 'count' },
+            size: { order: ['S', 'M', 'L'], sortRemainingBy: 'hidden' },
+          },
+        },
+      },
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

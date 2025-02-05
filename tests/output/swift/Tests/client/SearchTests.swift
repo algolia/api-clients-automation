@@ -693,6 +693,31 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// with algolia user id
+    func testSearchSingleIndexTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6686"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "playlists",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "foo")),
+            requestOptions: RequestOptions(
+                headers: ["X-Algolia-User-ID": "user1234"]
+            )
+        )
+
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+    }
+
     /// switch API key
     func testSetClientApiKeyTest0() async throws {
         let configuration = try SearchClientConfiguration(

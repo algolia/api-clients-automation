@@ -828,6 +828,28 @@ class SearchTest {
   }
 
   @Test
+  fun `with algolia user id`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "playlists",
+          searchParams = SearchParamsObject(
+            query = "foo",
+          ),
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("X-Algolia-User-ID", "user1234")
+            },
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
   fun `switch API key`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(

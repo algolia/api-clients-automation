@@ -9,6 +9,7 @@ using dotenv.net;
 using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
+using Range = Algolia.Search.Models.Search.Range;
 
 namespace Algolia.Search.requests;
 
@@ -26,8 +27,29 @@ public class SearchClientRequestTests
   [Fact]
   public void Dispose() { }
 
-  [Fact(DisplayName = "addApiKey")]
+  [Fact(DisplayName = "minimal")]
   public async Task AddApiKeyTest()
+  {
+    await client.AddApiKeyAsync(
+      new ApiKey
+      {
+        Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
+        Description = "my new api key",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/keys", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api key\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "all")]
+  public async Task AddApiKeyTest1()
   {
     await client.AddApiKeyAsync(
       new ApiKey
@@ -1248,8 +1270,55 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getObjects")]
+  [Fact(DisplayName = "by ID")]
   public async Task GetObjectsTest()
+  {
+    await client.GetObjectsAsync<Hit>(
+      new GetObjectsParams
+      {
+        Requests = new List<GetObjectsRequest>
+        {
+          new GetObjectsRequest { ObjectID = "uniqueID", IndexName = "theIndexName" },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/objects", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "multiple IDs")]
+  public async Task GetObjectsTest1()
+  {
+    await client.GetObjectsAsync<Hit>(
+      new GetObjectsParams
+      {
+        Requests = new List<GetObjectsRequest>
+        {
+          new GetObjectsRequest { ObjectID = "uniqueID1", IndexName = "theIndexName1" },
+          new GetObjectsRequest { ObjectID = "uniqueID2", IndexName = "theIndexName2" },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/objects", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"objectID\":\"uniqueID1\",\"indexName\":\"theIndexName1\"},{\"objectID\":\"uniqueID2\",\"indexName\":\"theIndexName2\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "with attributesToRetrieve")]
+  public async Task GetObjectsTest2()
   {
     await client.GetObjectsAsync<Hit>(
       new GetObjectsParams
@@ -3847,8 +3916,26 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "distinct")]
+  [Fact(DisplayName = "filters boolean")]
   public async Task SearchSingleIndexTest6()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Filters = "is_available:true" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"filters\":\"is_available:true\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "distinct")]
+  public async Task SearchSingleIndexTest7()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -3862,7 +3949,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "filtersNumeric")]
-  public async Task SearchSingleIndexTest7()
+  public async Task SearchSingleIndexTest8()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -3880,7 +3967,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "filtersTimestamp")]
-  public async Task SearchSingleIndexTest8()
+  public async Task SearchSingleIndexTest9()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -3900,7 +3987,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "filtersSumOrFiltersScoresFalse")]
-  public async Task SearchSingleIndexTest9()
+  public async Task SearchSingleIndexTest10()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -3925,7 +4012,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "filtersSumOrFiltersScoresTrue")]
-  public async Task SearchSingleIndexTest10()
+  public async Task SearchSingleIndexTest11()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -3950,7 +4037,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "filtersStephenKing")]
-  public async Task SearchSingleIndexTest11()
+  public async Task SearchSingleIndexTest12()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -3968,7 +4055,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "filtersNotTags")]
-  public async Task SearchSingleIndexTest12()
+  public async Task SearchSingleIndexTest13()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -3986,7 +4073,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "facetFiltersList")]
-  public async Task SearchSingleIndexTest13()
+  public async Task SearchSingleIndexTest14()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4020,8 +4107,135 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "facetFiltersBook")]
+  public async Task SearchSingleIndexTest15()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters> { new FacetFilters("category:Book") }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"facetFilters\":[\"category:Book\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "facetFiltersAND")]
+  public async Task SearchSingleIndexTest16()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters>
+            {
+              new FacetFilters("category:Book"),
+              new FacetFilters("author:John Doe"),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"facetFilters\":[\"category:Book\",\"author:John Doe\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "facetFiltersOR")]
+  public async Task SearchSingleIndexTest17()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters>
+            {
+              new FacetFilters(
+                new List<FacetFilters>
+                {
+                  new FacetFilters("category:Book"),
+                  new FacetFilters("author:John Doe"),
+                }
+              ),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"facetFilters\":[[\"category:Book\",\"author:John Doe\"]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "facetFiltersCombined")]
+  public async Task SearchSingleIndexTest18()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          FacetFilters = new FacetFilters(
+            new List<FacetFilters>
+            {
+              new FacetFilters("author:John Doe"),
+              new FacetFilters(
+                new List<FacetFilters>
+                {
+                  new FacetFilters("category:Book"),
+                  new FacetFilters("category:Movie"),
+                }
+              ),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"facetFilters\":[\"author:John Doe\",[\"category:Book\",\"category:Movie\"]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "facetFiltersNeg")]
-  public async Task SearchSingleIndexTest14()
+  public async Task SearchSingleIndexTest19()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4041,7 +4255,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "filtersAndFacetFilters")]
-  public async Task SearchSingleIndexTest15()
+  public async Task SearchSingleIndexTest20()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4067,7 +4281,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "facet author genre")]
-  public async Task SearchSingleIndexTest16()
+  public async Task SearchSingleIndexTest21()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4090,7 +4304,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "facet wildcard")]
-  public async Task SearchSingleIndexTest17()
+  public async Task SearchSingleIndexTest22()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4104,7 +4318,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "maxValuesPerFacet")]
-  public async Task SearchSingleIndexTest18()
+  public async Task SearchSingleIndexTest23()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4122,7 +4336,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "aroundLatLng")]
-  public async Task SearchSingleIndexTest19()
+  public async Task SearchSingleIndexTest24()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4140,7 +4354,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "aroundLatLngViaIP")]
-  public async Task SearchSingleIndexTest20()
+  public async Task SearchSingleIndexTest25()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4158,7 +4372,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "aroundRadius")]
-  public async Task SearchSingleIndexTest21()
+  public async Task SearchSingleIndexTest26()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4182,7 +4396,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "insideBoundingBox")]
-  public async Task SearchSingleIndexTest22()
+  public async Task SearchSingleIndexTest27()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4210,7 +4424,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "insidePolygon")]
-  public async Task SearchSingleIndexTest23()
+  public async Task SearchSingleIndexTest28()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4250,7 +4464,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "insidePolygon")]
-  public async Task SearchSingleIndexTest24()
+  public async Task SearchSingleIndexTest29()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4290,7 +4504,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "optionalFilters")]
-  public async Task SearchSingleIndexTest25()
+  public async Task SearchSingleIndexTest30()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4315,7 +4529,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "optionalFiltersMany")]
-  public async Task SearchSingleIndexTest26()
+  public async Task SearchSingleIndexTest31()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4345,7 +4559,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "optionalFiltersSimple")]
-  public async Task SearchSingleIndexTest27()
+  public async Task SearchSingleIndexTest32()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4374,7 +4588,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "restrictSearchableAttributes")]
-  public async Task SearchSingleIndexTest28()
+  public async Task SearchSingleIndexTest33()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4394,7 +4608,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "getRankingInfo")]
-  public async Task SearchSingleIndexTest29()
+  public async Task SearchSingleIndexTest34()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4412,7 +4626,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "clickAnalytics")]
-  public async Task SearchSingleIndexTest30()
+  public async Task SearchSingleIndexTest35()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4430,7 +4644,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "clickAnalyticsUserToken")]
-  public async Task SearchSingleIndexTest31()
+  public async Task SearchSingleIndexTest36()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4448,7 +4662,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enablePersonalization")]
-  public async Task SearchSingleIndexTest32()
+  public async Task SearchSingleIndexTest37()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4468,7 +4682,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "userToken")]
-  public async Task SearchSingleIndexTest33()
+  public async Task SearchSingleIndexTest38()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4485,8 +4699,26 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "userToken1234")]
+  public async Task SearchSingleIndexTest39()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", UserToken = "user-1234" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"userToken\":\"user-1234\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "analyticsTag")]
-  public async Task SearchSingleIndexTest34()
+  public async Task SearchSingleIndexTest40()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4506,7 +4738,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "facetFiltersUsers")]
-  public async Task SearchSingleIndexTest35()
+  public async Task SearchSingleIndexTest41()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4535,7 +4767,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "buildTheQuery")]
-  public async Task SearchSingleIndexTest36()
+  public async Task SearchSingleIndexTest42()
   {
     await client.SearchSingleIndexAsync<Hit>(
       "indexName",
@@ -4557,6 +4789,1927 @@ public class SearchClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
+  }
+
+  [Fact(DisplayName = "attributesToHighlightOverride")]
+  public async Task SearchSingleIndexTest43()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AttributesToHighlight = new List<string> { "title", "content" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"attributesToHighlight\":[\"title\",\"content\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disableTypoToleranceOnAttributes")]
+  public async Task SearchSingleIndexTest44()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          DisableTypoToleranceOnAttributes = new List<string> { "serial_number" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_a_query")]
+  public async Task SearchSingleIndexTest45()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "shirt" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"query\":\"shirt\"}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "search_everything")]
+  public async Task SearchSingleIndexTest46()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"query\":\"\"}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "api_filtering_range_example")]
+  public async Task SearchSingleIndexTest47()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "books", Filters = "price:10 TO 20" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"books\",\"filters\":\"price:10 TO 20\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_a_query")]
+  public async Task SearchSingleIndexTest48()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "",
+          SimilarQuery = "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+          Filters = "year:1991 TO 2001",
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"\",\"similarQuery\":\"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_retrievable_attributes")]
+  public async Task SearchSingleIndexTest49()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AttributesToRetrieve = new List<string> { "title", "content" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"attributesToRetrieve\":[\"title\",\"content\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "restrict_searchable_attributes")]
+  public async Task SearchSingleIndexTest50()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RestrictSearchableAttributes = new List<string> { "title", "author" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"restrictSearchableAttributes\":[\"title\",\"author\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_relevancy")]
+  public async Task SearchSingleIndexTest51()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", RelevancyStrictness = 70 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"relevancyStrictness\":70}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "apply_filters")]
+  public async Task SearchSingleIndexTest52()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Filters = "(category:Book OR category:Ebook) AND _tags:published",
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"filters\":\"(category:Book OR category:Ebook) AND _tags:published\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "apply_all_filters")]
+  public async Task SearchSingleIndexTest53()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Filters =
+            "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\"",
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"filters\":\"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\\"John Doe\\\"\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "escape_spaces")]
+  public async Task SearchSingleIndexTest54()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", Filters = "category:\"Books and Comics\"" }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"filters\":\"category:\\\"Books and Comics\\\"\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "escape_keywords")]
+  public async Task SearchSingleIndexTest55()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", Filters = "keyword:\"OR\"" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"filters\":\"keyword:\\\"OR\\\"\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "escape_single_quotes")]
+  public async Task SearchSingleIndexTest56()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", Filters = "content:\"It's a wonderful day\"" }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"filters\":\"content:\\\"It's a wonderful day\\\"\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "escape_double_quotes")]
+  public async Task SearchSingleIndexTest57()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", Filters = "content:\"She said \"Hello World\"" }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"filters\":\"content:\\\"She said \\\"Hello World\\\"\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "apply_filters")]
+  public async Task SearchSingleIndexTest58()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          OptionalFilters = new OptionalFilters(
+            new List<OptionalFilters>
+            {
+              new OptionalFilters("category:Book"),
+              new OptionalFilters("author:John Doe"),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"optionalFilters\":[\"category:Book\",\"author:John Doe\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "apply_negative_filters")]
+  public async Task SearchSingleIndexTest59()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          OptionalFilters = new OptionalFilters(
+            new List<OptionalFilters>
+            {
+              new OptionalFilters("category:Book"),
+              new OptionalFilters("author:-John Doe"),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"optionalFilters\":[\"category:Book\",\"author:-John Doe\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "apply_numeric_filters")]
+  public async Task SearchSingleIndexTest60()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          NumericFilters = new NumericFilters(
+            new List<NumericFilters>
+            {
+              new NumericFilters("price < 1000"),
+              new NumericFilters(
+                new List<NumericFilters>
+                {
+                  new NumericFilters("inStock = 1"),
+                  new NumericFilters("deliveryDate < 1441755506"),
+                }
+              ),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"numericFilters\":[\"price < 1000\",[\"inStock = 1\",\"deliveryDate < 1441755506\"]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "apply_tag_filters")]
+  public async Task SearchSingleIndexTest61()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          TagFilters = new TagFilters(
+            new List<TagFilters>
+            {
+              new TagFilters("SciFi"),
+              new TagFilters(
+                new List<TagFilters> { new TagFilters("Book"), new TagFilters("Movie") }
+              ),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"tagFilters\":[\"SciFi\",[\"Book\",\"Movie\"]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "apply_filters")]
+  public async Task SearchSingleIndexTest62()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", SumOrFiltersScores = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"sumOrFiltersScores\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "facets_all")]
+  public async Task SearchSingleIndexTest63()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Facets = new List<string> { "*" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"facets\":[\"*\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "retrieve_only_some_facets")]
+  public async Task SearchSingleIndexTest64()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          Facets = new List<string> { "category", "author" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"facets\":[\"category\",\"author\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_max_values_per_facet")]
+  public async Task SearchSingleIndexTest65()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", MaxValuesPerFacet = 20 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"maxValuesPerFacet\":20}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_faceting_after_distinct")]
+  public async Task SearchSingleIndexTest66()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", FacetingAfterDistinct = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"facetingAfterDistinct\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "sort_facet_values_alphabetically")]
+  public async Task SearchSingleIndexTest67()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", SortFacetValuesBy = "count" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"sortFacetValuesBy\":\"count\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_attributes_to_snippet")]
+  public async Task SearchSingleIndexTest68()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AttributesToSnippet = new List<string> { "title", "content:80" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"attributesToSnippet\":[\"title\",\"content:80\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_highlight_pre_tag")]
+  public async Task SearchSingleIndexTest69()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", HighlightPreTag = "<strong>" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"highlightPreTag\":\"<strong>\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_highlight_post_tag")]
+  public async Task SearchSingleIndexTest70()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", HighlightPostTag = "</strong>" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"highlightPostTag\":\"</strong>\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_snippet_ellipsis_text")]
+  public async Task SearchSingleIndexTest71()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", SnippetEllipsisText = "" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"snippetEllipsisText\":\"\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_restrict_highlight_and_snippet_arrays")]
+  public async Task SearchSingleIndexTest72()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", RestrictHighlightAndSnippetArrays = false }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"restrictHighlightAndSnippetArrays\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "access_page")]
+  public async Task SearchSingleIndexTest73()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", Page = 0 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"page\":0}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_hits_per_page")]
+  public async Task SearchSingleIndexTest74()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", HitsPerPage = 10 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"hitsPerPage\":10}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "get_nth_hit")]
+  public async Task SearchSingleIndexTest75()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", Offset = 4 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"offset\":4}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "get_n_results")]
+  public async Task SearchSingleIndexTest76()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", Length = 4 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"length\":4}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_min_word_size_for_one_typo")]
+  public async Task SearchSingleIndexTest77()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", MinWordSizefor1Typo = 2 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"minWordSizefor1Typo\":2}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_min_word_size_for_two_typos")]
+  public async Task SearchSingleIndexTest78()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", MinWordSizefor2Typos = 2 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"minWordSizefor2Typos\":2}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_typo_tolerance_mode")]
+  public async Task SearchSingleIndexTest79()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", TypoTolerance = new TypoTolerance(false) }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"typoTolerance\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disable_typos_on_numeric_tokens_at_search_time")]
+  public async Task SearchSingleIndexTest80()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", AllowTyposOnNumericTokens = false }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"allowTyposOnNumericTokens\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_around_a_position")]
+  public async Task SearchSingleIndexTest81()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", AroundLatLng = "40.71, -74.01" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"aroundLatLng\":\"40.71, -74.01\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_around_server_ip")]
+  public async Task SearchSingleIndexTest82()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", AroundLatLngViaIP = true }),
+      new RequestOptionBuilder()
+        .AddExtraHeader(
+          "x-forwarded-for",
+          "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+        )
+        .Build()
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"aroundLatLngViaIP\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"x-forwarded-for\":\"94.228.178.246 // should be replaced with the actual IP you would like to search around\"}"
+    );
+    var actualHeaders = req.Headers;
+    foreach (var expectedHeader in expectedHeaders)
+    {
+      string actualHeaderValue;
+      actualHeaders.TryGetValue(expectedHeader.Key, out actualHeaderValue);
+      Assert.Equal(expectedHeader.Value, actualHeaderValue);
+    }
+  }
+
+  [Fact(DisplayName = "set_around_radius")]
+  public async Task SearchSingleIndexTest83()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", AroundRadius = new AroundRadius(1000) }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"aroundRadius\":1000}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disable_automatic_radius")]
+  public async Task SearchSingleIndexTest84()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"aroundRadius\":\"all\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_geo_search_precision")]
+  public async Task SearchSingleIndexTest85()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", AroundPrecision = new AroundPrecision(100) }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"aroundPrecision\":100}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_geo_search_precision_non_linear")]
+  public async Task SearchSingleIndexTest86()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AroundPrecision = new AroundPrecision(
+            new List<Range>
+            {
+              new Range { From = 0, Value = 25 },
+              new Range { From = 2000, Value = 1000 },
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"aroundPrecision\":[{\"from\":0,\"value\":25},{\"from\":2000,\"value\":1000}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_minimum_geo_search_radius")]
+  public async Task SearchSingleIndexTest87()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", MinimumAroundRadius = 1000 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"minimumAroundRadius\":1000}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_inside_rectangular_area")]
+  public async Task SearchSingleIndexTest88()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsideBoundingBox = new InsideBoundingBox(
+            new List<List<Double>>
+            {
+              new List<Double> { 46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625 },
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_inside_multiple_rectangular_areas")]
+  public async Task SearchSingleIndexTest89()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsideBoundingBox = new InsideBoundingBox(
+            new List<List<Double>>
+            {
+              new List<Double> { 46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625 },
+              new List<Double> { 49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875 },
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_inside_polygon_area")]
+  public async Task SearchSingleIndexTest90()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsidePolygon = new List<List<Double>>
+          {
+            new List<Double>
+            {
+              46.650828100116044,
+              7.123046875,
+              45.17210966999772,
+              1.009765625,
+              49.62625916704081,
+              4.6181640625,
+            },
+          },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search_inside_multiple_polygon_areas")]
+  public async Task SearchSingleIndexTest91()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          InsidePolygon = new List<List<Double>>
+          {
+            new List<Double>
+            {
+              46.650828100116044,
+              7.123046875,
+              45.17210966999772,
+              1.009765625,
+              49.62625916704081,
+              4.6181640625,
+            },
+            new List<Double>
+            {
+              49.62625916704081,
+              4.6181640625,
+              47.715070300900194,
+              0.482421875,
+              45.17210966999772,
+              1.009765625,
+              50.62626704081,
+              4.6181640625,
+            },
+          },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_querylanguages_override")]
+  public async Task SearchSingleIndexTest92()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          IgnorePlurals = new IgnorePlurals(
+            new List<SupportedLanguage>
+            {
+              Enum.Parse<SupportedLanguage>("Ca"),
+              Enum.Parse<SupportedLanguage>("Es"),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"ignorePlurals\":[\"ca\",\"es\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_querylanguages_override")]
+  public async Task SearchSingleIndexTest93()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RemoveStopWords = new RemoveStopWords(
+            new List<SupportedLanguage>
+            {
+              Enum.Parse<SupportedLanguage>("Ca"),
+              Enum.Parse<SupportedLanguage>("Es"),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"removeStopWords\":[\"ca\",\"es\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_querylanguages_override")]
+  public async Task SearchSingleIndexTest94()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RemoveStopWords = new RemoveStopWords(
+            new List<SupportedLanguage>
+            {
+              Enum.Parse<SupportedLanguage>("Ca"),
+              Enum.Parse<SupportedLanguage>("Es"),
+            }
+          ),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"removeStopWords\":[\"ca\",\"es\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_querylanguages_with_japanese_query")]
+  public async Task SearchSingleIndexTest95()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          QueryLanguages = new List<SupportedLanguage>
+          {
+            Enum.Parse<SupportedLanguage>("Ja"),
+            Enum.Parse<SupportedLanguage>("En"),
+          },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"queryLanguages\":[\"ja\",\"en\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_natural_languages")]
+  public async Task SearchSingleIndexTest96()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "",
+          NaturalLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"\",\"naturalLanguages\":[\"fr\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_natural_languages_with_query")]
+  public async Task SearchSingleIndexTest97()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "",
+          NaturalLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
+          RemoveWordsIfNoResults = Enum.Parse<RemoveWordsIfNoResults>("FirstWords"),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"\",\"naturalLanguages\":[\"fr\"],\"removeWordsIfNoResults\":\"firstWords\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_decompound_query_search_time")]
+  public async Task SearchSingleIndexTest98()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", DecompoundQuery = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"decompoundQuery\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_rules_search_time")]
+  public async Task SearchSingleIndexTest99()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", EnableRules = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"enableRules\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_rule_contexts")]
+  public async Task SearchSingleIndexTest100()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RuleContexts = new List<string> { "front_end", "website2" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"ruleContexts\":[\"front_end\",\"website2\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_personalization")]
+  public async Task SearchSingleIndexTest101()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", EnablePersonalization = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"enablePersonalization\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_personalization_with_user_token")]
+  public async Task SearchSingleIndexTest102()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          EnablePersonalization = true,
+          UserToken = "123456",
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"enablePersonalization\":true,\"userToken\":\"123456\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "personalization_impact")]
+  public async Task SearchSingleIndexTest103()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", PersonalizationImpact = 20 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"personalizationImpact\":20}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_user_token")]
+  public async Task SearchSingleIndexTest104()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", UserToken = "123456" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"userToken\":\"123456\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_user_token_with_personalization")]
+  public async Task SearchSingleIndexTest105()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          EnablePersonalization = true,
+          UserToken = "123456",
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"enablePersonalization\":true,\"userToken\":\"123456\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_query_type")]
+  public async Task SearchSingleIndexTest106()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", QueryType = Enum.Parse<QueryType>("PrefixAll") }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"queryType\":\"prefixAll\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_remove_words_if_no_results")]
+  public async Task SearchSingleIndexTest107()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          RemoveWordsIfNoResults = Enum.Parse<RemoveWordsIfNoResults>("LastWords"),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"removeWordsIfNoResults\":\"lastWords\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_advanced_syntax_search_time")]
+  public async Task SearchSingleIndexTest108()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", AdvancedSyntax = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"advancedSyntax\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "overide_default_optional_words")]
+  public async Task SearchSingleIndexTest109()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          OptionalWords = new OptionalWords(new List<string> { "toyota", "2020 2021" }),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"optionalWords\":[\"toyota\",\"2020 2021\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disabling_exact_for_some_attributes_search_time")]
+  public async Task SearchSingleIndexTest110()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          DisableExactOnAttributes = new List<string> { "description" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"disableExactOnAttributes\":[\"description\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_exact_single_word_query")]
+  public async Task SearchSingleIndexTest111()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          ExactOnSingleWordQuery = Enum.Parse<ExactOnSingleWordQuery>("None"),
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"exactOnSingleWordQuery\":\"none\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_aternative_as_exact")]
+  public async Task SearchSingleIndexTest112()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AlternativesAsExact = new List<AlternativesAsExact>
+          {
+            Enum.Parse<AlternativesAsExact>("MultiWordsSynonym"),
+          },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"alternativesAsExact\":[\"multiWordsSynonym\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_advanced_syntax_exact_phrase")]
+  public async Task SearchSingleIndexTest113()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AdvancedSyntax = true,
+          AdvancedSyntaxFeatures = new List<AdvancedSyntaxFeatures>
+          {
+            Enum.Parse<AdvancedSyntaxFeatures>("ExactPhrase"),
+          },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_advanced_syntax_exclude_words")]
+  public async Task SearchSingleIndexTest114()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AdvancedSyntax = true,
+          AdvancedSyntaxFeatures = new List<AdvancedSyntaxFeatures>
+          {
+            Enum.Parse<AdvancedSyntaxFeatures>("ExcludeWords"),
+          },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"excludeWords\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_distinct")]
+  public async Task SearchSingleIndexTest115()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", Distinct = new Distinct(0) })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"distinct\":0}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "get_ranking_info")]
+  public async Task SearchSingleIndexTest116()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", GetRankingInfo = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"getRankingInfo\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disable_click_analytics")]
+  public async Task SearchSingleIndexTest117()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", ClickAnalytics = false })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"clickAnalytics\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_click_analytics")]
+  public async Task SearchSingleIndexTest118()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", ClickAnalytics = true })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"clickAnalytics\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disable_analytics")]
+  public async Task SearchSingleIndexTest119()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", Analytics = false })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"analytics\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "add_analytics_tags")]
+  public async Task SearchSingleIndexTest120()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          AnalyticsTags = new List<string> { "front_end", "website2" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"analyticsTags\":[\"front_end\",\"website2\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disable_synonyms")]
+  public async Task SearchSingleIndexTest121()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", Synonyms = false })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"synonyms\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_replace_synonyms_in_highlights")]
+  public async Task SearchSingleIndexTest122()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject { Query = "query", ReplaceSynonymsInHighlight = true }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"replaceSynonymsInHighlight\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_min_proximity")]
+  public async Task SearchSingleIndexTest123()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", MinProximity = 2 })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"minProximity\":2}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_default_field")]
+  public async Task SearchSingleIndexTest124()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          ResponseFields = new List<string> { "hits", "facets" },
+        }
+      )
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"responseFields\":[\"hits\",\"facets\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "override_percentile_computation")]
+  public async Task SearchSingleIndexTest125()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", PercentileComputation = false })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"percentileComputation\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_ab_test")]
+  public async Task SearchSingleIndexTest126()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", EnableABTest = false })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"enableABTest\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_enable_re_ranking")]
+  public async Task SearchSingleIndexTest127()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query", EnableReRanking = false })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"query\":\"query\",\"enableReRanking\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "with algolia user id")]
+  public async Task SearchSingleIndexTest128()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "indexName",
+      new SearchParams(new SearchParamsObject { Query = "query" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"query\":\"query\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "searchSynonyms with minimal parameters")]
@@ -5051,8 +7204,71 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "attributesForFaceting categoryPageId")]
+  [Fact(DisplayName = "api_attributes_for_faceting")]
   public async Task SetSettingsTest14()
+  {
+    await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string> { "genre", "author" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesForFaceting\":[\"genre\",\"author\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "api_attributes_for_faceting_searchable")]
+  public async Task SetSettingsTest15()
+  {
+    await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string> { "genre", "searchable(author)" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesForFaceting\":[\"genre\",\"searchable(author)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "api_attributes_for_filter_only")]
+  public async Task SetSettingsTest16()
+  {
+    await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string> { "filterOnly(genre)", "author" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesForFaceting\":[\"filterOnly(genre)\",\"author\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "attributesForFaceting categoryPageId")]
+  public async Task SetSettingsTest17()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5073,7 +7289,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "unretrievableAttributes")]
-  public async Task SetSettingsTest15()
+  public async Task SetSettingsTest18()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5091,7 +7307,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "attributesForFaceting user restricted data")]
-  public async Task SetSettingsTest16()
+  public async Task SetSettingsTest19()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5109,7 +7325,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "attributesForFaceting optional filters")]
-  public async Task SetSettingsTest17()
+  public async Task SetSettingsTest20()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5130,7 +7346,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "attributesForFaceting redirect index")]
-  public async Task SetSettingsTest18()
+  public async Task SetSettingsTest21()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5148,7 +7364,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "attributesForFaceting multiple consequences")]
-  public async Task SetSettingsTest19()
+  public async Task SetSettingsTest22()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5166,7 +7382,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "attributesForFaceting in-depth optional filters")]
-  public async Task SetSettingsTest20()
+  public async Task SetSettingsTest23()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5184,7 +7400,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "mode neuralSearch")]
-  public async Task SetSettingsTest21()
+  public async Task SetSettingsTest24()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5202,7 +7418,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "mode keywordSearch")]
-  public async Task SetSettingsTest22()
+  public async Task SetSettingsTest25()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5220,7 +7436,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributes same priority")]
-  public async Task SetSettingsTest23()
+  public async Task SetSettingsTest26()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5241,7 +7457,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributes higher priority")]
-  public async Task SetSettingsTest24()
+  public async Task SetSettingsTest27()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5262,7 +7478,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "customRanking retweets")]
-  public async Task SetSettingsTest25()
+  public async Task SetSettingsTest28()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5283,7 +7499,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "customRanking boosted")]
-  public async Task SetSettingsTest26()
+  public async Task SetSettingsTest29()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5301,7 +7517,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "customRanking pageviews")]
-  public async Task SetSettingsTest27()
+  public async Task SetSettingsTest30()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5322,7 +7538,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "customRanking applying search parameters for a specific query")]
-  public async Task SetSettingsTest28()
+  public async Task SetSettingsTest31()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5344,7 +7560,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "customRanking rounded pageviews")]
-  public async Task SetSettingsTest29()
+  public async Task SetSettingsTest32()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5365,7 +7581,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "customRanking price")]
-  public async Task SetSettingsTest30()
+  public async Task SetSettingsTest33()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5383,7 +7599,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "ranking exhaustive")]
-  public async Task SetSettingsTest31()
+  public async Task SetSettingsTest34()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5415,7 +7631,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "ranking standard replica")]
-  public async Task SetSettingsTest32()
+  public async Task SetSettingsTest35()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5433,7 +7649,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "ranking virtual replica")]
-  public async Task SetSettingsTest33()
+  public async Task SetSettingsTest36()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5451,7 +7667,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "customRanking and ranking sort alphabetically")]
-  public async Task SetSettingsTest34()
+  public async Task SetSettingsTest37()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5483,7 +7699,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "relevancyStrictness")]
-  public async Task SetSettingsTest35()
+  public async Task SetSettingsTest38()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5505,7 +7721,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "create replica index")]
-  public async Task SetSettingsTest36()
+  public async Task SetSettingsTest39()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5522,8 +7738,26 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "create replica index articles")]
+  public async Task SetSettingsTest40()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Replicas = new List<string> { "articles_date_desc" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"replicas\":[\"articles_date_desc\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "create virtual replica index")]
-  public async Task SetSettingsTest37()
+  public async Task SetSettingsTest41()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5541,7 +7775,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "unlink replica index")]
-  public async Task SetSettingsTest38()
+  public async Task SetSettingsTest42()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5555,7 +7789,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "forwardToReplicas")]
-  public async Task SetSettingsTest39()
+  public async Task SetSettingsTest43()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5590,7 +7824,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "maxValuesPerFacet")]
-  public async Task SetSettingsTest40()
+  public async Task SetSettingsTest44()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxValuesPerFacet = 1000 });
 
@@ -5605,7 +7839,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "maxFacetHits")]
-  public async Task SetSettingsTest41()
+  public async Task SetSettingsTest45()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxFacetHits = 1000 });
 
@@ -5616,7 +7850,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "attributesForFaceting complex")]
-  public async Task SetSettingsTest42()
+  public async Task SetSettingsTest46()
   {
     await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
@@ -5642,7 +7876,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "ranking closest dates")]
-  public async Task SetSettingsTest43()
+  public async Task SetSettingsTest47()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5674,7 +7908,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributes item variation")]
-  public async Task SetSettingsTest44()
+  public async Task SetSettingsTest48()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5695,7 +7929,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributes around location")]
-  public async Task SetSettingsTest45()
+  public async Task SetSettingsTest49()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5716,15 +7950,14 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "searchableAttributes around location")]
-  public async Task SetSettingsTest46()
+  [Fact(DisplayName = "attributesToHighlight")]
+  public async Task SetSettingsTest50()
   {
     await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings
       {
-        SearchableAttributes = new List<string> { "name", "country", "code", "iata_code" },
-        CustomRanking = new List<string> { "desc(links_count)" },
+        AttributesToHighlight = new List<string> { "author", "title", "content" },
       }
     );
 
@@ -5732,32 +7965,32 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"searchableAttributes\":[\"name\",\"country\",\"code\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}",
+      "{\"attributesToHighlight\":[\"author\",\"title\",\"content\"]}",
       req.Body,
       new JsonDiffConfig(false)
     );
   }
 
-  [Fact(DisplayName = "disableTypoToleranceOnAttributes")]
-  public async Task SetSettingsTest47()
+  [Fact(DisplayName = "attributesToHighlightStar")]
+  public async Task SetSettingsTest51()
   {
     await client.SetSettingsAsync(
       "theIndexName",
-      new IndexSettings { DisableTypoToleranceOnAttributes = new List<string> { "serial_number" } }
+      new IndexSettings { AttributesToHighlight = new List<string> { "*" } }
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}",
+      "{\"attributesToHighlight\":[\"*\"]}",
       req.Body,
       new JsonDiffConfig(false)
     );
   }
 
   [Fact(DisplayName = "everything")]
-  public async Task SetSettingsTest48()
+  public async Task SetSettingsTest52()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5870,7 +8103,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesWithCustomRankingsAndAttributesForFaceting")]
-  public async Task SetSettingsTest49()
+  public async Task SetSettingsTest53()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5904,8 +8137,29 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "searchableAttributesOrdering")]
+  public async Task SetSettingsTest54()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string> { "unordered(title)", "cast" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"searchableAttributes\":[\"unordered(title)\",\"cast\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "searchableAttributesProductReferenceSuffixes")]
-  public async Task SetSettingsTest50()
+  public async Task SetSettingsTest55()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5931,7 +8185,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "queryLanguageAndIgnorePlurals")]
-  public async Task SetSettingsTest51()
+  public async Task SetSettingsTest56()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5953,7 +8207,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesInMovies")]
-  public async Task SetSettingsTest52()
+  public async Task SetSettingsTest57()
   {
     await client.SetSettingsAsync(
       "movies",
@@ -5974,7 +8228,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disablePrefixOnAttributes")]
-  public async Task SetSettingsTest53()
+  public async Task SetSettingsTest58()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -5992,7 +8246,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disableTypoToleranceOnAttributes")]
-  public async Task SetSettingsTest54()
+  public async Task SetSettingsTest59()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -6010,7 +8264,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesSimpleExample")]
-  public async Task SetSettingsTest55()
+  public async Task SetSettingsTest60()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -6028,7 +8282,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesSimpleExampleAlt")]
-  public async Task SetSettingsTest56()
+  public async Task SetSettingsTest61()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -6043,6 +8297,1259 @@ public class SearchClientRequestTests
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"searchableAttributes\":[\"serial_number\",\"serial_number_suffixes\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_searchable_attributes")]
+  public async Task SetSettingsTest62()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        SearchableAttributes = new List<string>
+        {
+          "title,alternative_title",
+          "author",
+          "unordered(text)",
+          "emails.personal",
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"searchableAttributes\":[\"title,alternative_title\",\"author\",\"unordered(text)\",\"emails.personal\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_searchable_attributes")]
+  public async Task SetSettingsTest63()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string>
+        {
+          "author",
+          "filterOnly(isbn)",
+          "searchable(edition)",
+          "afterDistinct(category)",
+          "afterDistinct(searchable(publisher))",
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesForFaceting\":[\"author\",\"filterOnly(isbn)\",\"searchable(edition)\",\"afterDistinct(category)\",\"afterDistinct(searchable(publisher))\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "unretrievable_attributes")]
+  public async Task SetSettingsTest64()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { UnretrievableAttributes = new List<string> { "total_number_of_sales" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"unretrievableAttributes\":[\"total_number_of_sales\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_retrievable_attributes")]
+  public async Task SetSettingsTest65()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        AttributesToRetrieve = new List<string> { "author", "title", "content" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesToRetrieve\":[\"author\",\"title\",\"content\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_all_attributes_as_retrievable")]
+  public async Task SetSettingsTest66()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { AttributesToRetrieve = new List<string> { "*" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesToRetrieve\":[\"*\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "specify_attributes_not_to_retrieve")]
+  public async Task SetSettingsTest67()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        AttributesToRetrieve = new List<string> { "*", "-SKU", "-internal_desc" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesToRetrieve\":[\"*\",\"-SKU\",\"-internal_desc\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "neural_search")]
+  public async Task SetSettingsTest68()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Mode = Enum.Parse<Mode>("NeuralSearch") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"mode\":\"neuralSearch\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "keyword_search")]
+  public async Task SetSettingsTest69()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Mode = Enum.Parse<Mode>("KeywordSearch") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"mode\":\"keywordSearch\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_ranking")]
+  public async Task SetSettingsTest70()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "attribute",
+          "proximity",
+          "exact",
+          "custom",
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"attribute\",\"proximity\",\"exact\",\"custom\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_ranking_by_attribute_asc")]
+  public async Task SetSettingsTest71()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "asc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom",
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"ranking\":[\"asc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_ranking_by_attribute_desc")]
+  public async Task SetSettingsTest72()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "desc(price)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom",
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "restrict_searchable_attributes")]
+  public async Task SetSettingsTest73()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        CustomRanking = new List<string> { "desc(popularity)", "asc(price)" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customRanking\":[\"desc(popularity)\",\"asc(price)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_relevancy")]
+  public async Task SetSettingsTest74()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { RelevancyStrictness = 90 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"relevancyStrictness\":90}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_replicas")]
+  public async Task SetSettingsTest75()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        Replicas = new List<string> { "name_of_replica_index1", "name_of_replica_index2" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"replicas\":[\"name_of_replica_index1\",\"name_of_replica_index2\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_max_values_per_facet")]
+  public async Task SetSettingsTest76()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxValuesPerFacet = 100 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"maxValuesPerFacet\":100}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_sort_facet_values_by")]
+  public async Task SetSettingsTest77()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { SortFacetValuesBy = "alpha" }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"sortFacetValuesBy\":\"alpha\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_attributes_to_snippet")]
+  public async Task SetSettingsTest78()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        AttributesToSnippet = new List<string> { "content:80", "description" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesToSnippet\":[\"content:80\",\"description\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_all_attributes_to_snippet")]
+  public async Task SetSettingsTest79()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { AttributesToSnippet = new List<string> { "*:80" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesToSnippet\":[\"*:80\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_highlight_pre_tag")]
+  public async Task SetSettingsTest80()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { HighlightPreTag = "<em>" });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"highlightPreTag\":\"<em>\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_highlight_post_tag")]
+  public async Task SetSettingsTest81()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { HighlightPostTag = "</em>" });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"highlightPostTag\":\"</em>\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_snippet_ellipsis_text")]
+  public async Task SetSettingsTest82()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { SnippetEllipsisText = "…" });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"snippetEllipsisText\":\"…\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_restrict_highlight_and_snippet_arrays_by_default")]
+  public async Task SetSettingsTest83()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { RestrictHighlightAndSnippetArrays = true }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"restrictHighlightAndSnippetArrays\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_hits_per_page")]
+  public async Task SetSettingsTest84()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { HitsPerPage = 20 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"hitsPerPage\":20}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "set_pagination_limit")]
+  public async Task SetSettingsTest85()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { PaginationLimitedTo = 1000 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"paginationLimitedTo\":1000}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_min_word_size_for_one_typo")]
+  public async Task SetSettingsTest86()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { MinWordSizefor1Typo = 4 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"minWordSizefor1Typo\":4}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_min_word_size_for_two_typos")]
+  public async Task SetSettingsTest87()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { MinWordSizefor2Typos = 4 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"minWordSizefor2Typos\":4}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_typo_tolerance_mode")]
+  public async Task SetSettingsTest88()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { TypoTolerance = new TypoTolerance(true) }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"typoTolerance\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disable_typos_on_numeric_tokens_by_default")]
+  public async Task SetSettingsTest89()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { AllowTyposOnNumericTokens = false }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"allowTyposOnNumericTokens\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disable_typo_tolerance_for_words")]
+  public async Task SetSettingsTest90()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        DisableTypoToleranceOnWords = new List<string> { "wheel", "1X2BCD" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"disableTypoToleranceOnWords\":[\"wheel\",\"1X2BCD\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_separators_to_index")]
+  public async Task SetSettingsTest91()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { SeparatorsToIndex = "+#" });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"separatorsToIndex\":\"+#\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_languages_using_querylanguages")]
+  public async Task SetSettingsTest92()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Es") },
+        IgnorePlurals = new IgnorePlurals(true),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"queryLanguages\":[\"es\"],\"ignorePlurals\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_attributes_to_transliterate")]
+  public async Task SetSettingsTest93()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        IndexLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Ja") },
+        AttributesToTransliterate = new List<string> { "name", "description" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"indexLanguages\":[\"ja\"],\"attributesToTransliterate\":[\"name\",\"description\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_languages_using_querylanguages")]
+  public async Task SetSettingsTest94()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Es") },
+        RemoveStopWords = new RemoveStopWords(true),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"queryLanguages\":[\"es\"],\"removeStopWords\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_camel_case_attributes")]
+  public async Task SetSettingsTest95()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { CamelCaseAttributes = new List<string> { "description" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"camelCaseAttributes\":[\"description\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_decompounded_attributes")]
+  public async Task SetSettingsTest96()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        DecompoundedAttributes = new Dictionary<string, List<string>>
+        {
+          {
+            "de",
+            new List<string> { "name" }
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"decompoundedAttributes\":{\"de\":[\"name\"]}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_decompounded_multiple_attributes")]
+  public async Task SetSettingsTest97()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        DecompoundedAttributes = new Dictionary<string, List<string>>
+        {
+          {
+            "de",
+            new List<string> { "name_de", "description_de" }
+          },
+          {
+            "fi",
+            new List<string> { "name_fi", "description_fi" }
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"decompoundedAttributes\":{\"de\":[\"name_de\",\"description_de\"],\"fi\":[\"name_fi\",\"description_fi\"]}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_keep_diacritics_on_characters")]
+  public async Task SetSettingsTest98()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { KeepDiacriticsOnCharacters = "øé" }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"keepDiacriticsOnCharacters\":\"øé\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_custom_normalization")]
+  public async Task SetSettingsTest99()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        CustomNormalization = new Dictionary<string, Dictionary<string, string>>
+        {
+          {
+            "default",
+            new Dictionary<string, string> { { "ä", "ae" } }
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"customNormalization\":{\"default\":{\"ä\":\"ae\"}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_languages_using_querylanguages")]
+  public async Task SetSettingsTest100()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Es") },
+        RemoveStopWords = new RemoveStopWords(true),
+        IgnorePlurals = new IgnorePlurals(true),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"queryLanguages\":[\"es\"],\"removeStopWords\":true,\"ignorePlurals\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_indexlanguages")]
+  public async Task SetSettingsTest101()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        IndexLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Ja") },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"indexLanguages\":[\"ja\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_decompound_query_by_default")]
+  public async Task SetSettingsTest102()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { DecompoundQuery = true });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"decompoundQuery\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_rules_syntax_by_default")]
+  public async Task SetSettingsTest103()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { EnableRules = true });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"enableRules\":true}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "enable_personalization_settings")]
+  public async Task SetSettingsTest104()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { EnablePersonalization = true }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"enablePersonalization\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_query_type")]
+  public async Task SetSettingsTest105()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { QueryType = Enum.Parse<QueryType>("PrefixLast") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"queryType\":\"prefixLast\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_remove_words_if_no_result")]
+  public async Task SetSettingsTest106()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { RemoveWordsIfNoResults = Enum.Parse<RemoveWordsIfNoResults>("None") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"removeWordsIfNoResults\":\"none\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_advanced_syntax_by_default")]
+  public async Task SetSettingsTest107()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { AdvancedSyntax = true });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"advancedSyntax\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_optional_words")]
+  public async Task SetSettingsTest108()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        OptionalWords = new OptionalWords(new List<string> { "blue", "iphone case" }),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"optionalWords\":[\"blue\",\"iphone case\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disabling_prefix_search_for_some_attributes_by_default")]
+  public async Task SetSettingsTest109()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { DisablePrefixOnAttributes = new List<string> { "sku" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"disablePrefixOnAttributes\":[\"sku\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "disabling_exact_for_some_attributes_by_default")]
+  public async Task SetSettingsTest110()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { DisableExactOnAttributes = new List<string> { "description" } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"disableExactOnAttributes\":[\"description\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_exact_single_word_query")]
+  public async Task SetSettingsTest111()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { ExactOnSingleWordQuery = Enum.Parse<ExactOnSingleWordQuery>("Attribute") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"exactOnSingleWordQuery\":\"attribute\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_default_aternative_as_exact")]
+  public async Task SetSettingsTest112()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        AlternativesAsExact = new List<AlternativesAsExact>
+        {
+          Enum.Parse<AlternativesAsExact>("IgnorePlurals"),
+          Enum.Parse<AlternativesAsExact>("SingleWordSynonym"),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_advanced_syntax_by_default")]
+  public async Task SetSettingsTest113()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { AdvancedSyntax = true });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"advancedSyntax\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_numeric_attributes_for_filtering")]
+  public async Task SetSettingsTest114()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        NumericAttributesForFiltering = new List<string> { "quantity", "popularity" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"numericAttributesForFiltering\":[\"quantity\",\"popularity\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "enable_compression_of_integer_array")]
+  public async Task SetSettingsTest115()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { AllowCompressionOfIntegerArray = true }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"allowCompressionOfIntegerArray\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_attributes_for_distinct")]
+  public async Task SetSettingsTest116()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { AttributeForDistinct = "url" }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributeForDistinct\":\"url\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_distinct")]
+  public async Task SetSettingsTest117()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { Distinct = new Distinct(1), AttributeForDistinct = "url" }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"distinct\":1,\"attributeForDistinct\":\"url\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_replace_synonyms_in_highlights")]
+  public async Task SetSettingsTest118()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { ReplaceSynonymsInHighlight = false }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"replaceSynonymsInHighlight\":false}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_min_proximity")]
+  public async Task SetSettingsTest119()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { MinProximity = 1 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"minProximity\":1}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "set_default_field")]
+  public async Task SetSettingsTest120()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        ResponseFields = new List<string> { "hits", "hitsPerPage", "nbPages", "page" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"responseFields\":[\"hits\",\"hitsPerPage\",\"nbPages\",\"page\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_max_facet_hits")]
+  public async Task SetSettingsTest121()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxFacetHits = 10 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"maxFacetHits\":10}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "set_attribute_criteria_computed_by_min_proximity")]
+  public async Task SetSettingsTest122()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { AttributeCriteriaComputedByMinProximity = true }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributeCriteriaComputedByMinProximity\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_user_data")]
+  public async Task SetSettingsTest123()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        UserData = new Dictionary<string, string>
+        {
+          { "extraData", "This is the custom data that you want to store in your index" },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"userData\":{\"extraData\":\"This is the custom data that you want to store in your index\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "set_rendering_content")]
+  public async Task SetSettingsTest124()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        RenderingContent = new RenderingContent
+        {
+          FacetOrdering = new FacetOrdering
+          {
+            Facets = new Facets
+            {
+              Order = new List<string> { "size", "brand" },
+            },
+            Values = new Dictionary<string, Value>
+            {
+              {
+                "brand",
+                new Value
+                {
+                  Order = new List<string> { "uniqlo" },
+                  Hide = new List<string> { "muji" },
+                  SortRemainingBy = Enum.Parse<SortRemainingBy>("Count"),
+                }
+              },
+              {
+                "size",
+                new Value
+                {
+                  Order = new List<string> { "S", "M", "L" },
+                  SortRemainingBy = Enum.Parse<SortRemainingBy>("Hidden"),
+                }
+              },
+            },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"size\",\"brand\"]},\"values\":{\"brand\":{\"order\":[\"uniqlo\"],\"hide\":[\"muji\"],\"sortRemainingBy\":\"count\"},\"size\":{\"order\":[\"S\",\"M\",\"L\"],\"sortRemainingBy\":\"hidden\"}}}}}",
       req.Body,
       new JsonDiffConfig(false)
     );

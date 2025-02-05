@@ -752,6 +752,31 @@ func TestSearchsaveObjects3(t *testing.T) {
 	}
 }
 
+// with algolia user id
+func TestSearchsearchSingleIndex0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6686", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"playlists").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("foo"))), search.WithHeaderParam("X-Algolia-User-ID", "user1234"))
+	require.NoError(t, err)
+}
+
 // switch API key
 func TestSearchsetClientApiKey0(t *testing.T) {
 	var err error

@@ -31,8 +31,31 @@ class SearchTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    #[TestDox('addApiKey')]
+    #[TestDox('minimal')]
     public function testAddApiKey(): void
+    {
+        $client = $this->getClient();
+        $client->addApiKey(
+            ['acl' => [
+                'search',
+
+                'addObject',
+            ],
+                'description' => 'my new api key',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/keys',
+                'method' => 'POST',
+                'body' => json_decode('{"acl":["search","addObject"],"description":"my new api key"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('all')]
+    public function testAddApiKey1(): void
     {
         $client = $this->getClient();
         $client->addApiKey(
@@ -1242,8 +1265,56 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getObjects')]
+    #[TestDox('by ID')]
     public function testGetObjects(): void
+    {
+        $client = $this->getClient();
+        $client->getObjects(
+            ['requests' => [
+                ['objectID' => 'uniqueID',
+                    'indexName' => 'theIndexName',
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/objects',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"objectID":"uniqueID","indexName":"theIndexName"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('multiple IDs')]
+    public function testGetObjects1(): void
+    {
+        $client = $this->getClient();
+        $client->getObjects(
+            ['requests' => [
+                ['objectID' => 'uniqueID1',
+                    'indexName' => 'theIndexName1',
+                ],
+
+                ['objectID' => 'uniqueID2',
+                    'indexName' => 'theIndexName2',
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/objects',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"objectID":"uniqueID1","indexName":"theIndexName1"},{"objectID":"uniqueID2","indexName":"theIndexName2"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('with attributesToRetrieve')]
+    public function testGetObjects2(): void
     {
         $client = $this->getClient();
         $client->getObjects(
@@ -3678,8 +3749,27 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('distinct')]
+    #[TestDox('filters boolean')]
     public function testSearchSingleIndex6(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['filters' => 'is_available:true',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"filters":"is_available:true"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('distinct')]
+    public function testSearchSingleIndex7(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3698,7 +3788,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersNumeric')]
-    public function testSearchSingleIndex7(): void
+    public function testSearchSingleIndex8(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3717,7 +3807,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersTimestamp')]
-    public function testSearchSingleIndex8(): void
+    public function testSearchSingleIndex9(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3736,7 +3826,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersSumOrFiltersScoresFalse')]
-    public function testSearchSingleIndex9(): void
+    public function testSearchSingleIndex10(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3756,7 +3846,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersSumOrFiltersScoresTrue')]
-    public function testSearchSingleIndex10(): void
+    public function testSearchSingleIndex11(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3776,7 +3866,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersStephenKing')]
-    public function testSearchSingleIndex11(): void
+    public function testSearchSingleIndex12(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3795,7 +3885,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersNotTags')]
-    public function testSearchSingleIndex12(): void
+    public function testSearchSingleIndex13(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3814,7 +3904,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersList')]
-    public function testSearchSingleIndex13(): void
+    public function testSearchSingleIndex14(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3840,8 +3930,108 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('facetFiltersBook')]
+    public function testSearchSingleIndex15(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'facetFilters' => [
+                    'category:Book',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","facetFilters":["category:Book"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('facetFiltersAND')]
+    public function testSearchSingleIndex16(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'facetFilters' => [
+                    'category:Book',
+
+                    'author:John Doe',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","facetFilters":["category:Book","author:John Doe"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('facetFiltersOR')]
+    public function testSearchSingleIndex17(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'facetFilters' => [
+                    [
+                        'category:Book',
+
+                        'author:John Doe',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","facetFilters":[["category:Book","author:John Doe"]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('facetFiltersCombined')]
+    public function testSearchSingleIndex18(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'facetFilters' => [
+                    'author:John Doe',
+
+                    [
+                        'category:Book',
+
+                        'category:Movie',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","facetFilters":["author:John Doe",["category:Book","category:Movie"]]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('facetFiltersNeg')]
-    public function testSearchSingleIndex14(): void
+    public function testSearchSingleIndex19(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3860,7 +4050,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filtersAndFacetFilters')]
-    public function testSearchSingleIndex15(): void
+    public function testSearchSingleIndex20(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3882,7 +4072,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facet author genre')]
-    public function testSearchSingleIndex16(): void
+    public function testSearchSingleIndex21(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3905,7 +4095,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facet wildcard')]
-    public function testSearchSingleIndex17(): void
+    public function testSearchSingleIndex22(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3926,7 +4116,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('maxValuesPerFacet')]
-    public function testSearchSingleIndex18(): void
+    public function testSearchSingleIndex23(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3945,7 +4135,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('aroundLatLng')]
-    public function testSearchSingleIndex19(): void
+    public function testSearchSingleIndex24(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3964,7 +4154,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('aroundLatLngViaIP')]
-    public function testSearchSingleIndex20(): void
+    public function testSearchSingleIndex25(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -3983,7 +4173,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('aroundRadius')]
-    public function testSearchSingleIndex21(): void
+    public function testSearchSingleIndex26(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4003,7 +4193,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('insideBoundingBox')]
-    public function testSearchSingleIndex22(): void
+    public function testSearchSingleIndex27(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4032,7 +4222,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('insidePolygon')]
-    public function testSearchSingleIndex23(): void
+    public function testSearchSingleIndex28(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4077,7 +4267,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('insidePolygon')]
-    public function testSearchSingleIndex24(): void
+    public function testSearchSingleIndex29(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4122,7 +4312,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('optionalFilters')]
-    public function testSearchSingleIndex25(): void
+    public function testSearchSingleIndex30(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4143,7 +4333,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('optionalFiltersMany')]
-    public function testSearchSingleIndex26(): void
+    public function testSearchSingleIndex31(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4168,7 +4358,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('optionalFiltersSimple')]
-    public function testSearchSingleIndex27(): void
+    public function testSearchSingleIndex32(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4191,7 +4381,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('restrictSearchableAttributes')]
-    public function testSearchSingleIndex28(): void
+    public function testSearchSingleIndex33(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4212,7 +4402,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getRankingInfo')]
-    public function testSearchSingleIndex29(): void
+    public function testSearchSingleIndex34(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4231,7 +4421,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clickAnalytics')]
-    public function testSearchSingleIndex30(): void
+    public function testSearchSingleIndex35(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4250,7 +4440,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clickAnalyticsUserToken')]
-    public function testSearchSingleIndex31(): void
+    public function testSearchSingleIndex36(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4270,7 +4460,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enablePersonalization')]
-    public function testSearchSingleIndex32(): void
+    public function testSearchSingleIndex37(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4290,7 +4480,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('userToken')]
-    public function testSearchSingleIndex33(): void
+    public function testSearchSingleIndex38(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4308,8 +4498,28 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('userToken1234')]
+    public function testSearchSingleIndex39(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'userToken' => 'user-1234',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","userToken":"user-1234"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('analyticsTag')]
-    public function testSearchSingleIndex34(): void
+    public function testSearchSingleIndex40(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4330,7 +4540,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('facetFiltersUsers')]
-    public function testSearchSingleIndex35(): void
+    public function testSearchSingleIndex41(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4353,7 +4563,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('buildTheQuery')]
-    public function testSearchSingleIndex36(): void
+    public function testSearchSingleIndex42(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -4371,6 +4581,1916 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/indexName/query',
                 'method' => 'POST',
                 'body' => json_decode("{\"filters\":\"categoryPageId: Men's Clothing\",\"hitsPerPage\":50,\"analyticsTags\":[\"mens-clothing\"]}"),
+            ],
+        ]);
+    }
+
+    #[TestDox('attributesToHighlightOverride')]
+    public function testSearchSingleIndex43(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'attributesToHighlight' => [
+                    'title',
+
+                    'content',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","attributesToHighlight":["title","content"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disableTypoToleranceOnAttributes')]
+    public function testSearchSingleIndex44(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'disableTypoToleranceOnAttributes' => [
+                    'serial_number',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_a_query')]
+    public function testSearchSingleIndex45(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'shirt',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"shirt"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_everything')]
+    public function testSearchSingleIndex46(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => '',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":""}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('api_filtering_range_example')]
+    public function testSearchSingleIndex47(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'books',
+                'filters' => 'price:10 TO 20',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"books","filters":"price:10 TO 20"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_a_query')]
+    public function testSearchSingleIndex48(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => '',
+                'similarQuery' => 'Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen',
+                'filters' => 'year:1991 TO 2001',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"","similarQuery":"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen","filters":"year:1991 TO 2001"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_retrievable_attributes')]
+    public function testSearchSingleIndex49(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'attributesToRetrieve' => [
+                    'title',
+
+                    'content',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","attributesToRetrieve":["title","content"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('restrict_searchable_attributes')]
+    public function testSearchSingleIndex50(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'restrictSearchableAttributes' => [
+                    'title',
+
+                    'author',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","restrictSearchableAttributes":["title","author"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_relevancy')]
+    public function testSearchSingleIndex51(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'relevancyStrictness' => 70,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","relevancyStrictness":70}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('apply_filters')]
+    public function testSearchSingleIndex52(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'filters' => '(category:Book OR category:Ebook) AND _tags:published',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","filters":"(category:Book OR category:Ebook) AND _tags:published"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('apply_all_filters')]
+    public function testSearchSingleIndex53(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'filters' => 'available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe"',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","filters":"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe""}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('escape_spaces')]
+    public function testSearchSingleIndex54(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'filters' => 'category:"Books and Comics"',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","filters":"category:"Books and Comics""}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('escape_keywords')]
+    public function testSearchSingleIndex55(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'filters' => 'keyword:"OR"',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","filters":"keyword:"OR""}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('escape_single_quotes')]
+    public function testSearchSingleIndex56(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'filters' => "content:\"It's a wonderful day\"",
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode("{\"query\":\"query\",\"filters\":\"content:\"It's a wonderful day\"\"}"),
+            ],
+        ]);
+    }
+
+    #[TestDox('escape_double_quotes')]
+    public function testSearchSingleIndex57(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'filters' => 'content:"She said "Hello World"',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","filters":"content:"She said "Hello World""}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('apply_filters')]
+    public function testSearchSingleIndex58(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'optionalFilters' => [
+                    'category:Book',
+
+                    'author:John Doe',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","optionalFilters":["category:Book","author:John Doe"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('apply_negative_filters')]
+    public function testSearchSingleIndex59(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'optionalFilters' => [
+                    'category:Book',
+
+                    'author:-John Doe',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('apply_numeric_filters')]
+    public function testSearchSingleIndex60(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'numericFilters' => [
+                    'price < 1000',
+
+                    [
+                        'inStock = 1',
+
+                        'deliveryDate < 1441755506',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","numericFilters":["price < 1000",["inStock = 1","deliveryDate < 1441755506"]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('apply_tag_filters')]
+    public function testSearchSingleIndex61(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'tagFilters' => [
+                    'SciFi',
+
+                    [
+                        'Book',
+
+                        'Movie',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('apply_filters')]
+    public function testSearchSingleIndex62(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'sumOrFiltersScores' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","sumOrFiltersScores":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('facets_all')]
+    public function testSearchSingleIndex63(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'facets' => [
+                    '*',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","facets":["*"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('retrieve_only_some_facets')]
+    public function testSearchSingleIndex64(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'facets' => [
+                    'category',
+
+                    'author',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","facets":["category","author"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_max_values_per_facet')]
+    public function testSearchSingleIndex65(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'maxValuesPerFacet' => 20,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","maxValuesPerFacet":20}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_faceting_after_distinct')]
+    public function testSearchSingleIndex66(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'facetingAfterDistinct' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","facetingAfterDistinct":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('sort_facet_values_alphabetically')]
+    public function testSearchSingleIndex67(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'sortFacetValuesBy' => 'count',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","sortFacetValuesBy":"count"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_attributes_to_snippet')]
+    public function testSearchSingleIndex68(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'attributesToSnippet' => [
+                    'title',
+
+                    'content:80',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","attributesToSnippet":["title","content:80"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_highlight_pre_tag')]
+    public function testSearchSingleIndex69(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'highlightPreTag' => '<strong>',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","highlightPreTag":"<strong>"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_highlight_post_tag')]
+    public function testSearchSingleIndex70(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'highlightPostTag' => '</strong>',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","highlightPostTag":"</strong>"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_snippet_ellipsis_text')]
+    public function testSearchSingleIndex71(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'snippetEllipsisText' => '',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","snippetEllipsisText":""}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_restrict_highlight_and_snippet_arrays')]
+    public function testSearchSingleIndex72(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'restrictHighlightAndSnippetArrays' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","restrictHighlightAndSnippetArrays":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('access_page')]
+    public function testSearchSingleIndex73(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'page' => 0,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","page":0}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_hits_per_page')]
+    public function testSearchSingleIndex74(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'hitsPerPage' => 10,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","hitsPerPage":10}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('get_nth_hit')]
+    public function testSearchSingleIndex75(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'offset' => 4,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","offset":4}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('get_n_results')]
+    public function testSearchSingleIndex76(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'length' => 4,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","length":4}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_min_word_size_for_one_typo')]
+    public function testSearchSingleIndex77(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'minWordSizefor1Typo' => 2,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","minWordSizefor1Typo":2}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_min_word_size_for_two_typos')]
+    public function testSearchSingleIndex78(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'minWordSizefor2Typos' => 2,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","minWordSizefor2Typos":2}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_typo_tolerance_mode')]
+    public function testSearchSingleIndex79(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'typoTolerance' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","typoTolerance":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disable_typos_on_numeric_tokens_at_search_time')]
+    public function testSearchSingleIndex80(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'allowTyposOnNumericTokens' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","allowTyposOnNumericTokens":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_around_a_position')]
+    public function testSearchSingleIndex81(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'aroundLatLng' => '40.71, -74.01',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","aroundLatLng":"40.71, -74.01"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_around_server_ip')]
+    public function testSearchSingleIndex82(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'aroundLatLngViaIP' => true,
+            ],
+            [
+                'headers' => [
+                    'x-forwarded-for' => '94.228.178.246 // should be replaced with the actual IP you would like to search around',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","aroundLatLngViaIP":true}'),
+                'headers' => json_decode('{"x-forwarded-for":"94.228.178.246 // should be replaced with the actual IP you would like to search around"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_around_radius')]
+    public function testSearchSingleIndex83(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'aroundRadius' => 1000,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","aroundRadius":1000}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disable_automatic_radius')]
+    public function testSearchSingleIndex84(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'aroundRadius' => 'all',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","aroundRadius":"all"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_geo_search_precision')]
+    public function testSearchSingleIndex85(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'aroundPrecision' => 100,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","aroundPrecision":100}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_geo_search_precision_non_linear')]
+    public function testSearchSingleIndex86(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'aroundPrecision' => [
+                    ['from' => 0,
+                        'value' => 25,
+                    ],
+
+                    ['from' => 2000,
+                        'value' => 1000,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","aroundPrecision":[{"from":0,"value":25},{"from":2000,"value":1000}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_minimum_geo_search_radius')]
+    public function testSearchSingleIndex87(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'minimumAroundRadius' => 1000,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","minimumAroundRadius":1000}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_inside_rectangular_area')]
+    public function testSearchSingleIndex88(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'insideBoundingBox' => [
+                    [
+                        46.650828100116044,
+
+                        7.123046875,
+
+                        45.17210966999772,
+
+                        1.009765625,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_inside_multiple_rectangular_areas')]
+    public function testSearchSingleIndex89(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'insideBoundingBox' => [
+                    [
+                        46.650828100116044,
+
+                        7.123046875,
+
+                        45.17210966999772,
+
+                        1.009765625,
+                    ],
+
+                    [
+                        49.62625916704081,
+
+                        4.6181640625,
+
+                        47.715070300900194,
+
+                        0.482421875,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_inside_polygon_area')]
+    public function testSearchSingleIndex90(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'insidePolygon' => [
+                    [
+                        46.650828100116044,
+
+                        7.123046875,
+
+                        45.17210966999772,
+
+                        1.009765625,
+
+                        49.62625916704081,
+
+                        4.6181640625,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search_inside_multiple_polygon_areas')]
+    public function testSearchSingleIndex91(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'insidePolygon' => [
+                    [
+                        46.650828100116044,
+
+                        7.123046875,
+
+                        45.17210966999772,
+
+                        1.009765625,
+
+                        49.62625916704081,
+
+                        4.6181640625,
+                    ],
+
+                    [
+                        49.62625916704081,
+
+                        4.6181640625,
+
+                        47.715070300900194,
+
+                        0.482421875,
+
+                        45.17210966999772,
+
+                        1.009765625,
+
+                        50.62626704081,
+
+                        4.6181640625,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_querylanguages_override')]
+    public function testSearchSingleIndex92(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'ignorePlurals' => [
+                    'ca',
+
+                    'es',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","ignorePlurals":["ca","es"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_querylanguages_override')]
+    public function testSearchSingleIndex93(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'removeStopWords' => [
+                    'ca',
+
+                    'es',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","removeStopWords":["ca","es"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_querylanguages_override')]
+    public function testSearchSingleIndex94(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'removeStopWords' => [
+                    'ca',
+
+                    'es',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","removeStopWords":["ca","es"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_querylanguages_with_japanese_query')]
+    public function testSearchSingleIndex95(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'queryLanguages' => [
+                    'ja',
+
+                    'en',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","queryLanguages":["ja","en"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_natural_languages')]
+    public function testSearchSingleIndex96(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => '',
+                'naturalLanguages' => [
+                    'fr',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"","naturalLanguages":["fr"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_natural_languages_with_query')]
+    public function testSearchSingleIndex97(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => '',
+                'naturalLanguages' => [
+                    'fr',
+                ],
+                'removeWordsIfNoResults' => 'firstWords',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"","naturalLanguages":["fr"],"removeWordsIfNoResults":"firstWords"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_decompound_query_search_time')]
+    public function testSearchSingleIndex98(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'decompoundQuery' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","decompoundQuery":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_rules_search_time')]
+    public function testSearchSingleIndex99(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'enableRules' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","enableRules":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_rule_contexts')]
+    public function testSearchSingleIndex100(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'ruleContexts' => [
+                    'front_end',
+
+                    'website2',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","ruleContexts":["front_end","website2"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_personalization')]
+    public function testSearchSingleIndex101(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'enablePersonalization' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","enablePersonalization":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_personalization_with_user_token')]
+    public function testSearchSingleIndex102(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'enablePersonalization' => true,
+                'userToken' => '123456',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","enablePersonalization":true,"userToken":"123456"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('personalization_impact')]
+    public function testSearchSingleIndex103(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'personalizationImpact' => 20,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","personalizationImpact":20}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_user_token')]
+    public function testSearchSingleIndex104(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'userToken' => '123456',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","userToken":"123456"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_user_token_with_personalization')]
+    public function testSearchSingleIndex105(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'enablePersonalization' => true,
+                'userToken' => '123456',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","enablePersonalization":true,"userToken":"123456"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_query_type')]
+    public function testSearchSingleIndex106(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'queryType' => 'prefixAll',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","queryType":"prefixAll"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_remove_words_if_no_results')]
+    public function testSearchSingleIndex107(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'removeWordsIfNoResults' => 'lastWords',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","removeWordsIfNoResults":"lastWords"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_advanced_syntax_search_time')]
+    public function testSearchSingleIndex108(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'advancedSyntax' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","advancedSyntax":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('overide_default_optional_words')]
+    public function testSearchSingleIndex109(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'optionalWords' => [
+                    'toyota',
+
+                    '2020 2021',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","optionalWords":["toyota","2020 2021"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disabling_exact_for_some_attributes_search_time')]
+    public function testSearchSingleIndex110(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'disableExactOnAttributes' => [
+                    'description',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","disableExactOnAttributes":["description"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_exact_single_word_query')]
+    public function testSearchSingleIndex111(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'exactOnSingleWordQuery' => 'none',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","exactOnSingleWordQuery":"none"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_aternative_as_exact')]
+    public function testSearchSingleIndex112(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'alternativesAsExact' => [
+                    'multiWordsSynonym',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","alternativesAsExact":["multiWordsSynonym"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_advanced_syntax_exact_phrase')]
+    public function testSearchSingleIndex113(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'advancedSyntax' => true,
+                'advancedSyntaxFeatures' => [
+                    'exactPhrase',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_advanced_syntax_exclude_words')]
+    public function testSearchSingleIndex114(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'advancedSyntax' => true,
+                'advancedSyntaxFeatures' => [
+                    'excludeWords',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["excludeWords"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_distinct')]
+    public function testSearchSingleIndex115(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'distinct' => 0,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","distinct":0}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('get_ranking_info')]
+    public function testSearchSingleIndex116(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'getRankingInfo' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","getRankingInfo":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disable_click_analytics')]
+    public function testSearchSingleIndex117(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'clickAnalytics' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","clickAnalytics":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_click_analytics')]
+    public function testSearchSingleIndex118(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'clickAnalytics' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","clickAnalytics":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disable_analytics')]
+    public function testSearchSingleIndex119(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'analytics' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","analytics":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('add_analytics_tags')]
+    public function testSearchSingleIndex120(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'analyticsTags' => [
+                    'front_end',
+
+                    'website2',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","analyticsTags":["front_end","website2"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disable_synonyms')]
+    public function testSearchSingleIndex121(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'synonyms' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","synonyms":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_replace_synonyms_in_highlights')]
+    public function testSearchSingleIndex122(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'replaceSynonymsInHighlight' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","replaceSynonymsInHighlight":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_min_proximity')]
+    public function testSearchSingleIndex123(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'minProximity' => 2,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","minProximity":2}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_default_field')]
+    public function testSearchSingleIndex124(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'responseFields' => [
+                    'hits',
+
+                    'facets',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","responseFields":["hits","facets"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('override_percentile_computation')]
+    public function testSearchSingleIndex125(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'percentileComputation' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","percentileComputation":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_ab_test')]
+    public function testSearchSingleIndex126(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'enableABTest' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","enableABTest":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_enable_re_ranking')]
+    public function testSearchSingleIndex127(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+                'enableReRanking' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query","enableReRanking":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('with algolia user id')]
+    public function testSearchSingleIndex128(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'indexName',
+            ['query' => 'query',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user1234',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"query"}'),
             ],
         ]);
     }
@@ -4776,8 +6896,77 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('attributesForFaceting categoryPageId')]
+    #[TestDox('api_attributes_for_faceting')]
     public function testSetSettings14(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'genre',
+
+                'author',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesForFaceting":["genre","author"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('api_attributes_for_faceting_searchable')]
+    public function testSetSettings15(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'genre',
+
+                'searchable(author)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesForFaceting":["genre","searchable(author)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('api_attributes_for_filter_only')]
+    public function testSetSettings16(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesForFaceting' => [
+                'filterOnly(genre)',
+
+                'author',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesForFaceting":["filterOnly(genre)","author"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('attributesForFaceting categoryPageId')]
+    public function testSetSettings17(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4798,7 +6987,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('unretrievableAttributes')]
-    public function testSetSettings15(): void
+    public function testSetSettings18(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4819,7 +7008,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting user restricted data')]
-    public function testSetSettings16(): void
+    public function testSetSettings19(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4840,7 +7029,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting optional filters')]
-    public function testSetSettings17(): void
+    public function testSetSettings20(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4863,7 +7052,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting redirect index')]
-    public function testSetSettings18(): void
+    public function testSetSettings21(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4884,7 +7073,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting multiple consequences')]
-    public function testSetSettings19(): void
+    public function testSetSettings22(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4905,7 +7094,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting in-depth optional filters')]
-    public function testSetSettings20(): void
+    public function testSetSettings23(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4926,7 +7115,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('mode neuralSearch')]
-    public function testSetSettings21(): void
+    public function testSetSettings24(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4945,7 +7134,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('mode keywordSearch')]
-    public function testSetSettings22(): void
+    public function testSetSettings25(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4964,7 +7153,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes same priority')]
-    public function testSetSettings23(): void
+    public function testSetSettings26(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -4987,7 +7176,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes higher priority')]
-    public function testSetSettings24(): void
+    public function testSetSettings27(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5010,7 +7199,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking retweets')]
-    public function testSetSettings25(): void
+    public function testSetSettings28(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5033,7 +7222,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking boosted')]
-    public function testSetSettings26(): void
+    public function testSetSettings29(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5054,7 +7243,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking pageviews')]
-    public function testSetSettings27(): void
+    public function testSetSettings30(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5077,7 +7266,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking applying search parameters for a specific query')]
-    public function testSetSettings28(): void
+    public function testSetSettings31(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5101,7 +7290,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking rounded pageviews')]
-    public function testSetSettings29(): void
+    public function testSetSettings32(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5124,7 +7313,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking price')]
-    public function testSetSettings30(): void
+    public function testSetSettings33(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5145,7 +7334,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('ranking exhaustive')]
-    public function testSetSettings31(): void
+    public function testSetSettings34(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5182,7 +7371,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('ranking standard replica')]
-    public function testSetSettings32(): void
+    public function testSetSettings35(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5203,7 +7392,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('ranking virtual replica')]
-    public function testSetSettings33(): void
+    public function testSetSettings36(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5224,7 +7413,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('customRanking and ranking sort alphabetically')]
-    public function testSetSettings34(): void
+    public function testSetSettings37(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5262,7 +7451,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('relevancyStrictness')]
-    public function testSetSettings35(): void
+    public function testSetSettings38(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5284,7 +7473,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('create replica index')]
-    public function testSetSettings36(): void
+    public function testSetSettings39(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5304,8 +7493,29 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('create replica index articles')]
+    public function testSetSettings40(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['replicas' => [
+                'articles_date_desc',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"replicas":["articles_date_desc"]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('create virtual replica index')]
-    public function testSetSettings37(): void
+    public function testSetSettings41(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5326,7 +7536,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('unlink replica index')]
-    public function testSetSettings38(): void
+    public function testSetSettings42(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5347,7 +7557,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('forwardToReplicas')]
-    public function testSetSettings39(): void
+    public function testSetSettings43(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5372,7 +7582,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('maxValuesPerFacet')]
-    public function testSetSettings40(): void
+    public function testSetSettings44(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5391,7 +7601,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('maxFacetHits')]
-    public function testSetSettings41(): void
+    public function testSetSettings45(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5410,7 +7620,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('attributesForFaceting complex')]
-    public function testSetSettings42(): void
+    public function testSetSettings46(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5435,7 +7645,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('ranking closest dates')]
-    public function testSetSettings43(): void
+    public function testSetSettings47(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5472,7 +7682,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes item variation')]
-    public function testSetSettings44(): void
+    public function testSetSettings48(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5497,7 +7707,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributes around location')]
-    public function testSetSettings45(): void
+    public function testSetSettings49(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5526,24 +7736,19 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('searchableAttributes around location')]
-    public function testSetSettings46(): void
+    #[TestDox('attributesToHighlight')]
+    public function testSetSettings50(): void
     {
         $client = $this->getClient();
         $client->setSettings(
             'theIndexName',
-            ['searchableAttributes' => [
-                'name',
+            ['attributesToHighlight' => [
+                'author',
 
-                'country',
+                'title',
 
-                'code',
-
-                'iata_code',
+                'content',
             ],
-                'customRanking' => [
-                    'desc(links_count)',
-                ],
             ],
         );
 
@@ -5551,19 +7756,19 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/theIndexName/settings',
                 'method' => 'PUT',
-                'body' => json_decode('{"searchableAttributes":["name","country","code","iata_code"],"customRanking":["desc(links_count)"]}'),
+                'body' => json_decode('{"attributesToHighlight":["author","title","content"]}'),
             ],
         ]);
     }
 
-    #[TestDox('disableTypoToleranceOnAttributes')]
-    public function testSetSettings47(): void
+    #[TestDox('attributesToHighlightStar')]
+    public function testSetSettings51(): void
     {
         $client = $this->getClient();
         $client->setSettings(
             'theIndexName',
-            ['disableTypoToleranceOnAttributes' => [
-                'serial_number',
+            ['attributesToHighlight' => [
+                '*',
             ],
             ],
         );
@@ -5572,13 +7777,13 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/theIndexName/settings',
                 'method' => 'PUT',
-                'body' => json_decode('{"disableTypoToleranceOnAttributes":["serial_number"]}'),
+                'body' => json_decode('{"attributesToHighlight":["*"]}'),
             ],
         ]);
     }
 
     #[TestDox('everything')]
-    public function testSetSettings48(): void
+    public function testSetSettings52(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5721,7 +7926,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesWithCustomRankingsAndAttributesForFaceting')]
-    public function testSetSettings49(): void
+    public function testSetSettings53(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5759,8 +7964,31 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('searchableAttributesOrdering')]
+    public function testSetSettings54(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['searchableAttributes' => [
+                'unordered(title)',
+
+                'cast',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"searchableAttributes":["unordered(title)","cast"]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('searchableAttributesProductReferenceSuffixes')]
-    public function testSetSettings50(): void
+    public function testSetSettings55(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5785,7 +8013,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('queryLanguageAndIgnorePlurals')]
-    public function testSetSettings51(): void
+    public function testSetSettings56(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5807,7 +8035,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesInMovies')]
-    public function testSetSettings52(): void
+    public function testSetSettings57(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5832,7 +8060,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disablePrefixOnAttributes')]
-    public function testSetSettings53(): void
+    public function testSetSettings58(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5853,7 +8081,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disableTypoToleranceOnAttributes')]
-    public function testSetSettings54(): void
+    public function testSetSettings59(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5874,7 +8102,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesSimpleExample')]
-    public function testSetSettings55(): void
+    public function testSetSettings60(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5895,7 +8123,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchableAttributesSimpleExampleAlt')]
-    public function testSetSettings56(): void
+    public function testSetSettings61(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -5913,6 +8141,1394 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/theIndexName/settings',
                 'method' => 'PUT',
                 'body' => json_decode('{"searchableAttributes":["serial_number","serial_number_suffixes"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_searchable_attributes')]
+    public function testSetSettings62(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['searchableAttributes' => [
+                'title,alternative_title',
+
+                'author',
+
+                'unordered(text)',
+
+                'emails.personal',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_searchable_attributes')]
+    public function testSetSettings63(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributesForFaceting' => [
+                'author',
+
+                'filterOnly(isbn)',
+
+                'searchable(edition)',
+
+                'afterDistinct(category)',
+
+                'afterDistinct(searchable(publisher))',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('unretrievable_attributes')]
+    public function testSetSettings64(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['unretrievableAttributes' => [
+                'total_number_of_sales',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"unretrievableAttributes":["total_number_of_sales"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_retrievable_attributes')]
+    public function testSetSettings65(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributesToRetrieve' => [
+                'author',
+
+                'title',
+
+                'content',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesToRetrieve":["author","title","content"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_all_attributes_as_retrievable')]
+    public function testSetSettings66(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributesToRetrieve' => [
+                '*',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesToRetrieve":["*"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('specify_attributes_not_to_retrieve')]
+    public function testSetSettings67(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributesToRetrieve' => [
+                '*',
+
+                '-SKU',
+
+                '-internal_desc',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesToRetrieve":["*","-SKU","-internal_desc"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('neural_search')]
+    public function testSetSettings68(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['mode' => 'neuralSearch',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"mode":"neuralSearch"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('keyword_search')]
+    public function testSetSettings69(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['mode' => 'keywordSearch',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"mode":"keywordSearch"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_ranking')]
+    public function testSetSettings70(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['ranking' => [
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'attribute',
+
+                'proximity',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"ranking":["typo","geo","words","filters","attribute","proximity","exact","custom"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_ranking_by_attribute_asc')]
+    public function testSetSettings71(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['ranking' => [
+                'asc(price)',
+
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'proximity',
+
+                'attribute',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"ranking":["asc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_ranking_by_attribute_desc')]
+    public function testSetSettings72(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['ranking' => [
+                'desc(price)',
+
+                'typo',
+
+                'geo',
+
+                'words',
+
+                'filters',
+
+                'proximity',
+
+                'attribute',
+
+                'exact',
+
+                'custom',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('restrict_searchable_attributes')]
+    public function testSetSettings73(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customRanking' => [
+                'desc(popularity)',
+
+                'asc(price)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customRanking":["desc(popularity)","asc(price)"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_relevancy')]
+    public function testSetSettings74(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['relevancyStrictness' => 90,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"relevancyStrictness":90}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_replicas')]
+    public function testSetSettings75(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['replicas' => [
+                'name_of_replica_index1',
+
+                'name_of_replica_index2',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"replicas":["name_of_replica_index1","name_of_replica_index2"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_max_values_per_facet')]
+    public function testSetSettings76(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['maxValuesPerFacet' => 100,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"maxValuesPerFacet":100}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_sort_facet_values_by')]
+    public function testSetSettings77(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['sortFacetValuesBy' => 'alpha',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"sortFacetValuesBy":"alpha"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_attributes_to_snippet')]
+    public function testSetSettings78(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributesToSnippet' => [
+                'content:80',
+
+                'description',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesToSnippet":["content:80","description"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_all_attributes_to_snippet')]
+    public function testSetSettings79(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributesToSnippet' => [
+                '*:80',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributesToSnippet":["*:80"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_highlight_pre_tag')]
+    public function testSetSettings80(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['highlightPreTag' => '<em>',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"highlightPreTag":"<em>"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_highlight_post_tag')]
+    public function testSetSettings81(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['highlightPostTag' => '</em>',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"highlightPostTag":"</em>"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_snippet_ellipsis_text')]
+    public function testSetSettings82(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['snippetEllipsisText' => '…',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"snippetEllipsisText":"…"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_restrict_highlight_and_snippet_arrays_by_default')]
+    public function testSetSettings83(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['restrictHighlightAndSnippetArrays' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"restrictHighlightAndSnippetArrays":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_hits_per_page')]
+    public function testSetSettings84(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['hitsPerPage' => 20,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"hitsPerPage":20}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_pagination_limit')]
+    public function testSetSettings85(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['paginationLimitedTo' => 1000,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"paginationLimitedTo":1000}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_min_word_size_for_one_typo')]
+    public function testSetSettings86(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['minWordSizefor1Typo' => 4,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"minWordSizefor1Typo":4}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_min_word_size_for_two_typos')]
+    public function testSetSettings87(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['minWordSizefor2Typos' => 4,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"minWordSizefor2Typos":4}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_typo_tolerance_mode')]
+    public function testSetSettings88(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['typoTolerance' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"typoTolerance":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disable_typos_on_numeric_tokens_by_default')]
+    public function testSetSettings89(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['allowTyposOnNumericTokens' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"allowTyposOnNumericTokens":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disable_typo_tolerance_for_words')]
+    public function testSetSettings90(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['disableTypoToleranceOnWords' => [
+                'wheel',
+
+                '1X2BCD',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"disableTypoToleranceOnWords":["wheel","1X2BCD"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_separators_to_index')]
+    public function testSetSettings91(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['separatorsToIndex' => '+#',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"separatorsToIndex":"+#"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_languages_using_querylanguages')]
+    public function testSetSettings92(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['queryLanguages' => [
+                'es',
+            ],
+                'ignorePlurals' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"queryLanguages":["es"],"ignorePlurals":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_attributes_to_transliterate')]
+    public function testSetSettings93(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['indexLanguages' => [
+                'ja',
+            ],
+                'attributesToTransliterate' => [
+                    'name',
+
+                    'description',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_languages_using_querylanguages')]
+    public function testSetSettings94(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['queryLanguages' => [
+                'es',
+            ],
+                'removeStopWords' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"queryLanguages":["es"],"removeStopWords":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_camel_case_attributes')]
+    public function testSetSettings95(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['camelCaseAttributes' => [
+                'description',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"camelCaseAttributes":["description"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_decompounded_attributes')]
+    public function testSetSettings96(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['decompoundedAttributes' => ['de' => [
+                'name',
+            ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"decompoundedAttributes":{"de":["name"]}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_decompounded_multiple_attributes')]
+    public function testSetSettings97(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['decompoundedAttributes' => ['de' => [
+                'name_de',
+
+                'description_de',
+            ],
+                'fi' => [
+                    'name_fi',
+
+                    'description_fi',
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"decompoundedAttributes":{"de":["name_de","description_de"],"fi":["name_fi","description_fi"]}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_keep_diacritics_on_characters')]
+    public function testSetSettings98(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['keepDiacriticsOnCharacters' => 'øé',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"keepDiacriticsOnCharacters":"øé"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_custom_normalization')]
+    public function testSetSettings99(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['customNormalization' => ['default' => ['ä' => 'ae',
+            ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"customNormalization":{"default":{"ä":"ae"}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_languages_using_querylanguages')]
+    public function testSetSettings100(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['queryLanguages' => [
+                'es',
+            ],
+                'removeStopWords' => true,
+                'ignorePlurals' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"queryLanguages":["es"],"removeStopWords":true,"ignorePlurals":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_indexlanguages')]
+    public function testSetSettings101(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['indexLanguages' => [
+                'ja',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"indexLanguages":["ja"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_decompound_query_by_default')]
+    public function testSetSettings102(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['decompoundQuery' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"decompoundQuery":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_rules_syntax_by_default')]
+    public function testSetSettings103(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['enableRules' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"enableRules":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_personalization_settings')]
+    public function testSetSettings104(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['enablePersonalization' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"enablePersonalization":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_query_type')]
+    public function testSetSettings105(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['queryType' => 'prefixLast',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"queryType":"prefixLast"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_remove_words_if_no_result')]
+    public function testSetSettings106(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['removeWordsIfNoResults' => 'none',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"removeWordsIfNoResults":"none"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_advanced_syntax_by_default')]
+    public function testSetSettings107(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['advancedSyntax' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"advancedSyntax":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_optional_words')]
+    public function testSetSettings108(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['optionalWords' => [
+                'blue',
+
+                'iphone case',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"optionalWords":["blue","iphone case"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disabling_prefix_search_for_some_attributes_by_default')]
+    public function testSetSettings109(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['disablePrefixOnAttributes' => [
+                'sku',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"disablePrefixOnAttributes":["sku"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('disabling_exact_for_some_attributes_by_default')]
+    public function testSetSettings110(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['disableExactOnAttributes' => [
+                'description',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"disableExactOnAttributes":["description"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_exact_single_word_query')]
+    public function testSetSettings111(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['exactOnSingleWordQuery' => 'attribute',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"exactOnSingleWordQuery":"attribute"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_aternative_as_exact')]
+    public function testSetSettings112(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['alternativesAsExact' => [
+                'ignorePlurals',
+
+                'singleWordSynonym',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_advanced_syntax_by_default')]
+    public function testSetSettings113(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['advancedSyntax' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"advancedSyntax":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_numeric_attributes_for_filtering')]
+    public function testSetSettings114(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['numericAttributesForFiltering' => [
+                'quantity',
+
+                'popularity',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"numericAttributesForFiltering":["quantity","popularity"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('enable_compression_of_integer_array')]
+    public function testSetSettings115(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['allowCompressionOfIntegerArray' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"allowCompressionOfIntegerArray":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_attributes_for_distinct')]
+    public function testSetSettings116(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributeForDistinct' => 'url',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributeForDistinct":"url"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_distinct')]
+    public function testSetSettings117(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['distinct' => 1,
+                'attributeForDistinct' => 'url',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"distinct":1,"attributeForDistinct":"url"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_replace_synonyms_in_highlights')]
+    public function testSetSettings118(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['replaceSynonymsInHighlight' => false,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"replaceSynonymsInHighlight":false}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_min_proximity')]
+    public function testSetSettings119(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['minProximity' => 1,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"minProximity":1}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_default_field')]
+    public function testSetSettings120(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['responseFields' => [
+                'hits',
+
+                'hitsPerPage',
+
+                'nbPages',
+
+                'page',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"responseFields":["hits","hitsPerPage","nbPages","page"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_max_facet_hits')]
+    public function testSetSettings121(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['maxFacetHits' => 10,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"maxFacetHits":10}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_attribute_criteria_computed_by_min_proximity')]
+    public function testSetSettings122(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['attributeCriteriaComputedByMinProximity' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"attributeCriteriaComputedByMinProximity":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_user_data')]
+    public function testSetSettings123(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['userData' => ['extraData' => 'This is the custom data that you want to store in your index',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"userData":{"extraData":"This is the custom data that you want to store in your index"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('set_rendering_content')]
+    public function testSetSettings124(): void
+    {
+        $client = $this->getClient();
+        $client->setSettings(
+            'theIndexName',
+            ['renderingContent' => ['facetOrdering' => ['facets' => ['order' => [
+                'size',
+
+                'brand',
+            ],
+            ],
+                'values' => ['brand' => ['order' => [
+                    'uniqlo',
+                ],
+                    'hide' => [
+                        'muji',
+                    ],
+                    'sortRemainingBy' => 'count',
+                ],
+                    'size' => ['order' => [
+                        'S',
+
+                        'M',
+
+                        'L',
+                    ],
+                        'sortRemainingBy' => 'hidden',
+                    ],
+                ],
+            ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/settings',
+                'method' => 'PUT',
+                'body' => json_decode('{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}'),
             ],
         ]);
     }

@@ -281,6 +281,72 @@
     }
   },
   {
+    "testName": "api_attributes_for_faceting",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "genre",
+          "author"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "genre",
+          "author"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "api_attributes_for_faceting_searchable",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "genre",
+          "searchable(author)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "genre",
+          "searchable(author)"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "api_attributes_for_filter_only",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "filterOnly(genre)",
+          "author"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "filterOnly(genre)",
+          "author"
+        ]
+      }
+    }
+  },
+  {
     "testName": "attributesForFaceting categoryPageId",
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
@@ -784,6 +850,26 @@
       "body": {
         "replicas": [
           "products_price_desc"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "create replica index articles",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "replicas": [
+          "articles_date_desc"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "replicas": [
+          "articles_date_desc"
         ]
       }
     }
@@ -1374,7 +1460,6 @@
   },
   {
     "testName": "searchableAttributesOrdering",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {

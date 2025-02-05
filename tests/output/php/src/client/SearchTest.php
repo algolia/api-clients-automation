@@ -672,6 +672,23 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('with algolia user id')]
+    public function test0searchSingleIndex(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->searchSingleIndex(
+            'playlists',
+            ['query' => 'foo',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user1234',
+                ],
+            ]
+        );
+    }
+
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
