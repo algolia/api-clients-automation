@@ -87,7 +87,7 @@ tags:
     description: List registered domains.
   - name: tasks
     x-displayName: Tasks
-    description: Task operations
+    description: Task operations.
 paths:
   /1/crawlers:
     $ref: 'paths/crawlers.yml'
