@@ -1064,7 +1064,7 @@
         "searchableAttributes": [
           "name",
           "country",
-          "code",
+          "city",
           "iata_code"
         ],
         "customRanking": [
@@ -1079,7 +1079,7 @@
         "searchableAttributes": [
           "name",
           "country",
-          "code",
+          "city",
           "iata_code"
         ],
         "customRanking": [

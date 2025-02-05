@@ -1283,6 +1283,28 @@
     }
   },
   {
+    "testName": "apply_negative_filters_restaurants",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
+        ]
+      }
+    }
+  },
+  {
     "testName": "apply_numeric_filters",
     "parameters": {
       "indexName": "indexName",
