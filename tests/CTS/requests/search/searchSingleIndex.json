@@ -279,14 +279,16 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     }
   },
