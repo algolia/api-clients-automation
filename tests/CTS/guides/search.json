@@ -61,7 +61,9 @@
     "method": "saveObjects",
     "parameters": {
       "indexName": "indexName",
-      "objects": "$var: playlists"
+      "objects": "$var: playlists",
+      "waitForTasks": false,
+      "batchSize": 1000
     },
     "requestOptions": {
       "headers": {
@@ -85,7 +87,9 @@
     "method": "saveObjects",
     "parameters": {
       "indexName": "indexName",
-      "objects": "$var: playlists"
+      "objects": "$var: playlists",
+      "waitForTasks": false,
+      "batchSize": 1000
     },
     "requestOptions": {
       "headers": {
