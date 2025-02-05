@@ -17,10 +17,11 @@ public class Snippet {
   public Map<String, Object> parameters;
   public RequestOptions requestOptions;
 
-  public Snippet(String method, String testName, Map<String, Object> parameters) {
+  public Snippet(String method, String testName, Map<String, Object> parameters, RequestOptions requestOptions) {
     this.method = method;
     this.testName = testName;
     this.parameters = parameters;
+    this.requestOptions = requestOptions;
   }
 
   public Snippet() {}
