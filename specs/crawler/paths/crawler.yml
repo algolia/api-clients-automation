@@ -27,17 +27,15 @@ get:
       $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
 patch:
   operationId: patchCrawler
-  summary: Update crawler
+  summary: Change crawler name
   description: |
-    Updates the crawler, either its name or its configuration.
+    Change the crawler's name.
 
-    Use this endpoint to update the crawler's name.
-    While you can use this endpoint to completely replace the crawler's configuration,
-    you should [update the crawler configuration](#tag/config/operation/patchConfig) instead.
+    While you _could_ use this endpoint to replace the crawler configuration,
+    you should [update it](#tag/config/operation/patchConfig) instead since cnfiguration changes made here aren't [versioned](#tag/config/operation/listConfigVersions).
 
     If you replace the configuration, you must provide the full configuration,
-    including the settings you want to keep.
-    Configuration changes from this endpoint aren't [versioned](#tag/config/operation/listConfigVersions).
+    including any settings you want to keep.
   tags:
     - crawlers
   parameters:
@@ -62,3 +60,20 @@ patch:
       $ref: '../common/schemas/responses.yml#/MissingAuthorization'
     '403':
       $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
+delete:
+  operationId: deleteCrawler
+  summary: Delete a crawler
+  description: Delete the specified crawler.
+  tags:
+    - crawlers
+  parameters:
+    - $ref: '#/components/parameters/CrawlerIdParameter'
+  responses:
+    '200':
+      $ref: '../common/schemas/responses.yml#/ActionAcknowledged'
+    '400':
+      $ref: '#/components/responses/InvalidRequest'
+    '401':
+      $ref: '#/components/responses/MissingAuthorization'
+    '403':
+      $ref: '#/components/responses/NoRightsOnCrawler'
