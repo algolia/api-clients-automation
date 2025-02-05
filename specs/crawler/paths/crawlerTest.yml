@@ -1,10 +1,10 @@
 post:
   operationId: testUrl
-  summary: Test crawling a URL
+  summary: Test crawl a URL
   description: |
     Tests a URL with the crawler's configuration and shows the extracted records.
 
-    You can override parts of the configuration to test your changes before updating the configuration.
+    You can test configuration changes by overriding specific parts before updating the full configuration.
   tags:
     - actions
   parameters:
@@ -108,6 +108,7 @@ post:
                 type: object
                 description: |
                   External data associated with the tested URL.
+                  
                   External data is refreshed automatically at the beginning of the crawl.
                 example:
                   externalData1: {data1: 'val1', data2: 'val2'}
