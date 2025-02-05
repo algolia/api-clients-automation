@@ -159,6 +159,24 @@
     }
   },
   {
+    "testName": "filters for stores",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    }
+  },
+  {
     "testName": "filters boolean",
     "parameters": {
       "indexName": "indexName",
