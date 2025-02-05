@@ -113,9 +113,6 @@ public class SnippetsGenerator extends TestsGenerator {
         test.put("testIndex", i == 0 ? "" : i);
         snippet.addMethodCall(test, paramsType, ope);
         addRequestOptions(paramsType, snippet.requestOptions, test);
-        if (name.equals("saveObjectsPublicUser")) {
-          System.out.println(snippet.toString());
-        }
         tests.add(test);
       }
       Map<String, Object> testObj = new HashMap<>();
