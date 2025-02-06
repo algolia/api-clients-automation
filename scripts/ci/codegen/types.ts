@@ -2,8 +2,8 @@ export type GuidesToPush = {
   // the type of changes to push to the repository (post-processing of files will be performed)
   type: 'guides';
 
-  // the name of the guides to push in this pull request
-  names: string[];
+  // the name of the guides to push in this pull request, when empty, every guides are pushed
+  names?: string[];
 
   // the name of the JSON file output that will contain every guides in `names`
   output: string;
@@ -68,11 +68,19 @@ export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc']: Repos
     baseBranch: 'master',
     tasks: [
       {
-        prBranch: 'feat/automated-update-from-api-clients-automation-repository',
+        prBranch: 'feat/automated-update-for-specs',
         commitMessage: 'feat: update specs and supported versions',
         files: {
           type: 'specs',
           output: 'app_data/api/specs',
+        },
+      },
+      {
+        prBranch: 'feat/automated-update-for-guides',
+        commitMessage: 'feat: update generated guides',
+        files: {
+          type: 'guides',
+          output: 'app_data/api/specs/guides.json',
         },
       },
     ],

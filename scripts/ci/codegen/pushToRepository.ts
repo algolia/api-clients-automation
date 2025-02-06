@@ -47,8 +47,13 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
       `docs/guides/${language}/${getClientsConfigField(language, ['snippets', 'outputFolder'])}`,
     );
 
-    const files = await fsp.readdir(pathToGuides);
-    for (const file of files.filter((file) => guide.names.some((guideName) => guideName === file.split('.')[0]))) {
+    let files = await fsp.readdir(pathToGuides);
+
+    if (guide.names) {
+      files = files.filter((file) => guide.names?.some((guideName) => guideName === file.split('.')[0]));
+    }
+
+    for (const file of files) {
       if (!file.endsWith(extension)) {
         continue;
       }
