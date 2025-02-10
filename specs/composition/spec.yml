@@ -34,18 +34,21 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: Compositions
+  - name: compositions
+    x-displayName: Compositions
     description: |
       Manage your compositions and composition settings.
-  - name: Rules
+  - name: rules
+    x-displayName: Rules
     description: |
       Manage your compositions rules.
-  - name: Search
+  - name: search
+    x-displayName: Search
     description: Search one or more indices for matching records or facet values.
 x-tagGroups:
-  - name: Search
+  - name: Compositions
     tags:
-      - Compositions
+      - search
 paths:
   # ########################
   # ### Search Endpoints ###
