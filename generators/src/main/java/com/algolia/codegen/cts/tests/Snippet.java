@@ -39,7 +39,7 @@ public class Snippet {
   }
 
   public void addMethodCall(Map<String, Object> context, ParametersWithDataType paramsType, CodegenOperation ope) throws CTSException {
-    // for dynamic snippets, we need to reset the context because the order if generation is random
+    // for dynamic snippets, we need to reset the context because the order of generation is random
     context.put("method", method);
     context.put("returnType", null);
     context.put("requestOptions", null);
