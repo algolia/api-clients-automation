@@ -1,9 +1,8 @@
-import asyncio
 import requests
 from algoliasearch.search.client import SearchClientSync
 
 
-async def main():
+if __name__ == "__main__":
     # Fetch sample dataset
     url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
     movies = requests.get(url).json()
@@ -16,6 +15,3 @@ async def main():
         index_name="<YOUR_INDEX_NAME>",
         objects=movies,
     )
-
-
-asyncio.run(main())

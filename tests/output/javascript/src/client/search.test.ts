@@ -639,6 +639,8 @@ describe('saveObjects', () => {
               createdAt: '1500240452',
             },
           ],
+          waitForTasks: false,
+          batchSize: 1000,
         },
         {
           headers: { 'X-Algolia-User-ID': '*' },

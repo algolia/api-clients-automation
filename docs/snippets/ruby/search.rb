@@ -653,7 +653,7 @@ def snippet_for_custom_get2
     "test/all",
     {query: "to be overriden"},
     {
-      :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+      :header_params => {"x-header-1" => "spaces are left alone"},
       :query_params => JSON.parse(
         "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
         :symbolize_names => true
@@ -773,7 +773,7 @@ def snippet_for_custom_post4
     "test/requestOptions",
     {query: "parameters"},
     {facet: "filters"},
-    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
   )
 
   # >LOG
@@ -798,7 +798,7 @@ def snippet_for_custom_post5
     "test/requestOptions",
     {query: "parameters"},
     {facet: "filters"},
-    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
   )
 
   # >LOG
@@ -2477,7 +2477,10 @@ def snippet_for_save_objects3
         playlistId: "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
         createdAt: "1500240452"
       }
-    ]
+    ],
+    false,
+    1000,
+    {:header_params => {"X-Algolia-User-ID" => "*"}}
   )
 
   # >LOG
@@ -6135,10 +6138,9 @@ def snippet_for_search_single_index84
     "<YOUR_INDEX_NAME>",
     Algolia::Search::SearchParamsObject.new(query: "query", around_lat_lng_via_ip: true),
     {
-      :header_params => JSON.parse(
-        "{\"x-forwarded-for\":\"94.228.178.246 // should be replaced with the actual IP you would like to search around\"}",
-        :symbolize_names => true
-      )
+      :header_params => {
+        "x-forwarded-for" => "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+      }
     }
   )
 
@@ -7245,7 +7247,7 @@ def snippet_for_search_single_index130
   response = client.search_single_index(
     "<YOUR_INDEX_NAME>",
     Algolia::Search::SearchParamsObject.new(query: "query"),
-    {:header_params => JSON.parse("{\"X-Algolia-User-ID\":\"user1234\"}", :symbolize_names => true)}
+    {:header_params => {"X-Algolia-User-ID" => "user1234"}}
   )
 
   # >LOG

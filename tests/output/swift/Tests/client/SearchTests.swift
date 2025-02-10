@@ -686,6 +686,8 @@ final class SearchClientClientTests: XCTestCase {
                     "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
                     "createdAt": "1500240452",
                 ]],
+                waitForTasks: false,
+                batchSize: 1000,
                 requestOptions: RequestOptions(
                     headers: ["X-Algolia-User-ID": "*"]
                 )
