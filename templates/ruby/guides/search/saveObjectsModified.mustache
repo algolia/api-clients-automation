@@ -1,0 +1,28 @@
+require "json"
+{{> snippets/import}}
+
+begin
+    {{> snippets/init}}
+
+    products = JSON.parse(File.read("products.json"))
+
+    records = []
+
+    products.each do |product|
+      reference = product['product_reference']
+      suffixes = []
+
+      while reference.length > 1
+        reference = reference[1..-1]
+        suffixes << reference
+      end
+
+      product['product_reference_suffixes'] = suffixes
+      records << product
+    end
+
+    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+rescue Exception => e
+  puts("An error occurred: #{e}")
+end
+

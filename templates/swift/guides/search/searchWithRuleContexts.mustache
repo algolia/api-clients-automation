@@ -1,0 +1,25 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+let getPlatformTag = {""} // Implement your logic here
+
+func searchWithRuleContexts() async throws {
+  do {
+    {{> snippets/init}}
+
+    let platformTag = getPlatformTag()
+    let searchParams = SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", ruleContexts: [platformTag])
+    )
+
+    let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+    print(response)
+  } catch {
+    print(error)
+  }
+}

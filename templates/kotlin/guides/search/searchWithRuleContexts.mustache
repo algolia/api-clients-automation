@@ -1,0 +1,18 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+val getPlatformTag: () -> String = {
+    "" // Implement your logic here
+}
+
+suspend fun searchWithRuleContexts() {
+  {{> snippets/init}}
+
+  val platformTag = getPlatformTag()
+  val searchParams = SearchParamsObject(
+    query = "<YOUR_SEARCH_QUERY>",
+    ruleContexts = listOf(platformTag)
+  )
+
+  client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+}

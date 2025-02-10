@@ -1,0 +1,22 @@
+{{> snippets/import}}
+
+try {
+  {{> snippets/init}}
+
+  // @ts-ignore
+  const { default: products } = await import('./products.json');
+
+  const records = products.map((product) => {
+      const reference = product["product_reference"];
+      const suffixes: string[] = []
+
+      for (let i = reference.length; i > 1; i--) {
+          suffixes.unshift(reference.slice(i));
+      }
+      return { ...product, product_reference_suffixes: suffixes };
+  });
+
+  {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+} catch (e) {
+  console.error(e);
+}

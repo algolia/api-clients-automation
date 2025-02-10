@@ -3,7 +3,7 @@ client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}
     .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
   {{/requestOptions.queryParameters.parametersWithDataType}}
   {{#requestOptions.headers.parametersWithDataType}}
-    .addExtraHeader("{{{key}}}", "{{{value}}}")
+    .addExtraHeader("{{{key}}}", {{#isVerbatim}}{{{value}}}{{/isVerbatim}}{{^isVerbatim}}"{{{value}}}"{{/isVerbatim}})
   {{/requestOptions.headers.parametersWithDataType}}
   {{#requestOptions.timeouts.read}}
     .setReadTimeout(Duration.ofMillis({{.}}L))

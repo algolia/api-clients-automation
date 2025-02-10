@@ -1,0 +1,35 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func reduceLabelsToFilters(_ []string) (search.OptionalFilters, error) {
+	return search.OptionalFilters{}, nil // Implement your logic here
+}
+
+func searchWithOptionalFilters() {
+  labels := []string{ /* A list of labels */ }
+
+  {{> snippets/init}}
+
+  optionalFilters, err := reduceLabelsToFilters(labels)
+  if err != nil {
+    panic(err)
+  }
+
+  searchParams := search.SearchParamsObjectAsSearchParams(
+    search.NewSearchParamsObject().
+      SetQuery("<YOUR_SEARCH_QUERY>").
+      SetOptionalFilters(&optionalFilters),
+  )
+
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

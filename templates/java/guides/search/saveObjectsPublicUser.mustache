@@ -1,0 +1,20 @@
+package com.algolia;
+
+import java.util.List;
+import java.util.Map;
+
+{{> snippets/import}}
+
+public class saveObjectsPublicUser {
+
+  private static final List<Map<String, Object>> playlists = List.of(/* Your records */);
+
+  public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+      {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

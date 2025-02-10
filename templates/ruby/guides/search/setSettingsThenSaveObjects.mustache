@@ -1,0 +1,31 @@
+{{> snippets/import}}
+
+def get_app_id_for(_user)
+    # Implement your own logic here
+    ""
+end
+
+def get_indexing_api_key_for(_user)
+    # Implement your own logic here
+    ""
+end
+
+playlists = [] # Your records
+
+begin
+  playlists.each do |playlist|
+      app_id = get_app_id_for(playlist['user'])
+      api_key = get_indexing_api_key_for(playlist['user'])
+
+      client = Algolia::SearchClient.create(app_id, api_key)
+
+      settings = Algolia::Search::IndexSettings.new(
+        attributes_for_faceting: ['filterOnly(user)']
+      )
+      {{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+
+      {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+  end
+rescue Exception => e
+  puts("An error occurred: #{e}")
+end

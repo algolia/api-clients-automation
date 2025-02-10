@@ -1,0 +1,33 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+$playlists = [ /* Your records */ ];
+
+$getAppIDFor = function ($user) {
+  return ""; // Implement your own logic here
+};
+
+$getIndexingApiKeyFor = function ($user) {
+  return ""; // Implement your own logic here
+};
+
+try {
+  {{> snippets/init}}
+
+  foreach ($playlists as $playlist) {
+    // Fetch from your own data storage and with your own code
+    // the associated application ID and API key for this user
+    $appID = $getAppIDFor($playlist['user']);
+    $apiKey = $getIndexingApiKeyFor($playlist['user']);
+
+    $client = SearchClient::create($appID, $apiKey);
+    $settings = ['attributesForFaceting' => ['filterOnly(user)']];
+    {{#dynamicSnippet}}setSettings{{/dynamicSnippet}};
+
+    {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}};
+  }
+} catch (Exception $e) {
+  echo $e->getMessage() . PHP_EOL;
+}

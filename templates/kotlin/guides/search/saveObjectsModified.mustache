@@ -1,0 +1,28 @@
+import java.io.File
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.*
+
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+ suspend fun saveObjectsModified() {
+  {{> snippets/init}}
+
+  val path = "/tmp/records.json"
+  val json = try {
+    File(path).readText()
+  } catch (e: Exception) {
+      throw RuntimeException("Failed to read file at $path", e)
+  }
+  val products: List<JsonObject> = Json.decodeFromString(ListSerializer(JsonObject.serializer()), json)
+
+  val records = products.map { product ->
+    val reference = product["product_reference"].toString()
+    val suffixes = reference.windowed(reference.length, 1, partialWindows = true).drop(1).map { JsonPrimitive(it) }
+    JsonObject(
+        product + ("product_reference_suffixes" to JsonArray(suffixes)),
+    )
+  }
+
+  client.{{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+}

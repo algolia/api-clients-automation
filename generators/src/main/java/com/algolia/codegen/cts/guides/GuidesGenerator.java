@@ -54,6 +54,7 @@ public class GuidesGenerator extends TestsGenerator {
       bundle.put("isSearchClient", true);
     }
     bundle.put("isSyncClient", true);
-    // nothing to do here, the mustache uses dynamicSnippets lambda
+    bundle.put("isGuide", true);
+    // nothing to do here, the mustache uses dynamicSnippet lambda
   }
 }

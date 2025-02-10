@@ -1,0 +1,26 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+  "time"
+)
+
+{{> snippets/import}}
+
+func searchRecentlyPublishedBooks() {
+  {{> snippets/init}}
+
+  dateTimestamp := time.Now().UnixMilli()
+  searchParams := search.SearchParamsObjectAsSearchParams(
+    search.NewSearchParamsObject().
+      SetQuery("<YOUR_SEARCH_QUERY>").
+      SetFilters(fmt.Sprintf("date_timestamp > %d", dateTimestamp)),
+  )
+
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

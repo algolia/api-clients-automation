@@ -1,0 +1,17 @@
+import time
+
+{{> snippets/import}}
+
+begin
+  {{> snippets/init}}
+
+  date_timestamp = Time.now.to_i # Get current timestamp
+  search_params = Algolia::Search::SearchParamsObject.new(
+    query: "<YOUR_SEARCH_QUERY>",
+    filters: "date_timestamp > #{date_timestamp}"
+  )
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+rescue Exception => e
+  puts("An error occurred: #{e}")
+end

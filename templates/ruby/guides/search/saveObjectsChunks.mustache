@@ -1,0 +1,18 @@
+require "json"
+{{> snippets/import}}
+
+begin
+  {{> snippets/init}}
+
+  records = JSON.parse(File.read("records.json"))
+  chunk_size = 10000
+
+  (0...records.length).step(chunk_size) do |begin_index|
+    chunk = records[begin_index, chunk_size]
+    {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}}
+  end
+
+rescue Exception => e
+  puts("An error occurred: #{e}")
+end
+

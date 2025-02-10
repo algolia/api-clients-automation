@@ -1,0 +1,18 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+try {
+  {{> snippets/init}}
+
+  $dateTimestamp = time();
+  $searchParams = [
+    'query' => '<YOUR_SEARCH_QUERY>',
+    'filters' => "date_timestamp > $dateTimestamp",
+  ];
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+} catch (Exception $e) {
+  echo $e->getMessage() . PHP_EOL;
+}
