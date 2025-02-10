@@ -1,0 +1,22 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+{{> snippets/import}}
+
+def setHeaderUserIDThenSaveObjects(): Future[Unit] = {
+  val playlists: Seq[Map[String, Any]] = Seq() // Your records
+
+  {{> snippets/init}}
+
+  playlists.foreach { playlist =>
+      val playlistUserID = playlist("userID").toString
+      Await.result(
+        {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}},
+        Duration(5, "sec")
+      )
+  }
+
+  Future.unit
+}

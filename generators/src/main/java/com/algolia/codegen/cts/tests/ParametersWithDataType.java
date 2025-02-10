@@ -161,6 +161,7 @@ public class ParametersWithDataType {
     } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
       // bypass for verbatim variables used in the guides, we don't need to do any validation
       testOutput.put("isVerbatim", true);
+      testOutput.put("isString", false);
       testOutput.put("value", ((String) param).substring(6));
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, depth);
@@ -207,6 +208,7 @@ public class ParametersWithDataType {
     } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
       // bypass for verbatim variables used in the guides, we don't need to do any validation
       testOutput.put("isVerbatim", true);
+      testOutput.put("isString", false);
       testOutput.put("value", ((String) param).substring(6));
     } else if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, depth);

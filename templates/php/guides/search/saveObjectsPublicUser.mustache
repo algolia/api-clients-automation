@@ -1,0 +1,14 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+$playlists = [ /* Your records */ ];
+
+try {
+  {{> snippets/init}}
+
+  {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}};
+} catch (Exception $e) {
+  echo $e->getMessage() . PHP_EOL;
+}

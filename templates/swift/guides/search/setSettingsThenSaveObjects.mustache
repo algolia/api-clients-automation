@@ -1,0 +1,33 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+let playlists: [[String: AnyCodable]] = [ /* Your records */ ]
+
+let getAppIDFor = {(_: String) in ""} // Implement your own logic here
+let getIndexingApiKeyFor = {(_: String) in ""} // Implement your own logic here
+
+func setSettingsThenSaveObjects() async throws {
+  for playlist in playlists {
+    // Fetch from your own data storage and with your own code
+    // the associated application ID and API key for this user
+    let appID = getAppIDFor(playlist["user"]?.value as! String);
+    let apiKey = getIndexingApiKeyFor(playlist["user"]?.value as! String);
+
+    do {
+      let client = try SearchClient(appID: appID, apiKey: apiKey)
+      let settings = IndexSettings(
+        attributesForFaceting: ["filterOnly(user)"]
+      )
+      {{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+
+      {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+    } catch {
+      print(error)
+    }
+  }
+}

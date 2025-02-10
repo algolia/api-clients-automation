@@ -35,9 +35,8 @@ func saveObjectsMovies() {
 	// push data to algolia
 	result, err := {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
 	if err != nil {
-		fmt.Println(err)
-		return
+		panic(err)
 	}
 
-fmt.Printf("Done! Uploaded records in %d batches.", len(result))
+  fmt.Printf("Done! Uploaded records in %d batches.", len(result))
 }

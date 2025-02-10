@@ -1,0 +1,24 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+$getPlatformTag = function (): string {
+    // Implement your logic here
+    return '';
+};
+
+try {
+  {{> snippets/init}}
+
+  // get the buyer account information
+  $platformTag = $getPlatformTag();
+  $searchParams = [
+    'query' => '<YOUR_SEARCH_QUERY>',
+    'ruleContexts' => [$platformTag],
+  ];
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+} catch (Exception $e) {
+  echo $e->getMessage() . PHP_EOL;
+}

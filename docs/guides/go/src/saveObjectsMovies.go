@@ -40,8 +40,7 @@ func saveObjectsMovies() {
 	result, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>", movies)
 	if err != nil {
-		fmt.Println(err)
-		return
+		panic(err)
 	}
 
 	fmt.Printf("Done! Uploaded records in %d batches.", len(result))

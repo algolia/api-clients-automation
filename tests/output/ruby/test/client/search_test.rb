@@ -776,7 +776,9 @@ class TestClientSearchClient < Test::Unit::TestCase
           createdAt: "1500240452"
         }
       ],
-      {:header_params => JSON.parse("{\"X-Algolia-User-ID\":\"*\"}", :symbolize_names => true)}
+      false,
+      1000,
+      {:header_params => {"X-Algolia-User-ID" => "*"}}
     )
   end
 
@@ -800,7 +802,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     req = client.search_single_index(
       "playlists",
       Algolia::Search::SearchParamsObject.new(query: "foo"),
-      {:header_params => JSON.parse("{\"X-Algolia-User-ID\":\"user1234\"}", :symbolize_names => true)}
+      {:header_params => {"X-Algolia-User-ID" => "user1234"}}
     )
   end
 

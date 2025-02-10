@@ -1,0 +1,17 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+val labels: List<String> = listOf() // A list of labels
+
+val reduceLabelsToFilters: (List<String>) -> OptionalFilters = {
+    OptionalFilters.of("") // Implement your logic here
+}
+
+suspend fun searchWithOptionalFilters() {
+  {{> snippets/init}}
+
+  val optionalFilters = reduceLabelsToFilters(labels)
+  val searchParams = SearchParamsObject(query = "<YOUR_SEARCH_QUERY>", optionalFilters = optionalFilters)
+
+  client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+}

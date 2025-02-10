@@ -815,6 +815,8 @@ class SearchTest {
               )
             },
           ),
+          waitForTasks = false,
+          batchSize = 1000,
           requestOptions = RequestOptions(
             headers = buildMap {
               put("X-Algolia-User-ID", "*")

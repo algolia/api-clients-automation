@@ -15,6 +15,9 @@ $config = SearchConfig::create(
     $env['ALGOLIA_ADMIN_KEY']
 );
 
+$config->setMaxRetries(200);
+var_dump($config->getDefaultMaxRetries());
+
 //$config->setFullHosts(
 //    [
 //       'http://localhost:6677',

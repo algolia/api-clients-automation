@@ -3110,7 +3110,7 @@ func SnippetForSaveObjectsOfSearch3() {
 	// Call the API
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}})
+		[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}}, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", "*"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

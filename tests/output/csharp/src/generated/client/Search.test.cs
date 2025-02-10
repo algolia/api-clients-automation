@@ -912,6 +912,8 @@ public class SearchClientTests
             { "createdAt", "1500240452" },
           },
         },
+        false,
+        1000,
         new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
       );
     }

@@ -932,6 +932,8 @@ class SearchClientClientTests {
             }
           }
         ),
+        false,
+        1000,
         new RequestOptions().addExtraHeader("X-Algolia-User-ID", "*")
       );
     });

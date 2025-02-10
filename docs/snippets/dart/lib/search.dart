@@ -2444,6 +2444,13 @@ void snippetForsaveObjects3() async {
         'createdAt': "1500240452",
       },
     ],
+    waitForTasks: false,
+    batchSize: 1000,
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': '*',
+      },
+    ),
   );
   // >LOG
   // SEPARATOR<

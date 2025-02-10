@@ -664,6 +664,8 @@ class SearchTest extends TestCase implements HttpClientInterface
                     'createdAt' => '1500240452',
                 ],
             ],
+            false,
+            1000,
             [
                 'headers' => [
                     'X-Algolia-User-ID' => '*',

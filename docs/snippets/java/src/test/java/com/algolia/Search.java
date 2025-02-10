@@ -2242,7 +2242,10 @@ class SnippetSearchClient {
             put("createdAt", "1500240452");
           }
         }
-      )
+      ),
+      false,
+      1000,
+      new RequestOptions().addExtraHeader("X-Algolia-User-ID", "*")
     );
     // >LOG
     // SEPARATOR<

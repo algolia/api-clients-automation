@@ -2953,6 +2953,11 @@ def snippet_for_save_objects3():
                 "createdAt": "1500240452",
             },
         ],
+        wait_for_tasks=False,
+        batch_size=1000,
+        request_options={
+            "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+        },
     )
 
     # >LOG

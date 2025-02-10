@@ -19,29 +19,7 @@ void main() {
         {{/hasRegionalHost}}
         options: ClientOptions(requester: requester),
       ),
-      call: (client) => client.{{method}}(
-        {{#parametersWithDataType}}
-        {{> tests/request_param}}
-        {{/parametersWithDataType}}
-        {{#hasRequestOptions}}
-        requestOptions : RequestOptions(
-            {{#requestOptions.headers}}
-            headers: { 
-            {{#parametersWithDataType}}
-                '{{{key}}}' : '{{value}}',    
-            {{/parametersWithDataType}}
-            },
-            {{/requestOptions.headers}}
-            {{#requestOptions.queryParameters}}
-            urlParameters: {
-                {{#parametersWithDataType}}
-                '{{{key}}}' : {{> tests/param_value}},
-                {{/parametersWithDataType}}
-            },
-            {{/requestOptions.queryParameters}}
-        ),
-        {{/hasRequestOptions}}
-      ),
+      call: (client) => {{> tests/method}},
       intercept: (request) {
         {{#request}}
         expectPath(request.path, '{{{path}}}');

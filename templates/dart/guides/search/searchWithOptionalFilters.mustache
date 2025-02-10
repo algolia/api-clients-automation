@@ -1,0 +1,16 @@
+{{> snippets/import}}
+
+final List<String> labels = []; // A list of labels
+
+List<String> reduceLabelsToFilters(List<String> labels) {
+  return []; // Implement your logic here
+}
+
+void searchWithOptionalFilters() async {
+  {{> snippets/init}}
+
+  final optionalFilters = reduceLabelsToFilters(labels);
+  final searchParams = SearchParamsObject(query: "<YOUR_SEARCH_QUERY>", optionalFilters: optionalFilters);
+
+  await {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+}
