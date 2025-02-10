@@ -14,7 +14,7 @@
     "instantsearch.css": "^8.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-instantsearch": "^7.13.8"
+    "react-instantsearch": "^7.15.3"
   },
   "devDependencies": {
     "@eslint/js": "9.20.0",
@@ -23,7 +23,7 @@
     "@vitejs/plugin-react-swc": "3.8.0",
     "eslint": "9.20.0",
     "eslint-plugin-react-hooks": "5.1.0",
-    "eslint-plugin-react-refresh": "0.4.18",
+    "eslint-plugin-react-refresh": "0.4.19",
     "globals": "15.14.0",
     "typescript": "5.7.3",
     "typescript-eslint": "8.23.0",
