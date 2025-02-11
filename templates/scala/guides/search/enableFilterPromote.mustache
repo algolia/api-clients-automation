@@ -1,0 +1,21 @@
+import scala.concurrent.ExecutionContext.Implicits.global
+
+{{> snippets/import}}
+import algoliasearch.search.{Anchoring, Condition, Consequence, Rule}
+
+def enableFilterPromote(): Unit = {
+  val condition = Condition(
+    pattern = Some("{facet:brand}"),
+    anchoring = Some(Anchoring.Is)
+  )
+
+  val consequence = Consequence(
+    filterPromotes = Some(true)
+  )
+
+  val rule = Rule(
+    objectID = "rule_with_filterPromotes",
+    conditions = Some(Seq(condition)),
+    consequence = consequence
+  )
+}
