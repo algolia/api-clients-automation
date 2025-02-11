@@ -1,0 +1,12 @@
+{{> snippets/import}}
+
+void searchWithLogicalOr() async {
+    {{> snippets/init}}
+    final query = "the query";
+    final optionalWords = ["the", "query"];
+    final searchParams = SearchParamsObject(
+        query: query,
+        optionalWords: optionalWords,
+    );
+    await {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+}
