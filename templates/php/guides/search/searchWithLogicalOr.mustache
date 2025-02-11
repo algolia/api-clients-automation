@@ -1,18 +1,24 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 {{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\OptionalWords;
 use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 
 try {
   {{> snippets/init}}
 
-  $dateTimestamp = time();
+  $query = 'the query';
+
+  $optionalWords = new OptionalWords();
+  $optionalWords[] = $query;
+
   $searchParams = (new SearchParamsObject())
-      ->setQuery('<YOUR_SEARCH_QUERY>')
-      ->setFilters("date_timestamp > " . $dateTimestamp);
+    ->setQuery($query)
+    ->setOptionalWords($optionalWords);
 
   {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
 } catch (Exception $e) {
   echo $e->getMessage() . PHP_EOL;
 }
+

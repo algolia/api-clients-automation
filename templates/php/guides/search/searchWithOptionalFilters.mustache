@@ -2,21 +2,22 @@
 
 require __DIR__.'/../vendor/autoload.php';
 {{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\OptionalFilters;
+use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 
 $labels = []; // A list of labels
-$reduceLabelsToFilters = function (array $labels): array {
+$reduceLabelsToFilters = function (array $labels): OptionalFilters {
     // Implement your logic here
-    return [];
+    return new OptionalFilters();
 };
 
 try {
   {{> snippets/init}}
 
   $optionalFilters = $reduceLabelsToFilters($labels);
-  $searchParams = [
-    'query' => '<YOUR_SEARCH_QUERY>',
-    'optionalFilters' => $optionalFilters,
-  ];
+  $searchParams = (new SearchParamsObject())
+      ->setQuery('<YOUR_SEARCH_QUERY>')
+      ->setOptionalFilters($optionalFilters);
 
   {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
 } catch (Exception $e) {
