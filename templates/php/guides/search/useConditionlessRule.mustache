@@ -1,13 +1,13 @@
 <?php
 
 require __DIR__.'/../vendor/autoload.php';
-use Algolia\AlgoliaSearch\Api\SearchClient;
+{{> snippets/import}}
 use Algolia\AlgoliaSearch\Model\Search\Consequence;
 use Algolia\AlgoliaSearch\Model\Search\Rule;
 use Algolia\AlgoliaSearch\Model\Search\TimeRange;
 
 try {
-    $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+    {{> snippets/init}}
 
     $objectID = 'a-rule-id';
 

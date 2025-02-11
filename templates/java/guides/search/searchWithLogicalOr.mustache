@@ -1,0 +1,27 @@
+package com.algolia;
+
+import java.util.List;
+
+{{> snippets/import}}
+
+public class searchWithLogicalOr {
+
+public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+
+      String query = "the query";
+
+      OptionalWords optionalWords = OptionalWords.of(query);
+
+      SearchParams searchParams = new SearchParamsObject()
+        .setQuery(query)
+        .setOptionalWords(optionalWords);
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}
+
