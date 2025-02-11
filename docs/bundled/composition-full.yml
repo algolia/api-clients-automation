@@ -292,7 +292,7 @@ paths:
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
-        - Search
+        - search
       operationId: searchForFacetValues
       x-use-read-transporter: true
       x-cacheable: true
