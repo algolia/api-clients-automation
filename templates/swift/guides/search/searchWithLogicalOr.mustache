@@ -1,0 +1,24 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func searchWithLogicalOr() async throws {
+  do {
+      {{> snippets/init}}
+      let query = "the query"
+      let optionalWords = ["the", "query"];
+      let searchParams = SearchSearchParams.searchSearchParamsObject(
+          SearchSearchParamsObject(
+            query: query,
+            optionalWords: .arrayOfString(optionalWords)
+          )
+      )
+      let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+  } catch {
+    print(error)
+  }
+}
