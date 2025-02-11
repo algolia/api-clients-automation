@@ -1,4 +1,10 @@
 {
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../../../clients/algoliasearch-client-php"
+    }
+  ],
   "require": {
     "algolia/algoliasearch-client-php": "*",
     "ext-json": "*"
