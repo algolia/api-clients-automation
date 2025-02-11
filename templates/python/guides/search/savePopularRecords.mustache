@@ -2,7 +2,7 @@
 from algoliasearch.search.models.browse_response import BrowseResponse
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
   try:
     _{{> snippets/init}}
 
@@ -11,9 +11,9 @@ if __name__ == '__main__':
       for hit in resp.hits:
         hit_dict = hit.to_dict()
         records.append({
-          'twitterHandle': hit_dict['twitterHandle'],
-          'nbFollowers': hit_dict['nbFollowers'],
-          'isPopular': hit_dict['nbFollowers'] > 1000000,
+          "twitterHandle": hit_dict["twitterHandle"],
+          "nbFollowers": hit_dict["nbFollowers"],
+          "isPopular": hit_dict["nbFollowers"] > 1000000,
         })
 
     _client.browse_objects(

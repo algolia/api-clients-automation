@@ -2,7 +2,7 @@ import requests
 {{> snippets/import}}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Fetch sample dataset
     url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
     movies = requests.get(url).json()
