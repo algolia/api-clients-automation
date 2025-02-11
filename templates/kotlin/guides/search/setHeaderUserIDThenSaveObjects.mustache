@@ -10,6 +10,10 @@ suspend fun setHeaderUserIDThenSaveObjects() {
 
   playlists.forEach { playlist ->
       val playlistUserID = playlist["userID"].toString()
-      client.{{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+      try {
+        client.{{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+      } catch (exception: Exception) {
+          println(exception.message)
+      }
   }
 }

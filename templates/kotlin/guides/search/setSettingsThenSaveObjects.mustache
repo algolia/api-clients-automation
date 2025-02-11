@@ -24,8 +24,12 @@ suspend fun setSettingsThenSaveObjects() {
       attributesForFaceting = listOf("filterOnly(user)")
     )
 
-    client.{{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+    try {
+      client.{{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
 
-    client.{{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+      client.{{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+    } catch (exception: Exception) {
+      println(exception.message)
+    }
   }
 }
