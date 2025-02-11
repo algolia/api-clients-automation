@@ -2,12 +2,11 @@ openapi: 3.0.2
 info:
   title: Composition API (beta)
   description: |
-    The Algolia Composition API lets you run search requests on your Compositions.
+    The Algolia Composition API lets you run composed search requests on your Compositions. The Composition API is in Beta.
 
     ## Client libraries
 
     Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.
-    The official API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/).
 
     See: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
 
