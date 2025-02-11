@@ -43,6 +43,18 @@
       "searchParams": "$var: searchParams"
     }
   },
+  "searchWithSearchParamsAndForwardedHeader": {
+    "method": "searchSingleIndex",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": "$var: searchParams"
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Forwarded-For": "$var: ip"
+      }
+    }
+  },
   "saveObjectsRecords": {
     "method": "saveObjects",
     "parameters": {
@@ -114,6 +126,23 @@
     "parameters": {
       "indexName": "indexName",
       "indexSettings": "$var: settings"
+    }
+  },
+  "searchWithIndexNameVar": {
+    "method": "searchSingleIndex",
+    "parameters": {
+      "indexName": "$var: indexName",
+      "searchParams": {
+        "query": "query"
+      }
+    }
+  },
+  "saveRule": {
+    "method": "saveRule",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "$var: objectID",
+      "rule": "$var: rule"
     }
   }
 }
