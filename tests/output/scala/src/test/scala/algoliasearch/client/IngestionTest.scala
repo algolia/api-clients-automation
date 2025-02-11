@@ -159,7 +159,7 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.13.1\).*""".r
+    val regexp = """^Algolia for Scala \(2.13.2\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
