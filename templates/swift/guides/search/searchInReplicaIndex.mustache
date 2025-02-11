@@ -17,7 +17,7 @@ func searchInReplicaIndex() async throws {
     let indexName = sortByPrice ? "products_price_desc" : "products"
 
     // 3. Search on dynamic index name (primary or replica)
-    let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}};
+    let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}}
   } catch {
     print(error)
   }

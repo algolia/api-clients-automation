@@ -17,7 +17,7 @@ func searchWithLogicalOr() async throws {
             optionalWords: .arrayOfString(optionalWords)
           )
       )
-      let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+      let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
   } catch {
     print(error)
   }
