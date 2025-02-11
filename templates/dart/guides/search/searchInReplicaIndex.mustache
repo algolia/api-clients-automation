@@ -7,6 +7,7 @@ void searchInReplicaIndex() async {
   final sortByPrice = false;
 
   // 2. Get the index name based on sortByPrice
+  // ignore: dead_code
   final indexName = sortByPrice ? "products_price_desc" : "products";
 
   // 3. Search on dynamic index name (primary or replica)
