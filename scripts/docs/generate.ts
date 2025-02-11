@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { callGenerator, exists, isWSL, run, setupAndGen, toAbsolutePath } from '../common.ts';
 import { getTestOutputFolder } from '../config.ts';
 import { formatter } from '../formatter.ts';
@@ -5,6 +6,10 @@ import type { Generator } from '../types.ts';
 
 export async function docsGenerateMany(generators: Generator[], scope: 'guides' | 'snippets'): Promise<void> {
   await setupAndGen(generators, scope, async (gen) => {
+    await run(`rm -rf ${path.join('docs', scope, gen.language, getTestOutputFolder(gen.language))}`, {
+      language: gen.language,
+    });
+
     if (getTestOutputFolder(gen.language)) {
       await callGenerator(gen);
     }
