@@ -1,13 +1,11 @@
-import time
-
 {{> snippets/import}}
 
 {{> snippets/init}}
 
-date_timestamp = Time.now.to_i # Get current timestamp
+query = "the query"
+optional_words = %w[the query]
 search_params = Algolia::Search::SearchParamsObject.new(
-  query: "<YOUR_SEARCH_QUERY>",
-  filters: "date_timestamp > #{date_timestamp}"
+  query: query,
+  optional_words: optional_words,
 )
-
 {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

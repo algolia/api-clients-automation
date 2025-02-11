@@ -2,10 +2,6 @@
 
 playlists = [] # Your records
 
-begin
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
-rescue Exception => e
-  puts("An error occurred: #{e}")
-end
+{{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}

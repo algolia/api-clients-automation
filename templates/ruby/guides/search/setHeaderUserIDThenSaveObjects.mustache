@@ -2,13 +2,9 @@
 
 playlists = [] # Your records
 
-begin
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  playlists.each do |playlist|
-    playlist_user_id = playlist['userID']
-    {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
-  end
-rescue Exception => e
-  puts("An error occurred: #{e}")
+playlists.each do |playlist|
+  playlist_user_id = playlist['userID']
+  {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
 end

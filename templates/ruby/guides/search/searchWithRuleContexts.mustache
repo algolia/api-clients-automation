@@ -5,17 +5,13 @@ def get_platform_tag
     ""
 end
 
-begin
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  # get the buyer account information
-  platform_tag = get_platform_tag
-  search_params = Algolia::Search::SearchParamsObject.new(
-    query: "<YOUR_SEARCH_QUERY>",
-    rule_contexts: [platform_tag],
-  )
+# get the buyer account information
+platform_tag = get_platform_tag
+search_params = Algolia::Search::SearchParamsObject.new(
+  query: "<YOUR_SEARCH_QUERY>",
+  rule_contexts: [platform_tag],
+)
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-rescue Exception => e
-  puts("An error occurred: #{e}")
-end
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

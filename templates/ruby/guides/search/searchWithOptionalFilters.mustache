@@ -7,16 +7,12 @@ end
 
 labels = [] # A list of labels
 
-begin
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  optional_filters = reduce_labels_to_filters(labels)
-  search_params = Algolia::Search::SearchParamsObject.new(
-    query: '<YOUR_SEARCH_QUERY>',
-    optionalFilters: optional_filters
-  )
+optional_filters = reduce_labels_to_filters(labels)
+search_params = Algolia::Search::SearchParamsObject.new(
+  query: '<YOUR_SEARCH_QUERY>',
+  optionalFilters: optional_filters
+)
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-rescue Exception => e
-  puts("An error occurred: #{e}")
-end
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
