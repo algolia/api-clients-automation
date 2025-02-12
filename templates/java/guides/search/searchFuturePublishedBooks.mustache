@@ -2,12 +2,12 @@ package com.algolia;
 
 {{> snippets/import}}
 
-public class searchRecentlyPublishedBooks {
+public class searchFuturePublishedBooks {
 
   public static void main(String[] args) throws Exception {
 
     try ({{> snippets/init}}) {
-      long unixTimeStamp = ZonedDateTime.now(ZoneOffset.UTC).plusYears(-1).toEpochSecond();
+      long dateTimestamp = System.currentTimeMillis();
       SearchParams searchParams = new SearchParamsObject()
         .setQuery("<YOUR_SEARCH_QUERY>")
         .setFilters("date_timestamp > " + dateTimestamp);

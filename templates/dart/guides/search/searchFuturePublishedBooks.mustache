@@ -1,9 +1,9 @@
 {{> snippets/import}}
 
-void searchRecentlyPublishedBooks() async {
+void searchFuturePublishedBooks() async {
   {{> snippets/init}}
 
-  final dateTimestamp = DateTime.now().subtract(Duration(days: 365)).millisecondsSinceEpoch;
+  final dateTimestamp = DateTime.now().millisecondsSinceEpoch;
   final searchParams = SearchParamsObject(
       query: "<YOUR_SEARCH_QUERY>",
       filters: "date_timestamp > $dateTimestamp"
