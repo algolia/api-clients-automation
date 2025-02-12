@@ -5,17 +5,13 @@ def get_buyer_account_id
   ""
 end
 
-begin
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  # get the buyer account information
-  buyer = get_buyer_account_id
-  search_params = Algolia::Search::SearchParamsObject.new(
-    query: "<YOUR_SEARCH_QUERY>",
-    rule_contexts: [buyer],
-  )
+# get the buyer account information
+buyer = get_buyer_account_id
+search_params = Algolia::Search::SearchParamsObject.new(
+  query: "<YOUR_SEARCH_QUERY>",
+  rule_contexts: [buyer],
+)
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-rescue Exception => e
-  puts("An error occurred: #{e}")
-end
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

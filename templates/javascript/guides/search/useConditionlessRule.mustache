@@ -1,0 +1,27 @@
+{{> snippets/import}}
+import type { Rule } from 'algoliasearch';
+
+try {
+  {{> snippets/init}}
+
+  const objectID = 'a-rule-id';
+
+  const rule: Rule = {
+    objectID,
+    consequence: {
+      // Set relevant consequence
+    },
+  };
+
+  // Set validity (optional)
+  rule.validity = [
+    {
+      from: 1688774400,
+      until: 1738972800,
+    },
+  ];
+
+  {{#dynamicSnippet}}saveRule{{/dynamicSnippet}};
+} catch (e: any) {
+  console.error(e.message);
+}

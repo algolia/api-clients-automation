@@ -20,6 +20,6 @@ try {
   searchParams.userToken = loggedInUser ?? userToken;
 
   {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-} catch (e) {
+} catch (e: any) {
   console.error(e);
 }

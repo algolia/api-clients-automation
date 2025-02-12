@@ -1,0 +1,11 @@
+{{> snippets/import}}
+
+{{> snippets/init}}
+
+query = "the query"
+optional_words = %w[the query]
+search_params = Algolia::Search::SearchParamsObject.new(
+  query: query,
+  optional_words: optional_words,
+)
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

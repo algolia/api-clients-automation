@@ -3,7 +3,7 @@ import json
 {{> snippets/import}}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
   try:
       _{{> snippets/init}}
 
@@ -13,14 +13,14 @@ if __name__ == '__main__':
           records = []
 
           for product in products:
-              reference = product['product_reference']
+              reference = product["product_reference"]
 
               suffixes = []
               while len(reference) > 1:
                   reference = reference[1:]
                   suffixes.append(reference)
 
-              product['product_reference_suffixes'] = suffixes
+              product["product_reference_suffixes"] = suffixes
               records.append(product)
 
       {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}

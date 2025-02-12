@@ -1,0 +1,33 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class SearchInReplicaIndex {
+
+  async Task Main(string[] args)
+  {
+
+    try {
+      {{> snippets/init}}
+
+      var query = "query";
+
+      // 1. Change the sort dynamically based on the UI events
+      var sortByPrice = false;
+
+      // 2. Get the index name based on sortByPrice
+      var indexName = sortByPrice ? "products_price_desc" : "products";
+
+      // 3. Search on dynamic index name (primary or replica)
+      {{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}};
+    } catch (Exception e) {
+      Console.WriteLine(e.Message);
+    }
+  }
+}
+

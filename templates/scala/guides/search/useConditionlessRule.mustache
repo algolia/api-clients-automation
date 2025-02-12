@@ -1,0 +1,32 @@
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
+{{> snippets/import}}
+import algoliasearch.search.{Consequence, Rule, TimeRange}
+
+def useConditionlessRule(): Future[Unit] = {
+  {{> snippets/init}}
+
+  val objectID = "a-rule-id";
+
+  val rule = Rule(
+      objectID = objectID,
+      consequence = Consequence(
+          // Set relevant consequence
+      ),
+      // Set validity (optional)
+      validity = Some(Seq(
+        TimeRange(
+              from = 1_688_774_400,
+              until = 1_738_972_800
+          )
+      ))
+  )
+
+  {{#dynamicSnippet}}saveRule{{/dynamicSnippet}}.map { response =>
+    println(response)
+  }.recover {
+    case ex: Exception =>
+      println(s"An error occurred: ${ex.getMessage}")
+  }
+}

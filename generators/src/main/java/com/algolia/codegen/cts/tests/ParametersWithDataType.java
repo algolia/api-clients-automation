@@ -181,7 +181,12 @@ public class ParametersWithDataType {
     }
 
     // for snippets, we want pretty index names, unless they are already pretty
-    if (prettyIndexName && paramName.equals("indexName") && !((String) testOutput.get("value")).startsWith("<")) {
+    if (
+      prettyIndexName &&
+      paramName.equals("indexName") &&
+      !((String) testOutput.get("value")).startsWith("<") &&
+      !((Boolean) testOutput.getOrDefault("isVerbatim", false))
+    ) {
       testOutput.put("value", "<YOUR_INDEX_NAME>");
     }
 

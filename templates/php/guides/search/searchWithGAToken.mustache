@@ -2,6 +2,7 @@
 
 require __DIR__.'/../vendor/autoload.php';
 {{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 
 $getGoogleAnalyticsUserIdFromBrowserCookie = function (string $cookieName): string {
     // Implement your logic here
@@ -12,17 +13,16 @@ try {
   {{> snippets/init}}
 
   $userToken = $getGoogleAnalyticsUserIdFromBrowserCookie('_ga');
-  $searchParams = [
-    'query' => '<YOUR_SEARCH_QUERY>',
-    'userToken' => $userToken,
-  ];
+  $searchParams = (new SearchParamsObject())
+      ->setQuery('<YOUR_SEARCH_QUERY>')
+      ->setUserToken($userToken);
 
   {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
 
   /** @var string|null $loggedInUser */
   $loggedInUser = null;
 
-  $searchParams['userToken'] = $loggedInUser ?? $userToken;
+  $searchParams->setUserToken($loggedInUser ?? $userToken);
 
   {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
 } catch (Exception $e) {

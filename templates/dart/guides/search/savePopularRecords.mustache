@@ -12,9 +12,10 @@ void savePopularRecords() async {
         indexName: "indexName", browseParams: browseParams
     );
     for (final hit in browseResponse.hits) {
-      final isPopular = hit['nbFollowers'] > 1000;
+      final props = hit.toJson();
+      final isPopular = props['nbFollowers'] > 1000;
       final updatedProduct = {
-        ...hit,
+        ...props,
         'isPopular': isPopular,
       };
       records.add(updatedProduct);

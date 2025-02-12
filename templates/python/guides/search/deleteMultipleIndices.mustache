@@ -1,7 +1,7 @@
 {{> snippets/import}}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
   try:
     # You need an API key with `deleteIndex`
     _{{> snippets/init}}
@@ -15,13 +15,13 @@ if __name__ == '__main__':
 
     # Delete primary indices first
     if primary_indices:
-      requests = [{'action': 'delete', 'indexName': index.name} for index in primary_indices]
+      requests = [{"action": "delete", "indexName": index.name} for index in primary_indices]
       {{#dynamicSnippet}}deleteMultipleIndicesPrimary{{/dynamicSnippet}}
       print("Deleted primary indices.")
 
     # Now, delete replica indices
     if replica_indices:
-      requests = [{'action': 'delete', 'indexName': index.name} for index in replica_indices]
+      requests = [{"action": "delete", "indexName": index.name} for index in replica_indices]
       {{#dynamicSnippet}}deleteMultipleIndicesReplica{{/dynamicSnippet}}
       print("Deleted replica indices.\n")
 
