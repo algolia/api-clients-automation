@@ -24,8 +24,6 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
 
-  '!docs/guides/csharp/src/program.cs',
-
   'tests/output/csharp/global.json',
 
   // Dart
@@ -51,8 +49,6 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/compression/*',
   '!clients/algoliasearch-client-go/algolia/debug/*',
   '!clients/algoliasearch-client-go/algolia/utils/*',
-
-  '!docs/guides/go/src/main.go',
 
   '!tests/output/go/go.*',
 
@@ -104,14 +100,6 @@ export const patterns = [
   '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
   'clients/algoliasearch-client-php/composer.json',
 
-  'docs/guides/php/**',
-  '!docs/guides/php/.gitignore',
-  '!docs/guides/php/composer.json',
-  '!docs/guides/php/phpstan.neon',
-  'docs/guides/php/composer.phar',
-  'docs/guides/php/composer.lock',
-  'docs/guides/php/vendor/**',
-
   // Python
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
@@ -127,8 +115,6 @@ export const patterns = [
   '!tests/output/python/**/__init__.py',
   'tests/output/python/requirements.txt',
 
-  'docs/guides/python/**',
-  '!docs/guides/python/pyproject.toml',
 
   // Ruby
   '!clients/algoliasearch-client-ruby/**',

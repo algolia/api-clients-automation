@@ -46,6 +46,24 @@ public class GuidesGenerator extends TestsGenerator {
         )
       );
     }
+
+    switch (language) {
+      case "csharp":
+        supportingFiles.add(
+          new SupportingFile("guides/program.mustache", "docs/guides/" + language + outputFolder + "program" + extension)
+        );
+        break;
+      case "go":
+        supportingFiles.add(new SupportingFile("guides/main.mustache", "docs/guides/" + language + outputFolder + "main" + extension));
+        break;
+      case "php":
+        supportingFiles.add(new SupportingFile("guides/.gitignore", "docs/guides/" + language + outputFolder + ".gitignore"));
+        supportingFiles.add(new SupportingFile("guides/composer.json", "docs/guides/" + language + outputFolder + "composer.json"));
+        supportingFiles.add(new SupportingFile("guides/phpstan.neon", "docs/guides/" + language + outputFolder + "phpstan.neon"));
+        break;
+      default:
+        break;
+    }
   }
 
   @Override
