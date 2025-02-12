@@ -73,6 +73,7 @@ resultsCompositionsResponse:
       type: object
       additionalProperties:
         title: resultsCompositionInfoResponse
+        x-additionalPropertiesName: composition-id
         type: object
         properties:
           injectedItems:
