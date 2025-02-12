@@ -11,5 +11,6 @@ func enableFilterPromote() {
     "rule_with_filterPromotes",
     *search.NewConsequence().SetFilterPromotes(true),
   ).SetEnabled(true).SetConditions([]search.Condition{*condition})
-	_ = rule
+
+  fmt.Printf("Rule: %#v\n", rule)
 }
