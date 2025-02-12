@@ -158,7 +158,9 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       head: task.prBranch,
     });
 
-    await run(`gh repo set-default ${OWNER}/${repository} && gh pr merge ${data.number} --auto`);
+    await run(`gh auth login --with-token ${ensureGitHubToken()}`);
+    await run(`gh repo set-default ${OWNER}/${repository}`);
+    await run(`gh pr merge ${data.number} --auto`);
 
     console.log(`Pull request created on ${OWNER}/${repository}`);
     console.log(`  > ${data.url}`);
