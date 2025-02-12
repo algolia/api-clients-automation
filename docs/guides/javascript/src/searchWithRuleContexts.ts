@@ -15,6 +15,6 @@ try {
   };
 
   await client.searchSingleIndex({ indexName: 'indexName', searchParams: searchParams });
-} catch (e) {
+} catch (e: any) {
   console.error(e);
 }

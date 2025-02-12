@@ -11,6 +11,6 @@ try {
       headers: { 'X-Algolia-User-ID': '*' },
     },
   );
-} catch (e) {
+} catch (e: any) {
   console.error(e);
 }

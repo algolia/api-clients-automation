@@ -2,6 +2,7 @@
 
 require __DIR__.'/../vendor/autoload.php';
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 
 $getBuyerAccountId = function (): string {
     // Implement your logic here
@@ -13,10 +14,10 @@ try {
 
     // get the buyer account information
     $buyer = $getBuyerAccountId();
-    $searchParams = [
-        'query' => '<YOUR_SEARCH_QUERY>',
-        'ruleContexts' => [$buyer],
-    ];
+    $searchParams = (new SearchParamsObject())
+        ->setQuery('<YOUR_SEARCH_QUERY>')
+        ->setRuleContexts([$buyer])
+    ;
 
     $client->searchSingleIndex(
         '<YOUR_INDEX_NAME>',

@@ -2,6 +2,8 @@
 
 require __DIR__.'/../vendor/autoload.php';
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\Model\Search\Action;
+use Algolia\AlgoliaSearch\Model\Search\MultipleBatchRequest;
 
 try {
     // You need an API key with `deleteIndex`
@@ -22,10 +24,10 @@ try {
     // Delete primary indices first
     if (!empty($primaryIndices)) {
         $requests = array_map(function ($index) {
-            return [
-                'action' => 'delete',
-                'indexName' => $index['name'],
-            ];
+            return (new MultipleBatchRequest())
+                ->setAction((new Action())::DELETE)
+                ->setIndexName($index['name'])
+            ;
         }, $primaryIndices);
 
         $client->multipleBatch(

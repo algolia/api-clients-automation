@@ -8,16 +8,12 @@ end
 # A list of labels
 labels = []
 
-begin
-  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
-  optional_filters = reduce_labels_to_filters(labels)
-  search_params = Algolia::Search::SearchParamsObject.new(
-    query: "<YOUR_SEARCH_QUERY>",
-    optionalFilters: optional_filters
-  )
+optional_filters = reduce_labels_to_filters(labels)
+search_params = Algolia::Search::SearchParamsObject.new(
+  query: "<YOUR_SEARCH_QUERY>",
+  optionalFilters: optional_filters
+)
 
-  client.search_single_index("<YOUR_INDEX_NAME>", search_params)
-rescue Exception => e
-  puts("An error occurred: #{e}")
-end
+client.search_single_index("<YOUR_INDEX_NAME>", search_params)

@@ -17,6 +17,6 @@ try {
   });
 
   await client.saveObjects({ indexName: 'indexName', objects: records });
-} catch (e) {
+} catch (e: any) {
   console.error(e);
 }
