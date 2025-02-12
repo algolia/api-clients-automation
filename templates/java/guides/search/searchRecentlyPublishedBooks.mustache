@@ -1,5 +1,8 @@
 package com.algolia;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+
 {{> snippets/import}}
 
 public class searchRecentlyPublishedBooks {
@@ -7,7 +10,7 @@ public class searchRecentlyPublishedBooks {
   public static void main(String[] args) throws Exception {
 
     try ({{> snippets/init}}) {
-      long unixTimeStamp = ZonedDateTime.now(ZoneOffset.UTC).plusYears(-1).toEpochSecond();
+      long dateTimestamp = ZonedDateTime.now(ZoneOffset.UTC).plusYears(-1).toEpochSecond();
       SearchParams searchParams = new SearchParamsObject()
         .setQuery("<YOUR_SEARCH_QUERY>")
         .setFilters("date_timestamp > " + dateTimestamp);
